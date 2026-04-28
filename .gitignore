@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcuserdatad/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.swiftpm/
+.build/
+Packages/
+Package.resolved
+
+# CocoaPods (defensive — not used in V1)
+Pods/
+
+# Carthage (defensive)
+Carthage/Build/
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
