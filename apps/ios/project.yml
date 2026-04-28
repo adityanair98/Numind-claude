@@ -40,3 +40,15 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.numind.app
         INFOPLIST_FILE: Numind/App/Info.plist
         SWIFT_EMIT_LOC_STRINGS: YES
+
+  NumindTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: NumindTests
+    dependencies:
+      - target: Numind
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.numind.app.tests

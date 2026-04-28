@@ -1,0 +1,10 @@
+[
+  {
+    "id": "tips",
+    "title": "Tips, Tax & Bill Split",
+    "subtitle": "Everyday restaurant and shopping math",
+    "icon": "percent",
+    "color": "primaryBlue",
+    "lessonIds": ["tip_18_percent"]
+  }
+]

@@ -10,34 +10,62 @@
 		08ECDE4B423BE11F7011106C /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F0704BD6A634C7DF076BC /* Radius.swift */; };
 		0A977B26D6289DEED93BC64A /* BeadRail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BDC1D8146AF56C25548BF5 /* BeadRail.swift */; };
 		2D0CCB9595793F157B29D8E4 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */; };
+		2FE105C8B1F17551E505F21E /* ContentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */; };
 		386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E47647944F778EBA32D80A /* NumindCard.swift */; };
 		3BAA7DB7CEEACFE8C78B7DB0 /* IconTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76E087252FEBD5528A5BC82 /* IconTile.swift */; };
 		5218EEDA9DF7C5439F346B60 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801C467A7D4DFBC7113E4A12 /* Colors.swift */; };
 		52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */; };
 		53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */; };
+		5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A7139387185959BC6413FC /* Lesson.swift */; };
+		5D254947FA29FBF59459543A /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EB9C1AB0D5B44747792E8B /* Module.swift */; };
+		6104FF691FB7D2DCB8BD4FE5 /* modules.json in Resources */ = {isa = PBXBuildFile; fileRef = 53291327E813B6AFAAFF8834 /* modules.json */; };
 		67D878B3D04A62674B2FB5A9 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */; };
 		6EBA9243B649FF227E0CF468 /* HomePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116647DEDB06AB6A25D48DD /* HomePlaceholderView.swift */; };
 		780705FB6704A43F599ABF29 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */; };
+		79C53E7BC19A3FA5B3E0458D /* QuizTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912929E50EF5E5526AB94217 /* QuizTemplate.swift */; };
+		85AF38C1C1849D2390D5933F /* ContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48236569E3C71A34C541C4 /* ContentRepository.swift */; };
 		8811D01840392F9AFACC1076 /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95023876E0A97905383796 /* PillButton.swift */; };
 		A5F4B58400EC6F846634878D /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90D290A95551415D993EC4C /* RootTabView.swift */; };
 		ABB4DCEF756B3B22D030E601 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D07D972E9B9DED4B8623883 /* Theme.swift */; };
 		B9022760D7480DAF2E89DB54 /* ProfilePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57428D613845E03057EBFF4 /* ProfilePlaceholderView.swift */; };
+		D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */; };
+		F019F76F7180D1815BFCAD16 /* quiz_templates.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BD9B2F3BDAC926EC7E3C7CC /* quiz_templates.json */; };
+		F804B6DA0B9EBB0816692FD9 /* lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 287275A57DE30AA3C1234BFB /* lessons.json */; };
 		F806105421058F684A87E071 /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D174F151101E293695B6CF7F /* ProgressPlaceholderView.swift */; };
 		F8D121F64C56088C7B5B5535 /* LearnPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83DFDD656898AC0419E770F /* LearnPlaceholderView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		217D6A6CDB87B544DE96B108 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 11A61BE67F9C423CBC296339 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B86209802F63D9D14D87AA55;
+			remoteInfo = Numind;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		09E47647944F778EBA32D80A /* NumindCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindCard.swift; sourceTree = "<group>"; };
 		0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemPreviewView.swift; sourceTree = "<group>"; };
+		1BD9B2F3BDAC926EC7E3C7CC /* quiz_templates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = quiz_templates.json; sourceTree = "<group>"; };
 		223F0704BD6A634C7DF076BC /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
+		287275A57DE30AA3C1234BFB /* lessons.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = lessons.json; sourceTree = "<group>"; };
+		2B2DC0C71D0E0F8576E6AEAC /* NumindTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NumindTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E95023876E0A97905383796 /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
 		3BDDFD6CE2DC30D6EC1423F1 /* Numind.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Numind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4116647DEDB06AB6A25D48DD /* HomePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePlaceholderView.swift; sourceTree = "<group>"; };
 		41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		53291327E813B6AFAAFF8834 /* modules.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = modules.json; sourceTree = "<group>"; };
+		61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRepositoryTests.swift; sourceTree = "<group>"; };
+		6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalContentRepository.swift; sourceTree = "<group>"; };
 		801C467A7D4DFBC7113E4A12 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		912929E50EF5E5526AB94217 /* QuizTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTemplate.swift; sourceTree = "<group>"; };
 		9D07D972E9B9DED4B8623883 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		A5EB9C1AB0D5B44747792E8B /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		A83DFDD656898AC0419E770F /* LearnPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnPlaceholderView.swift; sourceTree = "<group>"; };
 		B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		B9A7139387185959BC6413FC /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindApp.swift; sourceTree = "<group>"; };
 		C6BDC1D8146AF56C25548BF5 /* BeadRail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeadRail.swift; sourceTree = "<group>"; };
 		C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
@@ -46,6 +74,7 @@
 		F76E087252FEBD5528A5BC82 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
 		F90D290A95551415D993EC4C /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		FD29BAB16DEC1A66045D564D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FF48236569E3C71A34C541C4 /* ContentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -108,6 +137,16 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		654132BC749CC3AF6E1446A6 /* LocalContent */ = {
+			isa = PBXGroup;
+			children = (
+				287275A57DE30AA3C1234BFB /* lessons.json */,
+				53291327E813B6AFAAFF8834 /* modules.json */,
+				1BD9B2F3BDAC926EC7E3C7CC /* quiz_templates.json */,
+			);
+			path = LocalContent;
+			sourceTree = "<group>";
+		};
 		74DA27B7945FED2F7BEA0A8D /* Primitives */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +161,7 @@
 		834D48C7B6907E90C86F4EAF /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				E7B961ABFB7AC727B5D3A204 /* Models */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -129,6 +169,7 @@
 		8E8CE37FB1B8D59B2E44BA4B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				654132BC749CC3AF6E1446A6 /* LocalContent */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -166,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				3BDDFD6CE2DC30D6EC1423F1 /* Numind.app */,
+				2B2DC0C71D0E0F8576E6AEAC /* NumindTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -178,10 +220,23 @@
 			path = Learn;
 			sourceTree = "<group>";
 		};
+		E7B961ABFB7AC727B5D3A204 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FF48236569E3C71A34C541C4 /* ContentRepository.swift */,
+				B9A7139387185959BC6413FC /* Lesson.swift */,
+				6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */,
+				A5EB9C1AB0D5B44747792E8B /* Module.swift */,
+				912929E50EF5E5526AB94217 /* QuizTemplate.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		EC32BD8E40A0662F64D5CF93 = {
 			isa = PBXGroup;
 			children = (
 				90E39ADD622EB4C2A214C636 /* Numind */,
+				F7A1545B0965B41DA93277A6 /* NumindTests */,
 				C09751E4AF15CC014A7BAAD4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -194,14 +249,41 @@
 			path = Progress;
 			sourceTree = "<group>";
 		};
+		F7A1545B0965B41DA93277A6 /* NumindTests */ = {
+			isa = PBXGroup;
+			children = (
+				61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */,
+			);
+			path = NumindTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A0DD3D4967F978C124CE7D61 /* NumindTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55C0D7678A3F8FB4741CBE93 /* Build configuration list for PBXNativeTarget "NumindTests" */;
+			buildPhases = (
+				477B1202E4FDB0CEC97CFD7A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7ABB6B3A45B7D0FA5C48A662 /* PBXTargetDependency */,
+			);
+			name = NumindTests;
+			packageProductDependencies = (
+			);
+			productName = NumindTests;
+			productReference = 2B2DC0C71D0E0F8576E6AEAC /* NumindTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B86209802F63D9D14D87AA55 /* Numind */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD8ED3BE70AFF3AF69806309 /* Build configuration list for PBXNativeTarget "Numind" */;
 			buildPhases = (
 				864419133C2581C4849EEF1F /* Sources */,
+				A06C02AB194147D7AFE953BC /* Resources */,
 			);
 			buildRules = (
 			);
@@ -223,6 +305,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					A0DD3D4967F978C124CE7D61 = {
+						DevelopmentTeam = "";
+					};
 					B86209802F63D9D14D87AA55 = {
 						DevelopmentTeam = "";
 					};
@@ -243,26 +328,53 @@
 			projectRoot = "";
 			targets = (
 				B86209802F63D9D14D87AA55 /* Numind */,
+				A0DD3D4967F978C124CE7D61 /* NumindTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		A06C02AB194147D7AFE953BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F804B6DA0B9EBB0816692FD9 /* lessons.json in Resources */,
+				6104FF691FB7D2DCB8BD4FE5 /* modules.json in Resources */,
+				F019F76F7180D1815BFCAD16 /* quiz_templates.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		477B1202E4FDB0CEC97CFD7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FE105C8B1F17551E505F21E /* ContentRepositoryTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		864419133C2581C4849EEF1F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				0A977B26D6289DEED93BC64A /* BeadRail.swift in Sources */,
 				5218EEDA9DF7C5439F346B60 /* Colors.swift in Sources */,
+				85AF38C1C1849D2390D5933F /* ContentRepository.swift in Sources */,
 				52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */,
 				6EBA9243B649FF227E0CF468 /* HomePlaceholderView.swift in Sources */,
 				3BAA7DB7CEEACFE8C78B7DB0 /* IconTile.swift in Sources */,
 				F8D121F64C56088C7B5B5535 /* LearnPlaceholderView.swift in Sources */,
+				5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */,
+				D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */,
+				5D254947FA29FBF59459543A /* Module.swift in Sources */,
 				53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */,
 				386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */,
 				8811D01840392F9AFACC1076 /* PillButton.swift in Sources */,
 				B9022760D7480DAF2E89DB54 /* ProfilePlaceholderView.swift in Sources */,
 				F806105421058F684A87E071 /* ProgressPlaceholderView.swift in Sources */,
+				79C53E7BC19A3FA5B3E0458D /* QuizTemplate.swift in Sources */,
 				08ECDE4B423BE11F7011106C /* Radius.swift in Sources */,
 				A5F4B58400EC6F846634878D /* RootTabView.swift in Sources */,
 				780705FB6704A43F599ABF29 /* RootView.swift in Sources */,
@@ -274,7 +386,49 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7ABB6B3A45B7D0FA5C48A662 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B86209802F63D9D14D87AA55 /* Numind */;
+			targetProxy = 217D6A6CDB87B544DE96B108 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		389F9DD8C856C1CBC2C1002B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.numind.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Numind.app/Numind";
+			};
+			name = Debug;
+		};
+		7052910E57A1B0F9421BD085 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.numind.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Numind.app/Numind";
+			};
+			name = Release;
+		};
 		B0D1D7EF43DA584382759163 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -439,6 +593,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		55C0D7678A3F8FB4741CBE93 /* Build configuration list for PBXNativeTarget "NumindTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				389F9DD8C856C1CBC2C1002B /* Debug */,
+				7052910E57A1B0F9421BD085 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		BD8ED3BE70AFF3AF69806309 /* Build configuration list for PBXNativeTarget "Numind" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

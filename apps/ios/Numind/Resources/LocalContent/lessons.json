@@ -1,0 +1,11 @@
+[
+  {
+    "id": "tip_18_percent",
+    "moduleId": "tips",
+    "title": "Calculate an 18% tip",
+    "concept": "18% is one of the most common tip amounts — but it's awkward because it's not a round number. The trick is to never try to calculate 18% in one step.",
+    "shortcut": "Find 10% by moving the decimal one place left. Take half of that for 5%. Add a small 3% bump (roughly 30 cents per $10). Or skip the math entirely: double the tax line on your receipt — in most US states that's close to 18%.",
+    "example": "Bill is $46. 10% = $4.60. Half = $2.30. 3% ≈ $1.40. Tip ≈ $8.30. Total ≈ $54.30.",
+    "quizTemplateIds": ["tip_percent_basic", "tip_bill_total", "tip_split_tip"]
+  }
+]

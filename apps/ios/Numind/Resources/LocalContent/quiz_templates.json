@@ -1,0 +1,45 @@
+[
+  {
+    "id": "tip_percent_basic",
+    "moduleId": "tips",
+    "difficulty": 1,
+    "promptTemplate": "What is {{tipPercent}}% of ${{billAmount}}?",
+    "variableRules": [
+      { "name": "tipPercent", "options": [15, 18, 20] },
+      { "name": "billAmount", "options": [20, 30, 40, 50, 60] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Find 10% first — move the decimal left. Then build up: 10% + 5% + 3% = 18%, or 10% + 10% = 20%."
+  },
+  {
+    "id": "tip_bill_total",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "promptTemplate": "The check is ${{billAmount}}. What's the total after a {{tipPercent}}% tip?",
+    "variableRules": [
+      { "name": "tipPercent", "options": [15, 18, 20] },
+      { "name": "billAmount", "options": [25, 40, 50, 80] }
+    ],
+    "answerFormula": "billWithTip",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Total = bill + tip. Tip = {{tipPercent}}% of ${{billAmount}}. Add both together."
+  },
+  {
+    "id": "tip_split_tip",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "promptTemplate": "A ${{billAmount}} bill is split evenly among {{numPeople}} people. Each person's share of the {{tipPercent}}% tip is?",
+    "variableRules": [
+      { "name": "billAmount", "options": [40, 60, 80] },
+      { "name": "numPeople", "options": [2, 4] },
+      { "name": "tipPercent", "options": [18, 20] }
+    ],
+    "answerFormula": "tipPerPerson",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Calculate the full tip first: {{tipPercent}}% of ${{billAmount}}. Then divide by {{numPeople}} people."
+  }
+]
