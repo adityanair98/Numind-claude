@@ -1,0 +1,229 @@
+import SwiftUI
+
+struct HomeView: View {
+    @EnvironmentObject private var progressStore: ProgressStore
+    @StateObject private var viewModel = HomeViewModel()
+    @State private var launchCard: HomeViewModel.LessonCard?
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
+                workoutSection
+                if let card = viewModel.continueCard {
+                    continueSection(card)
+                }
+                if !viewModel.upNextCards.isEmpty {
+                    upNextSection
+                }
+            }
+            .padding(.horizontal, Theme.Spacing.screenHorizontal)
+            .padding(.vertical, Theme.Spacing.sectionSpacing)
+        }
+        .background(Theme.Colors.softBackground.ignoresSafeArea())
+        .navigationTitle("Today")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            if progressStore.streak > 0 {
+                ToolbarItem(placement: .topBarTrailing) { streakChip }
+            }
+        }
+        .fullScreenCover(item: $launchCard) { card in
+            LessonView(viewModel: LessonViewModel(
+                lesson: card.lesson,
+                moduleTitle: card.module.title,
+                lessonIndex: card.lessonIndex,
+                totalLessons: card.totalLessons
+            ))
+        }
+        .onAppear { viewModel.refresh(using: progressStore) }
+        .onChange(of: progressStore.totalSessions) { _, _ in
+            viewModel.refresh(using: progressStore)
+        }
+    }
+
+    // MARK: - Streak chip
+
+    private var streakChip: some View {
+        HStack(spacing: 5) {
+            Image(systemName: "flame.fill")
+                .font(.system(size: 13))
+                .foregroundStyle(Theme.Colors.insightYellow)
+            Text("\(progressStore.streak) day streak")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(Theme.Colors.insightText)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(Theme.Colors.insightYellowTint)
+        .clipShape(Capsule())
+    }
+
+    // MARK: - Workout section
+
+    @ViewBuilder
+    private var workoutSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Today's workout")
+            if let card = viewModel.todayCard {
+                workoutCard(card)
+            } else {
+                allDoneCard
+            }
+        }
+    }
+
+    private func workoutCard(_ card: HomeViewModel.LessonCard) -> some View {
+        NumindCard {
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(alignment: .top, spacing: 14) {
+                    IconTile(systemName: "bolt.fill", tintColor: Theme.Colors.primaryBlue, size: 56)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(card.lesson.title)
+                            .font(Theme.Typography.headline)
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text("\(card.module.title) · \(card.questionCount) questions")
+                            .font(Theme.Typography.caption)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                }
+
+                HStack {
+                    BeadRail(progress: 0, total: card.questionCount, variant: .chunky)
+                    Spacer()
+                    Text("+\(card.xpReward) XP")
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+
+                PillButton("Start workout") { launchCard = card }
+            }
+        }
+    }
+
+    private var allDoneCard: some View {
+        NumindCard {
+            VStack(spacing: 12) {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 44))
+                    .foregroundStyle(Theme.Colors.mindTeal)
+                Text("All done for today!")
+                    .font(Theme.Typography.headline)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                Text("Come back tomorrow to keep your streak going.")
+                    .font(Theme.Typography.caption)
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 8)
+        }
+    }
+
+    // MARK: - Continue learning
+
+    private func continueSection(_ card: HomeViewModel.LessonCard) -> some View {
+        let repo = LocalContentRepository()
+        let lessons = repo.lessons(for: card.module.id)
+        let completed = progressStore.completedLessonCount(moduleId: card.module.id)
+        let progress: Double = lessons.isEmpty ? 0 : Double(completed) / Double(lessons.count)
+
+        return VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Continue learning")
+            NumindCard {
+                Button { launchCard = card } label: {
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack(spacing: 14) {
+                            IconTile(systemName: card.module.icon,
+                                     tintColor: card.module.color.tintColor)
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(card.module.title)
+                                    .font(Theme.Typography.small)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(card.module.color.tintColor)
+                                    .textCase(.uppercase)
+                                    .kerning(0.5)
+                                Text(card.lesson.title)
+                                    .font(Theme.Typography.headline)
+                                    .foregroundStyle(Theme.Colors.deepNavy)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        }
+
+                        GeometryReader { geo in
+                            ZStack(alignment: .leading) {
+                                Capsule().fill(Theme.Colors.mutedTint)
+                                Capsule()
+                                    .fill(card.module.color.tintColor)
+                                    .frame(width: geo.size.width * CGFloat(min(progress, 1)))
+                            }
+                        }
+                        .frame(height: 6)
+
+                        Text("\(completed) of \(lessons.count) lessons · Resume")
+                            .font(Theme.Typography.small)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+
+    // MARK: - Up next
+
+    private var upNextSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Up next")
+            NumindCard {
+                VStack(spacing: 0) {
+                    ForEach(Array(viewModel.upNextCards.enumerated()), id: \.element.id) { i, card in
+                        Button { launchCard = card } label: {
+                            HStack(spacing: 14) {
+                                IconTile(systemName: card.module.icon,
+                                         tintColor: card.module.color.tintColor,
+                                         size: 36)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(card.lesson.title)
+                                        .font(Theme.Typography.body)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(Theme.Colors.deepNavy)
+                                    Text(card.module.title)
+                                        .font(Theme.Typography.small)
+                                        .foregroundStyle(Theme.Colors.mutedText)
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .foregroundStyle(Theme.Colors.mutedText)
+                            }
+                            .padding(.vertical, 14)
+                        }
+                        .buttonStyle(.plain)
+                        if i < viewModel.upNextCards.count - 1 {
+                            Divider().background(Theme.Colors.hairline)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - Helpers
+
+    private func sectionLabel(_ text: String) -> some View {
+        Text(text.uppercased())
+            .font(Theme.Typography.small)
+            .foregroundStyle(Theme.Colors.mutedText)
+            .kerning(0.8)
+    }
+}
+
+#Preview {
+    NavigationStack {
+        HomeView()
+            .environmentObject(ProgressStore())
+    }
+}

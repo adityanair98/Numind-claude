@@ -20,6 +20,7 @@
 		33C0DB88E228E4124E5AD8AF /* SessionSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9CA00444BE87523E9530A9 /* SessionSummaryView.swift */; };
 		386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E47647944F778EBA32D80A /* NumindCard.swift */; };
 		3BAA7DB7CEEACFE8C78B7DB0 /* IconTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76E087252FEBD5528A5BC82 /* IconTile.swift */; };
+		4887433834B6D49BDA97324D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524705B8209C6D4E3F0CC73 /* ProfileView.swift */; };
 		5218EEDA9DF7C5439F346B60 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801C467A7D4DFBC7113E4A12 /* Colors.swift */; };
 		52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */; };
 		53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */; };
@@ -29,7 +30,6 @@
 		6104FF691FB7D2DCB8BD4FE5 /* modules.json in Resources */ = {isa = PBXBuildFile; fileRef = 53291327E813B6AFAAFF8834 /* modules.json */; };
 		67D878B3D04A62674B2FB5A9 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */; };
 		6A4B6D457E27E05283815D00 /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30769F1EBA741149D714254B /* QuizQuestion.swift */; };
-		6EBA9243B649FF227E0CF468 /* HomePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116647DEDB06AB6A25D48DD /* HomePlaceholderView.swift */; };
 		6ECFD6DFCC5D5233EF6F7EA6 /* ModuleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97E63367A0CE1E7DE1EF52 /* ModuleColor.swift */; };
 		74D7B638A7BDC51FB653C7DF /* OptionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98F41FD249430B232E53CD1 /* OptionCard.swift */; };
 		780705FB6704A43F599ABF29 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */; };
@@ -44,8 +44,9 @@
 		ABB4DCEF756B3B22D030E601 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D07D972E9B9DED4B8623883 /* Theme.swift */; };
 		AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3433B4F7B4DF55F59F07BC /* LessonViewModel.swift */; };
 		B5311AB63A1F647D2E37D563 /* ModuleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */; };
-		B9022760D7480DAF2E89DB54 /* ProfilePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57428D613845E03057EBFF4 /* ProfilePlaceholderView.swift */; };
+		D0B52158341507F98500AFB7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860D435039106101616AB8EF /* HomeView.swift */; };
 		D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */; };
+		EB7110E292B1F140F390751B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93AF8C68EA7C1F3DE444C1C /* HomeViewModel.swift */; };
 		F019F76F7180D1815BFCAD16 /* quiz_templates.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BD9B2F3BDAC926EC7E3C7CC /* quiz_templates.json */; };
 		F4D0FAE3B58BC70BA9008747 /* QuizSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C0AA52152D1BE63F1AFA33 /* QuizSessionView.swift */; };
 		F7D4D92508A3D9330245FC02 /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB662BA3033BF189F6992B1 /* ProgressStore.swift */; };
@@ -66,6 +67,7 @@
 /* Begin PBXFileReference section */
 		09E47647944F778EBA32D80A /* NumindCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindCard.swift; sourceTree = "<group>"; };
 		0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemPreviewView.swift; sourceTree = "<group>"; };
+		1524705B8209C6D4E3F0CC73 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDetailViewModel.swift; sourceTree = "<group>"; };
 		1BD9B2F3BDAC926EC7E3C7CC /* quiz_templates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = quiz_templates.json; sourceTree = "<group>"; };
 		223F0704BD6A634C7DF076BC /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
@@ -78,7 +80,6 @@
 		3312A791E19D9CA4D3561B5F /* ModuleColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleColorTheme.swift; sourceTree = "<group>"; };
 		38AE88137BBFD45A10176D7C /* ProgressTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTabView.swift; sourceTree = "<group>"; };
 		3BDDFD6CE2DC30D6EC1423F1 /* Numind.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Numind.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4116647DEDB06AB6A25D48DD /* HomePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePlaceholderView.swift; sourceTree = "<group>"; };
 		41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
 		427D2A94E6C31ADD56597941 /* ModuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDetailView.swift; sourceTree = "<group>"; };
 		4C9CA00444BE87523E9530A9 /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 		6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalContentRepository.swift; sourceTree = "<group>"; };
 		801C467A7D4DFBC7113E4A12 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		85C0AA52152D1BE63F1AFA33 /* QuizSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSessionView.swift; sourceTree = "<group>"; };
+		860D435039106101616AB8EF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8841452C620A4E482C588B92 /* SeededRandomGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRandomGenerator.swift; sourceTree = "<group>"; };
 		8E3433B4F7B4DF55F59F07BC /* LessonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModel.swift; sourceTree = "<group>"; };
 		8FB92943AE0DCB4EB8250012 /* QuizSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSessionViewModel.swift; sourceTree = "<group>"; };
@@ -106,7 +108,7 @@
 		D29DDF75E961E74E542F381E /* SessionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRecord.swift; sourceTree = "<group>"; };
 		DD97E63367A0CE1E7DE1EF52 /* ModuleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleColor.swift; sourceTree = "<group>"; };
 		E25112B5A1394145F294F64F /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
-		F57428D613845E03057EBFF4 /* ProfilePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePlaceholderView.swift; sourceTree = "<group>"; };
+		E93AF8C68EA7C1F3DE444C1C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		F76E087252FEBD5528A5BC82 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
 		F90D290A95551415D993EC4C /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		FD29BAB16DEC1A66045D564D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -181,7 +183,7 @@
 		51E822FB9EA278DD2423EB9C /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				F57428D613845E03057EBFF4 /* ProfilePlaceholderView.swift */,
+				1524705B8209C6D4E3F0CC73 /* ProfileView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -259,7 +261,8 @@
 		A4C1A123BDC4BEEF2C9DC478 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				4116647DEDB06AB6A25D48DD /* HomePlaceholderView.swift */,
+				860D435039106101616AB8EF /* HomeView.swift */,
+				E93AF8C68EA7C1F3DE444C1C /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -458,7 +461,8 @@
 				5218EEDA9DF7C5439F346B60 /* Colors.swift in Sources */,
 				85AF38C1C1849D2390D5933F /* ContentRepository.swift in Sources */,
 				52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */,
-				6EBA9243B649FF227E0CF468 /* HomePlaceholderView.swift in Sources */,
+				D0B52158341507F98500AFB7 /* HomeView.swift in Sources */,
+				EB7110E292B1F140F390751B /* HomeViewModel.swift in Sources */,
 				3BAA7DB7CEEACFE8C78B7DB0 /* IconTile.swift in Sources */,
 				11B7027F6BE80FD314557ABD /* LearnView.swift in Sources */,
 				58F088554AE41474740F7800 /* LearnViewModel.swift in Sources */,
@@ -475,7 +479,7 @@
 				386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */,
 				74D7B638A7BDC51FB653C7DF /* OptionCard.swift in Sources */,
 				8811D01840392F9AFACC1076 /* PillButton.swift in Sources */,
-				B9022760D7480DAF2E89DB54 /* ProfilePlaceholderView.swift in Sources */,
+				4887433834B6D49BDA97324D /* ProfileView.swift in Sources */,
 				12F3444AA03E49F31E5139F1 /* ProgressData.swift in Sources */,
 				F7D4D92508A3D9330245FC02 /* ProgressStore.swift in Sources */,
 				0DD48EB0A90D24214AF78D5A /* ProgressTabView.swift in Sources */,

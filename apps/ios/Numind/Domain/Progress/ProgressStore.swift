@@ -22,6 +22,11 @@ final class ProgressStore: ObservableObject {
         persist()
     }
 
+    func reset() {
+        data = ProgressData()
+        UserDefaults.standard.removeObject(forKey: Self.defaultsKey)
+    }
+
     private func persist() {
         guard let encoded = try? JSONEncoder().encode(data) else { return }
         UserDefaults.standard.set(encoded, forKey: Self.defaultsKey)

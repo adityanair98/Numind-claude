@@ -6,7 +6,7 @@ struct RootTabView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             NavigationStack {
-                HomePlaceholderView()
+                HomeView()
             }
             .tabItem { Label("Home", systemImage: "house.fill") }
             .tag(NumindTab.home)
@@ -24,7 +24,7 @@ struct RootTabView: View {
             .tag(NumindTab.progress)
 
             NavigationStack {
-                ProfilePlaceholderView()
+                ProfileView()
             }
             .tabItem { Label("Profile", systemImage: "person.fill") }
             .tag(NumindTab.profile)
