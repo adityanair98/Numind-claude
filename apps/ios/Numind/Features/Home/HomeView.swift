@@ -8,6 +8,8 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
+                greetingHeader
+                streakWeekCard
                 workoutSection
                 if let card = viewModel.continueCard {
                     continueSection(card)
@@ -22,11 +24,6 @@ struct HomeView: View {
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .navigationTitle("Today")
         .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            if progressStore.streak > 0 {
-                ToolbarItem(placement: .topBarTrailing) { streakChip }
-            }
-        }
         .fullScreenCover(item: $launchCard) { card in
             LessonView(viewModel: LessonViewModel(
                 lesson: card.lesson,
@@ -41,21 +38,85 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Streak chip
+    // MARK: - Greeting
 
-    private var streakChip: some View {
-        HStack(spacing: 5) {
-            Image(systemName: "flame.fill")
-                .font(.system(size: 13))
-                .foregroundStyle(Theme.Colors.insightYellow)
-            Text("\(progressStore.streak) day streak")
-                .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(Theme.Colors.insightText)
+    private var greetingHeader: some View {
+        HStack(spacing: 14) {
+            ZStack {
+                Circle().fill(Theme.Colors.primaryBlueTint)
+                Text("A")
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .foregroundStyle(Theme.Colors.primaryBlue)
+            }
+            .frame(width: 44, height: 44)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(timeBasedGreeting)
+                    .font(Theme.Typography.headline)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                Text("Ready for your daily workout?")
+                    .font(Theme.Typography.caption)
+                    .foregroundStyle(Theme.Colors.mutedText)
+            }
+            Spacer()
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 6)
-        .background(Theme.Colors.insightYellowTint)
-        .clipShape(Capsule())
+    }
+
+    private var timeBasedGreeting: String {
+        let hour = Calendar.current.component(.hour, from: Date())
+        if hour < 12 { return "Good morning, Alex!" }
+        if hour < 17 { return "Good afternoon, Alex!" }
+        return "Good evening, Alex!"
+    }
+
+    // MARK: - Streak + weekly strip
+
+    private var streakWeekCard: some View {
+        let completions = progressStore.weeklyCompletions
+        let dayLabels = ["M", "T", "W", "T", "F", "S", "S"]
+
+        return NumindCard {
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(spacing: 10) {
+                    Image(systemName: "flame.fill")
+                        .font(.system(size: 22))
+                        .foregroundStyle(Theme.Colors.insightYellow)
+                    Text("\(progressStore.streak)")
+                        .font(.system(size: 30, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text("day streak")
+                            .font(Theme.Typography.small)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                        Text(progressStore.streak > 0 ? "Keep it going!" : "Start your streak today!")
+                            .font(Theme.Typography.small)
+                            .foregroundStyle(progressStore.streak > 0 ? Theme.Colors.insightText : Theme.Colors.mutedText)
+                    }
+                    Spacer()
+                }
+
+                HStack(spacing: 0) {
+                    ForEach(0..<7, id: \.self) { i in
+                        VStack(spacing: 4) {
+                            ZStack {
+                                Circle()
+                                    .fill(completions[i] ? Theme.Colors.primaryBlue : Theme.Colors.mutedTint)
+                                    .frame(width: 28, height: 28)
+                                if completions[i] {
+                                    Image(systemName: "checkmark")
+                                        .font(.system(size: 11, weight: .bold))
+                                        .foregroundStyle(.white)
+                                }
+                            }
+                            Text(dayLabels[i])
+                                .font(.system(size: 10, weight: .medium))
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                }
+            }
+        }
     }
 
     // MARK: - Workout section

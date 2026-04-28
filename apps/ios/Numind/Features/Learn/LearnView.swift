@@ -30,6 +30,12 @@ struct LearnView: View {
                 }
                 .buttonStyle(.plain)
             }
+
+            Text("More modules arrive soon")
+                .font(Theme.Typography.small)
+                .foregroundStyle(Theme.Colors.mutedText)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 4)
         }
     }
 
@@ -38,10 +44,10 @@ struct LearnView: View {
             moduleId: module.id,
             totalLessons: module.lessonIds.count
         )
-        return NumindCard {
+        return NumindCard(background: module.color.tintBackground) {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 14) {
-                    IconTile(systemName: module.icon, tintColor: module.color.tintColor)
+                    IconTile(systemName: module.icon, tintColor: module.color.tintColor, size: 56)
                     VStack(alignment: .leading, spacing: 3) {
                         Text(module.title)
                             .font(Theme.Typography.headline)
@@ -58,7 +64,7 @@ struct LearnView: View {
 
                 GeometryReader { geo in
                     ZStack(alignment: .leading) {
-                        Capsule().fill(Theme.Colors.mutedTint)
+                        Capsule().fill(Theme.Colors.mutedText.opacity(0.15))
                         Capsule()
                             .fill(module.color.tintColor)
                             .frame(width: geo.size.width * CGFloat(min(progress, 1)))
@@ -73,7 +79,7 @@ struct LearnView: View {
                     Spacer()
                     Text(progress > 0 ? "\(Int(progress * 100))%" : "Not started")
                         .font(Theme.Typography.small)
-                        .foregroundStyle(Theme.Colors.mutedText)
+                        .foregroundStyle(progress > 0 ? module.color.tintColor : Theme.Colors.mutedText)
                 }
             }
         }
