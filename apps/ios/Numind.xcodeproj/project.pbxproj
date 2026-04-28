@@ -7,14 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08ECDE4B423BE11F7011106C /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F0704BD6A634C7DF076BC /* Radius.swift */; };
+		0A977B26D6289DEED93BC64A /* BeadRail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BDC1D8146AF56C25548BF5 /* BeadRail.swift */; };
+		2D0CCB9595793F157B29D8E4 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */; };
+		386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E47647944F778EBA32D80A /* NumindCard.swift */; };
+		3BAA7DB7CEEACFE8C78B7DB0 /* IconTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76E087252FEBD5528A5BC82 /* IconTile.swift */; };
+		5218EEDA9DF7C5439F346B60 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801C467A7D4DFBC7113E4A12 /* Colors.swift */; };
+		52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */; };
 		53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */; };
+		67D878B3D04A62674B2FB5A9 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */; };
 		780705FB6704A43F599ABF29 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */; };
+		8811D01840392F9AFACC1076 /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95023876E0A97905383796 /* PillButton.swift */; };
+		ABB4DCEF756B3B22D030E601 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D07D972E9B9DED4B8623883 /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09E47647944F778EBA32D80A /* NumindCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindCard.swift; sourceTree = "<group>"; };
+		0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemPreviewView.swift; sourceTree = "<group>"; };
+		223F0704BD6A634C7DF076BC /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
+		2E95023876E0A97905383796 /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
 		3BDDFD6CE2DC30D6EC1423F1 /* Numind.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Numind.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		801C467A7D4DFBC7113E4A12 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		9D07D972E9B9DED4B8623883 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindApp.swift; sourceTree = "<group>"; };
+		C6BDC1D8146AF56C25548BF5 /* BeadRail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeadRail.swift; sourceTree = "<group>"; };
+		C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		F76E087252FEBD5528A5BC82 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
 		FD29BAB16DEC1A66045D564D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -26,6 +46,28 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
+		2D7A70CC1AD72F39B40E1257 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */,
+				9D07D972E9B9DED4B8623883 /* Theme.swift */,
+				74DA27B7945FED2F7BEA0A8D /* Primitives */,
+				51BA726E2C08787105D70708 /* Tokens */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		51BA726E2C08787105D70708 /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				801C467A7D4DFBC7113E4A12 /* Colors.swift */,
+				223F0704BD6A634C7DF076BC /* Radius.swift */,
+				41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */,
+				C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */,
+			);
+			path = Tokens;
+			sourceTree = "<group>";
+		};
 		584920BF69DC0372C4943520 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -34,6 +76,17 @@
 				B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		74DA27B7945FED2F7BEA0A8D /* Primitives */ = {
+			isa = PBXGroup;
+			children = (
+				C6BDC1D8146AF56C25548BF5 /* BeadRail.swift */,
+				F76E087252FEBD5528A5BC82 /* IconTile.swift */,
+				09E47647944F778EBA32D80A /* NumindCard.swift */,
+				2E95023876E0A97905383796 /* PillButton.swift */,
+			);
+			path = Primitives;
 			sourceTree = "<group>";
 		};
 		834D48C7B6907E90C86F4EAF /* Domain */ = {
@@ -65,6 +118,7 @@
 		9C1FC22804A0FB21005034A8 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				2D7A70CC1AD72F39B40E1257 /* DesignSystem */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -143,8 +197,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A977B26D6289DEED93BC64A /* BeadRail.swift in Sources */,
+				5218EEDA9DF7C5439F346B60 /* Colors.swift in Sources */,
+				52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */,
+				3BAA7DB7CEEACFE8C78B7DB0 /* IconTile.swift in Sources */,
 				53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */,
+				386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */,
+				8811D01840392F9AFACC1076 /* PillButton.swift in Sources */,
+				08ECDE4B423BE11F7011106C /* Radius.swift in Sources */,
 				780705FB6704A43F599ABF29 /* RootView.swift in Sources */,
+				67D878B3D04A62674B2FB5A9 /* Spacing.swift in Sources */,
+				ABB4DCEF756B3B22D030E601 /* Theme.swift in Sources */,
+				2D0CCB9595793F157B29D8E4 /* Typography.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
