@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LessonView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var progressStore: ProgressStore
     let viewModel: LessonViewModel
 
     enum Phase { case lesson, quiz, summary }
@@ -24,6 +25,14 @@ struct LessonView: View {
         case .quiz:
             if let vm = sessionVM {
                 QuizSessionView(viewModel: vm) {
+                    progressStore.recordSession(SessionRecord(
+                        id: UUID(),
+                        lessonId: viewModel.lesson.id,
+                        moduleId: viewModel.lesson.moduleId,
+                        date: Date(),
+                        correctCount: vm.correctCount,
+                        totalCount: vm.total
+                    ))
                     phase = .summary
                 }
             }

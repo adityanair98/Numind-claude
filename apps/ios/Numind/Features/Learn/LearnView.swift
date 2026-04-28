@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LearnView: View {
     @StateObject private var viewModel = LearnViewModel()
+    @EnvironmentObject private var progressStore: ProgressStore
 
     var body: some View {
         ScrollView {
@@ -33,7 +34,11 @@ struct LearnView: View {
     }
 
     private func moduleCard(_ module: Module) -> some View {
-        NumindCard {
+        let progress = progressStore.moduleProgress(
+            moduleId: module.id,
+            totalLessons: module.lessonIds.count
+        )
+        return NumindCard {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 14) {
                     IconTile(systemName: module.icon, tintColor: module.color.tintColor)
@@ -56,7 +61,7 @@ struct LearnView: View {
                         Capsule().fill(Theme.Colors.mutedTint)
                         Capsule()
                             .fill(module.color.tintColor)
-                            .frame(width: 0) // M7: replace with real progress
+                            .frame(width: geo.size.width * CGFloat(min(progress, 1)))
                     }
                 }
                 .frame(height: 6)
@@ -66,7 +71,7 @@ struct LearnView: View {
                         .font(Theme.Typography.small)
                         .foregroundStyle(Theme.Colors.mutedText)
                     Spacer()
-                    Text("Not started")
+                    Text(progress > 0 ? "\(Int(progress * 100))%" : "Not started")
                         .font(Theme.Typography.small)
                         .foregroundStyle(Theme.Colors.mutedText)
                 }

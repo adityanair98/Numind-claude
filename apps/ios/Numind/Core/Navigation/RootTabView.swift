@@ -18,7 +18,7 @@ struct RootTabView: View {
             .tag(NumindTab.learn)
 
             NavigationStack {
-                ProgressPlaceholderView()
+                ProgressTabView()
             }
             .tabItem { Label("Progress", systemImage: "chart.bar.fill") }
             .tag(NumindTab.progress)

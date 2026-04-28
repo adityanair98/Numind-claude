@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ModuleDetailView: View {
     @StateObject private var viewModel: ModuleDetailViewModel
+    @EnvironmentObject private var progressStore: ProgressStore
     @State private var selectedLesson: Lesson?
 
     init(module: Module, moduleIndex: Int, totalModules: Int) {
@@ -57,12 +58,16 @@ struct ModuleDetailView: View {
                 Spacer()
             }
 
+            let completed = progressStore.completedLessonCount(moduleId: viewModel.module.id)
+            let total = viewModel.lessons.count
+            let progress = total > 0 ? Double(completed) / Double(total) : 0
+
             HStack {
-                Text("0 of \(viewModel.lessons.count) lessons")
+                Text("\(completed) of \(total) lessons")
                     .font(Theme.Typography.small)
                     .foregroundStyle(.white.opacity(0.85))
                 Spacer()
-                Text("0%")
+                Text("\(Int(progress * 100))%")
                     .font(Theme.Typography.small)
                     .foregroundStyle(.white.opacity(0.85))
             }
@@ -72,7 +77,7 @@ struct ModuleDetailView: View {
                     Capsule().fill(.white.opacity(0.22))
                     Capsule()
                         .fill(Theme.Colors.insightYellow)
-                        .frame(width: 0)
+                        .frame(width: geo.size.width * CGFloat(min(progress, 1)))
                 }
             }
             .frame(height: 6)
@@ -105,20 +110,21 @@ struct ModuleDetailView: View {
     }
 
     private func lessonRow(lesson: Lesson, index: Int) -> some View {
-        Button {
+        let isDone = progressStore.hasCompletedLesson(lesson.id)
+        return Button {
             selectedLesson = lesson
         } label: {
             HStack(spacing: 14) {
-                numberTile(index: index)
+                lessonTile(index: index, isDone: isDone)
 
                 VStack(alignment: .leading, spacing: 3) {
                     Text(lesson.title)
                         .font(Theme.Typography.body)
                         .fontWeight(.semibold)
                         .foregroundStyle(Theme.Colors.deepNavy)
-                    Text("\(lesson.quizTemplateIds.count) questions")
+                    Text(isDone ? "Completed" : "\(lesson.quizTemplateIds.count) questions")
                         .font(Theme.Typography.small)
-                        .foregroundStyle(Theme.Colors.mutedText)
+                        .foregroundStyle(isDone ? Theme.Colors.mindTeal : Theme.Colors.mutedText)
                 }
                 Spacer()
                 Image(systemName: "chevron.right")
@@ -131,13 +137,19 @@ struct ModuleDetailView: View {
         .buttonStyle(.plain)
     }
 
-    private func numberTile(index: Int) -> some View {
+    private func lessonTile(index: Int, isDone: Bool) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: Theme.Radius.pill, style: .continuous)
-                .fill(Theme.Colors.primaryBlueTint)
-            Text("\(index + 1)")
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(Theme.Colors.primaryBlue)
+                .fill(isDone ? Theme.Colors.mindTealTint : Theme.Colors.primaryBlueTint)
+            if isDone {
+                Image(systemName: "checkmark")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(Theme.Colors.mindTeal)
+            } else {
+                Text("\(index + 1)")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.primaryBlue)
+            }
         }
         .frame(width: 36, height: 36)
     }

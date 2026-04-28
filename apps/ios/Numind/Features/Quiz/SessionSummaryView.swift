@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SessionSummaryView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var progressStore: ProgressStore
     @ObservedObject var viewModel: QuizSessionViewModel
     let onContinue: () -> Void
 
@@ -78,7 +79,7 @@ struct SessionSummaryView: View {
                 Divider()
                     .frame(width: 1, height: 32)
                     .background(Theme.Colors.hairline)
-                statCell(value: "—",
+                statCell(value: progressStore.streak > 0 ? "\(progressStore.streak)🔥" : "—",
                          label: "Streak",
                          color: Theme.Colors.insightYellow)
             }
