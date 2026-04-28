@@ -16,9 +16,14 @@
 		52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */; };
 		53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */; };
 		67D878B3D04A62674B2FB5A9 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */; };
+		6EBA9243B649FF227E0CF468 /* HomePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116647DEDB06AB6A25D48DD /* HomePlaceholderView.swift */; };
 		780705FB6704A43F599ABF29 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */; };
 		8811D01840392F9AFACC1076 /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95023876E0A97905383796 /* PillButton.swift */; };
+		A5F4B58400EC6F846634878D /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90D290A95551415D993EC4C /* RootTabView.swift */; };
 		ABB4DCEF756B3B22D030E601 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D07D972E9B9DED4B8623883 /* Theme.swift */; };
+		B9022760D7480DAF2E89DB54 /* ProfilePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57428D613845E03057EBFF4 /* ProfilePlaceholderView.swift */; };
+		F806105421058F684A87E071 /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D174F151101E293695B6CF7F /* ProgressPlaceholderView.swift */; };
+		F8D121F64C56088C7B5B5535 /* LearnPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83DFDD656898AC0419E770F /* LearnPlaceholderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,14 +32,19 @@
 		223F0704BD6A634C7DF076BC /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
 		2E95023876E0A97905383796 /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
 		3BDDFD6CE2DC30D6EC1423F1 /* Numind.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Numind.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4116647DEDB06AB6A25D48DD /* HomePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePlaceholderView.swift; sourceTree = "<group>"; };
 		41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
 		801C467A7D4DFBC7113E4A12 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		9D07D972E9B9DED4B8623883 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		A83DFDD656898AC0419E770F /* LearnPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnPlaceholderView.swift; sourceTree = "<group>"; };
 		B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindApp.swift; sourceTree = "<group>"; };
 		C6BDC1D8146AF56C25548BF5 /* BeadRail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeadRail.swift; sourceTree = "<group>"; };
 		C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		D174F151101E293695B6CF7F /* ProgressPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPlaceholderView.swift; sourceTree = "<group>"; };
+		F57428D613845E03057EBFF4 /* ProfilePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePlaceholderView.swift; sourceTree = "<group>"; };
 		F76E087252FEBD5528A5BC82 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
+		F90D290A95551415D993EC4C /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		FD29BAB16DEC1A66045D564D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -42,6 +52,10 @@
 		085C178A06590F8935C3BFAB /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				A4C1A123BDC4BEEF2C9DC478 /* Home */,
+				E0457C022D78F068CD761262 /* Learn */,
+				51E822FB9EA278DD2423EB9C /* Profile */,
+				F15BC27AC957E34B812A182D /* Progress */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -57,6 +71,14 @@
 			path = DesignSystem;
 			sourceTree = "<group>";
 		};
+		4DCB558F55545418F95E471A /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				F90D290A95551415D993EC4C /* RootTabView.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 		51BA726E2C08787105D70708 /* Tokens */ = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +88,14 @@
 				C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */,
 			);
 			path = Tokens;
+			sourceTree = "<group>";
+		};
+		51E822FB9EA278DD2423EB9C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F57428D613845E03057EBFF4 /* ProfilePlaceholderView.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		584920BF69DC0372C4943520 /* App */ = {
@@ -119,8 +149,17 @@
 			isa = PBXGroup;
 			children = (
 				2D7A70CC1AD72F39B40E1257 /* DesignSystem */,
+				4DCB558F55545418F95E471A /* Navigation */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		A4C1A123BDC4BEEF2C9DC478 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				4116647DEDB06AB6A25D48DD /* HomePlaceholderView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		C09751E4AF15CC014A7BAAD4 /* Products */ = {
@@ -131,12 +170,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E0457C022D78F068CD761262 /* Learn */ = {
+			isa = PBXGroup;
+			children = (
+				A83DFDD656898AC0419E770F /* LearnPlaceholderView.swift */,
+			);
+			path = Learn;
+			sourceTree = "<group>";
+		};
 		EC32BD8E40A0662F64D5CF93 = {
 			isa = PBXGroup;
 			children = (
 				90E39ADD622EB4C2A214C636 /* Numind */,
 				C09751E4AF15CC014A7BAAD4 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		F15BC27AC957E34B812A182D /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				D174F151101E293695B6CF7F /* ProgressPlaceholderView.swift */,
+			);
+			path = Progress;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,11 +255,16 @@
 				0A977B26D6289DEED93BC64A /* BeadRail.swift in Sources */,
 				5218EEDA9DF7C5439F346B60 /* Colors.swift in Sources */,
 				52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */,
+				6EBA9243B649FF227E0CF468 /* HomePlaceholderView.swift in Sources */,
 				3BAA7DB7CEEACFE8C78B7DB0 /* IconTile.swift in Sources */,
+				F8D121F64C56088C7B5B5535 /* LearnPlaceholderView.swift in Sources */,
 				53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */,
 				386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */,
 				8811D01840392F9AFACC1076 /* PillButton.swift in Sources */,
+				B9022760D7480DAF2E89DB54 /* ProfilePlaceholderView.swift in Sources */,
+				F806105421058F684A87E071 /* ProgressPlaceholderView.swift in Sources */,
 				08ECDE4B423BE11F7011106C /* Radius.swift in Sources */,
+				A5F4B58400EC6F846634878D /* RootTabView.swift in Sources */,
 				780705FB6704A43F599ABF29 /* RootView.swift in Sources */,
 				67D878B3D04A62674B2FB5A9 /* Spacing.swift in Sources */,
 				ABB4DCEF756B3B22D030E601 /* Theme.swift in Sources */,
