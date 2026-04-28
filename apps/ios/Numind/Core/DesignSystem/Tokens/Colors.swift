@@ -28,5 +28,8 @@ extension Theme {
         static var errorSoftRedTint:  Color { errorSoftRed.opacity(0.14) }
         static var mutedTint:         Color { mutedText.opacity(0.12) }
         static var hairline:          Color { mutedText.opacity(0.18) }
+
+        // Semantic text-on-tint colors
+        static let insightText = Color(hex: 0x8A6500)   // legible dark-yellow on insightYellowTint
     }
 }

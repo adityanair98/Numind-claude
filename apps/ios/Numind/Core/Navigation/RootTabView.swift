@@ -12,7 +12,7 @@ struct RootTabView: View {
             .tag(NumindTab.home)
 
             NavigationStack {
-                LearnPlaceholderView()
+                LearnView()
             }
             .tabItem { Label("Learn", systemImage: "book.fill") }
             .tag(NumindTab.learn)

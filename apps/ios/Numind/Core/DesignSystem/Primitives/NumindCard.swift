@@ -1,16 +1,18 @@
 import SwiftUI
 
 struct NumindCard<Content: View>: View {
+    private let background: Color
     private let content: () -> Content
 
-    init(@ViewBuilder content: @escaping () -> Content) {
+    init(background: Color = Theme.Colors.cardBackground, @ViewBuilder content: @escaping () -> Content) {
+        self.background = background
         self.content = content
     }
 
     var body: some View {
         content()
             .padding(Theme.Spacing.cardPadding)
-            .background(Theme.Colors.cardBackground)
+            .background(background)
             .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
             .shadow(color: .black.opacity(0.06), radius: 12, x: 0, y: 4)
     }

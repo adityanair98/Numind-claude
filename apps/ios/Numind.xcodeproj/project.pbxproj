@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04969645E6CE3F25880D2488 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955388FC06C02C5CD3B96B14 /* LessonView.swift */; };
 		08ECDE4B423BE11F7011106C /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F0704BD6A634C7DF076BC /* Radius.swift */; };
 		0A977B26D6289DEED93BC64A /* BeadRail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BDC1D8146AF56C25548BF5 /* BeadRail.swift */; };
+		11B7027F6BE80FD314557ABD /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25112B5A1394145F294F64F /* LearnView.swift */; };
 		2D0CCB9595793F157B29D8E4 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */; };
 		2FE105C8B1F17551E505F21E /* ContentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */; };
 		3296FF937604D309373BF89F /* QuizEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414306B6EF002CBE6408C31 /* QuizEngine.swift */; };
@@ -18,6 +20,7 @@
 		52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */; };
 		53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */; };
 		5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A7139387185959BC6413FC /* Lesson.swift */; };
+		58F088554AE41474740F7800 /* LearnViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8490760BAE7C9FD71F012 /* LearnViewModel.swift */; };
 		5D254947FA29FBF59459543A /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EB9C1AB0D5B44747792E8B /* Module.swift */; };
 		6104FF691FB7D2DCB8BD4FE5 /* modules.json in Resources */ = {isa = PBXBuildFile; fileRef = 53291327E813B6AFAAFF8834 /* modules.json */; };
 		67D878B3D04A62674B2FB5A9 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */; };
@@ -31,13 +34,16 @@
 		8811D01840392F9AFACC1076 /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95023876E0A97905383796 /* PillButton.swift */; };
 		8F366A7A2AEDFD3A01A34D53 /* SeededRandomGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8841452C620A4E482C588B92 /* SeededRandomGenerator.swift */; };
 		A5F4B58400EC6F846634878D /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90D290A95551415D993EC4C /* RootTabView.swift */; };
+		A8E5936C1255349C339B27DA /* ModuleColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3312A791E19D9CA4D3561B5F /* ModuleColorTheme.swift */; };
 		ABB4DCEF756B3B22D030E601 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D07D972E9B9DED4B8623883 /* Theme.swift */; };
+		AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3433B4F7B4DF55F59F07BC /* LessonViewModel.swift */; };
+		B5311AB63A1F647D2E37D563 /* ModuleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */; };
 		B9022760D7480DAF2E89DB54 /* ProfilePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57428D613845E03057EBFF4 /* ProfilePlaceholderView.swift */; };
 		D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */; };
 		F019F76F7180D1815BFCAD16 /* quiz_templates.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BD9B2F3BDAC926EC7E3C7CC /* quiz_templates.json */; };
 		F804B6DA0B9EBB0816692FD9 /* lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 287275A57DE30AA3C1234BFB /* lessons.json */; };
 		F806105421058F684A87E071 /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D174F151101E293695B6CF7F /* ProgressPlaceholderView.swift */; };
-		F8D121F64C56088C7B5B5535 /* LearnPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83DFDD656898AC0419E770F /* LearnPlaceholderView.swift */; };
+		FB9B652F0B6D8B14AC1445B5 /* ModuleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427D2A94E6C31ADD56597941 /* ModuleDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,7 @@
 /* Begin PBXFileReference section */
 		09E47647944F778EBA32D80A /* NumindCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindCard.swift; sourceTree = "<group>"; };
 		0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemPreviewView.swift; sourceTree = "<group>"; };
+		17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDetailViewModel.swift; sourceTree = "<group>"; };
 		1BD9B2F3BDAC926EC7E3C7CC /* quiz_templates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = quiz_templates.json; sourceTree = "<group>"; };
 		223F0704BD6A634C7DF076BC /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
 		2414306B6EF002CBE6408C31 /* QuizEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizEngine.swift; sourceTree = "<group>"; };
@@ -60,19 +67,23 @@
 		2B2DC0C71D0E0F8576E6AEAC /* NumindTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NumindTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E95023876E0A97905383796 /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
 		30769F1EBA741149D714254B /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
+		30A8490760BAE7C9FD71F012 /* LearnViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnViewModel.swift; sourceTree = "<group>"; };
+		3312A791E19D9CA4D3561B5F /* ModuleColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleColorTheme.swift; sourceTree = "<group>"; };
 		3BDDFD6CE2DC30D6EC1423F1 /* Numind.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Numind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4116647DEDB06AB6A25D48DD /* HomePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePlaceholderView.swift; sourceTree = "<group>"; };
 		41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		427D2A94E6C31ADD56597941 /* ModuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDetailView.swift; sourceTree = "<group>"; };
 		53291327E813B6AFAAFF8834 /* modules.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = modules.json; sourceTree = "<group>"; };
 		61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizEngineTests.swift; sourceTree = "<group>"; };
 		61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRepositoryTests.swift; sourceTree = "<group>"; };
 		6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalContentRepository.swift; sourceTree = "<group>"; };
 		801C467A7D4DFBC7113E4A12 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8841452C620A4E482C588B92 /* SeededRandomGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRandomGenerator.swift; sourceTree = "<group>"; };
+		8E3433B4F7B4DF55F59F07BC /* LessonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModel.swift; sourceTree = "<group>"; };
 		912929E50EF5E5526AB94217 /* QuizTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTemplate.swift; sourceTree = "<group>"; };
+		955388FC06C02C5CD3B96B14 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
 		9D07D972E9B9DED4B8623883 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A5EB9C1AB0D5B44747792E8B /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
-		A83DFDD656898AC0419E770F /* LearnPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnPlaceholderView.swift; sourceTree = "<group>"; };
 		B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B9A7139387185959BC6413FC /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindApp.swift; sourceTree = "<group>"; };
@@ -80,6 +91,7 @@
 		C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		D174F151101E293695B6CF7F /* ProgressPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPlaceholderView.swift; sourceTree = "<group>"; };
 		DD97E63367A0CE1E7DE1EF52 /* ModuleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleColor.swift; sourceTree = "<group>"; };
+		E25112B5A1394145F294F64F /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		F57428D613845E03057EBFF4 /* ProfilePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePlaceholderView.swift; sourceTree = "<group>"; };
 		F76E087252FEBD5528A5BC82 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
 		F90D290A95551415D993EC4C /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
@@ -103,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */,
+				3312A791E19D9CA4D3561B5F /* ModuleColorTheme.swift */,
 				9D07D972E9B9DED4B8623883 /* Theme.swift */,
 				74DA27B7945FED2F7BEA0A8D /* Primitives */,
 				51BA726E2C08787105D70708 /* Tokens */,
@@ -224,6 +237,15 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		A70847754F3D0932363ECD76 /* ModuleDetail */ = {
+			isa = PBXGroup;
+			children = (
+				427D2A94E6C31ADD56597941 /* ModuleDetailView.swift */,
+				17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */,
+			);
+			path = ModuleDetail;
+			sourceTree = "<group>";
+		};
 		C09751E4AF15CC014A7BAAD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,7 +258,10 @@
 		E0457C022D78F068CD761262 /* Learn */ = {
 			isa = PBXGroup;
 			children = (
-				A83DFDD656898AC0419E770F /* LearnPlaceholderView.swift */,
+				E25112B5A1394145F294F64F /* LearnView.swift */,
+				30A8490760BAE7C9FD71F012 /* LearnViewModel.swift */,
+				F917D6D23530AD1801881CA6 /* Lesson */,
+				A70847754F3D0932363ECD76 /* ModuleDetail */,
 			);
 			path = Learn;
 			sourceTree = "<group>";
@@ -278,6 +303,15 @@
 				61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */,
 			);
 			path = NumindTests;
+			sourceTree = "<group>";
+		};
+		F917D6D23530AD1801881CA6 /* Lesson */ = {
+			isa = PBXGroup;
+			children = (
+				955388FC06C02C5CD3B96B14 /* LessonView.swift */,
+				8E3433B4F7B4DF55F59F07BC /* LessonViewModel.swift */,
+			);
+			path = Lesson;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -389,11 +423,17 @@
 				52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */,
 				6EBA9243B649FF227E0CF468 /* HomePlaceholderView.swift in Sources */,
 				3BAA7DB7CEEACFE8C78B7DB0 /* IconTile.swift in Sources */,
-				F8D121F64C56088C7B5B5535 /* LearnPlaceholderView.swift in Sources */,
+				11B7027F6BE80FD314557ABD /* LearnView.swift in Sources */,
+				58F088554AE41474740F7800 /* LearnViewModel.swift in Sources */,
 				5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */,
+				04969645E6CE3F25880D2488 /* LessonView.swift in Sources */,
+				AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */,
 				D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */,
 				5D254947FA29FBF59459543A /* Module.swift in Sources */,
 				6ECFD6DFCC5D5233EF6F7EA6 /* ModuleColor.swift in Sources */,
+				A8E5936C1255349C339B27DA /* ModuleColorTheme.swift in Sources */,
+				FB9B652F0B6D8B14AC1445B5 /* ModuleDetailView.swift in Sources */,
+				B5311AB63A1F647D2E37D563 /* ModuleDetailViewModel.swift in Sources */,
 				53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */,
 				386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */,
 				8811D01840392F9AFACC1076 /* PillButton.swift in Sources */,
