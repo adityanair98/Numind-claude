@@ -24,7 +24,7 @@ final class ContentRepositoryTests: XCTestCase {
         let m = repo.module(id: "tips")
         XCTAssertEqual(m?.title,     "Tips, Tax & Bill Split")
         XCTAssertEqual(m?.icon,      "percent")
-        XCTAssertEqual(m?.color,     "primaryBlue")
+        XCTAssertEqual(m?.color,     .blue)
         XCTAssertEqual(m?.lessonIds, ["tip_18_percent"])
     }
 

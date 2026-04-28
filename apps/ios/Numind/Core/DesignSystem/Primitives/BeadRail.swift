@@ -1,34 +1,59 @@
 import SwiftUI
 
-// Placeholder geometry — bead size, spacing, and rail shape will be
-// refined after Claude Design wireframes are approved.
 struct BeadRail: View {
+    enum Variant { case dot, chunky }
+
     let progress: Int
     let total: Int
-
-    private let beadSize: CGFloat = 10
-    private let beadSpacing: CGFloat = 8
+    var variant: Variant = .dot
 
     var body: some View {
-        HStack(spacing: beadSpacing) {
+        HStack(spacing: variant == .chunky ? 6 : 8) {
             ForEach(0..<total, id: \.self) { index in
-                Circle()
-                    .frame(width: beadSize, height: beadSize)
-                    .foregroundStyle(
-                        index < progress
-                            ? Theme.Colors.insightYellow
-                            : Theme.Colors.mutedText.opacity(0.25)
-                    )
+                beadView(at: index)
             }
+        }
+    }
+
+    @ViewBuilder
+    private func beadView(at index: Int) -> some View {
+        switch variant {
+        case .chunky:
+            Capsule()
+                .frame(width: 28, height: 6)
+                .foregroundStyle(
+                    index < progress
+                        ? Theme.Colors.primaryBlue
+                        : Theme.Colors.mutedTint
+                )
+        case .dot:
+            let isDone    = index < progress
+            let isCurrent = index == progress
+            Circle()
+                .frame(width: 10, height: 10)
+                .foregroundStyle(
+                    isDone    ? Theme.Colors.insightYellow :
+                    isCurrent ? Theme.Colors.primaryBlue   :
+                                Theme.Colors.mutedTint
+                )
+                .scaleEffect(isCurrent ? 1.3 : 1)
         }
     }
 }
 
 #Preview {
-    VStack(spacing: 16) {
-        BeadRail(progress: 3, total: 5)
-        BeadRail(progress: 0, total: 5)
-        BeadRail(progress: 5, total: 5)
+    VStack(alignment: .leading, spacing: 20) {
+        Text("Dot variant").font(Theme.Typography.small).foregroundStyle(Theme.Colors.mutedText)
+        BeadRail(progress: 3, total: 5, variant: .dot)
+        BeadRail(progress: 0, total: 5, variant: .dot)
+        BeadRail(progress: 5, total: 5, variant: .dot)
+
+        Divider()
+
+        Text("Chunky variant").font(Theme.Typography.small).foregroundStyle(Theme.Colors.mutedText)
+        BeadRail(progress: 2, total: 5, variant: .chunky)
+        BeadRail(progress: 0, total: 5, variant: .chunky)
+        BeadRail(progress: 5, total: 5, variant: .chunky)
     }
     .padding()
     .background(Theme.Colors.softBackground)

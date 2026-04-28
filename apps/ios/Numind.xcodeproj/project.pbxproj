@@ -21,6 +21,7 @@
 		6104FF691FB7D2DCB8BD4FE5 /* modules.json in Resources */ = {isa = PBXBuildFile; fileRef = 53291327E813B6AFAAFF8834 /* modules.json */; };
 		67D878B3D04A62674B2FB5A9 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */; };
 		6EBA9243B649FF227E0CF468 /* HomePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116647DEDB06AB6A25D48DD /* HomePlaceholderView.swift */; };
+		6ECFD6DFCC5D5233EF6F7EA6 /* ModuleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97E63367A0CE1E7DE1EF52 /* ModuleColor.swift */; };
 		780705FB6704A43F599ABF29 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */; };
 		79C53E7BC19A3FA5B3E0458D /* QuizTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912929E50EF5E5526AB94217 /* QuizTemplate.swift */; };
 		85AF38C1C1849D2390D5933F /* ContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48236569E3C71A34C541C4 /* ContentRepository.swift */; };
@@ -70,6 +71,7 @@
 		C6BDC1D8146AF56C25548BF5 /* BeadRail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeadRail.swift; sourceTree = "<group>"; };
 		C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		D174F151101E293695B6CF7F /* ProgressPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPlaceholderView.swift; sourceTree = "<group>"; };
+		DD97E63367A0CE1E7DE1EF52 /* ModuleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleColor.swift; sourceTree = "<group>"; };
 		F57428D613845E03057EBFF4 /* ProfilePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePlaceholderView.swift; sourceTree = "<group>"; };
 		F76E087252FEBD5528A5BC82 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
 		F90D290A95551415D993EC4C /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				B9A7139387185959BC6413FC /* Lesson.swift */,
 				6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */,
 				A5EB9C1AB0D5B44747792E8B /* Module.swift */,
+				DD97E63367A0CE1E7DE1EF52 /* ModuleColor.swift */,
 				912929E50EF5E5526AB94217 /* QuizTemplate.swift */,
 			);
 			path = Models;
@@ -369,6 +372,7 @@
 				5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */,
 				D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */,
 				5D254947FA29FBF59459543A /* Module.swift in Sources */,
+				6ECFD6DFCC5D5233EF6F7EA6 /* ModuleColor.swift in Sources */,
 				53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */,
 				386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */,
 				8811D01840392F9AFACC1076 /* PillButton.swift in Sources */,
@@ -399,6 +403,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -416,6 +421,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

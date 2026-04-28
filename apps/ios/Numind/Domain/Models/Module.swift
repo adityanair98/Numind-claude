@@ -5,6 +5,6 @@ struct Module: Codable, Identifiable, Equatable {
     let title: String
     let subtitle: String
     let icon: String        // SF Symbol name
-    let color: String       // Theme.Colors key — resolved at display time
+    let color: ModuleColor  // semantic tone — resolved to Theme.Colors at display time
     let lessonIds: [String]
 }

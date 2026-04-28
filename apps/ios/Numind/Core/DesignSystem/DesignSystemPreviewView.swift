@@ -91,12 +91,18 @@ struct DesignSystemPreviewView: View {
     }
 
     private var beadRailSection: some View {
-        section("BeadRail (placeholder)") {
+        section("BeadRail") {
             NumindCard {
                 VStack(alignment: .leading, spacing: 14) {
-                    labeledRail("3 / 5", progress: 3, total: 5)
-                    labeledRail("0 / 5", progress: 0, total: 5)
-                    labeledRail("5 / 5", progress: 5, total: 5)
+                    Text("Dot").font(Theme.Typography.small).foregroundStyle(Theme.Colors.mutedText)
+                    labeledRail("3 / 5", progress: 3, total: 5, variant: .dot)
+                    labeledRail("0 / 5", progress: 0, total: 5, variant: .dot)
+                    labeledRail("5 / 5", progress: 5, total: 5, variant: .dot)
+                    Divider()
+                    Text("Chunky").font(Theme.Typography.small).foregroundStyle(Theme.Colors.mutedText)
+                    labeledRail("2 / 5", progress: 2, total: 5, variant: .chunky)
+                    labeledRail("0 / 5", progress: 0, total: 5, variant: .chunky)
+                    labeledRail("5 / 5", progress: 5, total: 5, variant: .chunky)
                 }
             }
         }
@@ -132,13 +138,13 @@ struct DesignSystemPreviewView: View {
         }
     }
 
-    private func labeledRail(_ label: String, progress: Int, total: Int) -> some View {
+    private func labeledRail(_ label: String, progress: Int, total: Int, variant: BeadRail.Variant) -> some View {
         HStack(spacing: 12) {
             Text(label)
                 .font(Theme.Typography.caption)
                 .foregroundStyle(Theme.Colors.mutedText)
                 .frame(width: 36, alignment: .leading)
-            BeadRail(progress: progress, total: total)
+            BeadRail(progress: progress, total: total, variant: variant)
         }
     }
 }

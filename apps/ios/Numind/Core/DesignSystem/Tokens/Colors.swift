@@ -20,5 +20,13 @@ extension Theme {
         static let cardBackground = Color(hex: 0xFFFFFF)
         static let mutedText      = Color(hex: 0x6B7280)
         static let errorSoftRed   = Color(hex: 0xEF6B6B)
+
+        // Derived tints — composed from primary tokens via opacity, never new hex values
+        static var primaryBlueTint:   Color { primaryBlue.opacity(0.12) }
+        static var mindTealTint:      Color { mindTeal.opacity(0.14) }
+        static var insightYellowTint: Color { insightYellow.opacity(0.22) }
+        static var errorSoftRedTint:  Color { errorSoftRed.opacity(0.14) }
+        static var mutedTint:         Color { mutedText.opacity(0.12) }
+        static var hairline:          Color { mutedText.opacity(0.18) }
     }
 }
