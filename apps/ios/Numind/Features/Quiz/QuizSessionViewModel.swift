@@ -1,0 +1,90 @@
+import Foundation
+
+@MainActor
+final class QuizSessionViewModel: ObservableObject {
+
+    enum SessionState: Equatable {
+        case question
+        case answered(UUID)
+        case feedback(UUID)
+        case complete
+    }
+
+    struct QuizResult {
+        let question: QuizQuestion
+        let selectedChoiceId: UUID
+        var isCorrect: Bool { selectedChoiceId == question.correctChoiceId }
+        var promptPreview: String {
+            question.prompt.count > 38
+                ? String(question.prompt.prefix(38)) + "…"
+                : question.prompt
+        }
+    }
+
+    // MARK: - Input
+
+    let lessonTitle: String
+    let questions: [QuizQuestion]
+
+    // MARK: - State
+
+    @Published private(set) var currentIndex: Int = 0
+    @Published private(set) var sessionState: SessionState = .question
+    @Published private(set) var results: [QuizResult] = []
+
+    // MARK: - Derived
+
+    var currentQuestion: QuizQuestion { questions[currentIndex] }
+    var total: Int { questions.count }
+    var correctCount: Int { results.filter(\.isCorrect).count }
+    var xpEarned: Int { correctCount * 10 }
+
+    var isAnswered: Bool {
+        if case .answered = sessionState { return true }
+        return false
+    }
+
+    var isCorrectAnswer: Bool {
+        guard case .feedback(let id) = sessionState else { return false }
+        return id == currentQuestion.correctChoiceId
+    }
+
+    var selectedChoiceId: UUID? {
+        switch sessionState {
+        case .answered(let id), .feedback(let id): return id
+        default: return nil
+        }
+    }
+
+    // MARK: - Init
+
+    init(lesson: Lesson, repository: ContentRepository = LocalContentRepository()) {
+        lessonTitle = lesson.title
+        let templates = repository.templates(for: lesson.id)
+        questions = templates.map { QuizEngine.generate(from: $0) }
+    }
+
+    // MARK: - Actions
+
+    func select(_ choiceId: UUID) {
+        guard case .question = sessionState else { return }
+        sessionState = .answered(choiceId)
+    }
+
+    func checkAnswer() {
+        guard case .answered(let id) = sessionState else { return }
+        sessionState = .feedback(id)
+    }
+
+    func advance() {
+        guard case .feedback(let id) = sessionState else { return }
+        results.append(QuizResult(question: currentQuestion, selectedChoiceId: id))
+        let next = currentIndex + 1
+        if next < questions.count {
+            currentIndex = next
+            sessionState = .question
+        } else {
+            sessionState = .complete
+        }
+    }
+}

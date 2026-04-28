@@ -4,29 +4,59 @@ struct LessonView: View {
     @Environment(\.dismiss) private var dismiss
     let viewModel: LessonViewModel
 
+    enum Phase { case lesson, quiz, summary }
+
+    @State private var phase: Phase = .lesson
+    @State private var sessionVM: QuizSessionViewModel?
+
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottom) {
-                scrollContent
-                footer
-            }
-            .background(Theme.Colors.softBackground.ignoresSafeArea())
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button { dismiss() } label: {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                    }
-                }
-            }
-            .navigationBarTitleDisplayMode(.inline)
+            phaseContent
+                .background(Theme.Colors.softBackground.ignoresSafeArea())
         }
     }
 
-    // MARK: - Scroll content
+    @ViewBuilder
+    private var phaseContent: some View {
+        switch phase {
+        case .lesson:
+            lessonPhaseView
+        case .quiz:
+            if let vm = sessionVM {
+                QuizSessionView(viewModel: vm) {
+                    phase = .summary
+                }
+            }
+        case .summary:
+            if let vm = sessionVM {
+                SessionSummaryView(viewModel: vm) {
+                    dismiss()       // "Continue learning" → back to module detail
+                }
+            }
+        }
+    }
 
-    private var scrollContent: some View {
+    // MARK: - Lesson phase
+
+    private var lessonPhaseView: some View {
+        ZStack(alignment: .bottom) {
+            lessonScrollContent
+            lessonFooter
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button { dismiss() } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                }
+            }
+        }
+    }
+
+    private var lessonScrollContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
                 headerSection
@@ -39,7 +69,7 @@ struct LessonView: View {
         }
     }
 
-    // MARK: - Header
+    // MARK: - Lesson header
 
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -115,9 +145,9 @@ struct LessonView: View {
         }
     }
 
-    // MARK: - Footer
+    // MARK: - Lesson footer
 
-    private var footer: some View {
+    private var lessonFooter: some View {
         VStack(spacing: 0) {
             LinearGradient(
                 colors: [Theme.Colors.softBackground.opacity(0), Theme.Colors.softBackground],
@@ -126,27 +156,35 @@ struct LessonView: View {
             .frame(height: 24)
             .allowsHitTesting(false)
 
-            PillButton("Continue") { dismiss() }
+            PillButton("Continue") { startQuiz() }
                 .padding(.horizontal, Theme.Spacing.screenHorizontal)
                 .padding(.bottom, 28)
                 .background(Theme.Colors.softBackground)
         }
+    }
+
+    // MARK: - Quiz start
+
+    private func startQuiz() {
+        let vm = QuizSessionViewModel(lesson: viewModel.lesson)
+        sessionVM = vm
+        phase = .quiz
     }
 }
 
 #Preview {
     LessonView(viewModel: LessonViewModel(
         lesson: Lesson(
-            id: "preview",
+            id: "tip_18_percent",
             moduleId: "tips",
             title: "Calculate an 18% tip",
             concept: "18% is one of the most common tip amounts. Start with 10%, then add half again for 15%, then add 3% more.",
             shortcut: "Find 10% by moving the decimal left one place. Then build up: 10% + 5% + 3% = 18%.",
-            example: "Bill: $46.00\n10% = $4.60\n+8% = $3.68\nTip ≈ $8.28",
-            quizTemplateIds: []
+            example: "Bill: $46.00\n10% = $4.60\n+8% = $3.68\nTip  ≈ $8.28",
+            quizTemplateIds: ["tip_percent_basic", "tip_bill_total", "tip_split_tip"]
         ),
         moduleTitle: "Tips, Tax & Bill Split",
         lessonIndex: 0,
-        totalLessons: 5
+        totalLessons: 1
     ))
 }
