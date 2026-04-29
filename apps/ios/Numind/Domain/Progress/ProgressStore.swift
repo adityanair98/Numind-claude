@@ -19,6 +19,10 @@ final class ProgressStore: ObservableObject {
 
     func recordSession(_ record: SessionRecord) {
         data.sessions.append(record)
+        let current = data.computeStreak()
+        if current > data.bestStreak {
+            data.bestStreak = current
+        }
         persist()
     }
 
@@ -34,11 +38,13 @@ final class ProgressStore: ObservableObject {
 
     // MARK: - Computed (forwarded from ProgressData)
 
-    var streak: Int              { data.computeStreak() }
-    var totalSessions: Int       { data.sessions.count }
-    var accuracy: Double         { data.computeAccuracy() }
-    var weeklyCompletions: [Bool]{ data.computeWeeklyCompletions() }
-    var weeklyWorkouts: Int      { data.computeWeeklyWorkouts() }
+    var streak: Int               { data.computeStreak() }
+    var bestStreak: Int           { data.bestStreak }
+    var totalSessions: Int        { data.sessions.count }
+    var totalXP: Int              { data.computeTotalXP() }
+    var accuracy: Double          { data.computeAccuracy() }
+    var weeklyCompletions: [Bool] { data.computeWeeklyCompletions() }
+    var weeklyWorkouts: Int       { data.computeWeeklyWorkouts() }
     let weeklyGoal: Int = 5
 
     func moduleProgress(moduleId: String, totalLessons: Int) -> Double {
@@ -51,5 +57,13 @@ final class ProgressStore: ObservableObject {
 
     func hasCompletedLesson(_ lessonId: String) -> Bool {
         data.hasCompletedLesson(lessonId)
+    }
+
+    func skillLevel(moduleId: String) -> Int {
+        data.skillLevel(moduleId: moduleId)
+    }
+
+    func skillLevelProgress(moduleId: String) -> Double {
+        data.skillLevelProgress(moduleId: moduleId)
     }
 }

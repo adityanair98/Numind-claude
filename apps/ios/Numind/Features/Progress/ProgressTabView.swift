@@ -6,12 +6,19 @@ struct ProgressTabView: View {
     private let modules = LocalContentRepository().allModules()
     private let weekDayLabels = ["M", "T", "W", "T", "F", "S", "S"]
 
+    // Drives the streak ring sweep-in animation
+    @State private var ringProgress: Double = 0
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
-                overviewSection
-                weeklyGoalSection
-                moduleProgressSection
+                sectionLabel("This week")
+                overviewCard
+                sectionLabel("Weekly goal")
+                weeklyGoalCard
+                sectionLabel("Skill mastery")
+                skillMasteryCard
+                totalXPCard
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.vertical, Theme.Spacing.sectionSpacing)
@@ -19,84 +26,116 @@ struct ProgressTabView: View {
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .navigationTitle("Progress")
         .navigationBarTitleDisplayMode(.large)
-    }
-
-    // MARK: - Overview
-
-    private var overviewSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("This week")
-            NumindCard {
-                HStack(spacing: 0) {
-                    statCell(
-                        value: store.streak > 0 ? "\(store.streak)" : "—",
-                        label: "Streak",
-                        color: store.streak > 0 ? Theme.Colors.insightYellow : Theme.Colors.deepNavy
-                    )
-                    vrule
-                    statCell(
-                        value: store.totalSessions > 0 ? "\(store.totalSessions)" : "—",
-                        label: "Sessions",
-                        color: Theme.Colors.deepNavy
-                    )
-                    vrule
-                    statCell(
-                        value: store.totalSessions > 0 ? "\(Int(store.accuracy * 100))%" : "—",
-                        label: "Accuracy",
-                        color: store.accuracy >= 0.8 ? Theme.Colors.mindTeal : Theme.Colors.deepNavy
-                    )
-                }
+        .onAppear {
+            let target = min(Double(store.streak), 7) / 7.0
+            withAnimation(.easeOut(duration: 0.9)) {
+                ringProgress = target
             }
         }
     }
 
-    private func statCell(value: String, label: String, color: Color) -> some View {
-        VStack(spacing: 4) {
-            Text(value)
-                .font(.system(size: 22, weight: .bold, design: .rounded))
-                .foregroundStyle(color)
-            Text(label.uppercased())
-                .font(Theme.Typography.small)
-                .foregroundStyle(Theme.Colors.mutedText)
-                .kerning(0.6)
+    // MARK: - Overview (streak ring + mini stats)
+
+    private var overviewCard: some View {
+        NumindCard {
+            HStack(alignment: .center, spacing: 20) {
+                streakRing
+                VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        HStack(alignment: .firstTextBaseline, spacing: 4) {
+                            Text("\(store.streak)")
+                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .foregroundStyle(Theme.Colors.deepNavy)
+                            Text("day streak")
+                                .font(Theme.Typography.caption)
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        }
+                        Text("Best: \(store.bestStreak) days")
+                            .font(Theme.Typography.small)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                    HStack(spacing: 16) {
+                        miniStat(
+                            value: store.totalSessions > 0 ? "\(store.totalSessions)" : "—",
+                            label: "Sessions"
+                        )
+                        Rectangle()
+                            .fill(Theme.Colors.hairline)
+                            .frame(width: 1, height: 24)
+                        miniStat(
+                            value: store.totalSessions > 0 ? "\(Int(store.accuracy * 100))%" : "—",
+                            label: "Accuracy"
+                        )
+                    }
+                }
+                Spacer()
+            }
         }
-        .frame(maxWidth: .infinity)
     }
 
-    private var vrule: some View {
-        Rectangle()
-            .fill(Theme.Colors.hairline)
-            .frame(width: 1, height: 32)
+    private var streakRing: some View {
+        ZStack {
+            Circle()
+                .stroke(Theme.Colors.mutedTint, lineWidth: 8)
+            Circle()
+                .trim(from: 0, to: ringProgress)
+                .stroke(
+                    Theme.Colors.insightYellow,
+                    style: StrokeStyle(lineWidth: 8, lineCap: .round)
+                )
+                .rotationEffect(.degrees(-90))
+            VStack(spacing: 1) {
+                Image(systemName: "flame.fill")
+                    .font(.system(size: 13))
+                    .foregroundStyle(Theme.Colors.insightYellow)
+                Text("\(store.streak)")
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                Text("days")
+                    .font(.system(size: 9, weight: .medium))
+                    .foregroundStyle(Theme.Colors.mutedText)
+            }
+        }
+        .frame(width: 84, height: 84)
+    }
+
+    private func miniStat(value: String, label: String) -> some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Text(value)
+                .font(.system(size: 17, weight: .bold, design: .rounded))
+                .foregroundStyle(Theme.Colors.deepNavy)
+            Text(label.uppercased())
+                .font(.system(size: 9, weight: .medium))
+                .foregroundStyle(Theme.Colors.mutedText)
+                .kerning(0.5)
+        }
     }
 
     // MARK: - Weekly goal
 
-    private var weeklyGoalSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Weekly goal")
-            NumindCard {
-                VStack(alignment: .leading, spacing: 14) {
-                    HStack(alignment: .top) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("\(store.weeklyWorkouts) of \(store.weeklyGoal) workouts")
-                                .font(Theme.Typography.headline)
-                                .foregroundStyle(Theme.Colors.deepNavy)
-                            Text(store.weeklyWorkouts >= store.weeklyGoal
-                                 ? "Goal reached — great work!"
-                                 : "\(store.weeklyGoal - store.weeklyWorkouts) more to hit your goal")
-                                .font(Theme.Typography.caption)
-                                .foregroundStyle(Theme.Colors.mutedText)
-                        }
-                        Spacer()
-                        IconTile(systemName: "trophy.fill", tintColor: Theme.Colors.insightYellow)
+    private var weeklyGoalCard: some View {
+        NumindCard {
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("\(store.weeklyWorkouts) of \(store.weeklyGoal) workouts")
+                            .font(Theme.Typography.headline)
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text(store.weeklyWorkouts >= store.weeklyGoal
+                             ? "Goal reached — great work!"
+                             : "\(store.weeklyGoal - store.weeklyWorkouts) more to hit your goal")
+                            .font(Theme.Typography.caption)
+                            .foregroundStyle(Theme.Colors.mutedText)
                     }
+                    Spacer()
+                    IconTile(systemName: "trophy.fill", tintColor: Theme.Colors.insightYellow)
+                }
 
-                    HStack(spacing: 0) {
-                        ForEach(Array(weekDayLabels.enumerated()), id: \.offset) { i, label in
-                            let done = store.weeklyCompletions.indices.contains(i)
-                                ? store.weeklyCompletions[i] : false
-                            dayCircle(label: label, isCompleted: done)
-                        }
+                HStack(spacing: 0) {
+                    ForEach(Array(weekDayLabels.enumerated()), id: \.offset) { i, label in
+                        let done = store.weeklyCompletions.indices.contains(i)
+                            ? store.weeklyCompletions[i] : false
+                        dayCircle(label: label, isCompleted: done)
                     }
                 }
             }
@@ -122,51 +161,79 @@ struct ProgressTabView: View {
         .frame(maxWidth: .infinity)
     }
 
-    // MARK: - Module progress
+    // MARK: - Skill mastery
 
-    private var moduleProgressSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("By module")
-            NumindCard {
-                VStack(spacing: 0) {
-                    ForEach(Array(modules.enumerated()), id: \.element.id) { i, module in
-                        moduleRow(module: module, isLast: i == modules.count - 1)
-                    }
+    private var skillMasteryCard: some View {
+        NumindCard {
+            VStack(spacing: 0) {
+                ForEach(Array(modules.enumerated()), id: \.element.id) { i, module in
+                    skillMasteryRow(module: module, isLast: i == modules.count - 1)
                 }
             }
         }
     }
 
-    private func moduleRow(module: Module, isLast: Bool) -> some View {
-        let progress = store.moduleProgress(
-            moduleId: module.id,
-            totalLessons: module.lessonIds.count
-        )
+    private func skillMasteryRow(module: Module, isLast: Bool) -> some View {
+        let level = store.skillLevel(moduleId: module.id)
+        let progress = store.skillLevelProgress(moduleId: module.id)
+
         return VStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(module.title)
-                        .font(Theme.Typography.body)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Theme.Colors.deepNavy)
-                    Spacer()
-                    Text(progress > 0 ? "\(Int(progress * 100))%" : "Not started")
-                        .font(Theme.Typography.small)
+            HStack(spacing: 12) {
+                IconTile(systemName: module.icon, tintColor: module.color.tintColor, size: 36)
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack {
+                        Text(module.title)
+                            .font(Theme.Typography.body)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Spacer()
+                        Text(level > 0 ? "Lvl \(level)" : "—")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundStyle(level > 0 ? module.color.tintColor : Theme.Colors.mutedText)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(level > 0 ? module.color.tintBackground : Theme.Colors.mutedTint)
+                            .clipShape(Capsule())
+                    }
+                    GeometryReader { geo in
+                        ZStack(alignment: .leading) {
+                            Capsule().fill(Theme.Colors.mutedTint)
+                            Capsule()
+                                .fill(module.color.tintColor)
+                                .frame(width: geo.size.width * CGFloat(progress))
+                        }
+                    }
+                    .frame(height: 5)
+                    Text(level == 0 ? "Not started" : "Level \(level) of 5")
+                        .font(.system(size: 10, weight: .medium))
                         .foregroundStyle(Theme.Colors.mutedText)
                 }
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        Capsule().fill(Theme.Colors.mutedTint)
-                        Capsule()
-                            .fill(module.color.tintColor)
-                            .frame(width: geo.size.width * CGFloat(min(progress, 1)))
-                    }
-                }
-                .frame(height: 6)
             }
             .padding(.vertical, 14)
             if !isLast {
                 Divider().background(Theme.Colors.hairline)
+            }
+        }
+    }
+
+    // MARK: - Total XP
+
+    private var totalXPCard: some View {
+        NumindCard(background: Theme.Colors.insightYellowTint) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Total XP")
+                        .font(Theme.Typography.small)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Theme.Colors.insightText)
+                        .textCase(.uppercase)
+                        .kerning(0.6)
+                    Text("\(store.totalXP)")
+                        .font(.system(size: 30, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                }
+                Spacer()
+                IconTile(systemName: "trophy.fill", tintColor: Theme.Colors.insightYellow, size: 48)
             }
         }
     }

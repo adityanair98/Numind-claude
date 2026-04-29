@@ -3,6 +3,7 @@ import Foundation
 // Pure Codable value — all computation lives here so it's testable without the store.
 struct ProgressData: Codable {
     var sessions: [SessionRecord] = []
+    var bestStreak: Int = 0
 
     // MARK: - Streak
 
@@ -11,7 +12,6 @@ struct ProgressData: Codable {
         let today = calendar.startOfDay(for: Date())
         let sessionDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
 
-        // Start from today if completed today, otherwise from yesterday
         var checkDay = sessionDays.contains(today)
             ? today
             : calendar.date(byAdding: .day, value: -1, to: today)!
@@ -33,6 +33,12 @@ struct ProgressData: Codable {
         return Double(totalCorrect) / Double(totalQuestions)
     }
 
+    // MARK: - XP
+
+    func computeTotalXP() -> Int {
+        sessions.reduce(0) { $0 + $1.correctCount * 10 }
+    }
+
     // MARK: - Module progress
 
     func completedLessonCount(moduleId: String) -> Int {
@@ -46,6 +52,32 @@ struct ProgressData: Codable {
 
     func hasCompletedLesson(_ lessonId: String) -> Bool {
         sessions.contains { $0.lessonId == lessonId }
+    }
+
+    // MARK: - Skill mastery (1–5 levels based on session count per module)
+
+    // Thresholds: sessions needed to reach each level boundary
+    private static let levelThresholds = [0, 1, 3, 6, 10, 15]
+
+    func skillLevel(moduleId: String) -> Int {
+        let count = sessions.filter { $0.moduleId == moduleId }.count
+        let thresholds = Self.levelThresholds
+        for level in stride(from: thresholds.count - 1, through: 0, by: -1) {
+            if count >= thresholds[level] { return level }
+        }
+        return 0
+    }
+
+    // Progress (0–1) within the current level toward the next.
+    func skillLevelProgress(moduleId: String) -> Double {
+        let count = sessions.filter { $0.moduleId == moduleId }.count
+        let level = skillLevel(moduleId: moduleId)
+        let thresholds = Self.levelThresholds
+        if level >= thresholds.count - 1 { return 1.0 }
+        let lower = thresholds[level]
+        let upper = thresholds[level + 1]
+        guard upper > lower else { return 1.0 }
+        return Double(count - lower) / Double(upper - lower)
     }
 
     // MARK: - Weekly
