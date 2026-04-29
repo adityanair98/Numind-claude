@@ -110,13 +110,21 @@ struct QuizSessionView: View {
         let q = viewModel.currentQuestion
         return VStack(spacing: Theme.Spacing.sectionSpacing) {
             NumindCard {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Question \(viewModel.currentIndex + 1)")
-                        .font(Theme.Typography.small)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Theme.Colors.primaryBlue)
-                        .textCase(.uppercase)
-                        .kerning(0.6)
+                VStack(alignment: .leading, spacing: 10) {
+                    // Module-colored topic chip + question counter
+                    HStack(spacing: 0) {
+                        Text(viewModel.lessonTitle)
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundStyle(viewModel.moduleColor.tintColor)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 4)
+                            .background(viewModel.moduleColor.tintBackground)
+                            .clipShape(Capsule())
+                        Spacer()
+                        Text("\(viewModel.currentIndex + 1) / \(viewModel.total)")
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
                     Text(q.prompt)
                         .font(Theme.Typography.title)
                         .foregroundStyle(Theme.Colors.deepNavy)
@@ -204,7 +212,7 @@ struct QuizSessionView: View {
             resultHeroCard(isCorrect: isCorrect)
             answerRevealPill(for: q, isCorrect: isCorrect)
             optionsRecap(for: q, isCorrect: isCorrect)
-            whyCard(explanation: q.explanation)
+            whyCard(explanation: q.explanation, shortcut: viewModel.lessonShortcut)
         }
     }
 
@@ -223,7 +231,7 @@ struct QuizSessionView: View {
                 Text(isCorrect ? "Nice — that's right." : "Not quite.")
                     .font(Theme.Typography.title)
                     .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
-                Text(isCorrect ? "+10 XP · streak +1" : "No penalty — keep going.")
+                Text(isCorrect ? "🎉 +10 XP · streak +1" : "No penalty — keep going.")
                     .font(Theme.Typography.caption)
                     .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.mutedText)
             }
@@ -257,9 +265,9 @@ struct QuizSessionView: View {
         }
     }
 
-    private func whyCard(explanation: String) -> some View {
+    private func whyCard(explanation: String, shortcut: String) -> some View {
         NumindCard(background: Theme.Colors.insightYellowTint) {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 8) {
                     Image(systemName: "lightbulb.fill")
                         .font(.system(size: 15, weight: .semibold))
@@ -274,6 +282,20 @@ struct QuizSessionView: View {
                 Text(explanation)
                     .font(Theme.Typography.body)
                     .foregroundStyle(Theme.Colors.deepNavy)
+
+                // Shortcut reminder
+                Divider()
+                    .background(Theme.Colors.insightYellow.opacity(0.4))
+
+                HStack(alignment: .top, spacing: 6) {
+                    Text("Shortcut:")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(Theme.Colors.insightText)
+                    Text(shortcut)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
     }
