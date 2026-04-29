@@ -18,6 +18,24 @@
     "quizTemplateIds": ["tip_percent_basic", "tip_bill_total"]
   },
   {
+    "id": "tip_20_double",
+    "moduleId": "tips",
+    "title": "20% in one step",
+    "concept": "20% is exactly twice 10%. Since you already know how to find 10% instantly by moving the decimal left, you can always nail a 20% tip in two steps — no guessing, no fumbling with the calculator at the table.",
+    "shortcut": "Move the decimal left (10%), then double it (20%). Bill $65 → 10% = $6.50 → double → $13.00 tip, $78.00 total. 20% is both the easiest tip to calculate precisely and the standard expectation at most restaurants in the US.",
+    "example": "Bill: $65.00\n10% = $6.50\n×2 = $13.00 tip\nTotal = $78.00",
+    "quizTemplateIds": ["tip_double_ten", "tip_twenty_total"]
+  },
+  {
+    "id": "tip_pre_or_post_tax",
+    "moduleId": "tips",
+    "title": "Tip on subtotal or total?",
+    "concept": "In the US, tipping on the pre-tax subtotal is technically correct — you're tipping on the service, not the government's cut. Many people tip on the full total because it's easier. The difference is small but adds up on larger bills.",
+    "shortcut": "Pre-tax tip is always the lower number. On a $50 meal with 10% tax, 20% pre-tax = $10 vs 20% post-tax = $11. Both are acceptable — knowing the difference means you're making a deliberate choice, not leaving money on the table by accident.",
+    "example": "Subtotal: $50.00\nTax (10%): $5.00\n20% on $50 = $10.00 (pre-tax)\n20% on $55 = $11.00 (post-tax)",
+    "quizTemplateIds": ["tip_pre_tax", "tip_post_tax"]
+  },
+  {
     "id": "tip_split_bill",
     "moduleId": "tips",
     "title": "Split the bill right",

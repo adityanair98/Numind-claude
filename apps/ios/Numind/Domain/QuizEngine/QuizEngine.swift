@@ -117,6 +117,13 @@ struct QuizEngine {
             guard let total = vars["totalAmount"] else { return nil }
             return total / 5
         },
+        // Tips — post-tax tip (tip calculated on subtotal + tax)
+        "tipOnTotal": { vars in
+            guard let subtotal = vars["billAmount"],
+                  let tipPct = vars["tipPercent"],
+                  let taxPct = vars["taxPercent"] else { return nil }
+            return subtotal * (1 + taxPct / 100) * tipPct / 100
+        },
         // Discounts — BOGO
         "bogoPerItemPrice": { vars in
             // Buy 2 get 1 free: pay for 2, receive 3 → cost per item = (2 × price) / 3

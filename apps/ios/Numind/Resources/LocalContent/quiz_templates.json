@@ -1,5 +1,63 @@
 [
   {
+    "id": "tip_double_ten",
+    "moduleId": "tips",
+    "difficulty": 1,
+    "promptTemplate": "The bill is ${{billAmount}}. Using the double-the-10% trick, what is the 20% tip?",
+    "variableRules": [
+      { "name": "billAmount", "options": [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 80] },
+      { "name": "tipPercent", "options": [20] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Move the decimal left: 10% of ${{billAmount}}. Double that for 20%. Two steps, done."
+  },
+  {
+    "id": "tip_twenty_total",
+    "moduleId": "tips",
+    "difficulty": 1,
+    "promptTemplate": "Your bill is ${{billAmount}}. What's the total after adding a 20% tip?",
+    "variableRules": [
+      { "name": "billAmount", "options": [25, 35, 40, 45, 50, 55, 60, 70, 80] },
+      { "name": "tipPercent", "options": [20] }
+    ],
+    "answerFormula": "billWithTip",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Find 10% of ${{billAmount}}, double it for the tip, then add to the original bill."
+  },
+  {
+    "id": "tip_pre_tax",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "promptTemplate": "Subtotal is ${{billAmount}} before {{taxPercent}}% tax. You tip {{tipPercent}}% on the subtotal only. What is your tip?",
+    "variableRules": [
+      { "name": "billAmount", "options": [30, 40, 50, 60, 70, 80] },
+      { "name": "tipPercent", "options": [18, 20] },
+      { "name": "taxPercent", "options": [8, 9, 10] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tip on subtotal only: {{tipPercent}}% of ${{billAmount}} (ignore the tax line). This is the technically correct way to tip."
+  },
+  {
+    "id": "tip_post_tax",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "promptTemplate": "Subtotal is ${{billAmount}} before {{taxPercent}}% tax. You tip {{tipPercent}}% on the total bill including tax. What is your tip?",
+    "variableRules": [
+      { "name": "billAmount", "options": [30, 40, 50, 60, 70, 80] },
+      { "name": "tipPercent", "options": [18, 20] },
+      { "name": "taxPercent", "options": [8, 9, 10] }
+    ],
+    "answerFormula": "tipOnTotal",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tip on total: add {{taxPercent}}% tax to ${{billAmount}} first, then take {{tipPercent}}% of that higher number. Always slightly more than tipping pre-tax."
+  },
+  {
     "id": "tip_percent_basic",
     "moduleId": "tips",
     "difficulty": 1,

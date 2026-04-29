@@ -5,7 +5,13 @@
     "subtitle": "Everyday restaurant and shopping math",
     "icon": "percent",
     "color": "blue",
-    "lessonIds": ["tip_18_percent", "tip_10_percent_trick", "tip_split_bill"]
+    "lessonIds": [
+      "tip_18_percent",
+      "tip_10_percent_trick",
+      "tip_20_double",
+      "tip_pre_or_post_tax",
+      "tip_split_bill"
+    ]
   },
   {
     "id": "discounts",
