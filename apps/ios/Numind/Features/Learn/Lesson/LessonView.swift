@@ -256,7 +256,7 @@ struct LessonView: View {
     // MARK: - Quiz start
 
     private func startQuiz() {
-        let vm = QuizSessionViewModel(lesson: viewModel.lesson)
+        let vm = QuizSessionViewModel(lesson: viewModel.lesson, moduleColor: viewModel.moduleColor)
         sessionVM = vm
         phase = .quiz
     }

@@ -24,6 +24,7 @@ final class QuizSessionViewModel: ObservableObject {
     // MARK: - Input
 
     let lessonTitle: String
+    let moduleColor: ModuleColor
     let questions: [QuizQuestion]
 
     // MARK: - State
@@ -69,8 +70,9 @@ final class QuizSessionViewModel: ObservableObject {
 
     // MARK: - Init
 
-    init(lesson: Lesson, repository: ContentRepository = LocalContentRepository()) {
+    init(lesson: Lesson, moduleColor: ModuleColor = .blue, repository: ContentRepository = LocalContentRepository()) {
         lessonTitle = lesson.title
+        self.moduleColor = moduleColor
         let templates = repository.templates(for: lesson.id)
         questions = templates.map { QuizEngine.generate(from: $0) }
     }

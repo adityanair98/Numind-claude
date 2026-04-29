@@ -6,6 +6,11 @@ struct SessionSummaryView: View {
     @ObservedObject var viewModel: QuizSessionViewModel
     let onContinue: () -> Void
 
+    @State private var xpAnimated: Int = 0
+
+    private var accent: Color { viewModel.moduleColor.tintColor }
+    private var accentTint: Color { viewModel.moduleColor.tintBackground }
+
     var body: some View {
         ZStack(alignment: .bottom) {
             scrollContent
@@ -23,6 +28,11 @@ struct SessionSummaryView: View {
                 }
             }
         }
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.7).delay(0.3)) {
+                xpAnimated = viewModel.xpEarned
+            }
+        }
     }
 
     // MARK: - Scroll content
@@ -30,7 +40,7 @@ struct SessionSummaryView: View {
     private var scrollContent: some View {
         ScrollView {
             VStack(spacing: Theme.Spacing.sectionSpacing) {
-                trophyHeader
+                resultHeader
                 statsCard
                 recapSection
             }
@@ -40,24 +50,37 @@ struct SessionSummaryView: View {
         }
     }
 
-    // MARK: - Trophy header
+    // MARK: - Result header
 
-    private var trophyHeader: some View {
-        VStack(spacing: 14) {
+    private var resultHeader: some View {
+        VStack(spacing: 16) {
             ZStack {
                 Circle()
-                    .fill(Theme.Colors.insightYellowTint)
-                    .frame(width: 88, height: 88)
+                    .fill(accentTint)
+                    .frame(width: 96, height: 96)
                 Image(systemName: "trophy.fill")
-                    .font(.system(size: 40))
-                    .foregroundStyle(Theme.Colors.insightYellow)
+                    .font(.system(size: 44))
+                    .foregroundStyle(accent)
             }
-            Text("Workout complete!")
-                .font(Theme.Typography.display)
-                .foregroundStyle(Theme.Colors.deepNavy)
-            Text("\(viewModel.total) questions")
-                .font(Theme.Typography.caption)
-                .foregroundStyle(Theme.Colors.mutedText)
+
+            VStack(spacing: 6) {
+                Text("Session complete!")
+                    .font(Theme.Typography.display)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                Text("\(viewModel.total) questions · \(viewModel.elapsedTimeString)")
+                    .font(Theme.Typography.caption)
+                    .foregroundStyle(Theme.Colors.mutedText)
+            }
+
+            Text("+\(xpAnimated) XP")
+                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .foregroundStyle(Theme.Colors.insightText)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 8)
+                .background(Theme.Colors.insightYellowTint)
+                .clipShape(Capsule())
+                .contentTransition(.numericText())
+                .animation(.easeOut(duration: 0.7).delay(0.3), value: xpAnimated)
         }
         .frame(maxWidth: .infinity)
     }
@@ -69,12 +92,12 @@ struct SessionSummaryView: View {
             HStack {
                 statCell(value: "\(viewModel.correctCount)/\(viewModel.total)",
                          label: "Correct",
-                         color: Theme.Colors.mindTeal)
+                         color: accent)
                 Divider()
                     .frame(width: 1, height: 32)
                     .background(Theme.Colors.hairline)
-                statCell(value: "+\(viewModel.xpEarned)",
-                         label: "XP Earned",
+                statCell(value: progressStore.accuracy > 0 ? "\(Int(progressStore.accuracy * 100))%" : "—",
+                         label: "Accuracy",
                          color: Theme.Colors.deepNavy)
                 Divider()
                     .frame(width: 1, height: 32)
@@ -127,10 +150,10 @@ struct SessionSummaryView: View {
         HStack(spacing: 14) {
             ZStack {
                 RoundedRectangle(cornerRadius: Theme.Radius.pill, style: .continuous)
-                    .fill(result.isCorrect ? Theme.Colors.mindTealTint : Theme.Colors.errorSoftRedTint)
+                    .fill(result.isCorrect ? accentTint : Theme.Colors.errorSoftRedTint)
                 Image(systemName: result.isCorrect ? "checkmark" : "xmark")
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(result.isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+                    .foregroundStyle(result.isCorrect ? accent : Theme.Colors.errorSoftRed)
             }
             .frame(width: 36, height: 36)
 

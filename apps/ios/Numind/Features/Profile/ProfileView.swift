@@ -8,7 +8,7 @@ struct ProfileView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
                 profileCard
-                goalsSection
+                statsSection
                 appSection
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
@@ -30,59 +30,88 @@ struct ProfileView: View {
     private var profileCard: some View {
         NumindCard {
             HStack(spacing: 14) {
-                IconTile(systemName: "person.fill", tintColor: Theme.Colors.primaryBlue, size: 56)
+                ZStack {
+                    Circle()
+                        .fill(Theme.Colors.primaryBlueTint)
+                        .frame(width: 56, height: 56)
+                    Text("A")
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.primaryBlue)
+                }
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Alex")
                         .font(Theme.Typography.headline)
                         .foregroundStyle(Theme.Colors.deepNavy)
-                    Text("Joined \(joinedDateString)")
+                    Text("Member since \(joinedDateString)")
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Colors.mutedText)
-                    if progressStore.streak > 0 {
-                        Text("\(progressStore.streak)-day streak 🔥")
-                            .font(Theme.Typography.small)
+                }
+                Spacer()
+                if progressStore.streak > 0 {
+                    VStack(spacing: 2) {
+                        Text("🔥")
+                            .font(.system(size: 22))
+                        Text("\(progressStore.streak)")
+                            .font(.system(size: 13, weight: .bold, design: .rounded))
                             .foregroundStyle(Theme.Colors.insightText)
                     }
                 }
-                Spacer()
             }
         }
     }
 
-    // MARK: - Goals section
+    // MARK: - Stats section
 
-    private var goalsSection: some View {
+    private var statsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Goals")
-            NumindCard {
-                VStack(spacing: 0) {
-                    goalRow(icon: "bolt.fill",    tint: Theme.Colors.primaryBlue,
-                            title: "Daily target", value: "5 minutes")
-                    Divider().background(Theme.Colors.hairline).padding(.leading, 18 + 36 + 14)
-                    goalRow(icon: "trophy.fill",  tint: Theme.Colors.insightYellow,
-                            title: "Weekly goal",  value: "5 workouts")
-                    Divider().background(Theme.Colors.hairline).padding(.leading, 18 + 36 + 14)
-                    goalRow(icon: "bell.fill",    tint: Theme.Colors.mindTeal,
-                            title: "Reminders",    value: "Off")
+            sectionLabel("Your numbers")
+
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                statTile(
+                    icon: "bolt.fill",
+                    tint: Theme.Colors.primaryBlue,
+                    value: "\(progressStore.totalSessions)",
+                    label: "Sessions"
+                )
+                statTile(
+                    icon: "star.fill",
+                    tint: Theme.Colors.insightYellow,
+                    value: "\(progressStore.totalXP)",
+                    label: "Total XP"
+                )
+                statTile(
+                    icon: "scope",
+                    tint: Theme.Colors.mindTeal,
+                    value: progressStore.totalSessions > 0
+                        ? "\(Int(progressStore.accuracy * 100))%"
+                        : "—",
+                    label: "Accuracy"
+                )
+                statTile(
+                    icon: "flame.fill",
+                    tint: Theme.Colors.errorSoftRed,
+                    value: progressStore.bestStreak > 0 ? "\(progressStore.bestStreak)" : "—",
+                    label: "Best streak"
+                )
+            }
+        }
+    }
+
+    private func statTile(icon: String, tint: Color, value: String, label: String) -> some View {
+        NumindCard {
+            VStack(alignment: .leading, spacing: 10) {
+                IconTile(systemName: icon, tintColor: tint, size: 36)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(value)
+                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text(label)
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-    }
-
-    private func goalRow(icon: String, tint: Color, title: String, value: String) -> some View {
-        HStack(spacing: 14) {
-            IconTile(systemName: icon, tintColor: tint, size: 36)
-            Text(title)
-                .font(Theme.Typography.body)
-                .fontWeight(.semibold)
-                .foregroundStyle(Theme.Colors.deepNavy)
-            Spacer()
-            Text(value)
-                .font(Theme.Typography.body)
-                .foregroundStyle(Theme.Colors.mutedText)
-        }
-        .padding(.vertical, 14)
-        .padding(.horizontal, 18)
     }
 
     // MARK: - App section
@@ -91,42 +120,24 @@ struct ProfileView: View {
         VStack(alignment: .leading, spacing: 12) {
             sectionLabel("App")
             NumindCard {
-                VStack(spacing: 0) {
+                Button { showResetAlert = true } label: {
                     HStack(spacing: 14) {
-                        IconTile(systemName: "square.and.arrow.up", tintColor: Theme.Colors.mutedText, size: 36)
-                        Text("Share Numind")
-                            .font(Theme.Typography.body)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Theme.Colors.deepNavy)
+                        IconTile(systemName: "arrow.counterclockwise", tintColor: Theme.Colors.errorSoftRed, size: 36)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Reset progress")
+                                .font(Theme.Typography.body)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Theme.Colors.errorSoftRed)
+                            Text("Clears all local lesson and quiz history")
+                                .font(Theme.Typography.small)
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        }
                         Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 13, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.mutedText)
                     }
                     .padding(.vertical, 14)
                     .padding(.horizontal, 18)
-
-                    Divider().background(Theme.Colors.hairline).padding(.leading, 18 + 36 + 14)
-
-                    Button { showResetAlert = true } label: {
-                        HStack(spacing: 14) {
-                            IconTile(systemName: "arrow.counterclockwise", tintColor: Theme.Colors.errorSoftRed, size: 36)
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Reset progress")
-                                    .font(Theme.Typography.body)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(Theme.Colors.errorSoftRed)
-                                Text("Clears all local lesson and quiz history")
-                                    .font(Theme.Typography.small)
-                                    .foregroundStyle(Theme.Colors.mutedText)
-                            }
-                            Spacer()
-                        }
-                        .padding(.vertical, 14)
-                        .padding(.horizontal, 18)
-                    }
-                    .buttonStyle(.plain)
                 }
+                .buttonStyle(.plain)
             }
         }
     }

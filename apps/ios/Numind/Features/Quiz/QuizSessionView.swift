@@ -39,8 +39,13 @@ struct QuizSessionView: View {
         }
         .onChange(of: viewModel.sessionState) { _, newState in
             if case .complete = newState { onComplete() }
-            if case .feedback = newState, viewModel.isCorrectAnswer {
-                showConfetti = true
+            if case .feedback = newState {
+                if viewModel.isCorrectAnswer {
+                    showConfetti = true
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                } else {
+                    UINotificationFeedbackGenerator().notificationOccurred(.error)
+                }
             }
             if case .question = newState {
                 showConfetti = false
@@ -123,7 +128,10 @@ struct QuizSessionView: View {
                         key: choiceKeys[safe: i] ?? "?",
                         text: choice.text,
                         state: questionCardState(for: choice),
-                        action: { viewModel.select(choice.id) }
+                        action: {
+                            viewModel.select(choice.id)
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        }
                     )
                 }
             }

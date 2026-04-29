@@ -112,20 +112,28 @@ struct ModuleDetailView: View {
 
     private func lessonRow(lesson: Lesson, index: Int) -> some View {
         let isDone = progressStore.hasCompletedLesson(lesson.id)
+        let moduleColor = viewModel.module.color
         return Button {
             selectedLesson = lesson
         } label: {
             HStack(spacing: 14) {
-                lessonTile(index: index, isDone: isDone)
+                lessonTile(index: index, isDone: isDone, moduleColor: moduleColor)
 
-                VStack(alignment: .leading, spacing: 3) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(lesson.title)
                         .font(Theme.Typography.body)
                         .fontWeight(.semibold)
                         .foregroundStyle(Theme.Colors.deepNavy)
-                    Text(isDone ? "Completed" : "\(lesson.quizTemplateIds.count) questions")
-                        .font(Theme.Typography.small)
-                        .foregroundStyle(isDone ? Theme.Colors.mindTeal : Theme.Colors.mutedText)
+                    if isDone {
+                        Text("Completed · \(lesson.quizTemplateIds.count) questions")
+                            .font(Theme.Typography.small)
+                            .foregroundStyle(moduleColor.tintColor)
+                    } else {
+                        Text(lesson.concept)
+                            .font(Theme.Typography.small)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .lineLimit(2)
+                    }
                 }
                 Spacer()
                 Image(systemName: "chevron.right")
@@ -138,18 +146,18 @@ struct ModuleDetailView: View {
         .buttonStyle(.plain)
     }
 
-    private func lessonTile(index: Int, isDone: Bool) -> some View {
+    private func lessonTile(index: Int, isDone: Bool, moduleColor: ModuleColor) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: Theme.Radius.pill, style: .continuous)
-                .fill(isDone ? Theme.Colors.mindTealTint : Theme.Colors.primaryBlueTint)
+                .fill(isDone ? moduleColor.tintBackground : Theme.Colors.mutedTint)
             if isDone {
                 Image(systemName: "checkmark")
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(Theme.Colors.mindTeal)
+                    .foregroundStyle(moduleColor.tintColor)
             } else {
                 Text("\(index + 1)")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Theme.Colors.primaryBlue)
+                    .foregroundStyle(Theme.Colors.mutedText)
             }
         }
         .frame(width: 36, height: 36)
@@ -158,7 +166,7 @@ struct ModuleDetailView: View {
     // MARK: - Footer
 
     private var footerNote: some View {
-        Text("Lessons unlock as you progress")
+        Text("More lessons coming soon")
             .font(Theme.Typography.small)
             .foregroundStyle(Theme.Colors.mutedText)
             .frame(maxWidth: .infinity)
