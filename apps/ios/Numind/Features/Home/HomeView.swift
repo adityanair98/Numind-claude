@@ -67,9 +67,9 @@ struct HomeView: View {
     private var timeBasedGreeting: String {
         let hour = Calendar.current.component(.hour, from: Date())
         let name = userName.isEmpty ? "there" : userName
-        if hour < 12 { return "Good morning, \(name)!" }
-        if hour < 17 { return "Good afternoon, \(name)!" }
-        return "Good evening, \(name)!"
+        if hour < 12 { return "👋 Good morning, \(name)!" }
+        if hour < 17 { return "👋 Good afternoon, \(name)!" }
+        return "👋 Good evening, \(name)!"
     }
 
     // MARK: - Streak + weekly strip
@@ -139,15 +139,37 @@ struct HomeView: View {
     private func workoutCard(_ card: HomeViewModel.LessonCard) -> some View {
         NumindCard {
             VStack(alignment: .leading, spacing: 14) {
+                // Header row: module icon + title/concept + duration pill
                 HStack(alignment: .top, spacing: 14) {
-                    IconTile(systemName: "bolt.fill", tintColor: Theme.Colors.primaryBlue, size: 56)
-                    VStack(alignment: .leading, spacing: 3) {
+                    IconTile(systemName: card.module.icon,
+                             tintColor: card.module.color.tintColor, size: 52)
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack(alignment: .center, spacing: 6) {
+                            Text(card.module.title.uppercased())
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundStyle(card.module.color.tintColor)
+                                .kerning(0.6)
+                            Spacer()
+                            HStack(spacing: 3) {
+                                Image(systemName: "clock")
+                                    .font(.system(size: 10, weight: .medium))
+                                Text("5–7 min")
+                                    .font(.system(size: 11, weight: .semibold))
+                            }
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(Theme.Colors.mutedTint)
+                            .clipShape(Capsule())
+                        }
                         Text(card.lesson.title)
                             .font(Theme.Typography.headline)
                             .foregroundStyle(Theme.Colors.deepNavy)
-                        Text("\(card.module.title) · \(card.questionCount) questions")
+                        Text(card.lesson.concept)
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Colors.mutedText)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
 
@@ -155,8 +177,12 @@ struct HomeView: View {
                     BeadRail(progress: 0, total: card.questionCount, variant: .chunky)
                     Spacer()
                     Text("+\(card.xpReward) XP")
-                        .font(Theme.Typography.small)
-                        .foregroundStyle(Theme.Colors.mutedText)
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(Theme.Colors.insightText)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(Theme.Colors.insightYellowTint)
+                        .clipShape(Capsule())
                 }
 
                 PillButton("Start workout") { launchCard = card }
