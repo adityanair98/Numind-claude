@@ -66,4 +66,16 @@ final class ProgressStore: ObservableObject {
     func skillLevelProgress(moduleId: String) -> Double {
         data.skillLevelProgress(moduleId: moduleId)
     }
+
+    /// Most-recent sessions, newest first.
+    func recentSessions(limit: Int = 5) -> [SessionRecord] {
+        Array(data.sessions.suffix(limit).reversed())
+    }
+
+    /// Best accuracy (0–1) across all attempts of a lesson, or nil if never attempted.
+    func bestAccuracy(lessonId: String) -> Double? {
+        let s = data.sessions.filter { $0.lessonId == lessonId }
+        guard !s.isEmpty else { return nil }
+        return s.map { Double($0.correctCount) / Double(max($0.totalCount, 1)) }.max()
+    }
 }

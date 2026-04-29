@@ -268,7 +268,8 @@ struct ProfileView: View {
     private var joinedDateString: String {
         let f = DateFormatter()
         f.dateFormat = "MMMM yyyy"
-        return f.string(from: Date())
+        let date = UserDefaults.standard.object(forKey: "numind.installDate") as? Date ?? Date()
+        return f.string(from: date)
     }
 
     private func sectionLabel(_ text: String) -> some View {

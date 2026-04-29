@@ -31,6 +31,7 @@
 		67D878B3D04A62674B2FB5A9 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BB9CE3DE6BE36D7F6D1D51 /* Spacing.swift */; };
 		6A4B6D457E27E05283815D00 /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30769F1EBA741149D714254B /* QuizQuestion.swift */; };
 		6ECFD6DFCC5D5233EF6F7EA6 /* ModuleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97E63367A0CE1E7DE1EF52 /* ModuleColor.swift */; };
+		6F61FB86B7ECC93DBAA85A0A /* SkillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104EF4E67FF992DB37C6AA54 /* SkillDetailView.swift */; };
 		74D7B638A7BDC51FB653C7DF /* OptionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98F41FD249430B232E53CD1 /* OptionCard.swift */; };
 		780705FB6704A43F599ABF29 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */; };
 		7848D2CEA968C67B0E532C05 /* SessionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29DDF75E961E74E542F381E /* SessionRecord.swift */; };
@@ -71,6 +72,7 @@
 /* Begin PBXFileReference section */
 		09E47647944F778EBA32D80A /* NumindCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindCard.swift; sourceTree = "<group>"; };
 		0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemPreviewView.swift; sourceTree = "<group>"; };
+		104EF4E67FF992DB37C6AA54 /* SkillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDetailView.swift; sourceTree = "<group>"; };
 		1524705B8209C6D4E3F0CC73 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDetailViewModel.swift; sourceTree = "<group>"; };
 		1BD9B2F3BDAC926EC7E3C7CC /* quiz_templates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = quiz_templates.json; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				38AE88137BBFD45A10176D7C /* ProgressTabView.swift */,
+				104EF4E67FF992DB37C6AA54 /* SkillDetailView.swift */,
 			);
 			path = Progress;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				8F366A7A2AEDFD3A01A34D53 /* SeededRandomGenerator.swift in Sources */,
 				7848D2CEA968C67B0E532C05 /* SessionRecord.swift in Sources */,
 				33C0DB88E228E4124E5AD8AF /* SessionSummaryView.swift in Sources */,
+				6F61FB86B7ECC93DBAA85A0A /* SkillDetailView.swift in Sources */,
 				67D878B3D04A62674B2FB5A9 /* Spacing.swift in Sources */,
 				ABB4DCEF756B3B22D030E601 /* Theme.swift in Sources */,
 				2D0CCB9595793F157B29D8E4 /* Typography.swift in Sources */,

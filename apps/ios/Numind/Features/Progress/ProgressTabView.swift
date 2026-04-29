@@ -4,6 +4,7 @@ struct ProgressTabView: View {
     @EnvironmentObject private var store: ProgressStore
 
     private let modules = LocalContentRepository().allModules()
+    private let repo = LocalContentRepository()
     private let weekDayLabels = ["M", "T", "W", "T", "F", "S", "S"]
 
     // Drives the streak ring sweep-in animation
@@ -93,8 +94,27 @@ struct ProgressTabView: View {
                 overviewCard
                 sectionLabel("Weekly goal")
                 weeklyGoalCard
-                sectionLabel("Skill mastery")
+
+                // Skill mastery with "See all" link
+                HStack(alignment: .firstTextBaseline) {
+                    sectionLabel("Skill mastery")
+                    Spacer()
+                    NavigationLink(destination: SkillDetailView()) {
+                        Text("See all")
+                            .font(Theme.Typography.small)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Theme.Colors.primaryBlue)
+                    }
+                }
                 skillMasteryCard
+
+                // Recent activity (only when sessions exist)
+                let recent = store.recentSessions(limit: 5)
+                if !recent.isEmpty {
+                    sectionLabel("Recent activity")
+                    recentActivityCard(sessions: recent)
+                }
+
                 totalXPCard
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
@@ -304,6 +324,69 @@ struct ProgressTabView: View {
                 IconTile(systemName: "trophy.fill", tintColor: Theme.Colors.insightYellow, size: 48)
             }
         }
+    }
+
+    // MARK: - Recent activity
+
+    private func recentActivityCard(sessions: [SessionRecord]) -> some View {
+        NumindCard {
+            VStack(spacing: 0) {
+                ForEach(Array(sessions.enumerated()), id: \.element.id) { i, session in
+                    recentRow(session, isLast: i == sessions.count - 1)
+                }
+            }
+        }
+    }
+
+    private func recentRow(_ session: SessionRecord, isLast: Bool) -> some View {
+        // Look up module + lesson for display info
+        let module = modules.first { $0.id == session.moduleId }
+        let lesson  = repo.lessons(for: session.moduleId).first { $0.id == session.lessonId }
+        let accuracy = Int(Double(session.correctCount) / Double(max(session.totalCount, 1)) * 100)
+
+        return VStack(spacing: 0) {
+            HStack(spacing: 12) {
+                IconTile(
+                    systemName: module?.icon ?? "book.fill",
+                    tintColor: module?.color.tintColor ?? Theme.Colors.primaryBlue,
+                    size: 36
+                )
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(lesson?.title ?? session.lessonId)
+                        .font(Theme.Typography.body)
+                        .fontWeight(.medium)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .lineLimit(1)
+                    Text(relativeDate(session.date))
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+                Spacer()
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("\(session.correctCount)/\(session.totalCount)")
+                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text("\(accuracy)%")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(accuracy >= 80
+                                         ? Theme.Colors.mindTeal
+                                         : Theme.Colors.mutedText)
+                }
+            }
+            .padding(.vertical, 12)
+            if !isLast {
+                Divider().background(Theme.Colors.hairline)
+            }
+        }
+    }
+
+    private func relativeDate(_ date: Date) -> String {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(date)     { return "Today" }
+        if calendar.isDateInYesterday(date) { return "Yesterday" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+        return formatter.string(from: date)
     }
 
     // MARK: - Helpers
