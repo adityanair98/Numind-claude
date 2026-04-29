@@ -47,6 +47,7 @@
 		B5311AB63A1F647D2E37D563 /* ModuleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */; };
 		D0B52158341507F98500AFB7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860D435039106101616AB8EF /* HomeView.swift */; };
 		D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */; };
+		D762F58C31C4DEDD825A362E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E1EFBBB00B27BBC9B6C5CA /* OnboardingView.swift */; };
 		EB7110E292B1F140F390751B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93AF8C68EA7C1F3DE444C1C /* HomeViewModel.swift */; };
 		F019F76F7180D1815BFCAD16 /* quiz_templates.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BD9B2F3BDAC926EC7E3C7CC /* quiz_templates.json */; };
 		F4D0FAE3B58BC70BA9008747 /* QuizSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C0AA52152D1BE63F1AFA33 /* QuizSessionView.swift */; };
@@ -109,6 +110,7 @@
 		CFB662BA3033BF189F6992B1 /* ProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStore.swift; sourceTree = "<group>"; };
 		D29DDF75E961E74E542F381E /* SessionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRecord.swift; sourceTree = "<group>"; };
 		DD97E63367A0CE1E7DE1EF52 /* ModuleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleColor.swift; sourceTree = "<group>"; };
+		E1E1EFBBB00B27BBC9B6C5CA /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E25112B5A1394145F294F64F /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		E93AF8C68EA7C1F3DE444C1C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		F76E087252FEBD5528A5BC82 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			children = (
 				A4C1A123BDC4BEEF2C9DC478 /* Home */,
 				E0457C022D78F068CD761262 /* Learn */,
+				8C4CFCFF612FFC108584D74F /* Onboarding */,
 				51E822FB9EA278DD2423EB9C /* Profile */,
 				F15BC27AC957E34B812A182D /* Progress */,
 				28D7E95382CF37B810301490 /* Quiz */,
@@ -230,6 +233,14 @@
 				44C6A312F7BA2F613EB4022F /* QuizEngine */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		8C4CFCFF612FFC108584D74F /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				E1E1EFBBB00B27BBC9B6C5CA /* OnboardingView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		8E8CE37FB1B8D59B2E44BA4B /* Resources */ = {
@@ -481,6 +492,7 @@
 				B5311AB63A1F647D2E37D563 /* ModuleDetailViewModel.swift in Sources */,
 				53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */,
 				386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */,
+				D762F58C31C4DEDD825A362E /* OnboardingView.swift in Sources */,
 				74D7B638A7BDC51FB653C7DF /* OptionCard.swift in Sources */,
 				8811D01840392F9AFACC1076 /* PillButton.swift in Sources */,
 				4887433834B6D49BDA97324D /* ProfileView.swift in Sources */,

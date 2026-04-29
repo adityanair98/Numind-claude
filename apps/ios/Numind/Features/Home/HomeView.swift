@@ -4,6 +4,7 @@ struct HomeView: View {
     @EnvironmentObject private var progressStore: ProgressStore
     @StateObject private var viewModel = HomeViewModel()
     @State private var launchCard: HomeViewModel.LessonCard?
+    @AppStorage("numind.userName") private var userName = "You"
 
     var body: some View {
         ScrollView {
@@ -45,7 +46,7 @@ struct HomeView: View {
         HStack(spacing: 14) {
             ZStack {
                 Circle().fill(Theme.Colors.primaryBlueTint)
-                Text("A")
+                Text(String(userName.prefix(1)).uppercased())
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .foregroundStyle(Theme.Colors.primaryBlue)
             }
@@ -65,9 +66,10 @@ struct HomeView: View {
 
     private var timeBasedGreeting: String {
         let hour = Calendar.current.component(.hour, from: Date())
-        if hour < 12 { return "Good morning, Alex!" }
-        if hour < 17 { return "Good afternoon, Alex!" }
-        return "Good evening, Alex!"
+        let name = userName.isEmpty ? "there" : userName
+        if hour < 12 { return "Good morning, \(name)!" }
+        if hour < 17 { return "Good afternoon, \(name)!" }
+        return "Good evening, \(name)!"
     }
 
     // MARK: - Streak + weekly strip

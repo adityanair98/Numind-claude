@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject private var progressStore: ProgressStore
+    @AppStorage("numind.userName") private var userName = "You"
     @State private var showResetAlert = false
 
     var body: some View {
@@ -34,12 +35,12 @@ struct ProfileView: View {
                     Circle()
                         .fill(Theme.Colors.primaryBlueTint)
                         .frame(width: 56, height: 56)
-                    Text("A")
+                    Text(String(userName.prefix(1)).uppercased())
                         .font(.system(size: 22, weight: .bold, design: .rounded))
                         .foregroundStyle(Theme.Colors.primaryBlue)
                 }
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Alex")
+                    Text(userName)
                         .font(Theme.Typography.headline)
                         .foregroundStyle(Theme.Colors.deepNavy)
                     Text("Member since \(joinedDateString)")
