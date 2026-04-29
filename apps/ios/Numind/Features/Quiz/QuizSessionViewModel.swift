@@ -32,6 +32,17 @@ final class QuizSessionViewModel: ObservableObject {
     @Published private(set) var sessionState: SessionState = .question
     @Published private(set) var results: [QuizResult] = []
 
+    // MARK: - Timer
+
+    private let sessionStartDate = Date()
+    private var stoppedAt: Date? = nil
+
+    var elapsedTimeString: String {
+        let ref = stoppedAt ?? Date()
+        let elapsed = Int(ref.timeIntervalSince(sessionStartDate))
+        return String(format: "%02d:%02d", elapsed / 60, elapsed % 60)
+    }
+
     // MARK: - Derived
 
     var currentQuestion: QuizQuestion { questions[currentIndex] }
@@ -84,6 +95,7 @@ final class QuizSessionViewModel: ObservableObject {
             currentIndex = next
             sessionState = .question
         } else {
+            stoppedAt = Date()
             sessionState = .complete
         }
     }

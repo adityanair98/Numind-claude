@@ -7,10 +7,17 @@ struct QuizSessionView: View {
     @ObservedObject var viewModel: QuizSessionViewModel
     let onComplete: () -> Void
 
+    @State private var showConfetti = false
+
     var body: some View {
         ZStack(alignment: .bottom) {
             scrollContent
             footer
+            if showConfetti {
+                ConfettiView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .ignoresSafeArea()
+            }
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
@@ -25,15 +32,32 @@ struct QuizSessionView: View {
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Text("\(viewModel.currentIndex + 1) / \(viewModel.total)")
-                    .font(Theme.Typography.small)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Theme.Colors.mutedText)
+                TimelineView(.periodic(from: .now, by: 1)) { _ in
+                    timerPill
+                }
             }
         }
         .onChange(of: viewModel.sessionState) { _, newState in
             if case .complete = newState { onComplete() }
+            if case .feedback = newState, viewModel.isCorrectAnswer {
+                showConfetti = true
+            }
+            if case .question = newState {
+                showConfetti = false
+            }
         }
+    }
+
+    // MARK: - Timer pill
+
+    private var timerPill: some View {
+        Text(viewModel.elapsedTimeString)
+            .font(.system(size: 12, weight: .semibold, design: .monospaced))
+            .foregroundStyle(Theme.Colors.mutedText)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
+            .background(Theme.Colors.mutedTint)
+            .clipShape(Capsule())
     }
 
     // MARK: - Scroll content
@@ -45,12 +69,18 @@ struct QuizSessionView: View {
                 switch viewModel.sessionState {
                 case .question, .answered:
                     questionContent
+                        .transition(.opacity)
                 case .feedback:
                     feedbackContent
+                        .transition(.asymmetric(
+                            insertion: .scale(scale: 0.92).combined(with: .opacity),
+                            removal: .opacity
+                        ))
                 case .complete:
                     EmptyView()
                 }
             }
+            .animation(.spring(response: 0.38, dampingFraction: 0.72), value: viewModel.sessionState)
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.top, 8)
             .padding(.bottom, Theme.Spacing.buttonHeight + 52)
@@ -73,7 +103,6 @@ struct QuizSessionView: View {
     private var questionContent: some View {
         let q = viewModel.currentQuestion
         return VStack(spacing: Theme.Spacing.sectionSpacing) {
-            // Question card
             NumindCard {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Question \(viewModel.currentIndex + 1)")
@@ -88,7 +117,6 @@ struct QuizSessionView: View {
                 }
             }
 
-            // Options
             VStack(spacing: 10) {
                 ForEach(Array(q.choices.enumerated()), id: \.element.id) { i, choice in
                     OptionCard(
@@ -113,36 +141,10 @@ struct QuizSessionView: View {
         let q = viewModel.currentQuestion
         let isCorrect = viewModel.isCorrectAnswer
         return VStack(spacing: Theme.Spacing.sectionSpacing) {
-            // Result hero
             resultHeroCard(isCorrect: isCorrect)
-
-            // Options recap
-            VStack(spacing: 10) {
-                ForEach(Array(q.choices.enumerated()), id: \.element.id) { i, choice in
-                    OptionCard(
-                        key: choiceKeys[safe: i] ?? "?",
-                        text: choice.text,
-                        state: feedbackCardState(for: choice),
-                        action: {}
-                    )
-                    .opacity(isHighlighted(choice) ? 1 : 0.45)
-                }
-            }
-
-            // Explanation
-            NumindCard {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Why")
-                        .font(Theme.Typography.small)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Theme.Colors.primaryBlue)
-                        .textCase(.uppercase)
-                        .kerning(0.6)
-                    Text(q.explanation)
-                        .font(Theme.Typography.body)
-                        .foregroundStyle(Theme.Colors.deepNavy)
-                }
-            }
+            answerRevealPill(for: q, isCorrect: isCorrect)
+            optionsRecap(for: q, isCorrect: isCorrect)
+            whyCard(explanation: q.explanation)
         }
     }
 
@@ -157,14 +159,62 @@ struct QuizSessionView: View {
                         .font(.system(size: 28, weight: .bold))
                         .foregroundStyle(.white)
                 }
+                .scaleEffect(1)
                 Text(isCorrect ? "Nice — that's right." : "Not quite.")
                     .font(Theme.Typography.title)
                     .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
-                Text(isCorrect ? "+10 XP" : "Keep going")
+                Text(isCorrect ? "+10 XP · streak +1" : "No penalty — keep going.")
                     .font(Theme.Typography.caption)
-                    .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+                    .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.mutedText)
             }
             .frame(maxWidth: .infinity)
+        }
+    }
+
+    private func answerRevealPill(for q: QuizQuestion, isCorrect: Bool) -> some View {
+        let correct = q.choices.first { $0.id == q.correctChoiceId }
+        return Text(correct?.text ?? "")
+            .font(.system(size: 30, weight: .bold, design: .rounded))
+            .foregroundStyle(.white)
+            .padding(.horizontal, 32)
+            .padding(.vertical, 14)
+            .frame(maxWidth: .infinity)
+            .background(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+            .clipShape(Capsule())
+    }
+
+    private func optionsRecap(for q: QuizQuestion, isCorrect: Bool) -> some View {
+        VStack(spacing: 10) {
+            ForEach(Array(q.choices.enumerated()), id: \.element.id) { i, choice in
+                OptionCard(
+                    key: choiceKeys[safe: i] ?? "?",
+                    text: choice.text,
+                    state: feedbackCardState(for: choice),
+                    action: {}
+                )
+                .opacity(isHighlighted(choice) ? 1 : 0.45)
+            }
+        }
+    }
+
+    private func whyCard(explanation: String) -> some View {
+        NumindCard(background: Theme.Colors.insightYellowTint) {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 8) {
+                    Image(systemName: "lightbulb.fill")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.insightText)
+                    Text("Why")
+                        .font(Theme.Typography.small)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Theme.Colors.insightText)
+                        .textCase(.uppercase)
+                        .kerning(0.6)
+                }
+                Text(explanation)
+                    .font(Theme.Typography.body)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+            }
         }
     }
 
@@ -204,9 +254,9 @@ struct QuizSessionView: View {
     private var footerButton: some View {
         switch viewModel.sessionState {
         case .question:
-            checkAnswerButtonView(enabled: false)
+            checkAnswerButton(enabled: false)
         case .answered:
-            checkAnswerButtonView(enabled: true)
+            checkAnswerButton(enabled: true)
         case .feedback:
             PillButton("Continue") { viewModel.advance() }
         case .complete:
@@ -214,7 +264,7 @@ struct QuizSessionView: View {
         }
     }
 
-    private func checkAnswerButtonView(enabled: Bool) -> some View {
+    private func checkAnswerButton(enabled: Bool) -> some View {
         Button { viewModel.checkAnswer() } label: {
             Text("Check answer")
                 .font(.system(size: 17, weight: .semibold))
@@ -229,7 +279,6 @@ struct QuizSessionView: View {
     }
 }
 
-// Safe subscript for the keys array
 private extension Array {
     subscript(safe index: Int) -> Element? {
         indices.contains(index) ? self[index] : nil
