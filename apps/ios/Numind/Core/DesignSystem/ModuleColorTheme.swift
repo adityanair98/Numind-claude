@@ -9,6 +9,8 @@ extension ModuleColor {
         case .teal:   return Theme.Colors.mindTeal
         case .yellow: return Theme.Colors.insightYellow
         case .orange: return Theme.Colors.warmOrange
+        case .green:  return Theme.Colors.growthGreen
+        case .indigo: return Theme.Colors.investIndigo
         case .muted:  return Theme.Colors.mutedText
         }
     }
@@ -19,6 +21,8 @@ extension ModuleColor {
         case .teal:   return Theme.Colors.mindTealTint
         case .yellow: return Theme.Colors.insightYellowTint
         case .orange: return Theme.Colors.warmOrangeTint
+        case .green:  return Theme.Colors.growthGreenTint
+        case .indigo: return Theme.Colors.investIndigoTint
         case .muted:  return Theme.Colors.mutedTint
         }
     }

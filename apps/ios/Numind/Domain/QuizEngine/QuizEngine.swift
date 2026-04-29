@@ -167,6 +167,66 @@ struct QuizEngine {
             guard let price = vars["itemPrice"] else { return nil }
             return price
         },
+        // Salary & Income
+        "grossToNet": { vars in
+            guard let gross = vars["grossPay"],
+                  let pct = vars["deductionPercent"] else { return nil }
+            return gross * (1 - pct / 100)
+        },
+        "annualToMonthly": { vars in
+            guard let annual = vars["annualSalary"] else { return nil }
+            return annual / 12
+        },
+        "raiseAmount": { vars in
+            guard let salary = vars["annualSalary"],
+                  let pct = vars["raisePercent"] else { return nil }
+            return salary * pct / 100
+        },
+        "raisedSalary": { vars in
+            guard let salary = vars["annualSalary"],
+                  let pct = vars["raisePercent"] else { return nil }
+            return salary * (1 + pct / 100)
+        },
+        "overtimePay": { vars in
+            guard let rate = vars["regularRate"],
+                  let hours = vars["overtimeHours"] else { return nil }
+            return rate * 1.5 * hours
+        },
+        "biweeklyToAnnual": { vars in
+            guard let biweekly = vars["biweeklySalary"] else { return nil }
+            return biweekly * 26
+        },
+        "weeklyToAnnual": { vars in
+            guard let weekly = vars["weeklySalary"] else { return nil }
+            return weekly * 52
+        },
+        // Investing Basics
+        "simpleInterest": { vars in
+            guard let principal = vars["principal"],
+                  let rate = vars["interestRate"],
+                  let years = vars["years"] else { return nil }
+            return principal * rate / 100 * years
+        },
+        "totalWithInterest": { vars in
+            guard let principal = vars["principal"],
+                  let rate = vars["interestRate"],
+                  let years = vars["years"] else { return nil }
+            return principal * (1 + rate / 100 * years)
+        },
+        "rule72": { vars in
+            guard let rate = vars["interestRate"], rate > 0 else { return nil }
+            return 72 / rate
+        },
+        "roiPercent": { vars in
+            guard let cost = vars["cost"], cost > 0,
+                  let gain = vars["gain"] else { return nil }
+            return (gain / cost) * 100
+        },
+        "dollarReturn": { vars in
+            guard let cost = vars["cost"],
+                  let pct = vars["roiPercent"] else { return nil }
+            return cost * pct / 100
+        },
         // Estimation — rounding
         "estimateSumNearestTen": { vars in
             guard let a = vars["priceA"], let b = vars["priceB"] else { return nil }
@@ -290,10 +350,23 @@ struct QuizEngine {
 
     private static func render(_ template: String, variables: [String: Double]) -> String {
         var result = template
+        let groupFormatter: NumberFormatter = {
+            let f = NumberFormatter()
+            f.numberStyle = .decimal
+            f.usesGroupingSeparator = true
+            return f
+        }()
         for (key, value) in variables {
-            let text = value.truncatingRemainder(dividingBy: 1) == 0
-                ? String(Int(value))
-                : String(format: "%.2f", value)
+            let text: String
+            if value.truncatingRemainder(dividingBy: 1) == 0 {
+                let intVal = Int(value)
+                // Use comma grouping for large integers so prompts read naturally
+                text = intVal >= 1_000
+                    ? (groupFormatter.string(from: NSNumber(value: intVal)) ?? String(intVal))
+                    : String(intVal)
+            } else {
+                text = String(format: "%.2f", value)
+            }
             result = result.replacingOccurrences(of: "{{\(key)}}", with: text)
         }
         return result

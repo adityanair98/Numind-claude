@@ -36,6 +36,22 @@
     "lessonIds": ["sales_tax_quick", "cart_total_estimate", "budget_check", "subscription_math", "price_per_use"]
   },
   {
+    "id": "salary",
+    "title": "Salary & Income",
+    "subtitle": "Understand your paycheck and job offers",
+    "icon": "briefcase.fill",
+    "color": "green",
+    "lessonIds": ["net_pay_check", "raise_impact", "overtime_calc", "pay_period_convert"]
+  },
+  {
+    "id": "investing",
+    "title": "Investing Basics",
+    "subtitle": "Interest, returns, and your money growing",
+    "icon": "chart.line.uptrend.xyaxis",
+    "color": "indigo",
+    "lessonIds": ["simple_interest", "rule_of_72", "roi_basic"]
+  },
+  {
     "id": "estimation",
     "title": "Estimation & Shortcuts",
     "subtitle": "Fast mental math for any situation",

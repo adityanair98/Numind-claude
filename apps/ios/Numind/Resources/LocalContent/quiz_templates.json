@@ -366,6 +366,172 @@
     "explanationTemplate": "Price per item = total ÷ quantity. ${{totalPrice}} ÷ {{quantity}}: divide evenly to find the per-unit cost."
   },
   {
+    "id": "net_pay_deduction",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "Your gross monthly pay is ${{grossPay}}. After {{deductionPercent}}% in deductions, what's your net (take-home) pay?",
+    "variableRules": [
+      { "name": "grossPay", "options": [2000, 2500, 3000, 3500, 4000, 4500, 5000] },
+      { "name": "deductionPercent", "options": [25, 28, 30] }
+    ],
+    "answerFormula": "grossToNet",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Net pay = gross × (1 − deduction%). ${{grossPay}} × (1 − {{deductionPercent}}%) = your take-home amount."
+  },
+  {
+    "id": "annual_to_monthly_pay",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "A job offers ${{annualSalary}}/year. What's the approximate monthly gross pay?",
+    "variableRules": [
+      { "name": "annualSalary", "options": [36000, 48000, 60000, 72000, 84000, 96000] }
+    ],
+    "answerFormula": "annualToMonthly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly pay = annual ÷ 12. ${{annualSalary}} ÷ 12 = monthly gross."
+  },
+  {
+    "id": "raise_dollar_amount",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You earn ${{annualSalary}}/year and get a {{raisePercent}}% raise. How much extra money is that per year?",
+    "variableRules": [
+      { "name": "annualSalary", "options": [40000, 50000, 60000, 70000, 80000] },
+      { "name": "raisePercent", "options": [3, 5, 10] }
+    ],
+    "answerFormula": "raiseAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Annual raise = salary × raise%. ${{annualSalary}} × {{raisePercent}}% = extra per year."
+  },
+  {
+    "id": "raise_new_salary",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Your salary is ${{annualSalary}}/year. After a {{raisePercent}}% raise, what's your new annual salary?",
+    "variableRules": [
+      { "name": "annualSalary", "options": [40000, 50000, 60000, 70000, 80000] },
+      { "name": "raisePercent", "options": [3, 5, 10] }
+    ],
+    "answerFormula": "raisedSalary",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "New salary = old × (1 + raise%). ${{annualSalary}} × (1 + {{raisePercent}}%) = new annual pay."
+  },
+  {
+    "id": "overtime_pay_calc",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Your regular pay is ${{regularRate}}/hr. You work {{overtimeHours}} hours of overtime this week. How much is your overtime pay?",
+    "variableRules": [
+      { "name": "regularRate", "options": [15, 18, 20, 22, 25] },
+      { "name": "overtimeHours", "options": [2, 4, 6, 8, 10] }
+    ],
+    "answerFormula": "overtimePay",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Overtime pay = regular rate × 1.5 × overtime hours. ${{regularRate}} × 1.5 = ${{regularRate}} overtime rate, then × {{overtimeHours}} hours."
+  },
+  {
+    "id": "biweekly_to_annual",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You're paid ${{biweeklySalary}} every two weeks (bi-weekly). What's your annual salary?",
+    "variableRules": [
+      { "name": "biweeklySalary", "options": [1000, 1500, 2000, 2500, 3000] }
+    ],
+    "answerFormula": "biweeklyToAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Bi-weekly × 26 pay periods = annual. ${{biweeklySalary}} × 26 = annual salary. There are 26 bi-weekly periods in a year, not 24."
+  },
+  {
+    "id": "weekly_to_annual",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "You earn ${{weeklySalary}} per week. What's your annual income?",
+    "variableRules": [
+      { "name": "weeklySalary", "options": [500, 600, 700, 800, 900, 1000] }
+    ],
+    "answerFormula": "weeklyToAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Weekly × 52 = annual. ${{weeklySalary}} × 52 weeks = annual income."
+  },
+  {
+    "id": "simple_interest_earned",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "You invest ${{principal}} at {{interestRate}}% simple interest per year for {{years}} years. How much interest do you earn in total?",
+    "variableRules": [
+      { "name": "principal", "options": [500, 1000, 2000, 5000] },
+      { "name": "interestRate", "options": [2, 3, 5, 8] },
+      { "name": "years", "options": [1, 2, 3, 5] }
+    ],
+    "answerFormula": "simpleInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Interest = Principal × Rate × Time. ${{principal}} × {{interestRate}}% × {{years}} years."
+  },
+  {
+    "id": "total_balance_with_interest",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "You deposit ${{principal}} at {{interestRate}}% simple interest for {{years}} years. What's your total balance?",
+    "variableRules": [
+      { "name": "principal", "options": [500, 1000, 2000, 5000] },
+      { "name": "interestRate", "options": [2, 3, 5, 8] },
+      { "name": "years", "options": [1, 2, 3, 5] }
+    ],
+    "answerFormula": "totalWithInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = Principal × (1 + Rate × Time). Add the interest earned to your original ${{principal}}."
+  },
+  {
+    "id": "rule_of_72_years",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Using the Rule of 72, how many years does it take for money to double at {{interestRate}}% per year?",
+    "variableRules": [
+      { "name": "interestRate", "options": [2, 3, 4, 6, 8, 9, 12] }
+    ],
+    "answerFormula": "rule72",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Rule of 72: years to double = 72 ÷ rate. 72 ÷ {{interestRate}} = years."
+  },
+  {
+    "id": "roi_percent_calc",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "You invested ${{cost}} and made a profit of ${{gain}}. What's your return on investment (ROI)?",
+    "variableRules": [
+      { "name": "cost", "options": [100, 200, 500] },
+      { "name": "gain", "options": [20, 50, 100] }
+    ],
+    "answerFormula": "roiPercent",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "ROI% = (gain ÷ cost) × 100. ${{gain}} ÷ ${{cost}} × 100 = your ROI."
+  },
+  {
+    "id": "dollar_return_calc",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "You invest ${{cost}} and earn a {{roiPercent}}% return. How much money do you make in profit?",
+    "variableRules": [
+      { "name": "cost", "options": [500, 1000, 2000, 5000] },
+      { "name": "roiPercent", "options": [5, 10, 20, 25] }
+    ],
+    "answerFormula": "dollarReturn",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Dollar return = cost × ROI% ÷ 100. ${{cost}} × {{roiPercent}}% = profit."
+  },
+  {
     "id": "estimate_two_items",
     "moduleId": "estimation",
     "difficulty": 1,

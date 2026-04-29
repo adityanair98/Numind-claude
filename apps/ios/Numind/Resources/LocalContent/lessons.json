@@ -135,6 +135,69 @@
     "quizTemplateIds": ["cart_total", "unit_price_check"]
   },
   {
+    "id": "net_pay_check",
+    "moduleId": "salary",
+    "title": "Gross vs net — what you actually keep",
+    "concept": "Your gross pay is what you earn before taxes. Net pay is what arrives in your bank account. Between federal tax, state tax, Social Security, and Medicare, most workers keep 70–75 cents of every dollar earned. Always plan your budget with net, never gross.",
+    "shortcut": "Quick estimate: take 25–30% off gross to get net. Earning $3,000/month gross? Expect $2,100–$2,250 net. For annual salary: divide by 12 to get monthly gross, then knock off 25–30% for a working budget number.",
+    "example": "Gross pay: $3,000/month\n−25% deductions = $750\nNet pay ≈ $2,250\n\n$60,000 salary\n÷ 12 = $5,000/month gross\n−25% = $3,750 net",
+    "quizTemplateIds": ["net_pay_deduction", "annual_to_monthly_pay"]
+  },
+  {
+    "id": "raise_impact",
+    "moduleId": "salary",
+    "title": "What a % raise really adds",
+    "concept": "A percentage raise sounds exciting, but the real number is what lands in your paycheck. A 5% raise on $60,000 is $3,000 more per year — about $250/month before taxes. Knowing the actual dollar impact helps you negotiate and plan clearly.",
+    "shortcut": "Annual raise = current salary × raise% ÷ 100. Monthly bump = ÷ 12. After-tax estimate: multiply by 0.70. Quick mental math: 5% on any salary is half of 10% — and 10% is just move the decimal.",
+    "example": "Salary: $60,000\n5% raise = $3,000/year\nPer month = $250\nAfter tax ≈ $175/month",
+    "quizTemplateIds": ["raise_dollar_amount", "raise_new_salary"]
+  },
+  {
+    "id": "overtime_calc",
+    "moduleId": "salary",
+    "title": "Overtime pay — time and a half",
+    "concept": "Overtime in the US is 1.5× your regular rate for hours worked beyond 40 per week. Those extra hours pay significantly more — 8 hours of overtime at $20/hr earns you $240, not $160.",
+    "shortcut": "Overtime rate = regular rate × 1.5. Multiply by overtime hours for your extra pay. At $20/hr: overtime rate = $30. 8 hours × $30 = $240 extra. Calculate before committing to a long week — overtime adds up fast.",
+    "example": "Regular rate: $20/hr\nOvertime rate: $20 × 1.5 = $30/hr\n8 OT hours × $30 = $240\nVs. 8 regular hours = $160",
+    "quizTemplateIds": ["overtime_pay_calc"]
+  },
+  {
+    "id": "pay_period_convert",
+    "moduleId": "salary",
+    "title": "Compare pay across periods",
+    "concept": "Job offers quote pay in different periods — weekly, bi-weekly, monthly, annual. Bi-weekly (every two weeks) is 26 pay periods per year, not 24. Converting to annual first puts every offer on the same footing.",
+    "shortcut": "Annual ÷ 52 = weekly. Annual ÷ 26 = bi-weekly. Annual ÷ 12 = monthly. In reverse: bi-weekly × 26 = annual. The most common mistake: treating bi-weekly as semi-monthly (24 periods instead of 26) — it under-counts two paychecks a year.",
+    "example": "$50,000/year\n÷ 26 = $1,923 bi-weekly\n÷ 12 = $4,167/month\n÷ 52 = $962/week",
+    "quizTemplateIds": ["biweekly_to_annual", "weekly_to_annual"]
+  },
+  {
+    "id": "simple_interest",
+    "moduleId": "investing",
+    "title": "Simple interest — the baseline",
+    "concept": "Simple interest is the most transparent form of interest: you earn the same amount each period on the original principal. No compounding, no surprises. It's used in short-term loans, bonds, and savings accounts as a reference point.",
+    "shortcut": "Interest = Principal × Rate × Time. $1,000 at 5%/year for 3 years = $1,000 × 0.05 × 3 = $150 total interest. Total balance = $1,150. The formula never changes — just substitute your numbers.",
+    "example": "Principal: $1,000\nRate: 5%/year\nTime: 3 years\nInterest = $1,000 × 5% × 3 = $150\nBalance = $1,150",
+    "quizTemplateIds": ["simple_interest_earned", "total_balance_with_interest"]
+  },
+  {
+    "id": "rule_of_72",
+    "moduleId": "investing",
+    "title": "The Rule of 72 — when does it double?",
+    "concept": "The Rule of 72 is a mental math shortcut: divide 72 by the annual interest rate to estimate how many years it takes for money to double. It works for any growth rate — investment returns, debt interest, even inflation.",
+    "shortcut": "Years to double = 72 ÷ annual rate. At 8%: 72 ÷ 8 = 9 years. At 6%: 72 ÷ 6 = 12 years. At 12%: 72 ÷ 12 = 6 years. Works equally well in reverse: if something doubles in 10 years, the implied rate is ~7.2%.",
+    "example": "Savings at 4%/year:\n72 ÷ 4 = 18 years to double\n\nDebt at 12%/year:\n72 ÷ 12 = 6 years to double\n(if you only pay minimums)",
+    "quizTemplateIds": ["rule_of_72_years"]
+  },
+  {
+    "id": "roi_basic",
+    "moduleId": "investing",
+    "title": "Return on investment — the one number",
+    "concept": "ROI (Return on Investment) puts every investment on the same scale: what percentage did you gain relative to what you put in? A $200 gain on a $1,000 investment is 20% ROI — regardless of how long it took.",
+    "shortcut": "ROI% = (gain ÷ cost) × 100. Gain $50 on a $500 investment → $50 ÷ $500 × 100 = 10% ROI. To find the dollar gain from an ROI%: cost × ROI% ÷ 100. Use ROI to compare any two investments directly.",
+    "example": "Bought: $500\nSold for: $600\nGain = $100\nROI = $100 ÷ $500 × 100 = 20%",
+    "quizTemplateIds": ["roi_percent_calc", "dollar_return_calc"]
+  },
+  {
     "id": "round_to_estimate",
     "moduleId": "estimation",
     "title": "Round to estimate fast",

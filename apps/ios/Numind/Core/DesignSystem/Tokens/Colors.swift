@@ -32,6 +32,8 @@ extension Theme {
         static let mindTeal      = Color(uiColor: .adaptive(light: 0x2DC6B6, dark: 0x3DD9C8))
         static let insightYellow = Color(uiColor: .adaptive(light: 0xFFD84D, dark: 0xFFD84D))
         static let warmOrange    = Color(uiColor: .adaptive(light: 0xFF7A3D, dark: 0xFF8E57))
+        static let growthGreen   = Color(uiColor: .adaptive(light: 0x22A64A, dark: 0x34D27A))
+        static let investIndigo  = Color(uiColor: .adaptive(light: 0x5B5BD6, dark: 0x7B7FF0))
         static let errorSoftRed  = Color(uiColor: .adaptive(light: 0xEF6B6B, dark: 0xF08080))
 
         // ── Surfaces ──────────────────────────────────────────────────────────────────
@@ -50,6 +52,8 @@ extension Theme {
         static var mindTealTint:      Color { mindTeal.opacity(0.14) }
         static var insightYellowTint: Color { insightYellow.opacity(0.22) }
         static var warmOrangeTint:    Color { warmOrange.opacity(0.14) }
+        static var growthGreenTint:   Color { growthGreen.opacity(0.14) }
+        static var investIndigoTint:  Color { investIndigo.opacity(0.12) }
         static var errorSoftRedTint:  Color { errorSoftRed.opacity(0.14) }
         static var mutedTint:         Color { mutedText.opacity(0.12) }
 
