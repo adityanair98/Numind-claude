@@ -5,6 +5,7 @@ struct LessonViewModel {
     let moduleTitle: String
     let lessonIndex: Int    // 0-based position in module
     let totalLessons: Int
+    var moduleColor: ModuleColor = .blue
 
     var contextLabel: String { "\(moduleTitle) · Lesson \(lessonIndex + 1)" }
     var stepLabel: String    { "\(lessonIndex + 1) / \(totalLessons)" }

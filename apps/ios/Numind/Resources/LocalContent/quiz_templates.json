@@ -41,5 +41,33 @@
     "answerFormat": "currency",
     "distractorStrategy": "commonMistake",
     "explanationTemplate": "Calculate the full tip first: {{tipPercent}}% of ${{billAmount}}. Then divide by {{numPeople}} people."
+  },
+  {
+    "id": "discount_amount_basic",
+    "moduleId": "discounts",
+    "difficulty": 1,
+    "promptTemplate": "A ${{originalPrice}} item is {{discountPercent}}% off. How much do you save?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [40, 60, 80, 100, 120, 160, 200] },
+      { "name": "discountPercent", "options": [10, 20, 25, 50] }
+    ],
+    "answerFormula": "discountAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "{{discountPercent}}% of ${{originalPrice}}: for 25% divide by 4, for 50% divide by 2, for 10% move the decimal left."
+  },
+  {
+    "id": "discount_sale_price",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "promptTemplate": "An item originally costs ${{originalPrice}}. It's {{discountPercent}}% off. What's the sale price?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [40, 80, 100, 120, 200] },
+      { "name": "discountPercent", "options": [10, 20, 25, 50] }
+    ],
+    "answerFormula": "salePrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Sale price = original × (1 − discount%). For {{discountPercent}}% off: find the saving first, then subtract from ${{originalPrice}}."
   }
 ]

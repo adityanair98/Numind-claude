@@ -5,7 +5,34 @@
     "title": "Calculate an 18% tip",
     "concept": "18% is one of the most common tip amounts — but it's awkward because it's not a round number. The trick is to never try to calculate 18% in one step.",
     "shortcut": "Find 10% by moving the decimal one place left. Take half of that for 5%. Add a small 3% bump (roughly 30 cents per $10). Or skip the math entirely: double the tax line on your receipt — in most US states that's close to 18%.",
-    "example": "Bill is $46. 10% = $4.60. Half = $2.30. 3% ≈ $1.40. Tip ≈ $8.30. Total ≈ $54.30.",
+    "example": "Bill: $46.00\n10% = $4.60\n5% = $2.30\n3% ≈ $1.38\nTip ≈ $8.28",
     "quizTemplateIds": ["tip_percent_basic", "tip_bill_total", "tip_split_tip"]
+  },
+  {
+    "id": "tip_10_percent_trick",
+    "moduleId": "tips",
+    "title": "The 10% trick",
+    "concept": "10% is the foundation of all tip math. Moving the decimal one place left gives you 10% of any number instantly. From there you can build any tip in seconds.",
+    "shortcut": "10% of $65 = $6.50 (just move the decimal). Double it for 20% = $13.00. Add half for 15% = $9.75. Master this one move and every tip becomes a two-second calculation.",
+    "example": "Bill: $65.00\n10% = $6.50\n15% = $9.75\n20% = $13.00",
+    "quizTemplateIds": ["tip_percent_basic", "tip_bill_total"]
+  },
+  {
+    "id": "tip_split_bill",
+    "moduleId": "tips",
+    "title": "Split the bill right",
+    "concept": "Always add the tip to the full bill before splitting. If you split first then tip separately, each person tips on a smaller amount and the server gets shortchanged.",
+    "shortcut": "The right order: Total → add tip → divide by people. A $80 bill with 20% tip becomes $96 total. Split 4 ways: $24 each. Never divide first — you lose cents in rounding and everyone underpays.",
+    "example": "Bill: $80.00\n20% tip = $16.00\nTotal = $96.00\nPer person = $24.00",
+    "quizTemplateIds": ["tip_split_tip", "tip_bill_total"]
+  },
+  {
+    "id": "discount_25_percent",
+    "moduleId": "discounts",
+    "title": "The 25% shortcut",
+    "concept": "25% off means you pay 75% of the original price. Since 25% equals one quarter (¼), you can find the discount instantly by dividing the price by 4.",
+    "shortcut": "Divide by 4 to find 25% of any price. That's your savings. Subtract from original to get the sale price. For 50% off, divide by 2. For 10% off, just move the decimal.",
+    "example": "Original: $120.00\n÷ 4 = $30.00\nYou pay = $90.00",
+    "quizTemplateIds": ["discount_amount_basic", "discount_sale_price"]
   }
 ]

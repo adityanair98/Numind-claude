@@ -75,6 +75,14 @@ struct QuizEngine {
                   let n = vars["numPeople"], n > 0 else { return nil }
             return bill * pct / 100 / n
         },
+        "discountAmount": { vars in
+            guard let price = vars["originalPrice"], let pct = vars["discountPercent"] else { return nil }
+            return price * pct / 100
+        },
+        "salePrice": { vars in
+            guard let price = vars["originalPrice"], let pct = vars["discountPercent"] else { return nil }
+            return price * (1 - pct / 100)
+        },
     ]
 
     private static func compute(formula: String, variables: [String: Double]) -> Double? {

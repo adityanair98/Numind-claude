@@ -25,7 +25,7 @@ final class ContentRepositoryTests: XCTestCase {
         XCTAssertEqual(m?.title,     "Tips, Tax & Bill Split")
         XCTAssertEqual(m?.icon,      "percent")
         XCTAssertEqual(m?.color,     .blue)
-        XCTAssertEqual(m?.lessonIds, ["tip_18_percent"])
+        XCTAssertEqual(m?.lessonIds, ["tip_18_percent", "tip_10_percent_trick", "tip_split_bill"])
     }
 
     func test_unknownModule_returnsNil() {
@@ -52,9 +52,9 @@ final class ContentRepositoryTests: XCTestCase {
         XCTAssertEqual(l?.quizTemplateIds.count, 3)
     }
 
-    func test_lessonsForModule_returnsTipsLesson() {
+    func test_lessonsForModule_returnsTipsLessons() {
         let lessons = repo.lessons(for: "tips")
-        XCTAssertEqual(lessons.count, 1)
+        XCTAssertEqual(lessons.count, 3)
         XCTAssertEqual(lessons.first?.id, "tip_18_percent")
     }
 

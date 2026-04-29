@@ -29,7 +29,8 @@ struct ModuleDetailView: View {
                 lesson: lesson,
                 moduleTitle: viewModel.module.title,
                 lessonIndex: viewModel.lessons.firstIndex(of: lesson) ?? 0,
-                totalLessons: viewModel.lessons.count
+                totalLessons: viewModel.lessons.count,
+                moduleColor: viewModel.module.color
             ))
         }
     }

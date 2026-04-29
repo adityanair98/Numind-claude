@@ -29,7 +29,8 @@ struct HomeView: View {
                 lesson: card.lesson,
                 moduleTitle: card.module.title,
                 lessonIndex: card.lessonIndex,
-                totalLessons: card.totalLessons
+                totalLessons: card.totalLessons,
+                moduleColor: card.module.color
             ))
         }
         .onAppear { viewModel.refresh(using: progressStore) }
