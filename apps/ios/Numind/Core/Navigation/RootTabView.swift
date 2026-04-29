@@ -18,25 +18,26 @@ struct RootTabView: View {
             .tag(NumindTab.learn)
 
             NavigationStack {
+                PracticeView()
+            }
+            .tabItem { Label("Practice", systemImage: "dumbbell.fill") }
+            .tag(NumindTab.practice)
+
+            NavigationStack {
                 ProgressTabView()
             }
             .tabItem { Label("Progress", systemImage: "chart.bar.fill") }
             .tag(NumindTab.progress)
-
-            NavigationStack {
-                ProfileView()
-            }
-            .tabItem { Label("Profile", systemImage: "person.fill") }
-            .tag(NumindTab.profile)
         }
         .tint(Theme.Colors.primaryBlue)
     }
 }
 
 enum NumindTab: Hashable {
-    case home, learn, progress, profile
+    case home, learn, practice, progress
 }
 
 #Preview {
     RootTabView()
+        .environmentObject(ProgressStore())
 }

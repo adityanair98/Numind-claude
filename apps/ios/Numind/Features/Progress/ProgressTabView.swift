@@ -8,6 +8,7 @@ struct ProgressTabView: View {
 
     // Drives the streak ring sweep-in animation
     @State private var ringProgress: Double = 0
+    @State private var showProfile = false
 
     var body: some View {
         Group {
@@ -20,6 +21,31 @@ struct ProgressTabView: View {
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .navigationTitle("Progress")
         .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showProfile = true
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+            }
+        }
+        .sheet(isPresented: $showProfile) {
+            NavigationStack {
+                ProfileView()
+                    .navigationBarTitleDisplayMode(.large)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Done") { showProfile = false }
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Theme.Colors.primaryBlue)
+                        }
+                    }
+            }
+            .environmentObject(store)
+        }
         .onAppear {
             let target = min(Double(store.streak), 7) / 7.0
             withAnimation(.easeOut(duration: 0.9)) {

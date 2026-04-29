@@ -45,6 +45,7 @@
 		AC2CE9448712D940D4B98677 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC603355770CC2CE67B6EFC6 /* ConfettiView.swift */; };
 		AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3433B4F7B4DF55F59F07BC /* LessonViewModel.swift */; };
 		B5311AB63A1F647D2E37D563 /* ModuleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */; };
+		BD07AC2AB61A4822A3F482C9 /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599502FD8C1610362F43C7BF /* PracticeView.swift */; };
 		D0B52158341507F98500AFB7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860D435039106101616AB8EF /* HomeView.swift */; };
 		D2C2769F0887CC05B33150FD /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46E6272861ABFFCC9127521 /* NotificationManager.swift */; };
 		D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */; };
@@ -87,6 +88,7 @@
 		427D2A94E6C31ADD56597941 /* ModuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDetailView.swift; sourceTree = "<group>"; };
 		4C9CA00444BE87523E9530A9 /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
 		53291327E813B6AFAAFF8834 /* modules.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = modules.json; sourceTree = "<group>"; };
+		599502FD8C1610362F43C7BF /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
 		61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizEngineTests.swift; sourceTree = "<group>"; };
 		61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRepositoryTests.swift; sourceTree = "<group>"; };
 		6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalContentRepository.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				A4C1A123BDC4BEEF2C9DC478 /* Home */,
 				E0457C022D78F068CD761262 /* Learn */,
 				8C4CFCFF612FFC108584D74F /* Onboarding */,
+				DB0F2CADAD49ACDE9ABEE141 /* Practice */,
 				51E822FB9EA278DD2423EB9C /* Profile */,
 				F15BC27AC957E34B812A182D /* Progress */,
 				28D7E95382CF37B810301490 /* Quiz */,
@@ -308,6 +311,14 @@
 				2B2DC0C71D0E0F8576E6AEAC /* NumindTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DB0F2CADAD49ACDE9ABEE141 /* Practice */ = {
+			isa = PBXGroup;
+			children = (
+				599502FD8C1610362F43C7BF /* PracticeView.swift */,
+			);
+			path = Practice;
 			sourceTree = "<group>";
 		};
 		E0457C022D78F068CD761262 /* Learn */ = {
@@ -507,6 +518,7 @@
 				D762F58C31C4DEDD825A362E /* OnboardingView.swift in Sources */,
 				74D7B638A7BDC51FB653C7DF /* OptionCard.swift in Sources */,
 				8811D01840392F9AFACC1076 /* PillButton.swift in Sources */,
+				BD07AC2AB61A4822A3F482C9 /* PracticeView.swift in Sources */,
 				4887433834B6D49BDA97324D /* ProfileView.swift in Sources */,
 				12F3444AA03E49F31E5139F1 /* ProgressData.swift in Sources */,
 				F7D4D92508A3D9330245FC02 /* ProgressStore.swift in Sources */,
