@@ -8,6 +8,8 @@ struct ProfileView: View {
     @AppStorage("numind.reminderHour") private var reminderHour = 20
     @AppStorage("numind.reminderMinute") private var reminderMinute = 0
 
+    @AppStorage("numind.appearance") private var appearanceRaw = "system"
+
     @State private var showResetAlert = false
     @State private var notificationStatus: UNAuthorizationStatus = .notDetermined
     @State private var showPermissionDeniedAlert = false
@@ -19,7 +21,9 @@ struct ProfileView: View {
                 profileCard
                 statsSection
                 remindersSection
+                appearanceSection
                 appSection
+                brandFooter
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.vertical, Theme.Spacing.sectionSpacing)
@@ -208,6 +212,50 @@ struct ProfileView: View {
                 .buttonStyle(.plain)
             }
         }
+    }
+
+    // MARK: - Appearance section
+
+    private var appearanceSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Appearance")
+            NumindCard {
+                HStack(spacing: 14) {
+                    IconTile(systemName: "circle.lefthalf.filled", tintColor: Theme.Colors.primaryBlue, size: 36)
+                    Text("Theme")
+                        .font(Theme.Typography.body)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Spacer()
+                    Picker("", selection: $appearanceRaw) {
+                        Text("Auto").tag("system")
+                        Text("Light").tag("light")
+                        Text("Dark").tag("dark")
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(width: 150)
+                }
+                .padding(.vertical, 4)
+            }
+        }
+    }
+
+    // MARK: - Brand footer
+
+    private var brandFooter: some View {
+        VStack(spacing: 10) {
+            Image("NumindWordmark")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 20)
+                .opacity(0.55)
+            Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
+                .font(.system(size: 11, weight: .medium))
+                .foregroundStyle(Theme.Colors.mutedText)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 8)
+        .padding(.bottom, 4)
     }
 
     // MARK: - Notification helpers
