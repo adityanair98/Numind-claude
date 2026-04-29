@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct NumindCard<Content: View>: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     private let background: Color
     private let content: () -> Content
 
@@ -14,7 +16,14 @@ struct NumindCard<Content: View>: View {
             .padding(Theme.Spacing.cardPadding)
             .background(background)
             .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
-            .shadow(color: .black.opacity(0.06), radius: 12, x: 0, y: 4)
+            // Light mode: drop shadow for depth. Dark mode: hairline border instead.
+            .shadow(color: .black.opacity(colorScheme == .dark ? 0 : 0.06), radius: 12, x: 0, y: 4)
+            .overlay {
+                if colorScheme == .dark {
+                    RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                        .strokeBorder(Theme.Colors.hairline, lineWidth: 0.5)
+                }
+            }
     }
 }
 

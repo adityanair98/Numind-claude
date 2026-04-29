@@ -20,6 +20,7 @@
 		33C0DB88E228E4124E5AD8AF /* SessionSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9CA00444BE87523E9530A9 /* SessionSummaryView.swift */; };
 		386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E47647944F778EBA32D80A /* NumindCard.swift */; };
 		3BAA7DB7CEEACFE8C78B7DB0 /* IconTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76E087252FEBD5528A5BC82 /* IconTile.swift */; };
+		3E76DF721CEB2CC5B86F87B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB83070B8213CDD48CB52530 /* Assets.xcassets */; };
 		4887433834B6D49BDA97324D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524705B8209C6D4E3F0CC73 /* ProfileView.swift */; };
 		5218EEDA9DF7C5439F346B60 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801C467A7D4DFBC7113E4A12 /* Colors.swift */; };
 		52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */; };
@@ -109,6 +110,7 @@
 		B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B9A7139387185959BC6413FC /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindApp.swift; sourceTree = "<group>"; };
+		BB83070B8213CDD48CB52530 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C6BDC1D8146AF56C25548BF5 /* BeadRail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeadRail.swift; sourceTree = "<group>"; };
 		C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		C98F41FD249430B232E53CD1 /* OptionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCard.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 		8E8CE37FB1B8D59B2E44BA4B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BB83070B8213CDD48CB52530 /* Assets.xcassets */,
 				654132BC749CC3AF6E1446A6 /* LocalContent */,
 			);
 			path = Resources;
@@ -474,6 +477,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E76DF721CEB2CC5B86F87B8 /* Assets.xcassets in Resources */,
 				F804B6DA0B9EBB0816692FD9 /* lessons.json in Resources */,
 				6104FF691FB7D2DCB8BD4FE5 /* modules.json in Resources */,
 				F019F76F7180D1815BFCAD16 /* quiz_templates.json in Resources */,
@@ -595,6 +599,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Numind/App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -613,6 +618,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Numind/App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;

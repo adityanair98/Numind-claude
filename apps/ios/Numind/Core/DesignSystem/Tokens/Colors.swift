@@ -1,37 +1,61 @@
 import SwiftUI
 
-// Hex literals are only allowed in this file.
-private extension Color {
-    init(hex: UInt32, alpha: Double = 1) {
-        let r = Double((hex >> 16) & 0xFF) / 255
-        let g = Double((hex >>  8) & 0xFF) / 255
-        let b = Double( hex        & 0xFF) / 255
-        self.init(red: r, green: g, blue: b, opacity: alpha)
+// MARK: - Internal helpers (this file only)
+
+private extension UIColor {
+    /// Convenience initialiser for hex literals. Only used inside Colors.swift.
+    convenience init(hex: UInt32, alpha: CGFloat = 1) {
+        let r = CGFloat((hex >> 16) & 0xFF) / 255
+        let g = CGFloat((hex >>  8) & 0xFF) / 255
+        let b = CGFloat( hex        & 0xFF) / 255
+        self.init(red: r, green: g, blue: b, alpha: alpha)
+    }
+
+    /// Returns an adaptive UIColor that picks a different hex in dark mode.
+    static func adaptive(light: UInt32, dark: UInt32) -> UIColor {
+        UIColor { traits in
+            traits.userInterfaceStyle == .dark
+                ? UIColor(hex: dark)
+                : UIColor(hex: light)
+        }
     }
 }
 
+// MARK: - Theme.Colors
+
 extension Theme {
     enum Colors {
-        static let primaryBlue    = Color(hex: 0x2F6BFF)
-        static let deepNavy       = Color(hex: 0x10224A)
-        static let mindTeal       = Color(hex: 0x2DC6B6)
-        static let insightYellow  = Color(hex: 0xFFD84D)
-        static let warmOrange     = Color(hex: 0xFF7A3D)
-        static let softBackground = Color(hex: 0xF6F9FF)
-        static let cardBackground = Color(hex: 0xFFFFFF)
-        static let mutedText      = Color(hex: 0x6B7280)
-        static let errorSoftRed   = Color(hex: 0xEF6B6B)
 
-        // Derived tints — composed from primary tokens via opacity, never new hex values
+        // ── Brand primaries (brighten slightly in dark so they pop on dark surfaces) ──
+        static let primaryBlue   = Color(uiColor: .adaptive(light: 0x2F6BFF, dark: 0x5B8FFF))
+        static let deepNavy      = Color(uiColor: .adaptive(light: 0x10224A, dark: 0xE8ECF4))
+        static let mindTeal      = Color(uiColor: .adaptive(light: 0x2DC6B6, dark: 0x3DD9C8))
+        static let insightYellow = Color(uiColor: .adaptive(light: 0xFFD84D, dark: 0xFFD84D))
+        static let warmOrange    = Color(uiColor: .adaptive(light: 0xFF7A3D, dark: 0xFF8E57))
+        static let errorSoftRed  = Color(uiColor: .adaptive(light: 0xEF6B6B, dark: 0xF08080))
+
+        // ── Surfaces ──────────────────────────────────────────────────────────────────
+        /// Page / scroll background
+        static let softBackground = Color(uiColor: .adaptive(light: 0xF6F9FF, dark: 0x0F1726))
+        /// Card / elevated surface
+        static let cardBackground = Color(uiColor: .adaptive(light: 0xFFFFFF, dark: 0x1A2332))
+
+        // ── Text ──────────────────────────────────────────────────────────────────────
+        static let mutedText  = Color(uiColor: .adaptive(light: 0x6B7280, dark: 0x8B95A5))
+        /// Dark-amber in light mode, bright yellow in dark (always legible on yellow tint)
+        static let insightText = Color(uiColor: .adaptive(light: 0x8A6500, dark: 0xFFD84D))
+
+        // ── Tints (opacity of base — automatically adaptive) ──────────────────────────
         static var primaryBlueTint:   Color { primaryBlue.opacity(0.12) }
         static var mindTealTint:      Color { mindTeal.opacity(0.14) }
         static var insightYellowTint: Color { insightYellow.opacity(0.22) }
         static var warmOrangeTint:    Color { warmOrange.opacity(0.14) }
         static var errorSoftRedTint:  Color { errorSoftRed.opacity(0.14) }
         static var mutedTint:         Color { mutedText.opacity(0.12) }
-        static var hairline:          Color { mutedText.opacity(0.18) }
 
-        // Semantic text-on-tint colors
-        static let insightText = Color(hex: 0x8A6500)   // legible dark-yellow on insightYellowTint
+        // ── Lines & shadows ───────────────────────────────────────────────────────────
+        static var hairline: Color { mutedText.opacity(0.18) }
+        /// Use this for card/view shadows instead of raw .black.opacity()
+        static let shadow = Color(uiColor: .adaptive(light: 0x000000, dark: 0x000000))
     }
 }
