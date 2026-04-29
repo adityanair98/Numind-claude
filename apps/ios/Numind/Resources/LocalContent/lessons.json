@@ -34,5 +34,41 @@
     "shortcut": "Divide by 4 to find 25% of any price. That's your savings. Subtract from original to get the sale price. For 50% off, divide by 2. For 10% off, just move the decimal.",
     "example": "Original: $120.00\n÷ 4 = $30.00\nYou pay = $90.00",
     "quizTemplateIds": ["discount_amount_basic", "discount_sale_price"]
+  },
+  {
+    "id": "sales_tax_quick",
+    "moduleId": "money_math",
+    "title": "Add sales tax in your head",
+    "concept": "Sales tax is usually 6–10% depending on your state. Since it's close to 10%, use 10% as your anchor and nudge down. You'll be within cents every time.",
+    "shortcut": "For 8% tax: find 10% (move the decimal left), then subtract 20% of that. On a $40 item: 10% = $4.00, minus $0.80 = $3.20 tax. Total = $43.20. Rounding up to 10% and ignoring the rest works fine for budgeting.",
+    "example": "Item: $40.00\n10% = $4.00\n−20% of $4 = $0.80\nTax ≈ $3.20\nTotal ≈ $43.20",
+    "quizTemplateIds": ["tax_amount", "price_with_tax"]
+  },
+  {
+    "id": "cart_total_estimate",
+    "moduleId": "money_math",
+    "title": "Estimate your cart total",
+    "concept": "You don't need exact prices to stay on budget. Round each item to the nearest dollar as you shop, keep a running mental sum, and you'll hit the register knowing you're covered.",
+    "shortcut": "Round every item up: $3.79 → $4, $8.49 → $9, $1.19 → $2. Add the rounded numbers. Your estimate will land a dollar or two above the actual total — exactly the right direction for budgeting. Never try to track cents.",
+    "example": "Eggs: $3.79 → $4\nBread: $2.89 → $3\n4 cans × $1.29 → $6\nEstimate = $13\nActual: $11.95",
+    "quizTemplateIds": ["cart_total", "unit_price_check"]
+  },
+  {
+    "id": "double_or_half",
+    "moduleId": "estimation",
+    "title": "Double and half in a second",
+    "concept": "Doubling and halving are the fastest mental operations you have. They're the foundation of 200% increases, 50% off deals, splitting bills, and finding midpoints. Speed up by splitting numbers into round parts.",
+    "shortcut": "To double $37: split into $30 + $7, double each ($60 + $14), add for $74. To halve: even numbers are instant. Odd: subtract 1, halve, add $0.50. $37 ÷ 2 = $18.50.",
+    "example": "$37 × 2\n$30 × 2 = $60\n$7 × 2 = $14\nTotal = $74",
+    "quizTemplateIds": ["double_amount", "half_amount"]
+  },
+  {
+    "id": "multiply_by_5",
+    "moduleId": "estimation",
+    "title": "Multiply by 5 the fast way",
+    "concept": "Multiplying by 5 looks hard but it's just ×10 then ÷2. Since finding 10% is automatic (move the decimal), you already know the hard part. One extra halving step and you're done.",
+    "shortcut": "$46 × 5: move decimal → $460, halve → $230. Works for any number. In reverse: ÷5 means ÷10 then ×2. Useful for per-item pricing, hourly rates, and 5-pack deals.",
+    "example": "$46 × 5\n$46 × 10 = $460\n$460 ÷ 2 = $230",
+    "quizTemplateIds": ["multiply_five", "split_five_ways"]
   }
 ]

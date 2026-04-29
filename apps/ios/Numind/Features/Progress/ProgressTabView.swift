@@ -10,6 +10,57 @@ struct ProgressTabView: View {
     @State private var ringProgress: Double = 0
 
     var body: some View {
+        Group {
+            if store.totalSessions == 0 {
+                emptyState
+            } else {
+                filledContent
+            }
+        }
+        .background(Theme.Colors.softBackground.ignoresSafeArea())
+        .navigationTitle("Progress")
+        .navigationBarTitleDisplayMode(.large)
+        .onAppear {
+            let target = min(Double(store.streak), 7) / 7.0
+            withAnimation(.easeOut(duration: 0.9)) {
+                ringProgress = target
+            }
+        }
+    }
+
+    // MARK: - Empty state
+
+    private var emptyState: some View {
+        VStack(spacing: 24) {
+            Spacer()
+            ZStack {
+                Circle()
+                    .fill(Theme.Colors.primaryBlueTint)
+                    .frame(width: 96, height: 96)
+                Image(systemName: "chart.bar.fill")
+                    .font(.system(size: 40))
+                    .foregroundStyle(Theme.Colors.primaryBlue)
+            }
+            VStack(spacing: 8) {
+                Text("No sessions yet")
+                    .font(Theme.Typography.display)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                Text("Complete your first lesson to\nsee your progress here.")
+                    .font(Theme.Typography.body)
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(3)
+            }
+            Spacer()
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+    }
+
+    // MARK: - Filled content
+
+    private var filledContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
                 sectionLabel("This week")
@@ -22,15 +73,6 @@ struct ProgressTabView: View {
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.vertical, Theme.Spacing.sectionSpacing)
-        }
-        .background(Theme.Colors.softBackground.ignoresSafeArea())
-        .navigationTitle("Progress")
-        .navigationBarTitleDisplayMode(.large)
-        .onAppear {
-            let target = min(Double(store.streak), 7) / 7.0
-            withAnimation(.easeOut(duration: 0.9)) {
-                ringProgress = target
-            }
         }
     }
 

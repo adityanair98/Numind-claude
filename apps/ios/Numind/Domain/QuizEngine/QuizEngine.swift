@@ -83,6 +83,40 @@ struct QuizEngine {
             guard let price = vars["originalPrice"], let pct = vars["discountPercent"] else { return nil }
             return price * (1 - pct / 100)
         },
+        // Money Math formulas
+        "taxAmount": { vars in
+            guard let price = vars["originalPrice"], let pct = vars["taxPercent"] else { return nil }
+            return price * pct / 100
+        },
+        "priceWithTax": { vars in
+            guard let price = vars["originalPrice"], let pct = vars["taxPercent"] else { return nil }
+            return price * (1 + pct / 100)
+        },
+        "totalCost": { vars in
+            guard let price = vars["itemPrice"], let qty = vars["quantity"] else { return nil }
+            return price * qty
+        },
+        "unitPrice": { vars in
+            guard let total = vars["totalPrice"], let qty = vars["quantity"], qty > 0 else { return nil }
+            return total / qty
+        },
+        // Estimation formulas
+        "doubleOf": { vars in
+            guard let amount = vars["originalAmount"] else { return nil }
+            return amount * 2
+        },
+        "halfOf": { vars in
+            guard let amount = vars["originalAmount"] else { return nil }
+            return amount / 2
+        },
+        "multiplyBy5": { vars in
+            guard let amount = vars["originalAmount"] else { return nil }
+            return amount * 5
+        },
+        "splitFive": { vars in
+            guard let total = vars["totalAmount"] else { return nil }
+            return total / 5
+        },
     ]
 
     private static func compute(formula: String, variables: [String: Double]) -> Double? {

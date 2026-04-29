@@ -8,6 +8,7 @@ extension ModuleColor {
         case .blue:   return Theme.Colors.primaryBlue
         case .teal:   return Theme.Colors.mindTeal
         case .yellow: return Theme.Colors.insightYellow
+        case .orange: return Theme.Colors.warmOrange
         case .muted:  return Theme.Colors.mutedText
         }
     }
@@ -17,6 +18,7 @@ extension ModuleColor {
         case .blue:   return Theme.Colors.primaryBlueTint
         case .teal:   return Theme.Colors.mindTealTint
         case .yellow: return Theme.Colors.insightYellowTint
+        case .orange: return Theme.Colors.warmOrangeTint
         case .muted:  return Theme.Colors.mutedTint
         }
     }

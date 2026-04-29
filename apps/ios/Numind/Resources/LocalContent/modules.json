@@ -14,5 +14,21 @@
     "icon": "tag.fill",
     "color": "teal",
     "lessonIds": ["discount_25_percent"]
+  },
+  {
+    "id": "money_math",
+    "title": "Money Math",
+    "subtitle": "Tax, totals, and everyday spending",
+    "icon": "dollarsign.circle.fill",
+    "color": "yellow",
+    "lessonIds": ["sales_tax_quick", "cart_total_estimate"]
+  },
+  {
+    "id": "estimation",
+    "title": "Estimation & Shortcuts",
+    "subtitle": "Fast mental math for any situation",
+    "icon": "function",
+    "color": "orange",
+    "lessonIds": ["double_or_half", "multiply_by_5"]
   }
 ]

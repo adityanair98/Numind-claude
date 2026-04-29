@@ -1,5 +1,5 @@
 import Foundation
 
 enum ModuleColor: String, Codable {
-    case blue, teal, yellow, muted
+    case blue, teal, yellow, orange, muted
 }

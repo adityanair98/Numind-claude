@@ -16,6 +16,7 @@ extension Theme {
         static let deepNavy       = Color(hex: 0x10224A)
         static let mindTeal       = Color(hex: 0x2DC6B6)
         static let insightYellow  = Color(hex: 0xFFD84D)
+        static let warmOrange     = Color(hex: 0xFF7A3D)
         static let softBackground = Color(hex: 0xF6F9FF)
         static let cardBackground = Color(hex: 0xFFFFFF)
         static let mutedText      = Color(hex: 0x6B7280)
@@ -25,6 +26,7 @@ extension Theme {
         static var primaryBlueTint:   Color { primaryBlue.opacity(0.12) }
         static var mindTealTint:      Color { mindTeal.opacity(0.14) }
         static var insightYellowTint: Color { insightYellow.opacity(0.22) }
+        static var warmOrangeTint:    Color { warmOrange.opacity(0.14) }
         static var errorSoftRedTint:  Color { errorSoftRed.opacity(0.14) }
         static var mutedTint:         Color { mutedText.opacity(0.12) }
         static var hairline:          Color { mutedText.opacity(0.18) }
