@@ -41,6 +41,6 @@
     "subtitle": "Fast mental math for any situation",
     "icon": "function",
     "color": "orange",
-    "lessonIds": ["double_or_half", "multiply_by_5"]
+    "lessonIds": ["round_to_estimate", "hourly_rate_check", "percent_change", "double_or_half", "multiply_by_5"]
   }
 ]

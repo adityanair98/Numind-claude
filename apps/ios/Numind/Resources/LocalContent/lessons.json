@@ -135,6 +135,33 @@
     "quizTemplateIds": ["cart_total", "unit_price_check"]
   },
   {
+    "id": "round_to_estimate",
+    "moduleId": "estimation",
+    "title": "Round to estimate fast",
+    "concept": "When you don't need an exact total, rounding each price to the nearest $10 is faster than adding exact amounts. Round first, then add the round numbers — you'll land within a few dollars every time.",
+    "shortcut": "Anything ending in 1–4 rounds down. Anything 5–9 rounds up. $13 → $10, $17 → $20, $23 → $20, $28 → $30. Add the rounded numbers in your head — two or three items takes under five seconds.",
+    "example": "Items: $13 and $27\nRound: $10 + $30 = $40\nActual: $40.00 ✓\n\nItems: $17 and $22\nRound: $20 + $20 = $40\nActual: $39.00 (close!)",
+    "quizTemplateIds": ["estimate_two_items", "cart_total"]
+  },
+  {
+    "id": "hourly_rate_check",
+    "moduleId": "estimation",
+    "title": "Convert salary to hourly fast",
+    "concept": "Whether you're comparing job offers or checking a freelance rate, the quickest salary reality check is to divide the annual figure by 2,000 — that's 40 hours × 50 working weeks, the real year.",
+    "shortcut": "Annual ÷ 2,000 = hourly. Drop three zeros and halve it: $60k → $60 → $30/hr. In reverse: hourly × 2,000 = annual. $25/hr × 2,000 = $50,000/year. One step, no calculator.",
+    "example": "$60,000/year\n÷ 2,000 = $30/hour\n\n$25/hour\n× 2,000 = $50,000/year",
+    "quizTemplateIds": ["hourly_from_annual", "annual_from_hourly"]
+  },
+  {
+    "id": "percent_change",
+    "moduleId": "estimation",
+    "title": "Spot a % change instantly",
+    "concept": "When a price rises or drops, find the percentage change with one move: change amount ÷ original price × 100. If a $50 item now costs $60, the change is $10 and $10 ÷ $50 = 20% — it went up 20%.",
+    "shortcut": "% change = (change ÷ original) × 100. The shortcut: recognize the fraction first. Change is a quarter of the original → 25%. A fifth → 20%. A tenth → 10%. Identify the fraction, convert to a percent.",
+    "example": "$80 → $100 (increase of $20)\n$20 ÷ $80 = 0.25 = 25% increase\n\n$50 → $40 (drop of $10)\n$10 ÷ $50 = 0.20 = 20% drop",
+    "quizTemplateIds": ["percent_increase", "percent_decrease"]
+  },
+  {
     "id": "double_or_half",
     "moduleId": "estimation",
     "title": "Double and half in a second",

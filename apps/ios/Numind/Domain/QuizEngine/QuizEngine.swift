@@ -42,7 +42,13 @@ struct QuizEngine {
 
     static func format(_ value: Double, as answerFormat: AnswerFormat) -> String {
         switch answerFormat {
-        case .currency: return String(format: "$%.2f", value)
+        case .currency:
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .currency
+            formatter.currencySymbol = "$"
+            formatter.minimumFractionDigits = 2
+            formatter.maximumFractionDigits = 2
+            return formatter.string(from: NSNumber(value: value)) ?? String(format: "$%.2f", value)
         case .percent:  return String(format: "%.0f%%", value)
         case .integer:  return String(Int(value.rounded()))
         }
@@ -160,6 +166,33 @@ struct QuizEngine {
             // Total saving on a BOGO-3 deal = exactly one item's price (the free one)
             guard let price = vars["itemPrice"] else { return nil }
             return price
+        },
+        // Estimation — rounding
+        "estimateSumNearestTen": { vars in
+            guard let a = vars["priceA"], let b = vars["priceB"] else { return nil }
+            let roundA = (a / 10).rounded() * 10
+            let roundB = (b / 10).rounded() * 10
+            return roundA + roundB
+        },
+        // Estimation — salary conversion
+        "hourlyFromAnnual": { vars in
+            guard let annual = vars["annualSalary"] else { return nil }
+            return annual / 2000
+        },
+        "annualFromHourly": { vars in
+            guard let hourly = vars["hourlyRate"] else { return nil }
+            return hourly * 2000
+        },
+        // Estimation — percent change
+        "percentRaise": { vars in
+            guard let base = vars["basePrice"], base > 0,
+                  let increase = vars["increaseAmount"] else { return nil }
+            return increase / base * 100
+        },
+        "percentDrop": { vars in
+            guard let base = vars["basePrice"], base > 0,
+                  let decrease = vars["decreaseAmount"] else { return nil }
+            return decrease / base * 100
         },
         // Discounts — stacked
         "stackedFinalPrice": { vars in

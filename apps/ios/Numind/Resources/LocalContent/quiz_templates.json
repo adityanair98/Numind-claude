@@ -366,6 +366,74 @@
     "explanationTemplate": "Price per item = total ÷ quantity. ${{totalPrice}} ÷ {{quantity}}: divide evenly to find the per-unit cost."
   },
   {
+    "id": "estimate_two_items",
+    "moduleId": "estimation",
+    "difficulty": 1,
+    "promptTemplate": "You pick up a ${{priceA}} item and a ${{priceB}} item. Rounding each to the nearest $10, what's your estimated total?",
+    "variableRules": [
+      { "name": "priceA", "options": [12, 13, 17, 18, 22, 23, 27, 28, 32, 33] },
+      { "name": "priceB", "options": [11, 14, 17, 19, 21, 24, 27, 29, 31, 34] }
+    ],
+    "answerFormula": "estimateSumNearestTen",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Round ${{priceA}} to the nearest $10, then round ${{priceB}} to the nearest $10. Add the two rounded values."
+  },
+  {
+    "id": "hourly_from_annual",
+    "moduleId": "estimation",
+    "difficulty": 2,
+    "promptTemplate": "A job pays ${{annualSalary}}/year. Using the ÷2,000 shortcut, what's the approximate hourly rate?",
+    "variableRules": [
+      { "name": "annualSalary", "options": [40000, 50000, 60000, 70000, 80000, 90000, 100000] }
+    ],
+    "answerFormula": "hourlyFromAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{annualSalary}}/year ÷ 2,000 working hours = hourly rate. Shortcut: drop three zeros, then halve."
+  },
+  {
+    "id": "annual_from_hourly",
+    "moduleId": "estimation",
+    "difficulty": 2,
+    "promptTemplate": "You earn ${{hourlyRate}}/hour working 40 hrs/week, 50 weeks/year. What's your annual income?",
+    "variableRules": [
+      { "name": "hourlyRate", "options": [15, 18, 20, 25, 30, 35, 40] }
+    ],
+    "answerFormula": "annualFromHourly",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "${{hourlyRate}}/hr × 2,000 hours/year = annual income. Shortcut: multiply by 2, then add three zeros."
+  },
+  {
+    "id": "percent_increase",
+    "moduleId": "estimation",
+    "difficulty": 2,
+    "promptTemplate": "A ${{basePrice}} item now costs ${{increaseAmount}} more than last year. What's the percentage increase?",
+    "variableRules": [
+      { "name": "basePrice", "options": [20, 25, 50, 100] },
+      { "name": "increaseAmount", "options": [5, 10, 20] }
+    ],
+    "answerFormula": "percentRaise",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "% increase = change ÷ original × 100. ${{increaseAmount}} ÷ ${{basePrice}} × 100 gives the answer."
+  },
+  {
+    "id": "percent_decrease",
+    "moduleId": "estimation",
+    "difficulty": 2,
+    "promptTemplate": "A ${{basePrice}} item now costs ${{decreaseAmount}} less than before. What's the percentage drop?",
+    "variableRules": [
+      { "name": "basePrice", "options": [20, 25, 50, 100] },
+      { "name": "decreaseAmount", "options": [5, 10, 20] }
+    ],
+    "answerFormula": "percentDrop",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "% decrease = change ÷ original × 100. ${{decreaseAmount}} ÷ ${{basePrice}} × 100 gives the answer."
+  },
+  {
     "id": "double_amount",
     "moduleId": "estimation",
     "difficulty": 1,
