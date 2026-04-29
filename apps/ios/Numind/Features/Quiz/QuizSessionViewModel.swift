@@ -25,6 +25,7 @@ final class QuizSessionViewModel: ObservableObject {
 
     let lessonTitle: String
     let moduleColor: ModuleColor
+    let lessonShortcut: String
     let questions: [QuizQuestion]
 
     // MARK: - State
@@ -32,6 +33,7 @@ final class QuizSessionViewModel: ObservableObject {
     @Published private(set) var currentIndex: Int = 0
     @Published private(set) var sessionState: SessionState = .question
     @Published private(set) var results: [QuizResult] = []
+    @Published private(set) var hintRevealed: Bool = false
 
     // MARK: - Timer
 
@@ -73,8 +75,14 @@ final class QuizSessionViewModel: ObservableObject {
     init(lesson: Lesson, moduleColor: ModuleColor = .blue, repository: ContentRepository = LocalContentRepository()) {
         lessonTitle = lesson.title
         self.moduleColor = moduleColor
+        self.lessonShortcut = lesson.shortcut
         let templates = repository.templates(for: lesson.id)
         questions = templates.map { QuizEngine.generate(from: $0) }
+    }
+
+    func revealHint() {
+        guard !hintRevealed else { return }
+        hintRevealed = true
     }
 
     // MARK: - Actions
@@ -96,6 +104,7 @@ final class QuizSessionViewModel: ObservableObject {
         if next < questions.count {
             currentIndex = next
             sessionState = .question
+            hintRevealed = false  // reset per-question
         } else {
             stoppedAt = Date()
             sessionState = .complete

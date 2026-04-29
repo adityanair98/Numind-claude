@@ -12,14 +12,25 @@ struct ProgressData: Codable {
         let today = calendar.startOfDay(for: Date())
         let sessionDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
 
+        // Start from today if practiced, otherwise from yesterday.
         var checkDay = sessionDays.contains(today)
             ? today
             : calendar.date(byAdding: .day, value: -1, to: today)!
 
+        // Allow one grace day (1-day gap) per streak chain.
         var streak = 0
-        while sessionDays.contains(checkDay) {
-            streak += 1
-            checkDay = calendar.date(byAdding: .day, value: -1, to: checkDay)!
+        var graceUsed = false
+        while true {
+            if sessionDays.contains(checkDay) {
+                streak += 1
+                checkDay = calendar.date(byAdding: .day, value: -1, to: checkDay)!
+            } else if !graceUsed {
+                // Skip the missed day once — grace day
+                graceUsed = true
+                checkDay = calendar.date(byAdding: .day, value: -1, to: checkDay)!
+            } else {
+                break
+            }
         }
         return streak
     }

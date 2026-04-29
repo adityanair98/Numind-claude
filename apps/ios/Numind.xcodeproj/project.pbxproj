@@ -46,6 +46,7 @@
 		AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3433B4F7B4DF55F59F07BC /* LessonViewModel.swift */; };
 		B5311AB63A1F647D2E37D563 /* ModuleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */; };
 		D0B52158341507F98500AFB7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860D435039106101616AB8EF /* HomeView.swift */; };
+		D2C2769F0887CC05B33150FD /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46E6272861ABFFCC9127521 /* NotificationManager.swift */; };
 		D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */; };
 		D762F58C31C4DEDD825A362E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E1EFBBB00B27BBC9B6C5CA /* OnboardingView.swift */; };
 		EB7110E292B1F140F390751B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93AF8C68EA7C1F3DE444C1C /* HomeViewModel.swift */; };
@@ -98,6 +99,7 @@
 		912929E50EF5E5526AB94217 /* QuizTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTemplate.swift; sourceTree = "<group>"; };
 		955388FC06C02C5CD3B96B14 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
 		9D07D972E9B9DED4B8623883 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		A46E6272861ABFFCC9127521 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		A5EB9C1AB0D5B44747792E8B /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		AA70F32E91A8A127C7D47AF1 /* ProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressData.swift; sourceTree = "<group>"; };
 		B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -268,8 +270,17 @@
 			children = (
 				2D7A70CC1AD72F39B40E1257 /* DesignSystem */,
 				4DCB558F55545418F95E471A /* Navigation */,
+				9C2658942ABA7F8E30DD6ABE /* Notifications */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		9C2658942ABA7F8E30DD6ABE /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				A46E6272861ABFFCC9127521 /* NotificationManager.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		A4C1A123BDC4BEEF2C9DC478 /* Home */ = {
@@ -490,6 +501,7 @@
 				A8E5936C1255349C339B27DA /* ModuleColorTheme.swift in Sources */,
 				FB9B652F0B6D8B14AC1445B5 /* ModuleDetailView.swift in Sources */,
 				B5311AB63A1F647D2E37D563 /* ModuleDetailViewModel.swift in Sources */,
+				D2C2769F0887CC05B33150FD /* NotificationManager.swift in Sources */,
 				53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */,
 				386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */,
 				D762F58C31C4DEDD825A362E /* OnboardingView.swift in Sources */,

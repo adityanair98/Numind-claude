@@ -86,6 +86,7 @@ struct QuizSessionView: View {
                 }
             }
             .animation(.spring(response: 0.38, dampingFraction: 0.72), value: viewModel.sessionState)
+            .animation(.spring(response: 0.32, dampingFraction: 0.75), value: viewModel.hintRevealed)
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.top, 8)
             .padding(.bottom, Theme.Spacing.buttonHeight + 52)
@@ -135,6 +136,57 @@ struct QuizSessionView: View {
                     )
                 }
             }
+
+            hintSection
+        }
+    }
+
+    // MARK: - Hint
+
+    @ViewBuilder
+    private var hintSection: some View {
+        if viewModel.hintRevealed {
+            NumindCard(background: Theme.Colors.insightYellowTint) {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "lightbulb.fill")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.insightText)
+                        Text("Shortcut")
+                            .font(Theme.Typography.small)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Theme.Colors.insightText)
+                            .textCase(.uppercase)
+                            .kerning(0.6)
+                    }
+                    Text(viewModel.lessonShortcut)
+                        .font(Theme.Typography.body)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .lineSpacing(3)
+                }
+            }
+            .transition(.scale(scale: 0.95).combined(with: .opacity))
+        } else {
+            Button {
+                viewModel.revealHint()
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "lightbulb")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.insightText)
+                    Text("Show shortcut")
+                        .font(Theme.Typography.small)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Theme.Colors.insightText)
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(Theme.Colors.insightYellowTint)
+                .clipShape(Capsule())
+            }
+            .buttonStyle(.plain)
+            .frame(maxWidth: .infinity)
         }
     }
 
