@@ -36,6 +36,42 @@
     "quizTemplateIds": ["discount_amount_basic", "discount_sale_price"]
   },
   {
+    "id": "discount_10_percent",
+    "moduleId": "discounts",
+    "title": "10% off — the gateway discount",
+    "concept": "10% is the foundation of all discount math. It's the easiest percentage to calculate: just move the decimal point one place to the left. Every other discount — 20%, 25%, 30% — is built from this single move.",
+    "shortcut": "Move the decimal left to find 10%. $80 → $8 off. $120 → $12 off. For 20% off, double that number. For 5% off, halve it. This one move unlocks every discount on any price tag.",
+    "example": "Original: $80.00\n10% = $8.00 (move decimal)\nYou pay = $72.00",
+    "quizTemplateIds": ["discount_ten_basic", "discount_ten_sale_price"]
+  },
+  {
+    "id": "discount_bogo",
+    "moduleId": "discounts",
+    "title": "Buy 2 get 1 free — the real math",
+    "concept": "\"Buy 2 get 1 free\" is 33% off, not 50%. You pay for 2 items and receive 3. The free item's cost is spread across all three, so each item effectively costs two-thirds of the full price.",
+    "shortcut": "Per-item cost = (2 × full price) ÷ 3. Total saving = 1 full item's price. For $9 shampoo: pay $18 for 3 → $6 per bottle, save $9 total. Ask: do you actually need all 3?",
+    "example": "Shampoo: $9.00 each\nBuy 2 get 1 free\nYou pay: $18.00 for 3\nPer bottle = $6.00\nTotal saving = $9.00",
+    "quizTemplateIds": ["bogo_per_item", "bogo_savings"]
+  },
+  {
+    "id": "discount_stacked",
+    "moduleId": "discounts",
+    "title": "Stacking discounts",
+    "concept": "Two discounts stacked together don't simply add up. 20% off plus 10% off is NOT 30% off — the second discount applies to the already-reduced price. You always save a little less than the sum suggests.",
+    "shortcut": "Apply discounts one at a time. $100 → 20% off → $80 → 10% off $80 → $72. Saving: $28, not $30. Quick rule: each 10% combo loses about 1% to stacking. Two 50%-off coupons would only be 75% off, not 100%.",
+    "example": "Original: $100.00\n− 20% = $80.00\n− 10% of $80 = $8.00\nFinal: $72.00\n(Not $70.00!)",
+    "quizTemplateIds": ["stacked_discount_final", "stacked_discount_saving_calc"]
+  },
+  {
+    "id": "discount_unit_price",
+    "moduleId": "discounts",
+    "title": "Compare unit prices",
+    "concept": "Bigger packs look cheaper, but they're not always cheaper per item. Divide the total price by the number of items to find the unit price — the true cost of one — so you can make a fair comparison.",
+    "shortcut": "Unit price = total price ÷ quantity. 6-pack for $7.20 → $7.20 ÷ 6 = $1.20 each. Singles at $1.49? The pack wins. Always check before you grab the bigger size — it's not always the better deal.",
+    "example": "6-pack: $7.20\n÷ 6 items = $1.20 each\nSingles: $1.49 each\nPack saves: $0.29 per item",
+    "quizTemplateIds": ["unit_price_check", "unit_price_bulk_pack"]
+  },
+  {
     "id": "sales_tax_quick",
     "moduleId": "money_math",
     "title": "Add sales tax in your head",

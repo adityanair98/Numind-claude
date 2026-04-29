@@ -13,7 +13,13 @@
     "subtitle": "Find the best price and save more",
     "icon": "tag.fill",
     "color": "teal",
-    "lessonIds": ["discount_25_percent"]
+    "lessonIds": [
+      "discount_25_percent",
+      "discount_10_percent",
+      "discount_bogo",
+      "discount_stacked",
+      "discount_unit_price"
+    ]
   },
   {
     "id": "money_math",

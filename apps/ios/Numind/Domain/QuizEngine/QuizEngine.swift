@@ -117,6 +117,30 @@ struct QuizEngine {
             guard let total = vars["totalAmount"] else { return nil }
             return total / 5
         },
+        // Discounts — BOGO
+        "bogoPerItemPrice": { vars in
+            // Buy 2 get 1 free: pay for 2, receive 3 → cost per item = (2 × price) / 3
+            guard let price = vars["itemPrice"] else { return nil }
+            return (2 * price) / 3
+        },
+        "bogoSavings": { vars in
+            // Total saving on a BOGO-3 deal = exactly one item's price (the free one)
+            guard let price = vars["itemPrice"] else { return nil }
+            return price
+        },
+        // Discounts — stacked
+        "stackedFinalPrice": { vars in
+            guard let price = vars["originalPrice"],
+                  let first = vars["firstDiscount"],
+                  let second = vars["secondDiscount"] else { return nil }
+            return price * (1 - first / 100) * (1 - second / 100)
+        },
+        "stackedTotalSaving": { vars in
+            guard let price = vars["originalPrice"],
+                  let first = vars["firstDiscount"],
+                  let second = vars["secondDiscount"] else { return nil }
+            return price - price * (1 - first / 100) * (1 - second / 100)
+        },
     ]
 
     private static func compute(formula: String, variables: [String: Double]) -> Double? {

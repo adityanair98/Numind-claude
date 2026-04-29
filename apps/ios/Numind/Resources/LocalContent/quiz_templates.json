@@ -43,6 +43,104 @@
     "explanationTemplate": "Calculate the full tip first: {{tipPercent}}% of ${{billAmount}}. Then divide by {{numPeople}} people."
   },
   {
+    "id": "discount_ten_basic",
+    "moduleId": "discounts",
+    "difficulty": 1,
+    "promptTemplate": "An item costs ${{originalPrice}}. It's 10% off. How much do you save?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [30, 40, 50, 60, 70, 80, 90, 100] },
+      { "name": "discountPercent", "options": [10] }
+    ],
+    "answerFormula": "discountAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Move the decimal one place left to find 10% of ${{originalPrice}}. That's your saving."
+  },
+  {
+    "id": "discount_ten_sale_price",
+    "moduleId": "discounts",
+    "difficulty": 1,
+    "promptTemplate": "A ${{originalPrice}} item is 10% off. What do you actually pay?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [35, 45, 55, 65, 75, 85, 95, 120, 150] },
+      { "name": "discountPercent", "options": [10] }
+    ],
+    "answerFormula": "salePrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Find 10% of ${{originalPrice}} (move decimal left), then subtract from the original price."
+  },
+  {
+    "id": "bogo_per_item",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "promptTemplate": "An item costs ${{itemPrice}} each. Buy 2 get 1 free. What's the per-item cost when you take the deal?",
+    "variableRules": [
+      { "name": "itemPrice", "options": [3, 4, 5, 6, 7, 8, 9, 10, 12, 15] }
+    ],
+    "answerFormula": "bogoPerItemPrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "You pay 2 × ${{itemPrice}} for 3 items. Per item: (2 × ${{itemPrice}}) ÷ 3. The deal is 33% off, not 50%."
+  },
+  {
+    "id": "bogo_savings",
+    "moduleId": "discounts",
+    "difficulty": 1,
+    "promptTemplate": "An item costs ${{itemPrice}}. You use a buy-2-get-1-free deal to get 3 of them. How much do you save in total?",
+    "variableRules": [
+      { "name": "itemPrice", "options": [3, 4, 5, 6, 7, 8, 9, 10, 12, 15] }
+    ],
+    "answerFormula": "bogoSavings",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "You pay for 2 and get 1 free — your saving is exactly 1 item's price: ${{itemPrice}}."
+  },
+  {
+    "id": "stacked_discount_final",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "promptTemplate": "A ${{originalPrice}} item gets {{firstDiscount}}% off, then an extra {{secondDiscount}}% off the new price. What's the final price?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [100, 120, 150, 200] },
+      { "name": "firstDiscount", "options": [10, 15, 20, 25] },
+      { "name": "secondDiscount", "options": [5, 10, 15] }
+    ],
+    "answerFormula": "stackedFinalPrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Apply discounts one at a time: ${{originalPrice}} − {{firstDiscount}}% first, then − {{secondDiscount}}% off that result. They don't simply add up."
+  },
+  {
+    "id": "stacked_discount_saving_calc",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "promptTemplate": "A ${{originalPrice}} item has a {{firstDiscount}}% discount, then {{secondDiscount}}% off the discounted price. How much do you save in total?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [100, 120, 150, 200] },
+      { "name": "firstDiscount", "options": [10, 20, 25] },
+      { "name": "secondDiscount", "options": [5, 10] }
+    ],
+    "answerFormula": "stackedTotalSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total saving = original − final price. The stacked saving is always less than {{firstDiscount}}+{{secondDiscount}}% — the second cut applies to the lower price."
+  },
+  {
+    "id": "unit_price_bulk_pack",
+    "moduleId": "discounts",
+    "difficulty": 1,
+    "promptTemplate": "A {{quantity}}-pack of the same item costs ${{totalPrice}}. What is the price per item?",
+    "variableRules": [
+      { "name": "totalPrice", "options": [3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 24] },
+      { "name": "quantity", "options": [2, 3, 4, 5, 6] }
+    ],
+    "answerFormula": "unitPrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Price per item = total ÷ quantity. ${{totalPrice}} ÷ {{quantity}} = cost of one. Compare this to the single-item price to find the real deal."
+  },
+  {
     "id": "discount_amount_basic",
     "moduleId": "discounts",
     "difficulty": 1,
