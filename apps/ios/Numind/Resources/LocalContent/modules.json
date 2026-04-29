@@ -33,7 +33,7 @@
     "subtitle": "Tax, totals, and everyday spending",
     "icon": "dollarsign.circle.fill",
     "color": "yellow",
-    "lessonIds": ["sales_tax_quick", "cart_total_estimate"]
+    "lessonIds": ["sales_tax_quick", "cart_total_estimate", "budget_check", "subscription_math", "price_per_use"]
   },
   {
     "id": "estimation",

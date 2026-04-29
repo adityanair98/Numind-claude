@@ -227,6 +227,89 @@
     "explanationTemplate": "Sale price = original × (1 − discount%). For {{discountPercent}}% off: find the saving first, then subtract from ${{originalPrice}}."
   },
   {
+    "id": "budget_remaining",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "Your budget is ${{budget}}. You've already spent ${{spent}}. How much do you have left?",
+    "variableRules": [
+      { "name": "budget",  "options": [80, 100, 120, 150, 200] },
+      { "name": "spent",   "options": [15, 20, 25, 30, 35, 40, 45, 50, 60, 75] }
+    ],
+    "answerFormula": "budgetRemaining",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Remaining = ${{budget}} − ${{spent}}. Simple subtraction — but tracking this in real-time is the whole skill."
+  },
+  {
+    "id": "budget_after_purchase",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "You have ${{budget}}. You buy {{quantity}} items at ${{itemPrice}} each. How much is left?",
+    "variableRules": [
+      { "name": "budget",    "options": [100, 120, 150, 200] },
+      { "name": "quantity",  "options": [2, 3, 4, 5] },
+      { "name": "itemPrice", "options": [8, 10, 12, 15] }
+    ],
+    "answerFormula": "budgetAfterPurchase",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Spend = {{quantity}} × ${{itemPrice}}. Remaining = ${{budget}} − that total. Find the spend first, then subtract."
+  },
+  {
+    "id": "monthly_to_yearly",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "A subscription costs ${{monthlyPrice}} per month. What does it cost over a full year?",
+    "variableRules": [
+      { "name": "monthlyPrice", "options": [5, 8, 9, 10, 12, 13, 15, 20, 25] }
+    ],
+    "answerFormula": "monthlyToYearly",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "${{monthlyPrice}}/month × 12 months. Most people underestimate yearly costs because the monthly number looks small."
+  },
+  {
+    "id": "yearly_to_monthly",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "An annual plan costs ${{yearlyPrice}} per year. What is the equivalent monthly cost?",
+    "variableRules": [
+      { "name": "yearlyPrice", "options": [60, 84, 96, 108, 120, 144, 156, 180, 240] }
+    ],
+    "answerFormula": "yearlyToMonthly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{yearlyPrice}} ÷ 12. Compare this to the monthly plan price to see which is actually cheaper."
+  },
+  {
+    "id": "cost_per_use_calc",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "You spend ${{itemPrice}} on an item you plan to use {{numberOfUses}} times. What is the cost per use?",
+    "variableRules": [
+      { "name": "itemPrice",    "options": [10, 20, 30, 40, 50, 60, 80, 100] },
+      { "name": "numberOfUses", "options": [5, 10, 20, 25, 40, 50, 100] }
+    ],
+    "answerFormula": "costPerUse",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Cost per use = ${{itemPrice}} ÷ {{numberOfUses}}. A high price spread over many uses can be cheaper than a low price used rarely."
+  },
+  {
+    "id": "cost_per_use_scenario",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "A gym membership costs ${{itemPrice}} for the year. You realistically go {{numberOfUses}} times. What's your cost per session?",
+    "variableRules": [
+      { "name": "itemPrice",    "options": [60, 80, 100, 120, 150, 180, 200, 240] },
+      { "name": "numberOfUses", "options": [10, 12, 15, 20, 24, 30, 40, 50, 60] }
+    ],
+    "answerFormula": "costPerUse",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{itemPrice}} ÷ {{numberOfUses}} sessions. If this is more than a drop-in class costs, the membership isn't worth it."
+  },
+  {
     "id": "tax_amount",
     "moduleId": "money_math",
     "difficulty": 1,

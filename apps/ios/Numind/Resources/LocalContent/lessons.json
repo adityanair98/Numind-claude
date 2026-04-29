@@ -90,6 +90,33 @@
     "quizTemplateIds": ["unit_price_check", "unit_price_bulk_pack"]
   },
   {
+    "id": "budget_check",
+    "moduleId": "money_math",
+    "title": "Is this within my budget?",
+    "concept": "Knowing if you can afford something isn't just about the price tag — it's about what you have left after everything else. Subtract your known expenses from your total budget and compare the remainder to what you're considering buying.",
+    "shortcut": "Budget − what you've spent = what's left. If the item costs less than what's left, you're fine. Build this as a 10-second mental check before any discretionary purchase: what's my budget, what have I spent, what's remaining?",
+    "example": "Budget: $150.00\nGroceries: $45.00\nTransport: $20.00\nRemaining: $85.00\nItem costs $79.99 → within budget ✓",
+    "quizTemplateIds": ["budget_remaining", "budget_after_purchase"]
+  },
+  {
+    "id": "subscription_math",
+    "moduleId": "money_math",
+    "title": "Monthly ↔ yearly costs",
+    "concept": "Subscription services quote monthly prices because they look smaller. $12.99/month sounds cheap until you realise it's $155.88/year. Always convert to yearly before subscribing — it's the only way to see the real annual impact on your budget.",
+    "shortcut": "Monthly → yearly: multiply by 12. Yearly → monthly: divide by 12. $10/month = $120/year. $99/year = $8.25/month. When comparing plans, always put them on the same basis — monthly vs monthly, or yearly vs yearly.",
+    "example": "Streaming: $14.99/month\n× 12 = $179.88/year\nAnnual plan: $149.99\nSaving: $29.89/year",
+    "quizTemplateIds": ["monthly_to_yearly", "yearly_to_monthly"]
+  },
+  {
+    "id": "price_per_use",
+    "moduleId": "money_math",
+    "title": "Price per use",
+    "concept": "The real cost of anything isn't the sticker price — it's the cost per use. A $30 item used 100 times costs $0.30 per use. The same $30 item used only 5 times costs $6.00 per use. Thinking in cost-per-use reveals which purchases actually have value.",
+    "shortcut": "Cost per use = total price ÷ estimated uses. A $100 gym membership for 50 sessions = $2 per session. A $5 coffee machine pod = $5 per cup. Estimate your realistic usage honestly — that's the number that matters.",
+    "example": "Coffee maker: $60.00\nUses per year: 300\nCost per cup: $0.20\nCafé coffee: $4.50/cup\nAnnual saving: $1,290",
+    "quizTemplateIds": ["cost_per_use_calc", "cost_per_use_scenario"]
+  },
+  {
     "id": "sales_tax_quick",
     "moduleId": "money_math",
     "title": "Add sales tax in your head",

@@ -117,6 +117,32 @@ struct QuizEngine {
             guard let total = vars["totalAmount"] else { return nil }
             return total / 5
         },
+        // Money Math — budget
+        "budgetRemaining": { vars in
+            guard let budget = vars["budget"], let spent = vars["spent"] else { return nil }
+            return budget - spent
+        },
+        "budgetAfterPurchase": { vars in
+            guard let budget = vars["budget"],
+                  let qty = vars["quantity"],
+                  let price = vars["itemPrice"] else { return nil }
+            return budget - qty * price
+        },
+        // Money Math — subscriptions
+        "monthlyToYearly": { vars in
+            guard let monthly = vars["monthlyPrice"] else { return nil }
+            return monthly * 12
+        },
+        "yearlyToMonthly": { vars in
+            guard let yearly = vars["yearlyPrice"] else { return nil }
+            return yearly / 12
+        },
+        // Money Math — cost per use
+        "costPerUse": { vars in
+            guard let price = vars["itemPrice"],
+                  let uses = vars["numberOfUses"], uses > 0 else { return nil }
+            return price / uses
+        },
         // Tips — post-tax tip (tip calculated on subtotal + tax)
         "tipOnTotal": { vars in
             guard let subtotal = vars["billAmount"],
