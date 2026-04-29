@@ -31,6 +31,7 @@ struct QuizEngine {
         return QuizQuestion(
             id: UUID(),
             templateId: template.id,
+            difficulty: template.difficulty,
             prompt: render(template.promptTemplate, variables: variables),
             choices: allChoices,
             correctChoiceId: correctChoice.id,

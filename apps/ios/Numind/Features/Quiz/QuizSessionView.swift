@@ -111,7 +111,7 @@ struct QuizSessionView: View {
         return VStack(spacing: Theme.Spacing.sectionSpacing) {
             NumindCard {
                 VStack(alignment: .leading, spacing: 10) {
-                    // Module-colored topic chip + question counter
+                    // Module-colored topic chip + difficulty pips + question counter
                     HStack(spacing: 0) {
                         Text(viewModel.lessonTitle)
                             .font(.system(size: 11, weight: .bold))
@@ -121,6 +121,8 @@ struct QuizSessionView: View {
                             .background(viewModel.moduleColor.tintBackground)
                             .clipShape(Capsule())
                         Spacer()
+                        difficultyPips(q.difficulty)
+                            .padding(.trailing, 8)
                         Text("\(viewModel.currentIndex + 1) / \(viewModel.total)")
                             .font(.system(size: 12, weight: .semibold, design: .rounded))
                             .foregroundStyle(Theme.Colors.mutedText)
@@ -195,6 +197,29 @@ struct QuizSessionView: View {
             }
             .buttonStyle(.plain)
             .frame(maxWidth: .infinity)
+        }
+    }
+
+    // MARK: - Difficulty pips
+
+    private func difficultyPips(_ level: Int) -> some View {
+        HStack(spacing: 3) {
+            ForEach(1...3, id: \.self) { i in
+                Circle()
+                    .fill(i <= level
+                          ? viewModel.moduleColor.tintColor
+                          : Theme.Colors.mutedTint)
+                    .frame(width: 6, height: 6)
+            }
+        }
+        .accessibilityLabel(difficultyLabel(level))
+    }
+
+    private func difficultyLabel(_ level: Int) -> String {
+        switch level {
+        case 1:  return "Easy"
+        case 2:  return "Medium"
+        default: return "Hard"
         }
     }
 
