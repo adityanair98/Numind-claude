@@ -88,8 +88,13 @@ final class QuizSessionViewModel: ObservableObject {
     // MARK: - Actions
 
     func select(_ choiceId: UUID) {
-        guard case .question = sessionState else { return }
-        sessionState = .answered(choiceId)
+        // Allow re-selection while in .answered — user can change their mind before tapping Check.
+        switch sessionState {
+        case .question, .answered:
+            sessionState = .answered(choiceId)
+        default:
+            return
+        }
     }
 
     func checkAnswer() {
