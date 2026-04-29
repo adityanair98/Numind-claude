@@ -127,6 +127,12 @@ struct QuizSessionView: View {
                             .font(.system(size: 12, weight: .semibold, design: .rounded))
                             .foregroundStyle(Theme.Colors.mutedText)
                     }
+                    if let scenario = q.scenario {
+                        Text(scenario)
+                            .font(Theme.Typography.body)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .italic()
+                    }
                     Text(q.prompt)
                         .font(Theme.Typography.title)
                         .foregroundStyle(Theme.Colors.deepNavy)

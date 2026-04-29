@@ -4,6 +4,7 @@ struct QuizTemplate: Codable, Identifiable, Equatable {
     let id: String
     let moduleId: String
     let difficulty: Int             // 1 = easy, 2 = medium, 3 = hard
+    let scenarioTemplate: String?   // optional context sentence rendered before the prompt
     let promptTemplate: String      // e.g. "What is {{tipPercent}}% of ${{billAmount}}?"
     let variableRules: [VariableRule]
     let answerFormula: String       // named formula key, evaluated by QuizEngine in M4

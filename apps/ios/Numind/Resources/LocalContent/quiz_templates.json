@@ -61,6 +61,7 @@
     "id": "tip_percent_basic",
     "moduleId": "tips",
     "difficulty": 1,
+    "scenarioTemplate": "You're at a restaurant. Your bill comes to ${{billAmount}}.",
     "promptTemplate": "What is {{tipPercent}}% of ${{billAmount}}?",
     "variableRules": [
       { "name": "tipPercent", "options": [15, 18, 20] },
@@ -75,6 +76,7 @@
     "id": "tip_bill_total",
     "moduleId": "tips",
     "difficulty": 2,
+    "scenarioTemplate": "You're settling the check after lunch with a friend.",
     "promptTemplate": "The check is ${{billAmount}}. What's the total after a {{tipPercent}}% tip?",
     "variableRules": [
       { "name": "tipPercent", "options": [15, 18, 20] },
@@ -89,6 +91,7 @@
     "id": "tip_split_tip",
     "moduleId": "tips",
     "difficulty": 2,
+    "scenarioTemplate": "Your group of {{numPeople}} just finished dinner and agreed to split the bill equally.",
     "promptTemplate": "A ${{billAmount}} bill is split evenly among {{numPeople}} people. Each person's share of the {{tipPercent}}% tip is?",
     "variableRules": [
       { "name": "billAmount", "options": [40, 60, 80] },
@@ -202,6 +205,7 @@
     "id": "discount_amount_basic",
     "moduleId": "discounts",
     "difficulty": 1,
+    "scenarioTemplate": "You're browsing a sale rack. An item you like has a tag showing {{discountPercent}}% off.",
     "promptTemplate": "A ${{originalPrice}} item is {{discountPercent}}% off. How much do you save?",
     "variableRules": [
       { "name": "originalPrice", "options": [40, 60, 80, 100, 120, 160, 200] },
@@ -216,6 +220,7 @@
     "id": "discount_sale_price",
     "moduleId": "discounts",
     "difficulty": 2,
+    "scenarioTemplate": "A jacket you've been eyeing is finally on sale for {{discountPercent}}% off.",
     "promptTemplate": "An item originally costs ${{originalPrice}}. It's {{discountPercent}}% off. What's the sale price?",
     "variableRules": [
       { "name": "originalPrice", "options": [40, 80, 100, 120, 200] },
@@ -230,6 +235,7 @@
     "id": "budget_remaining",
     "moduleId": "money_math",
     "difficulty": 1,
+    "scenarioTemplate": "You set yourself a ${{budget}} discretionary budget for the month.",
     "promptTemplate": "Your budget is ${{budget}}. You've already spent ${{spent}}. How much do you have left?",
     "variableRules": [
       { "name": "budget",  "options": [80, 100, 120, 150, 200] },
@@ -285,6 +291,7 @@
     "id": "cost_per_use_calc",
     "moduleId": "money_math",
     "difficulty": 1,
+    "scenarioTemplate": "You're deciding whether a purchase is worth it based on how often you'll actually use it.",
     "promptTemplate": "You spend ${{itemPrice}} on an item you plan to use {{numberOfUses}} times. What is the cost per use?",
     "variableRules": [
       { "name": "itemPrice",    "options": [10, 20, 30, 40, 50, 60, 80, 100] },
@@ -369,6 +376,7 @@
     "id": "net_pay_deduction",
     "moduleId": "salary",
     "difficulty": 1,
+    "scenarioTemplate": "You're starting a new job and reviewing your offer letter.",
     "promptTemplate": "Your gross monthly pay is ${{grossPay}}. After {{deductionPercent}}% in deductions, what's your net (take-home) pay?",
     "variableRules": [
       { "name": "grossPay", "options": [2000, 2500, 3000, 3500, 4000, 4500, 5000] },
@@ -396,6 +404,7 @@
     "id": "raise_dollar_amount",
     "moduleId": "salary",
     "difficulty": 2,
+    "scenarioTemplate": "Your manager just told you you're getting a raise. Now you want to know the real dollar impact.",
     "promptTemplate": "You earn ${{annualSalary}}/year and get a {{raisePercent}}% raise. How much extra money is that per year?",
     "variableRules": [
       { "name": "annualSalary", "options": [40000, 50000, 60000, 70000, 80000] },
@@ -424,6 +433,7 @@
     "id": "overtime_pay_calc",
     "moduleId": "salary",
     "difficulty": 2,
+    "scenarioTemplate": "Your boss asks if you can work extra hours this week. You want to know what that's worth.",
     "promptTemplate": "Your regular pay is ${{regularRate}}/hr. You work {{overtimeHours}} hours of overtime this week. How much is your overtime pay?",
     "variableRules": [
       { "name": "regularRate", "options": [15, 18, 20, 22, 25] },
@@ -464,6 +474,7 @@
     "id": "simple_interest_earned",
     "moduleId": "investing",
     "difficulty": 1,
+    "scenarioTemplate": "You deposit ${{principal}} into a savings account that earns {{interestRate}}% simple interest per year.",
     "promptTemplate": "You invest ${{principal}} at {{interestRate}}% simple interest per year for {{years}} years. How much interest do you earn in total?",
     "variableRules": [
       { "name": "principal", "options": [500, 1000, 2000, 5000] },
@@ -494,6 +505,7 @@
     "id": "rule_of_72_years",
     "moduleId": "investing",
     "difficulty": 2,
+    "scenarioTemplate": "You're comparing savings accounts or investment options and wondering how long it takes for money to double.",
     "promptTemplate": "Using the Rule of 72, how many years does it take for money to double at {{interestRate}}% per year?",
     "variableRules": [
       { "name": "interestRate", "options": [2, 3, 4, 6, 8, 9, 12] }

@@ -28,10 +28,13 @@ struct QuizEngine {
 
         let allChoices = ([correctChoice] + distractorChoices).shuffled(using: &rng)
 
+        let scenario = template.scenarioTemplate.map { render($0, variables: variables) }
+
         return QuizQuestion(
             id: UUID(),
             templateId: template.id,
             difficulty: template.difficulty,
+            scenario: scenario,
             prompt: render(template.promptTemplate, variables: variables),
             choices: allChoices,
             correctChoiceId: correctChoice.id,
