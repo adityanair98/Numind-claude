@@ -9,6 +9,7 @@ struct LessonView: View {
 
     @State private var phase: Phase = .lesson
     @State private var sessionVM: QuizSessionViewModel?
+    @State private var isNewPersonalBest: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -25,6 +26,14 @@ struct LessonView: View {
         case .quiz:
             if let vm = sessionVM {
                 QuizSessionView(viewModel: vm) {
+                    // Compare against prior sessions BEFORE recording this one.
+                    let priorBest = progressStore.data.bestResult(for: viewModel.lesson.id)
+                    if let prior = priorBest {
+                        isNewPersonalBest = vm.correctCount > prior.correctCount
+                            || (vm.correctCount == prior.correctCount && vm.totalXP > prior.totalXP)
+                    } else {
+                        isNewPersonalBest = true   // first attempt is always a personal best
+                    }
                     var record = SessionRecord(
                         id: UUID(),
                         lessonId: viewModel.lesson.id,
@@ -41,7 +50,7 @@ struct LessonView: View {
             }
         case .summary:
             if let vm = sessionVM {
-                SessionSummaryView(viewModel: vm) {
+                SessionSummaryView(viewModel: vm, isPersonalBest: isNewPersonalBest) {
                     dismiss()
                 }
             }

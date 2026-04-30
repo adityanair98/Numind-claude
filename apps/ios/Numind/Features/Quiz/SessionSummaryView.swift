@@ -4,9 +4,11 @@ struct SessionSummaryView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var progressStore: ProgressStore
     @ObservedObject var viewModel: QuizSessionViewModel
+    let isPersonalBest: Bool
     let onContinue: () -> Void
 
     @State private var xpAnimated: Int = 0
+    @State private var showPersonalBest: Bool = false
     @State private var reviewVM: QuizSessionViewModel? = nil
 
     private var accent: Color { viewModel.moduleColor.tintColor }
@@ -34,6 +36,11 @@ struct SessionSummaryView: View {
         .onAppear {
             withAnimation(.easeOut(duration: 0.7).delay(0.3)) {
                 xpAnimated = viewModel.totalXP
+            }
+            if isPersonalBest {
+                withAnimation(.spring(response: 0.42, dampingFraction: 0.62).delay(1.0)) {
+                    showPersonalBest = true
+                }
             }
         }
         .fullScreenCover(item: $reviewVM) { vm in
@@ -82,7 +89,7 @@ struct SessionSummaryView: View {
                     .foregroundStyle(Theme.Colors.mutedText)
             }
 
-            VStack(spacing: 6) {
+            VStack(spacing: 8) {
                 Text("+\(xpAnimated) XP")
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundStyle(Theme.Colors.insightText)
@@ -102,6 +109,21 @@ struct SessionSummaryView: View {
                     }
                     .foregroundStyle(Theme.Colors.insightText)
                     .transition(.opacity.combined(with: .scale(scale: 0.9)))
+                }
+
+                if showPersonalBest {
+                    HStack(spacing: 6) {
+                        Text("🏆")
+                            .font(.system(size: 14))
+                        Text("New personal best!")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundStyle(accent)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 7)
+                    .background(accentTint)
+                    .clipShape(Capsule())
+                    .transition(.scale(scale: 0.75).combined(with: .opacity))
                 }
             }
         }

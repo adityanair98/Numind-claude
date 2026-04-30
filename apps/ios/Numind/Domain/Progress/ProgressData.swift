@@ -91,6 +91,22 @@ struct ProgressData: Codable {
         return Double(count - lower) / Double(upper - lower)
     }
 
+    // MARK: - Personal best
+
+    /// Best (correctCount, totalXP) across all prior sessions for a lesson.
+    /// Returns nil if the lesson has never been attempted.
+    func bestResult(for lessonId: String) -> (correctCount: Int, totalXP: Int)? {
+        let prior = sessions.filter { $0.lessonId == lessonId }
+        guard !prior.isEmpty else { return nil }
+        let best = prior.max { a, b in
+            let xpA = a.correctCount * 10 + a.bonusXP
+            let xpB = b.correctCount * 10 + b.bonusXP
+            return a.correctCount < b.correctCount
+                || (a.correctCount == b.correctCount && xpA < xpB)
+        }!
+        return (best.correctCount, best.correctCount * 10 + best.bonusXP)
+    }
+
     // MARK: - Weekly
 
     // Returns 7 Bool values: index 0 = Monday of the current week.
