@@ -261,6 +261,37 @@ struct QuizEngine {
                   let decrease = vars["decreaseAmount"] else { return nil }
             return decrease / base * 100
         },
+        // Tips — total per person including tip
+        "billWithTipPerPerson": { vars in
+            guard let bill = vars["billAmount"],
+                  let pct = vars["tipPercent"],
+                  let n = vars["numPeople"], n > 0 else { return nil }
+            return bill * (1 + pct / 100) / n
+        },
+        // Salary — monthly to annual
+        "monthlyToAnnual": { vars in
+            guard let monthly = vars["monthlyIncome"] else { return nil }
+            return monthly * 12
+        },
+        // Investing — monthly return on principal
+        "monthlyInvestmentReturn": { vars in
+            guard let principal = vars["principal"],
+                  let rate = vars["interestRate"] else { return nil }
+            return principal * rate / 100 / 12
+        },
+        // Estimation — triple / quarter / 20%
+        "tripleOf": { vars in
+            guard let amount = vars["originalAmount"] else { return nil }
+            return amount * 3
+        },
+        "quarterOf": { vars in
+            guard let amount = vars["originalAmount"] else { return nil }
+            return amount / 4
+        },
+        "twentyPercentOf": { vars in
+            guard let amount = vars["originalAmount"] else { return nil }
+            return amount / 5
+        },
         // Discounts — stacked
         "stackedFinalPrice": { vars in
             guard let price = vars["originalPrice"],

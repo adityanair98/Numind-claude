@@ -671,6 +671,798 @@
   },
 
   {
+    "id": "tip_coffee_d1",
+    "moduleId": "tips",
+    "difficulty": 1,
+    "promptTemplate": "You get a ${{billAmount}} coffee and pastry. You want to leave a 20% tip. How much is the tip?",
+    "variableRules": [
+      { "name": "billAmount", "options": [5, 8, 10, 12, 15] },
+      { "name": "tipPercent", "options": [20] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "20% tip = bill ÷ 5. ${{billAmount}} ÷ 5 = your tip. Or move the decimal (10%) then double it."
+  },
+  {
+    "id": "tip_taxi_d1",
+    "moduleId": "tips",
+    "difficulty": 1,
+    "promptTemplate": "Your taxi ride costs ${{billAmount}}. You tip {{tipPercent}}%. How much is the tip?",
+    "variableRules": [
+      { "name": "billAmount", "options": [10, 15, 20, 25, 30, 40] },
+      { "name": "tipPercent", "options": [15, 20] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tip = bill × tip% ÷ 100. ${{billAmount}} × {{tipPercent}}% = your tip. For {{tipPercent}}%: find 10% first, then adjust."
+  },
+  {
+    "id": "tip_hair_salon_d2",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "scenarioTemplate": "Your haircut costs ${{billAmount}} at the salon.",
+    "promptTemplate": "You tip {{tipPercent}}%. What is the tip amount?",
+    "variableRules": [
+      { "name": "billAmount", "options": [45, 55, 65, 75, 85, 95] },
+      { "name": "tipPercent", "options": [15, 18, 20] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tip = bill × tip%. ${{billAmount}} × {{tipPercent}}% — find 10% (${{billAmount}} move decimal), then build up to {{tipPercent}}%."
+  },
+  {
+    "id": "tip_hotel_service_d2",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "scenarioTemplate": "Room service delivers a ${{billAmount}} meal to your hotel room.",
+    "promptTemplate": "You tip {{tipPercent}}%. What is the tip?",
+    "variableRules": [
+      { "name": "billAmount", "options": [30, 40, 50, 60, 70, 80] },
+      { "name": "tipPercent", "options": [18, 20, 22] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tip = bill × {{tipPercent}}%. Build from 10% of ${{billAmount}}, then add or subtract to reach {{tipPercent}}%."
+  },
+  {
+    "id": "tip_bar_d2",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "scenarioTemplate": "Your bar tab for the night is ${{billAmount}}.",
+    "promptTemplate": "You tip {{tipPercent}}%. What is the tip?",
+    "variableRules": [
+      { "name": "billAmount", "options": [25, 35, 45, 55, 65, 75] },
+      { "name": "tipPercent", "options": [18, 20, 25] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tip = ${{billAmount}} × {{tipPercent}}%. Standard for bars is 18–20%. Always tip on the full tab, not just per drink."
+  },
+  {
+    "id": "tip_10_pct_d1",
+    "moduleId": "tips",
+    "difficulty": 1,
+    "promptTemplate": "Your bill is ${{billAmount}}. You tip 10%. How much is the tip?",
+    "variableRules": [
+      { "name": "billAmount", "options": [20, 30, 40, 50, 60, 70, 80, 90, 100] },
+      { "name": "tipPercent", "options": [10] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "10% = move the decimal one place left. ${{billAmount}} → 10% = just shift the decimal. This is the foundation of all tip math."
+  },
+  {
+    "id": "tip_15_pct_d1",
+    "moduleId": "tips",
+    "difficulty": 1,
+    "promptTemplate": "Your bill is ${{billAmount}}. You want to leave a 15% tip. How much?",
+    "variableRules": [
+      { "name": "billAmount", "options": [20, 40, 60, 80, 100] },
+      { "name": "tipPercent", "options": [15] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "15% = 10% + 5%. Find 10% (move decimal), halve it for 5%, then add. ${{billAmount}}: 10% + 5% = 15% tip."
+  },
+  {
+    "id": "tip_25_pct_d2",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "promptTemplate": "Bill is ${{billAmount}}. Exceptional service — you tip 25%. What is the tip?",
+    "variableRules": [
+      { "name": "billAmount", "options": [20, 28, 36, 44, 52, 60] },
+      { "name": "tipPercent", "options": [25] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "25% = ÷4. Halve the bill, then halve again. ${{billAmount}} ÷ 2 ÷ 2 = your 25% tip."
+  },
+  {
+    "id": "tip_total_20_d1",
+    "moduleId": "tips",
+    "difficulty": 1,
+    "promptTemplate": "Your dinner bill is ${{billAmount}}. You add a 20% tip. What is the total you pay?",
+    "variableRules": [
+      { "name": "billAmount", "options": [25, 30, 35, 40, 45, 50] },
+      { "name": "tipPercent", "options": [20] }
+    ],
+    "answerFormula": "billWithTip",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = bill × 1.20. Or: add 20% to ${{billAmount}}. Find 20% (10% × 2), then add to the bill."
+  },
+  {
+    "id": "tip_total_15_d2",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "promptTemplate": "Lunch costs ${{billAmount}}. With a 15% tip, what is the total?",
+    "variableRules": [
+      { "name": "billAmount", "options": [18, 24, 32, 38, 44, 52] },
+      { "name": "tipPercent", "options": [15] }
+    ],
+    "answerFormula": "billWithTip",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = bill × 1.15. Find 15% (10% + 5%) of ${{billAmount}}, then add to the bill."
+  },
+  {
+    "id": "tip_total_25_d2",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "promptTemplate": "Your spa service costs ${{billAmount}}. You leave a 25% tip. What is the total bill?",
+    "variableRules": [
+      { "name": "billAmount", "options": [40, 60, 80, 100, 120] },
+      { "name": "tipPercent", "options": [25] }
+    ],
+    "answerFormula": "billWithTip",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = bill × 1.25. That's bill + 25%. 25% = bill ÷ 4. Add to original: ${{billAmount}} + (${{billAmount}} ÷ 4)."
+  },
+  {
+    "id": "tip_group_per_person_d2",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "scenarioTemplate": "A table of {{numPeople}} splits a ${{billAmount}} dinner bill equally, including a {{tipPercent}}% tip.",
+    "promptTemplate": "How much does each person pay?",
+    "variableRules": [
+      { "name": "billAmount", "options": [60, 80, 100, 120, 140, 160] },
+      { "name": "tipPercent", "options": [18, 20] },
+      { "name": "numPeople", "options": [2, 4] }
+    ],
+    "answerFormula": "billWithTipPerPerson",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Each person pays (bill + tip) ÷ people. ${{billAmount}} × {{tipPercent}}% tip = total, then ÷ {{numPeople}} people."
+  },
+  {
+    "id": "tip_group_per_person_d3",
+    "moduleId": "tips",
+    "difficulty": 3,
+    "scenarioTemplate": "A group of {{numPeople}} goes out. The bill is ${{billAmount}} and they add a {{tipPercent}}% tip.",
+    "promptTemplate": "What is each person's share of the total?",
+    "variableRules": [
+      { "name": "billAmount", "options": [75, 95, 115, 135, 155] },
+      { "name": "tipPercent", "options": [18, 20, 22] },
+      { "name": "numPeople", "options": [3, 5] }
+    ],
+    "answerFormula": "billWithTipPerPerson",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Per person = bill × (1 + tip%) ÷ people. Add {{tipPercent}}% to ${{billAmount}}, then split {{numPeople}} ways."
+  },
+  {
+    "id": "tip_18_d2",
+    "moduleId": "tips",
+    "difficulty": 2,
+    "scenarioTemplate": "You and a friend eat at a restaurant. The bill is ${{billAmount}}.",
+    "promptTemplate": "You want to leave an 18% tip. How much is it?",
+    "variableRules": [
+      { "name": "billAmount", "options": [30, 40, 50, 60, 70, 80, 90] },
+      { "name": "tipPercent", "options": [18] }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "18% = 10% + 5% + 3%. Or: double the tax line (most states have ~9% tax). ${{billAmount}}: 10% + 8% = 18%."
+  },
+  {
+    "id": "tip_post_tax_scenario_d3",
+    "moduleId": "tips",
+    "difficulty": 3,
+    "scenarioTemplate": "Your pre-tax meal is ${{billAmount}}. Sales tax is {{taxPercent}}%.",
+    "promptTemplate": "You tip {{tipPercent}}% on the post-tax total. What is the tip amount?",
+    "variableRules": [
+      { "name": "billAmount", "options": [40, 50, 60, 70, 80] },
+      { "name": "taxPercent", "options": [8, 9, 10] },
+      { "name": "tipPercent", "options": [18, 20] }
+    ],
+    "answerFormula": "tipOnTotal",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Post-tax total = ${{billAmount}} × (1 + {{taxPercent}}%). Tip = that total × {{tipPercent}}%. Tipping on post-tax is slightly more than on pre-tax."
+  },
+
+  {
+    "id": "discount_15_d1",
+    "moduleId": "discounts",
+    "difficulty": 1,
+    "promptTemplate": "An item costs ${{originalPrice}}. It's 15% off. How much do you save?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [20, 40, 60, 80, 100] },
+      { "name": "discountPercent", "options": [15] }
+    ],
+    "answerFormula": "discountAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "15% off = 10% + 5%. Find 10% of ${{originalPrice}} (move decimal), halve it for 5%, add together."
+  },
+  {
+    "id": "discount_20_d1",
+    "moduleId": "discounts",
+    "difficulty": 1,
+    "promptTemplate": "A ${{originalPrice}} jacket is 20% off. What is the discount amount?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [30, 45, 60, 75, 90, 120, 150] },
+      { "name": "discountPercent", "options": [20] }
+    ],
+    "answerFormula": "discountAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "20% off = ÷5. ${{originalPrice}} ÷ 5 = savings. Or: find 10% and double it."
+  },
+  {
+    "id": "discount_25_d1",
+    "moduleId": "discounts",
+    "difficulty": 1,
+    "promptTemplate": "A ${{originalPrice}} item has a 25% discount. How much is the discount?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [20, 40, 60, 80, 100, 120] },
+      { "name": "discountPercent", "options": [25] }
+    ],
+    "answerFormula": "discountAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "25% = ÷4. Halve ${{originalPrice}}, then halve again. That's your discount."
+  },
+  {
+    "id": "discount_50_d1",
+    "moduleId": "discounts",
+    "difficulty": 1,
+    "promptTemplate": "A ${{originalPrice}} item is 50% off. What is the sale price?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [18, 24, 36, 48, 60, 74, 90] },
+      { "name": "discountPercent", "options": [50] }
+    ],
+    "answerFormula": "salePrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "50% off = half price. ${{originalPrice}} ÷ 2 = sale price. This is the easiest discount to calculate."
+  },
+  {
+    "id": "discount_30_d2",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "promptTemplate": "A ${{originalPrice}} item is 30% off. What is the sale price?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [30, 40, 50, 60, 70, 80, 90] },
+      { "name": "discountPercent", "options": [30] }
+    ],
+    "answerFormula": "salePrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "30% off → you pay 70%. ${{originalPrice}} × 70% = sale price. Or: find 30% (${{originalPrice}} × 3 ÷ 10) and subtract."
+  },
+  {
+    "id": "discount_clearance_d2",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "scenarioTemplate": "A {{originalPrice}}-dollar item is on the clearance rack at {{discountPercent}}% off.",
+    "promptTemplate": "How much money do you save?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [25, 35, 45, 55, 65, 75] },
+      { "name": "discountPercent", "options": [20, 30, 40] }
+    ],
+    "answerFormula": "discountAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Savings = original × discount%. ${{originalPrice}} × {{discountPercent}}% = amount saved. Then subtract to get sale price."
+  },
+  {
+    "id": "discount_online_d2",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "scenarioTemplate": "You find a ${{originalPrice}} item online with a promo code for {{discountPercent}}% off.",
+    "promptTemplate": "What is the price after the discount?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [35, 55, 75, 95, 115, 135] },
+      { "name": "discountPercent", "options": [10, 15, 20, 25] }
+    ],
+    "answerFormula": "salePrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Sale price = ${{originalPrice}} × (1 − {{discountPercent}}%). You pay {{discountPercent}} less than the listed price."
+  },
+  {
+    "id": "unit_price_grocery_d2",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "promptTemplate": "A {{quantity}}-pack of yogurt costs ${{totalPrice}}. What is the price per cup?",
+    "variableRules": [
+      { "name": "totalPrice", "options": [3, 4, 5, 6, 8] },
+      { "name": "quantity", "options": [4, 5] }
+    ],
+    "answerFormula": "unitPrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Unit price = total ÷ quantity. ${{totalPrice}} ÷ {{quantity}} = price per cup. Knowing unit price lets you compare sizes fairly."
+  },
+  {
+    "id": "unit_price_oz_d2",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "promptTemplate": "A {{quantity}}-oz bottle of shampoo costs ${{totalPrice}}. What is the cost per ounce?",
+    "variableRules": [
+      { "name": "totalPrice", "options": [4, 6, 8, 10, 12] },
+      { "name": "quantity", "options": [8, 12, 16] }
+    ],
+    "answerFormula": "unitPrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Cost per oz = ${{totalPrice}} ÷ {{quantity}} oz. Always compare unit prices — bigger sizes aren't always cheaper per unit."
+  },
+  {
+    "id": "bogo_scenario_d2",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "scenarioTemplate": "A store runs a buy-2-get-1-free deal. Each item is ${{itemPrice}}.",
+    "promptTemplate": "What is the effective cost per item when you take 3?",
+    "variableRules": [
+      { "name": "itemPrice", "options": [6, 9, 12, 15, 18, 24] }
+    ],
+    "answerFormula": "bogoPerItemPrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "BOGO-3: you pay for 2, get 3. Effective price = (2 × ${{itemPrice}}) ÷ 3. That's a 33% discount per item."
+  },
+  {
+    "id": "discount_compare_d2",
+    "moduleId": "discounts",
+    "difficulty": 2,
+    "scenarioTemplate": "Store A sells an item for ${{originalPrice}}. Store B has the same item at {{discountPercent}}% off.",
+    "promptTemplate": "What is Store B's price?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [40, 50, 60, 70, 80, 100] },
+      { "name": "discountPercent", "options": [10, 15, 20, 25] }
+    ],
+    "answerFormula": "salePrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Sale price = ${{originalPrice}} × (1 − {{discountPercent}}%). That's what Store B charges."
+  },
+  {
+    "id": "discount_budget_d3",
+    "moduleId": "discounts",
+    "difficulty": 3,
+    "scenarioTemplate": "You have a ${{originalPrice}} item in your cart. You apply a {{discountPercent}}% coupon.",
+    "promptTemplate": "After the discount, what do you pay?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [48, 64, 72, 88, 96, 112] },
+      { "name": "discountPercent", "options": [12, 15, 18, 22] }
+    ],
+    "answerFormula": "salePrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "You pay ${{originalPrice}} × (1 − {{discountPercent}}%). Non-round discount percents require careful math — break into 10% + remainder."
+  },
+  {
+    "id": "stacked_scenario_d3",
+    "moduleId": "discounts",
+    "difficulty": 3,
+    "scenarioTemplate": "A ${{originalPrice}} item is marked {{firstDiscount}}% off. At checkout, your member code gives an extra {{secondDiscount}}% off the sale price.",
+    "promptTemplate": "What is the final price?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [50, 60, 80, 100, 120] },
+      { "name": "firstDiscount", "options": [20, 25, 30] },
+      { "name": "secondDiscount", "options": [10, 15] }
+    ],
+    "answerFormula": "stackedFinalPrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Stacked discounts multiply, not add. Final = ${{originalPrice}} × (1−{{firstDiscount}}%) × (1−{{secondDiscount}}%). Not the same as {{firstDiscount}}+{{secondDiscount}}% off."
+  },
+
+  {
+    "id": "tax_coffee_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "Your coffee order is ${{originalPrice}}. Sales tax is {{taxPercent}}%. How much is the tax?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [4, 5, 6, 7, 8, 10] },
+      { "name": "taxPercent", "options": [8, 9, 10] }
+    ],
+    "answerFormula": "taxAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tax = price × {{taxPercent}}%. ${{originalPrice}} × {{taxPercent}}% = tax. For 10%: move decimal. For 8–9%: find 10%, adjust slightly."
+  },
+  {
+    "id": "tax_electronics_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "scenarioTemplate": "You're buying a ${{originalPrice}} gadget. Sales tax in your state is {{taxPercent}}%.",
+    "promptTemplate": "How much sales tax will you pay?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [50, 80, 100, 120, 150, 200] },
+      { "name": "taxPercent", "options": [7, 8, 9, 10] }
+    ],
+    "answerFormula": "taxAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tax = ${{originalPrice}} × {{taxPercent}}%. Always calculate tax before you reach the register — especially on big purchases."
+  },
+  {
+    "id": "price_tax_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "A book costs ${{originalPrice}} before tax. Tax is {{taxPercent}}%. What is the total with tax?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [10, 15, 20, 25, 30] },
+      { "name": "taxPercent", "options": [10] }
+    ],
+    "answerFormula": "priceWithTax",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = price × 1.{{taxPercent}}. Add {{taxPercent}}% to ${{originalPrice}}. At 10%, just add 10% (move decimal, then add)."
+  },
+  {
+    "id": "price_tax_scenario_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "scenarioTemplate": "You're buying a ${{originalPrice}} item. The cashier will add {{taxPercent}}% sales tax.",
+    "promptTemplate": "What total will appear on the receipt?",
+    "variableRules": [
+      { "name": "originalPrice", "options": [25, 35, 45, 55, 65, 75] },
+      { "name": "taxPercent", "options": [7, 8, 9] }
+    ],
+    "answerFormula": "priceWithTax",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = ${{originalPrice}} × (1 + {{taxPercent}}%). Find {{taxPercent}}% of the price and add it. Always budget for tax on top of the sticker price."
+  },
+  {
+    "id": "cart_estimate_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "Two grocery items cost ${{priceA}} and ${{priceB}}. Rounding to the nearest $10, what is the estimated total?",
+    "variableRules": [
+      { "name": "priceA", "options": [4, 7, 12, 16, 23, 28] },
+      { "name": "priceB", "options": [5, 8, 11, 17, 22, 31] }
+    ],
+    "answerFormula": "estimateSumNearestTen",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Round each to the nearest $10, then add. Quick mental check before you reach the register."
+  },
+  {
+    "id": "cart_estimate_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "scenarioTemplate": "You grab two items off the shelf: ${{priceA}} and ${{priceB}}.",
+    "promptTemplate": "Rounding each to the nearest $10, what is your estimated total?",
+    "variableRules": [
+      { "name": "priceA", "options": [14, 19, 26, 33, 41, 47] },
+      { "name": "priceB", "options": [13, 22, 35, 44, 53, 67] }
+    ],
+    "answerFormula": "estimateSumNearestTen",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Round each to nearest $10, then add. Fast estimation prevents register surprise on bigger purchases."
+  },
+  {
+    "id": "budget_trip_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "scenarioTemplate": "You have ${{budget}} saved for gear. You buy {{quantity}} items at ${{itemPrice}} each.",
+    "promptTemplate": "How much budget do you have left?",
+    "variableRules": [
+      { "name": "budget", "options": [100, 150, 200, 250] },
+      { "name": "quantity", "options": [2, 3] },
+      { "name": "itemPrice", "options": [20, 25, 30, 35] }
+    ],
+    "answerFormula": "budgetAfterPurchase",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Remaining = budget − (qty × price). ${{budget}} − ({{quantity}} × ${{itemPrice}}) = what's left."
+  },
+  {
+    "id": "subscription_compare_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "scenarioTemplate": "A service costs ${{monthlyPrice}}/month. They also offer an annual plan.",
+    "promptTemplate": "How much does the monthly plan cost per year?",
+    "variableRules": [
+      { "name": "monthlyPrice", "options": [8, 10, 12, 15, 16, 18, 20] }
+    ],
+    "answerFormula": "monthlyToYearly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual cost = monthly × 12. ${{monthlyPrice}} × 12 = what you pay per year. Compare this to any annual plan discount."
+  },
+  {
+    "id": "yearly_cost_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "You pay ${{monthlyPrice}} per month for a subscription. What is the total annual cost?",
+    "variableRules": [
+      { "name": "monthlyPrice", "options": [5, 7, 9, 11, 13, 15, 17, 20] }
+    ],
+    "answerFormula": "monthlyToYearly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual = monthly × 12. ${{monthlyPrice}} × 12 = total yearly cost. Subscription costs add up — always know your annual spend."
+  },
+  {
+    "id": "cost_per_use_gym_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "scenarioTemplate": "Your gym membership costs ${{itemPrice}} per year. You go {{numberOfUses}} times.",
+    "promptTemplate": "What is your cost per visit?",
+    "variableRules": [
+      { "name": "itemPrice", "options": [120, 180, 240, 300, 360] },
+      { "name": "numberOfUses", "options": [24, 30, 36, 40, 48, 60] }
+    ],
+    "answerFormula": "costPerUse",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Cost per visit = ${{itemPrice}} ÷ {{numberOfUses}} visits. Knowing this makes gym membership decisions obvious."
+  },
+  {
+    "id": "budget_weekly_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "You budget ${{budget}} for groceries. After spending ${{spent}}, how much is left?",
+    "variableRules": [
+      { "name": "budget", "options": [80, 100, 120, 150, 180, 200] },
+      { "name": "spent", "options": [25, 35, 45, 55, 65, 75] }
+    ],
+    "answerFormula": "budgetRemaining",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Remaining = ${{budget}} − ${{spent}}. Simple subtraction — but knowing your budget number upfront keeps you on track."
+  },
+  {
+    "id": "subscription_streaming_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "You pay ${{monthlyPrice}} a month for streaming. What does that cost you in a year?",
+    "variableRules": [
+      { "name": "monthlyPrice", "options": [8, 10, 12, 14, 16, 18] }
+    ],
+    "answerFormula": "monthlyToYearly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{monthlyPrice}} × 12 = yearly cost. The monthly price is designed to feel small — always convert to annual to see the real commitment."
+  },
+
+  {
+    "id": "salary_monthly_annual_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "You earn ${{monthlyIncome}} per month. What is your annual salary?",
+    "variableRules": [
+      { "name": "monthlyIncome", "options": [3000, 4000, 5000, 6000, 7000, 8000] }
+    ],
+    "answerFormula": "monthlyToAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual = monthly × 12. ${{monthlyIncome}} × 12 = gross annual salary. Useful when comparing job offers quoted in monthly vs annual terms."
+  },
+  {
+    "id": "salary_hourly_annual_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "You earn ${{hourlyRate}} per hour working full time (2,000 hours/year). What is your approximate annual salary?",
+    "variableRules": [
+      { "name": "hourlyRate", "options": [15, 18, 20, 22, 25, 30] }
+    ],
+    "answerFormula": "annualFromHourly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual ≈ hourly × 2,000. ${{hourlyRate}} × 2,000 = approximate yearly salary. The 2,000 comes from 40 hours × 50 weeks."
+  },
+  {
+    "id": "salary_hourly_annual_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "scenarioTemplate": "A job posting lists the pay as ${{hourlyRate}}/hour. You'd work full time.",
+    "promptTemplate": "What is the approximate annual salary?",
+    "variableRules": [
+      { "name": "hourlyRate", "options": [17, 19, 21, 24, 27, 32, 38] }
+    ],
+    "answerFormula": "annualFromHourly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual ≈ hourly × 2,000. ${{hourlyRate}}/hr × 2,000 hours = yearly total. Always convert hourly rates before comparing job offers."
+  },
+  {
+    "id": "salary_annual_hourly_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "A salaried job pays ${{annualSalary}} per year. Assuming 2,000 working hours, what is the effective hourly rate?",
+    "variableRules": [
+      { "name": "annualSalary", "options": [40000, 50000, 60000, 70000, 80000] }
+    ],
+    "answerFormula": "hourlyFromAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Hourly ≈ annual ÷ 2,000. ${{annualSalary}} ÷ 2,000 = hourly equivalent. Use this to compare salary offers with contract or hourly jobs."
+  },
+  {
+    "id": "salary_annual_hourly_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "scenarioTemplate": "You're offered a ${{annualSalary}}/year salary position.",
+    "promptTemplate": "What is your approximate hourly rate based on a 2,000-hour work year?",
+    "variableRules": [
+      { "name": "annualSalary", "options": [45000, 55000, 65000, 75000, 90000, 110000] }
+    ],
+    "answerFormula": "hourlyFromAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Hourly = salary ÷ 2,000. Knowing your effective hourly rate helps you evaluate overtime, consulting side work, and job switches."
+  },
+  {
+    "id": "net_pay_biweekly_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Your biweekly gross paycheck is ${{grossPay}}. After a {{deductionPercent}}% deduction, what is your net pay?",
+    "variableRules": [
+      { "name": "grossPay", "options": [1500, 2000, 2500, 3000, 3500] },
+      { "name": "deductionPercent", "options": [20, 22, 25, 28, 30] }
+    ],
+    "answerFormula": "grossToNet",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Net = gross × (1 − deduction%). ${{grossPay}} × (1 − {{deductionPercent}}%) = take-home pay. Deductions include taxes and benefits."
+  },
+  {
+    "id": "net_pay_scenario_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "scenarioTemplate": "Your gross monthly salary is ${{grossPay}}. Taxes and benefits take {{deductionPercent}}% off the top.",
+    "promptTemplate": "How much do you actually take home each month?",
+    "variableRules": [
+      { "name": "grossPay", "options": [3000, 4000, 5000, 6000, 7000] },
+      { "name": "deductionPercent", "options": [20, 22, 25, 28, 30, 32] }
+    ],
+    "answerFormula": "grossToNet",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Net = ${{grossPay}} × (1 − {{deductionPercent}}%). Your take-home is always less than gross — plan your budget from net, not gross."
+  },
+  {
+    "id": "raise_dollar_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "You earn ${{annualSalary}} per year. You get a {{raisePercent}}% raise. How much more per year is that?",
+    "variableRules": [
+      { "name": "annualSalary", "options": [40000, 50000, 60000, 70000, 80000] },
+      { "name": "raisePercent", "options": [3, 4, 5] }
+    ],
+    "answerFormula": "raiseAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Raise amount = salary × raise%. ${{annualSalary}} × {{raisePercent}}% = additional annual pay."
+  },
+  {
+    "id": "raise_new_salary_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Your current salary is ${{annualSalary}}. You negotiate a {{raisePercent}}% raise. What is your new annual salary?",
+    "variableRules": [
+      { "name": "annualSalary", "options": [45000, 55000, 65000, 75000, 85000] },
+      { "name": "raisePercent", "options": [3, 4, 5, 6, 8, 10] }
+    ],
+    "answerFormula": "raisedSalary",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "New salary = current × (1 + raise%). ${{annualSalary}} × (1 + {{raisePercent}}%) = your new salary."
+  },
+  {
+    "id": "raise_new_salary_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "scenarioTemplate": "You currently make ${{annualSalary}} a year and just got a performance review.",
+    "promptTemplate": "Your manager approves a {{raisePercent}}% raise. What is your new salary?",
+    "variableRules": [
+      { "name": "annualSalary", "options": [52000, 63000, 74000, 86000, 97000] },
+      { "name": "raisePercent", "options": [3, 4, 5, 6, 7] }
+    ],
+    "answerFormula": "raisedSalary",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "New salary = ${{annualSalary}} × (1 + {{raisePercent}}%). Knowing this in advance helps you negotiate confidently."
+  },
+  {
+    "id": "overtime_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Your regular pay is ${{regularRate}}/hour. You work {{overtimeHours}} hours of overtime at 1.5× rate. How much do you earn in overtime?",
+    "variableRules": [
+      { "name": "regularRate", "options": [16, 18, 20, 22, 24] },
+      { "name": "overtimeHours", "options": [4, 6, 8, 10] }
+    ],
+    "answerFormula": "overtimePay",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Overtime = regular rate × 1.5 × hours. ${{regularRate}} × 1.5 × {{overtimeHours}} = overtime earnings."
+  },
+  {
+    "id": "overtime_scenario_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "scenarioTemplate": "You earn ${{regularRate}}/hour. This week you worked {{overtimeHours}} hours past your regular 40.",
+    "promptTemplate": "How much will you earn for those overtime hours?",
+    "variableRules": [
+      { "name": "regularRate", "options": [15, 17, 19, 21, 25, 28] },
+      { "name": "overtimeHours", "options": [3, 5, 7, 8, 10] }
+    ],
+    "answerFormula": "overtimePay",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Overtime pay = hourly × 1.5 × OT hours. ${{regularRate}} × 1.5 = overtime rate, then × {{overtimeHours}} hours."
+  },
+  {
+    "id": "biweekly_annual_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "You receive ${{biweeklySalary}} every two weeks. What is your annual gross salary?",
+    "variableRules": [
+      { "name": "biweeklySalary", "options": [1500, 2000, 2500, 3000, 3500, 4000] }
+    ],
+    "answerFormula": "biweeklyToAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual = biweekly × 26 pay periods. ${{biweeklySalary}} × 26 = gross annual salary."
+  },
+  {
+    "id": "weekly_annual_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "You earn ${{weeklySalary}} per week. What is your annual gross income?",
+    "variableRules": [
+      { "name": "weeklySalary", "options": [500, 600, 700, 800, 900, 1000] }
+    ],
+    "answerFormula": "weeklyToAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual = weekly × 52. ${{weeklySalary}} × 52 = yearly total."
+  },
+  {
+    "id": "weekly_annual_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "scenarioTemplate": "A gig job pays ${{weeklySalary}} per week on average.",
+    "promptTemplate": "If you work all 52 weeks, what is the annual income?",
+    "variableRules": [
+      { "name": "weeklySalary", "options": [550, 650, 750, 850, 950, 1100] }
+    ],
+    "answerFormula": "weeklyToAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual = weekly × 52. ${{weeklySalary}} × 52. Useful when comparing gig income to a salaried offer."
+  },
+
+  {
     "id": "cc_monthly_interest",
     "moduleId": "debt",
     "difficulty": 2,
@@ -888,6 +1680,410 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "New balance = old balance × (1 + APR/12%). ${{balance}} × (1 + {{apr}}%/12) shows exactly how carrying a balance grows your debt."
+  },
+
+  {
+    "id": "simple_interest_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "You put ${{principal}} in a savings account earning {{interestRate}}% annual interest. How much interest do you earn in {{years}} year(s)?",
+    "variableRules": [
+      { "name": "principal", "options": [500, 1000, 2000, 5000] },
+      { "name": "interestRate", "options": [2, 3, 4, 5] },
+      { "name": "years", "options": [1] }
+    ],
+    "answerFormula": "simpleInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Interest = principal × rate% × years. ${{principal}} × {{interestRate}}% × {{years}} = interest earned."
+  },
+  {
+    "id": "simple_interest_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "scenarioTemplate": "You lend ${{principal}} to a friend at {{interestRate}}% simple interest per year.",
+    "promptTemplate": "How much interest do you earn after {{years}} years?",
+    "variableRules": [
+      { "name": "principal", "options": [1000, 2000, 3000, 5000] },
+      { "name": "interestRate", "options": [3, 4, 5, 6] },
+      { "name": "years", "options": [2, 3] }
+    ],
+    "answerFormula": "simpleInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Simple interest = principal × rate% × years. ${{principal}} × {{interestRate}}% × {{years}}."
+  },
+  {
+    "id": "total_with_interest_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "You invest ${{principal}} at {{interestRate}}% simple interest for {{years}} year(s). What is the total balance?",
+    "variableRules": [
+      { "name": "principal", "options": [1000, 2000, 5000, 10000] },
+      { "name": "interestRate", "options": [4, 5, 6] },
+      { "name": "years", "options": [1] }
+    ],
+    "answerFormula": "totalWithInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = principal × (1 + rate% × years). ${{principal}} + interest = new balance."
+  },
+  {
+    "id": "total_with_interest_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "scenarioTemplate": "You park ${{principal}} in a CD earning {{interestRate}}% simple interest.",
+    "promptTemplate": "What is the account balance after {{years}} years?",
+    "variableRules": [
+      { "name": "principal", "options": [2000, 3000, 5000, 8000] },
+      { "name": "interestRate", "options": [3, 4, 5, 6] },
+      { "name": "years", "options": [2, 3] }
+    ],
+    "answerFormula": "totalWithInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Balance = principal × (1 + rate% × years). ${{principal}} grows by {{interestRate}}% each year."
+  },
+  {
+    "id": "rule72_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "Your investment grows at {{interestRate}}% per year. Using the Rule of 72, how many years to double your money?",
+    "variableRules": [
+      { "name": "interestRate", "options": [4, 6, 8, 9, 12] }
+    ],
+    "answerFormula": "rule72",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Rule of 72: years to double = 72 ÷ rate. 72 ÷ {{interestRate}} = years. Simple and surprisingly accurate."
+  },
+  {
+    "id": "rule72_scenario_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "scenarioTemplate": "Your 401(k) has historically returned about {{interestRate}}% per year.",
+    "promptTemplate": "Using the Rule of 72, roughly how many years will it take your balance to double?",
+    "variableRules": [
+      { "name": "interestRate", "options": [6, 7, 8, 9, 10, 12] }
+    ],
+    "answerFormula": "rule72",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "72 ÷ {{interestRate}}% = doubling time. At {{interestRate}}%, your money doubles roughly every 72 ÷ {{interestRate}} years."
+  },
+  {
+    "id": "roi_percent_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "You invest ${{cost}} and sell for a ${{gain}} profit. What is your ROI percentage?",
+    "variableRules": [
+      { "name": "cost", "options": [200, 400, 500, 1000, 2000] },
+      { "name": "gain", "options": [20, 40, 50, 100, 200] }
+    ],
+    "answerFormula": "roiPercent",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "ROI% = (gain ÷ cost) × 100. ${{gain}} profit on a ${{cost}} investment = ROI of that %."
+  },
+  {
+    "id": "roi_scenario_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "scenarioTemplate": "You bought stock for ${{cost}} and sold it for a ${{gain}} gain.",
+    "promptTemplate": "What was your return on investment (ROI)?",
+    "variableRules": [
+      { "name": "cost", "options": [500, 1000, 2000, 5000] },
+      { "name": "gain", "options": [50, 100, 200, 500] }
+    ],
+    "answerFormula": "roiPercent",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "ROI% = profit ÷ cost × 100. ${{gain}} ÷ ${{cost}} × 100 = your percentage return."
+  },
+  {
+    "id": "dollar_return_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "You invest ${{cost}} expecting a {{roiPercent}}% return. How much profit do you make?",
+    "variableRules": [
+      { "name": "cost", "options": [100, 200, 500, 1000] },
+      { "name": "roiPercent", "options": [5, 8, 10, 12] }
+    ],
+    "answerFormula": "dollarReturn",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Dollar return = investment × ROI%. ${{cost}} × {{roiPercent}}% = profit in dollars."
+  },
+  {
+    "id": "dollar_return_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "scenarioTemplate": "Your portfolio is worth ${{cost}}. It earns a {{roiPercent}}% return this year.",
+    "promptTemplate": "How much does your portfolio grow in dollar terms?",
+    "variableRules": [
+      { "name": "cost", "options": [5000, 10000, 15000, 20000] },
+      { "name": "roiPercent", "options": [5, 7, 8, 10, 12] }
+    ],
+    "answerFormula": "dollarReturn",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Growth = portfolio × return%. ${{cost}} × {{roiPercent}}% = dollar gain this year."
+  },
+  {
+    "id": "monthly_return_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "You have ${{principal}} in a bond earning {{interestRate}}% annual interest. How much interest do you earn each month?",
+    "variableRules": [
+      { "name": "principal", "options": [6000, 12000, 24000, 36000] },
+      { "name": "interestRate", "options": [4, 5, 6, 8] }
+    ],
+    "answerFormula": "monthlyInvestmentReturn",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly interest = principal × annual rate ÷ 12. ${{principal}} × {{interestRate}}% ÷ 12 = monthly income."
+  },
+  {
+    "id": "monthly_return_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "scenarioTemplate": "You invest ${{principal}} in a high-yield savings account at {{interestRate}}% APY.",
+    "promptTemplate": "Approximately how much interest does it generate each month?",
+    "variableRules": [
+      { "name": "principal", "options": [10000, 20000, 30000, 50000] },
+      { "name": "interestRate", "options": [4, 5, 6] }
+    ],
+    "answerFormula": "monthlyInvestmentReturn",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly = principal × rate ÷ 12. ${{principal}} × {{interestRate}}% ÷ 12 = monthly interest. This compounds over time."
+  },
+  {
+    "id": "bond_simple_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "scenarioTemplate": "You buy a ${{principal}} government bond with a {{interestRate}}% annual coupon.",
+    "promptTemplate": "How much interest do you receive in {{years}} year(s)?",
+    "variableRules": [
+      { "name": "principal", "options": [1000, 5000, 10000] },
+      { "name": "interestRate", "options": [3, 4, 5] },
+      { "name": "years", "options": [1, 2] }
+    ],
+    "answerFormula": "simpleInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Bond interest = face value × coupon rate × years. ${{principal}} × {{interestRate}}% × {{years}} = interest paid."
+  },
+  {
+    "id": "portfolio_gain_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "scenarioTemplate": "Your investment portfolio starts the year at ${{cost}}.",
+    "promptTemplate": "After a {{roiPercent}}% gain, how much did the portfolio increase in value?",
+    "variableRules": [
+      { "name": "cost", "options": [8000, 12000, 16000, 25000] },
+      { "name": "roiPercent", "options": [6, 7, 8, 9, 10] }
+    ],
+    "answerFormula": "dollarReturn",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Gain = portfolio × return%. ${{cost}} × {{roiPercent}}% = dollar increase. This is the compounding base for next year."
+  },
+  {
+    "id": "investing_total_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "scenarioTemplate": "You invest ${{principal}} and leave it for {{years}} years at {{interestRate}}% simple interest.",
+    "promptTemplate": "What is the total value of your investment?",
+    "variableRules": [
+      { "name": "principal", "options": [3000, 5000, 8000, 12000] },
+      { "name": "interestRate", "options": [5, 6, 7, 8] },
+      { "name": "years", "options": [3, 4, 5] }
+    ],
+    "answerFormula": "totalWithInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = ${{principal}} × (1 + {{interestRate}}% × {{years}}). Patience is the most powerful investing tool."
+  },
+
+  {
+    "id": "triple_amount_d1",
+    "moduleId": "estimation",
+    "difficulty": 1,
+    "promptTemplate": "You need to triple ${{originalAmount}}. What is the result?",
+    "variableRules": [
+      { "name": "originalAmount", "options": [15, 20, 25, 30, 35, 40, 45, 50] }
+    ],
+    "answerFormula": "tripleOf",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Triple = amount × 3. ${{originalAmount}} × 3. Double it first, then add one more copy."
+  },
+  {
+    "id": "quarter_d1",
+    "moduleId": "estimation",
+    "difficulty": 1,
+    "promptTemplate": "What is one quarter (25%) of ${{originalAmount}}?",
+    "variableRules": [
+      { "name": "originalAmount", "options": [20, 40, 60, 80, 100, 120, 160, 200] }
+    ],
+    "answerFormula": "quarterOf",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Quarter = amount ÷ 4. Halve ${{originalAmount}}, then halve again. Same as 25% off or splitting 4 ways."
+  },
+  {
+    "id": "twenty_pct_d1",
+    "moduleId": "estimation",
+    "difficulty": 1,
+    "promptTemplate": "What is 20% of ${{originalAmount}}?",
+    "variableRules": [
+      { "name": "originalAmount", "options": [10, 15, 20, 25, 30, 35, 40, 50] }
+    ],
+    "answerFormula": "twentyPercentOf",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "20% = ÷5. ${{originalAmount}} ÷ 5 = 20%. Or: find 10% and double it. Fastest route for 20% tip or discount."
+  },
+  {
+    "id": "twenty_pct_d2",
+    "moduleId": "estimation",
+    "difficulty": 2,
+    "scenarioTemplate": "A store offers 20% off everything this weekend.",
+    "promptTemplate": "An item is ${{originalAmount}}. How much is the discount?",
+    "variableRules": [
+      { "name": "originalAmount", "options": [35, 45, 55, 65, 75, 85, 95] }
+    ],
+    "answerFormula": "twentyPercentOf",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "20% off = price ÷ 5. ${{originalAmount}} ÷ 5 = discount. Then subtract from price to get sale price."
+  },
+  {
+    "id": "estimate_groceries_d1",
+    "moduleId": "estimation",
+    "difficulty": 1,
+    "promptTemplate": "You grab two grocery items costing ${{priceA}} and ${{priceB}}. Rounding to the nearest $10, what is the approximate total?",
+    "variableRules": [
+      { "name": "priceA", "options": [3, 6, 9, 13, 17, 22] },
+      { "name": "priceB", "options": [4, 7, 11, 16, 24, 28] }
+    ],
+    "answerFormula": "estimateSumNearestTen",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Round each to nearest $10, sum them. Quick mental check so you never overspend at the register."
+  },
+  {
+    "id": "estimate_shopping_d2",
+    "moduleId": "estimation",
+    "difficulty": 2,
+    "scenarioTemplate": "You're at a clothing store and want to estimate your total before checkout.",
+    "promptTemplate": "Two items cost ${{priceA}} and ${{priceB}}. What is the rounded estimate to the nearest $10?",
+    "variableRules": [
+      { "name": "priceA", "options": [18, 23, 34, 42, 57, 63] },
+      { "name": "priceB", "options": [24, 31, 38, 46, 54, 72] }
+    ],
+    "answerFormula": "estimateSumNearestTen",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Round each price to nearest $10, then add. Faster and accurate enough for on-the-spot budget checks."
+  },
+  {
+    "id": "hourly_check_d2",
+    "moduleId": "estimation",
+    "difficulty": 2,
+    "scenarioTemplate": "A job offer pays ${{annualSalary}} per year.",
+    "promptTemplate": "Using the ÷2,000 shortcut, what is the approximate hourly rate?",
+    "variableRules": [
+      { "name": "annualSalary", "options": [40000, 50000, 60000, 70000, 80000, 100000] }
+    ],
+    "answerFormula": "hourlyFromAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Hourly ≈ annual ÷ 2,000. Drop the last 3 zeros, then halve. ${{annualSalary}} → ${{annualSalary}} ÷ 2,000 = hourly."
+  },
+  {
+    "id": "annual_from_hourly_d1",
+    "moduleId": "estimation",
+    "difficulty": 1,
+    "promptTemplate": "Someone earns ${{hourlyRate}}/hour full-time. Using the × 2,000 shortcut, what is their approximate annual salary?",
+    "variableRules": [
+      { "name": "hourlyRate", "options": [12, 15, 18, 20, 22, 25, 30] }
+    ],
+    "answerFormula": "annualFromHourly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual ≈ hourly × 2,000. ${{hourlyRate}} × 2 = daily pay in hundreds. Add three zeros. Quick mental benchmark."
+  },
+  {
+    "id": "percent_raise_d2",
+    "moduleId": "estimation",
+    "difficulty": 2,
+    "promptTemplate": "A product's price went from ${{basePrice}} to ${{basePrice}} + ${{increaseAmount}}. What percentage did it increase?",
+    "variableRules": [
+      { "name": "basePrice", "options": [20, 25, 40, 50, 80, 100] },
+      { "name": "increaseAmount", "options": [2, 4, 5, 8, 10, 20] }
+    ],
+    "answerFormula": "percentRaise",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "% increase = increase ÷ original × 100. ${{increaseAmount}} ÷ ${{basePrice}} × 100 = percent change."
+  },
+  {
+    "id": "price_drop_d2",
+    "moduleId": "estimation",
+    "difficulty": 2,
+    "scenarioTemplate": "A stock dropped from ${{basePrice}} to ${{basePrice}} minus ${{decreaseAmount}}.",
+    "promptTemplate": "What was the percentage drop?",
+    "variableRules": [
+      { "name": "basePrice", "options": [25, 40, 50, 80, 100, 200] },
+      { "name": "decreaseAmount", "options": [5, 8, 10, 16, 20, 40] }
+    ],
+    "answerFormula": "percentDrop",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "% drop = decrease ÷ original × 100. ${{decreaseAmount}} ÷ ${{basePrice}} × 100 = the percentage fallen."
+  },
+  {
+    "id": "split_three_ways_d1",
+    "moduleId": "estimation",
+    "difficulty": 1,
+    "promptTemplate": "Three friends split a ${{totalCost}} expense equally. What does each person pay?",
+    "variableRules": [
+      { "name": "totalCost", "options": [30, 45, 60, 90, 120, 150, 180] },
+      { "name": "numPeople", "options": [3] }
+    ],
+    "answerFormula": "splitTravelCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{totalCost}} ÷ 3. For ÷3: find 1/3 by trial, or divide by 3 directly. Useful for splitting any 3-way cost."
+  },
+  {
+    "id": "double_quick_d1",
+    "moduleId": "estimation",
+    "difficulty": 1,
+    "promptTemplate": "You need to order twice as many items. If one costs ${{originalAmount}}, what is the cost of two?",
+    "variableRules": [
+      { "name": "originalAmount", "options": [12, 16, 18, 22, 28, 32, 36, 44] }
+    ],
+    "answerFormula": "doubleOf",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Double = amount × 2. ${{originalAmount}} × 2. Split into tens and ones: double each, recombine."
+  },
+  {
+    "id": "half_quick_d2",
+    "moduleId": "estimation",
+    "difficulty": 2,
+    "scenarioTemplate": "A sale takes 50% off a ${{originalAmount}} item.",
+    "promptTemplate": "What is the sale price?",
+    "variableRules": [
+      { "name": "originalAmount", "options": [37, 43, 55, 67, 79, 93] }
+    ],
+    "answerFormula": "halfOf",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Half of odd numbers: subtract $1, halve, add $0.50. ${{originalAmount}} − $1 = even, ÷ 2, + $0.50 = half."
   },
 
   {
