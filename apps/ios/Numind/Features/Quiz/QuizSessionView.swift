@@ -109,33 +109,38 @@ struct QuizSessionView: View {
     private var questionContent: some View {
         let q = viewModel.currentQuestion
         return VStack(spacing: Theme.Spacing.sectionSpacing) {
-            // Prompt card (shared between both input modes)
-            NumindCard {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack(spacing: 0) {
-                        Text(viewModel.lessonTitle)
-                            .font(.system(size: 11, weight: .bold))
-                            .foregroundStyle(viewModel.moduleColor.tintColor)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 4)
-                            .background(viewModel.moduleColor.tintBackground)
-                            .clipShape(Capsule())
-                        Spacer()
-                        difficultyPips(q.difficulty)
-                            .padding(.trailing, 8)
-                        Text("\(viewModel.currentIndex + 1) / \(viewModel.total)")
-                            .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .foregroundStyle(Theme.Colors.mutedText)
+            // Themed graphic banner + prompt card — grouped as a visual unit
+            VStack(spacing: 8) {
+                QuizGraphicBanner(theme: QuestionTheme.theme(for: q.templateId))
+
+                // Prompt card (shared between both input modes)
+                NumindCard {
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack(spacing: 0) {
+                            Text(viewModel.lessonTitle)
+                                .font(.system(size: 11, weight: .bold))
+                                .foregroundStyle(viewModel.moduleColor.tintColor)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 4)
+                                .background(viewModel.moduleColor.tintBackground)
+                                .clipShape(Capsule())
+                            Spacer()
+                            difficultyPips(q.difficulty)
+                                .padding(.trailing, 8)
+                            Text("\(viewModel.currentIndex + 1) / \(viewModel.total)")
+                                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        }
+                        if let scenario = q.scenario {
+                            Text(scenario)
+                                .font(Theme.Typography.body)
+                                .foregroundStyle(Theme.Colors.mutedText)
+                                .italic()
+                        }
+                        Text(q.prompt)
+                            .font(Theme.Typography.title)
+                            .foregroundStyle(Theme.Colors.deepNavy)
                     }
-                    if let scenario = q.scenario {
-                        Text(scenario)
-                            .font(Theme.Typography.body)
-                            .foregroundStyle(Theme.Colors.mutedText)
-                            .italic()
-                    }
-                    Text(q.prompt)
-                        .font(Theme.Typography.title)
-                        .foregroundStyle(Theme.Colors.deepNavy)
                 }
             }
 
