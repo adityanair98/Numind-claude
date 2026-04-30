@@ -109,9 +109,9 @@ struct QuizSessionView: View {
     private var questionContent: some View {
         let q = viewModel.currentQuestion
         return VStack(spacing: Theme.Spacing.sectionSpacing) {
+            // Prompt card (shared between both input modes)
             NumindCard {
                 VStack(alignment: .leading, spacing: 10) {
-                    // Module-colored topic chip + difficulty pips + question counter
                     HStack(spacing: 0) {
                         Text(viewModel.lessonTitle)
                             .font(.system(size: 11, weight: .bold))
@@ -139,22 +139,61 @@ struct QuizSessionView: View {
                 }
             }
 
-            VStack(spacing: 10) {
-                ForEach(Array(q.choices.enumerated()), id: \.element.id) { i, choice in
-                    OptionCard(
-                        key: choiceKeys[safe: i] ?? "?",
-                        text: choice.text,
-                        state: questionCardState(for: choice),
-                        action: {
-                            viewModel.select(choice.id)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        }
-                    )
+            // Input area — numpad or option cards
+            if q.inputMode == .freeEntry {
+                freeEntrySection(for: q)
+            } else {
+                VStack(spacing: 10) {
+                    ForEach(Array(q.choices.enumerated()), id: \.element.id) { i, choice in
+                        OptionCard(
+                            key: choiceKeys[safe: i] ?? "?",
+                            text: choice.text,
+                            state: questionCardState(for: choice),
+                            action: {
+                                viewModel.select(choice.id)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            }
+                        )
+                    }
                 }
+                hintSection
             }
-
-            hintSection
         }
+    }
+
+    // MARK: - Free-entry input
+
+    private func freeEntrySection(for q: QuizQuestion) -> some View {
+        VStack(spacing: 12) {
+            // Display strip
+            freeEntryDisplay(for: q)
+            // Numpad
+            NumpadView(
+                onDigit:   { viewModel.appendDigit($0); UIImpactFeedbackGenerator(style: .light).impactOccurred() },
+                onDecimal: { viewModel.appendDigit("."); UIImpactFeedbackGenerator(style: .light).impactOccurred() },
+                onDelete:  { viewModel.deleteDigit();   UIImpactFeedbackGenerator(style: .light).impactOccurred() }
+            )
+        }
+    }
+
+    private func freeEntryDisplay(for q: QuizQuestion) -> some View {
+        let raw   = viewModel.freeEntryText
+        let label: String = {
+            if raw.isEmpty { return q.answerFormat == .currency ? "$—" : "—" }
+            switch q.answerFormat {
+            case .currency: return "$\(raw)"
+            case .percent:  return "\(raw)%"
+            case .integer:  return raw
+            }
+        }()
+        return Text(label)
+            .font(.system(size: 38, weight: .bold, design: .rounded))
+            .foregroundStyle(raw.isEmpty ? Theme.Colors.mutedText : Theme.Colors.deepNavy)
+            .frame(maxWidth: .infinity)
+            .frame(height: 80)
+            .background(Theme.Colors.mutedTint)
+            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+            .animation(.none, value: raw)
     }
 
     // MARK: - Hint
@@ -242,7 +281,9 @@ struct QuizSessionView: View {
         return VStack(spacing: Theme.Spacing.sectionSpacing) {
             resultHeroCard(isCorrect: isCorrect)
             answerRevealPill(for: q, isCorrect: isCorrect)
-            optionsRecap(for: q, isCorrect: isCorrect)
+            if q.inputMode == .multipleChoice {
+                optionsRecap(for: q, isCorrect: isCorrect)
+            }
             whyCard(explanation: q.explanation, shortcut: viewModel.lessonShortcut)
         }
     }
@@ -366,10 +407,8 @@ struct QuizSessionView: View {
     @ViewBuilder
     private var footerButton: some View {
         switch viewModel.sessionState {
-        case .question:
-            checkAnswerButton(enabled: false)
-        case .answered:
-            checkAnswerButton(enabled: true)
+        case .question, .answered:
+            checkAnswerButton(enabled: viewModel.isReadyToCheck)
         case .feedback:
             PillButton("Continue") { viewModel.advance() }
         case .complete:

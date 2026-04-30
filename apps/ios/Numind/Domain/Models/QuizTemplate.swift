@@ -4,6 +4,7 @@ struct QuizTemplate: Codable, Identifiable, Equatable {
     let id: String
     let moduleId: String
     let difficulty: Int             // 1 = easy, 2 = medium, 3 = hard
+    let inputMode: InputMode?       // nil → defaults to .multipleChoice
     let scenarioTemplate: String?   // optional context sentence rendered before the prompt
     let promptTemplate: String      // e.g. "What is {{tipPercent}}% of ${{billAmount}}?"
     let variableRules: [VariableRule]
@@ -11,6 +12,11 @@ struct QuizTemplate: Codable, Identifiable, Equatable {
     let answerFormat: AnswerFormat
     let distractorStrategy: DistractorStrategy
     let explanationTemplate: String
+}
+
+enum InputMode: String, Codable {
+    case multipleChoice  // 4 option cards (default)
+    case freeEntry       // number pad — user types the answer
 }
 
 struct VariableRule: Codable, Equatable {

@@ -35,6 +35,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     @Published private(set) var sessionState: SessionState = .question
     @Published private(set) var results: [QuizResult] = []
     @Published private(set) var hintRevealed: Bool = false
+    @Published var freeEntryText: String = ""  // used when inputMode == .freeEntry
 
     // MARK: - Timer
 
@@ -53,6 +54,15 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     var total: Int { questions.count }
     var correctCount: Int { results.filter(\.isCorrect).count }
     var xpEarned: Int { correctCount * 10 }
+
+    /// True when the player has made a selection (MCQ) or typed something (free-entry).
+    var isReadyToCheck: Bool {
+        switch sessionState {
+        case .answered: return true
+        case .question: return currentQuestion.inputMode == .freeEntry && !freeEntryText.isEmpty
+        default:        return false
+        }
+    }
 
     var isAnswered: Bool {
         if case .answered = sessionState { return true }
@@ -107,8 +117,32 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     }
 
     func checkAnswer() {
-        guard case .answered(let id) = sessionState else { return }
-        sessionState = .feedback(id)
+        switch currentQuestion.inputMode {
+        case .multipleChoice:
+            guard case .answered(let id) = sessionState else { return }
+            sessionState = .feedback(id)
+        case .freeEntry:
+            guard let entered = Double(freeEntryText) else { return }
+            let tolerance: Double = 0.05
+            let isCorrect = abs(entered - currentQuestion.correctValue) <= tolerance
+            sessionState = .feedback(isCorrect ? currentQuestion.correctChoiceId : UUID())
+        }
+    }
+
+    func appendDigit(_ digit: String) {
+        guard freeEntryText.count < 10 else { return }
+        if digit == "." {
+            guard !freeEntryText.contains(".") else { return }
+            freeEntryText += freeEntryText.isEmpty ? "0." : "."
+        } else {
+            if freeEntryText == "0" { freeEntryText = "" } // replace leading zero
+            freeEntryText += digit
+        }
+    }
+
+    func deleteDigit() {
+        guard !freeEntryText.isEmpty else { return }
+        freeEntryText.removeLast()
     }
 
     func advance() {
@@ -118,7 +152,8 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         if next < questions.count {
             currentIndex = next
             sessionState = .question
-            hintRevealed = false  // reset per-question
+            hintRevealed = false
+            freeEntryText = ""  // reset for next question
         } else {
             stoppedAt = Date()
             sessionState = .complete

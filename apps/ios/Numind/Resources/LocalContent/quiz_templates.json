@@ -3,6 +3,7 @@
     "id": "tip_double_ten",
     "moduleId": "tips",
     "difficulty": 1,
+    "inputMode": "freeEntry",
     "promptTemplate": "The bill is ${{billAmount}}. Using the double-the-10% trick, what is the 20% tip?",
     "variableRules": [
       { "name": "billAmount", "options": [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 80] },
@@ -107,6 +108,7 @@
     "id": "discount_ten_basic",
     "moduleId": "discounts",
     "difficulty": 1,
+    "inputMode": "freeEntry",
     "promptTemplate": "An item costs ${{originalPrice}}. It's 10% off. How much do you save?",
     "variableRules": [
       { "name": "originalPrice", "options": [30, 40, 50, 60, 70, 80, 90, 100] },
@@ -348,6 +350,7 @@
     "id": "cart_total",
     "moduleId": "money_math",
     "difficulty": 1,
+    "inputMode": "freeEntry",
     "promptTemplate": "You grab {{quantity}} items at ${{itemPrice}} each. What's the total?",
     "variableRules": [
       { "name": "itemPrice", "options": [4, 5, 6, 7, 8, 10, 12, 15] },
@@ -505,6 +508,7 @@
     "id": "rule_of_72_years",
     "moduleId": "investing",
     "difficulty": 2,
+    "inputMode": "freeEntry",
     "scenarioTemplate": "You're comparing savings accounts or investment options and wondering how long it takes for money to double.",
     "promptTemplate": "Using the Rule of 72, how many years does it take for money to double at {{interestRate}}% per year?",
     "variableRules": [
@@ -615,6 +619,7 @@
     "id": "double_amount",
     "moduleId": "estimation",
     "difficulty": 1,
+    "inputMode": "freeEntry",
     "promptTemplate": "What is double ${{originalAmount}}?",
     "variableRules": [
       { "name": "originalAmount", "options": [12, 14, 17, 23, 26, 35, 37, 44, 48, 55] }
@@ -628,6 +633,7 @@
     "id": "half_amount",
     "moduleId": "estimation",
     "difficulty": 1,
+    "inputMode": "freeEntry",
     "promptTemplate": "What is half of ${{originalAmount}}?",
     "variableRules": [
       { "name": "originalAmount", "options": [18, 24, 34, 46, 52, 64, 74, 86, 96, 110] }
