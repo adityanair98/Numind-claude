@@ -14,6 +14,8 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     struct QuizResult {
         let question: QuizQuestion
         let selectedChoiceId: UUID
+        /// Seconds from question appearing to the user tapping "Check answer".
+        let timeSpentSeconds: Double
         var isCorrect: Bool { selectedChoiceId == question.correctChoiceId }
         var promptPreview: String {
             question.prompt.count > 38
@@ -37,10 +39,17 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     @Published private(set) var hintRevealed: Bool = false
     @Published var freeEntryText: String = ""  // used when inputMode == .freeEntry
 
-    // MARK: - Timer
+    // MARK: - Session timer
 
     private let sessionStartDate = Date()
     private var stoppedAt: Date? = nil
+
+    // MARK: - Per-question timer
+
+    /// Reset each time a new question becomes active.
+    private var questionStartTime: Date = Date()
+    /// Captured by checkAnswer(); consumed by advance() to build the QuizResult.
+    private var lastQuestionTimeSpent: Double = 0
 
     var elapsedTimeString: String {
         let ref = stoppedAt ?? Date()
@@ -54,6 +63,17 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     var total: Int { questions.count }
     var correctCount: Int { results.filter(\.isCorrect).count }
     var xpEarned: Int { correctCount * 10 }
+
+    /// Maps completed results to the Codable `QuestionResult` type for `SessionRecord`.
+    var questionResults: [QuestionResult] {
+        results.map {
+            QuestionResult(
+                templateId: $0.question.templateId,
+                isCorrect: $0.isCorrect,
+                timeSpentSeconds: $0.timeSpentSeconds
+            )
+        }
+    }
 
     /// True when the player has made a selection (MCQ) or typed something (free-entry).
     var isReadyToCheck: Bool {
@@ -117,6 +137,8 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     }
 
     func checkAnswer() {
+        // Capture how long the user spent on this question before revealing feedback.
+        lastQuestionTimeSpent = Date().timeIntervalSince(questionStartTime)
         switch currentQuestion.inputMode {
         case .multipleChoice:
             guard case .answered(let id) = sessionState else { return }
@@ -147,13 +169,18 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     func advance() {
         guard case .feedback(let id) = sessionState else { return }
-        results.append(QuizResult(question: currentQuestion, selectedChoiceId: id))
+        results.append(QuizResult(
+            question: currentQuestion,
+            selectedChoiceId: id,
+            timeSpentSeconds: lastQuestionTimeSpent
+        ))
         let next = currentIndex + 1
         if next < questions.count {
             currentIndex = next
             sessionState = .question
             hintRevealed = false
-            freeEntryText = ""  // reset for next question
+            freeEntryText = ""
+            questionStartTime = Date()  // reset timer for next question
         } else {
             stoppedAt = Date()
             sessionState = .complete

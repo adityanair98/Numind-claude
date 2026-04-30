@@ -25,14 +25,16 @@ struct LessonView: View {
         case .quiz:
             if let vm = sessionVM {
                 QuizSessionView(viewModel: vm) {
-                    progressStore.recordSession(SessionRecord(
+                    var record = SessionRecord(
                         id: UUID(),
                         lessonId: viewModel.lesson.id,
                         moduleId: viewModel.lesson.moduleId,
                         date: Date(),
                         correctCount: vm.correctCount,
                         totalCount: vm.total
-                    ))
+                    )
+                    record.questionResults = vm.questionResults
+                    progressStore.recordSession(record)
                     phase = .summary
                 }
             }

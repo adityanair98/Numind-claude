@@ -39,16 +39,16 @@ struct HomeView: View {
         .fullScreenCover(item: $dailyVM) { vm in
             NavigationStack {
                 QuizSessionView(viewModel: vm) {
-                    let correct = vm.correctCount
-                    let total   = vm.total
-                    progressStore.recordSession(SessionRecord(
+                    var record = SessionRecord(
                         id: UUID(),
                         lessonId: "daily_challenge",
                         moduleId: "mixed",
                         date: Date(),
-                        correctCount: correct,
-                        totalCount: total
-                    ))
+                        correctCount: vm.correctCount,
+                        totalCount: vm.total
+                    )
+                    record.questionResults = vm.questionResults
+                    progressStore.recordSession(record)
                     progressStore.markDailyChallengeCompleted()
                     dailyVM = nil
                 }
