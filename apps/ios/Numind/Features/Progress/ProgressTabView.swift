@@ -116,6 +116,8 @@ struct ProgressTabView: View {
                 }
 
                 totalXPCard
+                sectionLabel("Badges")
+                badgesGrid
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.vertical, Theme.Spacing.sectionSpacing)
@@ -324,6 +326,60 @@ struct ProgressTabView: View {
                 IconTile(systemName: "trophy.fill", tintColor: Theme.Colors.insightYellow, size: 48)
             }
         }
+    }
+
+    // MARK: - Badges grid
+
+    private var badgesGrid: some View {
+        let earned = store.data.earnedBadgeIds
+        let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
+        return VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("\(earned.count) of \(BadgeCatalog.all.count) unlocked")
+                    .font(Theme.Typography.small)
+                    .foregroundStyle(Theme.Colors.mutedText)
+                Spacer()
+            }
+            NumindCard {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(BadgeCatalog.all) { badge in
+                        badgeCell(badge, isEarned: earned.contains(badge.id))
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+        }
+    }
+
+    private func badgeCell(_ badge: Badge, isEarned: Bool) -> some View {
+        VStack(spacing: 6) {
+            ZStack {
+                Circle()
+                    .fill(isEarned ? badgeTierBackground(badge.tier) : Theme.Colors.mutedTint)
+                    .frame(width: 48, height: 48)
+                Image(systemName: isEarned ? badge.icon : "lock.fill")
+                    .font(.system(size: 19, weight: .semibold))
+                    .foregroundStyle(isEarned ? badgeTierColor(badge.tier) : Theme.Colors.mutedText.opacity(0.5))
+            }
+            Text(badge.name)
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundStyle(isEarned ? Theme.Colors.deepNavy : Theme.Colors.mutedText)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private func badgeTierColor(_ tier: BadgeTier) -> Color {
+        switch tier {
+        case .bronze: return Color(red: 0.78, green: 0.50, blue: 0.20)
+        case .silver: return Theme.Colors.mindTeal
+        case .gold:   return Theme.Colors.insightYellow
+        }
+    }
+
+    private func badgeTierBackground(_ tier: BadgeTier) -> Color {
+        badgeTierColor(tier).opacity(0.15)
     }
 
     // MARK: - Recent activity

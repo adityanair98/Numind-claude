@@ -10,6 +10,7 @@ struct LessonView: View {
     @State private var phase: Phase = .lesson
     @State private var sessionVM: QuizSessionViewModel?
     @State private var isNewPersonalBest: Bool = false
+    @State private var newBadgeIds: Set<String> = []
 
     var body: some View {
         NavigationStack {
@@ -45,12 +46,13 @@ struct LessonView: View {
                     record.questionResults = vm.questionResults
                     record.bonusXP = vm.bonusXP
                     progressStore.recordSession(record)
+                    newBadgeIds = progressStore.newlyEarnedBadgeIds
                     phase = .summary
                 }
             }
         case .summary:
             if let vm = sessionVM {
-                SessionSummaryView(viewModel: vm, isPersonalBest: isNewPersonalBest) {
+                SessionSummaryView(viewModel: vm, isPersonalBest: isNewPersonalBest, newBadgeIds: newBadgeIds) {
                     dismiss()
                 }
             }

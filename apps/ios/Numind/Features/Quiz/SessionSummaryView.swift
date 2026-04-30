@@ -5,6 +5,7 @@ struct SessionSummaryView: View {
     @EnvironmentObject private var progressStore: ProgressStore
     @ObservedObject var viewModel: QuizSessionViewModel
     let isPersonalBest: Bool
+    let newBadgeIds: Set<String>
     let onContinue: () -> Void
 
     @State private var xpAnimated: Int = 0
@@ -59,6 +60,7 @@ struct SessionSummaryView: View {
             VStack(spacing: Theme.Spacing.sectionSpacing) {
                 resultHeader
                 statsCard
+                if !newBadgeIds.isEmpty { newBadgesSection }
                 recapSection
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
@@ -218,6 +220,73 @@ struct SessionSummaryView: View {
         }
         .padding(.vertical, 14)
         .padding(.horizontal, 18)
+    }
+
+    // MARK: - Newly earned badges
+
+    private var newBadgesSection: some View {
+        let badges = newBadgeIds.compactMap { BadgeCatalog.badge(for: $0) }
+            .sorted { $0.name < $1.name }
+        return VStack(alignment: .leading, spacing: 12) {
+            Text("Badges unlocked".uppercased())
+                .font(Theme.Typography.small)
+                .foregroundStyle(Theme.Colors.mutedText)
+                .kerning(0.8)
+
+            VStack(spacing: 0) {
+                ForEach(Array(badges.enumerated()), id: \.element.id) { i, badge in
+                    badgeUnlockRow(badge)
+                    if i < badges.count - 1 {
+                        Divider()
+                            .padding(.leading, 18 + 44 + 14)
+                            .background(Theme.Colors.hairline)
+                    }
+                }
+            }
+            .background(Theme.Colors.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+            .shadow(color: .black.opacity(0.06), radius: 12, x: 0, y: 4)
+        }
+    }
+
+    private func badgeUnlockRow(_ badge: Badge) -> some View {
+        HStack(spacing: 14) {
+            ZStack {
+                Circle()
+                    .fill(badgeTierBackground(badge.tier))
+                    .frame(width: 44, height: 44)
+                Image(systemName: badge.icon)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(badgeTierColor(badge.tier))
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(badge.name)
+                    .font(Theme.Typography.body)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                Text(badge.description)
+                    .font(Theme.Typography.small)
+                    .foregroundStyle(Theme.Colors.mutedText)
+            }
+            Spacer()
+            Image(systemName: "checkmark.seal.fill")
+                .font(.system(size: 18))
+                .foregroundStyle(Theme.Colors.mindTeal)
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal, 18)
+    }
+
+    private func badgeTierColor(_ tier: BadgeTier) -> Color {
+        switch tier {
+        case .bronze: return Color(red: 0.78, green: 0.50, blue: 0.20)
+        case .silver: return Theme.Colors.mindTeal
+        case .gold:   return Theme.Colors.insightYellow
+        }
+    }
+
+    private func badgeTierBackground(_ tier: BadgeTier) -> Color {
+        badgeTierColor(tier).opacity(0.15)
     }
 
     // MARK: - Review mistakes

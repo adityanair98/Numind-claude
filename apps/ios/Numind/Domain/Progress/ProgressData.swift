@@ -4,6 +4,8 @@ import Foundation
 struct ProgressData: Codable {
     var sessions: [SessionRecord] = []
     var bestStreak: Int = 0
+    /// Stable set of earned badge IDs. Default empty for backward compat.
+    var earnedBadgeIds: Set<String> = []
 
     // MARK: - Streak
 

@@ -10,6 +10,8 @@ final class ProgressStore: ObservableObject {
 
     @Published private(set) var data: ProgressData
     @Published private(set) var dailyChallengeCompletedDate: String
+    /// Badge IDs earned in the most-recent recordSession call. Cleared on the next call.
+    @Published private(set) var newlyEarnedBadgeIds: Set<String> = []
 
     init() {
         if let raw = UserDefaults.standard.data(forKey: Self.defaultsKey),
@@ -24,11 +26,15 @@ final class ProgressStore: ObservableObject {
     // MARK: - Write
 
     func recordSession(_ record: SessionRecord) {
+        let previouslyEarned = data.earnedBadgeIds
         data.sessions.append(record)
         let current = data.computeStreak()
         if current > data.bestStreak {
             data.bestStreak = current
         }
+        let nowEarned = BadgeEvaluator.earned(from: data)
+        newlyEarnedBadgeIds = nowEarned.subtracting(previouslyEarned)
+        data.earnedBadgeIds = nowEarned
         persist()
     }
 
