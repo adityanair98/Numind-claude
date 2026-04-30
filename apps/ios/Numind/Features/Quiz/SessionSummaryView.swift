@@ -7,9 +7,12 @@ struct SessionSummaryView: View {
     let onContinue: () -> Void
 
     @State private var xpAnimated: Int = 0
+    @State private var reviewVM: QuizSessionViewModel? = nil
 
     private var accent: Color { viewModel.moduleColor.tintColor }
     private var accentTint: Color { viewModel.moduleColor.tintBackground }
+
+    private var wrongCount: Int { viewModel.results.filter { !$0.isCorrect }.count }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -31,6 +34,13 @@ struct SessionSummaryView: View {
         .onAppear {
             withAnimation(.easeOut(duration: 0.7).delay(0.3)) {
                 xpAnimated = viewModel.xpEarned
+            }
+        }
+        .fullScreenCover(item: $reviewVM) { vm in
+            NavigationStack {
+                QuizSessionView(viewModel: vm) {
+                    reviewVM = nil   // dismiss back to this summary when review ends
+                }
             }
         }
     }
@@ -163,13 +173,43 @@ struct SessionSummaryView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             if !result.isCorrect {
-                Text("Review")
-                    .font(Theme.Typography.small)
-                    .foregroundStyle(Theme.Colors.primaryBlue)
+                Image(systemName: "arrow.counterclockwise")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.errorSoftRed)
+                    .padding(6)
+                    .background(Theme.Colors.errorSoftRedTint)
+                    .clipShape(Circle())
             }
         }
         .padding(.vertical, 14)
         .padding(.horizontal, 18)
+    }
+
+    // MARK: - Review mistakes
+
+    private var reviewMistakesButton: some View {
+        Button { startReview() } label: {
+            HStack(spacing: 8) {
+                Image(systemName: "arrow.counterclockwise.circle.fill")
+                    .font(.system(size: 18, weight: .semibold))
+                Text("Review \(wrongCount) mistake\(wrongCount == 1 ? "" : "s")")
+                    .font(Theme.Typography.headline)
+            }
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .frame(height: Theme.Spacing.buttonHeight)
+            .background(Theme.Colors.errorSoftRed)
+            .clipShape(Capsule())
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func startReview() {
+        reviewVM = ReviewMistakesEngine.build(
+            from: viewModel.results,
+            moduleColor: viewModel.moduleColor,
+            lessonShortcut: viewModel.lessonShortcut
+        )
     }
 
     // MARK: - Footer
@@ -184,7 +224,12 @@ struct SessionSummaryView: View {
             .allowsHitTesting(false)
 
             VStack(spacing: 10) {
-                PillButton("Continue learning") { onContinue() }
+                if wrongCount > 0 {
+                    reviewMistakesButton
+                }
+                PillButton(wrongCount > 0 ? "Skip & continue" : "Continue learning") {
+                    onContinue()
+                }
                 Button("Done for today") { dismiss() }
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundStyle(Theme.Colors.primaryBlue)
