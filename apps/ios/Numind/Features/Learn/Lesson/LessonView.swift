@@ -258,7 +258,11 @@ struct LessonView: View {
     // MARK: - Quiz start
 
     private func startQuiz() {
-        let vm = QuizSessionViewModel(lesson: viewModel.lesson, moduleColor: viewModel.moduleColor)
+        let vm = QuizSessionViewModel(
+            lesson: viewModel.lesson,
+            moduleColor: viewModel.moduleColor,
+            sessions: progressStore.data.sessions   // enables SR ordering on repeat visits
+        )
         sessionVM = vm
         phase = .quiz
     }

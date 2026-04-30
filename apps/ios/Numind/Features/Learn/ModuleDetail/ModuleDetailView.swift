@@ -177,7 +177,13 @@ struct ModuleDetailView: View {
 
     private func launchPractice(lesson: Lesson) {
         let repo = LocalContentRepository()
-        let templates = repo.templates(for: lesson.id)
+        let sessions = progressStore.data.sessions
+        // SR-sorted: most-due / most-struggled templates surface first.
+        let templates = SpacedRepetitionEngine.sortedTemplates(
+            for: lesson.id,
+            sessions: sessions,
+            repository: repo
+        )
         guard !templates.isEmpty else { return }
         let questions = templates.map { QuizEngine.generate(from: $0) }
         practiceVM = QuizSessionViewModel(

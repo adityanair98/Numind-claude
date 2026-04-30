@@ -103,11 +103,25 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     // MARK: - Init
 
-    init(lesson: Lesson, moduleColor: ModuleColor = .blue, repository: ContentRepository = LocalContentRepository()) {
+    /// Initialiser for lesson-driven quiz sessions.
+    /// When `sessions` is non-empty the template order is determined by the
+    /// Spaced Repetition engine (most-due / most-struggled templates first).
+    init(
+        lesson: Lesson,
+        moduleColor: ModuleColor = .blue,
+        sessions: [SessionRecord] = [],
+        repository: ContentRepository = LocalContentRepository()
+    ) {
         lessonTitle = lesson.title
         self.moduleColor = moduleColor
         self.lessonShortcut = lesson.shortcut
-        let templates = repository.templates(for: lesson.id)
+        let templates = sessions.isEmpty
+            ? repository.templates(for: lesson.id)
+            : SpacedRepetitionEngine.sortedTemplates(
+                for: lesson.id,
+                sessions: sessions,
+                repository: repository
+              )
         questions = templates.map { QuizEngine.generate(from: $0) }
     }
 
