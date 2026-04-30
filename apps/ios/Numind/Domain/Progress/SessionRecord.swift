@@ -16,7 +16,8 @@ struct SessionRecord: Codable, Identifiable {
     let date: Date
     let correctCount: Int
     let totalCount: Int
-    /// Per-question breakdown. Defaults to empty for backward compatibility with
-    /// sessions recorded before M43 (existing UserDefaults data decodes cleanly).
+    /// Per-question breakdown. Defaults to empty for backward compat (pre-M43 data).
     var questionResults: [QuestionResult] = []
+    /// Speed bonus XP earned this session. Defaults to 0 for backward compat.
+    var bonusXP: Int = 0
 }

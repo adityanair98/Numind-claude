@@ -47,7 +47,7 @@ struct ProgressData: Codable {
     // MARK: - XP
 
     func computeTotalXP() -> Int {
-        sessions.reduce(0) { $0 + $1.correctCount * 10 }
+        sessions.reduce(0) { $0 + $1.correctCount * 10 + $1.bonusXP }
     }
 
     // MARK: - Module progress

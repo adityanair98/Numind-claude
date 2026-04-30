@@ -61,8 +61,41 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     var currentQuestion: QuizQuestion { questions[currentIndex] }
     var total: Int { questions.count }
+    // MARK: - XP
+
+    /// Seconds thresholds and bonus amounts for speed XP.
+    static let speedFastSeconds: Double = 5
+    static let speedGoodSeconds: Double = 10
+    static let speedFastBonus:   Int    = 5
+    static let speedGoodBonus:   Int    = 2
+
     var correctCount: Int { results.filter(\.isCorrect).count }
+
+    /// Base XP: 10 per correct answer.
     var xpEarned: Int { correctCount * 10 }
+
+    /// Speed bonus XP for the question currently showing feedback
+    /// (computed from lastQuestionTimeSpent before advance() is called).
+    var currentSpeedBonus: Int {
+        guard case .feedback = sessionState, isCorrectAnswer else { return 0 }
+        return Self.speedBonus(for: lastQuestionTimeSpent)
+    }
+
+    /// Total speed bonus XP across all completed questions in this session.
+    var bonusXP: Int {
+        results.reduce(0) { acc, r in
+            acc + (r.isCorrect ? Self.speedBonus(for: r.timeSpentSeconds) : 0)
+        }
+    }
+
+    /// Total XP including speed bonuses — use this for display and storage.
+    var totalXP: Int { xpEarned + bonusXP }
+
+    private static func speedBonus(for seconds: Double) -> Int {
+        if seconds < speedFastSeconds { return speedFastBonus }
+        if seconds < speedGoodSeconds { return speedGoodBonus }
+        return 0
+    }
 
     /// Maps completed results to the Codable `QuestionResult` type for `SessionRecord`.
     var questionResults: [QuestionResult] {

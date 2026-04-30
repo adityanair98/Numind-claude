@@ -33,7 +33,7 @@ struct SessionSummaryView: View {
         }
         .onAppear {
             withAnimation(.easeOut(duration: 0.7).delay(0.3)) {
-                xpAnimated = viewModel.xpEarned
+                xpAnimated = viewModel.totalXP
             }
         }
         .fullScreenCover(item: $reviewVM) { vm in
@@ -82,15 +82,28 @@ struct SessionSummaryView: View {
                     .foregroundStyle(Theme.Colors.mutedText)
             }
 
-            Text("+\(xpAnimated) XP")
-                .font(.system(size: 22, weight: .bold, design: .rounded))
-                .foregroundStyle(Theme.Colors.insightText)
-                .padding(.horizontal, 20)
-                .padding(.vertical, 8)
-                .background(Theme.Colors.insightYellowTint)
-                .clipShape(Capsule())
-                .contentTransition(.numericText())
-                .animation(.easeOut(duration: 0.7).delay(0.3), value: xpAnimated)
+            VStack(spacing: 6) {
+                Text("+\(xpAnimated) XP")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundStyle(Theme.Colors.insightText)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 8)
+                    .background(Theme.Colors.insightYellowTint)
+                    .clipShape(Capsule())
+                    .contentTransition(.numericText())
+                    .animation(.easeOut(duration: 0.7).delay(0.3), value: xpAnimated)
+
+                if viewModel.bonusXP > 0 {
+                    HStack(spacing: 4) {
+                        Image(systemName: "bolt.fill")
+                            .font(.system(size: 10, weight: .bold))
+                        Text("+\(viewModel.bonusXP) XP speed bonus included")
+                            .font(.system(size: 12, weight: .semibold))
+                    }
+                    .foregroundStyle(Theme.Colors.insightText)
+                    .transition(.opacity.combined(with: .scale(scale: 0.9)))
+                }
+            }
         }
         .frame(maxWidth: .infinity)
     }

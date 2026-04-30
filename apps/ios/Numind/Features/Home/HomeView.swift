@@ -48,6 +48,7 @@ struct HomeView: View {
                         totalCount: vm.total
                     )
                     record.questionResults = vm.questionResults
+                    record.bonusXP = vm.bonusXP
                     progressStore.recordSession(record)
                     progressStore.markDailyChallengeCompleted()
                     dailyVM = nil

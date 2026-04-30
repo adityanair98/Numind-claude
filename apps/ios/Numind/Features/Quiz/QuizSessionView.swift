@@ -294,7 +294,8 @@ struct QuizSessionView: View {
     }
 
     private func resultHeroCard(isCorrect: Bool) -> some View {
-        NumindCard(background: isCorrect ? Theme.Colors.mindTealTint : Theme.Colors.errorSoftRedTint) {
+        let speedBonus = viewModel.currentSpeedBonus
+        return NumindCard(background: isCorrect ? Theme.Colors.mindTealTint : Theme.Colors.errorSoftRedTint) {
             VStack(spacing: 12) {
                 ZStack {
                     Circle()
@@ -304,15 +305,37 @@ struct QuizSessionView: View {
                         .font(.system(size: 28, weight: .bold))
                         .foregroundStyle(.white)
                 }
-                .scaleEffect(1)
                 Text(isCorrect ? "Nice — that's right." : "Not quite.")
                     .font(Theme.Typography.title)
                     .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
-                Text(isCorrect ? "🎉 +10 XP · streak +1" : "No penalty — keep going.")
-                    .font(Theme.Typography.caption)
-                    .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.mutedText)
+                if isCorrect {
+                    VStack(spacing: 6) {
+                        Text("🎉 +10 XP · streak +1")
+                            .font(Theme.Typography.caption)
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                        if speedBonus > 0 {
+                            HStack(spacing: 4) {
+                                Image(systemName: "bolt.fill")
+                                    .font(.system(size: 10, weight: .bold))
+                                Text("+\(speedBonus) XP speed bonus!")
+                                    .font(.system(size: 11, weight: .bold))
+                            }
+                            .foregroundStyle(Theme.Colors.insightText)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 4)
+                            .background(Theme.Colors.insightYellowTint)
+                            .clipShape(Capsule())
+                            .transition(.scale(scale: 0.85).combined(with: .opacity))
+                        }
+                    }
+                } else {
+                    Text("No penalty — keep going.")
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
             }
             .frame(maxWidth: .infinity)
+            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: speedBonus)
         }
     }
 
