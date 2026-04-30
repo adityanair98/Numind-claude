@@ -4,6 +4,7 @@ struct ModuleDetailView: View {
     @StateObject private var viewModel: ModuleDetailViewModel
     @EnvironmentObject private var progressStore: ProgressStore
     @State private var selectedLesson: Lesson?
+    @State private var practiceVM: QuizSessionViewModel?
 
     init(module: Module, moduleIndex: Int, totalModules: Int) {
         _viewModel = StateObject(wrappedValue: ModuleDetailViewModel(
@@ -32,6 +33,13 @@ struct ModuleDetailView: View {
                 totalLessons: viewModel.lessons.count,
                 moduleColor: viewModel.module.color
             ))
+        }
+        .fullScreenCover(item: $practiceVM) { vm in
+            NavigationStack {
+                QuizSessionView(viewModel: vm) {
+                    practiceVM = nil
+                }
+            }
         }
     }
 
@@ -136,14 +144,48 @@ struct ModuleDetailView: View {
                     }
                 }
                 Spacer()
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(Theme.Colors.mutedText)
+
+                if isDone {
+                    // Practice chip — tappable independently of the row
+                    Button {
+                        launchPractice(lesson: lesson)
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "bolt.fill")
+                                .font(.system(size: 9, weight: .bold))
+                            Text("Practice")
+                                .font(.system(size: 11, weight: .bold))
+                        }
+                        .foregroundStyle(moduleColor.tintColor)
+                        .padding(.horizontal, 9)
+                        .padding(.vertical, 5)
+                        .background(moduleColor.tintBackground)
+                        .clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                } else {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
             }
             .padding(.vertical, 14)
             .padding(.horizontal, 18)
         }
         .buttonStyle(.plain)
+    }
+
+    private func launchPractice(lesson: Lesson) {
+        let repo = LocalContentRepository()
+        let templates = repo.templates(for: lesson.id)
+        guard !templates.isEmpty else { return }
+        let questions = templates.map { QuizEngine.generate(from: $0) }
+        practiceVM = QuizSessionViewModel(
+            questions: questions,
+            title: lesson.title,
+            shortcut: lesson.shortcut,
+            moduleColor: viewModel.module.color
+        )
     }
 
     private func lessonTile(index: Int, isDone: Bool, moduleColor: ModuleColor) -> some View {
@@ -166,10 +208,11 @@ struct ModuleDetailView: View {
     // MARK: - Footer
 
     private var footerNote: some View {
-        Text("More lessons coming soon")
+        Text("Tap a completed lesson to practice again anytime")
             .font(Theme.Typography.small)
             .foregroundStyle(Theme.Colors.mutedText)
             .frame(maxWidth: .infinity)
+            .multilineTextAlignment(.center)
     }
 
     private func sectionLabel(_ text: String) -> some View {
