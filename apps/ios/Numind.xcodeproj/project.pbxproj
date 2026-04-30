@@ -40,6 +40,7 @@
 		780705FB6704A43F599ABF29 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */; };
 		7848D2CEA968C67B0E532C05 /* SessionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29DDF75E961E74E542F381E /* SessionRecord.swift */; };
 		79C53E7BC19A3FA5B3E0458D /* QuizTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912929E50EF5E5526AB94217 /* QuizTemplate.swift */; };
+		7F643EFCD0CC5BF54B2487F6 /* LevelUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64057FC5753D48B372179EF8 /* LevelUpView.swift */; };
 		804758367F1A82CA5137811B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486939289C929BAA50861ECF /* Badge.swift */; };
 		85117D0CFAB65AD05D1F7ADE /* QuizEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */; };
 		85AF38C1C1849D2390D5933F /* ContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48236569E3C71A34C541C4 /* ContentRepository.swift */; };
@@ -106,6 +107,7 @@
 		61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizEngineTests.swift; sourceTree = "<group>"; };
 		61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRepositoryTests.swift; sourceTree = "<group>"; };
 		63D2F05A692A69B987B2A19E /* ReviewMistakesEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMistakesEngine.swift; sourceTree = "<group>"; };
+		64057FC5753D48B372179EF8 /* LevelUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpView.swift; sourceTree = "<group>"; };
 		6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalContentRepository.swift; sourceTree = "<group>"; };
 		742E5694B65A39CFBED1D89D /* QuizGraphicBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizGraphicBanner.swift; sourceTree = "<group>"; };
 		801C467A7D4DFBC7113E4A12 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				CC603355770CC2CE67B6EFC6 /* ConfettiView.swift */,
+				64057FC5753D48B372179EF8 /* LevelUpView.swift */,
 				C98F41FD249430B232E53CD1 /* OptionCard.swift */,
 				85C0AA52152D1BE63F1AFA33 /* QuizSessionView.swift */,
 				8FB92943AE0DCB4EB8250012 /* QuizSessionViewModel.swift */,
@@ -548,6 +551,7 @@
 				5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */,
 				04969645E6CE3F25880D2488 /* LessonView.swift in Sources */,
 				AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */,
+				7F643EFCD0CC5BF54B2487F6 /* LevelUpView.swift in Sources */,
 				D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */,
 				5D254947FA29FBF59459543A /* Module.swift in Sources */,
 				6ECFD6DFCC5D5233EF6F7EA6 /* ModuleColor.swift in Sources */,

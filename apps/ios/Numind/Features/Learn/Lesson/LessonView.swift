@@ -11,11 +11,19 @@ struct LessonView: View {
     @State private var sessionVM: QuizSessionViewModel?
     @State private var isNewPersonalBest: Bool = false
     @State private var newBadgeIds: Set<String> = []
+    @State private var pendingLevelUp: LevelUpInfo? = nil
 
     var body: some View {
         NavigationStack {
             phaseContent
                 .background(Theme.Colors.softBackground.ignoresSafeArea())
+        }
+        // Level-up modal — shown BEFORE summary so summary animations fire when visible.
+        // onDismiss triggers phase = .summary after the user taps "Keep going".
+        .fullScreenCover(item: $pendingLevelUp, onDismiss: {
+            phase = .summary
+        }) { info in
+            LevelUpView(info: info)
         }
     }
 
@@ -27,7 +35,7 @@ struct LessonView: View {
         case .quiz:
             if let vm = sessionVM {
                 QuizSessionView(viewModel: vm) {
-                    // Compare against prior sessions BEFORE recording this one.
+                    // Personal best — compare BEFORE recording.
                     let priorBest = progressStore.data.bestResult(for: viewModel.lesson.id)
                     if let prior = priorBest {
                         isNewPersonalBest = vm.correctCount > prior.correctCount
@@ -35,6 +43,10 @@ struct LessonView: View {
                     } else {
                         isNewPersonalBest = true   // first attempt is always a personal best
                     }
+
+                    // Level-up detection — capture level BEFORE recording.
+                    let prevLevel = progressStore.skillLevel(moduleId: viewModel.lesson.moduleId)
+
                     var record = SessionRecord(
                         id: UUID(),
                         lessonId: viewModel.lesson.id,
@@ -47,7 +59,23 @@ struct LessonView: View {
                     record.bonusXP = vm.bonusXP
                     progressStore.recordSession(record)
                     newBadgeIds = progressStore.newlyEarnedBadgeIds
-                    phase = .summary
+
+                    // If skill level increased, show ceremony BEFORE summary.
+                    // onDismiss of the fullScreenCover will set phase = .summary.
+                    let newLevel = progressStore.skillLevel(moduleId: viewModel.lesson.moduleId)
+                    if newLevel > prevLevel {
+                        let module = LocalContentRepository().allModules()
+                            .first { $0.id == viewModel.lesson.moduleId }
+                        pendingLevelUp = LevelUpInfo(
+                            moduleName: module?.title ?? viewModel.moduleTitle,
+                            moduleIcon: module?.icon  ?? "star.fill",
+                            moduleColor: viewModel.moduleColor,
+                            newLevel: newLevel
+                        )
+                        // phase = .summary is deferred to fullScreenCover onDismiss
+                    } else {
+                        phase = .summary
+                    }
                 }
             }
         case .summary:

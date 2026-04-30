@@ -43,6 +43,9 @@ struct SessionSummaryView: View {
                     showPersonalBest = true
                 }
             }
+            if !newBadgeIds.isEmpty {
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+            }
         }
         .fullScreenCover(item: $reviewVM) { vm in
             NavigationStack {
