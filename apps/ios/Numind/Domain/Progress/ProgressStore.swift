@@ -2,9 +2,14 @@ import Foundation
 
 @MainActor
 final class ProgressStore: ObservableObject {
-    private static let defaultsKey = "numind.progress.v1"
+    private static let defaultsKey      = "numind.progress.v1"
+    private static let dailyChallengeKey = "numind.dailyChallenge.lastCompleted"
+    private static let dateFormatter: DateFormatter = {
+        let f = DateFormatter(); f.dateFormat = "yyyy-MM-dd"; return f
+    }()
 
     @Published private(set) var data: ProgressData
+    @Published private(set) var dailyChallengeCompletedDate: String
 
     init() {
         if let raw = UserDefaults.standard.data(forKey: Self.defaultsKey),
@@ -13,6 +18,7 @@ final class ProgressStore: ObservableObject {
         } else {
             data = ProgressData()
         }
+        dailyChallengeCompletedDate = UserDefaults.standard.string(forKey: Self.dailyChallengeKey) ?? ""
     }
 
     // MARK: - Write
@@ -29,6 +35,18 @@ final class ProgressStore: ObservableObject {
     func reset() {
         data = ProgressData()
         UserDefaults.standard.removeObject(forKey: Self.defaultsKey)
+    }
+
+    // MARK: - Daily challenge
+
+    var isDailyChallengeCompleted: Bool {
+        dailyChallengeCompletedDate == Self.dateFormatter.string(from: Date())
+    }
+
+    func markDailyChallengeCompleted() {
+        let today = Self.dateFormatter.string(from: Date())
+        UserDefaults.standard.set(today, forKey: Self.dailyChallengeKey)
+        dailyChallengeCompletedDate = today
     }
 
     private func persist() {

@@ -12,6 +12,7 @@ final class LocalContentRepository: ContentRepository {
     }
 
     func allModules() -> [Module] { modules }
+    func allTemplates() -> [QuizTemplate] { templates }
 
     func module(id: String) -> Module? {
         modules.first { $0.id == id }

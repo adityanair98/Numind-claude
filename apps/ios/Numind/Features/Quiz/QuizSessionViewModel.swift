@@ -1,7 +1,8 @@
 import Foundation
 
 @MainActor
-final class QuizSessionViewModel: ObservableObject {
+final class QuizSessionViewModel: ObservableObject, Identifiable {
+    let id = UUID()
 
     enum SessionState: Equatable {
         case question
@@ -78,6 +79,14 @@ final class QuizSessionViewModel: ObservableObject {
         self.lessonShortcut = lesson.shortcut
         let templates = repository.templates(for: lesson.id)
         questions = templates.map { QuizEngine.generate(from: $0) }
+    }
+
+    /// Initialiser for pre-generated question sets (e.g. daily challenge).
+    init(questions: [QuizQuestion], title: String, shortcut: String, moduleColor: ModuleColor = .blue) {
+        lessonTitle = title
+        self.moduleColor = moduleColor
+        self.lessonShortcut = shortcut
+        self.questions = questions
     }
 
     func revealHint() {

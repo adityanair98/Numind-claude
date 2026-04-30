@@ -5,6 +5,7 @@ protocol ContentRepository {
     func module(id: String) -> Module?
     func lessons(for moduleId: String) -> [Lesson]
     func lesson(id: String) -> Lesson?
+    func allTemplates() -> [QuizTemplate]
     func templates(for lessonId: String) -> [QuizTemplate]
     func template(id: String) -> QuizTemplate?
 }

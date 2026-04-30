@@ -26,6 +26,7 @@
 		52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */; };
 		53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */; };
 		5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A7139387185959BC6413FC /* Lesson.swift */; };
+		58972D81669005D6C506FD13 /* DailyChallengeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC02588669C25EEC373E8D3C /* DailyChallengeEngine.swift */; };
 		58F088554AE41474740F7800 /* LearnViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8490760BAE7C9FD71F012 /* LearnViewModel.swift */; };
 		5D254947FA29FBF59459543A /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EB9C1AB0D5B44747792E8B /* Module.swift */; };
 		6104FF691FB7D2DCB8BD4FE5 /* modules.json in Resources */ = {isa = PBXBuildFile; fileRef = 53291327E813B6AFAAFF8834 /* modules.json */; };
@@ -107,6 +108,7 @@
 		A46E6272861ABFFCC9127521 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		A5EB9C1AB0D5B44747792E8B /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		AA70F32E91A8A127C7D47AF1 /* ProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressData.swift; sourceTree = "<group>"; };
+		AC02588669C25EEC373E8D3C /* DailyChallengeEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallengeEngine.swift; sourceTree = "<group>"; };
 		B3BDBD4ACB5038B0BBD1C599 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B9A7139387185959BC6413FC /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindApp.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 		44C6A312F7BA2F613EB4022F /* QuizEngine */ = {
 			isa = PBXGroup;
 			children = (
+				AC02588669C25EEC373E8D3C /* DailyChallengeEngine.swift */,
 				2414306B6EF002CBE6408C31 /* QuizEngine.swift */,
 				30769F1EBA741149D714254B /* QuizQuestion.swift */,
 				8841452C620A4E482C588B92 /* SeededRandomGenerator.swift */,
@@ -504,6 +507,7 @@
 				5218EEDA9DF7C5439F346B60 /* Colors.swift in Sources */,
 				AC2CE9448712D940D4B98677 /* ConfettiView.swift in Sources */,
 				85AF38C1C1849D2390D5933F /* ContentRepository.swift in Sources */,
+				58972D81669005D6C506FD13 /* DailyChallengeEngine.swift in Sources */,
 				52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */,
 				D0B52158341507F98500AFB7 /* HomeView.swift in Sources */,
 				EB7110E292B1F140F390751B /* HomeViewModel.swift in Sources */,

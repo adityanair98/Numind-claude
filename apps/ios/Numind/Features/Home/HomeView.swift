@@ -4,6 +4,7 @@ struct HomeView: View {
     @EnvironmentObject private var progressStore: ProgressStore
     @StateObject private var viewModel = HomeViewModel()
     @State private var launchCard: HomeViewModel.LessonCard?
+    @State private var dailyVM: QuizSessionViewModel? = nil
     @AppStorage("numind.userName") private var userName = "You"
 
     var body: some View {
@@ -11,6 +12,7 @@ struct HomeView: View {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
                 greetingHeader
                 streakWeekCard
+                dailyChallengeSection
                 workoutSection
                 if let card = viewModel.continueCard {
                     continueSection(card)
@@ -33,6 +35,24 @@ struct HomeView: View {
                 totalLessons: card.totalLessons,
                 moduleColor: card.module.color
             ))
+        }
+        .fullScreenCover(item: $dailyVM) { vm in
+            NavigationStack {
+                QuizSessionView(viewModel: vm) {
+                    let correct = vm.correctCount
+                    let total   = vm.total
+                    progressStore.recordSession(SessionRecord(
+                        id: UUID(),
+                        lessonId: "daily_challenge",
+                        moduleId: "mixed",
+                        date: Date(),
+                        correctCount: correct,
+                        totalCount: total
+                    ))
+                    progressStore.markDailyChallengeCompleted()
+                    dailyVM = nil
+                }
+            }
         }
         .onAppear { viewModel.refresh(using: progressStore) }
         .onChange(of: progressStore.totalSessions) { _, _ in
@@ -207,6 +227,82 @@ struct HomeView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 8)
         }
+    }
+
+    // MARK: - Daily challenge
+
+    private var dailyChallengeSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Daily challenge")
+            NumindCard(background: Theme.Colors.primaryBlueTint) {
+                VStack(alignment: .leading, spacing: 14) {
+                    // Header: icon + title + done badge
+                    HStack(spacing: 12) {
+                        ZStack {
+                            Circle()
+                                .fill(progressStore.isDailyChallengeCompleted
+                                      ? Theme.Colors.mindTeal
+                                      : Theme.Colors.primaryBlue)
+                                .frame(width: 44, height: 44)
+                            Image(systemName: progressStore.isDailyChallengeCompleted
+                                  ? "checkmark" : "bolt.fill")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundStyle(.white)
+                        }
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("5 questions · All modules")
+                                .font(Theme.Typography.headline)
+                                .foregroundStyle(Theme.Colors.deepNavy)
+                            Text(progressStore.isDailyChallengeCompleted
+                                 ? "Completed today"
+                                 : "New questions every day")
+                                .font(Theme.Typography.caption)
+                                .foregroundStyle(progressStore.isDailyChallengeCompleted
+                                                 ? Theme.Colors.mindTeal : Theme.Colors.mutedText)
+                        }
+                        Spacer()
+                    }
+
+                    // Bead rail + XP badge
+                    HStack {
+                        BeadRail(
+                            progress: progressStore.isDailyChallengeCompleted ? 5 : 0,
+                            total: 5,
+                            variant: .chunky
+                        )
+                        Spacer()
+                        Text("+50 XP max")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(Theme.Colors.insightText)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(Theme.Colors.insightYellowTint)
+                            .clipShape(Capsule())
+                    }
+
+                    // CTA
+                    if progressStore.isDailyChallengeCompleted {
+                        Text("✓ Come back tomorrow for new questions")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    } else {
+                        PillButton("Start challenge") { startDailyChallenge() }
+                    }
+                }
+            }
+        }
+    }
+
+    private func startDailyChallenge() {
+        let repo = LocalContentRepository()
+        let questions = DailyChallengeEngine.dailyQuestions(from: repo)
+        dailyVM = QuizSessionViewModel(
+            questions: questions,
+            title: "Daily Challenge",
+            shortcut: "Draw on all the skills you've built — tips, discounts, salary math, and more.",
+            moduleColor: .blue
+        )
     }
 
     // MARK: - Continue learning
