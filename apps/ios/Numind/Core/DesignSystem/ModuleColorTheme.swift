@@ -11,6 +11,8 @@ extension ModuleColor {
         case .orange: return Theme.Colors.warmOrange
         case .green:  return Theme.Colors.growthGreen
         case .indigo: return Theme.Colors.investIndigo
+        case .coral:  return Theme.Colors.debtCoral
+        case .purple: return Theme.Colors.travelPurple
         case .muted:  return Theme.Colors.mutedText
         }
     }
@@ -23,6 +25,8 @@ extension ModuleColor {
         case .orange: return Theme.Colors.warmOrangeTint
         case .green:  return Theme.Colors.growthGreenTint
         case .indigo: return Theme.Colors.investIndigoTint
+        case .coral:  return Theme.Colors.debtCoralTint
+        case .purple: return Theme.Colors.travelPurpleTint
         case .muted:  return Theme.Colors.mutedTint
         }
     }

@@ -58,5 +58,33 @@
     "icon": "function",
     "color": "orange",
     "lessonIds": ["round_to_estimate", "hourly_rate_check", "percent_change", "double_or_half", "multiply_by_5"]
+  },
+  {
+    "id": "debt",
+    "title": "Debt & Loans",
+    "subtitle": "Credit cards, loans, and the real cost of borrowing",
+    "icon": "exclamationmark.circle.fill",
+    "color": "coral",
+    "lessonIds": [
+      "credit_card_interest",
+      "minimum_payment_trap",
+      "loan_true_cost",
+      "debt_to_income",
+      "extra_payment_power"
+    ]
+  },
+  {
+    "id": "travel",
+    "title": "Travel Money",
+    "subtitle": "Currency, fees, and spending abroad",
+    "icon": "airplane",
+    "color": "purple",
+    "lessonIds": [
+      "currency_conversion",
+      "exchange_rate_traps",
+      "travel_budget_math",
+      "accommodation_cost_math",
+      "travel_insurance_fees"
+    ]
   }
 ]

@@ -12,6 +12,8 @@ enum QuestionTheme {
     case investing
     case quickMath
     case estimation
+    case debt
+    case travel
 
     // MARK: - Display properties
 
@@ -26,6 +28,8 @@ enum QuestionTheme {
         case .investing:     return "chart.line.uptrend.xyaxis"
         case .quickMath:     return "plusminus"
         case .estimation:    return "gauge.medium"
+        case .debt:          return "exclamationmark.circle.fill"
+        case .travel:        return "airplane"
         }
     }
 
@@ -40,6 +44,8 @@ enum QuestionTheme {
         case .investing:     return "arrow.up.right.circle.fill"
         case .quickMath:     return "multiply.circle.fill"
         case .estimation:    return "function"
+        case .debt:          return "banknote.fill"
+        case .travel:        return "globe.americas.fill"
         }
     }
 
@@ -54,6 +60,8 @@ enum QuestionTheme {
         case .investing:     return "Investing"
         case .quickMath:     return "Quick Math"
         case .estimation:    return "Estimation"
+        case .debt:          return "Debt & Loans"
+        case .travel:        return "Travel Money"
         }
     }
 
@@ -68,6 +76,8 @@ enum QuestionTheme {
         case .investing:     return "Interest & returns"
         case .quickMath:     return "Doubling & splitting"
         case .estimation:    return "Mental math shortcuts"
+        case .debt:          return "Credit cards & loans"
+        case .travel:        return "Currency & spending abroad"
         }
     }
 
@@ -82,6 +92,8 @@ enum QuestionTheme {
         case .investing:     return .indigo
         case .quickMath:     return .orange
         case .estimation:    return .orange
+        case .debt:          return .coral
+        case .travel:        return .purple
         }
     }
 
@@ -129,6 +141,25 @@ enum QuestionTheme {
         // ── Quick Math ───────────────────────────────────────────────────────────
         case "double_amount", "half_amount", "multiply_five", "split_five_ways":
             return .quickMath
+
+        // ── Debt & Loans ─────────────────────────────────────────────────────────
+        case "cc_monthly_interest", "cc_monthly_interest_scenario",
+             "cc_annual_interest", "cc_interest_year_d3",
+             "cc_minimum_payment", "cc_minimum_payment_scenario",
+             "loan_total_repayment", "loan_heavy_interest",
+             "loan_total_interest_paid",
+             "dti_ratio_basic", "dti_ratio_scenario", "dti_add_payments", "dti_housing_only",
+             "cc_extra_payment_saving", "cc_balance_after_interest":
+            return .debt
+
+        // ── Travel Money ─────────────────────────────────────────────────────────
+        case "currency_to_usd", "currency_to_usd_scenario",
+             "usd_to_foreign_calc", "currency_convert_freeentry",
+             "airport_markup_cost", "foreign_transaction_fee_calc", "total_with_fee_calc",
+             "days_on_budget_calc", "travel_budget_remaining_calc",
+             "split_hotel_room_calc", "hotel_per_night_calc", "split_accommodation_calc",
+             "travel_insurance_cost_calc", "total_trip_with_insurance", "foreign_fee_total_saved":
+            return .travel
 
         // ── Estimation (default) ─────────────────────────────────────────────────
         default:

@@ -35,6 +35,8 @@ extension Theme {
         static let growthGreen   = Color(uiColor: .adaptive(light: 0x22A64A, dark: 0x34D27A))
         static let investIndigo  = Color(uiColor: .adaptive(light: 0x5B5BD6, dark: 0x7B7FF0))
         static let errorSoftRed  = Color(uiColor: .adaptive(light: 0xEF6B6B, dark: 0xF08080))
+        static let debtCoral     = Color(uiColor: .adaptive(light: 0xEF5A3A, dark: 0xFF7055))
+        static let travelPurple  = Color(uiColor: .adaptive(light: 0x7C4DBC, dark: 0xA070E0))
 
         // ── Surfaces ──────────────────────────────────────────────────────────────────
         /// Page / scroll background
@@ -55,6 +57,8 @@ extension Theme {
         static var growthGreenTint:   Color { growthGreen.opacity(0.14) }
         static var investIndigoTint:  Color { investIndigo.opacity(0.12) }
         static var errorSoftRedTint:  Color { errorSoftRed.opacity(0.14) }
+        static var debtCoralTint:     Color { debtCoral.opacity(0.13) }
+        static var travelPurpleTint:  Color { travelPurple.opacity(0.12) }
         static var mutedTint:         Color { mutedText.opacity(0.12) }
 
         // ── Lines & shadows ───────────────────────────────────────────────────────────

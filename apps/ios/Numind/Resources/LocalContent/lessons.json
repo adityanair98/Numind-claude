@@ -241,5 +241,97 @@
     "shortcut": "$46 × 5: move decimal → $460, halve → $230. Works for any number. In reverse: ÷5 means ÷10 then ×2. Useful for per-item pricing, hourly rates, and 5-pack deals.",
     "example": "$46 × 5\n$46 × 10 = $460\n$460 ÷ 2 = $230",
     "quizTemplateIds": ["multiply_five", "split_five_ways"]
+  },
+
+  {
+    "id": "credit_card_interest",
+    "moduleId": "debt",
+    "title": "How credit card interest works",
+    "concept": "Credit card APR sounds small — 20% — but it compounds monthly. The interest charge each month is APR ÷ 12 × balance. On a $2,000 balance at 20% APR you're paying ~$33 every single month just in interest.",
+    "shortcut": "Monthly interest = balance × APR% ÷ 12. To estimate: move the decimal left two places (gives 1%), multiply by your APR, divide by 12. $2,000 × 20% ÷ 12 = $33.33/month.",
+    "example": "Balance: $2,000 · APR: 20%\nMonthly rate = 20% ÷ 12 = 1.67%\nInterest = $2,000 × 1.67% = $33.33",
+    "quizTemplateIds": ["cc_monthly_interest", "cc_monthly_interest_scenario", "cc_annual_interest", "cc_interest_year_d3"]
+  },
+  {
+    "id": "minimum_payment_trap",
+    "moduleId": "debt",
+    "title": "The minimum payment trap",
+    "concept": "Credit card minimum payments are usually 2% of your balance. They feel manageable — but they're designed to keep you in debt longer. A $3,000 balance at 2% minimum means paying only $60/month while interest charges eat most of it.",
+    "shortcut": "Minimum payment ≈ balance × 2%. Always pay more than the minimum. Even an extra $50/month can cut years off your payoff timeline.",
+    "example": "Balance: $3,000\nMinimum = $3,000 × 2% = $60\nAt 20% APR, interest alone = $50/month\nOnly $10 goes to principal!",
+    "quizTemplateIds": ["cc_minimum_payment", "cc_minimum_payment_scenario"]
+  },
+  {
+    "id": "loan_true_cost",
+    "moduleId": "debt",
+    "title": "The true cost of a loan",
+    "concept": "The sticker price of a loan is not what you pay. Total repayment = monthly payment × number of months. The difference between that total and your original loan amount is pure interest — money the lender earns.",
+    "shortcut": "Total cost = payment × months. Interest paid = total cost − loan amount. Always calculate these before signing. A $6,000 loan at $200/month for 36 months costs $7,200 — $1,200 in interest.",
+    "example": "Loan: $6,000\nPayment: $200/month × 36 months\nTotal paid: $7,200\nInterest: $7,200 − $6,000 = $1,200",
+    "quizTemplateIds": ["loan_total_repayment", "loan_heavy_interest", "loan_total_interest_paid"]
+  },
+  {
+    "id": "debt_to_income",
+    "moduleId": "debt",
+    "title": "Debt-to-income ratio",
+    "concept": "DTI ratio = total monthly debt payments ÷ monthly income × 100. Lenders use this to assess risk. Under 36% is healthy; over 43% is a red flag for mortgage approval. It tells you how much of your income is already spoken for.",
+    "shortcut": "DTI% = monthly debt ÷ monthly income × 100. If you earn $5,000/month and pay $1,500 in debt: $1,500 ÷ $5,000 × 100 = 30% DTI. Keep it under 36%.",
+    "example": "Monthly income: $5,000\nDebt payments: $1,500\nDTI = $1,500 ÷ $5,000 × 100 = 30%",
+    "quizTemplateIds": ["dti_ratio_basic", "dti_ratio_scenario", "dti_add_payments", "dti_housing_only"]
+  },
+  {
+    "id": "extra_payment_power",
+    "moduleId": "debt",
+    "title": "The power of extra payments",
+    "concept": "Every extra dollar you pay toward debt saves you that dollar's worth of future interest. The annual interest saving from an extra monthly payment equals extra payment × APR%. Small extra payments compound over time into big savings.",
+    "shortcut": "Annual interest saved ≈ extra payment × APR%. Paying an extra $100/month on a 20% APR card saves $20/year per $100 — plus you reduce the principal faster, which shrinks future interest too.",
+    "example": "Extra payment: $100 · APR: 20%\nAnnual saving ≈ $100 × 20% = $20\nPlus reduced principal each month",
+    "quizTemplateIds": ["cc_extra_payment_saving", "cc_balance_after_interest"]
+  },
+
+  {
+    "id": "currency_conversion",
+    "moduleId": "travel",
+    "title": "Currency conversion basics",
+    "concept": "Exchange rates tell you how many units of one currency equal one unit of another. To convert foreign currency to USD: multiply by the exchange rate (USD per foreign unit). To convert USD to foreign: multiply by the foreign rate.",
+    "shortcut": "Foreign → USD: amount × rate (USD per unit). USD → Foreign: amount × foreign rate. Example: 100 euros × 1.08 = $108 USD. Always know which direction the rate runs.",
+    "example": "100 EUR × $1.08/EUR = $108 USD\n200 GBP × $1.27/GBP = $254 USD",
+    "quizTemplateIds": ["currency_to_usd", "currency_to_usd_scenario", "usd_to_foreign_calc", "currency_convert_freeentry"]
+  },
+  {
+    "id": "exchange_rate_traps",
+    "moduleId": "travel",
+    "title": "Exchange rate traps & fees",
+    "concept": "Airports, hotels, and dynamic currency conversion all charge markups of 5–15% above the real rate. Foreign transaction fees (typically 3%) compound on top. These invisible costs add up quickly on long trips.",
+    "shortcut": "Airport markup cost = amount × markup%. Foreign transaction fee = purchase × fee%. Always use a no-foreign-fee card and avoid airport currency exchange. Even 5% markup on $1,000 = $50 gone.",
+    "example": "$1,000 converted at airport (8% markup)\nMarkup cost = $1,000 × 8% = $80\nYou effectively get $920 worth of foreign currency",
+    "quizTemplateIds": ["airport_markup_cost", "foreign_transaction_fee_calc", "total_with_fee_calc", "foreign_fee_total_saved"]
+  },
+  {
+    "id": "travel_budget_math",
+    "moduleId": "travel",
+    "title": "Travel budget planning",
+    "concept": "A daily budget is the cornerstone of trip planning. Days on budget = total budget ÷ daily spend. If you go over your daily budget on some days, you lose equivalent days on your trip. Knowing your number keeps you in control.",
+    "shortcut": "Days on budget = total budget ÷ daily cost. Remaining budget = total − (days elapsed × daily spend). Check in daily to catch overspending before it compounds.",
+    "example": "Budget: $900 · Daily spend: $150\nDays on budget = $900 ÷ $150 = 6 days",
+    "quizTemplateIds": ["days_on_budget_calc", "travel_budget_remaining_calc"]
+  },
+  {
+    "id": "accommodation_cost_math",
+    "moduleId": "travel",
+    "title": "Accommodation cost math",
+    "concept": "Hotel and Airbnb prices are often listed as total for the stay, not per night. Knowing the per-night cost lets you compare options fairly. Splitting costs among travel partners dramatically reduces the per-person burden.",
+    "shortcut": "Per night = total ÷ nights. Per person = total ÷ people. Always calculate both before booking. A $360 hotel for 3 nights = $120/night. Split 4 ways = $90/person per night.",
+    "example": "Hotel: $360 for 3 nights\nPer night = $360 ÷ 3 = $120\nSplit 4 ways = $90/person per night",
+    "quizTemplateIds": ["split_hotel_room_calc", "hotel_per_night_calc", "split_accommodation_calc"]
+  },
+  {
+    "id": "travel_insurance_fees",
+    "moduleId": "travel",
+    "title": "Travel insurance & total trip cost",
+    "concept": "Travel insurance typically costs 4–10% of your total trip cost. It's worth understanding the math so you can budget for it. Total trip cost with insurance = trip cost × (1 + insurance%). Always include it in your planning budget.",
+    "shortcut": "Insurance cost = trip cost × insurance%. Total with insurance = trip cost × (1 + insurance%). A $2,000 trip with 6% insurance costs $120 extra — total $2,120.",
+    "example": "Trip cost: $2,000 · Insurance: 6%\nInsurance = $2,000 × 6% = $120\nTotal = $2,000 + $120 = $2,120",
+    "quizTemplateIds": ["travel_insurance_cost_calc", "total_trip_with_insurance"]
   }
 ]

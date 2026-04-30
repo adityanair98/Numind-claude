@@ -274,6 +274,100 @@ struct QuizEngine {
                   let second = vars["secondDiscount"] else { return nil }
             return price - price * (1 - first / 100) * (1 - second / 100)
         },
+
+        // Debt & Loans
+        "creditCardMonthlyInterest": { vars in
+            guard let balance = vars["balance"], let apr = vars["apr"] else { return nil }
+            return balance * apr / 100 / 12
+        },
+        "creditCardAnnualInterest": { vars in
+            guard let balance = vars["balance"], let apr = vars["apr"] else { return nil }
+            return balance * apr / 100
+        },
+        "minimumPaymentTwoPercent": { vars in
+            guard let balance = vars["balance"] else { return nil }
+            return balance * 0.02
+        },
+        "debtToIncomeRatio": { vars in
+            guard let totalDebt = vars["totalDebt"],
+                  let monthlyIncome = vars["monthlyIncome"], monthlyIncome > 0 else { return nil }
+            return totalDebt / monthlyIncome * 100
+        },
+        "loanTotalRepayment": { vars in
+            guard let payment = vars["monthlyPayment"],
+                  let months = vars["numMonths"] else { return nil }
+            return payment * months
+        },
+        "loanTotalInterest": { vars in
+            guard let payment = vars["monthlyPayment"],
+                  let months = vars["numMonths"],
+                  let principal = vars["loanAmount"] else { return nil }
+            return payment * months - principal
+        },
+        "balanceAfterMonthlyInterest": { vars in
+            guard let balance = vars["balance"], let apr = vars["apr"] else { return nil }
+            return balance * (1 + apr / 100 / 12)
+        },
+        "extraPaymentAnnualSaving": { vars in
+            guard let extra = vars["extraPayment"], let apr = vars["apr"] else { return nil }
+            return extra * apr / 100
+        },
+        "totalMonthlyPayments": { vars in
+            guard let p1 = vars["payment1"], let p2 = vars["payment2"] else { return nil }
+            return p1 + p2
+        },
+
+        // Travel Money
+        "foreignToUSD": { vars in
+            guard let foreign = vars["foreignAmount"],
+                  let rate = vars["exchangeRate"] else { return nil }
+            return foreign * rate
+        },
+        "usdToForeign": { vars in
+            guard let usd = vars["usdAmount"],
+                  let rate = vars["foreignRate"] else { return nil }
+            return usd * rate
+        },
+        "currencyMarkupCost": { vars in
+            guard let amount = vars["convertAmount"],
+                  let markup = vars["markupPercent"] else { return nil }
+            return amount * markup / 100
+        },
+        "foreignTransactionFee": { vars in
+            guard let purchase = vars["purchaseAmount"],
+                  let fee = vars["feePercent"] else { return nil }
+            return purchase * fee / 100
+        },
+        "totalWithForeignFee": { vars in
+            guard let purchase = vars["purchaseAmount"],
+                  let fee = vars["feePercent"] else { return nil }
+            return purchase * (1 + fee / 100)
+        },
+        "splitTravelCost": { vars in
+            guard let total = vars["totalCost"],
+                  let people = vars["numPeople"], people > 0 else { return nil }
+            return total / people
+        },
+        "daysOnBudget": { vars in
+            guard let budget = vars["travelBudget"],
+                  let daily = vars["dailyCost"], daily > 0 else { return nil }
+            return budget / daily
+        },
+        "hotelCostPerNight": { vars in
+            guard let total = vars["hotelTotal"],
+                  let nights = vars["numNights"], nights > 0 else { return nil }
+            return total / nights
+        },
+        "travelInsuranceCost": { vars in
+            guard let trip = vars["tripCost"],
+                  let pct = vars["insurancePercent"] else { return nil }
+            return trip * pct / 100
+        },
+        "tripTotalWithInsurance": { vars in
+            guard let trip = vars["tripCost"],
+                  let pct = vars["insurancePercent"] else { return nil }
+            return trip * (1 + pct / 100)
+        },
     ]
 
     private static func compute(formula: String, variables: [String: Double]) -> Double? {

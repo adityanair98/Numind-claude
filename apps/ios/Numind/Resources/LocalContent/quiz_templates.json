@@ -668,5 +668,443 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "÷5 = ÷10 × 2. Find ${{totalAmount}} ÷ 10 first (move the decimal), then double it. That's your per-person share."
+  },
+
+  {
+    "id": "cc_monthly_interest",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "Your credit card balance is ${{balance}} with a {{apr}}% APR. What is your monthly interest charge?",
+    "variableRules": [
+      { "name": "balance", "options": [500, 1000, 1500, 2000, 2500, 3000] },
+      { "name": "apr", "options": [18, 20, 22, 24, 26] }
+    ],
+    "answerFormula": "creditCardMonthlyInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly interest = balance × APR ÷ 12. ${{balance}} × {{apr}}% ÷ 12 = your monthly charge. High APR makes even small balances expensive."
+  },
+  {
+    "id": "cc_monthly_interest_scenario",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "scenarioTemplate": "You carry a ${{balance}} balance on your card (APR: {{apr}}%) and don't pay it off this month.",
+    "promptTemplate": "How much interest will you be charged?",
+    "variableRules": [
+      { "name": "balance", "options": [800, 1200, 1600, 2000, 2400, 3000] },
+      { "name": "apr", "options": [18, 20, 22, 24] }
+    ],
+    "answerFormula": "creditCardMonthlyInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly interest = balance × APR ÷ 12. At {{apr}}% APR, ${{balance}} costs you that amount in interest for just one month of carrying a balance."
+  },
+  {
+    "id": "cc_annual_interest",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "You carry a ${{balance}} credit card balance all year at {{apr}}% APR. How much interest do you pay annually?",
+    "variableRules": [
+      { "name": "balance", "options": [500, 1000, 1500, 2000, 3000] },
+      { "name": "apr", "options": [18, 20, 22, 24] }
+    ],
+    "answerFormula": "creditCardAnnualInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual interest = balance × APR%. ${{balance}} × {{apr}}% = annual interest. This is why paying off your card monthly saves a lot."
+  },
+  {
+    "id": "cc_interest_year_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "scenarioTemplate": "After a big purchase, your card balance sits at ${{balance}} all year (APR: {{apr}}%).",
+    "promptTemplate": "What is the total interest cost for the full year?",
+    "variableRules": [
+      { "name": "balance", "options": [2000, 2500, 3000, 3500, 4000, 5000] },
+      { "name": "apr", "options": [19, 21, 23, 25, 27] }
+    ],
+    "answerFormula": "creditCardAnnualInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual interest = balance × APR%. ${{balance}} × {{apr}}% = the total you pay in interest over 12 months. Carrying a large balance is very costly."
+  },
+  {
+    "id": "cc_minimum_payment",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "Your credit card balance is ${{balance}}. The minimum payment is 2% of the balance. What is the minimum payment?",
+    "variableRules": [
+      { "name": "balance", "options": [500, 1000, 1500, 2000, 2500, 3000, 4000] }
+    ],
+    "answerFormula": "minimumPaymentTwoPercent",
+    "answerFormat": "currency",
+    "inputMode": "freeEntry",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Minimum payment = balance × 2%. ${{balance}} × 2% = minimum due. This keeps you in debt longest — always pay more when you can."
+  },
+  {
+    "id": "cc_minimum_payment_scenario",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "scenarioTemplate": "Your statement shows a ${{balance}} balance. The card requires a 2% minimum payment.",
+    "promptTemplate": "What is the minimum amount due?",
+    "variableRules": [
+      { "name": "balance", "options": [1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500] }
+    ],
+    "answerFormula": "minimumPaymentTwoPercent",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Minimum = balance × 2%. On ${{balance}}, that's a small amount — but at high APR, nearly all of it goes to interest, not principal."
+  },
+  {
+    "id": "loan_total_repayment",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "You take a loan with a ${{monthlyPayment}} monthly payment for {{numMonths}} months. What is the total amount you repay?",
+    "variableRules": [
+      { "name": "monthlyPayment", "options": [150, 200, 250, 300, 350, 400] },
+      { "name": "numMonths", "options": [12, 24, 36, 48, 60] }
+    ],
+    "answerFormula": "loanTotalRepayment",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total repayment = monthly payment × months. ${{monthlyPayment}} × {{numMonths}} = total paid. The difference from your original loan is pure interest."
+  },
+  {
+    "id": "loan_heavy_interest",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "scenarioTemplate": "You borrow ${{loanAmount}} and repay ${{monthlyPayment}}/month for {{numMonths}} months.",
+    "promptTemplate": "What is the total amount you repay over the life of the loan?",
+    "variableRules": [
+      { "name": "loanAmount", "options": [5000, 6000, 7000] },
+      { "name": "monthlyPayment", "options": [220, 250, 280] },
+      { "name": "numMonths", "options": [36] }
+    ],
+    "answerFormula": "loanTotalRepayment",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total repaid = ${{monthlyPayment}} × {{numMonths}} months. Always compare this total to your original loan to see how much interest you're paying."
+  },
+  {
+    "id": "loan_total_interest_paid",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "scenarioTemplate": "You borrow ${{loanAmount}} and repay ${{monthlyPayment}}/month for {{numMonths}} months.",
+    "promptTemplate": "How much interest do you pay in total?",
+    "variableRules": [
+      { "name": "loanAmount", "options": [5000, 6000, 7000] },
+      { "name": "monthlyPayment", "options": [220, 250, 280] },
+      { "name": "numMonths", "options": [36] }
+    ],
+    "answerFormula": "loanTotalInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total interest = (payment × months) − loan amount. (${{monthlyPayment}} × {{numMonths}}) − ${{loanAmount}} = the bank's earnings on your loan."
+  },
+  {
+    "id": "dti_ratio_basic",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "Your monthly income is ${{monthlyIncome}} and your total monthly debt payments are ${{totalDebt}}. What is your debt-to-income ratio?",
+    "variableRules": [
+      { "name": "monthlyIncome", "options": [3000, 4000, 5000, 6000, 8000] },
+      { "name": "totalDebt", "options": [600, 800, 1000, 1200, 1500, 1800] }
+    ],
+    "answerFormula": "debtToIncomeRatio",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "DTI = (monthly debt ÷ monthly income) × 100. ${{totalDebt}} ÷ ${{monthlyIncome}} × 100 = your DTI%. Under 36% is healthy."
+  },
+  {
+    "id": "dti_ratio_scenario",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "scenarioTemplate": "You earn ${{monthlyIncome}}/month. Your rent is ${{totalDebt}}/month and you have no other debt.",
+    "promptTemplate": "What is your housing debt-to-income ratio?",
+    "variableRules": [
+      { "name": "monthlyIncome", "options": [4000, 5000, 6000, 7000, 8000] },
+      { "name": "totalDebt", "options": [800, 1000, 1200, 1400, 1600] }
+    ],
+    "answerFormula": "debtToIncomeRatio",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "DTI = (debt ÷ income) × 100. ${{totalDebt}} ÷ ${{monthlyIncome}} × 100 = your housing DTI. Lenders prefer housing DTI under 28%."
+  },
+  {
+    "id": "dti_add_payments",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "scenarioTemplate": "Your monthly income is ${{monthlyIncome}}. Your combined monthly debt payments (rent + loan) total ${{totalDebt}}.",
+    "promptTemplate": "What is your debt-to-income ratio?",
+    "variableRules": [
+      { "name": "monthlyIncome", "options": [4000, 5000, 6000, 7000] },
+      { "name": "totalDebt", "options": [1000, 1200, 1400, 1600, 1800] }
+    ],
+    "answerFormula": "debtToIncomeRatio",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "DTI = total monthly debt ÷ monthly income × 100. ${{totalDebt}} ÷ ${{monthlyIncome}} × 100. Lenders add all your debts together — not just one."
+  },
+  {
+    "id": "dti_housing_only",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "scenarioTemplate": "Your gross monthly income is ${{monthlyIncome}}. You want to qualify for a mortgage with a ${{totalDebt}} monthly payment.",
+    "promptTemplate": "What would your front-end DTI ratio be?",
+    "variableRules": [
+      { "name": "monthlyIncome", "options": [5000, 6000, 7000, 8000, 10000] },
+      { "name": "totalDebt", "options": [1200, 1400, 1600, 1800, 2000] }
+    ],
+    "answerFormula": "debtToIncomeRatio",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Front-end DTI = mortgage payment ÷ gross income × 100. Lenders want this under 28%. ${{totalDebt}} ÷ ${{monthlyIncome}} × 100 = your ratio."
+  },
+  {
+    "id": "cc_extra_payment_saving",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "You pay an extra ${{extraPayment}}/month on a credit card with {{apr}}% APR. What is your approximate annual interest saving?",
+    "variableRules": [
+      { "name": "extraPayment", "options": [50, 75, 100, 150, 200] },
+      { "name": "apr", "options": [18, 20, 22, 24, 26] }
+    ],
+    "answerFormula": "extraPaymentAnnualSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual saving ≈ extra payment × APR%. ${{extraPayment}} × {{apr}}% = approximate interest saved per year. This grows as your balance shrinks."
+  },
+  {
+    "id": "cc_balance_after_interest",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "Your balance is ${{balance}} at {{apr}}% APR. You make no payment this month. What is your new balance after interest?",
+    "variableRules": [
+      { "name": "balance", "options": [1000, 1500, 2000, 2500, 3000] },
+      { "name": "apr", "options": [18, 20, 22, 24] }
+    ],
+    "answerFormula": "balanceAfterMonthlyInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "New balance = old balance × (1 + APR/12%). ${{balance}} × (1 + {{apr}}%/12) shows exactly how carrying a balance grows your debt."
+  },
+
+  {
+    "id": "currency_to_usd",
+    "moduleId": "travel",
+    "difficulty": 1,
+    "promptTemplate": "The exchange rate is ${{exchangeRate}} USD per euro. You have {{foreignAmount}} euros. How much is that in USD?",
+    "variableRules": [
+      { "name": "foreignAmount", "options": [50, 100, 150, 200, 250, 300] },
+      { "name": "exchangeRate", "options": [1.05, 1.08, 1.10, 1.12, 1.15] }
+    ],
+    "answerFormula": "foreignToUSD",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Foreign → USD: amount × exchange rate. {{foreignAmount}} EUR × ${{exchangeRate}}/EUR = the USD equivalent."
+  },
+  {
+    "id": "currency_to_usd_scenario",
+    "moduleId": "travel",
+    "difficulty": 2,
+    "scenarioTemplate": "You're in Europe. The exchange rate is ${{exchangeRate}} USD per euro.",
+    "promptTemplate": "You spend {{foreignAmount}} euros on dinner. How much did you spend in USD?",
+    "variableRules": [
+      { "name": "foreignAmount", "options": [40, 60, 80, 100, 120, 160, 200] },
+      { "name": "exchangeRate", "options": [1.05, 1.08, 1.10, 1.12] }
+    ],
+    "answerFormula": "foreignToUSD",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "EUR × rate = USD. {{foreignAmount}} × {{exchangeRate}} = your USD spend. Always multiply by the rate to convert to USD."
+  },
+  {
+    "id": "usd_to_foreign_calc",
+    "moduleId": "travel",
+    "difficulty": 2,
+    "promptTemplate": "The exchange rate is {{foreignRate}} pesos per USD. You have ${{usdAmount}}. How many pesos do you get?",
+    "variableRules": [
+      { "name": "usdAmount", "options": [50, 100, 150, 200, 300] },
+      { "name": "foreignRate", "options": [17, 18, 19, 20] }
+    ],
+    "answerFormula": "usdToForeign",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "USD → foreign: USD × foreign rate. ${{usdAmount}} × {{foreignRate}} pesos/USD = the local currency you receive."
+  },
+  {
+    "id": "currency_convert_freeentry",
+    "moduleId": "travel",
+    "difficulty": 1,
+    "promptTemplate": "The exchange rate is ${{exchangeRate}} USD per British pound. You have {{foreignAmount}} pounds. How many USD is that?",
+    "variableRules": [
+      { "name": "foreignAmount", "options": [50, 100, 150, 200] },
+      { "name": "exchangeRate", "options": [1.25, 1.27, 1.30] }
+    ],
+    "answerFormula": "foreignToUSD",
+    "answerFormat": "currency",
+    "inputMode": "freeEntry",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "GBP × rate = USD. {{foreignAmount}} × {{exchangeRate}} = your USD amount. Pounds are worth more than dollars, so you always get more USD."
+  },
+  {
+    "id": "airport_markup_cost",
+    "moduleId": "travel",
+    "difficulty": 2,
+    "scenarioTemplate": "You exchange ${{convertAmount}} at the airport. They charge a {{markupPercent}}% markup above the real rate.",
+    "promptTemplate": "How much do you lose to the markup fee?",
+    "variableRules": [
+      { "name": "convertAmount", "options": [200, 300, 400, 500, 600, 800, 1000] },
+      { "name": "markupPercent", "options": [5, 6, 7, 8, 10] }
+    ],
+    "answerFormula": "currencyMarkupCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Markup cost = amount × markup%. ${{convertAmount}} × {{markupPercent}}% = money lost to the exchange markup. Use a zero-fee card instead."
+  },
+  {
+    "id": "foreign_transaction_fee_calc",
+    "moduleId": "travel",
+    "difficulty": 1,
+    "promptTemplate": "Your credit card charges a {{feePercent}}% foreign transaction fee. You spend ${{purchaseAmount}} abroad. What is the fee?",
+    "variableRules": [
+      { "name": "purchaseAmount", "options": [50, 80, 100, 120, 150, 200, 250] },
+      { "name": "feePercent", "options": [1, 2, 3] }
+    ],
+    "answerFormula": "foreignTransactionFee",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Fee = purchase × fee%. ${{purchaseAmount}} × {{feePercent}}% = the extra charge. On a long trip this adds up. Get a no-foreign-fee card."
+  },
+  {
+    "id": "total_with_fee_calc",
+    "moduleId": "travel",
+    "difficulty": 2,
+    "promptTemplate": "You spend ${{purchaseAmount}} abroad. Your card adds a {{feePercent}}% foreign transaction fee. What is the total charged to your card?",
+    "variableRules": [
+      { "name": "purchaseAmount", "options": [100, 150, 200, 250, 300, 400] },
+      { "name": "feePercent", "options": [1, 2, 3] }
+    ],
+    "answerFormula": "totalWithForeignFee",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = purchase × (1 + fee%). ${{purchaseAmount}} × (1 + {{feePercent}}%) = total billed. The fee is added on top of your actual spend."
+  },
+  {
+    "id": "days_on_budget_calc",
+    "moduleId": "travel",
+    "difficulty": 1,
+    "promptTemplate": "Your travel budget is ${{travelBudget}} and you plan to spend ${{dailyCost}} per day. How many days can you travel?",
+    "variableRules": [
+      { "name": "travelBudget", "options": [300, 450, 600, 750, 900] },
+      { "name": "dailyCost", "options": [50, 75, 100, 150] }
+    ],
+    "answerFormula": "daysOnBudget",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Days on budget = total budget ÷ daily spend. ${{travelBudget}} ÷ ${{dailyCost}} = days you can travel. Know this before you book."
+  },
+  {
+    "id": "travel_budget_remaining_calc",
+    "moduleId": "travel",
+    "difficulty": 2,
+    "scenarioTemplate": "You started your trip with a ${{budget}} budget.",
+    "promptTemplate": "You've spent ${{spent}} so far. How much do you have left?",
+    "variableRules": [
+      { "name": "budget", "options": [600, 750, 800, 1000, 1200] },
+      { "name": "spent", "options": [150, 200, 250, 300, 350, 400] }
+    ],
+    "answerFormula": "budgetRemaining",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Remaining = budget − spent. ${{budget}} − ${{spent}} = what's left. Tracking this daily keeps you from overspending mid-trip."
+  },
+  {
+    "id": "split_hotel_room_calc",
+    "moduleId": "travel",
+    "difficulty": 1,
+    "promptTemplate": "A hotel room costs ${{totalCost}} total for the stay. You split it equally among {{numPeople}} people. How much does each person pay?",
+    "variableRules": [
+      { "name": "totalCost", "options": [120, 180, 240, 360, 480] },
+      { "name": "numPeople", "options": [2, 3, 4] }
+    ],
+    "answerFormula": "splitTravelCost",
+    "answerFormat": "currency",
+    "inputMode": "freeEntry",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Per person = total ÷ people. ${{totalCost}} ÷ {{numPeople}} = each person's share. Splitting rooms dramatically reduces per-person travel costs."
+  },
+  {
+    "id": "hotel_per_night_calc",
+    "moduleId": "travel",
+    "difficulty": 1,
+    "promptTemplate": "Your hotel charges ${{hotelTotal}} for a {{numNights}}-night stay. What is the nightly rate?",
+    "variableRules": [
+      { "name": "hotelTotal", "options": [120, 180, 240, 300, 360, 450] },
+      { "name": "numNights", "options": [2, 3, 4, 5] }
+    ],
+    "answerFormula": "hotelCostPerNight",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Nightly rate = total ÷ nights. ${{hotelTotal}} ÷ {{numNights}} nights = cost per night. Knowing the nightly rate helps you compare accommodation options."
+  },
+  {
+    "id": "split_accommodation_calc",
+    "moduleId": "travel",
+    "difficulty": 2,
+    "scenarioTemplate": "An Airbnb costs ${{totalCost}} for the full stay. You split it equally among {{numPeople}} people.",
+    "promptTemplate": "How much does each person pay?",
+    "variableRules": [
+      { "name": "totalCost", "options": [120, 180, 240, 300, 360, 480] },
+      { "name": "numPeople", "options": [2, 3, 4] }
+    ],
+    "answerFormula": "splitTravelCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Per person = total ÷ people. ${{totalCost}} ÷ {{numPeople}} = each person's share. Splitting accommodation is one of the biggest travel cost savers."
+  },
+  {
+    "id": "travel_insurance_cost_calc",
+    "moduleId": "travel",
+    "difficulty": 2,
+    "promptTemplate": "Your trip costs ${{tripCost}}. Travel insurance costs {{insurancePercent}}% of the trip cost. How much is the insurance?",
+    "variableRules": [
+      { "name": "tripCost", "options": [1000, 1500, 2000, 2500, 3000, 4000] },
+      { "name": "insurancePercent", "options": [4, 5, 6, 7, 8] }
+    ],
+    "answerFormula": "travelInsuranceCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Insurance = trip cost × insurance%. ${{tripCost}} × {{insurancePercent}}% = the premium. Always budget for this before booking."
+  },
+  {
+    "id": "total_trip_with_insurance",
+    "moduleId": "travel",
+    "difficulty": 2,
+    "promptTemplate": "Your trip costs ${{tripCost}} and travel insurance is {{insurancePercent}}% of the cost. What is the total trip cost with insurance?",
+    "variableRules": [
+      { "name": "tripCost", "options": [1000, 1500, 2000, 2500, 3000] },
+      { "name": "insurancePercent", "options": [4, 5, 6, 7, 8] }
+    ],
+    "answerFormula": "tripTotalWithInsurance",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = trip cost × (1 + insurance%). ${{tripCost}} × (1 + {{insurancePercent}}%) = total with insurance. Include this in your upfront budget."
+  },
+  {
+    "id": "foreign_fee_total_saved",
+    "moduleId": "travel",
+    "difficulty": 3,
+    "scenarioTemplate": "You use a no-foreign-transaction-fee card instead of a card with a {{feePercent}}% fee.",
+    "promptTemplate": "On a ${{purchaseAmount}} trip, how much do you save?",
+    "variableRules": [
+      { "name": "purchaseAmount", "options": [500, 800, 1000, 1500, 2000, 2500, 3000] },
+      { "name": "feePercent", "options": [1, 2, 3] }
+    ],
+    "answerFormula": "foreignTransactionFee",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Savings = purchase × fee%. By skipping the {{feePercent}}% foreign transaction fee on ${{purchaseAmount}}, you save that amount. Small percents add up on big trips."
   }
 ]
