@@ -7,6 +7,9 @@ struct SessionSummaryView: View {
     let isPersonalBest: Bool
     let newBadgeIds: Set<String>
     let onContinue: () -> Void
+    /// Called when the user wants to retry the quiz with fresh questions.
+    /// Only shown when mastery threshold was not met.
+    let onRetry: () -> Void
 
     @State private var xpAnimated: Int = 0
     @State private var showPersonalBest: Bool = false
@@ -16,6 +19,12 @@ struct SessionSummaryView: View {
     private var accentTint: Color { viewModel.moduleColor.tintBackground }
 
     private var wrongCount: Int { viewModel.results.filter { !$0.isCorrect }.count }
+
+    /// Whether the user hit the 75% mastery threshold this session.
+    private var didMaster: Bool {
+        viewModel.total > 0
+            && Double(viewModel.correctCount) / Double(viewModel.total) >= 0.75
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -35,10 +44,14 @@ struct SessionSummaryView: View {
             }
         }
         .onAppear {
-            withAnimation(.easeOut(duration: 0.7).delay(0.3)) {
-                xpAnimated = viewModel.totalXP
+            if didMaster {
+                withAnimation(.easeOut(duration: 0.7).delay(0.3)) {
+                    xpAnimated = viewModel.totalXP
+                }
+            } else {
+                xpAnimated = viewModel.totalXP   // immediate, no fanfare on failure
             }
-            if isPersonalBest {
+            if isPersonalBest && didMaster {
                 withAnimation(.spring(response: 0.42, dampingFraction: 0.62).delay(1.0)) {
                     showPersonalBest = true
                 }
@@ -63,6 +76,7 @@ struct SessionSummaryView: View {
             VStack(spacing: Theme.Spacing.sectionSpacing) {
                 resultHeader
                 statsCard
+                masteryBanner
                 if !newBadgeIds.isEmpty { newBadgesSection }
                 recapSection
             }
@@ -74,7 +88,16 @@ struct SessionSummaryView: View {
 
     // MARK: - Result header
 
+    @ViewBuilder
     private var resultHeader: some View {
+        if didMaster {
+            passHeader
+        } else {
+            failHeader
+        }
+    }
+
+    private var passHeader: some View {
         VStack(spacing: 16) {
             ZStack {
                 Circle()
@@ -135,6 +158,54 @@ struct SessionSummaryView: View {
         .frame(maxWidth: .infinity)
     }
 
+    private var failHeader: some View {
+        let needed = Int(ceil(0.75 * Double(viewModel.total)))
+        return VStack(spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(Theme.Colors.warmOrangeTint)
+                    .frame(width: 96, height: 96)
+                Image(systemName: "arrow.counterclockwise")
+                    .font(.system(size: 40, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.warmOrange)
+            }
+
+            VStack(spacing: 6) {
+                Text("Almost there!")
+                    .font(Theme.Typography.display)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                Text("\(viewModel.total) questions · \(viewModel.elapsedTimeString)")
+                    .font(Theme.Typography.caption)
+                    .foregroundStyle(Theme.Colors.mutedText)
+            }
+
+            VStack(spacing: 8) {
+                Text("+\(viewModel.totalXP) XP")
+                    .font(Theme.Typography.body)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Theme.Colors.insightText)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 6)
+                    .background(Theme.Colors.insightYellowTint)
+                    .clipShape(Capsule())
+
+                HStack(spacing: 6) {
+                    Image(systemName: "target")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.warmOrange)
+                    Text("You got \(viewModel.correctCount)/\(viewModel.total) — need \(needed) to master")
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(Theme.Colors.warmOrangeTint)
+                .clipShape(Capsule())
+            }
+        }
+        .frame(maxWidth: .infinity)
+    }
+
     // MARK: - Stats card
 
     private var statsCard: some View {
@@ -170,6 +241,32 @@ struct SessionSummaryView: View {
                 .kerning(0.6)
         }
         .frame(maxWidth: .infinity)
+    }
+
+    // MARK: - Mastery banner (pass only)
+
+    @ViewBuilder
+    private var masteryBanner: some View {
+        if didMaster {
+            HStack(spacing: 10) {
+                Image(systemName: "checkmark.seal.fill")
+                    .font(.system(size: 22))
+                    .foregroundStyle(accent)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Lesson mastered!")
+                        .font(Theme.Typography.headline)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text("Next lesson unlocked")
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .background(accentTint)
+            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        }
     }
 
     // MARK: - Recap section
@@ -331,12 +428,35 @@ struct SessionSummaryView: View {
             .allowsHitTesting(false)
 
             VStack(spacing: 10) {
-                if wrongCount > 0 {
-                    reviewMistakesButton
+                if !didMaster {
+                    // Not mastered: retry is the primary action
+                    Button { onRetry() } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "arrow.counterclockwise.circle.fill")
+                                .font(.system(size: 18, weight: .semibold))
+                            Text("Retry quiz")
+                                .font(Theme.Typography.headline)
+                        }
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: Theme.Spacing.buttonHeight)
+                        .background(Color.orange)
+                        .clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+
+                    PillButton("Skip for now", variant: .secondary) { onContinue() }
+
+                } else {
+                    // Mastered: review mistakes (if any), then continue
+                    if wrongCount > 0 {
+                        reviewMistakesButton
+                    }
+                    PillButton(wrongCount > 0 ? "Skip & continue" : "Continue learning") {
+                        onContinue()
+                    }
                 }
-                PillButton(wrongCount > 0 ? "Skip & continue" : "Continue learning") {
-                    onContinue()
-                }
+
                 Button("Done for today") { dismiss() }
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundStyle(Theme.Colors.primaryBlue)

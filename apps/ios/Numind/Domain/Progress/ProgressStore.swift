@@ -60,6 +60,16 @@ final class ProgressStore: ObservableObject {
         UserDefaults.standard.set(encoded, forKey: Self.defaultsKey)
     }
 
+    // MARK: - Blitz personal best
+
+    var blitzBest: Int { data.blitzBestScore }
+
+    func updateBlitzBest(score: Int) {
+        guard score > data.blitzBestScore else { return }
+        data.updateBlitzBest(score: score)
+        persist()
+    }
+
     // MARK: - Computed (forwarded from ProgressData)
 
     var streak: Int               { data.computeStreak() }
@@ -83,6 +93,10 @@ final class ProgressStore: ObservableObject {
         data.hasCompletedLesson(lessonId)
     }
 
+    func hasMasteredLesson(_ lessonId: String) -> Bool {
+        data.hasMasteredLesson(lessonId)
+    }
+
     func skillLevel(moduleId: String) -> Int {
         data.skillLevel(moduleId: moduleId)
     }
@@ -94,6 +108,10 @@ final class ProgressStore: ObservableObject {
     /// Most-recent sessions, newest first.
     func recentSessions(limit: Int = 5) -> [SessionRecord] {
         Array(data.sessions.suffix(limit).reversed())
+    }
+
+    func weeklyXPHistory() -> [(label: String, xp: Int, isCurrent: Bool)] {
+        data.weeklyXPHistory()
     }
 
     /// Best accuracy (0–1) across all attempts of a lesson, or nil if never attempted.

@@ -35,13 +35,20 @@ struct LessonView: View {
         case .quiz:
             if let vm = sessionVM {
                 QuizSessionView(viewModel: vm) {
-                    // Personal best — compare BEFORE recording.
-                    let priorBest = progressStore.data.bestResult(for: viewModel.lesson.id)
-                    if let prior = priorBest {
-                        isNewPersonalBest = vm.correctCount > prior.correctCount
-                            || (vm.correctCount == prior.correctCount && vm.totalXP > prior.totalXP)
+                    let didMasterThisSession = vm.total > 0
+                        && Double(vm.correctCount) / Double(vm.total) >= 0.75
+
+                    // Personal best — only meaningful on a passing attempt.
+                    if didMasterThisSession {
+                        let priorBest = progressStore.data.bestResult(for: viewModel.lesson.id)
+                        if let prior = priorBest {
+                            isNewPersonalBest = vm.correctCount > prior.correctCount
+                                || (vm.correctCount == prior.correctCount && vm.totalXP > prior.totalXP)
+                        } else {
+                            isNewPersonalBest = true   // first mastered attempt is a personal best
+                        }
                     } else {
-                        isNewPersonalBest = true   // first attempt is always a personal best
+                        isNewPersonalBest = false
                     }
 
                     // Level-up detection — capture level BEFORE recording.
@@ -60,19 +67,23 @@ struct LessonView: View {
                     progressStore.recordSession(record)
                     newBadgeIds = progressStore.newlyEarnedBadgeIds
 
-                    // If skill level increased, show ceremony BEFORE summary.
+                    // Level-up ceremony only fires when the user actually mastered the lesson.
                     // onDismiss of the fullScreenCover will set phase = .summary.
-                    let newLevel = progressStore.skillLevel(moduleId: viewModel.lesson.moduleId)
-                    if newLevel > prevLevel {
-                        let module = LocalContentRepository().allModules()
-                            .first { $0.id == viewModel.lesson.moduleId }
-                        pendingLevelUp = LevelUpInfo(
-                            moduleName: module?.title ?? viewModel.moduleTitle,
-                            moduleIcon: module?.icon  ?? "star.fill",
-                            moduleColor: viewModel.moduleColor,
-                            newLevel: newLevel
-                        )
-                        // phase = .summary is deferred to fullScreenCover onDismiss
+                    if didMasterThisSession {
+                        let newLevel = progressStore.skillLevel(moduleId: viewModel.lesson.moduleId)
+                        if newLevel > prevLevel {
+                            let module = LocalContentRepository().allModules()
+                                .first { $0.id == viewModel.lesson.moduleId }
+                            pendingLevelUp = LevelUpInfo(
+                                moduleName: module?.title ?? viewModel.moduleTitle,
+                                moduleIcon: module?.icon  ?? "star.fill",
+                                moduleColor: viewModel.moduleColor,
+                                newLevel: newLevel
+                            )
+                            // phase = .summary is deferred to fullScreenCover onDismiss
+                        } else {
+                            phase = .summary
+                        }
                     } else {
                         phase = .summary
                     }
@@ -80,9 +91,13 @@ struct LessonView: View {
             }
         case .summary:
             if let vm = sessionVM {
-                SessionSummaryView(viewModel: vm, isPersonalBest: isNewPersonalBest, newBadgeIds: newBadgeIds) {
-                    dismiss()
-                }
+                SessionSummaryView(
+                    viewModel: vm,
+                    isPersonalBest: isNewPersonalBest,
+                    newBadgeIds: newBadgeIds,
+                    onContinue: { dismiss() },
+                    onRetry: { retryQuiz() }
+                )
             }
         }
     }
@@ -167,7 +182,7 @@ struct LessonView: View {
                 Image(systemName: "bolt.fill")
                     .font(.system(size: 10, weight: .semibold))
                     .foregroundStyle(accent)
-                Text("\(viewModel.lesson.quizTemplateIds.count) questions to follow")
+                Text("\(QuizSessionViewModel.targetQuestionCount) questions to follow")
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(Theme.Colors.mutedText)
             }
@@ -295,7 +310,7 @@ struct LessonView: View {
         }
     }
 
-    // MARK: - Quiz start
+    // MARK: - Quiz start / retry
 
     private func startQuiz() {
         let vm = QuizSessionViewModel(
@@ -303,6 +318,20 @@ struct LessonView: View {
             moduleColor: viewModel.moduleColor,
             sessions: progressStore.data.sessions   // enables SR ordering on repeat visits
         )
+        sessionVM = vm
+        phase = .quiz
+    }
+
+    /// Regenerates the quiz with fresh random seeds → different values and answer options.
+    private func retryQuiz() {
+        let vm = QuizSessionViewModel(
+            lesson: viewModel.lesson,
+            moduleColor: viewModel.moduleColor,
+            sessions: progressStore.data.sessions
+        )
+        isNewPersonalBest = false
+        newBadgeIds = []
+        pendingLevelUp = nil
         sessionVM = vm
         phase = .quiz
     }

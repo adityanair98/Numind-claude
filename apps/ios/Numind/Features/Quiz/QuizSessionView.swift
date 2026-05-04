@@ -32,10 +32,17 @@ struct QuizSessionView: View {
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                TimelineView(.periodic(from: .now, by: 1)) { _ in
-                    timerPill
+                if viewModel.questionTimeLimit != nil {
+                    countdownRing
+                } else {
+                    TimelineView(.periodic(from: .now, by: 1)) { _ in
+                        timerPill
+                    }
                 }
             }
+        }
+        .onAppear {
+            viewModel.startSession()
         }
         .onChange(of: viewModel.sessionState) { _, newState in
             if case .complete = newState { onComplete() }
@@ -53,7 +60,7 @@ struct QuizSessionView: View {
         }
     }
 
-    // MARK: - Timer pill
+    // MARK: - Timer pill (standard quiz)
 
     private var timerPill: some View {
         Text(viewModel.elapsedTimeString)
@@ -63,6 +70,33 @@ struct QuizSessionView: View {
             .padding(.vertical, 4)
             .background(Theme.Colors.mutedTint)
             .clipShape(Capsule())
+    }
+
+    // MARK: - Countdown ring (Speed Drill)
+
+    private var countdownRing: some View {
+        let limit = viewModel.questionTimeLimit ?? 15
+        let remaining = viewModel.questionTimeRemaining
+        let progress = limit > 0 ? remaining / limit : 0
+        let ringColor: Color = {
+            if remaining > 5 { return Theme.Colors.primaryBlue }
+            if remaining > 3 { return Theme.Colors.warmOrange }
+            return Theme.Colors.errorSoftRed
+        }()
+        return ZStack {
+            Circle()
+                .stroke(Theme.Colors.mutedTint, lineWidth: 3)
+            Circle()
+                .trim(from: 0, to: progress)
+                .stroke(ringColor, style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+                .animation(.linear(duration: 0.1), value: remaining)
+            Text("\(max(0, Int(ceil(remaining))))")
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundStyle(ringColor)
+                .animation(.none, value: remaining)
+        }
+        .frame(width: 40, height: 40)
     }
 
     // MARK: - Scroll content
@@ -115,7 +149,8 @@ struct QuizSessionView: View {
 
                 // Prompt card (shared between both input modes)
                 NumindCard {
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 12) {
+                        // Top meta row: module label · difficulty · question counter
                         HStack(spacing: 0) {
                             Text(viewModel.lessonTitle)
                                 .font(.system(size: 11, weight: .bold))
@@ -131,12 +166,33 @@ struct QuizSessionView: View {
                                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                                 .foregroundStyle(Theme.Colors.mutedText)
                         }
+
+                        // Scenario / context block — visually distinct from the question.
+                        // Many questions depend on this setup text to be answerable.
                         if let scenario = q.scenario {
-                            Text(scenario)
-                                .font(Theme.Typography.body)
-                                .foregroundStyle(Theme.Colors.mutedText)
-                                .italic()
+                            VStack(alignment: .leading, spacing: 5) {
+                                HStack(spacing: 5) {
+                                    Image(systemName: "info.circle.fill")
+                                        .font(.system(size: 11, weight: .semibold))
+                                        .foregroundStyle(Theme.Colors.primaryBlue)
+                                    Text("CONTEXT")
+                                        .font(.system(size: 10, weight: .bold))
+                                        .foregroundStyle(Theme.Colors.primaryBlue)
+                                        .kerning(0.5)
+                                }
+                                Text(scenario)
+                                    .font(Theme.Typography.body)
+                                    .fontWeight(.medium)
+                                    .foregroundStyle(Theme.Colors.deepNavy)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(12)
+                            .background(Theme.Colors.primaryBlueTint)
+                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                         }
+
+                        // Question prompt
                         Text(q.prompt)
                             .font(Theme.Typography.title)
                             .foregroundStyle(Theme.Colors.deepNavy)

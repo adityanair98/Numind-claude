@@ -94,6 +94,8 @@ struct ProgressTabView: View {
                 overviewCard
                 sectionLabel("Weekly goal")
                 weeklyGoalCard
+                sectionLabel("Weekly XP")
+                weeklyLeaderboardCard
 
                 // Skill mastery with "See all" link
                 HStack(alignment: .firstTextBaseline) {
@@ -249,6 +251,92 @@ struct ProgressTabView: View {
                 .foregroundStyle(Theme.Colors.mutedText)
         }
         .frame(maxWidth: .infinity)
+    }
+
+    // MARK: - Weekly leaderboard
+
+    private var weeklyLeaderboardCard: some View {
+        let weeks        = store.weeklyXPHistory()
+        let maxXP        = max(1, weeks.map { $0.xp }.max() ?? 1)
+        let currentXP    = weeks.last?.xp ?? 0
+        let rank         = weeks.filter { $0.xp > currentXP }.count + 1
+        let isBestEver   = currentXP > 0 && weeks.dropLast().allSatisfy { $0.xp < currentXP }
+        let maxBarHeight: CGFloat = 72
+
+        return NumindCard {
+            VStack(alignment: .leading, spacing: 16) {
+
+                // ── Header ─────────────────────────────────────────────────
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(currentXP > 0
+                             ? "Ranked #\(rank) of your last 4 weeks"
+                             : "No XP yet this week")
+                            .font(Theme.Typography.headline)
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text(currentXP > 0
+                             ? "\(currentXP) XP this week"
+                             : "Complete a session to start")
+                            .font(Theme.Typography.caption)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                    Spacer()
+                    if isBestEver {
+                        HStack(spacing: 4) {
+                            Image(systemName: "star.fill")
+                                .font(.system(size: 10, weight: .bold))
+                            Text("Best week!")
+                                .font(.system(size: 11, weight: .bold))
+                        }
+                        .foregroundStyle(Theme.Colors.insightText)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(Theme.Colors.insightYellowTint)
+                        .clipShape(Capsule())
+                    }
+                }
+
+                // ── Bar chart ──────────────────────────────────────────────
+                HStack(alignment: .bottom, spacing: 8) {
+                    ForEach(Array(weeks.enumerated()), id: \.offset) { _, week in
+                        VStack(spacing: 4) {
+                            // XP label above bar
+                            Text(week.xp > 0 ? "\(week.xp)" : "")
+                                .font(.system(size: 10, weight: .bold, design: .rounded))
+                                .foregroundStyle(
+                                    week.isCurrent ? Theme.Colors.primaryBlue : Theme.Colors.mutedText
+                                )
+                                .frame(height: 13)
+
+                            // Bar — minimum 3 pt so 0-XP weeks still show a baseline
+                            let barH: CGFloat = week.xp == 0
+                                ? 3
+                                : max(10, CGFloat(week.xp) / CGFloat(maxXP) * maxBarHeight)
+                            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                .fill(weekBarColor(week))
+                                .frame(height: barH)
+
+                            // Week label
+                            Text(week.label)
+                                .font(.system(size: 10,
+                                              weight: week.isCurrent ? .semibold : .regular))
+                                .foregroundStyle(
+                                    week.isCurrent ? Theme.Colors.deepNavy : Theme.Colors.mutedText
+                                )
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.7)
+                                .frame(height: 14)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                }
+                .frame(height: maxBarHeight + 13 + 4 + 14 + 4)
+            }
+        }
+    }
+
+    private func weekBarColor(_ week: (label: String, xp: Int, isCurrent: Bool)) -> Color {
+        week.isCurrent ? Theme.Colors.primaryBlue : Theme.Colors.mutedTint
     }
 
     // MARK: - Skill mastery

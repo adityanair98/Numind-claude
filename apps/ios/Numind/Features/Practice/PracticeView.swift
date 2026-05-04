@@ -2,19 +2,29 @@ import SwiftUI
 
 struct PracticeView: View {
     @EnvironmentObject private var progressStore: ProgressStore
+    @State private var selectedModuleIndex: Int = 0
     @State private var selectedLesson: Lesson?
     private let repo = LocalContentRepository()
 
+    private var modules: [Module] { repo.allModules() }
+    private var selectedModule: Module { modules[selectedModuleIndex] }
+    private var lessons: [Lesson] { repo.lessons(for: selectedModule.id) }
+
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
-                headerSection
-                surpriseMeCard
-                sectionLabel("Choose a skill")
-                moduleSkillList
+            VStack(spacing: 0) {
+                moduleTabStrip
+                    .padding(.top, 8)
+                    .padding(.bottom, 20)
+
+                moduleHeaderCard
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 20)
+
+                lessonList
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 40)
             }
-            .padding(.horizontal, Theme.Spacing.screenHorizontal)
-            .padding(.vertical, Theme.Spacing.sectionSpacing)
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .navigationTitle("Practice")
@@ -24,187 +34,249 @@ struct PracticeView: View {
         }
     }
 
-    // MARK: - Header
+    // MARK: - Module tab strip
 
-    private var headerSection: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text("Pick a category to focus on.")
-                .font(Theme.Typography.body)
-                .foregroundStyle(Theme.Colors.mutedText)
+    private var moduleTabStrip: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+                ForEach(Array(modules.enumerated()), id: \.element.id) { i, module in
+                    moduleTab(module: module, index: i)
+                }
+            }
+            .padding(.horizontal, Theme.Spacing.screenHorizontal)
         }
     }
 
-    // MARK: - Surprise Me
+    private func moduleTab(module: Module, index: Int) -> some View {
+        let isSelected = index == selectedModuleIndex
+        let accent = module.color.tintColor
 
-    private var surpriseMeCard: some View {
-        Button {
-            pickRandomLesson()
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        } label: {
-            HStack(spacing: 16) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: Theme.Radius.pill, style: .continuous)
-                        .fill(Theme.Colors.primaryBlue)
-                        .frame(width: 52, height: 52)
-                    Image(systemName: "dice.fill")
-                        .font(.system(size: 22, weight: .semibold))
-                        .foregroundStyle(.white)
-                }
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("Surprise Me")
-                        .font(Theme.Typography.headline)
-                        .foregroundStyle(.white)
-                    Text("We'll pick a skill for you")
-                        .font(Theme.Typography.caption)
-                        .foregroundStyle(.white.opacity(0.75))
-                }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.7))
+        return Button {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                selectedModuleIndex = index
             }
-            .padding(18)
-            .background(
-                LinearGradient(
-                    colors: [Theme.Colors.primaryBlue, Theme.Colors.primaryBlue.opacity(0.75)],
-                    startPoint: .topLeading, endPoint: .bottomTrailing
-                )
-            )
-            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
-            .shadow(color: Theme.Colors.primaryBlue.opacity(0.3), radius: 12, x: 0, y: 6)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        } label: {
+            VStack(spacing: 6) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: Theme.Radius.iconTile, style: .continuous)
+                        .fill(isSelected ? accent.opacity(0.15) : Theme.Colors.cardBackground)
+                        .frame(width: 60, height: 60)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Theme.Radius.iconTile, style: .continuous)
+                                .strokeBorder(
+                                    isSelected ? accent : Theme.Colors.hairline,
+                                    lineWidth: isSelected ? 2 : 1
+                                )
+                        )
+                        .shadow(
+                            color: isSelected ? accent.opacity(0.2) : .clear,
+                            radius: 8, y: 3
+                        )
+                    Image(systemName: module.icon)
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundStyle(isSelected ? accent : Theme.Colors.mutedText)
+                }
+
+                Text(moduleShortName(module))
+                    .font(.system(size: 10, weight: isSelected ? .bold : .medium))
+                    .foregroundStyle(isSelected ? accent : Theme.Colors.mutedText)
+                    .lineLimit(1)
+            }
         }
         .buttonStyle(.plain)
     }
 
-    // MARK: - Module skill list
+    private func moduleShortName(_ module: Module) -> String {
+        // Use first word of title, capped at 8 chars
+        let first = module.title.components(separatedBy: " ").first ?? module.title
+        return first.count > 8 ? String(first.prefix(7)) + "…" : first
+    }
 
-    private var moduleSkillList: some View {
-        VStack(spacing: 10) {
-            ForEach(repo.allModules()) { module in
-                let lessons = repo.lessons(for: module.id)
-                if !lessons.isEmpty {
-                    moduleSkillCard(module: module, lessons: lessons)
+    // MARK: - Module header card
+
+    private var moduleHeaderCard: some View {
+        let accent = selectedModule.color.tintColor
+        let tint = selectedModule.color.tintBackground
+        let total = lessons.count
+        let completed = lessons.filter { progressStore.hasMasteredLesson($0.id) }.count
+        let progress: Double = total > 0 ? Double(completed) / Double(total) : 0
+
+        return NumindCard(background: tint) {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .top, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(selectedModule.title)
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+
+                        Text(selectedModule.subtitle)
+                            .font(Theme.Typography.caption)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    // Surprise Me button
+                    Button {
+                        pickRandomLessonInModule()
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    } label: {
+                        ZStack {
+                            Circle()
+                                .fill(accent.opacity(0.15))
+                                .frame(width: 36, height: 36)
+                            Image(systemName: "dice.fill")
+                                .font(.system(size: 15, weight: .semibold))
+                                .foregroundStyle(accent)
+                        }
+                    }
+                    .buttonStyle(.plain)
+
+                    // Decorative icon (watermark)
+                    Image(systemName: selectedModule.icon)
+                        .font(.system(size: 64, weight: .semibold))
+                        .foregroundStyle(accent.opacity(0.12))
+                        .padding(.leading, 4)
+                }
+
+                Spacer().frame(height: 16)
+
+                // Progress bar + label
+                VStack(alignment: .leading, spacing: 6) {
+                    GeometryReader { geo in
+                        ZStack(alignment: .leading) {
+                            Capsule()
+                                .fill(accent.opacity(0.2))
+                            Capsule()
+                                .fill(accent)
+                                .frame(width: geo.size.width * CGFloat(min(progress, 1)))
+                        }
+                    }
+                    .frame(height: 6)
+
+                    Text("\(completed)/\(total) mastered")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(accent.opacity(0.8))
+                }
+            }
+        }
+        .id(selectedModule.id) // force redraw on tab change
+    }
+
+    // MARK: - Lesson list
+
+    private var lessonList: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Lessons".uppercased())
+                .font(Theme.Typography.small)
+                .foregroundStyle(Theme.Colors.mutedText)
+                .kerning(0.8)
+                .padding(.horizontal, 2)
+
+            NumindCard {
+                VStack(spacing: 0) {
+                    ForEach(Array(lessons.enumerated()), id: \.element.id) { i, lesson in
+                        lessonRow(lesson: lesson, index: i)
+                        if i < lessons.count - 1 {
+                            Divider()
+                                .padding(.leading, 18 + 32 + 14)
+                                .background(Theme.Colors.hairline)
+                        }
+                    }
                 }
             }
         }
     }
 
-    private func moduleSkillCard(module: Module, lessons: [Lesson]) -> some View {
-        NumindCard(background: module.color.tintBackground) {
-            VStack(alignment: .leading, spacing: 12) {
-                // Module header
-                HStack(spacing: 12) {
-                    IconTile(systemName: module.icon, tintColor: module.color.tintColor, size: 44)
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(module.title)
-                            .font(Theme.Typography.headline)
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                        Text(module.subtitle)
+    private func lessonRow(lesson: Lesson, index: Int) -> some View {
+        let accent = selectedModule.color.tintColor
+        let mastered = progressStore.hasMasteredLesson(lesson.id)
+        let attempted = progressStore.hasCompletedLesson(lesson.id)
+        let bestAcc = progressStore.bestAccuracy(lessonId: lesson.id)
+
+        return Button {
+            selectedLesson = lesson
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        } label: {
+            HStack(spacing: 14) {
+                // Index circle
+                ZStack {
+                    Circle()
+                        .fill(mastered ? accent : (attempted ? Theme.Colors.warmOrangeTint : Theme.Colors.mutedTint))
+                        .frame(width: 32, height: 32)
+                    if mastered {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(.white)
+                    } else {
+                        Text("\(index + 1)")
+                            .font(.system(size: 13, weight: .bold, design: .rounded))
+                            .foregroundStyle(attempted ? Theme.Colors.warmOrange : Theme.Colors.mutedText)
+                    }
+                }
+
+                // Title + subtitle
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(lesson.title)
+                        .font(Theme.Typography.body)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    if let acc = bestAcc {
+                        Text("Best: \(Int(acc * 100))%")
+                            .font(Theme.Typography.small)
+                            .foregroundStyle(mastered ? accent : Theme.Colors.warmOrange)
+                    } else {
+                        Text("Not attempted yet")
                             .font(Theme.Typography.small)
                             .foregroundStyle(Theme.Colors.mutedText)
                     }
-                    Spacer()
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
 
-                // Lesson pills
-                FlowRow(spacing: 8) {
-                    ForEach(lessons) { lesson in
-                        Button {
-                            selectedLesson = lesson
-                        } label: {
-                            HStack(spacing: 5) {
-                                let isDone = progressStore.hasCompletedLesson(lesson.id)
-                                Image(systemName: isDone ? "checkmark.circle.fill" : "circle")
-                                    .font(.system(size: 12, weight: .semibold))
-                                    .foregroundStyle(isDone ? module.color.tintColor : Theme.Colors.mutedText)
-                                Text(lesson.title)
-                                    .font(Theme.Typography.small)
-                                    .fontWeight(.medium)
-                                    .foregroundStyle(Theme.Colors.deepNavy)
-                                    .lineLimit(1)
-                            }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 7)
-                            .background(Theme.Colors.cardBackground)
-                            .clipShape(Capsule())
-                            .shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 1)
-                        }
-                        .buttonStyle(.plain)
+                // Status icon + chevron
+                HStack(spacing: 6) {
+                    if mastered {
+                        Image(systemName: "checkmark.seal.fill")
+                            .font(.system(size: 15))
+                            .foregroundStyle(accent)
+                    } else if attempted {
+                        Image(systemName: "arrow.counterclockwise")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.warmOrange)
                     }
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.mutedText)
                 }
             }
+            .padding(.vertical, 14)
+            .padding(.horizontal, 18)
         }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Helpers
 
-    private func pickRandomLesson() {
-        let allLessons = repo.allModules().flatMap { repo.lessons(for: $0.id) }
-        guard !allLessons.isEmpty else { return }
-        selectedLesson = allLessons.randomElement()
+    private func pickRandomLessonInModule() {
+        guard !lessons.isEmpty else { return }
+        selectedLesson = lessons.randomElement()
     }
 
     private func lessonCover(for lesson: Lesson) -> some View {
-        let modules = repo.allModules()
-        let module = modules.first { $0.lessonIds.contains(lesson.id) }
-        let lessons = module.map { repo.lessons(for: $0.id) } ?? []
+        let module = modules.first { $0.lessonIds.contains(lesson.id) } ?? selectedModule
+        let moduleLessons = repo.lessons(for: module.id)
         return LessonView(viewModel: LessonViewModel(
             lesson: lesson,
-            moduleTitle: module?.title ?? "",
-            lessonIndex: lessons.firstIndex(of: lesson) ?? 0,
-            totalLessons: lessons.count,
-            moduleColor: module?.color ?? .blue
+            moduleTitle: module.title,
+            lessonIndex: moduleLessons.firstIndex(of: lesson) ?? 0,
+            totalLessons: moduleLessons.count,
+            moduleColor: module.color
         ))
-    }
-
-    private func sectionLabel(_ text: String) -> some View {
-        Text(text.uppercased())
-            .font(Theme.Typography.small)
-            .foregroundStyle(Theme.Colors.mutedText)
-            .kerning(0.8)
-    }
-}
-
-// MARK: - Simple flow layout for lesson pills
-
-struct FlowRow: Layout {
-    var spacing: CGFloat = 8
-
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let width = proposal.width ?? 0
-        var x: CGFloat = 0
-        var y: CGFloat = 0
-        var rowHeight: CGFloat = 0
-
-        for subview in subviews {
-            let size = subview.sizeThatFits(.unspecified)
-            if x + size.width > width, x > 0 {
-                x = 0
-                y += rowHeight + spacing
-                rowHeight = 0
-            }
-            x += size.width + spacing
-            rowHeight = max(rowHeight, size.height)
-        }
-        return CGSize(width: width, height: y + rowHeight)
-    }
-
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        var x = bounds.minX
-        var y = bounds.minY
-        var rowHeight: CGFloat = 0
-
-        for subview in subviews {
-            let size = subview.sizeThatFits(.unspecified)
-            if x + size.width > bounds.maxX, x > bounds.minX {
-                x = bounds.minX
-                y += rowHeight + spacing
-                rowHeight = 0
-            }
-            subview.place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(size))
-            x += size.width + spacing
-            rowHeight = max(rowHeight, size.height)
-        }
+        .environmentObject(progressStore)
     }
 }
 

@@ -6,6 +6,8 @@ struct ProgressData: Codable {
     var bestStreak: Int = 0
     /// Stable set of earned badge IDs. Default empty for backward compat.
     var earnedBadgeIds: Set<String> = []
+    /// Personal best for Blitz mode: highest number of correct answers in a 60-second session.
+    var blitzBestScore: Int = 0
 
     // MARK: - Streak
 
@@ -55,7 +57,9 @@ struct ProgressData: Codable {
     // MARK: - Module progress
 
     func completedLessonCount(moduleId: String) -> Int {
-        Set(sessions.filter { $0.moduleId == moduleId }.map { $0.lessonId }).count
+        // Exclude review/checkpoint sessions — they share moduleId but aren't lessons.
+        Set(sessions.filter { $0.moduleId == moduleId && !$0.isReviewSession }
+            .map { $0.lessonId }).count
     }
 
     func moduleProgress(moduleId: String, totalLessons: Int) -> Double {
@@ -65,6 +69,16 @@ struct ProgressData: Codable {
 
     func hasCompletedLesson(_ lessonId: String) -> Bool {
         sessions.contains { $0.lessonId == lessonId }
+    }
+
+    /// Returns true if the user has ever scored ≥ 75% on this lesson.
+    /// 75% = the mastery threshold (6/8 correct).
+    func hasMasteredLesson(_ lessonId: String) -> Bool {
+        sessions.contains {
+            $0.lessonId == lessonId
+                && $0.totalCount > 0
+                && Double($0.correctCount) / Double($0.totalCount) >= 0.75
+        }
     }
 
     // MARK: - Skill mastery (1–5 levels based on session count per module)
@@ -91,6 +105,13 @@ struct ProgressData: Codable {
         let upper = thresholds[level + 1]
         guard upper > lower else { return 1.0 }
         return Double(count - lower) / Double(upper - lower)
+    }
+
+    // MARK: - Blitz best score
+
+    /// Updates blitzBestScore if the new score exceeds the current record.
+    mutating func updateBlitzBest(score: Int) {
+        if score > blitzBestScore { blitzBestScore = score }
     }
 
     // MARK: - Personal best
@@ -135,5 +156,36 @@ struct ProgressData: Codable {
             calendar.isDate($0.date, equalTo: today, toGranularity: .weekOfYear)
         }
         return Set(thisWeek.map { calendar.startOfDay(for: $0.date) }).count
+    }
+
+    // MARK: - Weekly XP history (last 4 weeks, oldest → newest)
+
+    /// Returns 4 entries ordered oldest → newest. isCurrent = true for the live week.
+    func weeklyXPHistory() -> [(label: String, xp: Int, isCurrent: Bool)] {
+        let calendar = Calendar.current
+        let today = Date()
+        // Anchor to Monday of the current week (matches computeWeeklyCompletions)
+        var comps = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)
+        comps.weekday = 2 // Monday
+        let currentMonday = calendar.date(from: comps) ?? today
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+
+        // weekOffset: 3 = oldest, 0 = current — reversed() gives [3,2,1,0] → chronological
+        return (0..<4).reversed().map { weekOffset in
+            let weekStart = calendar.date(
+                byAdding: .weekOfYear, value: -weekOffset, to: currentMonday
+            ) ?? currentMonday
+            let weekEnd = calendar.date(byAdding: .weekOfYear, value: 1, to: weekStart) ?? weekStart
+            let xp = sessions
+                .filter { $0.date >= weekStart && $0.date < weekEnd }
+                .reduce(0) { $0 + $1.correctCount * 10 + $1.bonusXP }
+            return (
+                label: weekOffset == 0 ? "This week" : formatter.string(from: weekStart),
+                xp: xp,
+                isCurrent: weekOffset == 0
+            )
+        }
     }
 }

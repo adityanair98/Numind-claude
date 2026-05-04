@@ -20,4 +20,8 @@ struct SessionRecord: Codable, Identifiable {
     var questionResults: [QuestionResult] = []
     /// Speed bonus XP earned this session. Defaults to 0 for backward compat.
     var bonusXP: Int = 0
+
+    /// True for module review/checkpoint sessions (lessonId starts with "review_").
+    /// Used to exclude reviews from per-module lesson-completion counts.
+    var isReviewSession: Bool { lessonId.hasPrefix("review_") }
 }

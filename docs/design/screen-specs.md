@@ -1,12 +1,10 @@
-# Numind — Screen Specs (V1 wireframes)
+# Numind — Screen Specs (V1)
 
-> **Design target (updated April 2026):** "Route 2 — Friendly Skill Trainer" is now the authoritative design reference. It supersedes this document where they conflict. Key Route 2 principles: warm greeting on Home, streak + weekly calendar strip as a card, module cards carry tinted backgrounds (not white), quiz feedback uses a large coloured answer-reveal, Progress shows per-module skill mastery levels and a streak ring. All colours still derive from the 8 design tokens — no new hexes.
-
-> **Status:** Mid-fidelity wireframes, April 2026.
-> **Source of truth:** Route 2 wireframe image + this document together.
+> **Last updated:** May 2026 (after M57 — Game Modes: Speed Drill, Blitz, mode cards on Home tab).
+> **Status:** Implemented screens, reflecting the current SwiftUI codebase.
 > **Tokens referenced** are the Swift constants in `apps/ios/Numind/Core/DesignSystem/Tokens/`. Do not introduce new tokens here — if a value is missing, propose it as a token first.
 
-This document defines the per-screen layout, copy, and empty / error / loading states for the V1 screens. Every screen sits inside `Theme.Colors.softBackground` and uses the standard `Theme.Spacing.screenHorizontal = 20` gutter unless noted.
+This document defines the per-screen layout, copy, and states for V1 screens. Every screen sits inside `Theme.Colors.softBackground` and uses the standard `Theme.Spacing.screenHorizontal = 20` gutter unless noted.
 
 ---
 
@@ -28,7 +26,7 @@ This document defines the per-screen layout, copy, and empty / error / loading s
 | **r-card** | `Theme.Radius.card = 20` |
 | **r-pill** | `Theme.Radius.pill = 999` |
 
-Tints are derived as `Color.opacity(0.12–0.22)` overlays of the source token — never new hexes.
+Tints are derived as `Color.opacity(0.12–0.22)` overlays of the source token — never new hexes. Additional tint tokens: `primaryBlueTint`, `mindTealTint`, `errorSoftRedTint`, `insightYellowTint`, `mutedTint`, `insightText`.
 
 The four root tabs use the **iOS large-title** style (32–34pt rounded, navy). Pushed and modal screens use a **44pt inline header** with leading chevron-back or X.
 
@@ -36,333 +34,447 @@ The four root tabs use the **iOS large-title** style (32–34pt rounded, navy). 
 
 ## 01 · Home (`Today`)
 
-**Tab:** Home (active). **Header style:** large title, "Today". **Top-right accessory:** `Streak chip` (icon `flame`, "12 day streak").
+**File:** `Features/Home/HomeView.swift` + `HomeViewModel.swift`
+**Tab:** Home (active). **Header style:** large title, "Today".
 
 **Layout (top → bottom):**
 
-1. **Eyebrow** "Today's workout" (12pt uppercase muted, kerning 0.8).
-2. **DailyWorkoutCard** — `NumindCard` containing:
-   - Top row: large `IconTile` (blue, 56pt, `bolt`) · headline "5-minute warm-up" · caption "Tip math · 5 quick questions".
-   - Middle: `BeadRail.chunky` (5 segments, 0 filled) · right-aligned XP pill "+15 XP".
-   - **Primary CTA** `PillButton.primary` "Start workout" → opens lesson or quiz.
-   - Tertiary inline link "Change session type" (blue, 12pt).
-3. **Eyebrow** "Continue learning".
-4. **ResumeCard** — module color tint (teal here) · `IconTile` · module eyebrow ("TIPS, TAX & BILL SPLIT") · headline ("Lesson 3 · Tip in your head") · `Progress` bar at 60% · "3 of 5 steps · Resume" · trailing chevron. Card is tappable; deep-links to the lesson.
-5. **Eyebrow** "Up next".
-6. **Flush card** with 2 `ModuleRow.compact` rows (sm icon tile, body title, small subtitle, chevron). Each row = a suggested next lesson or daily exercise.
+1. **GreetingHeader** — HStack: 44pt avatar circle (user initial, blue tint) · time-based greeting ("👋 Good morning, [name]!") + subtitle "Ready for your daily workout?".
+2. **StreakWeekCard** — `NumindCard` containing:
+   - Top row: flame icon (22pt, yellow) + streak count (30pt bold rounded) + "day streak" label + encouragement copy.
+   - Day row: 7-column M–S calendar strip. Each day: 28pt circle (blue fill + white check if completed, muted tint otherwise) + day letter caption.
+3. **DailyChallengeSection** — eyebrow "Daily challenge":
+   - `NumindCard` with blue tint background. Contains: bolt icon circle (44pt, blue/teal depending on completion state) + "5 questions · All modules" headline + status caption.
+   - `BeadRail.chunky` (5 segments) + XP pill "+50 XP max".
+   - CTA: `PillButton.primary` "Start challenge" (or "✓ Come back tomorrow" if completed).
+   - Daily challenge launches a mixed-module `QuizSessionView` via `DailyChallengeEngine`.
+4. **WorkoutSection** — eyebrow "Today's workout":
+   - `NumindCard` with: `IconTile` (52pt, module color) + module eyebrow + lesson title + concept preview (2 lines) + duration pill ("5–7 min").
+   - `BeadRail.chunky` (progress 0 / question count) + XP pill.
+   - `PillButton.primary` "Start workout".
+   - **All-done state:** teal checkmark circle (44pt) + "All done for today!" + "Come back tomorrow" caption.
+5. **ContinueSection** — eyebrow "Continue learning" (shown when there's a resumable lesson):
+   - `NumindCard`: module icon tile + module eyebrow + lesson title + progress bar (module color) + "N of M lessons · Resume" + trailing chevron.
+6. **UpNextSection** — eyebrow "Up next" (shown when multiple lessons available):
+   - Flush `NumindCard` with rows: 36pt `IconTile` + lesson title + module subtitle + chevron. Rows separated by hairline dividers.
 
-**Copy guidance:** Encouraging, second-person ("you"), present tense. Never gamified beyond the streak.
+**Copy guidance:** Encouraging, second-person ("you"), present tense.
 
-**Empty state (no streak, fresh install):** Replace streak chip with `PillButton.secondary` "Set daily goal" (links to Profile → Goals). Keep DailyWorkoutCard but swap subtitle to "Pick something quick to get started." Hide "Continue learning" + "Up next" sections; show single full-width `EmptyHint` card: tile (yellow, `star`) + "Your first workout will appear here once you finish it."
-
-**Error state:** If today's session fails to load, replace DailyWorkoutCard body with inline `Alert` (red tint card, `xCircle` icon, "Couldn't load today's workout. Pull to refresh."). Other sections render normally if cached.
-
-**Loading:** 3 skeleton cards (rounded, 100×80 / 80 / 60) using `mutedTint`. No spinners.
-
-> **Rationale.** Home is the daily entry point — the user must see exactly one obvious next action. We elevate "today's workout" as the only filled-color element above the fold and keep "Continue learning" as a softer secondary card so the choice is clear. The streak chip lives in the nav accessory rather than as a hero card to keep the page calm and avoid finance-dashboard density.
+**Empty state (fresh install):** Keep DailyWorkoutCard but swap copy. Hide "Continue learning" + "Up next" sections.
 
 ---
 
-## 02 · Learn (module list)
+## 02 · Learn (quest-journey path)
 
+**File:** `Features/Learn/LearnView.swift` + `LearnViewModel.swift`
 **Tab:** Learn (active). **Header style:** large title, "Learn".
 
 **Layout:**
 
-1. **Eyebrow** "Modules".
-2. Vertical stack of 4 `ModuleRow` cards, 12pt gap. Each card:
-   - `IconTile` (module color) · headline title · caption subtitle · trailing chevron.
-   - Below the row, a 6pt-tall `Progress` bar in module color tint.
-   - Caption row: "5 lessons" (left) · "40%" or "Not started" (right).
-3. Centered footer caption "More modules arrive after V1" — sets expectation without an empty placeholder.
+The Learn tab presents a **quest-journey path** — lesson and review nodes are laid out vertically as circular quest nodes connected by curved S-curve paths. Nodes are grouped by module with world banner headers.
 
-**Module roster (V1):**
-- Tips, Tax & Bill Split — blue, `percent`
-- Discounts & Shopping — teal, `tag`
-- Everyday Money Math — yellow, `dollar`
-- Estimation & Number Sense — muted, `eye`
+1. **World banners** — full-width card with colored tint background: filled accent circle (module icon) + module title (headline) + "N/N completed" counter + 32pt progress ring. Appears at the top of each module section.
+2. **Quest nodes** — 64pt circles positioned along the path. Nodes alternate left and right using `.offset(x:)` with `pathOffset: 56pt` from center.
+   - **Node button:** full-color fill for current/mastered nodes; white fill with accent border for available; muted fill with lock icon for locked. Optional `PulsingRing` animation behind `current` nodes.
+   - **Node label:** lesson title (110pt width, 2-line max, centered) + state subtitle below the node.
+   - **Curved connectors:** SwiftUI `Path` with bezier curves (S-curve between consecutive nodes), not straight lines or arrows.
 
-**Empty state:** Not applicable — module list is hard-coded V1 content.
+**5 Node States:**
 
-**Error state:** If progress data fails, render rows without the progress bar / percent and show a single muted footer "Couldn't load progress — tap to retry."
+| State | Circle fill | Icon / decoration | Label subtitle |
+|---|---|---|---|
+| `mastered` | full accent color | white checkmark + golden star badge + sparkle decorations | "Mastered ✓" |
+| `attempted` | orange | orange retry icon | "Retry — need 75%" |
+| `current` | full accent color | pulsing ring animation + bouncing "START" badge | "Available" |
+| `available` | white, accent border | lesson number in accent color | "Available" |
+| `locked` | muted fill, 45% opacity | lock icon | "Locked" |
 
-**Loading:** 4 row skeletons, no progress bar.
+**Node types:**
+- **Lesson nodes** — tapping opens `LessonView` via `.fullScreenCover`.
+- **Review nodes** — tapping opens `CheckpointView` via `.fullScreenCover`. Reviews appear after every 3 lessons within a module.
 
-> **Rationale.** The placeholder already lays out modules as iconified cards; we add per-module progress + lesson counts so the list earns the user's scroll. One module color per row is the only place we use color as taxonomy — this propagates through Module Detail, Lesson, and Progress so the user starts forming a color → topic association.
+**Mastery gating:** locked nodes have 0.45 opacity and ignore taps. A node unlocks only when the preceding node is mastered (≥75% on any attempt).
+
+**Reactivity:** Path rebuilds on every `progressStore` change via `.onChange(of: progressStore.totalSessions)`.
+
+> **Rationale.** The quest-journey path replaces the earlier zigzag list design. Curved S-curve connectors and distinct node decorations (pulsing ring, bouncing START badge, star + sparkle for mastered) make progress feel game-like and spatial. The world banner gives each module a clear visual identity. The single pulsing "current" node provides a clear call to action without cluttering the path.
 
 ---
 
-## 03 · Module Detail
+## 03 · Module Detail (legacy)
 
-**Header style:** inline, leading chevron-back, title = module name.
+**File:** `Features/Learn/ModuleDetail/ModuleDetailView.swift`
+**Status:** Still in codebase but not actively navigated to from the Learn tab. The zigzag path (02) replaced this screen as the primary learning navigation. May be removed in a future cleanup.
 
-**Layout:**
+---
 
-1. **ModuleHero** — full-bleed colored card (filled with module color, e.g. blue), white type. Contains:
-   - White-tinted `IconTile` (rgba(255,255,255,0.18)) · "Module 1 of 4" + subtitle.
-   - Progress meta line: "2 of 5 lessons · 40%".
-   - Progress bar on rgba(255,255,255,0.22), filled with `yellow` for warmth.
-2. **Eyebrow** "Lessons".
-3. **Lesson list** (flush card) — one `LessonRow` per lesson:
-   - **Done:** small tile (teal tint + `check`) · title · "Completed".
-   - **Current:** small tile (blue tint + lesson number) · title · "In progress · N steps" · 140pt mini progress bar.
-   - **Locked / not-started:** small tile (muted tint + lesson number) · title · "N steps".
-   - All rows have trailing chevron and 1pt hairline separator.
-4. Centered footer caption "Lessons unlock as you progress".
+## 03b · Practice
 
-**Empty state:** N/A — modules always have lessons.
+**File:** `Features/Practice/PracticeView.swift`
+**Tab:** Practice (active). **Header style:** large title, "Practice".
 
-**Error state:** If lesson progress fails, render all lessons as "not started" and show inline retry footer.
+The Practice tab gives users free-access browsing of all lessons across all modules, independent of Learn tab progression. All lessons are accessible regardless of mastery gating.
 
-**Loading:** Hero card loads first (static metadata); lesson list shows 5 row skeletons.
+**Layout (top → bottom):**
 
-> **Rationale.** The colored hero card is the only place inside the V1 visual system where we fill a card with a brand color — it's reserved for "you are inside this module." The list below stays soft and additive so the user reads top-down: where I am → what's left.
+1. **Module Tab Strip** — `ScrollView(.horizontal, showsIndicators: false)` at the top of the screen. Contains one icon tile per module (8 total).
+
+   **Each tile:** 60×60 rounded square (`r-card` corners), module SF Symbol icon (24pt), module short-name label below (10pt).
+
+   **Selected state:** `tintBackground` fill (accent color at 0.15 opacity), 2pt accent-color border, accent-colored icon, bold label, subtle glow shadow (accent color, radius 6, opacity 0.25).
+
+   **Unselected state:** `cardBackground` fill, `hairline` border, `mutedText` icon color, regular label weight.
+
+   Tapping a tile updates the header card and lesson list with an `.animation(.easeInOut)` transition.
+
+2. **Module Header Card** — `NumindCard` with `tintBackground` fill (module accent at 0.12 opacity).
+
+   Contains:
+   - Module title (20pt bold rounded, `deepNavy`)
+   - Module subtitle (caption, `mutedText`)
+   - **"Surprise Me" button** — 36pt circle, accent fill, dice SF Symbol icon (white), positioned top-right corner. Tapping picks a random lesson from the selected module and launches `LessonView` as `.fullScreenCover`.
+   - **Watermark icon** — module SF Symbol at 64pt, accent color at 0.12 opacity, right-aligned behind the text content.
+   - **Mastery progress bar** — 6pt capsule, accent fill over accent/0.2 track. Shows fraction of lessons mastered in this module.
+   - **"N/M mastered" label** — 11pt semibold, accent color at 0.8 opacity, below the progress bar.
+
+3. **Lesson List** — "LESSONS" eyebrow label (`sectionLabel`) + a single `NumindCard` with hairline-divider-separated rows. One row per lesson in the selected module.
+
+   **Each row (HStack):**
+   - **Index circle** (32pt):
+     - Mastered: accent fill + white `checkmark` icon
+     - Attempted-not-mastered: `warmOrangeTint` fill + `warmOrange` lesson number
+     - Not attempted: `mutedTint` fill + `mutedText` lesson number
+   - **Title + subtitle stack:**
+     - Title: body weight, semibold, `deepNavy`
+     - Subtitle: "Best: NN%" in accent color (mastered), "Best: NN%" in `warmOrange` (attempted), "Not attempted yet" in `mutedText` (not attempted)
+   - **Status icon + chevron (trailing):**
+     - Mastered: `checkmark.seal.fill` in accent color + `chevron.right` (muted)
+     - Attempted: `arrow.counterclockwise` in `warmOrange` + `chevron.right` (muted)
+     - Not attempted: `chevron.right` only (muted)
+
+   Tapping any row launches `LessonView` as `.fullScreenCover`. No mastery gating — all rows are tappable.
+
+**Removed from earlier designs:** FlowRow pill layout, expand/collapse module cards, global Surprise Me hero card at screen top.
 
 ---
 
 ## 04 · Lesson
 
-**Header style:** inline, leading X (closes session with confirm), no title (lesson title is in the body), trailing empty.
+**File:** `Features/Learn/Lesson/LessonView.swift` + `LessonViewModel.swift`
+**Header style:** inline, leading X (dismisses with confirm), no title in header (lesson title is in the body).
 
-**Layout:**
+**LessonView manages 3 phases** as an internal `Phase` enum: `.lesson` → `.quiz` → `.summary`. The quiz and summary phases embed `QuizSessionView` and `SessionSummaryView` respectively.
 
-1. **Lesson progress strip** — 6pt thin `Progress` bar (blue) + "2 / 5" small caption. Sits flush below the inline header.
-2. **Lesson eyebrow** — module name + lesson number (blue, uppercase).
-3. **Title** — `Theme.Typography.title` ("The 10% trick").
-4. **ConceptCard** — body copy with the rule, then a **decimal-shift block** (soft-bg, mono font) showing 2 worked examples (`$48.00 → $4.80`).
-5. **WhyCard** — yellow-tinted insight card. Tile (yellow, `hint`) + "Why this works" headline + caption explanation. Reused for all "aha" moments across the app.
-6. **Optional illustration slot** — placeholder dashed box (height 120pt) reserved for bead-rail diagrams or simple line illustrations to be added when assets ship.
-7. **Footer** — sticky bottom `PillButton.primary` "Continue".
+**Layout (lesson phase):**
 
-**Empty / error / loading:**
-- **Loading:** title + concept card skeleton; sticky button disabled.
-- **Error:** if lesson body fails to fetch, show full-width `ErrorCard` (red tint, `xCircle`, "Couldn't load this lesson. Try again."); footer shows "Back to module" instead of Continue.
-- **Empty state:** N/A.
+1. **LessonHero** — progress bar (4pt, accent color) + step label ("Lesson 2 of 5") · category chip (accent color, capsule) · lesson title (26pt bold rounded) · quiz count badge ("8 questions to follow").
+2. **RuleCard** — `NumindCard`: "THE RULE" eyebrow (accent) + concept body text.
+3. **WorkedExampleCard** — "WORKED EXAMPLE" eyebrow (muted) + monospaced label/value rows. Each row: left label + right value, separated by hairlines. Final row has accent tint background and bold accent text.
+4. **WhyCard** — `NumindCard` with `insightYellowTint` background: lightbulb icon + "Why this works" headline (insightText color) + shortcut body text.
+5. **Footer** — sticky `PillButton.primary` "Start quiz". Gradient mask over scroll content.
 
-**Copy guidance:** Each lesson is one shortcut, one paragraph. Concept first, worked example second, "why" last. Never more than ~120 words of body copy on a single lesson screen — split into multiple steps.
-
-> **Rationale.** Lessons are the heart of Numind's "practical number sense" claim. The page is intentionally short and reads like a flash card: one rule, one example, one reason. The yellow `WhyCard` is the recurring visual primitive that ties learning moments together; it appears verbatim on Quiz Feedback so the explanation feels native, not bolted-on.
+**Phase transitions:**
+- "Start quiz" → builds `QuizSessionViewModel` and transitions to `.quiz` phase.
+- Quiz completion → records `SessionRecord`, checks personal best and level-up, transitions to `.summary` (or level-up ceremony first).
+- Level-up detected → `LevelUpView` shown as `.fullScreenCover`; on dismiss → `.summary` phase.
+- "Retry quiz" from summary → new `QuizSessionViewModel` with fresh random seeds, back to `.quiz`.
 
 ---
 
 ## 05 · Quiz Question
 
-**Header style:** inline. Leading X (with confirm), title = lesson short name, trailing = "3 / 5" small bold counter.
+**File:** `Features/Quiz/QuizSessionView.swift` + `QuizSessionViewModel.swift`
+**Header style:** inline. Leading X (dismisses), title = lesson/session name, trailing = timer pill.
+
+The quiz supports two input modes: **multiple choice** (4 options) and **free entry** (numeric keypad).
 
 **Layout:**
 
-1. **Beads progress** — `BeadRail.chunky` centered (5 beads, current = blue, completed = on/yellow, upcoming = muted). Acts as both progress and orientation device.
-2. **QuestionCard** —
-   - Eyebrow ("Question 3", blue uppercase).
-   - Title body ("Your dinner bill is **$48**. About how much is a **20% tip?**") — `Theme.Typography.title`, line-height 1.25.
-   - Caption hint ("Use the 10% trick — round to the nearest dollar.").
-3. **Option list** — vertical stack of `OptionCard`s, 10pt gap. 4 options (A–D). One can be `selected` (blue ring + tint). Numpad-key letter on the left, value on the right.
-4. **Hint** — ghost button "Hint" (icon + label), centered. On tap → modal with the matching `WhyCard`-style hint; reveals cost the user XP.
-5. **Footer** — sticky `PillButton.primary` "Check answer". Disabled state = muted tint + muted text until something is selected.
+1. **BeadRail** — `BeadRail.chunky` centered (8 beads for standard sessions, progress updates as questions are answered).
+2. **QuizGraphicBanner** — decorative themed header graphic based on template ID (via `QuestionTheme`).
+3. **PromptCard** — `NumindCard` containing:
+   - Top row: module chip (capsule, module color) + difficulty pips (3 dots, filled to difficulty level) + question counter ("3 / 8").
+   - Optional scenario text (italic, muted).
+   - Prompt text (`Theme.Typography.title`, navy).
+
+4a. **Option list (MCQ mode)** — vertical stack of `OptionCard`s, 10pt gap. 4 options (A–D). Key letter on the left, value on the right.
+4b. **Free entry (freeEntry mode)** — display strip (38pt bold rounded, shows typed value with format prefix/suffix) + `NumpadView` (custom numeric keypad with digit, decimal, delete buttons).
+
+5. **Hint section** — initially a capsule button "Show shortcut" (insightYellowTint). On tap, expands to a full `NumindCard` (insightYellowTint) with lightbulb icon + "SHORTCUT" eyebrow + lesson shortcut text.
+
+6. **Footer** — sticky "Check answer" button. Disabled state = muted tint + muted text until an option is selected (MCQ) or text is entered (free entry).
+
+**Timer pill:** trailing toolbar item, monospaced elapsed time in a muted capsule. Updates every second via `TimelineView`.
 
 **States:**
-- **No selection:** Continue button disabled.
-- **Selected:** option border + tint = blue.
-- **Hint used:** ghost button changes to "Hint used" with reduced opacity.
-- **Loading:** the question card shimmers but options + chrome are visible.
-- **Error:** "Question couldn't load — Skip / Retry" inline alert in place of the option list.
-
-> **Rationale.** MCQ-only is a V1 constraint, so the question card and option cards must do all the work. We keep the question text generous (24pt) and never let it scroll away — it's anchored above the options, the most-tapped surface. Letter keys (A–D) on options are deliberate: they double as accessibility anchors and let us refer back to specific options in feedback ("B was right").
+- **No selection / empty input:** Check answer button disabled.
+- **Selected (MCQ):** option border + tint = blue.
+- **Hint revealed:** button expands to full shortcut card.
+- **Feedback transition:** confetti + haptic for correct; error haptic for wrong.
 
 ---
 
 ## 06 · Quiz Feedback
 
-**Header style:** identical to Quiz Question (X · lesson name · "3 / 5") so the user feels they are still in the same flow, not a new screen.
+**File:** `Features/Quiz/QuizSessionView.swift` (feedback phase within same view)
+**Header style:** identical to Quiz Question (the user stays in the same flow).
 
 **Layout:**
 
-1. **Beads progress** — same as Quiz Question, but the current bead is now `on` (yellow) since it's been answered.
-2. **ResultHero** — full-width tinted card (teal tint for correct, red tint for wrong). Contains a 64pt circular badge (teal/red filled) with `check` or `xCircle`, headline ("Nice — that's right." / "Not quite."), and reward sub-line ("+10 XP · streak +1" or "Take a moment — no penalty.").
-3. **Option recap** — same option list, but:
-   - The correct option is fully visible with a `correct` style (teal ring + tint + trailing check icon, label bold).
-   - All other options are dimmed to 50% opacity. If the user picked wrong, their pick gets the `wrong` style and stays at full opacity.
-4. **WhyCard** — eyebrow "Why" (blue uppercase) + body explaining the math + caption with the "shortcut" framing. Same component as the Lesson WhyCard so it builds visual continuity between lesson and quiz.
-5. **Footer** — sticky `PillButton.primary` "Continue".
-
-**States:**
-- **Correct:** teal hero, "+XP" copy.
-- **Incorrect:** red hero, neutral copy ("no penalty"), explanation framed as a hint.
-- **Out of attempts (rare):** show "Try again later" state — disable continue, replace footer with "Back to lesson".
-
-> **Rationale.** Feedback is the single highest-leverage moment for retention. We commit to a single emotional beat (the hero card), one piece of evidence (the option recap), and one teaching moment (the WhyCard). No confetti, no extended animations — Numind is App-Store-friendly, not Duolingo-loud. Color is emotion: teal for "you got it," red only as a soft tint for "not quite."
+1. **BeadRail** — same as Question, current bead now marked as answered.
+2. **ResultHero** — `NumindCard` with tinted background (tealTint for correct, redTint for wrong):
+   - 64pt circle (teal/red filled) with white checkmark/xmark.
+   - Headline: "Nice — that's right." / "Not quite."
+   - Correct: "🎉 +10 XP · streak +1" + optional speed bonus pill (insightYellowTint, bolt icon, "+N XP speed bonus!").
+   - Wrong: "No penalty — keep going."
+3. **AnswerRevealPill** — full-width capsule showing correct answer in 30pt bold rounded white text on teal/red background.
+4. **OptionsRecap (MCQ only)** — same option list, but correct option gets `correct` state (teal), user's wrong pick gets `wrong` state (red), all others dimmed to 0.45 opacity.
+5. **WhyCard** — `NumindCard` (insightYellowTint): lightbulb + "WHY" eyebrow + explanation text + divider + "Shortcut:" label + shortcut text.
+6. **Footer** — sticky `PillButton.primary` "Continue" → advances to next question or completes session.
 
 ---
 
 ## 07 · Session Summary
 
-**Header style:** inline, **trailing X only** (no back). The session is "done" — the only forward action is Continue or Done.
+**File:** `Features/Quiz/SessionSummaryView.swift`
+**Header style:** inline, **trailing X only** (no back). The session is done.
 
 **Layout:**
 
-1. **CompletionHero** — centered.
-   - 88pt yellow-tinted circle with `trophy` glyph (yellow stroke + fill).
-   - `Theme.Typography.display` "Workout complete!".
-   - Caption "Tip math · 5 questions · 4 min".
-2. **StatsCard** — 3 `Stat` cells separated by `vrule`s.
-   - **Correct** — value in teal ("4/5").
-   - **XP earned** — neutral navy ("+45").
-   - **Streak** — value in yellow with flame ("13🔥").
-3. **Eyebrow** "Recap".
-4. **Recap card** (flush) — 5 rows:
-   - sm tile (teal/red tint + `check`/`x`).
-   - body label = the question stem in past tense ("10% of $80 is…").
-   - if wrong, trailing "Review" link (blue, small) → opens that question's feedback view.
-5. **Footer (sticky)** — stack of two buttons:
-   - `PillButton.primary` "Continue learning" → next lesson or recommended workout.
-   - `PillButton.ghost` "Done for today" → Home.
+1. **ResultHeader** — centered, split by pass/fail:
+
+   **Pass (≥75%):**
+   - 96pt circle (accent tint) + trophy icon.
+   - `Theme.Typography.display` "Session complete!".
+   - Caption "N questions · MM:SS".
+   - Animated "+XP" pill (insightYellowTint, 22pt bold rounded, insightText, springs in with 0.3s delay).
+   - Speed bonus callout (if any): bolt icon + "+N XP speed bonus included" (insightText).
+   - "New personal best!" chip (spring animation) — only on first mastered or higher score.
+
+   **Fail (<75%):**
+   - 96pt circle (warmOrangeTint) + counterclockwise arrow icon.
+   - `Theme.Typography.display` "Almost there!".
+   - Caption "N questions · MM:SS".
+   - Static "+XP" pill (insightYellowTint, body font, no animation delay).
+   - "You got X/N — need Y to master" pill (warmOrangeTint background).
+   - No trophy, no personal best chip, no speed bonus callout.
+
+2. **StatsCard** — `NumindCard` with 3 `StatCell`s separated by vertical dividers:
+   - **Correct** — "N/N" in accent color.
+   - **Accuracy** — "N%" in navy (overall accuracy from progressStore).
+   - **Streak** — "N🔥" in yellow.
+
+3. **MasteryBanner** — pass variant only:
+   - **Mastered (≥75%):** accent tint background + checkmark.seal.fill + "Lesson mastered!" + "Next lesson unlocked".
+   - The "Not mastered yet" variant has been removed. The fail-state score gap message is now embedded directly in the fail `ResultHeader` as a `warmOrangeTint` pill.
+
+4. **NewBadgesSection** (if badges earned) — "BADGES UNLOCKED" eyebrow + card with badge rows:
+   - Each row: tier-colored circle (48pt, badge icon) + badge name (semibold) + description + teal checkmark.seal.fill.
+   - Haptic feedback on appear.
+
+5. **RecapSection** — "RECAP" eyebrow + flush card with per-question rows:
+   - 36pt result tile (teal check / red xmark) + question prompt preview + retry icon for wrong answers.
+
+6. **Footer (sticky)** — varies by mastery:
+   - **Not mastered:** "Retry quiz" (orange, primary) + "Skip for now" (`PillButton(.secondary)` — light background, blue text, visually subordinate to Retry) + "Done for today" (text link).
+   - **Mastered with mistakes:** "Review N mistake(s)" (red capsule) + "Skip & continue" (ghost) + "Done for today".
+   - **Mastered, perfect:** "Continue learning" (primary) + "Done for today".
+
+**Review mistakes:** launches a new `QuizSessionView` via `ReviewMistakesEngine.build()` as a `.fullScreenCover`.
+
+> **Rationale.** The mastery banner is the key feedback element — it makes the 75% gate visible and actionable. The retry flow (with fresh random values) is surfaced prominently when mastery isn't achieved, encouraging persistence without punishment. Personal best and badge celebrations provide positive reinforcement beyond the pass/fail binary.
+
+---
+
+## 08 · Checkpoint Review
+
+**File:** `Features/Learn/Checkpoint/CheckpointView.swift`
+**Header style:** inline (via embedded `QuizSessionView`).
+
+A module review quiz that covers the 3 most recent lessons. No lesson-content phase — jumps straight to questions.
+
+**Phases:** `.quiz` → `.summary` (same as LessonView but without the lesson phase).
+
+**Flow:**
+1. `CheckpointQuizEngine.build(lessonIds:)` generates 8 questions round-robined across covered lessons.
+2. Title: "Module Review". Shortcut: "Apply everything you've learned in [module]."
+3. On completion: records session with stable review ID (`review_{moduleId}_{groupIndex}`), checks personal best and level-up.
+4. Level-up → `LevelUpView` → summary. Otherwise → summary directly.
+5. Summary has full retry support (rebuilds quiz with fresh questions).
+
+---
+
+## 09 · Level-Up Ceremony
+
+**File:** `Features/Quiz/LevelUpView.swift`
+**Presentation:** `.fullScreenCover` from within `LessonView` or `CheckpointView`, shown before session summary.
+
+**Layout:**
+
+1. **Background:** `softBg` with `ConfettiView` particle overlay.
+2. **Module badge** — 128pt circle (accent tint) with module icon (36pt, accent) + level number ("Lv N"). Spring scale-in animation from 0.55 → 1.0.
+3. **Headline** — `Theme.Typography.display` "Level up!" + module name (headline, muted) + level name capsule ("BEGINNER" / "DEVELOPING" / "SKILLED" / "ADVANCED" / "EXPERT", accent text on accent tint).
+4. **Level pips** — 5 circles: filled pips for completed levels (accent), empty for remaining (mutedTint). Current level pip is 14pt (others 8pt).
+5. **Footer** — `PillButton.primary` "Keep going" → dismisses to reveal session summary.
+
+**Haptic:** `.success` notification feedback on appear.
+
+---
+
+## 10 · Progress
+
+**File:** `Features/Progress/ProgressTabView.swift`
+**Tab:** Progress (active). **Header style:** large title, "Progress". Trailing toolbar: gear icon → `ProfileView` sheet.
+
+**Layout:**
+
+1. **OverviewCard** — `NumindCard`:
+   - Left: **StreakRing** (84pt, 8pt stroke, yellow fill, muted track, rotated -90°). Center: flame icon + streak count + "days" label.
+   - Right: streak count (28pt bold) + "day streak" + "Best: N days" caption + mini stats (sessions count + accuracy %) separated by 1pt vertical rule.
+
+2. **WeeklyGoalCard** — `NumindCard`:
+   - Top row: "N of M workouts" headline + goal caption + trailing yellow `IconTile` trophy.
+   - Day row: 7 columns (M-S), each: 28pt circle (blue + white check if completed, mutedTint otherwise) + day letter.
+
+3. **WeeklyXPLeaderboard** — `NumindCard`:
+   - Header: rank text ("Ranked #N of your last 4 weeks") + XP count + optional "Best week!" star pill (insightYellowTint).
+   - Bar chart: 4 bars (HStack, equal flex), each with XP label above + colored bar + week label below. Current week = blue, others = mutedTint. Min bar height 3pt for 0-XP weeks. Max bar height 72pt.
+
+4. **SkillMasteryCard** — `NumindCard` with header "SKILL MASTERY" + "See all" NavigationLink:
+   - Per module row: 36pt `IconTile` + module title + level capsule ("Lvl N", module color) + 5pt progress bar + "Level N of 5" / "Not started" caption. Rows separated by hairline dividers.
+
+5. **RecentActivityCard** (shown when sessions exist) — `NumindCard`:
+   - Per session row: module icon tile (36pt) + lesson title + relative date + score (N/N) + accuracy %. High accuracy (≥80%) shown in teal.
+
+6. **TotalXPCard** — `NumindCard` (insightYellowTint background):
+   - "TOTAL XP" eyebrow + XP count (30pt bold rounded) + trailing trophy `IconTile` (48pt, yellow).
+
+7. **BadgesGrid** — "N of 27 unlocked" caption + `NumindCard` with 3-column `LazyVGrid`:
+   - Each badge: 48pt circle (tier color tint if earned, mutedTint if locked) + icon (badge icon if earned, lock if locked) + name (10pt, 2 lines).
+   - Tier colors: bronze = warm brown, silver = teal, gold = yellow.
+
+**Empty state (no sessions):** Blue circle (96pt) with chart icon + "No sessions yet" display text + "Complete your first lesson" body text.
+
+---
+
+## 11 · Profile
+
+**File:** `Features/Profile/ProfileView.swift`
+**Presentation:** Sheet from Progress tab gear icon, or standalone via Profile tab.
+**Header style:** large title, "Profile".
+
+**Layout:**
+
+1. **ProfileCard** — `NumindCard`: 56pt avatar circle (user initial, blue tint) + name (headline) + "Member since [date]" caption + streak emoji + count (if active).
+
+2. **StatsSection** — eyebrow "Your numbers" + 2×2 `LazyVGrid` of stat tiles:
+   - **Sessions** (blue bolt icon) + **Total XP** (yellow star icon) + **Accuracy** (teal scope icon) + **Best streak** (red flame icon).
+   - Each tile: `NumindCard` with `IconTile` (36pt) + value (26pt bold rounded) + label.
+
+3. **RemindersSection** — eyebrow "Reminders" + `NumindCard`:
+   - Toggle row: bell icon (teal, 36pt) + "Daily reminder" + toggle (teal tint).
+   - Time picker row (shown when enabled): clock icon + "Remind me at" + `DatePicker` (hourAndMinute). Animated expand/collapse.
+
+4. **AppearanceSection** — eyebrow "Appearance" + `NumindCard`:
+   - Circle.lefthalf.filled icon (blue, 36pt) + "Theme" + 3-segment picker (Auto / Light / Dark).
+
+5. **AppSection** — eyebrow "App" + `NumindCard`:
+   - "Reset progress" row: red counterclockwise icon (36pt) + red title + "Clears all local lesson and quiz history" caption. Tap → destructive confirmation alert.
+
+6. **BrandFooter** — centered: Numind wordmark image (20pt height, 0.55 opacity) + version string.
 
 **States:**
-- **Perfect score:** swap stats card highlight color to teal across the row; no other change.
-- **First-ever session:** add a single `WhyCard`-style "habit prompt" between hero and stats: "Want a daily reminder?" with inline link to Profile → Reminders.
-- **Loading:** stats card shimmers; recap rows are skeletons.
-
-> **Rationale.** Summary is a celebration screen, not a debrief. We use the warmest color (yellow) only here — the trophy glow signals "you finished," not "you mastered." The recap is unflashy on purpose: it lets the user verify what they got wrong and re-enter feedback for those questions, which protects retention without nagging.
+- **Reset confirm:** native iOS alert with red "Reset" + "Cancel".
+- **Notifications blocked:** alert directing to Settings to re-enable.
 
 ---
 
-## 08 · Tools list
+## 12 · Speed Drill (overlay on QuizSessionView)
 
-**Header style:** inline, leading chevron-back, title "Tools". Reachable from a Home overflow menu and from "Practice this skill" links inside lessons.
+**File:** `Features/Quiz/QuizSessionView.swift` (standard view with countdown ring)
+**Presentation:** `.fullScreenCover` from Home tab "Speed Drill" mode card.
+**Trigger:** `QuizSessionViewModel(questions:title:shortcut:moduleColor:questionTimeLimit: 15.0)`
 
-**Layout:**
+Speed Drill is the standard `QuizSessionView` with a countdown ring replacing the elapsed-time pill. Everything else (bead rail, prompt card, option cards, feedback, explanation, continue button) is unchanged.
 
-1. Top caption (no eyebrow): "Quick calculators that use the same shortcuts you learn in lessons."
-2. Vertical stack of 3 `ToolCard`s:
-   - **Tip calculator** — blue tile, `percent`, "Round any bill, in your head or on screen."
-   - **Bill split** — teal tile, `receipt`, "Split fairly across people, with or without tip."
-   - **Discount** — yellow tile, `tag`, "Sale price, markdowns, percent off."
-3. **Cross-link card** (blue tint background) — tile (blue, `hint`) + "Practice what you learn" + caption explaining each tool links back to its lesson.
+**Countdown ring (toolbar trailing, 40×40pt):**
+- Outer stroke: `mutedTint`, 3pt, full circle.
+- Inner arc: trim from 0 to `questionTimeRemaining / questionTimeLimit`. Stroke: 3pt, `.round` lineCap. Animated with `.linear(duration: 0.1)`.
+- Center text: `Int(ceil(remaining))` — `13pt bold rounded`. No animation.
+- Color: `primaryBlue` (>5s) → `warmOrange` (≤5s) → `errorSoftRed` (≤3s).
+- Timer starts via `viewModel.startSession()` called from `.onAppear`.
+- Timer expiry: `handleTimeout()` → auto-wrong → `.feedback(UUID())`. User sees error card + explanation + Continue, then advances normally.
 
-**Empty state:** N/A.
-
-**Error state:** N/A — calculators are local.
-
-> **Rationale.** Tools is the V1 utility surface — a place to use Numind in the wild, not just inside lessons. The cross-link card at the bottom is the only persuasion attempt; everything else is direct.
-
----
-
-## 09 · Tip calculator
-
-**Header style:** inline, leading chevron-back, title "Tip calculator", trailing `hint` icon button (opens contextual explanation as a sheet).
-
-**Layout:**
-
-1. **Bill input** (`InputCard`) — uppercase muted "BILL" label · 22pt rounded value "$48.00". Tap opens the system numpad.
-2. **Eyebrow** "Tip".
-3. **PercentChips** — 4 pill chips (15 / 18 / 20 / 25) full-width row. Selected chip is filled blue.
-4. Caption "Slide for custom %" — links to a system slider sheet for non-preset values.
-5. **CalcResult** "Tip" — big colored card (blue), white display value "$9.60".
-6. **CalcResult** "Total" — teal card, white display value "$57.60".
-7. **MentalMathCard** — yellow-tinted, `hint` tile + caption "**In your head:** 10% of $48 = $4.80. Double for 20% → $9.60." (Same shortcut surface as lesson WhyCard.)
-
-**States:**
-- **Empty bill:** result cards show "—" in place of the value, `MentalMathCard` is hidden, primary action becomes the bill input itself (no sticky footer).
-- **Custom percent:** chips show "—%" and a small inline "Custom" pill to indicate non-preset.
-
-> **Rationale.** The tip calculator must look more like a learning artifact than a finance app — that's why the result cards are flat colored cards (not data tables) and the mental-math card is always the last visible element. The user should walk away knowing the trick, not just the answer.
+**Session recording:** `lessonId: "speed_drill"`, `moduleId: "mixed"`. Standard SessionSummaryView shown on completion.
 
 ---
 
-## 10 · Bill split calculator
+## 13 · Blitz Mode
 
-**Header style:** inline, leading chevron-back, title "Bill split".
+**Files:** `Features/Blitz/BlitzView.swift`, `Features/Blitz/BlitzSummaryView.swift`
+**Presentation:** `.fullScreenCover` from Home tab "Blitz" mode card.
+**ViewModel:** `BlitzViewModel` (not `QuizSessionViewModel` — different lifecycle).
+
+### Playing Phase
+
+**Top bar (full-width, 16pt top padding):**
+- Leading: 36pt circle close button (`xmark`, mutedTint fill, navy icon).
+- Center: 72pt circular countdown timer. Outer ring: 5pt mutedTint. Inner arc: trim from 0 to `timeRemaining/60`, 5pt lineCap round, animated `.linear(0.1)`. Color: `mindTeal` (>20s) → `warmOrange` (≤20s) → `errorSoftRed` (≤10s). Center: time in seconds (24pt bold rounded) + "sec" (10pt semibold muted). Pulsing scale animation when ≤10s.
+- Trailing: score capsule — `checkmark` icon (12pt bold) + count (18pt bold rounded). Fill: `mindTeal` if score > 0, else muted. Spring-animates on increment.
+
+**Prompt card** (`NumindCard`): question prompt only (22pt semibold rounded, centered). No scenario card — too slow to read mid-blitz.
+
+**Options grid:** `LazyVGrid` 2 columns, 12pt spacing. Each option: `NumindCard` background, 17pt semibold, centered, minHeight 72pt. Tap = immediate answer (no "Check answer" button). Disabled during `.flashing` state.
+
+**Flash overlay** (0.5s, `allowsHitTesting: false`):
+- Full-screen color tint (green 0.15 opacity if correct, red 0.15 opacity if wrong).
+- 72pt circle (mindTeal/errorSoftRed) + large checkmark/xmark icon.
+
+### Summary Phase
+
+Shown when `viewModel.state == .complete` (inline within `BlitzView` — no new cover).
 
 **Layout:**
+1. **Hero:** 72pt warmOrangeTint circle with flame icon. "Blitz complete!" (28pt bold). Score number (72pt black rounded, warmOrange, spring-animated on appear). "questions correct" label (16pt muted).
+2. **Personal best badge:** If `isNewBest` — "🏆 New personal best!" in insightYellowTint capsule with shadow.
+3. **Stats card** (`NumindCard`): 4 divider-separated rows — Correct (count/total), Accuracy (%), XP earned (+N XP), Avg time/question (Xs).
+4. **Footer:** "Play again" (`.primary` PillButton) → reset + new queue + back to playing. "Done" (`.secondary` PillButton) → recordSession + updateBlitzBest + dismiss.
 
-1. **Two side-by-side `InputCard`s:** "Bill" (left, $86.40) + "People" (right, 4). Equal flex.
-2. **Eyebrow** "Include tip?" + 4 `PercentChips` (0 / 15 / 18 / 20).
-3. **People row** — N small blue tiles (`person` icon), centered, 6pt gap. Visual confirmation of the splitter count.
-4. **CalcResult** "Each person pays" — blue card, large display.
-5. **BreakdownCard** — Subtotal · Tip (N%) · hairline · **Total**. Right-aligned values, body labels left.
-
-**States:**
-- **People = 1:** the People-row collapses to a single tile and the result label switches to "You pay".
-- **Bill empty:** all amounts show "—".
-- **Tip = 0:** breakdown card omits the Tip row; "Include tip?" chip "0" is filled.
-
-> **Rationale.** Bill split is the highest-utility tool of the three — most likely to be opened mid-restaurant. The two side-by-side inputs at the top mean the user can edit either with a single thumb without scrolling. The people-row tiles are the only "playful" element here; they're cheaper than illustrations and reinforce the split count.
+**Haptic:** `.success` notification on game end.
 
 ---
 
-## 11 · Discount calculator
+## 14 · Home — Game Modes Section
 
-**Header style:** inline, leading chevron-back, title "Discount".
+**Section:** Sits between Daily Challenge and Today's Workout in HomeView scroll.
 
-**Layout:**
+**Section label:** "GAME MODES" (standard eyebrow text — 10pt semibold muted, 0.8 tracking, uppercase).
 
-1. **Original price** `InputCard` ($120.00).
-2. **Eyebrow** "Discount" + `PercentChips` (10 / 25 / 40 / 50).
-3. **CalcResult** "You save" — yellow card (warm, the win), display "$30.00".
-4. **CalcResult** "Sale price" — teal card, display "$90.00".
-5. **MentalMathCard** — eyebrow ("HOW TO DO IT IN YOUR HEAD"), body "25% off = ¼ off. $120 ÷ 4 = $30. Subtract → $90."
+**Layout:** HStack of two equal-width mode cards.
 
-**States:**
-- **0% discount:** "You save" card hides; sale price = original price; mental-math card swaps copy to the trivial case.
+**Mode card structure** (`NumindCard`, each half-width):
+- 44pt icon circle (tint background, icon fill in accent color). Lock icon in mutedText when locked.
+- Title (15pt bold rounded, navy). Locked → muted.
+- Subtitle (small, muted): "8 questions · 15s each" / "60 seconds · Go fast".
+- Chip (10pt bold): best stat in accent color/tint, or "Master a lesson to unlock" (muted) when locked.
 
-> **Rationale.** Discount calc is a teaching moment as much as a calculator — the *fraction equivalents* of common discounts (¼, ½, ⅓) are the actual mental-math shortcut. We surface the savings card before the sale price card to mirror the user's question ("how much do I save?") rather than the receipt order.
-
----
-
-## 12 · Progress
-
-**Tab:** Progress (active). **Header style:** large title, "Progress".
-
-**Layout:**
-
-1. **Eyebrow** "This week".
-2. **OverviewCard** — 3 `Stat` cells separated by `vrule`s (Streak / Lessons / Accuracy). Mirrors the placeholder structure but with real values.
-3. **Eyebrow** "Weekly goal".
-4. **WeeklyGoalCard** —
-   - Top row: headline ("4 of 5 workouts") + caption ("One more to hit your goal") · trailing yellow `IconTile` + `trophy`.
-   - Day-row (7 columns, M T W T F S S): each day is a 28pt circle — filled blue with white check if completed, muted-tint otherwise. Day letter caption below.
-5. **Eyebrow** "By module".
-6. **ByModuleCard** — 4 rows (one per module), separated by 1pt hairlines. Each row: module title · right-aligned percent · 6pt progress bar in module tint color.
-
-**Empty state (no activity):** Replace OverviewCard values with "—". Hide WeeklyGoalCard. Replace ByModuleCard with single muted card "Finish your first lesson to start tracking progress."
-
-**Loading:** all three cards as skeletons (top stat row, day row, 4 module rows).
-
-> **Rationale.** Progress is the screen most at risk of becoming a "finance dashboard." We resist that by limiting it to three cards, no charts, and using module color only inside the per-module bars. The weekly goal day-row is the one piece of habit visualization — a single, calm, clear pattern.
+**Speed Drill:** `mindTeal` accent. Icon: `bolt.fill`.
+**Blitz:** `warmOrange` accent. Icon: `flame.fill`.
+**Locked state:** Both cards disabled, icon replaced with `lock.fill`, chip shows unlock prompt.
 
 ---
 
-## 13 · Profile
+## 15 · Tools (future)
 
-**Tab:** Profile (active). **Header style:** large title, "Profile".
-
-**Layout:**
-
-1. **AccountCard** — large blue tile (`person`) · headline ("Alex") · caption ("Joined April 2026 · 12-day streak") · trailing chevron. Tap → account detail (post-V1).
-2. **Eyebrow** "Goals".
-3. **GoalsCard** (flush, hairlines between rows):
-   - **Daily target** — sm blue tile (`bolt`) · "5 minutes" detail · chevron.
-   - **Weekly goal** — sm yellow tile (`trophy`) · "5 workouts" detail · chevron.
-   - **Reminders** — sm teal tile (`light`) · "Daily, 6:30 PM" detail · chevron.
-4. **Eyebrow** "App".
-5. **AppCard** (flush):
-   - **Share Numind** — sm muted tile (`share`) · chevron.
-   - **Reset progress** — sm red tile (`reset`) · red title · caption "Clears local lesson and quiz history." Tap → destructive confirm sheet.
-
-**Empty / error states:**
-- **No name set:** "Alex" placeholder swaps to "Set your name" in muted color, links to onboarding.
-- **Reset confirm sheet:** native iOS action sheet with red "Reset everything" + "Cancel". Reset clears UserDefaults keys behind the persistence layer.
-
-**Loading:** AccountCard renders immediately from local data; goals/app sections are static.
-
-> **Rationale.** Profile is intentionally short. We surface goals as the second card because they're the only thing the user can change that affects the rest of the app. The "Reset progress" row uses the red tint primitive sparingly — it's the only destructive action in V1, and it lives at the bottom of Profile where it's hard to hit by accident.
+Calculator tools (tip calculator, bill split, discount calculator) are not part of V1. These are deferred to the future website, per the product brief.
 
 ---
 
 ## Cross-screen notes
 
-- **Tab bar.** Floating glass pill with rounded 28pt radius, sitting 14pt off the safe-area bottom. Active tab has a `primaryBlue.opacity(0.12)` pill behind the icon and a blue label. Renders identically across all four tab screens.
+- **Tab bar.** Standard iOS tab bar with 4 tabs: Home, Learn, Progress, Profile. Active tab uses standard iOS tinting.
 - **Inline navigation header.** 44pt high, leading + trailing icon slots are 32pt tap targets, title is 17pt semibold navy. Title can be empty (Lesson) when the body owns the heading.
-- **Sticky footers.** Whenever a screen has a sticky CTA, the scroll content pads 100pt at the bottom and the footer floats with a 12pt vertical pad and a softBg-to-transparent gradient mask so content doesn't slam into it.
-- **Modals (Lesson, Quiz, Tools details).** Use the inline header pattern with X close (or chevron-back if pushed from a list). Sticky footers on Lesson, Quiz Question, Quiz Feedback. Session Summary closes via the trailing X.
-- **No new colors.** Every color used across all screens is one of the 8 design tokens or a tint (≤22% opacity overlay) of one. No gradients other than the implicit softBg→transparent gradient under sticky footers.
+- **Sticky footers.** Whenever a screen has a sticky CTA, the scroll content pads at the bottom and the footer floats with a gradient mask so content doesn't slam into it. The gradient is `softBg.opacity(0)` → `softBg`, 24pt high.
+- **Full-screen covers.** Lessons and reviews open as `.fullScreenCover` from the Learn tab. Level-up is a nested `.fullScreenCover` from within the lesson/review view. Session summary is a phase within the lesson/review view, not a separate screen.
+- **No new colors.** Every color used across all screens is one of the design tokens or a tint overlay. No gradients other than the implicit softBg→transparent mask under sticky footers.
+- **Haptics.** Light impact on option selection and digit entry. Medium impact on correct answer. Error notification on wrong answer. Success notification on badge unlock and level-up.

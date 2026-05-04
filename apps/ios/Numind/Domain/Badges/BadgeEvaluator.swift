@@ -13,8 +13,11 @@ enum BadgeEvaluator {
         let accuracy      = data.computeAccuracy()
         let xp            = data.computeTotalXP()
         let streak        = data.computeStreak()
-        let uniqueLessons = Set(sessions.map(\.lessonId)).count
-        let uniqueModules = Set(sessions.map(\.moduleId)).count
+        // Exclude review sessions from lesson/module uniqueness counts so badges
+        // reflect actual lesson breadth, not review repetition.
+        let realSessions  = sessions.filter { !$0.isReviewSession }
+        let uniqueLessons = Set(realSessions.map(\.lessonId)).count
+        let uniqueModules = Set(realSessions.map(\.moduleId)).count
 
         // MARK: Starter
         if sessionCount >= 1 { ids.insert("first_session") }

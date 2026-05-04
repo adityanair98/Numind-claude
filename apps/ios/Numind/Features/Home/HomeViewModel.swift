@@ -18,6 +18,9 @@ final class HomeViewModel: ObservableObject {
     @Published private(set) var continueCard: LessonCard?
     @Published private(set) var upNextCards: [LessonCard] = []
 
+    /// True when the user has mastered at least one lesson — unlocks game modes.
+    @Published private(set) var modesUnlocked: Bool = false
+
     private let repo: ContentRepository
 
     init(repository: ContentRepository = LocalContentRepository()) {
@@ -56,8 +59,9 @@ final class HomeViewModel: ObservableObject {
             }
         }
 
-        todayCard   = incompleteCards.first
+        todayCard    = incompleteCards.first
         continueCard = partialModuleCard
         upNextCards  = Array(incompleteCards.dropFirst().prefix(2))
+        modesUnlocked = MasteredTemplatePool.hasUnlockedModes(progressData: store.data)
     }
 }

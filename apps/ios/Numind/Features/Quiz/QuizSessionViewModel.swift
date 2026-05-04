@@ -6,9 +6,9 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     enum SessionState: Equatable {
         case question
-        case answered(UUID)
-        case feedback(UUID)
-        case complete
+        case answered(UUID)      // user picked a choice
+        case feedback(UUID)      // answer checked, showing result
+        case complete            // all questions done
     }
 
     struct QuizResult {
@@ -31,6 +31,10 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     let lessonShortcut: String
     let questions: [QuizQuestion]
 
+    /// Optional per-question time limit (seconds). Nil = standard untimed quiz.
+    /// When set, a countdown timer runs each question; expiry = automatic wrong answer.
+    let questionTimeLimit: TimeInterval?
+
     // MARK: - State
 
     @Published private(set) var currentIndex: Int = 0
@@ -38,6 +42,12 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     @Published private(set) var results: [QuizResult] = []
     @Published private(set) var hintRevealed: Bool = false
     @Published var freeEntryText: String = ""  // used when inputMode == .freeEntry
+
+    // MARK: - Per-question countdown (Speed Drill)
+
+    /// Remaining seconds for the current question. Zero when no time limit is set.
+    @Published private(set) var questionTimeRemaining: TimeInterval = 0
+    private var timerTask: Task<Void, Never>?
 
     // MARK: - Session timer
 
@@ -61,6 +71,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     var currentQuestion: QuizQuestion { questions[currentIndex] }
     var total: Int { questions.count }
+
     // MARK: - XP
 
     /// Seconds thresholds and bonus amounts for speed XP.
@@ -74,8 +85,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     /// Base XP: 10 per correct answer.
     var xpEarned: Int { correctCount * 10 }
 
-    /// Speed bonus XP for the question currently showing feedback
-    /// (computed from lastQuestionTimeSpent before advance() is called).
+    /// Speed bonus XP for the question currently showing feedback.
     var currentSpeedBonus: Int {
         guard case .feedback = sessionState, isCorrectAnswer else { return 0 }
         return Self.speedBonus(for: lastQuestionTimeSpent)
@@ -136,9 +146,10 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     // MARK: - Init
 
+    /// Number of questions generated per quiz session.
+    static let targetQuestionCount = 8
+
     /// Initialiser for lesson-driven quiz sessions.
-    /// When `sessions` is non-empty the template order is determined by the
-    /// Spaced Repetition engine (most-due / most-struggled templates first).
     init(
         lesson: Lesson,
         moduleColor: ModuleColor = .blue,
@@ -148,22 +159,88 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         lessonTitle = lesson.title
         self.moduleColor = moduleColor
         self.lessonShortcut = lesson.shortcut
-        let templates = sessions.isEmpty
+        self.questionTimeLimit = nil
+        let ordered = sessions.isEmpty
             ? repository.templates(for: lesson.id)
             : SpacedRepetitionEngine.sortedTemplates(
                 for: lesson.id,
                 sessions: sessions,
                 repository: repository
               )
-        questions = templates.map { QuizEngine.generate(from: $0) }
+        guard !ordered.isEmpty else {
+            questions = []
+            return
+        }
+        var built: [QuizQuestion] = []
+        var idx = 0
+        while built.count < Self.targetQuestionCount {
+            built.append(QuizEngine.generate(from: ordered[idx % ordered.count]))
+            idx += 1
+        }
+        built.shuffle()
+        questions = built
     }
 
-    /// Initialiser for pre-generated question sets (e.g. daily challenge).
-    init(questions: [QuizQuestion], title: String, shortcut: String, moduleColor: ModuleColor = .blue) {
+    /// Initialiser for pre-generated question sets (daily challenge, game modes).
+    ///
+    /// - Parameters:
+    ///   - questions: Pre-built question array.
+    ///   - title: Display title shown in the quiz header.
+    ///   - shortcut: Hint/shortcut text shown in the hint section.
+    ///   - moduleColor: Accent color for the quiz UI.
+    ///   - questionTimeLimit: Optional per-question countdown in seconds (Speed Drill = 15s).
+    init(
+        questions: [QuizQuestion],
+        title: String,
+        shortcut: String,
+        moduleColor: ModuleColor = .blue,
+        questionTimeLimit: TimeInterval? = nil
+    ) {
         lessonTitle = title
         self.moduleColor = moduleColor
         self.lessonShortcut = shortcut
         self.questions = questions
+        self.questionTimeLimit = questionTimeLimit
+        // Start countdown for first question if a time limit is set.
+        if questionTimeLimit != nil {
+            questionTimeRemaining = questionTimeLimit!
+        }
+    }
+
+    // MARK: - Per-question timer management
+
+    /// Starts (or restarts) the per-question countdown. No-op if no time limit is set.
+    private func startQuestionTimer() {
+        guard let limit = questionTimeLimit else { return }
+        questionTimeRemaining = limit
+        timerTask?.cancel()
+        timerTask = Task { @MainActor in
+            while !Task.isCancelled && self.questionTimeRemaining > 0 {
+                try? await Task.sleep(for: .milliseconds(100))
+                guard !Task.isCancelled else { return }
+                self.questionTimeRemaining = max(0, self.questionTimeRemaining - 0.1)
+            }
+            guard !Task.isCancelled else { return }
+            self.handleTimeout()
+        }
+    }
+
+    /// Cancels the current countdown (called when user answers before time runs out).
+    private func cancelQuestionTimer() {
+        timerTask?.cancel()
+        timerTask = nil
+    }
+
+    /// Called when the countdown hits zero. Marks the question as wrong and shows feedback.
+    private func handleTimeout() {
+        switch sessionState {
+        case .question, .answered:
+            // Time's up — always wrong, regardless of any selection made.
+            lastQuestionTimeSpent = questionTimeLimit ?? 0
+            sessionState = .feedback(UUID())  // UUID won't match correctChoiceId → wrong
+        default:
+            break
+        }
     }
 
     func revealHint() {
@@ -174,7 +251,6 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     // MARK: - Actions
 
     func select(_ choiceId: UUID) {
-        // Allow re-selection while in .answered — user can change their mind before tapping Check.
         switch sessionState {
         case .question, .answered:
             sessionState = .answered(choiceId)
@@ -184,7 +260,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     }
 
     func checkAnswer() {
-        // Capture how long the user spent on this question before revealing feedback.
+        cancelQuestionTimer()
         lastQuestionTimeSpent = Date().timeIntervalSince(questionStartTime)
         switch currentQuestion.inputMode {
         case .multipleChoice:
@@ -204,7 +280,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
             guard !freeEntryText.contains(".") else { return }
             freeEntryText += freeEntryText.isEmpty ? "0." : "."
         } else {
-            if freeEntryText == "0" { freeEntryText = "" } // replace leading zero
+            if freeEntryText == "0" { freeEntryText = "" }
             freeEntryText += digit
         }
     }
@@ -227,10 +303,18 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
             sessionState = .question
             hintRevealed = false
             freeEntryText = ""
-            questionStartTime = Date()  // reset timer for next question
+            questionStartTime = Date()
+            startQuestionTimer()
         } else {
             stoppedAt = Date()
             sessionState = .complete
         }
+    }
+
+    // MARK: - Lifecycle
+
+    func startSession() {
+        // Called after the view appears — starts the first question's timer.
+        startQuestionTimer()
     }
 }

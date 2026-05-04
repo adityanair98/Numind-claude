@@ -1,26 +1,48 @@
 import Foundation
 
-/// Selects the daily 5 quiz questions from all available templates.
+/// Selects the daily 10 quiz questions from mastered (or all) templates.
 ///
 /// The selection is seeded with the current calendar date (YYYYMMDD), so:
-///   - Every user sees the same questions on the same day.
+///   - Every user sees the same question types on the same day.
 ///   - The set resets automatically at midnight.
 ///   - The exact numbers within each question are also fixed for the day.
+///
+/// Template pool priority:
+///   - If the user has mastered at least one lesson, questions are drawn only from
+///     mastered-lesson templates (concepts they've actually learned).
+///   - If no lessons have been mastered yet (new user), falls back to all templates
+///     so the daily challenge always has something to show.
 struct DailyChallengeEngine {
 
-    static let questionCount = 5
+    static let questionCount = 10
 
     // MARK: - Public API
 
-    static func dailyQuestions(from repository: ContentRepository) -> [QuizQuestion] {
-        let allTemplates = repository.allTemplates()
-        guard !allTemplates.isEmpty else { return [] }
+    /// Generates today's daily challenge questions.
+    ///
+    /// - Parameters:
+    ///   - repository: Content source (defaults to local JSON).
+    ///   - progressData: If provided, filters to mastered-lesson templates only.
+    ///                   Pass nil for backward-compat (uses all templates).
+    static func dailyQuestions(
+        from repository: ContentRepository,
+        progressData: ProgressData? = nil
+    ) -> [QuizQuestion] {
+        // Determine template pool: mastered first, fall back to all.
+        let pool: [QuizTemplate]
+        if let progressData {
+            let mastered = MasteredTemplatePool.templates(from: progressData, repository: repository)
+            pool = mastered.isEmpty ? repository.allTemplates() : mastered
+        } else {
+            pool = repository.allTemplates()
+        }
+
+        guard !pool.isEmpty else { return [] }
 
         var rng = SeededRandomGenerator(seed: dailySeed())
 
-        // Shuffle all templates with the daily seed and take the first N.
-        // With 47+ templates spanning 6 modules this naturally gives variety.
-        var shuffled = allTemplates
+        // Fisher-Yates shuffle with the daily seed so every user gets the same order.
+        var shuffled = pool
         for i in stride(from: shuffled.count - 1, through: 1, by: -1) {
             let j = Int(rng.next() % UInt64(i + 1))
             shuffled.swapAt(i, j)
