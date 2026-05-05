@@ -8,7 +8,7 @@ struct QuizQuestion: Identifiable, Equatable {
 
     let id: UUID
     let templateId: String
-    let difficulty: Int         // 1 = easy, 2 = medium, 3 = hard
+    let difficulty: QuestionDifficulty
     let inputMode: InputMode    // multipleChoice or freeEntry
     let answerFormat: AnswerFormat
     let correctValue: Double    // raw numeric answer (for free-entry validation)

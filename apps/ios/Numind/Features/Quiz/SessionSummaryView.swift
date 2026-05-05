@@ -14,11 +14,19 @@ struct SessionSummaryView: View {
     @State private var xpAnimated: Int = 0
     @State private var showPersonalBest: Bool = false
     @State private var reviewVM: QuizSessionViewModel? = nil
+    /// Results from the most recent review session (nil = no review done yet).
+    /// Replaces the original wrong answers once the first review completes.
+    @State private var reviewResults: [QuizSessionViewModel.QuizResult]? = nil
 
     private var accent: Color { viewModel.moduleColor.tintColor }
     private var accentTint: Color { viewModel.moduleColor.tintBackground }
 
-    private var wrongCount: Int { viewModel.results.filter { !$0.isCorrect }.count }
+    /// Wrong answers from whichever set the next review should target.
+    /// After a review completes this switches to that review's results,
+    /// giving a cascading "review the review" loop.
+    private var wrongCount: Int {
+        (reviewResults ?? viewModel.results).filter { !$0.isCorrect }.count
+    }
 
     /// Whether the user hit the 75% mastery threshold this session.
     private var didMaster: Bool {
@@ -63,7 +71,10 @@ struct SessionSummaryView: View {
         .fullScreenCover(item: $reviewVM) { vm in
             NavigationStack {
                 QuizSessionView(viewModel: vm) {
-                    reviewVM = nil   // dismiss back to this summary when review ends
+                    // Capture results before dismissing so the footer
+                    // can offer another round on any remaining mistakes.
+                    reviewResults = vm.results
+                    reviewVM = nil
                 }
             }
         }
@@ -410,7 +421,7 @@ struct SessionSummaryView: View {
 
     private func startReview() {
         reviewVM = ReviewMistakesEngine.build(
-            from: viewModel.results,
+            from: reviewResults ?? viewModel.results,
             moduleColor: viewModel.moduleColor,
             lessonShortcut: viewModel.lessonShortcut
         )

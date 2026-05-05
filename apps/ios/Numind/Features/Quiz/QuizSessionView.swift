@@ -308,25 +308,17 @@ struct QuizSessionView: View {
 
     // MARK: - Difficulty pips
 
-    private func difficultyPips(_ level: Int) -> some View {
+    private func difficultyPips(_ difficulty: QuestionDifficulty) -> some View {
         HStack(spacing: 3) {
             ForEach(1...3, id: \.self) { i in
                 Circle()
-                    .fill(i <= level
+                    .fill(i <= difficulty.rawValue
                           ? viewModel.moduleColor.tintColor
                           : Theme.Colors.mutedTint)
                     .frame(width: 6, height: 6)
             }
         }
-        .accessibilityLabel(difficultyLabel(level))
-    }
-
-    private func difficultyLabel(_ level: Int) -> String {
-        switch level {
-        case 1:  return "Easy"
-        case 2:  return "Medium"
-        default: return "Hard"
-        }
+        .accessibilityLabel(difficulty.label)
     }
 
     private func questionCardState(for choice: QuizQuestion.Choice) -> OptionCardState {

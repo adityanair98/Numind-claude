@@ -1,5 +1,13 @@
 import Foundation
 
+/// A point-in-time snapshot of the user's Numind Score, recorded after each session.
+struct ScoreEntry: Codable {
+    let date: Date
+    let overallScore: Int
+    /// Per-module scores at this point in time. Keyed by module ID.
+    let moduleScores: [String: Int]
+}
+
 // Pure Codable value — all computation lives here so it's testable without the store.
 struct ProgressData: Codable {
     var sessions: [SessionRecord] = []
@@ -8,6 +16,9 @@ struct ProgressData: Codable {
     var earnedBadgeIds: Set<String> = []
     /// Personal best for Blitz mode: highest number of correct answers in a 60-second session.
     var blitzBestScore: Int = 0
+    /// Timestamped Numind Score snapshots — one appended after each session.
+    /// Retained for 90 days; older entries are pruned automatically.
+    var scoreHistory: [ScoreEntry] = []
 
     // MARK: - Streak
 

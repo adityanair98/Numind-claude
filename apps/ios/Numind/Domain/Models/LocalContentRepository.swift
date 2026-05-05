@@ -37,6 +37,15 @@ final class LocalContentRepository: ContentRepository {
     func template(id: String) -> QuizTemplate? {
         templates.first { $0.id == id }
     }
+
+    func lesson(forTemplateId templateId: String) -> Lesson? {
+        lessons.first { $0.quizTemplateIds.contains(templateId) }
+    }
+
+    func module(forTemplateId templateId: String) -> Module? {
+        guard let lesson = lesson(forTemplateId: templateId) else { return nil }
+        return module(id: lesson.moduleId)
+    }
 }
 
 // MARK: - Bundle helper

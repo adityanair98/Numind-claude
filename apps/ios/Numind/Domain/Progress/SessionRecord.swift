@@ -7,6 +7,10 @@ struct QuestionResult: Codable {
     let isCorrect: Bool
     /// Seconds from question appearing to the user tapping "Check answer".
     let timeSpentSeconds: Double
+    /// Difficulty tier of the generated question (assessed from actual numbers,
+    /// not the static template tier). Nil for sessions recorded before
+    /// dynamic difficulty was introduced (backward compat).
+    var difficulty: QuestionDifficulty?
 }
 
 struct SessionRecord: Codable, Identifiable {

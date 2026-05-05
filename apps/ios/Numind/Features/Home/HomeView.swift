@@ -5,18 +5,28 @@ struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     @State private var launchCard: HomeViewModel.LessonCard?
     @State private var dailyVM: QuizSessionViewModel? = nil
+    @State private var bonusRoundVM: QuizSessionViewModel? = nil
     @State private var showSpeedDrill = false
     @State private var blitzVM: BlitzViewModel? = nil
+    @State private var insightLesson: Lesson? = nil   // built when daily challenge ends
+    @State private var showInsight = false
+    @State private var insightSessionVM: QuizSessionViewModel? = nil   // retained while sheet shows
     @AppStorage("numind.userName") private var userName = "You"
+
+    private let repo = LocalContentRepository()
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
-                greetingHeader
-                streakWeekCard
+                BrandHeader(
+                    name: userName,
+                    isDailyChallengeCompleted: progressStore.isDailyChallengeCompleted,
+                    numindScore: progressStore.numindScore
+                )
                 dailyChallengeSection
-                modesSection
+                streakSection
                 workoutSection
+                modesSection
                 if let card = viewModel.continueCard {
                     continueSection(card)
                 }
@@ -28,8 +38,7 @@ struct HomeView: View {
             .padding(.vertical, Theme.Spacing.sectionSpacing)
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
-        .navigationTitle("Today")
-        .navigationBarTitleDisplayMode(.large)
+        .toolbar(.hidden, for: .navigationBar)
         // Lesson launch
         .fullScreenCover(item: $launchCard) { card in
             LessonView(viewModel: LessonViewModel(
@@ -56,11 +65,44 @@ struct HomeView: View {
                     record.bonusXP = vm.bonusXP
                     progressStore.recordSession(record)
                     progressStore.markDailyChallengeCompleted()
+                    // Resolve lesson recommendation for the weakest module
+                    insightLesson = resolveInsightLesson()
+                    insightSessionVM = vm
                     dailyVM = nil
+                    showInsight = true
                 }
             }
         }
-        // Speed Drill launch — SpeedDrillView manages quiz + summary phases
+        // Post-daily-challenge insight sheet
+        .sheet(isPresented: $showInsight, onDismiss: {
+            insightSessionVM = nil
+            insightLesson = nil
+            viewModel.refresh(using: progressStore)
+        }) {
+            if let vm = insightSessionVM {
+                insightView(for: vm)
+            }
+        }
+        // Bonus round launch
+        .fullScreenCover(item: $bonusRoundVM) { vm in
+            NavigationStack {
+                QuizSessionView(viewModel: vm) {
+                    var record = SessionRecord(
+                        id: UUID(),
+                        lessonId: "bonus_round",
+                        moduleId: "mixed",
+                        date: Date(),
+                        correctCount: vm.correctCount,
+                        totalCount: vm.total
+                    )
+                    record.questionResults = vm.questionResults
+                    record.bonusXP = vm.bonusXP
+                    progressStore.recordSession(record)
+                    bonusRoundVM = nil
+                }
+            }
+        }
+        // Speed Drill launch
         .fullScreenCover(isPresented: $showSpeedDrill) {
             SpeedDrillView()
                 .environmentObject(progressStore)
@@ -78,279 +120,91 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Greeting
-
-    private var greetingHeader: some View {
-        HStack(spacing: 14) {
-            ZStack {
-                Circle().fill(Theme.Colors.primaryBlueTint)
-                Text(String(userName.prefix(1)).uppercased())
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                    .foregroundStyle(Theme.Colors.primaryBlue)
-            }
-            .frame(width: 44, height: 44)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(timeBasedGreeting)
-                    .font(Theme.Typography.headline)
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                Text("Ready for your daily workout?")
-                    .font(Theme.Typography.caption)
-                    .foregroundStyle(Theme.Colors.mutedText)
-            }
-            Spacer()
-        }
-    }
-
-    private var timeBasedGreeting: String {
-        let hour = Calendar.current.component(.hour, from: Date())
-        let name = userName.isEmpty ? "there" : userName
-        if hour < 12 { return "👋 Good morning, \(name)!" }
-        if hour < 17 { return "👋 Good afternoon, \(name)!" }
-        return "👋 Good evening, \(name)!"
-    }
-
-    // MARK: - Streak + weekly strip
-
-    private var streakWeekCard: some View {
-        let completions = progressStore.weeklyCompletions
-        let dayLabels = ["M", "T", "W", "T", "F", "S", "S"]
-
-        return NumindCard {
-            VStack(alignment: .leading, spacing: 14) {
-                HStack(spacing: 10) {
-                    Image(systemName: "flame.fill")
-                        .font(.system(size: 22))
-                        .foregroundStyle(Theme.Colors.insightYellow)
-                    Text("\(progressStore.streak)")
-                        .font(.system(size: 30, weight: .bold, design: .rounded))
-                        .foregroundStyle(Theme.Colors.deepNavy)
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text("day streak")
-                            .font(Theme.Typography.small)
-                            .foregroundStyle(Theme.Colors.mutedText)
-                        Text(progressStore.streak > 0 ? "Keep it going!" : "Start your streak today!")
-                            .font(Theme.Typography.small)
-                            .foregroundStyle(progressStore.streak > 0 ? Theme.Colors.insightText : Theme.Colors.mutedText)
-                    }
-                    Spacer()
-                }
-
-                HStack(spacing: 0) {
-                    ForEach(0..<7, id: \.self) { i in
-                        VStack(spacing: 4) {
-                            ZStack {
-                                Circle()
-                                    .fill(completions[i] ? Theme.Colors.primaryBlue : Theme.Colors.mutedTint)
-                                    .frame(width: 28, height: 28)
-                                if completions[i] {
-                                    Image(systemName: "checkmark")
-                                        .font(.system(size: 11, weight: .bold))
-                                        .foregroundStyle(.white)
-                                }
-                            }
-                            Text(dayLabels[i])
-                                .font(.system(size: 10, weight: .medium))
-                                .foregroundStyle(Theme.Colors.mutedText)
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                }
-            }
-        }
-    }
-
     // MARK: - Daily challenge
 
     private var dailyChallengeSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Daily challenge")
-            NumindCard(background: Theme.Colors.primaryBlueTint) {
-                VStack(alignment: .leading, spacing: 14) {
-                    HStack(spacing: 12) {
-                        ZStack {
-                            Circle()
-                                .fill(progressStore.isDailyChallengeCompleted
-                                      ? Theme.Colors.mindTeal
-                                      : Theme.Colors.primaryBlue)
-                                .frame(width: 44, height: 44)
-                            Image(systemName: progressStore.isDailyChallengeCompleted
-                                  ? "checkmark" : "bolt.fill")
-                                .font(.system(size: 18, weight: .bold))
-                                .foregroundStyle(.white)
-                        }
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text("10 questions · Your modules")
-                                .font(Theme.Typography.headline)
-                                .foregroundStyle(Theme.Colors.deepNavy)
-                            Text(progressStore.isDailyChallengeCompleted
-                                 ? "Completed today"
-                                 : "New questions every day")
-                                .font(Theme.Typography.caption)
-                                .foregroundStyle(progressStore.isDailyChallengeCompleted
-                                                 ? Theme.Colors.mindTeal : Theme.Colors.mutedText)
-                        }
-                        Spacer()
-                    }
+        DailyChallengeCard(
+            isDone: progressStore.isDailyChallengeCompleted,
+            progress: progressStore.isDailyChallengeCompleted ? DailyChallengeEngine.questionCount : 0,
+            timeUntilReset: viewModel.timeUntilDailyReset,
+            hasHistory: progressStore.totalSessions > 0,
+            onStart: { startDailyChallenge() },
+            onBonusRound: { startBonusRound() }
+        )
+    }
 
-                    HStack {
-                        BeadRail(
-                            progress: progressStore.isDailyChallengeCompleted ? 10 : 0,
-                            total: 10,
-                            variant: .chunky
-                        )
-                        Spacer()
-                        Text("+100 XP max")
-                            .font(.system(size: 12, weight: .bold))
-                            .foregroundStyle(Theme.Colors.insightText)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(Theme.Colors.insightYellowTint)
-                            .clipShape(Capsule())
-                    }
+    // MARK: - Insight helpers
 
-                    if progressStore.isDailyChallengeCompleted {
-                        Text("✓ Come back tomorrow for new questions")
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundStyle(Theme.Colors.mindTeal)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                    } else {
-                        PillButton("Start challenge") { startDailyChallenge() }
-                    }
+    /// Builds the DailyInsightView using current store scores and the captured session VM.
+    @ViewBuilder
+    private func insightView(for vm: QuizSessionViewModel) -> some View {
+        let modules = repo.allModules()
+        let moduleScores = modules.map { m in
+            DailyInsightView.ModuleScore(
+                module: m,
+                score: progressStore.numindScore(for: m.id),
+                previousScore: progressStore.numindScoreHistory(for: m.id, daysAgo: 7)
+            )
+        }
+        DailyInsightView(
+            overallScore: progressStore.numindScore,
+            scoreDelta: progressStore.numindScoreDelta,
+            moduleScores: moduleScores,
+            sessionCorrect: vm.correctCount,
+            sessionTotal: vm.total,
+            sessionTimeString: vm.elapsedTimeString,
+            recommendedLesson: insightLesson,
+            onContinue: { showInsight = false },
+            onLearnWeakness: { lesson in
+                showInsight = false
+                // Brief delay so the sheet can dismiss before launching the lesson
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    launchCard = viewModel.card(for: lesson, using: repo)
                 }
             }
+        )
+    }
+
+    /// Finds the first unlearned lesson in the weakest module to surface as a recommendation.
+    private func resolveInsightLesson() -> Lesson? {
+        let modules = repo.allModules()
+        guard !modules.isEmpty else { return nil }
+        let weakest = modules.min {
+            progressStore.numindScore(for: $0.id) < progressStore.numindScore(for: $1.id)
         }
+        guard let module = weakest else { return nil }
+        return repo.lessons(for: module.id)
+            .first { !progressStore.hasCompletedLesson($0.id) }
+            ?? repo.lessons(for: module.id).first   // fallback: first lesson even if done
     }
 
     private func startDailyChallenge() {
-        let repo = LocalContentRepository()
         let questions = DailyChallengeEngine.dailyQuestions(from: repo, progressData: progressStore.data)
         dailyVM = QuizSessionViewModel(
             questions: questions,
             title: "Daily Challenge",
-            shortcut: "Draw on all the skills you've built — tips, discounts, salary math, and more.",
+            shortcut: "Draw on all the skills you've built \u{2014} tips, discounts, salary math, and more.",
             moduleColor: .blue
         )
     }
 
-    // MARK: - Game modes section
-
-    private var modesSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Game modes")
-            HStack(spacing: 12) {
-                speedDrillCard
-                blitzCard
-            }
-        }
-    }
-
-    private var speedDrillCard: some View {
-        let locked = !viewModel.modesUnlocked
-        let bestAccuracy = progressStore.bestAccuracy(lessonId: "speed_drill")
-
-        return modeCard(
-            icon: "bolt.fill",
-            iconBackground: Theme.Colors.mindTealTint,
-            iconColor: Theme.Colors.mindTeal,
-            title: "Speed Drill",
-            subtitle: "8 questions · 15s each",
-            bestLabel: bestAccuracy.map { "\(Int($0 * 100))% best accuracy" },
-            locked: locked,
-            action: { startSpeedDrill() }
+    private func startBonusRound() {
+        let questions = DailyChallengeEngine.bonusRoundQuestions(from: repo, progressData: progressStore.data)
+        bonusRoundVM = QuizSessionViewModel(
+            questions: questions,
+            title: "Bonus Round",
+            shortcut: "Extra practice \u{2014} a fresh set of questions from your modules.",
+            moduleColor: .blue
         )
     }
 
-    private var blitzCard: some View {
-        let locked = !viewModel.modesUnlocked
-        let best = progressStore.blitzBest
+    // MARK: - Streak
 
-        return modeCard(
-            icon: "flame.fill",
-            iconBackground: Theme.Colors.warmOrangeTint,
-            iconColor: Theme.Colors.warmOrange,
-            title: "Blitz",
-            subtitle: "60 seconds · Go fast",
-            bestLabel: best > 0 ? "Best: \(best) correct" : nil,
-            locked: locked,
-            action: { startBlitz() }
+    private var streakSection: some View {
+        StreakStripCard(
+            streak: progressStore.streak,
+            completions: progressStore.weeklyCompletions
         )
-    }
-
-    private func modeCard(
-        icon: String,
-        iconBackground: Color,
-        iconColor: Color,
-        title: String,
-        subtitle: String,
-        bestLabel: String?,
-        locked: Bool,
-        action: @escaping () -> Void
-    ) -> some View {
-        Button(action: action) {
-            NumindCard {
-                VStack(alignment: .leading, spacing: 10) {
-                    ZStack {
-                        Circle()
-                            .fill(iconBackground)
-                            .frame(width: 44, height: 44)
-                        Image(systemName: locked ? "lock.fill" : icon)
-                            .font(.system(size: 18, weight: .bold))
-                            .foregroundStyle(locked ? Theme.Colors.mutedText : iconColor)
-                    }
-
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(title)
-                            .font(.system(size: 15, weight: .bold, design: .rounded))
-                            .foregroundStyle(locked ? Theme.Colors.mutedText : Theme.Colors.deepNavy)
-                        Text(subtitle)
-                            .font(Theme.Typography.small)
-                            .foregroundStyle(Theme.Colors.mutedText)
-                    }
-
-                    if locked {
-                        Text("Master a lesson to unlock")
-                            .font(.system(size: 10, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.mutedText)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(Theme.Colors.mutedTint)
-                            .clipShape(Capsule())
-                    } else if let best = bestLabel {
-                        Text(best)
-                            .font(.system(size: 10, weight: .bold))
-                            .foregroundStyle(iconColor)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(iconBackground)
-                            .clipShape(Capsule())
-                    } else {
-                        Text("No sessions yet")
-                            .font(.system(size: 10, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.mutedText)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(Theme.Colors.mutedTint)
-                            .clipShape(Capsule())
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-            }
-        }
-        .buttonStyle(.plain)
-        .disabled(locked)
-    }
-
-    private func startSpeedDrill() {
-        guard viewModel.modesUnlocked else { return }
-        showSpeedDrill = true
-    }
-
-    private func startBlitz() {
-        guard viewModel.modesUnlocked else { return }
-        let questions = BlitzEngine.generateQuestionQueue(from: progressStore.data)
-        guard !questions.isEmpty else { return }
-        blitzVM = BlitzViewModel(questions: questions, previousBest: progressStore.blitzBest)
     }
 
     // MARK: - Workout section
@@ -360,14 +214,17 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 12) {
             sectionLabel("Today's workout")
             if let card = viewModel.todayCard {
-                workoutCard(card)
+                workoutCard(card, reason: viewModel.recommendations.first?.reason)
             } else {
-                allDoneCard
+                allCaughtUpCard
             }
         }
     }
 
-    private func workoutCard(_ card: HomeViewModel.LessonCard) -> some View {
+    private func workoutCard(
+        _ card: HomeViewModel.LessonCard,
+        reason: LessonRecommendation.Reason? = nil
+    ) -> some View {
         NumindCard {
             VStack(alignment: .leading, spacing: 14) {
                 HStack(alignment: .top, spacing: 14) {
@@ -380,17 +237,21 @@ struct HomeView: View {
                                 .foregroundStyle(card.module.color.tintColor)
                                 .kerning(0.6)
                             Spacer()
-                            HStack(spacing: 3) {
-                                Image(systemName: "clock")
-                                    .font(.system(size: 10, weight: .medium))
-                                Text("5–7 min")
-                                    .font(.system(size: 11, weight: .semibold))
+                            if let reason {
+                                reasonChip(reason)
+                            } else {
+                                HStack(spacing: 3) {
+                                    Image(systemName: "clock")
+                                        .font(.system(size: 10, weight: .medium))
+                                    Text("5\u{2013}7 min")
+                                        .font(.system(size: 11, weight: .semibold))
+                                }
+                                .foregroundStyle(Theme.Colors.mutedText)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 3)
+                                .background(Theme.Colors.mutedTint)
+                                .clipShape(Capsule())
                             }
-                            .foregroundStyle(Theme.Colors.mutedText)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(Theme.Colors.mutedTint)
-                            .clipShape(Capsule())
                         }
                         Text(card.lesson.title)
                             .font(Theme.Typography.headline)
@@ -420,16 +281,44 @@ struct HomeView: View {
         }
     }
 
-    private var allDoneCard: some View {
+    @ViewBuilder
+    private func reasonChip(_ reason: LessonRecommendation.Reason) -> some View {
+        switch reason {
+        case .neverAttempted:
+            chipView("NEW", icon: "sparkle", color: Theme.Colors.mindTeal)
+        case .inProgress:
+            chipView("IN PROGRESS", icon: "arrow.right.circle", color: Theme.Colors.primaryBlue)
+        case .weakModule:
+            chipView("NEEDS WORK", icon: "exclamationmark.triangle", color: Theme.Colors.warmOrange)
+        }
+    }
+
+    private func chipView(_ label: String, icon: String, color: Color) -> some View {
+        HStack(spacing: 3) {
+            Image(systemName: icon)
+                .font(.system(size: 9, weight: .bold))
+            Text(label)
+                .font(.system(size: 10, weight: .bold))
+                .kerning(0.4)
+        }
+        .foregroundStyle(color)
+        .padding(.horizontal, 7)
+        .padding(.vertical, 3)
+        .background(color.opacity(0.12))
+        .clipShape(Capsule())
+    }
+
+    /// Shown only when all lessons are done AND no SRS reviews are due.
+    private var allCaughtUpCard: some View {
         NumindCard {
             VStack(spacing: 12) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 44))
                     .foregroundStyle(Theme.Colors.mindTeal)
-                Text("All done for today!")
+                Text("You're all caught up!")
                     .font(Theme.Typography.headline)
                     .foregroundStyle(Theme.Colors.deepNavy)
-                Text("Come back tomorrow to keep your streak going.")
+                Text("No reviews due right now. Check back later or try a bonus round.")
                     .font(Theme.Typography.caption)
                     .foregroundStyle(Theme.Colors.mutedText)
                     .multilineTextAlignment(.center)
@@ -439,10 +328,53 @@ struct HomeView: View {
         }
     }
 
+    // MARK: - Game modes section
+
+    private var modesSection: some View {
+        let locked = !viewModel.modesUnlocked
+
+        return VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Game modes")
+            HStack(spacing: 12) {
+                ModeCard.speedDrill(
+                    bestLabel: speedDrillBestLabel,
+                    locked: locked,
+                    action: { startSpeedDrill() }
+                )
+                ModeCard.blitz(
+                    bestLabel: blitzBestLabel,
+                    locked: locked,
+                    action: { startBlitz() }
+                )
+            }
+        }
+    }
+
+    private var speedDrillBestLabel: String? {
+        progressStore.bestAccuracy(lessonId: "speed_drill")
+            .map { "\(Int($0 * 100))% best accuracy" }
+    }
+
+    private var blitzBestLabel: String? {
+        let best = progressStore.blitzBest
+        return best > 0 ? "Best: \(best) correct" : nil
+    }
+
+    private func startSpeedDrill() {
+        guard viewModel.modesUnlocked else { return }
+        showSpeedDrill = true
+    }
+
+    private func startBlitz() {
+        guard viewModel.modesUnlocked else { return }
+        let questions = BlitzEngine.generateQuestionQueue(from: progressStore.data)
+        guard !questions.isEmpty else { return }
+        blitzVM = BlitzViewModel(questions: questions, previousBest: progressStore.blitzBest)
+    }
+
     // MARK: - Continue learning
 
     private func continueSection(_ card: HomeViewModel.LessonCard) -> some View {
-        let repo = LocalContentRepository()
         let lessons = repo.lessons(for: card.module.id)
         let completed = progressStore.completedLessonCount(moduleId: card.module.id)
         let progress: Double = lessons.isEmpty ? 0 : Double(completed) / Double(lessons.count)
@@ -482,7 +414,7 @@ struct HomeView: View {
                         }
                         .frame(height: 6)
 
-                        Text("\(completed) of \(lessons.count) lessons · Resume")
+                        Text("\(completed) of \(lessons.count) lessons \u{00B7} Resume")
                             .font(Theme.Typography.small)
                             .foregroundStyle(Theme.Colors.mutedText)
                     }

@@ -3,6 +3,7 @@ import SwiftUI
 struct ModuleDetailView: View {
     @StateObject private var viewModel: ModuleDetailViewModel
     @EnvironmentObject private var progressStore: ProgressStore
+    @Environment(\.dismiss) private var dismiss
     @State private var selectedLesson: Lesson?
     @State private var practiceVM: QuizSessionViewModel?
 
@@ -12,19 +13,25 @@ struct ModuleDetailView: View {
         ))
     }
 
+    private var accent: Color { viewModel.module.color.tintColor }
+    private var masteredCount: Int {
+        viewModel.lessons.filter { progressStore.hasMasteredLesson($0.id) }.count
+    }
+    private var averageAccuracy: Double {
+        let done = viewModel.lessons.compactMap { progressStore.bestAccuracy(lessonId: $0.id) }
+        guard !done.isEmpty else { return 0 }
+        return done.reduce(0, +) / Double(done.count)
+    }
+
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
-                moduleHeaderCard
-                lessonListSection
-                footerNote
+            VStack(spacing: 0) {
+                heroHeader
+                bodyContent
             }
-            .padding(.horizontal, Theme.Spacing.screenHorizontal)
-            .padding(.vertical, Theme.Spacing.sectionSpacing)
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
-        .navigationTitle(viewModel.module.title)
-        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .navigationBar)
         .fullScreenCover(item: $selectedLesson) { lesson in
             LessonView(viewModel: LessonViewModel(
                 lesson: lesson,
@@ -43,142 +50,355 @@ struct ModuleDetailView: View {
         }
     }
 
-    // MARK: - Module header card
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Hero Header
+    // ═══════════════════════════════════════════════════════════════
 
-    private var moduleHeaderCard: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack(spacing: 14) {
-                IconTile(
-                    systemName: viewModel.module.icon,
-                    tintColor: .white,
-                    size: 48
+    private var heroHeader: some View {
+        let total = viewModel.lessons.count
+        let progress = total > 0 ? Double(masteredCount) / Double(total) : 0
+
+        return ZStack(alignment: .topLeading) {
+            // Background gradient
+            LinearGradient(
+                colors: [accent, accent.opacity(0.85)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+
+            // Watermark glyph
+            Text(viewModel.module.glyph)
+                .font(.system(size: 240, weight: .heavy, design: .rounded))
+                .foregroundStyle(.white.opacity(0.13))
+                .offset(x: 100, y: -30)
+                .allowsHitTesting(false)
+
+            // Decorative orbs
+            Circle()
+                .fill(.white.opacity(0.10))
+                .frame(width: 180, height: 180)
+                .offset(x: 200, y: 120)
+            Circle()
+                .fill(.white.opacity(0.06))
+                .frame(width: 110, height: 110)
+                .offset(x: -40, y: 140)
+
+            VStack(alignment: .leading, spacing: 0) {
+                // Toolbar
+                HStack {
+                    Button { dismiss() } label: {
+                        ZStack {
+                            Circle()
+                                .fill(.white.opacity(0.18))
+                                .frame(width: 38, height: 38)
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundStyle(.white)
+                        }
+                    }
+                    .buttonStyle(.plain)
+
+                    Spacer()
+
+                    Text(viewModel.moduleLabel.uppercased())
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.9))
+
+                    Spacer()
+
+                    // Placeholder for symmetry
+                    Circle()
+                        .fill(.clear)
+                        .frame(width: 38, height: 38)
+                }
+                .padding(.top, 8)
+
+                // Mascot + title
+                HStack(alignment: .bottom, spacing: 14) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 24, style: .continuous)
+                            .fill(.white.opacity(0.22))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                    .strokeBorder(.white.opacity(0.35), lineWidth: 1)
+                            )
+                        Text(viewModel.module.mascot)
+                            .font(.system(size: 40))
+                            .shadow(color: .black.opacity(0.25), radius: 2, y: 1)
+                    }
+                    .frame(width: 78, height: 78)
+                    .shadow(color: .black.opacity(0.18), radius: 11, y: 4)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(viewModel.module.title)
+                            .font(.system(size: 26, weight: .bold, design: .rounded))
+                            .foregroundStyle(.white)
+                            .lineLimit(2)
+                        Text(viewModel.module.subtitle)
+                            .font(.system(size: 13))
+                            .foregroundStyle(.white.opacity(0.85))
+                    }
+                    .padding(.bottom, 2)
+                }
+                .padding(.top, 22)
+
+                // Stat strip
+                HStack(spacing: 0) {
+                    heroStat(value: "\(masteredCount)/\(total)", label: "Lessons")
+                    heroDivider
+                    heroStat(value: "\(Int(averageAccuracy * 100))%", label: "Accuracy")
+                    heroDivider
+                    heroStat(
+                        value: "\(progressStore.numindScore(for: viewModel.module.id))",
+                        label: "Score"
+                    )
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 12)
+                .background(.white.opacity(0.16))
+                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .strokeBorder(.white.opacity(0.22), lineWidth: 1)
                 )
-                .background(.white.opacity(0.18))
-                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.iconTile, style: .continuous))
+                .padding(.top, 22)
 
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(viewModel.moduleLabel)
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
-                        .foregroundStyle(.white)
-                    Text(viewModel.module.subtitle)
-                        .font(Theme.Typography.small)
-                        .foregroundStyle(.white.opacity(0.85))
+                // Progress bar
+                VStack(spacing: 6) {
+                    HStack {
+                        Text("WORLD PROGRESS")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundStyle(.white.opacity(0.85))
+                            .tracking(0.4)
+                        Spacer()
+                        Text("\(Int(progress * 100))%")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(.white)
+                    }
+                    GeometryReader { geo in
+                        ZStack(alignment: .leading) {
+                            Capsule()
+                                .fill(.white.opacity(0.20))
+                            Capsule()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [Theme.Colors.insightYellow, .white],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .frame(width: geo.size.width * CGFloat(min(progress, 1)))
+                                .shadow(color: Theme.Colors.insightYellow, radius: 6)
+                        }
+                    }
+                    .frame(height: 8)
                 }
-                Spacer()
+                .padding(.top, 14)
             }
-
-            let completed = progressStore.completedLessonCount(moduleId: viewModel.module.id)
-            let total = viewModel.lessons.count
-            let progress = total > 0 ? Double(completed) / Double(total) : 0
-
-            HStack {
-                Text("\(completed) of \(total) lessons")
-                    .font(Theme.Typography.small)
-                    .foregroundStyle(.white.opacity(0.85))
-                Spacer()
-                Text("\(Int(progress * 100))%")
-                    .font(Theme.Typography.small)
-                    .foregroundStyle(.white.opacity(0.85))
-            }
-
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(.white.opacity(0.22))
-                    Capsule()
-                        .fill(Theme.Colors.insightYellow)
-                        .frame(width: geo.size.width * CGFloat(min(progress, 1)))
-                }
-            }
-            .frame(height: 6)
+            .padding(.horizontal, Theme.Spacing.screenHorizontal)
+            .padding(.bottom, 22)
         }
-        .padding(22)
-        .background(viewModel.module.color.tintColor)
-        .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
-        .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 4)
     }
 
-    // MARK: - Lesson list
+    private func heroStat(value: String, label: String) -> some View {
+        VStack(spacing: 2) {
+            Text(value)
+                .font(.system(size: 18, weight: .heavy, design: .rounded))
+                .foregroundStyle(.white)
+            Text(label.uppercased())
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(.white.opacity(0.78))
+                .tracking(0.5)
+        }
+        .frame(maxWidth: .infinity)
+    }
 
-    private var lessonListSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Lessons")
+    private var heroDivider: some View {
+        Rectangle()
+            .fill(.white.opacity(0.25))
+            .frame(width: 1, height: 28)
+    }
 
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Body Content
+    // ═══════════════════════════════════════════════════════════════
+
+    private var bodyContent: some View {
+        VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
+            // Curriculum header
+            HStack {
+                Text("Curriculum \u{00B7} \(viewModel.lessons.count) lessons".uppercased())
+                    .font(.system(size: 11, weight: .heavy))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .tracking(0.8)
+                Spacer()
+                Text("\(masteredCount)/\(viewModel.lessons.count) mastered")
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(accent)
+            }
+            .padding(.horizontal, 4)
+
+            // Lesson list
             VStack(spacing: 0) {
                 ForEach(Array(viewModel.lessons.enumerated()), id: \.element.id) { index, lesson in
-                    lessonRow(lesson: lesson, index: index)
+                    lessonRow(lesson: lesson, index: index, isLast: index == viewModel.lessons.count - 1)
                     if index < viewModel.lessons.count - 1 {
                         Divider()
-                            .padding(.leading, 18 + 36 + 14) // align to text
+                            .padding(.leading, 16 + 36 + 14)
                     }
                 }
             }
             .background(Theme.Colors.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
             .shadow(color: .black.opacity(0.06), radius: 12, x: 0, y: 4)
+
+            footerNote
         }
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+        .padding(.vertical, Theme.Spacing.sectionSpacing)
     }
 
-    private func lessonRow(lesson: Lesson, index: Int) -> some View {
-        let isDone = progressStore.hasCompletedLesson(lesson.id)
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Lesson Row
+    // ═══════════════════════════════════════════════════════════════
+
+    private func lessonRow(lesson: Lesson, index: Int, isLast: Bool) -> some View {
+        let isDone = progressStore.hasMasteredLesson(lesson.id)
+        let isAttempted = progressStore.hasCompletedLesson(lesson.id)
+        let bestAcc = progressStore.bestAccuracy(lessonId: lesson.id)
         let moduleColor = viewModel.module.color
+        // Simple unlock: previous lesson must be mastered (or first lesson)
+        let prevMastered = index == 0 || progressStore.hasMasteredLesson(viewModel.lessons[index - 1].id)
+        let isLocked = !isDone && !isAttempted && !prevMastered
+
         return Button {
+            guard !isLocked else { return }
             selectedLesson = lesson
         } label: {
             HStack(spacing: 14) {
-                lessonTile(index: index, isDone: isDone, moduleColor: moduleColor)
+                // Lesson tile with connector rail
+                ZStack {
+                    // Connector rail to next row
+                    if !isLast {
+                        Rectangle()
+                            .fill(isDone ? accent.opacity(0.4) : Theme.Colors.mutedTint)
+                            .frame(width: 2)
+                            .offset(y: 28)
+                    }
 
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(tileFill(isDone: isDone, isAttempted: isAttempted, isLocked: isLocked))
+                            .frame(width: 36, height: 36)
+                            .shadow(
+                                color: isDone ? accent.opacity(0.35) : .clear,
+                                radius: isDone ? 5 : 0, y: 2
+                            )
+
+                        if isDone {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundStyle(.white)
+                        } else if isLocked {
+                            Image(systemName: "lock.fill")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        } else {
+                            Text("\(index + 1)")
+                                .font(.system(size: 14, weight: .heavy, design: .rounded))
+                                .foregroundStyle(isAttempted ? Theme.Colors.warmOrange : accent)
+                        }
+                    }
+                }
+                .frame(width: 36)
+
+                // Title + subtitle
                 VStack(alignment: .leading, spacing: 4) {
                     Text(lesson.title)
-                        .font(Theme.Typography.body)
-                        .fontWeight(.semibold)
+                        .font(.system(size: 15, weight: .semibold))
                         .foregroundStyle(Theme.Colors.deepNavy)
-                    if isDone {
-                        Text("Completed · \(lesson.quizTemplateIds.count) questions")
-                            .font(Theme.Typography.small)
-                            .foregroundStyle(moduleColor.tintColor)
+                        .lineLimit(2)
+
+                    if isDone, let acc = bestAcc {
+                        // Mastered: accuracy bar + question count
+                        HStack(spacing: 8) {
+                            ZStack(alignment: .leading) {
+                                Capsule()
+                                    .fill(Theme.Colors.mutedTint)
+                                    .frame(width: 70, height: 4)
+                                Capsule()
+                                    .fill(accent)
+                                    .frame(width: 70 * CGFloat(min(acc, 1)), height: 4)
+                            }
+                            Text("\(Int(acc * 100))% accuracy")
+                                .font(.system(size: 11, weight: .bold))
+                                .foregroundStyle(accent)
+                            Text("\u{00B7} \(lesson.quizTemplateIds.count)q")
+                                .font(.system(size: 11))
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        }
+                    } else if isLocked {
+                        Text("Unlocks after lesson \(index)")
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundStyle(Theme.Colors.mutedText)
                     } else {
                         Text(lesson.concept)
-                            .font(Theme.Typography.small)
+                            .font(.system(size: 12))
                             .foregroundStyle(Theme.Colors.mutedText)
                             .lineLimit(2)
                     }
                 }
+
                 Spacer()
 
+                // Trailing action
                 if isDone {
-                    // Practice chip — tappable independently of the row
                     Button {
                         launchPractice(lesson: lesson)
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "bolt.fill")
-                                .font(.system(size: 9, weight: .bold))
+                                .font(.system(size: 10, weight: .bold))
                             Text("Practice")
-                                .font(.system(size: 11, weight: .bold))
+                                .font(.system(size: 11, weight: .heavy))
+                                .textCase(.uppercase)
+                                .tracking(0.3)
                         }
-                        .foregroundStyle(moduleColor.tintColor)
-                        .padding(.horizontal, 9)
-                        .padding(.vertical, 5)
+                        .foregroundStyle(accent)
+                        .padding(.horizontal, 11)
+                        .padding(.vertical, 7)
                         .background(moduleColor.tintBackground)
                         .clipShape(Capsule())
                     }
                     .buttonStyle(.plain)
+                } else if isLocked {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 14))
+                        .foregroundStyle(Theme.Colors.mutedText)
                 } else {
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 13, weight: .semibold))
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(Theme.Colors.mutedText)
                 }
             }
             .padding(.vertical, 14)
-            .padding(.horizontal, 18)
+            .padding(.horizontal, 16)
+            .opacity(isLocked ? 0.55 : 1)
         }
         .buttonStyle(.plain)
+        .disabled(isLocked)
+    }
+
+    private func tileFill(isDone: Bool, isAttempted: Bool, isLocked: Bool) -> Color {
+        if isDone { return accent }
+        if isAttempted { return Theme.Colors.warmOrangeTint }
+        if isLocked { return Theme.Colors.mutedTint }
+        return accent.opacity(0.16)
     }
 
     private func launchPractice(lesson: Lesson) {
         let repo = LocalContentRepository()
         let sessions = progressStore.data.sessions
-        // SR-sorted: most-due / most-struggled templates surface first.
         let templates = SpacedRepetitionEngine.sortedTemplates(
             for: lesson.id,
             sessions: sessions,
@@ -194,23 +414,6 @@ struct ModuleDetailView: View {
         )
     }
 
-    private func lessonTile(index: Int, isDone: Bool, moduleColor: ModuleColor) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: Theme.Radius.pill, style: .continuous)
-                .fill(isDone ? moduleColor.tintBackground : Theme.Colors.mutedTint)
-            if isDone {
-                Image(systemName: "checkmark")
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(moduleColor.tintColor)
-            } else {
-                Text("\(index + 1)")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Theme.Colors.mutedText)
-            }
-        }
-        .frame(width: 36, height: 36)
-    }
-
     // MARK: - Footer
 
     private var footerNote: some View {
@@ -219,13 +422,6 @@ struct ModuleDetailView: View {
             .foregroundStyle(Theme.Colors.mutedText)
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
-    }
-
-    private func sectionLabel(_ text: String) -> some View {
-        Text(text.uppercased())
-            .font(Theme.Typography.small)
-            .foregroundStyle(Theme.Colors.mutedText)
-            .kerning(0.8)
     }
 }
 
@@ -238,7 +434,9 @@ struct ModuleDetailView: View {
                 subtitle: "Everyday restaurant and shopping math",
                 icon: "percent",
                 color: .blue,
-                lessonIds: ["tip_18_percent"]
+                lessonIds: ["tip_18_percent"],
+                mascot: "\u{2615}",
+                glyph: "%"
             ),
             moduleIndex: 0,
             totalModules: 4

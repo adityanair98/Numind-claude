@@ -35,7 +35,11 @@ final class ProgressStore: ObservableObject {
         let nowEarned = BadgeEvaluator.earned(from: data)
         newlyEarnedBadgeIds = nowEarned.subtracting(previouslyEarned)
         data.earnedBadgeIds = nowEarned
-        persist()
+        // Recompute Numind Score after every session so the radar + score ring
+        // always reflect the latest performance without extra callsite boilerplate.
+        let moduleIds = LocalContentRepository().allModules().map(\.id)
+        recomputeAndStoreScore(moduleIds: moduleIds)
+        // persist() is called inside recomputeAndStoreScore — no double write needed.
     }
 
     func reset() {
@@ -119,5 +123,59 @@ final class ProgressStore: ObservableObject {
         let s = data.sessions.filter { $0.lessonId == lessonId }
         guard !s.isEmpty else { return nil }
         return s.map { Double($0.correctCount) / Double(max($0.totalCount, 1)) }.max()
+    }
+
+    // MARK: - Numind Score
+
+    /// Current overall Numind Score (0–100). 0 if no score has been computed yet.
+    var numindScore: Int { data.scoreHistory.last?.overallScore ?? 0 }
+
+    /// Latest score for a specific module (0–100). 0 if never computed.
+    func numindScore(for moduleId: String) -> Int {
+        data.scoreHistory.last?.moduleScores[moduleId] ?? 0
+    }
+
+    /// Module score from the nearest snapshot at or before `daysAgo` days ago.
+    /// Returns nil if no snapshot exists that far back.
+    func numindScoreHistory(for moduleId: String, daysAgo: Int) -> Int? {
+        let cutoff = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
+        return data.scoreHistory
+            .filter { $0.date <= cutoff }
+            .max { $0.date < $1.date }
+            .flatMap { $0.moduleScores[moduleId] }
+    }
+
+    /// How much the overall score changed versus 7 days ago.
+    /// Positive = improvement, negative = regression, 0 = no history.
+    var numindScoreDelta: Int {
+        guard let latest = data.scoreHistory.last else { return 0 }
+        let cutoff = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
+        let prior = data.scoreHistory
+            .filter { $0.date <= cutoff }
+            .max { $0.date < $1.date }
+        return latest.overallScore - (prior?.overallScore ?? 0)
+    }
+
+    /// Recomputes Numind Scores for all given modules and appends a `ScoreEntry`
+    /// snapshot to `ProgressData`. Call this immediately after `recordSession`.
+    ///
+    /// - Parameter moduleIds: All known module IDs (from `ContentRepository.allModules()`).
+    func recomputeAndStoreScore(moduleIds: [String]) {
+        let sessions = data.sessions
+        var moduleScores: [String: Int] = [:]
+        for id in moduleIds {
+            moduleScores[id] = NumindScoreEngine.score(for: id, sessions: sessions)
+        }
+        let overall = moduleIds.isEmpty ? 0
+            : moduleScores.values.reduce(0, +) / moduleIds.count
+
+        let entry = ScoreEntry(date: Date(), overallScore: overall, moduleScores: moduleScores)
+        data.scoreHistory.append(entry)
+
+        // Prune entries older than 90 days to prevent unbounded growth.
+        let horizon = Calendar.current.date(byAdding: .day, value: -90, to: Date()) ?? Date()
+        data.scoreHistory.removeAll { $0.date < horizon }
+
+        persist()
     }
 }

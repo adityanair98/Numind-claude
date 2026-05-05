@@ -18,6 +18,9 @@ final class HomeViewModel: ObservableObject {
     @Published private(set) var continueCard: LessonCard?
     @Published private(set) var upNextCards: [LessonCard] = []
 
+    /// All ordered recommendations — used by the view to show reason chips.
+    @Published private(set) var recommendations: [LessonRecommendation] = []
+
     /// True when the user has mastered at least one lesson — unlocks game modes.
     @Published private(set) var modesUnlocked: Bool = false
 
@@ -27,41 +30,72 @@ final class HomeViewModel: ObservableObject {
         repo = repository
     }
 
+    // MARK: - Daily reset countdown
+
+    /// Human-readable time until midnight, e.g. "7h 23m".
+    var timeUntilDailyReset: String {
+        let cal = Calendar.current
+        let now = Date()
+        guard let midnight = cal.nextDate(after: now, matching: DateComponents(hour: 0, minute: 0), matchingPolicy: .nextTime) else {
+            return ""
+        }
+        let diff = cal.dateComponents([.hour, .minute], from: now, to: midnight)
+        let h = diff.hour ?? 0
+        let m = diff.minute ?? 0
+        if h > 0 { return "\(h)h \(m)m" }
+        return "\(m)m"
+    }
+
+    /// Builds a `LessonCard` for a given lesson so the insight view can launch it.
+    func card(for lesson: Lesson, using repository: ContentRepository) -> LessonCard? {
+        guard let module = repository.module(id: lesson.moduleId) else { return nil }
+        let lessons = repository.lessons(for: module.id)
+        guard let idx = lessons.firstIndex(where: { $0.id == lesson.id }) else { return nil }
+        return LessonCard(
+            id: lesson.id,
+            lesson: lesson,
+            module: module,
+            lessonIndex: idx,
+            totalLessons: lessons.count
+        )
+    }
+
     func refresh(using store: ProgressStore) {
-        var incompleteCards: [LessonCard] = []
-        var partialModuleCard: LessonCard? = nil
+        // Use the recommendation engine to rank incomplete lessons by weakness.
+        let recs = LessonRecommendationEngine.recommendations(
+            repository: repo,
+            sessions: store.data.sessions,
+            limit: 10
+        )
 
-        for module in repo.allModules() {
-            let lessons = repo.lessons(for: module.id)
-            let completedCount = store.completedLessonCount(moduleId: module.id)
-
-            // A module with partial progress surfaces a "Continue" card
-            if completedCount > 0 && completedCount < lessons.count, partialModuleCard == nil {
-                if let next = lessons.enumerated().first(where: { !store.hasCompletedLesson($0.element.id) }) {
-                    partialModuleCard = LessonCard(
-                        id: next.element.id,
-                        lesson: next.element,
-                        module: module,
-                        lessonIndex: next.offset,
-                        totalLessons: lessons.count
-                    )
-                }
-            }
-
-            for (i, lesson) in lessons.enumerated() where !store.hasCompletedLesson(lesson.id) {
-                incompleteCards.append(LessonCard(
-                    id: lesson.id,
-                    lesson: lesson,
-                    module: module,
-                    lessonIndex: i,
-                    totalLessons: lessons.count
-                ))
-            }
+        // Convert recommendations to LessonCards preserving urgency order.
+        let cards: [LessonCard] = recs.compactMap { rec in
+            let lessons = repo.lessons(for: rec.module.id)
+            guard let idx = lessons.firstIndex(where: { $0.id == rec.lesson.id }) else { return nil }
+            return LessonCard(
+                id: rec.lesson.id,
+                lesson: rec.lesson,
+                module: rec.module,
+                lessonIndex: idx,
+                totalLessons: lessons.count
+            )
         }
 
-        todayCard    = incompleteCards.first
-        continueCard = partialModuleCard
-        upNextCards  = Array(incompleteCards.dropFirst().prefix(2))
-        modesUnlocked = MasteredTemplatePool.hasUnlockedModes(progressData: store.data)
+        // "Continue" = a partially-started module (in-progress recommendation).
+        let continueRec = recs.first {
+            if case .inProgress = $0.reason { return true }
+            return false
+        }
+        continueCard = continueRec.flatMap { rec in
+            let lessons = repo.lessons(for: rec.module.id)
+            guard let idx = lessons.firstIndex(where: { $0.id == rec.lesson.id }) else { return nil }
+            return LessonCard(id: rec.lesson.id, lesson: rec.lesson, module: rec.module,
+                              lessonIndex: idx, totalLessons: lessons.count)
+        }
+
+        recommendations = recs
+        todayCard       = cards.first
+        upNextCards     = Array(cards.dropFirst().prefix(2))
+        modesUnlocked   = MasteredTemplatePool.hasUnlockedModes(progressData: store.data)
     }
 }

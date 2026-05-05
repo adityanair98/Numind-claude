@@ -1,64 +1,86 @@
 import Foundation
 
-/// Selects the daily 10 quiz questions from mastered (or all) templates.
+/// Selects the daily quiz questions using spaced-repetition priority.
 ///
-/// The selection is seeded with the current calendar date (YYYYMMDD), so:
-///   - Every user sees the same question types on the same day.
-///   - The set resets automatically at midnight.
-///   - The exact numbers within each question are also fixed for the day.
+/// ## Selection logic
+/// 1. Pool = ALL templates. Users already know the underlying math — lessons teach
+///    shortcuts that make them faster, not prerequisites for answering. The daily
+///    challenge surfaces weaknesses that motivate lesson discovery.
+/// 2. Each template is scored by `SpacedRepetitionEngine` — overdue questions
+///    (score > 0) surface first, never-seen templates get ∞ priority, then
+///    questions closest to their review date.
+/// 3. Equal-score ties (e.g. all templates unseen on day 1) are broken by a
+///    date-seeded shuffle, giving day-over-day variety without losing stability.
+/// 4. The top `questionCount` templates are taken and question variable values are
+///    generated with a deterministic per-day seed so numbers stay consistent
+///    if the user pauses and resumes.
 ///
-/// Template pool priority:
-///   - If the user has mastered at least one lesson, questions are drawn only from
-///     mastered-lesson templates (concepts they've actually learned).
-///   - If no lessons have been mastered yet (new user), falls back to all templates
-///     so the daily challenge always has something to show.
+/// The result is personal (driven by each user's SRS history), stable within a
+/// day, and naturally transitions from exposure → review as history builds.
 struct DailyChallengeEngine {
 
-    static let questionCount = 10
+    static let questionCount = 7
 
     // MARK: - Public API
 
-    /// Generates today's daily challenge questions.
-    ///
-    /// - Parameters:
-    ///   - repository: Content source (defaults to local JSON).
-    ///   - progressData: If provided, filters to mastered-lesson templates only.
-    ///                   Pass nil for backward-compat (uses all templates).
+    /// Generates today's personalised daily challenge questions.
     static func dailyQuestions(
         from repository: ContentRepository,
         progressData: ProgressData? = nil
     ) -> [QuizQuestion] {
-        // Determine template pool: mastered first, fall back to all.
-        let pool: [QuizTemplate]
-        if let progressData {
-            let mastered = MasteredTemplatePool.templates(from: progressData, repository: repository)
-            pool = mastered.isEmpty ? repository.allTemplates() : mastered
-        } else {
-            pool = repository.allTemplates()
-        }
+        let sessions = progressData?.sessions ?? []
 
+        // Pool = all templates. SRS handles ordering — never-seen templates
+        // get ∞ priority and surface first, naturally exposing all modules to
+        // new users before transitioning to reinforcement mode.
+        let pool = repository.allTemplates()
         guard !pool.isEmpty else { return [] }
 
+        // Date-seeded shuffle for stable, daily-varying tiebreaking.
         var rng = SeededRandomGenerator(seed: dailySeed())
+        var shuffled = pool
+        for i in stride(from: shuffled.count - 1, through: 1, by: -1) {
+            let j = Int(rng.next() % UInt64(i + 1))
+            shuffled.swapAt(i, j)
+        }
 
-        // Fisher-Yates shuffle with the daily seed so every user gets the same order.
+        // Sort by SRS priority descending. Swift's sort is stable, so ties keep
+        // their shuffled order — giving per-day variety for equal-priority items.
+        let sorted = shuffled.sorted {
+            SpacedRepetitionEngine.priorityScore(templateId: $0.id, in: sessions) >
+            SpacedRepetitionEngine.priorityScore(templateId: $1.id, in: sessions)
+        }
+
+        let picked = Array(sorted.prefix(questionCount))
+
+        // Deterministic variable values for the day (rng has advanced past the shuffle).
+        return picked.map { QuizEngine.generate(from: $0, seed: rng.next()) }
+    }
+
+    // MARK: - Bonus Round
+
+    /// Generates a bonus round with a random seed — always different from the daily set.
+    static func bonusRoundQuestions(
+        from repository: ContentRepository,
+        progressData: ProgressData? = nil
+    ) -> [QuizQuestion] {
+        // Same open pool as the daily challenge.
+        let pool = repository.allTemplates()
+        guard !pool.isEmpty else { return [] }
+
+        var rng = SeededRandomGenerator(seed: UInt64.random(in: 0 ... .max))
         var shuffled = pool
         for i in stride(from: shuffled.count - 1, through: 1, by: -1) {
             let j = Int(rng.next() % UInt64(i + 1))
             shuffled.swapAt(i, j)
         }
         let picked = Array(shuffled.prefix(questionCount))
-
-        // Each question also uses a deterministic sub-seed so the variable
-        // values (bill amounts, prices, etc.) stay fixed throughout the day.
-        return picked.map { template in
-            QuizEngine.generate(from: template, seed: rng.next())
-        }
+        return picked.map { QuizEngine.generate(from: $0, seed: rng.next()) }
     }
 
     // MARK: - Private
 
-    /// Produces a UInt64 seed from today's date in the form YYYYMMDD.
+    /// Seed from today's date in YYYYMMDD form — resets automatically at midnight.
     static func dailySeed() -> UInt64 {
         let cal = Calendar.current
         let now = Date()

@@ -5,6 +5,8 @@
     "subtitle": "Everyday restaurant and shopping math",
     "icon": "percent",
     "color": "blue",
+    "mascot": "☕",
+    "glyph": "%",
     "lessonIds": [
       "tip_18_percent",
       "tip_10_percent_trick",
@@ -19,6 +21,8 @@
     "subtitle": "Find the best price and save more",
     "icon": "tag.fill",
     "color": "teal",
+    "mascot": "🏷️",
+    "glyph": "-",
     "lessonIds": [
       "discount_25_percent",
       "discount_10_percent",
@@ -33,6 +37,8 @@
     "subtitle": "Tax, totals, and everyday spending",
     "icon": "dollarsign.circle.fill",
     "color": "yellow",
+    "mascot": "🧮",
+    "glyph": "×",
     "lessonIds": ["sales_tax_quick", "cart_total_estimate", "budget_check", "subscription_math", "price_per_use"]
   },
   {
@@ -41,6 +47,8 @@
     "subtitle": "Understand your paycheck and job offers",
     "icon": "briefcase.fill",
     "color": "green",
+    "mascot": "💼",
+    "glyph": "$",
     "lessonIds": ["net_pay_check", "raise_impact", "overtime_calc", "pay_period_convert"]
   },
   {
@@ -49,6 +57,8 @@
     "subtitle": "Interest, returns, and your money growing",
     "icon": "chart.line.uptrend.xyaxis",
     "color": "indigo",
+    "mascot": "📈",
+    "glyph": "$",
     "lessonIds": ["simple_interest", "rule_of_72", "roi_basic"]
   },
   {
@@ -57,6 +67,8 @@
     "subtitle": "Fast mental math for any situation",
     "icon": "function",
     "color": "orange",
+    "mascot": "🎯",
+    "glyph": "≈",
     "lessonIds": ["round_to_estimate", "hourly_rate_check", "percent_change", "double_or_half", "multiply_by_5"]
   },
   {
@@ -65,6 +77,8 @@
     "subtitle": "Credit cards, loans, and the real cost of borrowing",
     "icon": "exclamationmark.circle.fill",
     "color": "coral",
+    "mascot": "💳",
+    "glyph": "!",
     "lessonIds": [
       "credit_card_interest",
       "minimum_payment_trap",
@@ -79,6 +93,8 @@
     "subtitle": "Currency, fees, and spending abroad",
     "icon": "airplane",
     "color": "purple",
+    "mascot": "✈️",
+    "glyph": "€",
     "lessonIds": [
       "currency_conversion",
       "exchange_rate_traps",

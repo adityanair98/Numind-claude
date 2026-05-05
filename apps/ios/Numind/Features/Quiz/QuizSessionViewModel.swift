@@ -54,6 +54,12 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     private let sessionStartDate = Date()
     private var stoppedAt: Date? = nil
 
+    /// Total time spent reading feedback screens — excluded from the displayed
+    /// session clock in untimed sessions. Blitz keeps the clock running (intentional).
+    private var totalFeedbackDuration: TimeInterval = 0
+    /// Set when the session enters `.feedback` state; cleared in `advance()`.
+    private var feedbackEnteredAt: Date? = nil
+
     // MARK: - Per-question timer
 
     /// Reset each time a new question becomes active.
@@ -63,8 +69,17 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     var elapsedTimeString: String {
         let ref = stoppedAt ?? Date()
-        let elapsed = Int(ref.timeIntervalSince(sessionStartDate))
-        return String(format: "%02d:%02d", elapsed / 60, elapsed % 60)
+        var elapsed = ref.timeIntervalSince(sessionStartDate)
+        // In untimed sessions, subtract feedback viewing time so the clock
+        // only counts active answering time — not reading right/wrong screens.
+        if questionTimeLimit == nil {
+            elapsed -= totalFeedbackDuration
+            if let entered = feedbackEnteredAt {
+                elapsed -= ref.timeIntervalSince(entered)
+            }
+        }
+        let secs = max(0, Int(elapsed))
+        return String(format: "%02d:%02d", secs / 60, secs % 60)
     }
 
     // MARK: - Derived
@@ -113,7 +128,8 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
             QuestionResult(
                 templateId: $0.question.templateId,
                 isCorrect: $0.isCorrect,
-                timeSpentSeconds: $0.timeSpentSeconds
+                timeSpentSeconds: $0.timeSpentSeconds,
+                difficulty: $0.question.difficulty
             )
         }
     }
@@ -272,6 +288,10 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
             let isCorrect = abs(entered - currentQuestion.correctValue) <= tolerance
             sessionState = .feedback(isCorrect ? currentQuestion.correctChoiceId : UUID())
         }
+        // Start tracking feedback viewing time (untimed sessions only).
+        if questionTimeLimit == nil {
+            feedbackEnteredAt = Date()
+        }
     }
 
     func appendDigit(_ digit: String) {
@@ -292,6 +312,11 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     func advance() {
         guard case .feedback(let id) = sessionState else { return }
+        // Accumulate how long the user spent on this feedback screen.
+        if questionTimeLimit == nil, let entered = feedbackEnteredAt {
+            totalFeedbackDuration += Date().timeIntervalSince(entered)
+            feedbackEnteredAt = nil
+        }
         results.append(QuizResult(
             question: currentQuestion,
             selectedChoiceId: id,

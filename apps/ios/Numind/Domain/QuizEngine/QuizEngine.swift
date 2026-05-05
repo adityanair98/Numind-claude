@@ -4,6 +4,26 @@ struct QuizEngine {
 
     // MARK: - Public API
 
+    /// Generates a question from `template`, re-rolling variables up to `maxAttempts` times
+    /// until the computed difficulty matches `targetDifficulty`. Falls back to the last
+    /// attempt if the target is never reached.
+    static func generate(
+        from template: QuizTemplate,
+        targetDifficulty: QuestionDifficulty? = nil,
+        maxAttempts: Int = 6
+    ) -> QuizQuestion {
+        guard let target = targetDifficulty else {
+            return generate(from: template, seed: .random(in: 1...UInt64.max))
+        }
+        var best: QuizQuestion? = nil
+        for _ in 0..<maxAttempts {
+            let q = generate(from: template, seed: .random(in: 1...UInt64.max))
+            if q.difficulty == target { return q }
+            if best == nil { best = q }
+        }
+        return best!   // never nil — loop runs at least once
+    }
+
     static func generate(from template: QuizTemplate, seed: UInt64 = .random(in: 1...UInt64.max)) -> QuizQuestion {
         var rng = SeededRandomGenerator(seed: seed)
 
@@ -13,6 +33,10 @@ struct QuizEngine {
             fatalError("QuizEngine: unknown formula '\(template.answerFormula)'")
         }
         let correctValue = correctRaw.rounded2dp
+
+        // Assess difficulty from the actual generated numbers, not the template's static tier.
+        let ops = FormulaOperationMap.operations(formula: template.answerFormula, variables: variables)
+        let difficulty: QuestionDifficulty = ops.isEmpty ? .easy : DifficultyScorer.score(operations: ops)
 
         let distractorValues = distractors(
             correct: correctValue,
@@ -33,7 +57,7 @@ struct QuizEngine {
         return QuizQuestion(
             id: UUID(),
             templateId: template.id,
-            difficulty: template.difficulty,
+            difficulty: difficulty,
             inputMode: template.inputMode ?? .multipleChoice,
             answerFormat: template.answerFormat,
             correctValue: correctValue,

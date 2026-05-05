@@ -7,6 +7,11 @@ struct BeadRail: View {
     let total: Int
     var variant: Variant = .dot
 
+    /// Override the filled-bead color (default: primaryBlue for chunky, insightYellow for dot).
+    var filledColor: Color? = nil
+    /// Override the track / unfilled color (default: mutedTint).
+    var trackColor: Color = Theme.Colors.mutedTint
+
     var body: some View {
         HStack(spacing: variant == .chunky ? 6 : 8) {
             ForEach(0..<total, id: \.self) { index in
@@ -19,22 +24,21 @@ struct BeadRail: View {
     private func beadView(at index: Int) -> some View {
         switch variant {
         case .chunky:
+            let filled = filledColor ?? Theme.Colors.primaryBlue
             Capsule()
                 .frame(width: 28, height: 6)
-                .foregroundStyle(
-                    index < progress
-                        ? Theme.Colors.primaryBlue
-                        : Theme.Colors.mutedTint
-                )
+                .foregroundStyle(index < progress ? filled : trackColor)
+                .shadow(color: index < progress ? filled.opacity(0.35) : .clear, radius: 3, y: 0)
         case .dot:
             let isDone    = index < progress
             let isCurrent = index == progress
+            let doneFill = filledColor ?? Theme.Colors.insightYellow
             Circle()
                 .frame(width: 10, height: 10)
                 .foregroundStyle(
-                    isDone    ? Theme.Colors.insightYellow :
-                    isCurrent ? Theme.Colors.primaryBlue   :
-                                Theme.Colors.mutedTint
+                    isDone    ? doneFill :
+                    isCurrent ? Theme.Colors.primaryBlue :
+                                trackColor
                 )
                 .scaleEffect(isCurrent ? 1.3 : 1)
         }

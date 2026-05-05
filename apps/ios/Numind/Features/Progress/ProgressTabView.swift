@@ -7,7 +7,6 @@ struct ProgressTabView: View {
     private let repo = LocalContentRepository()
     private let weekDayLabels = ["M", "T", "W", "T", "F", "S", "S"]
 
-    // Drives the streak ring sweep-in animation
     @State private var ringProgress: Double = 0
     @State private var showProfile = false
 
@@ -20,19 +19,7 @@ struct ProgressTabView: View {
             }
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
-        .navigationTitle("Progress")
-        .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    showProfile = true
-                } label: {
-                    Image(systemName: "gearshape.fill")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(Theme.Colors.mutedText)
-                }
-            }
-        }
+        .toolbar(.hidden, for: .navigationBar)
         .sheet(isPresented: $showProfile) {
             NavigationStack {
                 ProfileView()
@@ -55,406 +42,724 @@ struct ProgressTabView: View {
         }
     }
 
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Header
+    // ═══════════════════════════════════════════════════════════════
+
+    private var progressHeader: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                Image("NumindWordmark")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 22)
+                Spacer()
+                Button {
+                    showProfile = true
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(Theme.Colors.cardBackground)
+                            .frame(width: 36, height: 36)
+                            .shadow(color: .black.opacity(0.06), radius: 6, x: 0, y: 2)
+                        Image(systemName: "gearshape.fill")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                }
+                .buttonStyle(.plain)
+            }
+
+            Text("Progress")
+                .font(.system(size: 30, weight: .bold, design: .rounded))
+                .foregroundStyle(Theme.Colors.deepNavy)
+        }
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+        .padding(.top, 4)
+        .padding(.bottom, 16)
+    }
+
     // MARK: - Empty state
 
     private var emptyState: some View {
-        VStack(spacing: 24) {
-            Spacer()
-            ZStack {
-                Circle()
-                    .fill(Theme.Colors.primaryBlueTint)
-                    .frame(width: 96, height: 96)
-                Image(systemName: "chart.bar.fill")
-                    .font(.system(size: 40))
-                    .foregroundStyle(Theme.Colors.primaryBlue)
+        ScrollView {
+            VStack(spacing: 24) {
+                progressHeader
+                Spacer(minLength: 80)
+                ZStack {
+                    Circle()
+                        .fill(Theme.Colors.primaryBlueTint)
+                        .frame(width: 96, height: 96)
+                    Image(systemName: "chart.bar.fill")
+                        .font(.system(size: 40))
+                        .foregroundStyle(Theme.Colors.primaryBlue)
+                }
+                VStack(spacing: 8) {
+                    Text("No sessions yet")
+                        .font(Theme.Typography.display)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text("Complete your first lesson to\nsee your progress here.")
+                        .font(Theme.Typography.body)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(3)
+                }
+                Spacer(minLength: 100)
             }
-            VStack(spacing: 8) {
-                Text("No sessions yet")
-                    .font(Theme.Typography.display)
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                Text("Complete your first lesson to\nsee your progress here.")
-                    .font(Theme.Typography.body)
-                    .foregroundStyle(Theme.Colors.mutedText)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(3)
-            }
-            Spacer()
-            Spacer()
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, Theme.Spacing.screenHorizontal)
     }
 
     // MARK: - Filled content
 
     private var filledContent: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
-                sectionLabel("This week")
-                overviewCard
-                sectionLabel("Weekly goal")
-                weeklyGoalCard
-                sectionLabel("Weekly XP")
-                weeklyLeaderboardCard
+            VStack(alignment: .leading, spacing: 0) {
+                progressHeader
 
-                // Skill mastery with "See all" link
+                streakHeroCard
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 18)
+
+                // Numind Score + radar chart
+                numindScoreSection
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 22)
+
+                sectionLabel("Weekly goal")
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 10)
+                weeklyGoalCard
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 22)
+
+                sectionLabel("Weekly XP")
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 10)
+                weeklyXPCard
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 22)
+
                 HStack(alignment: .firstTextBaseline) {
                     sectionLabel("Skill mastery")
                     Spacer()
                     NavigationLink(destination: SkillDetailView()) {
                         Text("See all")
-                            .font(Theme.Typography.small)
-                            .fontWeight(.semibold)
+                            .font(.system(size: 12, weight: .bold))
                             .foregroundStyle(Theme.Colors.primaryBlue)
                     }
                 }
+                .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                .padding(.bottom, 10)
                 skillMasteryCard
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 22)
 
-                // Recent activity (only when sessions exist)
                 let recent = store.recentSessions(limit: 5)
                 if !recent.isEmpty {
-                    sectionLabel("Recent activity")
+                    HStack(alignment: .firstTextBaseline) {
+                        sectionLabel("Recent activity")
+                        Spacer()
+                    }
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 10)
                     recentActivityCard(sessions: recent)
+                        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                        .padding(.bottom, 22)
                 }
 
-                totalXPCard
                 sectionLabel("Badges")
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 10)
                 badgesGrid
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 40)
             }
-            .padding(.horizontal, Theme.Spacing.screenHorizontal)
-            .padding(.vertical, Theme.Spacing.sectionSpacing)
         }
     }
 
-    // MARK: - Overview (streak ring + mini stats)
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Numind Score + Radar
+    // ═══════════════════════════════════════════════════════════════
 
-    private var overviewCard: some View {
+    private var numindScoreSection: some View {
         NumindCard {
-            HStack(alignment: .center, spacing: 20) {
-                streakRing
-                VStack(alignment: .leading, spacing: 10) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        HStack(alignment: .firstTextBaseline, spacing: 4) {
-                            Text("\(store.streak)")
-                                .font(.system(size: 28, weight: .bold, design: .rounded))
-                                .foregroundStyle(Theme.Colors.deepNavy)
-                            Text("day streak")
-                                .font(Theme.Typography.caption)
-                                .foregroundStyle(Theme.Colors.mutedText)
-                        }
-                        Text("Best: \(store.bestStreak) days")
-                            .font(Theme.Typography.small)
+            VStack(alignment: .leading, spacing: 16) {
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("NUMIND SCORE")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .kerning(0.6)
+                        Text("Your overall number sense")
+                            .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Colors.mutedText)
                     }
-                    HStack(spacing: 16) {
-                        miniStat(
-                            value: store.totalSessions > 0 ? "\(store.totalSessions)" : "—",
-                            label: "Sessions"
-                        )
-                        Rectangle()
-                            .fill(Theme.Colors.hairline)
-                            .frame(width: 1, height: 24)
-                        miniStat(
-                            value: store.totalSessions > 0 ? "\(Int(store.accuracy * 100))%" : "—",
-                            label: "Accuracy"
-                        )
-                    }
+                    Spacer()
+                    NumindScoreRing(score: store.numindScore,
+                                   delta: store.numindScoreDelta,
+                                   size: 76)
                 }
-                Spacer()
+
+                Divider().background(Theme.Colors.hairline)
+
+                // Radar or bars depending on module count
+                let mods = modules
+                if mods.count >= 3 {
+                    let current = mods.map {
+                        RadarChartView.Axis(label: $0.shortName,
+                                            value: Double(store.numindScore(for: $0.id)) / 100.0)
+                    }
+                    let previous: [RadarChartView.Axis]? = mods.allSatisfy({
+                        store.numindScoreHistory(for: $0.id, daysAgo: 7) != nil
+                    })
+                    ? mods.map {
+                        RadarChartView.Axis(label: $0.shortName,
+                                            value: Double(store.numindScoreHistory(for: $0.id, daysAgo: 7) ?? 0) / 100.0)
+                    }
+                    : nil
+                    RadarChartView(axes: current, previousAxes: previous, size: 220)
+                        .frame(maxWidth: .infinity)
+                } else {
+                    ModuleBarsView(bars: mods.map { m in
+                        ModuleBarsView.Bar(
+                            icon: m.icon,
+                            label: m.shortName,
+                            score: store.numindScore(for: m.id),
+                            color: m.color.tintColor,
+                            previousScore: store.numindScoreHistory(for: m.id, daysAgo: 7)
+                        )
+                    })
+                }
+
+                if store.numindScore == 0 {
+                    Text("Complete your first lesson to see your Numind Score.")
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                }
             }
         }
     }
 
-    private var streakRing: some View {
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Streak Hero Card
+    // ═══════════════════════════════════════════════════════════════
+
+    private var streakHeroCard: some View {
+        HeroCard(variant: .navy) {
+            HStack(spacing: 14) {
+                // Streak ring (116pt)
+                streakRingLarge
+                    .frame(width: 116, height: 116)
+
+                VStack(alignment: .leading, spacing: 0) {
+                    // Personal Best pill
+                    if store.streak >= store.bestStreak && store.streak > 0 {
+                        HStack(spacing: 4) {
+                            Image(systemName: "crown.fill")
+                                .font(.system(size: 8, weight: .bold))
+                                .foregroundStyle(Theme.Colors.insightYellow)
+                            Text("PERSONAL BEST")
+                                .font(.system(size: 9, weight: .heavy))
+                                .foregroundStyle(Theme.Colors.insightYellow)
+                                .tracking(0.5)
+                        }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(Theme.Colors.insightYellow.opacity(0.2))
+                        .clipShape(Capsule())
+                        .padding(.bottom, 6)
+                    }
+
+                    // Streak tier message
+                    Text(streakTierMessage)
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .padding(.bottom, 2)
+
+                    Text("Best ever: \(store.bestStreak) days")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.white.opacity(0.7))
+                        .padding(.bottom, 12)
+
+                    // Inline stats
+                    HStack(spacing: 0) {
+                        inlineStat(value: "\(store.totalXP)", label: "Total XP")
+                        statDivider
+                        inlineStat(value: store.totalSessions > 0 ? "\(Int(store.accuracy * 100))%" : "\u{2014}", label: "Accuracy")
+                        statDivider
+                        inlineStat(value: "\(store.totalSessions)", label: "Sessions")
+                    }
+                }
+
+                Spacer(minLength: 0)
+            }
+        }
+    }
+
+    private var streakRingLarge: some View {
         ZStack {
+            // Track ring
             Circle()
-                .stroke(Theme.Colors.mutedTint, lineWidth: 8)
+                .stroke(.white.opacity(0.12), lineWidth: 9)
+
+            // Gradient progress ring
             Circle()
                 .trim(from: 0, to: ringProgress)
                 .stroke(
-                    Theme.Colors.insightYellow,
-                    style: StrokeStyle(lineWidth: 8, lineCap: .round)
+                    AngularGradient(
+                        colors: [Theme.Colors.insightYellow, Theme.Colors.warmOrange, Theme.Colors.insightYellow],
+                        center: .center,
+                        startAngle: .degrees(-90),
+                        endAngle: .degrees(270)
+                    ),
+                    style: StrokeStyle(lineWidth: 9, lineCap: .round)
                 )
                 .rotationEffect(.degrees(-90))
-            VStack(spacing: 1) {
-                Image(systemName: "flame.fill")
-                    .font(.system(size: 13))
-                    .foregroundStyle(Theme.Colors.insightYellow)
+
+            // Day tick marks
+            ForEach(0..<7, id: \.self) { i in
+                let angle = Double(i) / 7.0 * 360.0 - 90.0
+                let radians = angle * .pi / 180.0
+                let r1: CGFloat = 40
+                let r2: CGFloat = 44
+                Path { path in
+                    path.move(to: CGPoint(
+                        x: 58 + cos(radians) * r1,
+                        y: 58 + sin(radians) * r1
+                    ))
+                    path.addLine(to: CGPoint(
+                        x: 58 + cos(radians) * r2,
+                        y: 58 + sin(radians) * r2
+                    ))
+                }
+                .stroke(.white.opacity(0.25), style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                .frame(width: 116, height: 116)
+            }
+
+            // Center content
+            VStack(spacing: 2) {
+                Text("\u{1F525}")
+                    .font(.system(size: 22))
                 Text("\(store.streak)")
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                Text("days")
-                    .font(.system(size: 9, weight: .medium))
-                    .foregroundStyle(Theme.Colors.mutedText)
+                    .font(.system(size: 28, weight: .heavy, design: .rounded))
+                    .foregroundStyle(.white)
+                Text("DAYS")
+                    .font(.system(size: 9, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.6))
+                    .tracking(0.5)
             }
         }
-        .frame(width: 84, height: 84)
     }
 
-    private func miniStat(value: String, label: String) -> some View {
-        VStack(alignment: .leading, spacing: 1) {
+    private var streakTierMessage: String {
+        let streak = store.streak
+        if streak >= 7 { return "You're on fire \u{1F525}" }
+        if streak >= 3 { return "Nice rhythm" }
+        if streak >= 1 { return "Building momentum" }
+        return "Start your streak!"
+    }
+
+    private func inlineStat(value: String, label: String) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
             Text(value)
-                .font(.system(size: 17, weight: .bold, design: .rounded))
-                .foregroundStyle(Theme.Colors.deepNavy)
+                .font(.system(size: 16, weight: .heavy, design: .rounded))
+                .foregroundStyle(.white)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
             Text(label.uppercased())
-                .font(.system(size: 9, weight: .medium))
-                .foregroundStyle(Theme.Colors.mutedText)
-                .kerning(0.5)
+                .font(.system(size: 8, weight: .bold))
+                .foregroundStyle(.white.opacity(0.55))
+                .tracking(0.5)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    // MARK: - Weekly goal
+    private var statDivider: some View {
+        Rectangle()
+            .fill(.white.opacity(0.15))
+            .frame(width: 1, height: 28)
+            .padding(.horizontal, 4)
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Weekly Goal
+    // ═══════════════════════════════════════════════════════════════
 
     private var weeklyGoalCard: some View {
-        NumindCard {
-            VStack(alignment: .leading, spacing: 14) {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("\(store.weeklyWorkouts) of \(store.weeklyGoal) workouts")
-                            .font(Theme.Typography.headline)
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                        Text(store.weeklyWorkouts >= store.weeklyGoal
-                             ? "Goal reached — great work!"
-                             : "\(store.weeklyGoal - store.weeklyWorkouts) more to hit your goal")
-                            .font(Theme.Typography.caption)
-                            .foregroundStyle(Theme.Colors.mutedText)
-                    }
-                    Spacer()
-                    IconTile(systemName: "trophy.fill", tintColor: Theme.Colors.insightYellow)
-                }
+        let done = store.weeklyWorkouts
+        let goal = store.weeklyGoal
+        let remaining = max(0, goal - done)
+        let reached = done >= goal
+        let todayIndex = Calendar.current.component(.weekday, from: Date())
+        // Convert Sunday=1..Saturday=7 to Monday=0..Sunday=6
+        let todayMon = (todayIndex + 5) % 7
 
-                HStack(spacing: 0) {
-                    ForEach(Array(weekDayLabels.enumerated()), id: \.offset) { i, label in
-                        let done = store.weeklyCompletions.indices.contains(i)
-                            ? store.weeklyCompletions[i] : false
-                        dayCircle(label: label, isCompleted: done)
-                    }
+        return VStack(spacing: 14) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("\(done) of \(goal) workouts")
+                        .font(.system(size: 17, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text(reached ? "Goal reached \u{2014} great work!" : "\(remaining) more to hit your goal")
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
                 }
-            }
-        }
-    }
-
-    private func dayCircle(label: String, isCompleted: Bool) -> some View {
-        VStack(spacing: 6) {
-            ZStack {
-                Circle()
-                    .fill(isCompleted ? Theme.Colors.primaryBlue : Theme.Colors.mutedTint)
-                    .frame(width: 28, height: 28)
-                if isCompleted {
-                    Image(systemName: "checkmark")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundStyle(.white)
+                Spacer()
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Theme.Colors.insightYellowTint)
+                        .frame(width: 38, height: 38)
+                    Image(systemName: "trophy.fill")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.insightYellow)
                 }
             }
-            Text(label)
-                .font(Theme.Typography.small)
-                .foregroundStyle(Theme.Colors.mutedText)
-        }
-        .frame(maxWidth: .infinity)
-    }
 
-    // MARK: - Weekly leaderboard
+            HStack(spacing: 6) {
+                ForEach(Array(weekDayLabels.enumerated()), id: \.offset) { i, label in
+                    let isDone = store.weeklyCompletions.indices.contains(i)
+                        ? store.weeklyCompletions[i] : false
+                    let isToday = i == todayMon
 
-    private var weeklyLeaderboardCard: some View {
-        let weeks        = store.weeklyXPHistory()
-        let maxXP        = max(1, weeks.map { $0.xp }.max() ?? 1)
-        let currentXP    = weeks.last?.xp ?? 0
-        let rank         = weeks.filter { $0.xp > currentXP }.count + 1
-        let isBestEver   = currentXP > 0 && weeks.dropLast().allSatisfy { $0.xp < currentXP }
-        let maxBarHeight: CGFloat = 72
-
-        return NumindCard {
-            VStack(alignment: .leading, spacing: 16) {
-
-                // ── Header ─────────────────────────────────────────────────
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(currentXP > 0
-                             ? "Ranked #\(rank) of your last 4 weeks"
-                             : "No XP yet this week")
-                            .font(Theme.Typography.headline)
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                        Text(currentXP > 0
-                             ? "\(currentXP) XP this week"
-                             : "Complete a session to start")
-                            .font(Theme.Typography.caption)
-                            .foregroundStyle(Theme.Colors.mutedText)
-                    }
-                    Spacer()
-                    if isBestEver {
-                        HStack(spacing: 4) {
-                            Image(systemName: "star.fill")
-                                .font(.system(size: 10, weight: .bold))
-                            Text("Best week!")
-                                .font(.system(size: 11, weight: .bold))
-                        }
-                        .foregroundStyle(Theme.Colors.insightText)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(Theme.Colors.insightYellowTint)
-                        .clipShape(Capsule())
-                    }
-                }
-
-                // ── Bar chart ──────────────────────────────────────────────
-                HStack(alignment: .bottom, spacing: 8) {
-                    ForEach(Array(weeks.enumerated()), id: \.offset) { _, week in
-                        VStack(spacing: 4) {
-                            // XP label above bar
-                            Text(week.xp > 0 ? "\(week.xp)" : "")
-                                .font(.system(size: 10, weight: .bold, design: .rounded))
-                                .foregroundStyle(
-                                    week.isCurrent ? Theme.Colors.primaryBlue : Theme.Colors.mutedText
+                    VStack(spacing: 5) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .fill(isDone ? Theme.Colors.primaryBlue : Theme.Colors.mutedTint)
+                                .frame(height: 32)
+                                .shadow(
+                                    color: isDone ? Theme.Colors.primaryBlue.opacity(0.3) : .clear,
+                                    radius: isDone ? 4 : 0, y: 2
                                 )
-                                .frame(height: 13)
+                            if !isDone && isToday {
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .strokeBorder(Theme.Colors.primaryBlue, style: StrokeStyle(lineWidth: 2, dash: [4, 3]))
+                                    .frame(height: 32)
+                            }
+                            if isDone {
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundStyle(.white)
+                            } else if isToday {
+                                Circle()
+                                    .fill(Theme.Colors.primaryBlue)
+                                    .frame(width: 6, height: 6)
+                            }
+                        }
+                        Text(label)
+                            .font(.system(size: 10, weight: isToday ? .heavy : .medium))
+                            .foregroundStyle(isToday ? Theme.Colors.primaryBlue : Theme.Colors.mutedText)
+                    }
+                }
+            }
+        }
+        .padding(16)
+        .background(Theme.Colors.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(0.06), radius: 7, y: 3)
+    }
 
-                            // Bar — minimum 3 pt so 0-XP weeks still show a baseline
-                            let barH: CGFloat = week.xp == 0
-                                ? 3
-                                : max(10, CGFloat(week.xp) / CGFloat(maxXP) * maxBarHeight)
-                            RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                .fill(weekBarColor(week))
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Weekly XP
+    // ═══════════════════════════════════════════════════════════════
+
+    private var weeklyXPCard: some View {
+        let weeks = store.weeklyXPHistory()
+        let maxXP = max(1, weeks.map { $0.xp }.max() ?? 1)
+        let currentXP = weeks.last?.xp ?? 0
+        let rank = weeks.filter { $0.xp > currentXP }.count + 1
+        let isBestEver = currentXP > 0 && weeks.dropLast().allSatisfy { $0.xp < currentXP }
+        let maxBarHeight: CGFloat = 92
+
+        return VStack(alignment: .leading, spacing: 16) {
+            // Header
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(currentXP > 0
+                         ? "Ranked #\(rank) of last 4 weeks"
+                         : "No XP yet this week")
+                        .font(.system(size: 17, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    HStack(spacing: 0) {
+                        Text("\(currentXP) XP")
+                            .font(Theme.Typography.small)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Theme.Colors.primaryBlue)
+                        Text(" this week")
+                            .font(Theme.Typography.small)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                }
+                Spacer()
+                if isBestEver {
+                    HStack(spacing: 4) {
+                        Image(systemName: "star.fill")
+                            .font(.system(size: 10, weight: .bold))
+                        Text("Best week!")
+                            .font(.system(size: 10, weight: .heavy))
+                            .tracking(0.4)
+                    }
+                    .foregroundStyle(Theme.Colors.insightText)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(Theme.Colors.insightYellowTint)
+                    .clipShape(Capsule())
+                }
+            }
+
+            // Bar chart
+            HStack(alignment: .bottom, spacing: 10) {
+                ForEach(Array(weeks.enumerated()), id: \.offset) { _, week in
+                    VStack(spacing: 4) {
+                        Text(week.xp > 0 ? "\(week.xp)" : "")
+                            .font(.system(size: 10, weight: .heavy, design: .rounded))
+                            .foregroundStyle(
+                                week.isCurrent ? Theme.Colors.primaryBlue : Theme.Colors.mutedText
+                            )
+                            .frame(height: 14)
+
+                        let barH: CGFloat = week.xp == 0
+                            ? 4
+                            : max(14, CGFloat(week.xp) / CGFloat(maxXP) * maxBarHeight)
+
+                        ZStack(alignment: .top) {
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(
+                                    week.isCurrent
+                                        ? LinearGradient(
+                                            colors: [Theme.Colors.primaryBlue, Color(red: 0.14, green: 0.34, blue: 0.83)],
+                                            startPoint: .top,
+                                            endPoint: .bottom
+                                          )
+                                        : LinearGradient(colors: [Theme.Colors.mutedTint], startPoint: .top, endPoint: .bottom)
+                                )
                                 .frame(height: barH)
-
-                            // Week label
-                            Text(week.label)
-                                .font(.system(size: 10,
-                                              weight: week.isCurrent ? .semibold : .regular))
-                                .foregroundStyle(
-                                    week.isCurrent ? Theme.Colors.deepNavy : Theme.Colors.mutedText
+                                .shadow(
+                                    color: week.isCurrent ? Theme.Colors.primaryBlue.opacity(0.35) : .clear,
+                                    radius: week.isCurrent ? 7 : 0, y: 3
                                 )
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.7)
-                                .frame(height: 14)
+
+                            // Highlight strip on current bar
+                            if week.isCurrent && barH > 10 {
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(.white.opacity(0.35))
+                                    .frame(height: 6)
+                            }
                         }
-                        .frame(maxWidth: .infinity)
+
+                        Text(week.label)
+                            .font(.system(size: 10, weight: week.isCurrent ? .bold : .regular))
+                            .foregroundStyle(
+                                week.isCurrent ? Theme.Colors.deepNavy : Theme.Colors.mutedText
+                            )
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
                     }
+                    .frame(maxWidth: .infinity)
                 }
-                .frame(height: maxBarHeight + 13 + 4 + 14 + 4)
             }
+            .frame(height: maxBarHeight + 14 + 4 + 16 + 4)
         }
+        .padding(16)
+        .background(Theme.Colors.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(0.06), radius: 7, y: 3)
     }
 
-    private func weekBarColor(_ week: (label: String, xp: Int, isCurrent: Bool)) -> Color {
-        week.isCurrent ? Theme.Colors.primaryBlue : Theme.Colors.mutedTint
-    }
-
-    // MARK: - Skill mastery
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Skill Mastery (milestone dots)
+    // ═══════════════════════════════════════════════════════════════
 
     private var skillMasteryCard: some View {
-        NumindCard {
-            VStack(spacing: 0) {
-                ForEach(Array(modules.enumerated()), id: \.element.id) { i, module in
-                    skillMasteryRow(module: module, isLast: i == modules.count - 1)
-                }
+        VStack(spacing: 0) {
+            ForEach(Array(modules.enumerated()), id: \.element.id) { i, module in
+                skillMasteryRow(module: module, isLast: i == modules.count - 1)
             }
         }
+        .background(Theme.Colors.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(0.06), radius: 7, y: 3)
     }
 
     private func skillMasteryRow(module: Module, isLast: Bool) -> some View {
+        let accent = module.color.tintColor
         let level = store.skillLevel(moduleId: module.id)
         let progress = store.skillLevelProgress(moduleId: module.id)
 
         return VStack(spacing: 0) {
             HStack(spacing: 12) {
-                IconTile(systemName: module.icon, tintColor: module.color.tintColor, size: 36)
+                // Mascot emoji tile
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(accent.opacity(0.12))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .strokeBorder(accent.opacity(0.2), lineWidth: 1)
+                        )
+                    Text(module.mascot)
+                        .font(.system(size: 22))
+                }
+                .frame(width: 40, height: 40)
+
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
                         Text(module.title)
-                            .font(Theme.Typography.body)
-                            .fontWeight(.semibold)
+                            .font(.system(size: 14, weight: .semibold))
                             .foregroundStyle(Theme.Colors.deepNavy)
+                            .lineLimit(1)
                         Spacer()
-                        Text(level > 0 ? "Lvl \(level)" : "—")
-                            .font(.system(size: 11, weight: .bold))
-                            .foregroundStyle(level > 0 ? module.color.tintColor : Theme.Colors.mutedText)
+                        Text(level > 0 ? "LVL \(level)" : "\u{2014}")
+                            .font(.system(size: 11, weight: .heavy))
+                            .foregroundStyle(level > 0 ? accent : Theme.Colors.mutedText)
+                            .tracking(0.4)
                             .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(level > 0 ? module.color.tintBackground : Theme.Colors.mutedTint)
+                            .padding(.vertical, 2)
+                            .background(level > 0 ? accent.opacity(0.14) : Theme.Colors.mutedTint)
                             .clipShape(Capsule())
                     }
-                    GeometryReader { geo in
-                        ZStack(alignment: .leading) {
-                            Capsule().fill(Theme.Colors.mutedTint)
-                            Capsule()
-                                .fill(module.color.tintColor)
-                                .frame(width: geo.size.width * CGFloat(progress))
+
+                    // Milestone dots (5 levels)
+                    HStack(spacing: 4) {
+                        ForEach(0..<5, id: \.self) { k in
+                            let reached = k < level
+                            let inProgress = k == level && progress > 0
+
+                            Circle()
+                                .fill(reached ? accent : Theme.Colors.mutedTint)
+                                .frame(width: 10, height: 10)
+                                .overlay(
+                                    Circle()
+                                        .strokeBorder(inProgress ? accent : .clear, lineWidth: 2)
+                                )
+
+                            if k < 4 {
+                                GeometryReader { geo in
+                                    ZStack(alignment: .leading) {
+                                        Capsule()
+                                            .fill(Theme.Colors.mutedTint)
+                                        Capsule()
+                                            .fill(accent)
+                                            .frame(width: geo.size.width * CGFloat(
+                                                reached ? 1.0 : (inProgress ? progress : 0)
+                                            ))
+                                    }
+                                }
+                                .frame(height: 3)
+                            }
                         }
                     }
-                    .frame(height: 5)
-                    Text(level == 0 ? "Not started" : "Level \(level) of 5")
-                        .font(.system(size: 10, weight: .medium))
-                        .foregroundStyle(Theme.Colors.mutedText)
                 }
             }
             .padding(.vertical, 14)
+            .padding(.horizontal, 16)
             if !isLast {
-                Divider().background(Theme.Colors.hairline)
+                Divider()
+                    .padding(.leading, 16 + 40 + 12)
             }
         }
     }
 
-    // MARK: - Total XP
-
-    private var totalXPCard: some View {
-        NumindCard(background: Theme.Colors.insightYellowTint) {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Total XP")
-                        .font(Theme.Typography.small)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Theme.Colors.insightText)
-                        .textCase(.uppercase)
-                        .kerning(0.6)
-                    Text("\(store.totalXP)")
-                        .font(.system(size: 30, weight: .bold, design: .rounded))
-                        .foregroundStyle(Theme.Colors.deepNavy)
-                }
-                Spacer()
-                IconTile(systemName: "trophy.fill", tintColor: Theme.Colors.insightYellow, size: 48)
-            }
-        }
-    }
-
-    // MARK: - Badges grid
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Badges
+    // ═══════════════════════════════════════════════════════════════
 
     private var badgesGrid: some View {
         let earned = store.data.earnedBadgeIds
-        let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
+        let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
+
         return VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Text("\(earned.count) of \(BadgeCatalog.all.count) unlocked")
-                    .font(Theme.Typography.small)
-                    .foregroundStyle(Theme.Colors.mutedText)
-                Spacer()
-            }
-            NumindCard {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(BadgeCatalog.all) { badge in
-                        badgeCell(badge, isEarned: earned.contains(badge.id))
-                    }
+            Text("\(earned.count) of \(BadgeCatalog.all.count) unlocked")
+                .font(Theme.Typography.small)
+                .foregroundStyle(Theme.Colors.mutedText)
+
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(BadgeCatalog.all) { badge in
+                    badgeCell(badge, isEarned: earned.contains(badge.id))
                 }
-                .padding(.vertical, 4)
             }
+            .padding(16)
+            .background(Theme.Colors.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                    .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+            )
+            .shadow(color: .black.opacity(0.06), radius: 7, y: 3)
         }
     }
 
     private func badgeCell(_ badge: Badge, isEarned: Bool) -> some View {
-        VStack(spacing: 6) {
+        let tierColor = badgeTierColor(badge.tier)
+
+        return VStack(spacing: 6) {
             ZStack {
                 Circle()
-                    .fill(isEarned ? badgeTierBackground(badge.tier) : Theme.Colors.mutedTint)
-                    .frame(width: 48, height: 48)
+                    .fill(
+                        isEarned
+                            ? RadialGradient(
+                                colors: [tierColor.opacity(0.4), tierColor.opacity(0.18)],
+                                center: UnitPoint(x: 0.3, y: 0.3),
+                                startRadius: 0,
+                                endRadius: 28
+                              )
+                            : RadialGradient(colors: [Theme.Colors.mutedTint], center: .center, startRadius: 0, endRadius: 28)
+                    )
+                    .frame(width: 56, height: 56)
+                    .overlay(
+                        Circle()
+                            .strokeBorder(
+                                isEarned ? tierColor : Theme.Colors.hairline,
+                                lineWidth: isEarned ? 2 : 1
+                            )
+                    )
+                    .shadow(
+                        color: isEarned ? tierColor.opacity(0.3) : .clear,
+                        radius: isEarned ? 7 : 0, y: 3
+                    )
+
                 Image(systemName: isEarned ? badge.icon : "lock.fill")
-                    .font(.system(size: 19, weight: .semibold))
-                    .foregroundStyle(isEarned ? badgeTierColor(badge.tier) : Theme.Colors.mutedText.opacity(0.5))
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundStyle(isEarned ? tierColor : Theme.Colors.mutedText.opacity(0.5))
+
+                // Earned checkmark
+                if isEarned {
+                    ZStack {
+                        Circle()
+                            .fill(tierColor)
+                            .frame(width: 18, height: 18)
+                            .overlay(
+                                Circle().stroke(.white, lineWidth: 2)
+                            )
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 9, weight: .bold))
+                            .foregroundStyle(.white)
+                    }
+                    .offset(x: 18, y: 18)
+                }
             }
+
             Text(badge.name)
-                .font(.system(size: 10, weight: .semibold))
+                .font(.system(size: 10, weight: .bold))
                 .foregroundStyle(isEarned ? Theme.Colors.deepNavy : Theme.Colors.mutedText)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: 80)
         }
     }
 
@@ -466,60 +771,74 @@ struct ProgressTabView: View {
         }
     }
 
-    private func badgeTierBackground(_ tier: BadgeTier) -> Color {
-        badgeTierColor(tier).opacity(0.15)
-    }
-
-    // MARK: - Recent activity
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Recent Activity
+    // ═══════════════════════════════════════════════════════════════
 
     private func recentActivityCard(sessions: [SessionRecord]) -> some View {
-        NumindCard {
-            VStack(spacing: 0) {
-                ForEach(Array(sessions.enumerated()), id: \.element.id) { i, session in
-                    recentRow(session, isLast: i == sessions.count - 1)
-                }
+        VStack(spacing: 0) {
+            ForEach(Array(sessions.enumerated()), id: \.element.id) { i, session in
+                recentRow(session, isLast: i == sessions.count - 1)
             }
         }
+        .background(Theme.Colors.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(0.06), radius: 7, y: 3)
     }
 
     private func recentRow(_ session: SessionRecord, isLast: Bool) -> some View {
-        // Look up module + lesson for display info
         let module = modules.first { $0.id == session.moduleId }
-        let lesson  = repo.lessons(for: session.moduleId).first { $0.id == session.lessonId }
+        let lesson = repo.lessons(for: session.moduleId).first { $0.id == session.lessonId }
         let accuracy = Int(Double(session.correctCount) / Double(max(session.totalCount, 1)) * 100)
+        let accent = module?.color.tintColor ?? Theme.Colors.primaryBlue
 
         return VStack(spacing: 0) {
             HStack(spacing: 12) {
-                IconTile(
-                    systemName: module?.icon ?? "book.fill",
-                    tintColor: module?.color.tintColor ?? Theme.Colors.primaryBlue,
-                    size: 36
-                )
-                VStack(alignment: .leading, spacing: 2) {
+                // Mascot emoji tile
+                ZStack {
+                    RoundedRectangle(cornerRadius: 11, style: .continuous)
+                        .fill(accent.opacity(0.12))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 11, style: .continuous)
+                                .strokeBorder(accent.opacity(0.2), lineWidth: 1)
+                        )
+                    Text(module?.mascot ?? "\u{1F4DA}")
+                        .font(.system(size: 19))
+                }
+                .frame(width: 36, height: 36)
+
+                VStack(alignment: .leading, spacing: 1) {
                     Text(lesson?.title ?? session.lessonId)
-                        .font(Theme.Typography.body)
-                        .fontWeight(.medium)
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(Theme.Colors.deepNavy)
                         .lineLimit(1)
                     Text(relativeDate(session.date))
-                        .font(Theme.Typography.small)
+                        .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(Theme.Colors.mutedText)
                 }
+
                 Spacer()
-                VStack(alignment: .trailing, spacing: 2) {
+
+                VStack(alignment: .trailing, spacing: 1) {
                     Text("\(session.correctCount)/\(session.totalCount)")
-                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                        .font(.system(size: 14, weight: .heavy, design: .rounded))
                         .foregroundStyle(Theme.Colors.deepNavy)
                     Text("\(accuracy)%")
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(.system(size: 11, weight: .bold))
                         .foregroundStyle(accuracy >= 80
                                          ? Theme.Colors.mindTeal
-                                         : Theme.Colors.mutedText)
+                                         : Theme.Colors.warmOrange)
                 }
             }
             .padding(.vertical, 12)
+            .padding(.horizontal, 16)
             if !isLast {
-                Divider().background(Theme.Colors.hairline)
+                Divider()
+                    .padding(.leading, 16 + 36 + 12)
             }
         }
     }
@@ -537,9 +856,9 @@ struct ProgressTabView: View {
 
     private func sectionLabel(_ text: String) -> some View {
         Text(text.uppercased())
-            .font(Theme.Typography.small)
+            .font(.system(size: 11, weight: .heavy))
             .foregroundStyle(Theme.Colors.mutedText)
-            .kerning(0.8)
+            .tracking(1.2)
     }
 }
 
