@@ -45,6 +45,8 @@ final class ProgressStore: ObservableObject {
     func reset() {
         data = ProgressData()
         UserDefaults.standard.removeObject(forKey: Self.defaultsKey)
+        UserDefaults.standard.removeObject(forKey: Self.dailyChallengeKey)
+        dailyChallengeCompletedDate = ""
     }
 
     // MARK: - Daily challenge
@@ -123,6 +125,16 @@ final class ProgressStore: ObservableObject {
         let s = data.sessions.filter { $0.lessonId == lessonId }
         guard !s.isEmpty else { return nil }
         return s.map { Double($0.correctCount) / Double(max($0.totalCount, 1)) }.max()
+    }
+
+    // MARK: - Daily challenge stats
+
+    /// Total correct answers across today's daily challenge sub-sessions.
+    var todayDailyChallengeCorrectCount: Int {
+        let cal = Calendar.current
+        return data.sessions
+            .filter { $0.lessonId == "daily_challenge" && cal.isDateInToday($0.date) }
+            .reduce(0) { $0 + $1.correctCount }
     }
 
     // MARK: - Numind Score

@@ -10,10 +10,9 @@ struct Module: Codable, Identifiable, Equatable {
     let mascot: String      // emoji mascot (e.g. "☕", "🏷️")
     let glyph: String       // math symbol watermark (e.g. "%", "÷", "$")
 
-    /// Short display name for tab strips and compact UI.
+    /// Short display name for radar chart labels and compact UI.
     var shortName: String {
-        // Return the first word, capped at 8 characters.
         let firstWord = title.split(separator: " ").first.map(String.init) ?? title
-        return String(firstWord.prefix(8))
+        return firstWord.trimmingCharacters(in: .punctuationCharacters)
     }
 }

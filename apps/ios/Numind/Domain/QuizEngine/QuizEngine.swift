@@ -54,6 +54,11 @@ struct QuizEngine {
 
         let scenario = template.scenarioTemplate.map { render($0, variables: variables) }
 
+        // Inject the computed answer into the render context so explanation
+        // templates can reference it as {{answer}} (e.g. "72 ÷ 8 = {{answer}} years").
+        var renderVars = variables
+        renderVars["answer"] = correctValue
+
         return QuizQuestion(
             id: UUID(),
             templateId: template.id,
@@ -65,7 +70,7 @@ struct QuizEngine {
             prompt: render(template.promptTemplate, variables: variables),
             choices: allChoices,
             correctChoiceId: correctChoice.id,
-            explanation: render(template.explanationTemplate, variables: variables)
+            explanation: render(template.explanationTemplate, variables: renderVars)
         )
     }
 
@@ -439,20 +444,40 @@ struct QuizEngine {
     ) -> [Double] {
         var candidates: [Double] = []
 
+        // Choose a step size that matches the answer's natural granularity.
+        // • Multiples of 10 (rounding-to-nearest-$10 questions) → ±10, ±20, …
+        // • Whole numbers (integer-format answers)                → ±1, ±2, …
+        // • Decimals                                              → ±0.50, ±1.00, …
+        let step: Double = {
+            if correct >= 10 && correct.truncatingRemainder(dividingBy: 10) == 0 {
+                return 10
+            } else if correct.truncatingRemainder(dividingBy: 1) == 0 {
+                return 1
+            } else {
+                return 0.5
+            }
+        }()
+
+        // For large steps (multiples of 10), keep distractors tight (±10/±20/±30).
+        // For smaller steps, use a wider spread.
+        let multipliers: [Double] = step >= 10
+            ? [1.0, -1.0, 2.0, -2.0, 3.0, -3.0]
+            : [1.0, -1.0, 2.0, -2.0, 3.0, -3.0, 4.0, -4.0, 5.0, -5.0, 6.0]
+
         switch strategy {
         case .roundedNeighbor:
-            for delta in [0.5, 1.0, 1.5, 2.0, -0.5, -1.0, -1.5, -2.0, 2.5, -2.5, 3.0] {
-                candidates.append((correct + delta).rounded2dp)
+            for multiplier in multipliers {
+                candidates.append((correct + step * multiplier).rounded2dp)
             }
 
         case .offByDecimal:
             candidates += [
                 (correct * 10).rounded2dp,
                 (correct / 10).rounded2dp,
-                (correct + 1.0).rounded2dp,
-                (correct - 1.0).rounded2dp,
-                (correct + 0.5).rounded2dp,
-                (correct - 0.5).rounded2dp,
+                (correct + step).rounded2dp,
+                (correct - step).rounded2dp,
+                (correct + step * 2).rounded2dp,
+                (correct - step * 2).rounded2dp,
             ]
 
         case .commonMistake:
@@ -468,8 +493,8 @@ struct QuizEngine {
                 }
             }
             // Neighbors as fallback
-            for delta in [0.5, 1.0, -0.5, -1.0, 1.5, -1.5] {
-                candidates.append((correct + delta).rounded2dp)
+            for multiplier in [1.0, -1.0, 2.0, -2.0, 3.0, -3.0] {
+                candidates.append((correct + step * multiplier).rounded2dp)
             }
         }
 
@@ -489,14 +514,14 @@ struct QuizEngine {
             unique.remove(at: idx)
         }
 
-        // Fallback: walk outward until we have 3
-        var fallbackDelta = 0.25
+        // Fallback: walk outward at the same step until we have 3
+        var fallbackDelta = step
         while result.count < 3 {
             let candidate = (correct + fallbackDelta).rounded2dp
             if candidate > 0 && !result.contains(candidate) {
                 result.append(candidate)
             }
-            fallbackDelta += 0.25
+            fallbackDelta += step
         }
 
         return result

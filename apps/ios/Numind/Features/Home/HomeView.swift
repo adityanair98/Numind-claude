@@ -11,6 +11,8 @@ struct HomeView: View {
     @State private var insightLesson: Lesson? = nil   // built when daily challenge ends
     @State private var showInsight = false
     @State private var insightSessionVM: QuizSessionViewModel? = nil   // retained while sheet shows
+    @State private var lastDailyCorrectCount: Int = 0
+    @State private var showScoreDetail = false
     @AppStorage("numind.userName") private var userName = "You"
 
     private let repo = LocalContentRepository()
@@ -21,7 +23,8 @@ struct HomeView: View {
                 BrandHeader(
                     name: userName,
                     isDailyChallengeCompleted: progressStore.isDailyChallengeCompleted,
-                    numindScore: progressStore.numindScore
+                    numindScore: progressStore.numindScore,
+                    onScoreTap: { showScoreDetail = true }
                 )
                 dailyChallengeSection
                 streakSection
@@ -53,17 +56,10 @@ struct HomeView: View {
         .fullScreenCover(item: $dailyVM) { vm in
             NavigationStack {
                 QuizSessionView(viewModel: vm) {
-                    var record = SessionRecord(
-                        id: UUID(),
-                        lessonId: "daily_challenge",
-                        moduleId: "mixed",
-                        date: Date(),
-                        correctCount: vm.correctCount,
-                        totalCount: vm.total
+                    recordMixedSession(
+                        vm: vm, lessonId: "daily_challenge"
                     )
-                    record.questionResults = vm.questionResults
-                    record.bonusXP = vm.bonusXP
-                    progressStore.recordSession(record)
+                    lastDailyCorrectCount = vm.correctCount
                     progressStore.markDailyChallengeCompleted()
                     // Resolve lesson recommendation for the weakest module
                     insightLesson = resolveInsightLesson()
@@ -87,17 +83,9 @@ struct HomeView: View {
         .fullScreenCover(item: $bonusRoundVM) { vm in
             NavigationStack {
                 QuizSessionView(viewModel: vm) {
-                    var record = SessionRecord(
-                        id: UUID(),
-                        lessonId: "bonus_round",
-                        moduleId: "mixed",
-                        date: Date(),
-                        correctCount: vm.correctCount,
-                        totalCount: vm.total
+                    recordMixedSession(
+                        vm: vm, lessonId: "bonus_round"
                     )
-                    record.questionResults = vm.questionResults
-                    record.bonusXP = vm.bonusXP
-                    progressStore.recordSession(record)
                     bonusRoundVM = nil
                 }
             }
@@ -114,9 +102,267 @@ struct HomeView: View {
             }
             .environmentObject(progressStore)
         }
-        .onAppear { viewModel.refresh(using: progressStore) }
+        // Score detail sheet
+        .sheet(isPresented: $showScoreDetail) {
+            scoreDetailSheet
+        }
+        .onAppear {
+            viewModel.refresh(using: progressStore)
+            lastDailyCorrectCount = progressStore.todayDailyChallengeCorrectCount
+        }
         .onChange(of: progressStore.totalSessions) { _, _ in
             viewModel.refresh(using: progressStore)
+        }
+    }
+
+    // MARK: - Score detail sheet
+
+    private var scoreDetailSheet: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Tier hero banner + large ring
+                    tierHeroBanner
+                        .padding(.top, 4)
+
+                    // 4-node progression ladder
+                    tierProgressionStrip
+
+                    // Radar / bar chart
+                    scoreChartCard
+
+                    // Per-module breakdown
+                    moduleBreakdownCard
+                }
+                .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                .padding(.vertical, 12)
+            }
+            .background(Theme.Colors.softBackground.ignoresSafeArea())
+            .navigationTitle("Numind Score")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { showScoreDetail = false }
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Theme.Colors.primaryBlue)
+                }
+            }
+        }
+    }
+
+    // MARK: - Tier hero banner
+
+    private var tierHeroBanner: some View {
+        let tier = ScoreTier(score: progressStore.numindScore)
+        let ptsToNext = tier.pointsToNext(from: progressStore.numindScore)
+
+        return NumindCard {
+            HStack(spacing: 20) {
+                // Large ring
+                NumindScoreRing(score: progressStore.numindScore,
+                                delta: progressStore.numindScoreDelta,
+                                size: 110)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    // Tier badge
+                    HStack(spacing: 6) {
+                        Image(systemName: tier.icon)
+                            .font(.system(size: 13, weight: .bold))
+                        Text(tier.name.uppercased())
+                            .font(.system(size: 12, weight: .bold))
+                            .kerning(0.5)
+                    }
+                    .foregroundStyle(tier.color)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(tier.color.opacity(0.12))
+                    .clipShape(Capsule())
+
+                    // Delta line
+                    if progressStore.numindScoreDelta != 0 {
+                        let up = progressStore.numindScoreDelta > 0
+                        HStack(spacing: 4) {
+                            Image(systemName: up ? "arrow.up.right" : "arrow.down.right")
+                                .font(.system(size: 11, weight: .bold))
+                            Text(up
+                                 ? "+\(progressStore.numindScoreDelta) pts this week"
+                                 : "\(progressStore.numindScoreDelta) pts this week")
+                                .font(.system(size: 12, weight: .semibold))
+                        }
+                        .foregroundStyle(up ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+                    }
+
+                    // Next tier callout
+                    if let pts = ptsToNext, let next = tier.next {
+                        Text("\(pts) pts to \(next.name)")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    } else {
+                        Text("You've reached the top tier \u{1F451}")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(Theme.Colors.growthGreen)
+                    }
+                }
+                Spacer(minLength: 0)
+            }
+        }
+    }
+
+    // MARK: - Tier progression strip
+
+    private var tierProgressionStrip: some View {
+        let currentTier = ScoreTier(score: progressStore.numindScore)
+        let score = progressStore.numindScore
+        let tiers = ScoreTier.allCases
+
+        return NumindCard {
+            VStack(alignment: .leading, spacing: 14) {
+                Text("YOUR JOURNEY")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .kerning(0.6)
+
+                // Node strip
+                HStack(spacing: 0) {
+                    ForEach(Array(tiers.enumerated()), id: \.offset) { i, tier in
+                        // Node
+                        let isReached = score >= tier.minScore
+                        let isCurrent = tier == currentTier
+
+                        VStack(spacing: 6) {
+                            ZStack {
+                                Circle()
+                                    .fill(isReached ? tier.color : Theme.Colors.mutedTint)
+                                    .frame(width: isCurrent ? 36 : 28, height: isCurrent ? 36 : 28)
+
+                                Image(systemName: tier.icon)
+                                    .font(.system(size: isCurrent ? 15 : 11, weight: .bold))
+                                    .foregroundStyle(isReached ? .white : Theme.Colors.mutedText)
+                            }
+                            .shadow(color: isCurrent ? tier.color.opacity(0.4) : .clear,
+                                    radius: 6, y: 2)
+
+                            Text(tier.name)
+                                .font(.system(size: 9, weight: isCurrent ? .bold : .medium))
+                                .foregroundStyle(isCurrent ? tier.color : Theme.Colors.mutedText)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                                .frame(width: 52)
+                        }
+
+                        // Connector line between nodes
+                        if i < tiers.count - 1 {
+                            let nextTier = tiers[i + 1]
+                            let nextReached = score >= nextTier.minScore
+                            Rectangle()
+                                .fill(nextReached
+                                      ? LinearGradient(colors: [tier.color, nextTier.color],
+                                                       startPoint: .leading, endPoint: .trailing)
+                                      : LinearGradient(colors: [Theme.Colors.mutedTint, Theme.Colors.mutedTint],
+                                                       startPoint: .leading, endPoint: .trailing))
+                                .frame(height: 2)
+                                .offset(y: -12) // align with node centers
+                                .frame(maxWidth: .infinity)
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity)
+
+                // Score threshold labels
+                HStack(spacing: 0) {
+                    ForEach(Array(tiers.enumerated()), id: \.offset) { i, tier in
+                        Text(tier.minScore == 0 ? "Start" : "\(tier.minScore)+")
+                            .font(.system(size: 9, weight: .medium))
+                            .foregroundStyle(score >= tier.minScore ? tier.color : Theme.Colors.mutedText)
+                            .frame(maxWidth: .infinity)
+                        if i < tiers.count - 1 {
+                            Spacer(minLength: 0).frame(maxWidth: .infinity)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private var scoreChartCard: some View {
+        let mods = repo.allModules()
+
+        return NumindCard {
+            VStack(alignment: .leading, spacing: 14) {
+                Text("PERFORMANCE BY MODULE")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .kerning(0.6)
+
+                if mods.count >= 3 {
+                    let current = mods.map {
+                        RadarChartView.Axis(label: $0.shortName,
+                                            value: Double(progressStore.numindScore(for: $0.id)) / 100.0)
+                    }
+                    let previous: [RadarChartView.Axis]? = mods.allSatisfy({
+                        progressStore.numindScoreHistory(for: $0.id, daysAgo: 7) != nil
+                    })
+                    ? mods.map {
+                        RadarChartView.Axis(label: $0.shortName,
+                                            value: Double(progressStore.numindScoreHistory(for: $0.id, daysAgo: 7) ?? 0) / 100.0)
+                    }
+                    : nil
+                    RadarChartView(axes: current, previousAxes: previous, size: 220)
+                        .frame(maxWidth: .infinity)
+                } else {
+                    ModuleBarsView(bars: mods.map { m in
+                        ModuleBarsView.Bar(
+                            icon: m.icon,
+                            label: m.shortName,
+                            score: progressStore.numindScore(for: m.id),
+                            color: m.color.tintColor,
+                            previousScore: progressStore.numindScoreHistory(for: m.id, daysAgo: 7)
+                        )
+                    })
+                }
+
+                if progressStore.numindScore == 0 {
+                    Text("Complete your first lesson to see your Numind Score.")
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                }
+            }
+        }
+    }
+
+    private var moduleBreakdownCard: some View {
+        let mods = repo.allModules()
+
+        return NumindCard {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("MODULE SCORES")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .kerning(0.6)
+
+                ForEach(Array(mods.enumerated()), id: \.element.id) { i, m in
+                    let score = progressStore.numindScore(for: m.id)
+
+                    HStack(spacing: 12) {
+                        IconTile(systemName: m.icon,
+                                 tintColor: m.color.tintColor, size: 32)
+                        Text(m.title)
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Spacer()
+                        Text("\(score)")
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .foregroundStyle(score > 0 ? m.color.tintColor : Theme.Colors.mutedText)
+                    }
+                    .padding(.vertical, 4)
+
+                    if i < mods.count - 1 {
+                        Divider().background(Theme.Colors.hairline)
+                    }
+                }
+            }
         }
     }
 
@@ -126,6 +372,7 @@ struct HomeView: View {
         DailyChallengeCard(
             isDone: progressStore.isDailyChallengeCompleted,
             progress: progressStore.isDailyChallengeCompleted ? DailyChallengeEngine.questionCount : 0,
+            correctCount: lastDailyCorrectCount,
             timeUntilReset: viewModel.timeUntilDailyReset,
             hasHistory: progressStore.totalSessions > 0,
             onStart: { startDailyChallenge() },
@@ -460,6 +707,35 @@ struct HomeView: View {
                     }
                 }
             }
+        }
+    }
+
+    // MARK: - Mixed-session recording
+
+    /// Records a mixed-pool session (daily challenge, bonus round) by splitting
+    /// question results into per-module session records so the Numind Score
+    /// engine can attribute each answer to the correct module.
+    private func recordMixedSession(vm: QuizSessionViewModel, lessonId: String) {
+        let groups = Dictionary(grouping: vm.questionResults) { result in
+            repo.module(forTemplateId: result.templateId)?.id ?? "mixed"
+        }
+
+        let sortedKeys = groups.keys.sorted()
+        for (i, moduleId) in sortedKeys.enumerated() {
+            let results = groups[moduleId]!
+            let correct = results.filter(\.isCorrect).count
+            var record = SessionRecord(
+                id: UUID(),
+                lessonId: lessonId,
+                moduleId: moduleId,
+                date: Date(),
+                correctCount: correct,
+                totalCount: results.count
+            )
+            record.questionResults = results
+            // Attach bonus XP only to the first sub-session to avoid double-counting.
+            record.bonusXP = i == 0 ? vm.bonusXP : 0
+            progressStore.recordSession(record)
         }
     }
 

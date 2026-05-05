@@ -4,6 +4,8 @@ import SwiftUI
 struct DailyChallengeCard: View {
     let isDone: Bool
     let progress: Int
+    /// Number of questions the user answered correctly (used in done state).
+    let correctCount: Int
     let timeUntilReset: String
     /// True when the user has completed at least one session (not brand new).
     let hasHistory: Bool
@@ -38,15 +40,21 @@ struct DailyChallengeCard: View {
 
     // MARK: - Done state
 
+    private var doneHeadline: String {
+        if correctCount == total { return "Nailed it \u{2728}" }
+        if correctCount >= total * 2 / 3 { return "Nice work \u{1F4AA}" }
+        return "Challenge done \u{2705}"
+    }
+
     private var doneState: some View {
         HeroCard(variant: .teal) {
             VStack(alignment: .leading, spacing: 0) {
                 dailyChip
-                Text("Nailed it \u{2728}")
+                Text(doneHeadline)
                     .font(.system(size: 26, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
                     .padding(.top, 14)
-                Text("\(total)/\(total) today. Streak +1. Come back tomorrow for a fresh set.")
+                Text("\(correctCount)/\(total) correct today. Streak +1. Come back tomorrow for a fresh set.")
                     .font(Theme.Typography.caption)
                     .foregroundStyle(.white.opacity(0.85))
                     .padding(.top, 6)
@@ -190,25 +198,31 @@ struct DailyChallengeCard: View {
 }
 
 #Preview("New user") {
-    DailyChallengeCard(isDone: false, progress: 0, timeUntilReset: "7h 23m", hasHistory: false, onStart: {}, onBonusRound: {})
+    DailyChallengeCard(isDone: false, progress: 0, correctCount: 0, timeUntilReset: "7h 23m", hasHistory: false, onStart: {}, onBonusRound: {})
         .padding(.horizontal, Theme.Spacing.screenHorizontal)
         .background(Theme.Colors.softBackground)
 }
 
 #Preview("Returning user") {
-    DailyChallengeCard(isDone: false, progress: 0, timeUntilReset: "7h 23m", hasHistory: true, onStart: {}, onBonusRound: {})
+    DailyChallengeCard(isDone: false, progress: 0, correctCount: 0, timeUntilReset: "7h 23m", hasHistory: true, onStart: {}, onBonusRound: {})
         .padding(.horizontal, Theme.Spacing.screenHorizontal)
         .background(Theme.Colors.softBackground)
 }
 
 #Preview("In Progress") {
-    DailyChallengeCard(isDone: false, progress: 4, timeUntilReset: "5h 10m", hasHistory: true, onStart: {}, onBonusRound: {})
+    DailyChallengeCard(isDone: false, progress: 4, correctCount: 0, timeUntilReset: "5h 10m", hasHistory: true, onStart: {}, onBonusRound: {})
         .padding(.horizontal, Theme.Spacing.screenHorizontal)
         .background(Theme.Colors.softBackground)
 }
 
-#Preview("Done") {
-    DailyChallengeCard(isDone: true, progress: DailyChallengeEngine.questionCount, timeUntilReset: "", hasHistory: true, onStart: {}, onBonusRound: {})
+#Preview("Done — perfect") {
+    DailyChallengeCard(isDone: true, progress: DailyChallengeEngine.questionCount, correctCount: 7, timeUntilReset: "", hasHistory: true, onStart: {}, onBonusRound: {})
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+        .background(Theme.Colors.softBackground)
+}
+
+#Preview("Done — partial") {
+    DailyChallengeCard(isDone: true, progress: DailyChallengeEngine.questionCount, correctCount: 5, timeUntilReset: "", hasHistory: true, onStart: {}, onBonusRound: {})
         .padding(.horizontal, Theme.Spacing.screenHorizontal)
         .background(Theme.Colors.softBackground)
 }

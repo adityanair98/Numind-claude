@@ -7,6 +7,8 @@ struct BrandHeader: View {
     let isDailyChallengeCompleted: Bool
     /// Current Numind Score (0–100). 0 hides the ring until the user has sessions.
     var numindScore: Int = 0
+    /// Called when the user taps the score ring.
+    var onScoreTap: (() -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -75,8 +77,13 @@ struct BrandHeader: View {
             Spacer()
             // Small score ring — only shown after first session
             if numindScore > 0 {
-                NumindScoreRing(score: numindScore, size: 52)
-                    .padding(.bottom, 4)
+                Button {
+                    onScoreTap?()
+                } label: {
+                    NumindScoreRing(score: numindScore, size: 52)
+                        .padding(.bottom, 4)
+                }
+                .buttonStyle(.plain)
             }
         }
     }

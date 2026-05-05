@@ -1172,7 +1172,7 @@
     "answerFormula": "rule72",
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Rule of 72: years to double = 72 \u00f7 rate. 72 \u00f7 {{interestRate}} = years."
+    "explanationTemplate": "Rule of 72: years to double = 72 \u00f7 rate. 72 \u00f7 {{interestRate}} = {{answer}} years."
   },
   {
     "id": "roi_percent_calc",
@@ -3794,7 +3794,7 @@
     "answerFormula": "rule72",
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Rule of 72: years to double = 72 \u00f7 rate. 72 \u00f7 {{interestRate}} = years. Simple and surprisingly accurate."
+    "explanationTemplate": "Rule of 72: years to double = 72 \u00f7 rate. 72 \u00f7 {{interestRate}} = {{answer}} years. Simple and surprisingly accurate."
   },
   {
     "id": "rule72_scenario_d2",

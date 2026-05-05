@@ -53,7 +53,7 @@ struct DailyInsightView: View {
                     chartSection
                     if let weak = weakestModule { weaknessCard(weak) }
                     statsSection
-                    Spacer(minLength: 80)
+                    Spacer(minLength: 120)
                 }
                 .padding(.horizontal, Theme.Spacing.screenHorizontal)
                 .padding(.top, 24)
