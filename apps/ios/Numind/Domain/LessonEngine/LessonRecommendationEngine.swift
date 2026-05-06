@@ -23,19 +23,23 @@ struct LessonRecommendation: Identifiable {
 
 // MARK: - Engine
 
-/// Ranks incomplete lessons by weakness, surfacing the most urgent learning
-/// opportunities based on each module's recent Numind Score.
+/// Ranks lessons by weakness, surfacing the most urgent learning opportunities
+/// based on each module's recent Numind Score.
 ///
 /// Ranking order:
-///   1. Modules with the lowest Numind Score (weakest) → highest urgency
-///   2. Within a module, incomplete lessons appear in content order
-///   3. Modules where the user is already in progress get a small boost
-///      (they're close to completion, finishing is high-value)
+///   1. Incomplete modules with the lowest score → highest urgency
+///   2. Never-attempted modules → mid urgency ("try something new")
+///   3. Completed modules' weakest lessons → review urgency (keeps the list
+///      populated even when every lesson has been finished at least once)
 enum LessonRecommendationEngine {
 
     // MARK: - Public API
 
     /// Returns up to `limit` recommended lessons ordered by urgency (most urgent first).
+    ///
+    /// When all lessons are complete the engine falls back to review recommendations:
+    /// the weakest module's first lesson is surfaced with `.weakModule` reason so the
+    /// user always has a targeted action to take.
     ///
     /// - Parameters:
     ///   - repository: Content source for modules and lessons.
@@ -49,8 +53,11 @@ enum LessonRecommendationEngine {
 
         let modules = repository.allModules()
 
-        // Per-module: current score and first incomplete lesson
-        var candidates: [(lesson: Lesson, module: Module, urgency: Double, reason: LessonRecommendation.Reason)] = []
+        typealias Candidate = (lesson: Lesson, module: Module, urgency: Double, reason: LessonRecommendation.Reason)
+        var candidates: [Candidate] = []
+
+        // Track fully-completed modules so we can fall back to review mode.
+        var completedModules: [(module: Module, score: Int, lessons: [Lesson])] = []
 
         for module in modules {
             let lessons         = repository.lessons(for: module.id)
@@ -59,24 +66,49 @@ enum LessonRecommendationEngine {
             let completedCount  = completedIds.count
 
             guard let nextLesson = lessons.first(where: { !completedIds.contains($0.id) }) else {
-                continue  // all lessons in this module are done — skip
+                // All lessons done — remember for review fallback.
+                if !lessons.isEmpty && score > 0 {
+                    completedModules.append((module: module, score: score, lessons: lessons))
+                }
+                continue
             }
 
             // Urgency: inverted score, boosted if the user is partially through.
-            var urgency = 1.0 - Double(score) / 100.0
             let inProgress = completedCount > 0 && completedCount < lessons.count
-            if inProgress { urgency = min(1.0, urgency + 0.15) }
-
             let reason: LessonRecommendation.Reason
+            var urgency: Double
+
             if score == 0 && completedCount == 0 {
+                // Never attempted — interesting to surface, but below weak/in-progress modules.
+                // 0.5 puts it in the middle: the user should see these as "try something new"
+                // rather than them drowning out actionable "you're struggling here" signals.
                 reason = .neverAttempted
+                urgency = 0.5
             } else if inProgress {
                 reason = .inProgress(moduleName: module.title)
+                urgency = min(1.0, (1.0 - Double(score) / 100.0) + 0.15)
             } else {
                 reason = .weakModule(moduleName: module.title)
+                urgency = 1.0 - Double(score) / 100.0
             }
 
             candidates.append((lesson: nextLesson, module: module, urgency: urgency, reason: reason))
+        }
+
+        // Fallback: when all lessons are complete, surface the weakest modules'
+        // first lesson as a review recommendation. The user always has something
+        // actionable — "sharpen your weakest skill."
+        if candidates.isEmpty && !completedModules.isEmpty {
+            let sorted = completedModules.sorted { $0.score < $1.score }
+            for entry in sorted.prefix(limit) {
+                let urgency = 1.0 - Double(entry.score) / 100.0
+                candidates.append((
+                    lesson: entry.lessons[0],
+                    module: entry.module,
+                    urgency: urgency,
+                    reason: .weakModule(moduleName: entry.module.title)
+                ))
+            }
         }
 
         return candidates

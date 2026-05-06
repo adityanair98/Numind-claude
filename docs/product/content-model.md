@@ -1,6 +1,6 @@
 # Content Model
 
-> **Last updated:** May 2026 (after M56).
+> **Last updated:** May 2026 (after M60 — Game Modes expansion, Practice drills, Celebration effects).
 
 ## Overview
 All content is stored locally as JSON in `Resources/LocalContent/`. No backend required for V1.
@@ -99,11 +99,24 @@ Per-question detail within a session.
 
 ```swift
 struct QuestionResult: Codable {
-    let questionId: String    // template ID
+    let templateId: String    // quiz template ID
     let isCorrect: Bool
     let timeSpentSeconds: Double
 }
 ```
+
+### Game Mode Session IDs
+| Mode | lessonId | moduleId |
+|---|---|---|
+| Lesson quiz | `{lessonId}` | `{moduleId}` |
+| Checkpoint review | `review_{moduleId}_{groupIndex}` | `{moduleId}` |
+| Daily Challenge | `daily_challenge` | `mixed` |
+| Speed Drill | `speed_drill` | `mixed` |
+| Blitz | `blitz_session` | `mixed` |
+| Streak | `streak_mode` | `mixed` |
+| True/False | `true_false` | `mixed` |
+| Estimation | `estimation` | `mixed` |
+| Comparison | `comparison` | `mixed` |
 
 ## ProgressData
 The user's entire local progress state, persisted via UserDefaults.
@@ -123,6 +136,19 @@ struct ProgressData: Codable {
     func weeklyXPHistory() -> [WeeklyXP]  // last 4 weeks
 }
 ```
+
+### Game Mode Best Scores
+`ProgressData` also tracks personal bests for each game mode:
+
+    var blitzBestScore: Int = 0
+    var streakModeBestScore: Int = 0
+    var speedDrillBestScore: Int = 0
+    var recallBestScore: Int = 0
+    var trueFalseBestScore: Int = 0
+    var estimationBestScore: Int = 0
+    var comparisonBestScore: Int = 0
+
+Each has a corresponding mutator (`updateBlitzBest(score:)`, etc.) that only updates if the new score exceeds the current best. `ProgressStore` exposes matching accessor properties and persist methods.
 
 ### Mastery
 A lesson is "mastered" when any session for that lesson has `correctCount / totalCount >= 0.75` (75%). This applies identically to both lesson quizzes and checkpoint reviews. Mastery is the gate for unlocking the next node on the learning path.

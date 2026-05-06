@@ -14,19 +14,22 @@ struct BlitzView: View {
     let generateQuestions: () -> [QuizQuestion]
 
     @State private var showSummary = false
+    @State private var blitzNumindScore: Int = 0
+    @State private var blitzScoreDelta: Int = 0
 
     var body: some View {
         Group {
             if showSummary {
                 BlitzSummaryView(
                     viewModel: viewModel,
+                    numindScore: blitzNumindScore,
+                    scoreDelta: blitzScoreDelta,
                     onPlayAgain: {
                         let newQuestions = generateQuestions()
                         viewModel.reset(questions: newQuestions)
                         showSummary = false
                     },
                     onDone: {
-                        recordSession()
                         dismiss()
                     }
                 )
@@ -43,6 +46,7 @@ struct BlitzView: View {
         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: showSummary)
         .onChange(of: viewModel.state) { _, newState in
             if case .complete = newState {
+                recordSession()
                 showSummary = true
             }
         }
@@ -277,6 +281,8 @@ struct BlitzView: View {
 
     private func recordSession() {
         guard viewModel.totalAnswered > 0 else { return }
+        let scoreBefore = progressStore.numindScore
+
         var record = SessionRecord(
             id: UUID(),
             lessonId: "blitz_session",
@@ -288,5 +294,8 @@ struct BlitzView: View {
         record.questionResults = viewModel.results
         progressStore.recordSession(record)
         progressStore.updateBlitzBest(score: viewModel.score)
+
+        blitzNumindScore = progressStore.numindScore
+        blitzScoreDelta = progressStore.numindScore - scoreBefore
     }
 }

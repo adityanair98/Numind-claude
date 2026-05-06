@@ -16,6 +16,18 @@ struct ProgressData: Codable {
     var earnedBadgeIds: Set<String> = []
     /// Personal best for Blitz mode: highest number of correct answers in a 60-second session.
     var blitzBestScore: Int = 0
+    /// Personal best for Streak mode: longest correct-answer streak in a single session.
+    var streakModeBestScore: Int = 0
+    /// Personal best for Speed Drill: highest correct count in a timed session.
+    var speedDrillBestScore: Int = 0
+    /// Personal best for Recall mode: highest correct count reviewing past misses.
+    var recallBestScore: Int = 0
+    /// Personal best for True/False Snap: highest score out of 20.
+    var trueFalseBestScore: Int = 0
+    /// Personal best for Estimation mode: highest correct count (2+ stars) in a session.
+    var estimationBestScore: Int = 0
+    /// Personal best for Comparison mode: highest score out of 15.
+    var comparisonBestScore: Int = 0
     /// Timestamped Numind Score snapshots — one appended after each session.
     /// Retained for 90 days; older entries are pruned automatically.
     var scoreHistory: [ScoreEntry] = []
@@ -123,6 +135,31 @@ struct ProgressData: Codable {
     /// Updates blitzBestScore if the new score exceeds the current record.
     mutating func updateBlitzBest(score: Int) {
         if score > blitzBestScore { blitzBestScore = score }
+    }
+
+    /// Updates streakModeBestScore if the new streak exceeds the current record.
+    mutating func updateStreakBest(score: Int) {
+        if score > streakModeBestScore { streakModeBestScore = score }
+    }
+
+    mutating func updateSpeedDrillBest(score: Int) {
+        if score > speedDrillBestScore { speedDrillBestScore = score }
+    }
+
+    mutating func updateRecallBest(score: Int) {
+        if score > recallBestScore { recallBestScore = score }
+    }
+
+    mutating func updateTrueFalseBest(score: Int) {
+        if score > trueFalseBestScore { trueFalseBestScore = score }
+    }
+
+    mutating func updateEstimationBest(score: Int) {
+        if score > estimationBestScore { estimationBestScore = score }
+    }
+
+    mutating func updateComparisonBest(score: Int) {
+        if score > comparisonBestScore { comparisonBestScore = score }
     }
 
     // MARK: - Personal best

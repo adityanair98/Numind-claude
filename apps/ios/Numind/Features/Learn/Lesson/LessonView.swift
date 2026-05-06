@@ -11,6 +11,8 @@ struct LessonView: View {
     @State private var sessionVM: QuizSessionViewModel?
     @State private var isNewPersonalBest: Bool = false
     @State private var newBadgeIds: Set<String> = []
+    @State private var sessionNumindScore: Int = 0
+    @State private var sessionScoreDelta: Int = 0
     @State private var pendingLevelUp: LevelUpInfo? = nil
 
     var body: some View {
@@ -51,8 +53,9 @@ struct LessonView: View {
                         isNewPersonalBest = false
                     }
 
-                    // Level-up detection — capture level BEFORE recording.
+                    // Capture level and score BEFORE recording.
                     let prevLevel = progressStore.skillLevel(moduleId: viewModel.lesson.moduleId)
+                    let scoreBefore = progressStore.numindScore
 
                     var record = SessionRecord(
                         id: UUID(),
@@ -66,6 +69,8 @@ struct LessonView: View {
                     record.bonusXP = vm.bonusXP
                     progressStore.recordSession(record)
                     newBadgeIds = progressStore.newlyEarnedBadgeIds
+                    sessionNumindScore = progressStore.numindScore
+                    sessionScoreDelta = progressStore.numindScore - scoreBefore
 
                     // Level-up ceremony only fires when the user actually mastered the lesson.
                     // onDismiss of the fullScreenCover will set phase = .summary.
@@ -95,6 +100,8 @@ struct LessonView: View {
                     viewModel: vm,
                     isPersonalBest: isNewPersonalBest,
                     newBadgeIds: newBadgeIds,
+                    numindScore: sessionNumindScore,
+                    scoreDelta: sessionScoreDelta,
                     onContinue: { dismiss() },
                     onRetry: { retryQuiz() }
                 )

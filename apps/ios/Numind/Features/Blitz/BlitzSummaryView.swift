@@ -8,6 +8,8 @@ struct BlitzSummaryView: View {
     @ObservedObject var viewModel: BlitzViewModel
     @EnvironmentObject private var progressStore: ProgressStore
 
+    let numindScore: Int
+    let scoreDelta: Int
     let onPlayAgain: () -> Void
     let onDone: () -> Void
 
@@ -22,11 +24,16 @@ struct BlitzSummaryView: View {
                 VStack(spacing: Theme.Spacing.sectionSpacing) {
                     heroSection
                     statsCard
+                    if numindScore > 0 { blitzScoreCard }
                     footerButtons
                 }
                 .padding(.horizontal, Theme.Spacing.screenHorizontal)
                 .padding(.top, 48)
                 .padding(.bottom, 40)
+            }
+
+            if viewModel.isNewBest {
+                ConfettiBurst()
             }
         }
         .onAppear {
@@ -79,18 +86,7 @@ struct BlitzSummaryView: View {
     }
 
     private var personalBestBadge: some View {
-        HStack(spacing: 6) {
-            Image(systemName: "trophy.fill")
-                .font(.system(size: 13, weight: .bold))
-            Text("New personal best!")
-                .font(.system(size: 13, weight: .bold))
-        }
-        .foregroundStyle(Theme.Colors.insightText)
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
-        .background(Theme.Colors.insightYellowTint)
-        .clipShape(Capsule())
-        .shadow(color: Theme.Colors.insightYellow.opacity(0.3), radius: 8, y: 3)
+        NewBestBadge()
     }
 
     private var previousBestLabel: some View {
@@ -158,6 +154,46 @@ struct BlitzSummaryView: View {
         guard viewModel.totalAnswered > 0 else { return "—" }
         let avg = viewModel.totalTime / Double(max(viewModel.totalAnswered, 1))
         return String(format: "%.1fs", avg)
+    }
+
+    // MARK: - Score card
+
+    private var blitzScoreCard: some View {
+        let tier = ScoreTier(score: numindScore)
+        return NumindCard {
+            HStack(spacing: 14) {
+                NumindScoreRing(score: numindScore, size: 52)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(tier.name)
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundStyle(tier.color)
+
+                    if scoreDelta != 0 {
+                        let isUp = scoreDelta > 0
+                        HStack(spacing: 4) {
+                            Image(systemName: isUp ? "arrow.up.right" : "arrow.down.right")
+                                .font(.system(size: 11, weight: .bold))
+                            Text("\(isUp ? "+" : "")\(scoreDelta) pts this session")
+                                .font(.system(size: 13, weight: .bold))
+                        }
+                        .foregroundStyle(isUp ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+                    } else {
+                        Text("Score unchanged")
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                }
+
+                Spacer()
+
+                Text("NUMIND\nSCORE")
+                    .font(.system(size: 9, weight: .heavy))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .tracking(0.5)
+                    .multilineTextAlignment(.trailing)
+            }
+        }
     }
 
     // MARK: - Footer

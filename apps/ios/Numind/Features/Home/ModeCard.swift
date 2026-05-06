@@ -176,6 +176,62 @@ extension ModeCard {
             action: action
         )
     }
+
+    /// Pre-configured Streak card.
+    static func streak(bestLabel: String?, locked: Bool, action: @escaping () -> Void) -> ModeCard {
+        ModeCard(
+            icon: "flame.fill",
+            title: "Streak",
+            subtitle: "Don't miss",
+            gradientColors: [Color(red: 0.95, green: 0.30, blue: 0.25), Color(red: 0.85, green: 0.20, blue: 0.18)],
+            shadowColor: Color(red: 0.95, green: 0.30, blue: 0.25),
+            bestLabel: bestLabel,
+            locked: locked,
+            action: action
+        )
+    }
+
+    /// Pre-configured True/False card.
+    static func trueFalse(bestLabel: String?, locked: Bool, action: @escaping () -> Void) -> ModeCard {
+        ModeCard(
+            icon: "hand.thumbsup.fill",
+            title: "True/False",
+            subtitle: "20 snaps \u{00B7} quick judge",
+            gradientColors: [Theme.Colors.primaryBlue, Color(red: 0.18, green: 0.30, blue: 0.72)],
+            shadowColor: Theme.Colors.primaryBlue,
+            bestLabel: bestLabel,
+            locked: locked,
+            action: action
+        )
+    }
+
+    /// Pre-configured Estimation card.
+    static func estimation(bestLabel: String?, locked: Bool, action: @escaping () -> Void) -> ModeCard {
+        ModeCard(
+            icon: "scope",
+            title: "Estimate",
+            subtitle: "Slider \u{00B7} how close?",
+            gradientColors: [Theme.Colors.insightYellow, Color(red: 0.88, green: 0.60, blue: 0.10)],
+            shadowColor: Theme.Colors.insightYellow,
+            bestLabel: bestLabel,
+            locked: locked,
+            action: action
+        )
+    }
+
+    /// Pre-configured Comparison card.
+    static func comparison(bestLabel: String?, locked: Bool, action: @escaping () -> Void) -> ModeCard {
+        ModeCard(
+            icon: "arrow.left.arrow.right",
+            title: "Compare",
+            subtitle: "15 pairs \u{00B7} which is more?",
+            gradientColors: [Theme.Colors.growthGreen, Color(red: 0.15, green: 0.58, blue: 0.40)],
+            shadowColor: Theme.Colors.growthGreen,
+            bestLabel: bestLabel,
+            locked: locked,
+            action: action
+        )
+    }
 }
 
 #Preview("Unlocked") {

@@ -172,12 +172,19 @@ struct NumindScoreRing: View {
                          : Theme.Colors.errorSoftRed
 
         Text(label)
-            .font(.system(size: max(9, size * 0.13), weight: .bold))
+            .font(.system(size: max(10, size * 0.15), weight: .bold, design: .rounded))
             .foregroundStyle(color)
-            .padding(.horizontal, 6)
-            .padding(.vertical, 2)
-            .background(color.opacity(0.12))
-            .clipShape(Capsule())
+            .padding(.horizontal, 8)
+            .padding(.vertical, 3)
+            .background(
+                Capsule()
+                    .fill(Theme.Colors.cardBackground)
+                    .shadow(color: color.opacity(0.25), radius: 4, y: 2)
+            )
+            .overlay(
+                Capsule()
+                    .strokeBorder(color.opacity(0.3), lineWidth: 1.5)
+            )
     }
 }
 

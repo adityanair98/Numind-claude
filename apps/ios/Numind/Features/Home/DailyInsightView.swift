@@ -20,6 +20,10 @@ struct DailyInsightView: View {
     let scoreDelta: Int
     let moduleScores: [ModuleScore]
 
+    /// Module IDs that appeared in this session's question set.
+    /// The weakness card is scoped to these modules only.
+    let sessionModuleIds: Set<String>
+
     let sessionCorrect: Int
     let sessionTotal: Int
     let sessionTimeString: String
@@ -36,8 +40,12 @@ struct DailyInsightView: View {
 
     // MARK: - Derived
 
+    /// Weakest module from the session's question set — not overall.
+    /// Only shows when ≥2 session modules exist to compare.
     private var weakestModule: ModuleScore? {
-        moduleScores.min { $0.score < $1.score }
+        let sessionScores = moduleScores.filter { sessionModuleIds.contains($0.id) && $0.score > 0 }
+        guard sessionScores.count > 1 else { return nil }
+        return sessionScores.min { $0.score < $1.score }
     }
 
     private var useRadar: Bool { moduleScores.count >= 3 }
@@ -297,6 +305,7 @@ struct DailyInsightView: View {
         overallScore: 68,
         scoreDelta: 7,
         moduleScores: Array(scores),
+        sessionModuleIds: Set(modules.prefix(4).map(\.id)),
         sessionCorrect: 7,
         sessionTotal: 10,
         sessionTimeString: "02:34",

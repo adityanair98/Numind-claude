@@ -14,6 +14,8 @@ struct SpeedDrillView: View {
     @State private var sessionVM: QuizSessionViewModel? = nil
     @State private var isNewPersonalBest = false
     @State private var newBadgeIds: Set<String> = []
+    @State private var sessionNumindScore: Int = 0
+    @State private var sessionScoreDelta: Int = 0
 
     var body: some View {
         NavigationStack {
@@ -41,6 +43,8 @@ struct SpeedDrillView: View {
                     viewModel: vm,
                     isPersonalBest: isNewPersonalBest,
                     newBadgeIds: newBadgeIds,
+                    numindScore: sessionNumindScore,
+                    scoreDelta: sessionScoreDelta,
                     onContinue: { dismiss() },
                     onRetry:    { retryDrill() }
                 )
@@ -100,6 +104,8 @@ struct SpeedDrillView: View {
             isNewPersonalBest = false
         }
 
+        let scoreBefore = progressStore.numindScore
+
         var record = SessionRecord(
             id: UUID(),
             lessonId: "speed_drill",
@@ -112,6 +118,8 @@ struct SpeedDrillView: View {
         record.bonusXP         = vm.bonusXP
         progressStore.recordSession(record)
         newBadgeIds = progressStore.newlyEarnedBadgeIds
+        sessionNumindScore = progressStore.numindScore
+        sessionScoreDelta = progressStore.numindScore - scoreBefore
 
         phase = .summary
     }

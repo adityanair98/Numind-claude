@@ -64,11 +64,13 @@ struct LearnView: View {
     // ═══════════════════════════════════════════════════════════════
 
     private var learnHeader: some View {
+        // Count only lesson nodes — exclude review/checkpoint nodes so the
+        // denominator matches the Practice tab's count.
         let totalMastered = viewModel.sections.reduce(0) { acc, section in
-            acc + section.nodes.filter { $0.state == .mastered }.count
+            acc + section.nodes.filter { !$0.isReview && $0.state == .mastered }.count
         }
         let totalLessons = viewModel.sections.reduce(0) { acc, section in
-            acc + section.nodes.count
+            acc + section.nodes.filter { !$0.isReview }.count
         }
         return LearnHeader(totalMastered: totalMastered, totalLessons: totalLessons)
     }
@@ -80,8 +82,9 @@ struct LearnView: View {
     private func worldBanner(_ section: LearnViewModel.PathSection, sectionIndex: Int) -> some View {
         let accent   = section.module.color.tintColor
         let tint     = section.module.color.tintBackground
-        let mastered = section.nodes.filter { $0.state == .mastered }.count
-        let total    = section.nodes.count
+        let lessonNodes = section.nodes.filter { !$0.isReview }
+        let mastered = lessonNodes.filter { $0.state == .mastered }.count
+        let total    = lessonNodes.count
         let pct      = total > 0 ? CGFloat(mastered) / CGFloat(total) : 0
         let isComplete = mastered == total && total > 0
 

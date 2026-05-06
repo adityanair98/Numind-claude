@@ -1,6 +1,6 @@
 # Quiz Engine
 
-> **Last updated:** May 2026 (after M56).
+> **Last updated:** May 2026 (after M60 — Game Modes expansion, Estimation mode, True/False generation, Comparison generation).
 
 ## Principle
 Questions are generated from templates, not hardcoded. Each quiz session produces different numbers, different answer choices, and different question order - even when replaying the same lesson.
@@ -142,6 +142,52 @@ All formulas live in `QuizEngine.swift` as `[String: ([String: Double]) -> Doubl
 | `roundedNeighbor` | Correct +/- small deltas (0.5, 1.0, 1.5, 2.0, etc.) |
 | `offByDecimal` | Correct x10, /10, and similar decimal-shift errors |
 | `commonMistake` | Context-specific mistakes (e.g., dividing tip before adding to bill) |
+
+## Estimation Mode
+
+Estimation questions use a slider instead of MCQ options. The system generates adaptive slider ranges and grades by proximity.
+
+### Slider Range Computation (`SliderRange.compute`)
+1. Spread factor: `1.6 × correctValue` defines the total slider range width.
+2. Anti-center positioning: the correct answer is placed in either the lower band (18–38%) or upper band (62–82%) of the slider — never near the center. This prevents gaming the midpoint.
+3. Nice-number snapping: min/max are snapped to "nice" boundaries based on magnitude and format.
+4. Step size: computed to yield ~40–80 discrete stops. A validation loop caps stops at ≤120.
+5. Minimum range width enforced: $5 for currency, 10 for percent, 5 for integer.
+
+### Grading (`EstimationGrade`)
+| Grade | Error threshold | Stars | Label |
+|---|---|---|---|
+| Perfect | ≤ 5% | 3 | "Nailed it!" |
+| Good | ≤ 15% | 2 | "Good estimate" |
+| Okay | ≤ 30% | 1 | "Close enough" |
+| Miss | > 30% | 0 | "Off the mark" |
+
+Error = `|estimate - correct| / |correct|`. A question with ≥2 stars is considered "correct" for session recording.
+
+### Difficulty Filter
+`EstimationViewModel.generateItems()` filters templates to `difficulty >= 2` first. Falls back to all templates if fewer than `count` medium-hard templates are available.
+
+### Timer
+10-second countdown per question. Timer expiry auto-submits the current slider position (or scores as miss if slider was never dragged).
+
+## True/False Generation
+
+`TrueFalseViewModel.generateItems(from:count:)` builds true/false items from quiz templates:
+
+1. Pick `count` templates (default 20), shuffled.
+2. For each template, generate a question via `QuizEngine.generate()`.
+3. Randomly assign as true (show correct answer) or false (show a distractor value).
+4. The statement combines the prompt with the answer value (e.g. "20% tip on $80 = $16.00").
+5. Fingerprint-based deduplication prevents identical statements.
+
+## Comparison Generation
+
+`ComparisonViewModel.generatePairs(from:count:)` builds comparison pairs:
+
+1. Shuffle template pool.
+2. Pick pairs of different templates, generate a question from each.
+3. Each pair shows two prompts side-by-side — the player taps the one with the larger answer.
+4. 15 pairs per session, 8-second countdown per question.
 
 ## Content Stats (as of M56)
 - **8 modules**, **37 lessons**, **187 templates**

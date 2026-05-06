@@ -76,6 +76,66 @@ final class ProgressStore: ObservableObject {
         persist()
     }
 
+    // MARK: - Streak mode personal best
+
+    var streakModeBest: Int { data.streakModeBestScore }
+
+    func updateStreakBest(score: Int) {
+        guard score > data.streakModeBestScore else { return }
+        data.updateStreakBest(score: score)
+        persist()
+    }
+
+    // MARK: - Speed Drill personal best
+
+    var speedDrillBest: Int { data.speedDrillBestScore }
+
+    func updateSpeedDrillBest(score: Int) {
+        guard score > data.speedDrillBestScore else { return }
+        data.updateSpeedDrillBest(score: score)
+        persist()
+    }
+
+    // MARK: - Recall personal best
+
+    var recallBest: Int { data.recallBestScore }
+
+    func updateRecallBest(score: Int) {
+        guard score > data.recallBestScore else { return }
+        data.updateRecallBest(score: score)
+        persist()
+    }
+
+    // MARK: - True/False personal best
+
+    var trueFalseBest: Int { data.trueFalseBestScore }
+
+    func updateTrueFalseBest(score: Int) {
+        guard score > data.trueFalseBestScore else { return }
+        data.updateTrueFalseBest(score: score)
+        persist()
+    }
+
+    // MARK: - Estimation personal best
+
+    var estimationBest: Int { data.estimationBestScore }
+
+    func updateEstimationBest(score: Int) {
+        guard score > data.estimationBestScore else { return }
+        data.updateEstimationBest(score: score)
+        persist()
+    }
+
+    // MARK: - Comparison personal best
+
+    var comparisonBest: Int { data.comparisonBestScore }
+
+    func updateComparisonBest(score: Int) {
+        guard score > data.comparisonBestScore else { return }
+        data.updateComparisonBest(score: score)
+        persist()
+    }
+
     // MARK: - Computed (forwarded from ProgressData)
 
     var streak: Int               { data.computeStreak() }
@@ -173,10 +233,10 @@ final class ProgressStore: ObservableObject {
     ///
     /// - Parameter moduleIds: All known module IDs (from `ContentRepository.allModules()`).
     func recomputeAndStoreScore(moduleIds: [String]) {
-        let sessions = data.sessions
+        let scoringSessions = sessionsWithDrillAttribution()
         var moduleScores: [String: Int] = [:]
         for id in moduleIds {
-            moduleScores[id] = NumindScoreEngine.score(for: id, sessions: sessions)
+            moduleScores[id] = NumindScoreEngine.score(for: id, sessions: scoringSessions)
         }
         let overall = moduleIds.isEmpty ? 0
             : moduleScores.values.reduce(0, +) / moduleIds.count
@@ -189,5 +249,39 @@ final class ProgressStore: ObservableObject {
         data.scoreHistory.removeAll { $0.date < horizon }
 
         persist()
+    }
+
+    // MARK: - Drill attribution
+
+    /// Returns all sessions with "mixed" drill sessions split into per-module
+    /// virtual sessions so the score engine can attribute questions to their
+    /// source modules. Non-mixed sessions pass through unchanged.
+    private func sessionsWithDrillAttribution() -> [SessionRecord] {
+        let repo = LocalContentRepository()
+        var result = data.sessions.filter { $0.moduleId != "mixed" }
+
+        for session in data.sessions where session.moduleId == "mixed" {
+            // Group question results by their source module.
+            var moduleGroups: [String: [QuestionResult]] = [:]
+            for qr in session.questionResults {
+                if let mod = repo.module(forTemplateId: qr.templateId) {
+                    moduleGroups[mod.id, default: []].append(qr)
+                }
+            }
+            // Create one virtual session per module.
+            for (modId, results) in moduleGroups {
+                var sub = SessionRecord(
+                    id: UUID(),
+                    lessonId: session.lessonId,
+                    moduleId: modId,
+                    date: session.date,
+                    correctCount: results.filter(\.isCorrect).count,
+                    totalCount: results.count
+                )
+                sub.questionResults = results
+                result.append(sub)
+            }
+        }
+        return result
     }
 }

@@ -188,10 +188,36 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
             return
         }
         var built: [QuizQuestion] = []
-        var idx = 0
+        var usedFingerprints: Set<String> = []
+
+        // Fingerprint = prompt + scenario combined. Many scenario-based templates
+        // keep the prompt static and only vary variables in the scenario text,
+        // so prompt-only dedup would treat every roll as a duplicate.
+        func fingerprint(_ q: QuizQuestion) -> String {
+            q.prompt + "|" + (q.scenario ?? "")
+        }
+
+        // First pass: one question per unique template — guarantees variety.
+        for template in ordered {
+            let q = QuizEngine.generate(from: template)
+            usedFingerprints.insert(fingerprint(q))
+            built.append(q)
+        }
+
+        // Second pass: fill remaining slots by reusing templates, re-rolling
+        // variables up to 10× to avoid duplicate fingerprints in the same session.
+        var reuseIdx = 0
         while built.count < Self.targetQuestionCount {
-            built.append(QuizEngine.generate(from: ordered[idx % ordered.count]))
-            idx += 1
+            let template = ordered[reuseIdx % ordered.count]
+            var q = QuizEngine.generate(from: template)
+            var attempts = 1
+            while usedFingerprints.contains(fingerprint(q)) && attempts < 10 {
+                q = QuizEngine.generate(from: template)
+                attempts += 1
+            }
+            usedFingerprints.insert(fingerprint(q))
+            built.append(q)
+            reuseIdx += 1
         }
         built.shuffle()
         questions = built

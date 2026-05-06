@@ -1,6 +1,6 @@
 # User Flows
 
-> **Last updated:** May 2026 (after M57 — Game Modes: Speed Drill, Blitz, Enhanced Daily Challenge).
+> **Last updated:** May 2026 (after M60 — Game Modes expansion, Practice drills, Celebration effects).
 
 ## Overview
 
@@ -266,23 +266,186 @@ Blitz uses its own `BlitzViewModel` and `BlitzView` — the lifecycle (auto-adva
 
 ---
 
+## Flow 14: Streak Mode
+
+```
+Home tab or Practice tab: "Streak" mode card (locked until ≥1 lesson mastered)
+→ MasteredTemplatePool.mcqTemplates(from:progressData) builds question pool
+→ ~40 MCQ questions generated (large pool since game can go long)
+→ StreakViewModel created (previousBest: progressStore.streakModeBest)
+→ StreakView presented as .fullScreenCover
+
+Playing phase:
+→ Question displayed with MCQ options
+→ Correct answer: streak counter increments, next question loads
+→ Wrong answer: game over → state = .gameOver → summary phase
+→ No timer per question — speed is not the constraint, accuracy is
+
+Summary phase (on state == .gameOver):
+→ Summary shown inline (no new fullScreenCover)
+→ Shows: streak count (large number), personal best badge (if isNewBest), confetti burst (if isNewBest), stats card (streak count, XP earned), Numind Score delta
+→ "Try again" → generates new question pool → viewModel.reset() → back to playing
+→ "Done" → recordSession() + updateStreakBest() → dismiss
+
+Session recording:
+→ SessionRecord saved (lessonId: "streak_mode", moduleId: "mixed", correctCount: streakCount, totalCount: results.count)
+→ progressStore.updateStreakBest(score:) updates persistent personal best
+```
+
+---
+
+## Flow 15: True/False (Snap)
+
+```
+Home tab or Practice tab: "True/False" mode card (locked until ≥1 lesson mastered)
+→ TrueFalseViewModel.generateItems(from:templates, count: 20) builds 20 items
+   → Half show the correct answer (isTrue = true), half show a distractor value (isTrue = false)
+   → Each item: statement text, scenario, correct value, answer format
+→ TrueFalseViewModel created (items: items, previousBest: progressStore.trueFalseBest)
+→ TrueFalseView presented as .fullScreenCover
+
+Playing phase:
+→ Statement displayed (e.g. "20% tip on $80 = $16.00")
+→ Optional scenario context card above statement
+→ Two buttons: True / False
+→ Tap → .flashing(Bool) state for brief feedback → auto-advance to next item
+→ After 20 items → state = .complete
+
+Summary phase:
+→ Summary shown inline with score (N/20 correct), XP earned
+→ Personal best badge + confetti if isNewBest
+→ Numind Score delta card
+→ "Done" → dismiss
+
+Session recording:
+→ SessionRecord saved (lessonId: "true_false", moduleId: "mixed")
+→ progressStore.updateTrueFalseBest(score:) updates persistent personal best
+```
+
+---
+
+## Flow 16: Estimation
+
+```
+Home tab or Practice tab: "Estimate" mode card (locked until ≥1 lesson mastered)
+→ EstimationViewModel.generateItems(from:templates, count: 10)
+   → Filters to difficulty ≥ 2 first, falls back to all if not enough
+   → SliderRange.compute() generates adaptive slider bounds with anti-center positioning
+     (correct answer placed in 18–38% OR 62–82% of slider range, never near center)
+→ EstimationViewModel created (items: items, previousBest: progressStore.estimationBest)
+→ EstimationView presented as .fullScreenCover
+
+Playing phase:
+→ 10-second countdown timer per question (draining bar, color: teal > orange > red)
+→ Prompt card with optional scenario context
+→ EstimationSlider: custom slider with step snapping, floating callout, endpoint labels
+→ "Drag to estimate" hint until first drag
+→ "Lock it in" button (disabled until slider dragged)
+→ On submit or timer expiry:
+   → Grade by proximity: ≤5% = perfect (3★), ≤15% = good (2★), ≤30% = okay (1★), >30% = miss (0★)
+   → Feedback banner shows grade, stars, correct answer, error band on slider
+   → "Next" button → advance to next question
+→ After 10 questions → state = .complete
+
+Summary phase:
+→ Shows: total stars (N/30), XP earned (5 XP per star)
+→ Personal best badge + confetti if isNewBest
+→ Numind Score delta card
+→ "Done" → dismiss
+
+Session recording:
+→ SessionRecord saved (lessonId: "estimation", moduleId: "mixed", correctCount: questions with ≥2 stars)
+→ progressStore.updateEstimationBest(score:) updates persistent personal best
+```
+
+---
+
+## Flow 17: Comparison
+
+```
+Home tab or Practice tab: "Compare" mode card (locked until ≥1 lesson mastered)
+→ ComparisonViewModel.generatePairs(from:templates, count: 15)
+   → Each pair uses two different templates, generating two questions with different values
+→ ComparisonViewModel created (pairs: pairs, previousBest: progressStore.comparisonBest)
+→ ComparisonView presented as .fullScreenCover
+
+Playing phase:
+→ 8-second countdown timer per question
+→ Two prompt cards side by side (A and B)
+→ Player taps the side with the larger answer
+→ On tap or timeout:
+   → .flashing(Bool) for brief feedback → auto-advance
+→ After 15 pairs → state = .complete
+
+Summary phase:
+→ Shows: score (N/15 correct), XP earned
+→ Personal best badge + confetti if isNewBest
+→ Numind Score delta card
+→ "Done" → dismiss
+
+Session recording:
+→ SessionRecord saved (lessonId: "comparison", moduleId: "mixed")
+→ progressStore.updateComparisonBest(score:) updates persistent personal best
+```
+
+---
+
+## Flow 18: High Score Celebration
+
+```
+Any game mode summary screen
+→ ViewModel.isNewBest computed (score > previousBest && score > 0)
+→ If isNewBest:
+   → ConfettiBurst overlay fires (60 particles, Canvas + TimelineView, 3s duration)
+   → NewBestBadge appears with spring bounce-in animation (trophy icon + "New personal best!")
+   → Haptic feedback (.success)
+→ If not isNewBest but previousBest > 0:
+   → "Personal best: N" text shown in muted style
+→ Celebration is purely visual — does not block interaction or navigation
+
+The previousBest value is captured at ViewModel creation time (before the session is recorded), ensuring accurate comparison.
+```
+
+---
+
 ## Flow 11: Practice Tab
 
 ```
 Practice tab
-→ Module tab strip shows all 8 modules
-→ Tap module tab → module header card and lesson list update (animated .easeInOut)
-→ "Surprise Me" dice button (header card, top-right)
-   → random lesson selected from current module
-   → LessonView presented as .fullScreenCover
-→ Lesson row tap → LessonView presented as .fullScreenCover
-→ Lesson completion → dismiss LessonView → back to Practice tab
-   → lesson row updates status (index circle, subtitle, status icon)
+→ PracticeView
 ```
 
-**No mastery gating.** All lessons in the Practice tab are accessible regardless of Learn tab progression. Tapping any row launches the lesson directly — there is no path node state check.
+**Layout (top -> bottom):**
+1. Practice header with Numind wordmark + mastery pill (N/37 mastered)
+2. Module tab strip (horizontally scrollable, 64pt rounded-square tiles with module mascots)
+3. Module spotlight card (shown when specific module selected -- module stats, accuracy, sessions)
+4. Hero quiz card (mixed-mode or module-specific quick quiz, "Start Mixed Round" / "Start Quick Quiz")
+5. Drills section -- 7 game-mode drill cards in a 3-column grid:
+   - Row 1: Speed Drill, Blitz Mode, Recall
+   - Row 2: Streak, True/False, Estimate
+   - Row 3: Compare (+ 2 spacers)
 
-**Practice vs. Learn.** The Learn tab enforces a gated quest-journey path. The Practice tab is a free-browse companion — users can revisit any lesson, drill specific modules, or explore ahead without unlocking.
+**Drill cards:**
+- Gradient-filled cards with icon tile, title, subtitle
+- Decorative orb (70pt circle, bottom-right) shows personal best score when > 0
+- Small decorative orb (24pt, top area) is always purely decorative
+- Locked state: muted gradient, lock icon, hit testing disabled
+- All modes gated by MasteredTemplatePool.hasUnlockedModes()
+
+**Module selection:**
+- "All" tab (default): pulls from all mastered templates
+- Specific module tab: scopes quiz and drills to that module's templates
+- Module spotlight card appears with module-specific stats (score, accuracy, sessions)
+
+**Quick quiz (hero card):**
+- 10 questions from mastered templates (module-scoped or all)
+- Uses standard QuizSessionViewModel + PracticeQuizContainer
+- No personal best tracking for quick quiz
+
+**Drill launches:**
+- Each drill card launches its respective mode as .fullScreenCover
+- PracticeQuizContainer wraps Speed Drill and Recall with score tracking
+- Other modes use their dedicated Views (StreakView, TrueFalseView, EstimationView, ComparisonView)
 
 ---
 
@@ -298,9 +461,17 @@ RootTabView
 │   │   └── SessionSummaryView (summary phase)
 │   │       └── → QuizSessionView (.fullScreenCover, review mistakes)
 │   ├── → QuizSessionView (.fullScreenCover, daily challenge — 10q, mastered pool)
-│   ├── → QuizSessionView (.fullScreenCover, Speed Drill — 8q, 15s timer, mastered MCQ pool)
-│   └── → BlitzView (.fullScreenCover)
-│       └── BlitzSummaryView (inline phase within BlitzView)
+│   ├── → QuizSessionView (.fullScreenCover, Speed Drill — 8q, 15s timer)
+│   ├── → BlitzView (.fullScreenCover)
+│   │   └── BlitzSummaryView (inline phase) + ConfettiBurst (if isNewBest)
+│   ├── → StreakView (.fullScreenCover)
+│   │   └── Summary (inline phase) + ConfettiBurst (if isNewBest)
+│   ├── → TrueFalseView (.fullScreenCover)
+│   │   └── Summary (inline phase) + ConfettiBurst (if isNewBest)
+│   ├── → EstimationView (.fullScreenCover)
+│   │   └── Summary (inline phase) + ConfettiBurst (if isNewBest)
+│   └── → ComparisonView (.fullScreenCover)
+│       └── Summary (inline phase) + ConfettiBurst (if isNewBest)
 ├── Learn (NavigationStack)
 │   ├── → LessonView (.fullScreenCover)
 │   │   └── (same as above)
@@ -309,8 +480,12 @@ RootTabView
 │       ├── LevelUpView (.fullScreenCover, optional)
 │       └── SessionSummaryView (summary phase)
 ├── Practice (NavigationStack)
-│   └── → LessonView (.fullScreenCover)  [any lesson, no gating]
-│       └── (same as Learn → LessonView above)
+│   ├── → PracticeQuizContainer (.fullScreenCover, quick quiz / speed drill / recall)
+│   │   └── Summary (inline) + ConfettiBurst (if isNewBest)
+│   ├── → StreakView (.fullScreenCover)
+│   ├── → TrueFalseView (.fullScreenCover)
+│   ├── → EstimationView (.fullScreenCover)
+│   └── → ComparisonView (.fullScreenCover)
 ├── Progress (NavigationStack)
 │   ├── → SkillDetailView (NavigationLink)
 │   └── → ProfileView (.sheet)

@@ -6,6 +6,10 @@ struct SessionSummaryView: View {
     @ObservedObject var viewModel: QuizSessionViewModel
     let isPersonalBest: Bool
     let newBadgeIds: Set<String>
+    /// Current overall Numind Score after this session was recorded.
+    let numindScore: Int
+    /// How the score changed this session (positive = improvement).
+    let scoreDelta: Int
     let onContinue: () -> Void
     /// Called when the user wants to retry the quiz with fresh questions.
     /// Only shown when mastery threshold was not met.
@@ -87,6 +91,7 @@ struct SessionSummaryView: View {
             VStack(spacing: Theme.Spacing.sectionSpacing) {
                 resultHeader
                 statsCard
+                if numindScore > 0 { scoreCard }
                 masteryBanner
                 if !newBadgeIds.isEmpty { newBadgesSection }
                 recapSection
@@ -252,6 +257,46 @@ struct SessionSummaryView: View {
                 .kerning(0.6)
         }
         .frame(maxWidth: .infinity)
+    }
+
+    // MARK: - Score card
+
+    private var scoreCard: some View {
+        let tier = ScoreTier(score: numindScore)
+        return NumindCard {
+            HStack(spacing: 14) {
+                NumindScoreRing(score: numindScore, size: 52)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(tier.name)
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundStyle(tier.color)
+
+                    if scoreDelta != 0 {
+                        let isUp = scoreDelta > 0
+                        HStack(spacing: 4) {
+                            Image(systemName: isUp ? "arrow.up.right" : "arrow.down.right")
+                                .font(.system(size: 11, weight: .bold))
+                            Text("\(isUp ? "+" : "")\(scoreDelta) pts this session")
+                                .font(.system(size: 13, weight: .bold))
+                        }
+                        .foregroundStyle(isUp ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+                    } else {
+                        Text("Score unchanged")
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                }
+
+                Spacer()
+
+                Text("NUMIND\nSCORE")
+                    .font(.system(size: 9, weight: .heavy))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .tracking(0.5)
+                    .multilineTextAlignment(.trailing)
+            }
+        }
     }
 
     // MARK: - Mastery banner (pass only)

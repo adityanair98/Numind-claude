@@ -19,9 +19,15 @@ enum CheckpointQuizEngine {
         guard !allTemplates.isEmpty else { return [] }
 
         // Round-robin through lessons so every lesson is represented roughly equally.
+        // Fingerprint = prompt + scenario to catch templates that only vary in scenario.
         var questions: [QuizQuestion] = []
+        var usedFingerprints: Set<String> = []
         var lessonIdx = 0
         var localIdx  = [Int](repeating: 0, count: perLesson.count)
+
+        func fingerprint(_ q: QuizQuestion) -> String {
+            q.prompt + "|" + (q.scenario ?? "")
+        }
 
         while questions.count < targetCount {
             // Skip empty lessons.
@@ -34,7 +40,15 @@ enum CheckpointQuizEngine {
             let bucket = perLesson[lessonIdx % perLesson.count]
             if !bucket.isEmpty {
                 let templatePos = localIdx[lessonIdx % perLesson.count] % bucket.count
-                questions.append(QuizEngine.generate(from: bucket[templatePos]))
+                let template = bucket[templatePos]
+                var q = QuizEngine.generate(from: template)
+                var rerollAttempts = 1
+                while usedFingerprints.contains(fingerprint(q)) && rerollAttempts < 10 {
+                    q = QuizEngine.generate(from: template)
+                    rerollAttempts += 1
+                }
+                usedFingerprints.insert(fingerprint(q))
+                questions.append(q)
                 localIdx[lessonIdx % perLesson.count] += 1
             }
             lessonIdx += 1

@@ -16,6 +16,8 @@ struct CheckpointView: View {
     @State private var sessionVM: QuizSessionViewModel? = nil
     @State private var isNewPersonalBest = false
     @State private var newBadgeIds: Set<String> = []
+    @State private var sessionNumindScore: Int = 0
+    @State private var sessionScoreDelta: Int = 0
     @State private var pendingLevelUp: LevelUpInfo? = nil
 
     var body: some View {
@@ -48,6 +50,8 @@ struct CheckpointView: View {
                     viewModel: vm,
                     isPersonalBest: isNewPersonalBest,
                     newBadgeIds: newBadgeIds,
+                    numindScore: sessionNumindScore,
+                    scoreDelta: sessionScoreDelta,
                     onContinue: { dismiss() },
                     onRetry:    { retryQuiz() }
                 )
@@ -92,8 +96,9 @@ struct CheckpointView: View {
             isNewPersonalBest = false
         }
 
-        // Level-up detection for the owning module — capture BEFORE recording.
+        // Capture level and score BEFORE recording.
         let prevLevel = progressStore.skillLevel(moduleId: module.id)
+        let scoreBefore = progressStore.numindScore
 
         var record = SessionRecord(
             id: UUID(),
@@ -107,6 +112,8 @@ struct CheckpointView: View {
         record.bonusXP         = vm.bonusXP
         progressStore.recordSession(record)
         newBadgeIds = progressStore.newlyEarnedBadgeIds
+        sessionNumindScore = progressStore.numindScore
+        sessionScoreDelta = progressStore.numindScore - scoreBefore
 
         // Level-up ceremony only fires when the user actually mastered the review.
         if didMasterThisSession {

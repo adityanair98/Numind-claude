@@ -1,6 +1,6 @@
 # Numind PRD Summary
 
-> **Last updated:** May 2026 (after M56).
+> **Last updated:** May 2026 (after M60 — Game Modes expansion, Practice drills, Celebration effects).
 
 ## Product Thesis
 Numind is an iOS-first daily training app for practical number fluency.
@@ -120,11 +120,27 @@ When a module level increases, a full-screen animated celebration appears before
 Progress tab shows a 4-week XP bar chart with "Best week!" indicator.
 
 ### Personal Bests
-Session summaries flag new personal bests per lesson (higher correct count or XP).
+Personal bests tracked per game mode: Speed Drill, Blitz, Recall, Streak, True/False, Estimation, Comparison. Displayed as decorative orb overlays on Practice tab drill cards. Summary screens show "New personal best!" badge with confetti burst animation when a new best is achieved.
+
+### Numind Score
+Composite score per module and overall, calculated by NumindScoreEngine. Score tiers displayed via NumindScoreRing in all game mode summary views with score delta (up/down change from session).
+
+### High Score Celebration
+When a user achieves a new personal best in any game mode, the summary screen shows:
+- ConfettiBurst particle animation (Canvas + TimelineView, 60 particles, 3-second duration)
+- NewBestBadge trophy capsule with spring bounce-in animation
+- Previous best comparison text (when applicable)
 
 ## Session Types
 - **Lesson quiz:** 8 questions from that lesson's 5 templates
 - **Checkpoint review:** 8 questions round-robined across 3 lessons' templates
+- **Speed Drill:** 8 MCQ questions, 15s per question countdown timer
+- **Blitz:** 60-second sprint, auto-advance on tap, no feedback phase
+- **Recall:** Review mode targeting previously missed questions
+- **Streak:** Consecutive correct answers, one miss ends the game
+- **True/False (Snap):** 20 rapid-fire true/false statements
+- **Estimation:** 10 slider-based proximity questions, 10s timer per question, 3-star grading
+- **Comparison:** 15 side-by-side pairs, 8s per question, tap the larger answer
 
 ## Lessons
 Each lesson is a micro-primer, not long content.
@@ -193,6 +209,14 @@ Currently implemented:
 - Personal bests and weekly leaderboard
 - Session summary with retry flow
 - Level-up ceremony
+- 7 game modes (Speed Drill, Blitz, Recall, Streak, True/False, Estimation, Comparison)
+- Practice tab with module spotlight, hero quiz card, and 7 drill cards
+- Home tab with horizontally scrollable 6-mode cards
+- Personal best tracking for all game modes with decorative orb display
+- High score celebration (confetti + badge) across all modes
+- Numind Score with tier system and score ring display
+- Estimation slider with anti-center positioning and proximity grading
+- previousBest/isNewBest pattern on all game mode ViewModels
 
 Not built yet:
 - backend (Supabase)

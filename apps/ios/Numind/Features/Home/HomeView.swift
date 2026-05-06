@@ -8,7 +8,11 @@ struct HomeView: View {
     @State private var bonusRoundVM: QuizSessionViewModel? = nil
     @State private var showSpeedDrill = false
     @State private var blitzVM: BlitzViewModel? = nil
-    @State private var insightLesson: Lesson? = nil   // built when daily challenge ends
+    @State private var streakVM: StreakViewModel? = nil
+    @State private var trueFalseVM: TrueFalseViewModel? = nil
+    @State private var estimationVM: EstimationViewModel? = nil
+    @State private var comparisonVM: ComparisonViewModel? = nil
+    // insightLesson is now computed inline in insightView(for:) from the session's modules
     @State private var showInsight = false
     @State private var insightSessionVM: QuizSessionViewModel? = nil   // retained while sheet shows
     @State private var lastDailyCorrectCount: Int = 0
@@ -61,8 +65,6 @@ struct HomeView: View {
                     )
                     lastDailyCorrectCount = vm.correctCount
                     progressStore.markDailyChallengeCompleted()
-                    // Resolve lesson recommendation for the weakest module
-                    insightLesson = resolveInsightLesson()
                     insightSessionVM = vm
                     dailyVM = nil
                     showInsight = true
@@ -72,7 +74,6 @@ struct HomeView: View {
         // Post-daily-challenge insight sheet
         .sheet(isPresented: $showInsight, onDismiss: {
             insightSessionVM = nil
-            insightLesson = nil
             viewModel.refresh(using: progressStore)
         }) {
             if let vm = insightSessionVM {
@@ -101,6 +102,29 @@ struct HomeView: View {
                 BlitzEngine.generateQuestionQueue(from: progressStore.data)
             }
             .environmentObject(progressStore)
+        }
+        // Streak launch
+        .fullScreenCover(item: $streakVM) { vm in
+            StreakView(
+                viewModel: vm,
+                generateQuestions: { generateMCQQuestions(count: 40) }
+            )
+            .environmentObject(progressStore)
+        }
+        // True/False launch
+        .fullScreenCover(item: $trueFalseVM) { vm in
+            TrueFalseView(viewModel: vm)
+                .environmentObject(progressStore)
+        }
+        // Estimation launch
+        .fullScreenCover(item: $estimationVM) { vm in
+            EstimationView(viewModel: vm)
+                .environmentObject(progressStore)
+        }
+        // Comparison launch
+        .fullScreenCover(item: $comparisonVM) { vm in
+            ComparisonView(viewModel: vm)
+                .environmentObject(progressStore)
         }
         // Score detail sheet
         .sheet(isPresented: $showScoreDetail) {
@@ -393,14 +417,19 @@ struct HomeView: View {
                 previousScore: progressStore.numindScoreHistory(for: m.id, daysAgo: 7)
             )
         }
+        // Derive which modules appeared in this session's questions.
+        let sessionModuleIds: Set<String> = Set(
+            vm.questionResults.compactMap { repo.module(forTemplateId: $0.templateId)?.id }
+        )
         DailyInsightView(
             overallScore: progressStore.numindScore,
             scoreDelta: progressStore.numindScoreDelta,
             moduleScores: moduleScores,
+            sessionModuleIds: sessionModuleIds,
             sessionCorrect: vm.correctCount,
             sessionTotal: vm.total,
             sessionTimeString: vm.elapsedTimeString,
-            recommendedLesson: insightLesson,
+            recommendedLesson: resolveInsightLesson(sessionModuleIds: sessionModuleIds),
             onContinue: { showInsight = false },
             onLearnWeakness: { lesson in
                 showInsight = false
@@ -412,17 +441,21 @@ struct HomeView: View {
         )
     }
 
-    /// Finds the first unlearned lesson in the weakest module to surface as a recommendation.
-    private func resolveInsightLesson() -> Lesson? {
+    /// Finds the first unlearned lesson in the weakest module *from the session's question set*.
+    /// This ensures the recommendation is relevant to what the user just practiced.
+    private func resolveInsightLesson(sessionModuleIds: Set<String>) -> Lesson? {
         let modules = repo.allModules()
         guard !modules.isEmpty else { return nil }
-        let weakest = modules.min {
+        // Filter to modules that were actually in this session
+        let sessionModules = modules.filter { sessionModuleIds.contains($0.id) }
+        guard sessionModules.count > 1 else { return nil }
+        let weakest = sessionModules.min {
             progressStore.numindScore(for: $0.id) < progressStore.numindScore(for: $1.id)
         }
         guard let module = weakest else { return nil }
         return repo.lessons(for: module.id)
             .first { !progressStore.hasCompletedLesson($0.id) }
-            ?? repo.lessons(for: module.id).first   // fallback: first lesson even if done
+            ?? repo.lessons(for: module.id).first
     }
 
     private func startDailyChallenge() {
@@ -582,29 +615,62 @@ struct HomeView: View {
 
         return VStack(alignment: .leading, spacing: 12) {
             sectionLabel("Game modes")
-            HStack(spacing: 12) {
-                ModeCard.speedDrill(
-                    bestLabel: speedDrillBestLabel,
-                    locked: locked,
-                    action: { startSpeedDrill() }
-                )
-                ModeCard.blitz(
-                    bestLabel: blitzBestLabel,
-                    locked: locked,
-                    action: { startBlitz() }
-                )
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ModeCard.speedDrill(
+                        bestLabel: bestLabel(for: progressStore.speedDrillBest),
+                        locked: locked,
+                        action: { startSpeedDrill() }
+                    )
+                    .frame(width: 155)
+
+                    ModeCard.blitz(
+                        bestLabel: bestLabel(for: progressStore.blitzBest),
+                        locked: locked,
+                        action: { startBlitz() }
+                    )
+                    .frame(width: 155)
+
+                    ModeCard.streak(
+                        bestLabel: bestLabel(for: progressStore.streakModeBest),
+                        locked: locked,
+                        action: { startStreak() }
+                    )
+                    .frame(width: 155)
+
+                    ModeCard.trueFalse(
+                        bestLabel: bestLabel(for: progressStore.trueFalseBest, suffix: "/20"),
+                        locked: locked,
+                        action: { startTrueFalse() }
+                    )
+                    .frame(width: 155)
+
+                    ModeCard.estimation(
+                        bestLabel: bestLabel(for: progressStore.estimationBest, suffix: " ★"),
+                        locked: locked,
+                        action: { startEstimation() }
+                    )
+                    .frame(width: 155)
+
+                    ModeCard.comparison(
+                        bestLabel: bestLabel(for: progressStore.comparisonBest, suffix: "/15"),
+                        locked: locked,
+                        action: { startComparison() }
+                    )
+                    .frame(width: 155)
+                }
+                .padding(.horizontal, Theme.Spacing.screenHorizontal)
             }
+            // Let scroll bleed to screen edges
+            .padding(.horizontal, -Theme.Spacing.screenHorizontal)
         }
     }
 
-    private var speedDrillBestLabel: String? {
-        progressStore.bestAccuracy(lessonId: "speed_drill")
-            .map { "\(Int($0 * 100))% best accuracy" }
-    }
+    // MARK: - Mode helpers
 
-    private var blitzBestLabel: String? {
-        let best = progressStore.blitzBest
-        return best > 0 ? "Best: \(best) correct" : nil
+    private func bestLabel(for score: Int, suffix: String = "") -> String? {
+        score > 0 ? "Best: \(score)\(suffix)" : nil
     }
 
     private func startSpeedDrill() {
@@ -617,6 +683,40 @@ struct HomeView: View {
         let questions = BlitzEngine.generateQuestionQueue(from: progressStore.data)
         guard !questions.isEmpty else { return }
         blitzVM = BlitzViewModel(questions: questions, previousBest: progressStore.blitzBest)
+    }
+
+    private func startStreak() {
+        guard viewModel.modesUnlocked else { return }
+        let questions = generateMCQQuestions(count: 40)
+        guard !questions.isEmpty else { return }
+        streakVM = StreakViewModel(questions: questions, previousBest: progressStore.streakModeBest)
+    }
+
+    private func startTrueFalse() {
+        guard viewModel.modesUnlocked else { return }
+        let templates = masteredTemplates()
+        guard !templates.isEmpty else { return }
+        let items = TrueFalseViewModel.generateItems(from: templates, count: 20)
+        guard !items.isEmpty else { return }
+        trueFalseVM = TrueFalseViewModel(items: items, previousBest: progressStore.trueFalseBest)
+    }
+
+    private func startEstimation() {
+        guard viewModel.modesUnlocked else { return }
+        let templates = masteredTemplates()
+        guard !templates.isEmpty else { return }
+        let items = EstimationViewModel.generateItems(from: templates, count: 10)
+        guard !items.isEmpty else { return }
+        estimationVM = EstimationViewModel(items: items, previousBest: progressStore.estimationBest)
+    }
+
+    private func startComparison() {
+        guard viewModel.modesUnlocked else { return }
+        let templates = masteredTemplates()
+        guard templates.count >= 2 else { return }
+        let pairs = ComparisonViewModel.generatePairs(from: templates, count: 15)
+        guard !pairs.isEmpty else { return }
+        comparisonVM = ComparisonViewModel(pairs: pairs, previousBest: progressStore.comparisonBest)
     }
 
     // MARK: - Continue learning
@@ -746,6 +846,42 @@ struct HomeView: View {
             .font(Theme.Typography.small)
             .foregroundStyle(Theme.Colors.mutedText)
             .kerning(0.8)
+    }
+
+    /// Templates from mastered lessons, for game modes.
+    private func masteredTemplates() -> [QuizTemplate] {
+        let pool = MasteredTemplatePool.templates(
+            from: progressStore.data,
+            repository: repo
+        )
+        return pool.isEmpty ? repo.allTemplates() : pool
+    }
+
+    /// Generates MCQ questions from mastered templates for game modes.
+    private func generateMCQQuestions(count: Int) -> [QuizQuestion] {
+        let templates = MasteredTemplatePool.mcqTemplates(
+            from: progressStore.data,
+            repository: repo
+        )
+        let pool = templates.isEmpty
+            ? repo.allTemplates().filter { ($0.inputMode ?? .multipleChoice) == .multipleChoice }
+            : templates
+        guard !pool.isEmpty else { return [] }
+
+        var questions: [QuizQuestion] = []
+        var usedFingerprints: Set<String> = []
+        var idx = 0
+        while questions.count < count && idx < count * 3 {
+            let template = pool[idx % pool.count]
+            let q = QuizEngine.generate(from: template)
+            let fp = q.prompt + "|" + (q.scenario ?? "")
+            if !usedFingerprints.contains(fp) {
+                usedFingerprints.insert(fp)
+                questions.append(q)
+            }
+            idx += 1
+        }
+        return questions
     }
 }
 
