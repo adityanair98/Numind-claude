@@ -29,8 +29,6 @@
 	<dict>
 		<key>UIColorName</key>
 		<string>LaunchBackground</string>
-		<key>UIImageName</key>
-		<string></string>
 	</dict>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

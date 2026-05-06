@@ -23,14 +23,10 @@ struct LearnHeader: View {
         .padding(.bottom, 8)
     }
 
-    // MARK: - Top row (wordmark + mastery pill)
+    // MARK: - Top row (mastery pill)
 
     private var topRow: some View {
         HStack {
-            Image("NumindWordmark")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 22)
             Spacer()
             masteryPill
         }

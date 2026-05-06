@@ -17,14 +17,10 @@ struct BrandHeader: View {
         }
     }
 
-    // MARK: - Top row (wordmark + bell)
+    // MARK: - Top row (bell)
 
     private var topRow: some View {
         HStack {
-            Image("NumindWordmark")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 22)
             Spacer()
             bellButton
         }

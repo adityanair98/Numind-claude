@@ -49,10 +49,6 @@ struct ProgressTabView: View {
     private var progressHeader: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
-                Image("NumindWordmark")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 22)
                 Spacer()
                 Button {
                     showProfile = true

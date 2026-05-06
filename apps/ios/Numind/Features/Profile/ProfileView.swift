@@ -243,19 +243,12 @@ struct ProfileView: View {
     // MARK: - Brand footer
 
     private var brandFooter: some View {
-        VStack(spacing: 10) {
-            Image("NumindWordmark")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 20)
-                .opacity(0.55)
-            Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
-                .font(.system(size: 11, weight: .medium))
-                .foregroundStyle(Theme.Colors.mutedText)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.top, 8)
-        .padding(.bottom, 4)
+        Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
+            .font(.system(size: 11, weight: .medium))
+            .foregroundStyle(Theme.Colors.mutedText)
+            .frame(maxWidth: .infinity)
+            .padding(.top, 8)
+            .padding(.bottom, 4)
     }
 
     // MARK: - Notification helpers

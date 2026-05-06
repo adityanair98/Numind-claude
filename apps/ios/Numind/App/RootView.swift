@@ -4,6 +4,7 @@ struct RootView: View {
     @StateObject private var progressStore = ProgressStore()
     @AppStorage("numind.hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @AppStorage("numind.appearance") private var appearanceRaw = "system"
+    @State private var showSplash = true
 
     private var preferredScheme: ColorScheme? {
         switch appearanceRaw {
@@ -14,15 +15,21 @@ struct RootView: View {
     }
 
     var body: some View {
-        Group {
-            if hasCompletedOnboarding {
-                RootTabView()
-                    .environmentObject(progressStore)
-            } else {
-                OnboardingView()
+        ZStack {
+            Group {
+                if hasCompletedOnboarding {
+                    RootTabView()
+                        .environmentObject(progressStore)
+                } else {
+                    OnboardingView()
+                }
+            }
+            .preferredColorScheme(preferredScheme)
+
+            if showSplash {
+                SplashView { showSplash = false }
             }
         }
-        .preferredColorScheme(preferredScheme)
     }
 }
 

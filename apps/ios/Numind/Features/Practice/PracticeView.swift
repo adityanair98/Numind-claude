@@ -112,10 +112,6 @@ struct PracticeView: View {
     private var practiceHeader: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Image("NumindWordmark")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 22)
                 Spacer()
                 masteryPill
             }

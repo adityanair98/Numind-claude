@@ -105,14 +105,6 @@ private struct WelcomePage: View {
             VStack(spacing: 0) {
                 Spacer(minLength: 32)
 
-                // Wordmark — always force dark (white) variant on the navy gradient
-                Image("NumindWordmark")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 22)
-                    .environment(\.colorScheme, .dark)
-                    .padding(.bottom, 24)
-
                 // Abstract hero illustration
                 HeroGraphic()
                     .padding(.bottom, 36)
