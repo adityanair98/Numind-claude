@@ -236,6 +236,7 @@ final class EstimationViewModel: ObservableObject, Identifiable {
     enum EstState: Equatable {
         case playing
         case feedback(EstimationGrade)   // showing how close they were
+        case motivator(MotivatorCheckpoint)  // mid-session checkpoint
         case complete
     }
 
@@ -260,6 +261,9 @@ final class EstimationViewModel: ObservableObject, Identifiable {
     private(set) var results: [QuestionResult] = []
     private var questionStartTime: Date = Date()
     private var timerTask: Task<Void, Never>?
+
+    /// Question indices where full-screen motivators were shown.
+    private var motivatorsShownAt: [Int] = []
 
     var currentItem: EstimationItem? {
         currentIndex < items.count ? items[currentIndex] : nil
@@ -421,17 +425,105 @@ final class EstimationViewModel: ObservableObject, Identifiable {
     }
 
     func advance() {
-        let next = currentIndex + 1
-        if next < items.count {
+        // ── Dismissing a motivator → proceed to next question ──
+        if case .motivator = state {
+            let next = currentIndex + 1
             currentIndex = next
             sliderValue = items[next].sliderConfig.midpoint
             hasDragged = false
             startTimer()
             state = .playing
-        } else {
+            return
+        }
+
+        let next = currentIndex + 1
+
+        // ── HARD CONSTRAINT: never show motivator after the last question ──
+        guard next < items.count else {
             stopTimer()
             state = .complete
             UINotificationFeedbackGenerator().notificationOccurred(.success)
+            return
         }
+
+        // ── Evaluate motivator checkpoint ──
+        // For estimation, "correct" = 2+ stars (good or perfect grade)
+        let correctFlags = results.map(\.isCorrect)
+        if let type = MotivatorEngine.evaluate(
+            correctFlags: correctFlags,
+            totalQuestions: items.count,
+            justAnsweredIndex: currentIndex,
+            motivatorsShownAt: motivatorsShownAt
+        ) {
+            let checkpoint = buildEstimationCheckpoint(type: type)
+            motivatorsShownAt.append(currentIndex)
+            state = .motivator(checkpoint)
+            return
+        }
+
+        // Normal advance
+        currentIndex = next
+        sliderValue = items[next].sliderConfig.midpoint
+        hasDragged = false
+        startTimer()
+        state = .playing
+    }
+
+    // MARK: - Motivator checkpoint builder
+
+    private func buildEstimationCheckpoint(type: MotivatorType) -> MotivatorCheckpoint {
+        var cp = MotivatorCheckpoint(type: type)
+        let answeredCount = results.count
+        let correctCount = results.filter(\.isCorrect).count
+        cp.accuracy = answeredCount > 0 ? Double(correctCount) / Double(answeredCount) : 0
+        cp.total = items.count
+        cp.completed = answeredCount
+
+        switch type {
+        case .momentum:
+            // Count consecutive "correct" (2+ stars) from end
+            var streak = 0
+            for r in results.reversed() {
+                if r.isCorrect { streak += 1 } else { break }
+            }
+            cp.streak = streak
+            let avgTime = results.suffix(streak).map(\.timeSpentSeconds).reduce(0, +) / Double(streak)
+            cp.avgTimeLastN = avgTime
+            let sessionAvg = results.map(\.timeSpentSeconds).reduce(0, +) / Double(results.count)
+            cp.paceImproving = avgTime < sessionAvg
+            let copy = MotivatorCopy.momentum(streak: streak)
+            cp.headline = copy.headline
+            cp.subtitle = copy.subtitle
+            cp.bodyText = copy.body
+            cp.ctaLabel = copy.cta
+
+        case .coaching:
+            // Use generic estimation tips
+            let tip = MotivatorCopy.estimationTips.randomElement()!
+            cp.tipTitle = tip.title
+            cp.tipBody = tip.body
+            let copy = MotivatorCopy.coaching()
+            cp.headline = copy.headline
+            cp.subtitle = copy.subtitle
+            cp.ctaLabel = "Keep going"
+
+        case .progress:
+            let copy = MotivatorCopy.progress(completed: answeredCount, total: items.count)
+            cp.headline = copy.headline
+            cp.subtitle = copy.subtitle
+            cp.bodyText = copy.body
+            cp.ctaLabel = copy.cta
+            cp.avgTime = results.map(\.timeSpentSeconds).reduce(0, +) / Double(results.count)
+
+        case .nearFinish:
+            let remaining = items.count - answeredCount
+            let copy = MotivatorCopy.nearFinish(remaining: remaining)
+            cp.headline = copy.headline
+            cp.subtitle = copy.subtitle
+            cp.bodyText = copy.body
+            cp.ctaLabel = copy.cta
+        }
+
+        return cp
     }
 }

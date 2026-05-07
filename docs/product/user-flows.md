@@ -1,6 +1,6 @@
 # User Flows
 
-> **Last updated:** May 2026 (after M60 — Game Modes expansion, Practice drills, Celebration effects).
+> **Last updated:** May 2026 (after mid-session motivator checkpoints).
 
 ## Overview
 
@@ -12,6 +12,15 @@ All V1 flows are local-only. No auth, no backend, no paywall.
 
 ```
 App opens
+→ SceneDelegate.scene(_:willConnectTo:) fires
+   → Reads "numind.appearance" from UserDefaults (default: "system")
+   → Sets UIWindow.overrideUserInterfaceStyle on all windows
+   → iOS displays correct light/dark LaunchScreen.storyboard instantly
+     (LaunchLogo centered + LaunchWordmark at bottom on LaunchBackground)
+→ SwiftUI loads RootView
+→ SplashView overlays with identical layout (ZStack: logo center, wordmark bottom)
+   → Seamless handoff from storyboard — user sees no transition
+   → After 1.2s hold, fades out (0.35s, slight scale-up) to reveal app
 → RootTabView (4 tabs: Home, Learn, Progress, Profile)
 → Home tab active by default
 → ProgressStore initialized with empty ProgressData
@@ -21,6 +30,10 @@ App opens
 ```
 
 No onboarding in V1. User lands directly on the Home tab.
+
+### Subsequent Cold Starts
+
+iOS caches the launch screen snapshot using the window's trait collection at app backgrounding time. Because `SceneDelegate` sets `overrideUserInterfaceStyle` early, the cached snapshot always matches the user's chosen appearance (light, dark, or system).
 
 ---
 
@@ -42,8 +55,11 @@ Home "Start workout" OR Learn tab node tap
       → Optional: "Show shortcut" hint
       → "Check answer" → feedback phase
       → ResultHero (correct/wrong) + AnswerRevealPill + WhyCard
-      → "Continue" → next question
-   → After question 8: session complete
+      → Optional: InlineEncouragementView overlay (fast/hint/streak correct)
+      → "Continue" → MotivatorEngine.evaluate()
+         → If motivator fires: MotivatorView (full-screen checkpoint) → CTA → next question
+         → If no motivator: next question directly
+   → After question 8: session complete (NEVER a motivator after last question)
 → SessionRecord created and saved to ProgressStore
 → Personal best check (compare before recording)
 → Level-up check (compare skill level before/after recording)
@@ -156,6 +172,44 @@ available → current (first unlocked-unattempted node)
 current → attempted (quiz taken but <75%)
 current → mastered (quiz taken and ≥75%)
 attempted → mastered (retry achieves ≥75%)
+```
+
+---
+
+## Flow 7b: Mid-Session Motivator
+
+```
+During quiz question progression (after feedback, before next question):
+→ MotivatorEngine.evaluate() checks session state
+→ Hard constraint: NEVER fires after the last question
+→ Priority evaluation (first match wins):
+   1. COACHING: 2+ wrong in last 3 → show lesson shortcut + tip + example
+   2. MOMENTUM: 3+ correct streak → show streak count + pace stats
+   3. PROGRESS: at halfway point → show completion count + accuracy + bead rail
+   4. NEAR FINISH: 2 remaining + accuracy ≥ 60% → show accuracy + daily streak
+→ If motivator fires:
+   → sessionState = .motivator(checkpoint)
+   → MotivatorView shown full-screen (illustration + headlines + stats cards + CTA)
+   → Light haptic on appear
+   → User taps CTA ("Keep going" / "Continue" / "Finish strong")
+   → advance() resumes → next question loads
+→ Maximum 2 full-screen motivators per session
+→ Minimum 2-question cooldown between motivators
+```
+
+**Eligible modes:** Lesson Quiz (8q), Daily Challenge (7q), Checkpoint Review (8q), Speed Drill (8q, max 1, no coaching), Estimation (10q).
+**Excluded:** Blitz, Streak, True/False, Comparison (auto-advance, no pause point).
+
+**Inline encouragement (separate):**
+```
+During feedback screen for correct answers:
+→ MotivatorEngine.evaluateInline() checks:
+   → Fast answer (< 5s) OR used hint + still correct OR 3+ streak
+→ If triggered:
+   → InlineEncouragementView overlaid on feedback screen
+   → Non-blocking: auto-dismisses after 2.5s or on "Continue" tap
+   → 3-question cooldown between inline displays
+   → Does NOT count toward 2-motivator cap
 ```
 
 ---
@@ -457,11 +511,13 @@ RootTabView
 │   ├── → LessonView (.fullScreenCover)
 │   │   ├── Lesson phase
 │   │   ├── QuizSessionView (quiz phase)
+│   │   │   ├── MotivatorView (inline phase, max 2 per session)
+│   │   │   └── InlineEncouragementView (overlay on feedback)
 │   │   ├── LevelUpView (.fullScreenCover, optional)
 │   │   └── SessionSummaryView (summary phase)
 │   │       └── → QuizSessionView (.fullScreenCover, review mistakes)
-│   ├── → QuizSessionView (.fullScreenCover, daily challenge — 10q, mastered pool)
-│   ├── → QuizSessionView (.fullScreenCover, Speed Drill — 8q, 15s timer)
+│   ├── → QuizSessionView (.fullScreenCover, daily challenge — 7q, mastered pool)
+│   ├── → QuizSessionView (.fullScreenCover, Speed Drill — 8q, 15s timer, max 1 motivator)
 │   ├── → BlitzView (.fullScreenCover)
 │   │   └── BlitzSummaryView (inline phase) + ConfettiBurst (if isNewBest)
 │   ├── → StreakView (.fullScreenCover)

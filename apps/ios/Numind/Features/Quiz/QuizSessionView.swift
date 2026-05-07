@@ -4,6 +4,7 @@ private let choiceKeys = ["A", "B", "C", "D"]
 
 struct QuizSessionView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var progressStore: ProgressStore
     @ObservedObject var viewModel: QuizSessionViewModel
     let onComplete: () -> Void
 
@@ -57,6 +58,9 @@ struct QuizSessionView: View {
             if case .question = newState {
                 showConfetti = false
             }
+            if case .motivator = newState {
+                showConfetti = false
+            }
         }
     }
 
@@ -102,28 +106,57 @@ struct QuizSessionView: View {
     // MARK: - Scroll content
 
     private var scrollContent: some View {
-        ScrollView {
-            VStack(spacing: Theme.Spacing.sectionSpacing) {
-                beadRail
-                switch viewModel.sessionState {
-                case .question, .answered:
-                    questionContent
-                        .transition(.opacity)
-                case .feedback:
-                    feedbackContent
-                        .transition(.asymmetric(
-                            insertion: .scale(scale: 0.92).combined(with: .opacity),
-                            removal: .opacity
-                        ))
-                case .complete:
-                    EmptyView()
+        Group {
+            if case .motivator(let checkpoint) = viewModel.sessionState {
+                // Motivator takes over the full screen — show with daily streak from ProgressStore
+                motivatorScreen(checkpoint: checkpoint)
+            } else {
+                ScrollView {
+                    VStack(spacing: Theme.Spacing.sectionSpacing) {
+                        beadRail
+                        switch viewModel.sessionState {
+                        case .question, .answered:
+                            questionContent
+                                .transition(.opacity)
+                        case .feedback:
+                            ZStack {
+                                feedbackContent
+                                    .transition(.asymmetric(
+                                        insertion: .scale(scale: 0.92).combined(with: .opacity),
+                                        removal: .opacity
+                                    ))
+                                // Inline encouragement overlay
+                                if let encouragement = viewModel.inlineEncouragement {
+                                    InlineEncouragementView(
+                                        encouragement: encouragement,
+                                        onContinue: { viewModel.advance() }
+                                    )
+                                    .transition(.scale(scale: 0.9).combined(with: .opacity))
+                                }
+                            }
+                        case .complete, .motivator:
+                            EmptyView()
+                        }
+                    }
+                    .animation(.spring(response: 0.38, dampingFraction: 0.72), value: viewModel.sessionState)
+                    .animation(.spring(response: 0.32, dampingFraction: 0.75), value: viewModel.hintRevealed)
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.top, 8)
+                    .padding(.bottom, Theme.Spacing.buttonHeight + 52)
                 }
             }
-            .animation(.spring(response: 0.38, dampingFraction: 0.72), value: viewModel.sessionState)
-            .animation(.spring(response: 0.32, dampingFraction: 0.75), value: viewModel.hintRevealed)
-            .padding(.horizontal, Theme.Spacing.screenHorizontal)
-            .padding(.top, 8)
-            .padding(.bottom, Theme.Spacing.buttonHeight + 52)
+        }
+    }
+
+    /// Full-screen motivator checkpoint with daily streak injected from ProgressStore.
+    private func motivatorScreen(checkpoint: MotivatorCheckpoint) -> some View {
+        var cp = checkpoint
+        // Inject daily streak from ProgressStore for near-finish cards
+        if checkpoint.type == .nearFinish {
+            cp.dailyStreak = progressStore.streak
+        }
+        return MotivatorView(checkpoint: cp) {
+            viewModel.advance()
         }
     }
 
@@ -167,34 +200,19 @@ struct QuizSessionView: View {
                                 .foregroundStyle(Theme.Colors.mutedText)
                         }
 
-                        // Scenario / context block — visually distinct from the question.
-                        // Many questions depend on this setup text to be answerable.
+                        // Context + question flow together naturally.
+                        // Context in normal weight, question in bold.
                         if let scenario = q.scenario {
-                            VStack(alignment: .leading, spacing: 5) {
-                                HStack(spacing: 5) {
-                                    Image(systemName: "info.circle.fill")
-                                        .font(.system(size: 11, weight: .semibold))
-                                        .foregroundStyle(Theme.Colors.primaryBlue)
-                                    Text("CONTEXT")
-                                        .font(.system(size: 10, weight: .bold))
-                                        .foregroundStyle(Theme.Colors.primaryBlue)
-                                        .kerning(0.5)
-                                }
-                                Text(scenario)
-                                    .font(Theme.Typography.body)
-                                    .fontWeight(.medium)
-                                    .foregroundStyle(Theme.Colors.deepNavy)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(12)
-                            .background(Theme.Colors.primaryBlueTint)
-                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                            Text(scenario)
+                                .font(Theme.Typography.body)
+                                .foregroundStyle(Theme.Colors.deepNavy)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .lineSpacing(2)
                         }
 
-                        // Question prompt
                         Text(q.prompt)
-                            .font(Theme.Typography.title)
+                            .font(Theme.Typography.headline)
+                            .fontWeight(.bold)
                             .foregroundStyle(Theme.Colors.deepNavy)
                     }
                 }
@@ -265,12 +283,17 @@ struct QuizSessionView: View {
             NumindCard(background: Theme.Colors.insightYellowTint) {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 8) {
-                        Image(systemName: "lightbulb.fill")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.insightText)
+                        ZStack {
+                            Circle()
+                                .fill(Theme.Colors.insightYellow.opacity(0.25))
+                                .frame(width: 28, height: 28)
+                            Image(systemName: "lightbulb.fill")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.insightText)
+                        }
                         Text("Shortcut")
                             .font(Theme.Typography.small)
-                            .fontWeight(.semibold)
+                            .fontWeight(.bold)
                             .foregroundStyle(Theme.Colors.insightText)
                             .textCase(.uppercase)
                             .kerning(0.6)
@@ -280,6 +303,16 @@ struct QuizSessionView: View {
                         .foregroundStyle(Theme.Colors.deepNavy)
                         .lineSpacing(3)
                 }
+            }
+            .overlay(alignment: .leading) {
+                UnevenRoundedRectangle(
+                    topLeadingRadius: Theme.Radius.card,
+                    bottomLeadingRadius: Theme.Radius.card,
+                    bottomTrailingRadius: 0,
+                    topTrailingRadius: 0
+                )
+                .fill(Theme.Colors.insightYellow)
+                .frame(width: 5)
             }
             .transition(.scale(scale: 0.95).combined(with: .opacity))
         } else {
@@ -337,7 +370,7 @@ struct QuizSessionView: View {
             if q.inputMode == .multipleChoice {
                 optionsRecap(for: q, isCorrect: isCorrect)
             }
-            whyCard(explanation: q.explanation, shortcut: viewModel.lessonShortcut)
+            whyCard(explanation: q.explanation)
         }
     }
 
@@ -413,16 +446,21 @@ struct QuizSessionView: View {
         }
     }
 
-    private func whyCard(explanation: String, shortcut: String) -> some View {
+    private func whyCard(explanation: String) -> some View {
         NumindCard(background: Theme.Colors.insightYellowTint) {
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 8) {
-                    Image(systemName: "lightbulb.fill")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(Theme.Colors.insightText)
+                    ZStack {
+                        Circle()
+                            .fill(Theme.Colors.insightYellow.opacity(0.25))
+                            .frame(width: 28, height: 28)
+                        Image(systemName: "lightbulb.fill")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.insightText)
+                    }
                     Text("Why")
                         .font(Theme.Typography.small)
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                         .foregroundStyle(Theme.Colors.insightText)
                         .textCase(.uppercase)
                         .kerning(0.6)
@@ -430,21 +468,17 @@ struct QuizSessionView: View {
                 Text(explanation)
                     .font(Theme.Typography.body)
                     .foregroundStyle(Theme.Colors.deepNavy)
-
-                // Shortcut reminder
-                Divider()
-                    .background(Theme.Colors.insightYellow.opacity(0.4))
-
-                HStack(alignment: .top, spacing: 6) {
-                    Text("Shortcut:")
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundStyle(Theme.Colors.insightText)
-                    Text(shortcut)
-                        .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(Theme.Colors.deepNavy)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
             }
+        }
+        .overlay(alignment: .leading) {
+            UnevenRoundedRectangle(
+                topLeadingRadius: Theme.Radius.card,
+                bottomLeadingRadius: Theme.Radius.card,
+                bottomTrailingRadius: 0,
+                topTrailingRadius: 0
+            )
+            .fill(Theme.Colors.insightYellow)
+            .frame(width: 5)
         }
     }
 
@@ -487,6 +521,8 @@ struct QuizSessionView: View {
             checkAnswerButton(enabled: viewModel.isReadyToCheck)
         case .feedback:
             PillButton("Continue") { viewModel.advance() }
+        case .motivator:
+            EmptyView()   // CTA lives inside MotivatorView
         case .complete:
             EmptyView()
         }

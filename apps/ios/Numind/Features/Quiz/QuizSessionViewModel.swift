@@ -8,6 +8,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         case question
         case answered(UUID)      // user picked a choice
         case feedback(UUID)      // answer checked, showing result
+        case motivator(MotivatorCheckpoint)  // mid-session checkpoint
         case complete            // all questions done
     }
 
@@ -42,6 +43,17 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     @Published private(set) var results: [QuizResult] = []
     @Published private(set) var hintRevealed: Bool = false
     @Published var freeEntryText: String = ""  // used when inputMode == .freeEntry
+
+    // MARK: - Motivator state
+
+    /// Question indices where full-screen motivators were shown.
+    private(set) var motivatorsShownAt: [Int] = []
+    /// Question indices where inline encouragement was shown.
+    private(set) var inlineShownAt: [Int] = []
+    /// Inline encouragement to display over the feedback screen (nil = none).
+    @Published private(set) var inlineEncouragement: InlineEncouragement? = nil
+    /// Content repository for looking up lesson shortcuts (coaching tips).
+    private let repository: ContentRepository
 
     // MARK: - Per-question countdown (Speed Drill)
 
@@ -176,6 +188,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         self.moduleColor = moduleColor
         self.lessonShortcut = lesson.shortcut
         self.questionTimeLimit = nil
+        self.repository = repository
         let ordered = sessions.isEmpty
             ? repository.templates(for: lesson.id)
             : SpacedRepetitionEngine.sortedTemplates(
@@ -231,18 +244,21 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     ///   - shortcut: Hint/shortcut text shown in the hint section.
     ///   - moduleColor: Accent color for the quiz UI.
     ///   - questionTimeLimit: Optional per-question countdown in seconds (Speed Drill = 15s).
+    ///   - repository: Content repository for coaching tip lookups.
     init(
         questions: [QuizQuestion],
         title: String,
         shortcut: String,
         moduleColor: ModuleColor = .blue,
-        questionTimeLimit: TimeInterval? = nil
+        questionTimeLimit: TimeInterval? = nil,
+        repository: ContentRepository = LocalContentRepository()
     ) {
         lessonTitle = title
         self.moduleColor = moduleColor
         self.lessonShortcut = shortcut
         self.questions = questions
         self.questionTimeLimit = questionTimeLimit
+        self.repository = repository
         // Start countdown for first question if a time limit is set.
         if questionTimeLimit != nil {
             questionTimeRemaining = questionTimeLimit!
@@ -318,6 +334,11 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         if questionTimeLimit == nil {
             feedbackEnteredAt = Date()
         }
+
+        // Evaluate inline encouragement for correct answers.
+        if isCorrectAnswer {
+            evaluateInlineEncouragement()
+        }
     }
 
     func appendDigit(_ digit: String) {
@@ -337,28 +358,157 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     }
 
     func advance() {
-        guard case .feedback(let id) = sessionState else { return }
-        // Accumulate how long the user spent on this feedback screen.
-        if questionTimeLimit == nil, let entered = feedbackEnteredAt {
-            totalFeedbackDuration += Date().timeIntervalSince(entered)
-            feedbackEnteredAt = nil
-        }
-        results.append(QuizResult(
-            question: currentQuestion,
-            selectedChoiceId: id,
-            timeSpentSeconds: lastQuestionTimeSpent
-        ))
-        let next = currentIndex + 1
-        if next < questions.count {
+        // ── Dismissing a motivator → proceed to next question ──
+        if case .motivator = sessionState {
+            let next = currentIndex + 1
             currentIndex = next
             sessionState = .question
             hintRevealed = false
             freeEntryText = ""
             questionStartTime = Date()
             startQuestionTimer()
-        } else {
+            return
+        }
+
+        guard case .feedback(let id) = sessionState else { return }
+
+        // Accumulate how long the user spent on this feedback screen.
+        if questionTimeLimit == nil, let entered = feedbackEnteredAt {
+            totalFeedbackDuration += Date().timeIntervalSince(entered)
+            feedbackEnteredAt = nil
+        }
+
+        // Clear inline encouragement
+        inlineEncouragement = nil
+
+        results.append(QuizResult(
+            question: currentQuestion,
+            selectedChoiceId: id,
+            timeSpentSeconds: lastQuestionTimeSpent
+        ))
+
+        let next = currentIndex + 1
+
+        // ── HARD CONSTRAINT: never show motivator after the last question ──
+        guard next < questions.count else {
             stoppedAt = Date()
             sessionState = .complete
+            return
+        }
+
+        // ── Evaluate motivator checkpoint ──
+        let correctFlags = results.map(\.isCorrect)
+        if let type = MotivatorEngine.evaluate(
+            correctFlags: correctFlags,
+            totalQuestions: questions.count,
+            justAnsweredIndex: currentIndex,
+            motivatorsShownAt: motivatorsShownAt,
+            isSpeedDrill: questionTimeLimit != nil
+        ) {
+            let checkpoint = buildCheckpoint(type: type)
+            motivatorsShownAt.append(currentIndex)
+            sessionState = .motivator(checkpoint)
+            return
+        }
+
+        // Normal advance
+        currentIndex = next
+        sessionState = .question
+        hintRevealed = false
+        freeEntryText = ""
+        questionStartTime = Date()
+        startQuestionTimer()
+    }
+
+    // MARK: - Motivator checkpoint builder
+
+    /// Builds a fully populated `MotivatorCheckpoint` for the given type,
+    /// resolving copy, stats, and coaching tips from the current session state.
+    private func buildCheckpoint(type: MotivatorType) -> MotivatorCheckpoint {
+        var cp = MotivatorCheckpoint(type: type)
+        let answeredCount = results.count
+        let correctCount = results.filter(\.isCorrect).count
+        cp.accuracy = answeredCount > 0 ? Double(correctCount) / Double(answeredCount) : 0
+        cp.total = questions.count
+        cp.completed = answeredCount
+
+        switch type {
+        case .momentum:
+            let streak = consecutiveCorrectFromEnd()
+            cp.streak = streak
+            let lastN = results.suffix(streak)
+            let avgLast = lastN.map(\.timeSpentSeconds).reduce(0, +) / Double(lastN.count)
+            cp.avgTimeLastN = avgLast
+            let sessionAvg = results.map(\.timeSpentSeconds).reduce(0, +) / Double(results.count)
+            cp.paceImproving = avgLast < sessionAvg
+            let copy = MotivatorCopy.momentum(streak: streak)
+            cp.headline = copy.headline
+            cp.subtitle = copy.subtitle
+            cp.bodyText = copy.body
+            cp.ctaLabel = copy.cta
+            cp.secondaryLabel = "See progress"
+
+        case .coaching:
+            // Find most recent wrong answer's template → look up lesson for tip
+            if let wrongResult = results.last(where: { !$0.isCorrect }),
+               let lesson = repository.lesson(forTemplateId: wrongResult.question.templateId) {
+                cp.tipTitle = lesson.shortcut
+                cp.example = lesson.example
+            } else {
+                cp.tipTitle = lessonShortcut
+            }
+            let copy = MotivatorCopy.coaching()
+            cp.headline = copy.headline
+            cp.subtitle = copy.subtitle
+            cp.ctaLabel = "Keep going"
+
+        case .progress:
+            let copy = MotivatorCopy.progress(completed: answeredCount, total: questions.count)
+            cp.headline = copy.headline
+            cp.subtitle = copy.subtitle
+            cp.bodyText = copy.body
+            cp.ctaLabel = copy.cta
+            cp.avgTime = results.map(\.timeSpentSeconds).reduce(0, +) / Double(results.count)
+            cp.secondaryLabel = "View progress"
+
+        case .nearFinish:
+            let remaining = questions.count - answeredCount
+            let copy = MotivatorCopy.nearFinish(remaining: remaining)
+            cp.headline = copy.headline
+            cp.subtitle = copy.subtitle
+            cp.bodyText = copy.body
+            cp.ctaLabel = copy.cta
+            cp.secondaryLabel = "See today's progress"
+            // dailyStreak is set by the view from ProgressStore
+        }
+
+        return cp
+    }
+
+    /// Count of consecutive correct answers from the end of results.
+    private func consecutiveCorrectFromEnd() -> Int {
+        var count = 0
+        for result in results.reversed() {
+            if result.isCorrect { count += 1 } else { break }
+        }
+        return count
+    }
+
+    /// Evaluate and set inline encouragement after a correct answer.
+    /// Called from `checkAnswer()` when the answer is correct.
+    private func evaluateInlineEncouragement() {
+        let streak = consecutiveCorrectFromEnd() + 1 // +1 because current result not yet in results
+        if MotivatorEngine.evaluateInline(
+            isCorrect: true,
+            timeSpent: lastQuestionTimeSpent,
+            hintWasRevealed: hintRevealed,
+            consecutiveCorrect: streak,
+            inlineShownAt: inlineShownAt,
+            currentIndex: currentIndex
+        ) {
+            let copy = MotivatorCopy.inlineEncouragement()
+            inlineEncouragement = InlineEncouragement(headline: copy.headline, subtitle: copy.subtitle)
+            inlineShownAt.append(currentIndex)
         }
     }
 

@@ -178,34 +178,18 @@ struct BlitzView: View {
 
     private func promptCard(for question: QuizQuestion) -> some View {
         NumindCard {
-            VStack(spacing: 0) {
-                // Scenario / context block — shown when template has a scenarioTemplate.
+            VStack(spacing: 10) {
                 if let scenario = question.scenario {
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack(spacing: 5) {
-                            Image(systemName: "info.circle.fill")
-                                .font(.system(size: 11, weight: .semibold))
-                                .foregroundStyle(Theme.Colors.primaryBlue)
-                            Text("CONTEXT")
-                                .font(.system(size: 10, weight: .bold))
-                                .foregroundStyle(Theme.Colors.primaryBlue)
-                                .kerning(0.5)
-                        }
-                        Text(scenario)
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(10)
-                    .background(Theme.Colors.primaryBlueTint)
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                    .padding(.bottom, 12)
+                    Text(scenario)
+                        .font(.system(size: 14, weight: .regular))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
                 }
 
-                // Main question prompt
                 Text(question.prompt)
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)

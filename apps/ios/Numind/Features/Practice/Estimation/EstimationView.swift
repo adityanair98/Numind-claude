@@ -19,18 +19,37 @@ struct EstimationView: View {
                         insertion: .scale(scale: 0.92).combined(with: .opacity),
                         removal: .opacity
                     ))
+            } else if case .motivator(let checkpoint) = viewModel.state {
+                motivatorScreen(checkpoint: checkpoint)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .bottom).combined(with: .opacity),
+                        removal: .opacity
+                    ))
             } else {
                 playingView
                     .transition(.opacity)
             }
         }
         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: showSummary)
+        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: viewModel.state)
         .onAppear { viewModel.startTimer() }
         .onChange(of: viewModel.state) { _, newState in
             if case .complete = newState {
                 recordSession()
                 showSummary = true
             }
+        }
+    }
+
+    // MARK: - Motivator
+
+    private func motivatorScreen(checkpoint: MotivatorCheckpoint) -> some View {
+        var cp = checkpoint
+        if checkpoint.type == .nearFinish {
+            cp.dailyStreak = progressStore.streak
+        }
+        return MotivatorView(checkpoint: cp) {
+            viewModel.advance()
         }
     }
 
@@ -140,27 +159,14 @@ struct EstimationView: View {
     // MARK: - Prompt Card
 
     private func promptCard(_ item: EstimationItem) -> some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 10) {
             if let scenario = item.scenario {
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack(spacing: 5) {
-                        Image(systemName: "info.circle.fill")
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.primaryBlue)
-                        Text("CONTEXT")
-                            .font(.system(size: 10, weight: .bold))
-                            .foregroundStyle(Theme.Colors.primaryBlue)
-                            .kerning(0.5)
-                    }
-                    Text(scenario)
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(Theme.Colors.deepNavy)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(10)
-                .background(Theme.Colors.primaryBlueTint)
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                Text(scenario)
+                    .font(Theme.Typography.body)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
             }
 
             Text(item.prompt)

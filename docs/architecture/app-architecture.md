@@ -1,6 +1,6 @@
 # App Architecture
 
-> **Last updated:** May 2026 (after M60 — Game Modes expansion, Practice drills, Celebration effects).
+> **Last updated:** May 2026 (after mid-session motivator checkpoints, splash screen architecture).
 
 ## Pattern
 MVVM with lightweight services. No third-party dependencies in V1.
@@ -10,8 +10,9 @@ MVVM with lightweight services. No third-party dependencies in V1.
 ```
 Numind/
   App/
-    NumindApp.swift              # @main entry point, ProgressStore injection
-    RootView.swift               # Root container
+    NumindApp.swift              # @main entry, AppDelegate/SceneDelegate, appearance bootstrap
+    RootView.swift               # Root container (splash overlay + onboarding gate)
+    SplashView.swift             # Branded splash overlay (seamless handoff from storyboard)
 
   Core/
     DesignSystem/
@@ -74,6 +75,10 @@ Numind/
     Badges/
       Badge.swift                # Badge model + BadgeCatalog (27 badges)
       BadgeEvaluator.swift       # Pure badge evaluation from ProgressData
+    Motivator/
+      MotivatorCheckpoint.swift  # Motivator data model + InlineEncouragement
+      MotivatorCopy.swift        # Copy bank with randomized rotation (4-5 variants per type)
+      MotivatorEngine.swift      # Pure evaluation logic: session state → optional motivator type
 
   Features/
     Home/
@@ -98,11 +103,13 @@ Numind/
         ModuleDetailViewModel.swift
     Quiz/
       QuizSessionView.swift      # Quiz question presentation and progression
-      QuizSessionViewModel.swift # Quiz state: questions, answers, XP, timer
+      QuizSessionViewModel.swift # Quiz state: questions, answers, XP, timer, motivators
       SessionSummaryView.swift   # Post-quiz summary with mastery, badges, personal best
       OptionCard.swift           # MCQ option button (5 visual states)
       LevelUpView.swift          # Full-screen level-up celebration
       ConfettiView.swift         # Particle animation for correct-answer celebrations
+      MotivatorView.swift        # Full-screen mid-session checkpoint (momentum/coaching/progress/near-finish)
+      InlineEncouragementView.swift  # Non-blocking overlay on feedback screen
     Blitz/
       BlitzView.swift            # Blitz mode: 60s sprint container
       BlitzViewModel.swift       # Blitz state: countdown, auto-advance, score
@@ -131,14 +138,40 @@ Numind/
       OnboardingView.swift       # Future onboarding flow (placeholder)
 
   Resources/
+    Base.lproj/
+      LaunchScreen.storyboard    # Native launch screen (logo + wordmark, Auto Layout)
     LocalContent/
       modules.json               # 8 module definitions
       lessons.json               # 37 lessons with template IDs
       quiz_templates.json        # 187 quiz templates
     Assets.xcassets              # App icons, colors, images
+      LaunchLogo.imageset        # Background-removed symbol (light + dark variants)
+      LaunchWordmark.imageset    # Cropped "Numind" wordmark (white text, both modes)
+      LaunchBackground.colorset  # Brand blue (light) / dark navy (dark)
 ```
 
 ## Key Architectural Decisions
+
+### Launch & Splash Screen
+
+The app uses a two-phase launch screen strategy:
+
+1. **LaunchScreen.storyboard** — a UIKit storyboard that iOS displays instantly on cold start (before any SwiftUI code runs). Contains `LaunchLogo` (centered via Auto Layout centerX/centerY) and `LaunchWordmark` (centered horizontally, 36pt above safe area bottom) on `LaunchBackground`.
+
+2. **SplashView** — a SwiftUI overlay in `RootView` that takes over seamlessly from the storyboard with an identical layout (ZStack with logo at exact center, wordmark at bottom). After 1.2s it fades out with a slight scale-up to reveal the app.
+
+Both phases use the same asset catalog images and named color, so the transition is invisible to the user.
+
+### Appearance Override (Dark Mode)
+
+iOS caches a snapshot of the launch screen using the window's trait collection when the app backgrounds. To ensure the correct light/dark launch screen appears on next cold start, the app uses UIKit lifecycle hooks:
+
+- **`AppDelegate`** registers a `SceneDelegate` via `UISceneConfiguration`.
+- **`SceneDelegate.scene(_:willConnectTo:options:)`** sets `overrideUserInterfaceStyle` on every `UIWindow` BEFORE the launch screen is dismissed.
+- **`SceneDelegate.sceneDidBecomeActive(_:)`** reapplies on every foreground (in case the user changed the appearance setting while backgrounded).
+- **`RootView.onChange(of: appearanceRaw)`** handles live appearance changes within the app session.
+
+This mirrors how apps like WhatsApp and Facebook handle appearance-aware launch screens. The key insight is that `UIWindow.overrideUserInterfaceStyle` must be set early in the UIKit lifecycle — SwiftUI's `.preferredColorScheme` alone is too late because iOS has already cached the launch screen snapshot.
 
 ### State Management
 - `ProgressStore` is an `ObservableObject` injected as `@EnvironmentObject` at the app root
@@ -160,6 +193,18 @@ Numind/
 - Each `QuizEngine.generate()` call uses a fresh random seed
 - Retries create a new ViewModel instance -> completely new random values
 - `CheckpointQuizEngine` round-robins across multiple lessons' templates
+
+### Mid-Session Motivators
+- `MotivatorEngine` is a pure, stateless evaluator — takes session state, returns optional `MotivatorType`
+- `SessionState` includes a `.motivator(MotivatorCheckpoint)` case between `.feedback` and `.question`
+- Hard constraint: motivators NEVER appear after the last question (`guard remainingAfter > 0`)
+- Maximum 2 full-screen motivators per session, minimum 2-question cooldown between them
+- Four types: momentum (3+ correct streak), coaching (2+ wrong in last 3), progress (halfway), near finish (2 remaining + 60%+ accuracy)
+- Priority: coaching > momentum > progress > near finish (struggling users get help first)
+- Inline encouragement is a separate non-blocking overlay on the feedback screen (fast answer, used hint, streak)
+- Coaching tips reuse the existing `Lesson.shortcut` field via `ContentRepository.lesson(forTemplateId:)`
+- Only available in modes with manual "Continue" pause: lesson quiz, daily challenge, checkpoint, speed drill, estimation
+- Auto-advance modes (blitz, streak, true/false, comparison) have no motivators
 
 ### Presentation
 - Lessons and reviews use `.fullScreenCover` from the Learn tab

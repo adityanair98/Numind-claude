@@ -1,6 +1,6 @@
 # Implementation Rules
 
-> **Last updated:** May 2026 (after M60 — Game Modes expansion, Practice drills, Celebration effects).
+> **Last updated:** May 2026 (after mid-session motivator checkpoints, splash screen architecture).
 
 Rules for building Numind. These supplement the top-level CLAUDE.md and apply to all implementation work.
 
@@ -85,12 +85,35 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **`NewBestBadge`** is a reusable golden trophy capsule badge (also in `ConfettiBurst.swift`). Spring bounce-in animation on appear. All summary views show it when `isNewBest` is true.
 - **Practice tab drill cards** show personal best inside the decorative orb (70pt circle, bottom-right) when `bestScore > 0`. The subtitle always remains visible.
 
+## Mid-Session Motivators
+
+- **MotivatorEngine is pure.** No side effects, no state. The ViewModel owns `motivatorsShownAt` and passes it into each evaluation call.
+- **Hard constraint:** Motivators NEVER fire after the last question. Enforce with `guard remainingAfter > 0` before any evaluation.
+- **Max 2 per session.** Do not raise this — research shows >2 crosses from motivating to annoying.
+- **2-question cooldown.** At least 2 questions between any two full-screen motivators.
+- **Priority order:** Coaching > Momentum > Progress > Near Finish. Struggling users need help more than succeeding users need celebration.
+- **Coaching tips** reuse `Lesson.shortcut` and `Lesson.example` — no new content fields. Look up via `ContentRepository.lesson(forTemplateId:)`.
+- **Estimation coaching** uses generic tips from `MotivatorCopy.estimationTips` since estimation questions don't map cleanly to lesson shortcuts.
+- **Speed Drill:** Max 1 motivator, no coaching (too slow for speed context).
+- **Auto-advance modes get nothing.** Blitz, Streak, True/False, Comparison have no natural pause point. Do not add motivators to these modes.
+- **Inline encouragement** is non-blocking, does not count toward the 2-motivator cap, and has its own 3-question cooldown.
+- **Copy rotation.** Always use `MotivatorCopy` static methods to pick copy — they randomize from 4-5 variants per type. Never hardcode motivator text in views.
+
 ## Navigation
 
 - **4 tabs:** Home, Learn, Progress, Profile (via `RootTabView`).
 - **Lessons and reviews** open as `.fullScreenCover` from the Learn tab.
 - **Level-up** uses a nested `.fullScreenCover` from within the lesson/review view.
 - **Session summary** is a phase within the lesson/review view (not a separate navigation destination).
+
+## Launch Screen & Appearance
+
+- **LaunchScreen.storyboard** is the native launch screen. Do not switch back to the `UILaunchScreen` Info.plist dictionary — the storyboard supports multiple Auto Layout views (logo + wordmark) which the dictionary cannot.
+- **SplashView** must use a `ZStack` layout matching the storyboard exactly (logo at center, wordmark at bottom). Do not use a `VStack` — it shifts the logo above center.
+- **Appearance override** is set via `SceneDelegate` (`UIWindow.overrideUserInterfaceStyle`), not via SwiftUI `.onAppear`. The SceneDelegate fires before the launch screen dismisses, which is required for iOS to cache the correct appearance snapshot.
+- **Do not remove the dark variant** of `LaunchBackground.colorset`. Light and dark modes use different background colors (brand blue vs dark navy).
+- **LaunchWordmark** uses the white text variant (`wordmark_dark`) for both light and dark modes. White has better contrast on both the blue and navy backgrounds.
+- **When editing LaunchScreen.storyboard**, use `targetRuntime="iOS.CocoaTouch"` and `toolsVersion="13122.16"` (Xcode's own template format). Do not use `targetRuntime="AppleSDK"` — it causes Xcode to reject the file.
 
 ## Persistence
 

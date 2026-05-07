@@ -1,6 +1,6 @@
 # Numind — Screen Specs (V1)
 
-> **Last updated:** May 2026 (after M57 — Game Modes: Speed Drill, Blitz, mode cards on Home tab).
+> **Last updated:** May 2026 (after mid-session motivator checkpoints, launch screen).
 > **Status:** Implemented screens, reflecting the current SwiftUI codebase.
 > **Tokens referenced** are the Swift constants in `apps/ios/Numind/Core/DesignSystem/Tokens/`. Do not introduce new tokens here — if a value is missing, propose it as a token first.
 
@@ -29,6 +29,36 @@ This document defines the per-screen layout, copy, and states for V1 screens. Ev
 Tints are derived as `Color.opacity(0.12–0.22)` overlays of the source token — never new hexes. Additional tint tokens: `primaryBlueTint`, `mindTealTint`, `errorSoftRedTint`, `insightYellowTint`, `mutedTint`, `insightText`.
 
 The four root tabs use the **iOS large-title** style (32–34pt rounded, navy). Pushed and modal screens use a **44pt inline header** with leading chevron-back or X.
+
+---
+
+## 00 · Launch Screen & Splash
+
+**Files:** `Resources/Base.lproj/LaunchScreen.storyboard` (native) + `App/SplashView.swift` (SwiftUI overlay)
+
+The launch experience has two seamless phases:
+
+### Phase 1: Native Launch Screen (LaunchScreen.storyboard)
+
+Displayed instantly by iOS before any SwiftUI code runs.
+
+**Layout:**
+- **Background:** `LaunchBackground` named color — brand blue `srgb(0.184, 0.420, 1.000)` in light mode, dark navy `srgb(0.059, 0.090, 0.149)` in dark mode.
+- **Logo:** `LaunchLogo` image, 120×120pt, centered horizontally and vertically (Auto Layout centerX + centerY constraints). Background-removed symbol with transparent background, light and dark variants.
+- **Wordmark:** `LaunchWordmark` image, height 24pt, centered horizontally, pinned 36pt above safe area bottom. White text variant used for both modes.
+
+### Phase 2: SplashView (SwiftUI overlay)
+
+Takes over from the storyboard with an identical layout, then fades out.
+
+**Layout:** `ZStack` matching storyboard exactly:
+- `Color("LaunchBackground")` full bleed.
+- `LaunchLogo` at exact center (ZStack default), 120×120pt.
+- `LaunchWordmark` at bottom via `VStack { Spacer(); Image(...).frame(height: 24).padding(.bottom, 36) }`.
+
+**Animation:** After 1.2s hold, fades to 0 opacity with 1.06× scale-up over 0.35s. `allowsHitTesting(false)` prevents interaction during fade.
+
+**Appearance:** `SceneDelegate` sets `UIWindow.overrideUserInterfaceStyle` before the storyboard dismisses, ensuring iOS caches the correct light/dark snapshot for next cold start.
 
 ---
 
@@ -467,6 +497,76 @@ Shown when `viewModel.state == .complete` (inline within `BlitzView` — no new 
 ## 15 · Tools (future)
 
 Calculator tools (tip calculator, bill split, discount calculator) are not part of V1. These are deferred to the future website, per the product brief.
+
+---
+
+## 16 · Mid-Session Motivator Checkpoint
+
+**Files:** `Features/Quiz/MotivatorView.swift` (full-screen), `Features/Quiz/InlineEncouragementView.swift` (overlay)
+**Presentation:** Inline phase within `QuizSessionView` or `EstimationView` (not a new cover). Uses `.motivator(MotivatorCheckpoint)` session state.
+
+Duolingo-style checkpoint moments shown between quiz questions. Four full-screen types + one inline overlay.
+
+**Eligible modes:** Lesson Quiz, Daily Challenge, Checkpoint Review, Speed Drill (max 1), Estimation.
+**Excluded modes:** Blitz, Streak, True/False, Comparison (auto-advance, no pause point).
+
+### Common Layout (all 4 full-screen types)
+
+**Background:** `softBg`, full bleed. No navigation bar, no bead rail.
+
+1. **Illustration** — 80pt circle (`illustrationTint` fill) + 36pt SF Symbol (`illustrationColor`). Spring scale-in from 0.6 → 1.0, 0.1s delay.
+2. **Headline** — `display` font (32pt bold rounded), `deepNavy`, centered.
+3. **Subtitle** — `headline` font (18pt semibold), accent color, centered.
+4. **Body** — `body` font (16pt), `mutedText`, centered. Optional.
+5. **Type-specific content** — varies (see below). Fade in with 0.25s delay.
+6. **Footer** — sticky `PillButton` CTA + optional secondary text link (caption, muted). Same gradient mask as other sticky footers.
+
+| Type | Icon | Tint | Accent |
+|---|---|---|---|
+| Momentum | `star.fill` | `insightYellowTint` | `mindTeal` |
+| Coaching | `lightbulb.fill` | `insightYellowTint` | `mutedText` |
+| Progress | `mountain.2.fill` | `primaryBlueTint` | `primaryBlue` |
+| Near Finish | `trophy.fill` | `insightYellowTint` | `primaryBlue` |
+
+### Type-specific content
+
+**Momentum:**
+- Streak visualization: HStack of 32pt circles — `mindTealTint` fill + white checkmark for each correct, `mutedTint` fill for remaining.
+- Stats card: `NumindCard` with clock icon (40pt `primaryBlueTint` circle) + "Your pace is improving!" / "Avg. time: Ns" + "Last N questions".
+- CTA: "Keep going". Secondary: "See progress".
+
+**Coaching:**
+- Tip card: `NumindCard(background: primaryBlueTint)` with brain icon + "TRY THIS TIP" eyebrow + lesson shortcut text (headline bold) + tip body.
+- Example card: `NumindCard` with "EXAMPLE" eyebrow + monospaced example text from `Lesson.example`.
+- Encouragement footer: brain icon circle (36pt) + "You've got this!" + "Every step counts." + chevron.
+- CTA: "Keep going".
+
+**Progress:**
+- Completion text: "You've completed" (body) + "N of M questions" (title, `primaryBlue`).
+- `BeadRail.dot` with `primaryBlue` fill.
+- Stats card: chart icon + "You're staying sharp" + accuracy % + avg time.
+- CTA: "Continue". Secondary: "View progress".
+
+**Near Finish:**
+- Stats card 1: star icon + "Great work!" + accuracy % (headline, `mindTeal`) + "Keep it up!".
+- Stats card 2: flame icon + "Daily streak" + N days (headline, `warmOrange`). Only shown if streak > 0.
+- CTA: "Finish strong". Secondary: "See today's progress".
+
+### Inline Encouragement (overlay)
+
+Non-blocking card overlaid on the feedback screen. Does NOT count toward the 2-motivator cap.
+
+**Layout:** Centered card, max width 300pt.
+- Dimmed background (`black.opacity(0.15)`).
+- 72pt `insightYellowTint` circle + `star.fill` (32pt, `insightYellow`).
+- Headline (headline font, navy) + subtitle (body, muted).
+- "Continue" capsule button (`primaryBlueTint` bg, `primaryBlue` text).
+- Entry: scale from 0.9 + opacity, spring animation.
+- Auto-dismiss after 2.5s. Light impact haptic on appear.
+
+**Trigger conditions (any of):** Fast answer (<5s), used hint and still correct, 3+ consecutive correct.
+
+**Haptic:** Light impact on appear (full-screen + inline). No haptic on dismiss.
 
 ---
 

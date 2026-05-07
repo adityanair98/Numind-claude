@@ -2,11 +2,10 @@ import SwiftUI
 
 /// Branded splash screen shown on cold launch.
 ///
-/// The native launch screen (Info.plist `UILaunchScreen`) shows
-/// `LaunchBackground` immediately. This SwiftUI view takes over
-/// seamlessly and shows the logo centered with the wordmark at the
-/// bottom (Meta/LinkedIn style). After a brief hold the splash
-/// fades out to reveal the app.
+/// The LaunchScreen.storyboard shows `LaunchLogo` centered and
+/// `LaunchWordmark` at the bottom on `LaunchBackground` immediately.
+/// This SwiftUI view takes over seamlessly with the same layout,
+/// then fades out to reveal the app.
 struct SplashView: View {
     let onFinished: () -> Void
 
@@ -17,22 +16,19 @@ struct SplashView: View {
             Color("LaunchBackground")
                 .ignoresSafeArea()
 
+            // Logo — exact center, matching storyboard centerX/centerY
+            Image("LaunchLogo")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 120, height: 120)
+
+            // Wordmark — bottom center, matching storyboard constraint
             VStack {
                 Spacer()
-
-                // Logo — centered, transparent background symbol
-                Image("LaunchLogo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 120, height: 120)
-
-                Spacer()
-
-                // Wordmark — bottom center, like Meta/LinkedIn/Facebook
                 Image("LaunchWordmark")
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 18)
+                    .frame(height: 24)
                     .padding(.bottom, 36)
             }
         }

@@ -116,18 +116,12 @@ struct TrueFalseView: View {
                 .kerning(0.8)
 
             if let scenario = item.scenario {
-                HStack(spacing: 5) {
-                    Image(systemName: "info.circle.fill")
-                        .font(.system(size: 11, weight: .semibold))
-                    Text(scenario)
-                        .font(.system(size: 13, weight: .semibold))
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .foregroundStyle(Theme.Colors.primaryBlue)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(10)
-                .background(Theme.Colors.primaryBlueTint)
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                Text(scenario)
+                    .font(.system(size: 14, weight: .regular))
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
             }
 
             Text(item.statement)

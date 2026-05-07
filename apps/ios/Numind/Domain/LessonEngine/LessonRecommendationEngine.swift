@@ -60,13 +60,22 @@ enum LessonRecommendationEngine {
         var completedModules: [(module: Module, score: Int, lessons: [Lesson])] = []
 
         for module in modules {
-            let lessons         = repository.lessons(for: module.id)
-            let completedIds    = Set(sessions.filter { $0.moduleId == module.id && !$0.isReviewSession }.map(\.lessonId))
-            let score           = NumindScoreEngine.score(for: module.id, sessions: sessions)
-            let completedCount  = completedIds.count
+            let lessons = repository.lessons(for: module.id)
+            let moduleSessions = sessions.filter { $0.moduleId == module.id && !$0.isReviewSession }
 
-            guard let nextLesson = lessons.first(where: { !completedIds.contains($0.id) }) else {
-                // All lessons done — remember for review fallback.
+            // Mastered = scored ≥ 75%. This gates lesson progression (same rule as Learn tab).
+            let masteredIds = Set(
+                moduleSessions.filter {
+                    $0.totalCount > 0 && Double($0.correctCount) / Double($0.totalCount) >= 0.75
+                }.map(\.lessonId)
+            )
+            // Attempted = any session exists (drives in-progress signal, not gating).
+            let attemptedIds = Set(moduleSessions.map(\.lessonId))
+
+            let score = NumindScoreEngine.score(for: module.id, sessions: sessions)
+
+            guard let nextLesson = lessons.first(where: { !masteredIds.contains($0.id) }) else {
+                // All lessons mastered — remember for review fallback.
                 if !lessons.isEmpty && score > 0 {
                     completedModules.append((module: module, score: score, lessons: lessons))
                 }
@@ -74,11 +83,11 @@ enum LessonRecommendationEngine {
             }
 
             // Urgency: inverted score, boosted if the user is partially through.
-            let inProgress = completedCount > 0 && completedCount < lessons.count
+            let inProgress = !attemptedIds.isEmpty && masteredIds.count < lessons.count
             let reason: LessonRecommendation.Reason
             var urgency: Double
 
-            if score == 0 && completedCount == 0 {
+            if score == 0 && attemptedIds.isEmpty {
                 // Never attempted — interesting to surface, but below weak/in-progress modules.
                 // 0.5 puts it in the middle: the user should see these as "try something new"
                 // rather than them drowning out actionable "you're struggling here" signals.

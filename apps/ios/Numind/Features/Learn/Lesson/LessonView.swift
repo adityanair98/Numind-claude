@@ -283,19 +283,36 @@ struct LessonView: View {
         NumindCard(background: Theme.Colors.insightYellowTint) {
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 8) {
-                    Image(systemName: "lightbulb.fill")
-                        .font(.system(size: 15))
-                        .foregroundStyle(Theme.Colors.insightText)
+                    ZStack {
+                        Circle()
+                            .fill(Theme.Colors.insightYellow.opacity(0.25))
+                            .frame(width: 30, height: 30)
+                        Image(systemName: "lightbulb.fill")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.insightText)
+                    }
                     Text("Why this works")
-                        .font(Theme.Typography.body)
-                        .fontWeight(.semibold)
+                        .font(Theme.Typography.small)
+                        .fontWeight(.bold)
                         .foregroundStyle(Theme.Colors.insightText)
+                        .textCase(.uppercase)
+                        .kerning(0.6)
                 }
                 Text(viewModel.lesson.shortcut)
                     .font(Theme.Typography.body)
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .lineSpacing(3)
             }
+        }
+        .overlay(alignment: .leading) {
+            UnevenRoundedRectangle(
+                topLeadingRadius: Theme.Radius.card,
+                bottomLeadingRadius: Theme.Radius.card,
+                bottomTrailingRadius: 0,
+                topTrailingRadius: 0
+            )
+            .fill(Theme.Colors.insightYellow)
+            .frame(width: 5)
         }
     }
 

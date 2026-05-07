@@ -24,10 +24,24 @@ struct RootView: View {
                     OnboardingView()
                 }
             }
-            .preferredColorScheme(preferredScheme)
 
             if showSplash {
                 SplashView { showSplash = false }
+            }
+        }
+        .preferredColorScheme(preferredScheme)
+        .onChange(of: appearanceRaw) { _ in
+            // Push the change to the UIWindow so iOS caches the correct
+            // launch screen appearance for the next cold start.
+            guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+            let style: UIUserInterfaceStyle
+            switch appearanceRaw {
+            case "light": style = .light
+            case "dark":  style = .dark
+            default:      style = .unspecified
+            }
+            for window in scene.windows {
+                window.overrideUserInterfaceStyle = style
             }
         }
     }
