@@ -4,6 +4,14 @@
 
 Rules for building Numind. These supplement the top-level CLAUDE.md and apply to all implementation work.
 
+## Business Model
+
+- **Numind is a paid app with a free trial. There is no free version.**
+- The onboarding flow is a conversion funnel — every screen should build toward the paywall.
+- Onboarding signals (motivation, confidence, topic interest) feed into the app experience: starting difficulty, daily challenge tuning, recommendation priority.
+- Streak protection (freeze/restore) is a subscription perk — available during trial, locked after trial expires without subscription.
+- All features should be evaluated through retention (does this keep subscribers?) and conversion (does this justify paying?).
+
 ## Architecture
 
 - **MVVM.** Views observe ViewModels. ViewModels are `@StateObject` or `@ObservedObject`, never singletons.
@@ -117,10 +125,20 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 
 ## Persistence
 
-- **UserDefaults** via `ProgressStore` wrapping `ProgressData` (Codable).
+- **UserDefaults** via `ProgressStore` wrapping `ProgressData` (Codable). Will migrate to Supabase for cloud sync.
 - **SessionRecord** per completed quiz. Includes `questionResults` array and `bonusXP`.
-- **No backend in V1.** Do not add network calls, auth, or remote storage.
 - **AppStorage** for user preferences (name, reminder settings, appearance).
+
+## Auth & Subscriptions
+
+- **Numind is a paid app with a free trial. There is no free version.**
+- **Auth provider:** Supabase Auth. Support Sign in with Apple (required by App Store if any third-party login is offered) + email/password.
+- **Onboarding runs anonymous.** No account creation until the user reaches the paywall. This maximizes sunk cost from the onboarding funnel (motivation → topics → mini-quiz → personalized plan → paywall).
+- **Paywall provider:** RevenueCat. Hard paywall after free trial. Placed at end of onboarding funnel.
+- **Subscription gates content.** After trial expiry without subscription: hard paywall blocks lessons/quizzes. Home screen visible in locked state.
+- **Streak protection** (freeze/restore) is a subscription perk. Available during trial, locked after expiry.
+- **Onboarding signals** (motivation, confidence, topic interest) feed into the app experience: starting difficulty, daily challenge tuning, recommendation priority.
+- **Restore purchases** available in Profile for reinstall/device switch scenarios.
 
 ## Testing
 
@@ -130,11 +148,8 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 
 ## Do Not
 
-- Do not add third-party packages in V1.
-- Do not build backend before local product loop works.
-- Do not integrate RevenueCat until core loop exists.
 - Do not add AI-generated content.
-- Do not force auth in V1.
 - Do not use SwiftData (deferred until backend lands).
 - Do not introduce new hex colors — derive from existing tokens.
 - Do not skip the design token layer with raw values.
+- Do not assume a free tier or freemium model — Numind is paid with a free trial.
