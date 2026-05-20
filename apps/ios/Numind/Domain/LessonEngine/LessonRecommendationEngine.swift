@@ -44,12 +44,16 @@ enum LessonRecommendationEngine {
     /// - Parameters:
     ///   - repository: Content source for modules and lessons.
     ///   - sessions: All recorded sessions used to compute module scores.
+    ///   - onboardingSignals: Optional signals from onboarding (topic interests boost urgency).
     ///   - limit: Maximum number of recommendations to return.
     static func recommendations(
         repository: ContentRepository,
         sessions: [SessionRecord],
+        onboardingSignals: OnboardingSignals? = nil,
         limit: Int = 5
     ) -> [LessonRecommendation] {
+        let topicInterests = onboardingSignals?.topicInterests ?? []
+        let recommendationPriority = onboardingSignals?.recommendationPriority ?? []
 
         let modules = repository.allModules()
 
@@ -99,6 +103,15 @@ enum LessonRecommendationEngine {
             } else {
                 reason = .weakModule(moduleName: module.title)
                 urgency = 1.0 - Double(score) / 100.0
+            }
+
+            // Boost urgency for modules matching onboarding topic interests
+            if topicInterests.contains(module.id) {
+                urgency = min(1.0, urgency + 0.10)
+            }
+            // Additional boost for recommendation priority (weaker topics first)
+            if let idx = recommendationPriority.firstIndex(of: module.id) {
+                urgency = min(1.0, urgency + 0.05 * Double(recommendationPriority.count - idx) / Double(max(1, recommendationPriority.count)))
             }
 
             candidates.append((lesson: nextLesson, module: module, urgency: urgency, reason: reason))

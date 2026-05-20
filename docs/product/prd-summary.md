@@ -1,6 +1,6 @@
 # Numind PRD Summary
 
-> **Last updated:** May 2026 (after M60 — Game Modes expansion, Practice drills, Celebration effects).
+> **Last updated:** May 2026 (after V1 refinement — new modules, scoring reweight, adaptive difficulty, streak freezes, distractor fix).
 
 ## Product Thesis
 Numind is an iOS-first daily training app for practical number fluency.
@@ -13,6 +13,8 @@ It helps users get faster and more confident with real-world money math:
 - investing basics (simple interest, Rule of 72, ROI)
 - debt math (credit cards, loans, DTI)
 - travel money (currency conversion, fees, budgeting)
+- housing and rent (affordability, leases, mortgage vs rent)
+- taxes and paycheck (brackets, deductions, take-home pay)
 - estimation and mental math shortcuts
 
 The product should feel like a short useful workout, not a textbook, calculator utility, or generic brain-training app.
@@ -45,23 +47,25 @@ They may feel slow or rusty with:
 - understanding loan costs
 - comparing salary offers
 
-## V1 Modules (8 total)
-1. **Tips** (tips) - tip calculation, pre/post-tax, bill splitting (5 lessons)
-2. **Discounts** (discounts) - percentage off, BOGO, stacked discounts, unit pricing (5 lessons)
-3. **Money Math** (money_math) - budgeting, subscriptions, cost per use, sales tax, cart estimation (5 lessons)
-4. **Salary** (salary) - net pay, raises, overtime, pay period conversion (4 lessons)
-5. **Investing** (investing) - simple interest, Rule of 72, ROI (3 lessons)
-6. **Estimation** (estimation) - rounding, hourly rate, percent change, doubling/halving, multiply by 5 (6 lessons)
-7. **Debt** (debt) - credit card interest, minimum payments, loans, DTI, extra payments (5 lessons)
-8. **Travel** (travel) - currency conversion, exchange fees, travel budgets, accommodation, insurance (5 lessons)
+## V1 Modules (10 total)
+1. **Tips, Tax & Bill Split** (tips) - tip calculation, pre/post-tax, bill splitting (5 lessons)
+2. **Discounts & Shopping** (discounts) - percentage off, BOGO, stacked discounts, unit pricing (5 lessons)
+3. **Budgets & Spending** (money_math) - budgeting, subscriptions, cost per use, sales tax, cart estimation (5 lessons)
+4. **Salary & Income** (salary) - net pay, raises, overtime, pay period conversion (4 lessons)
+5. **Investing Basics** (investing) - simple interest, Rule of 72, ROI (3 lessons)
+6. **Estimation & Shortcuts** (estimation) - rounding, percent change, doubling/halving, multiply by 5 (5 lessons)
+7. **Debt & Loans** (debt) - credit card interest, minimum payments, loans, DTI, extra payments (5 lessons)
+8. **Travel Money** (travel) - currency conversion, exchange fees, travel budgets, accommodation, insurance (5 lessons)
+9. **Housing & Rent** (housing) - rent affordability (28% rule), rent increases, move-in costs, price per sqft, mortgage vs rent (5 lessons)
+10. **Taxes & Paycheck** (taxes) - marginal tax brackets, paycheck deductions, gross-to-net, tax refund estimation, self-employment tax (5 lessons)
 
-**Total: 37 lessons, 187 quiz templates**
+**Total: 47 lessons, 237 quiz templates**
 
 ## Core User Loop
 Home / Today
 -> pick a lesson from the learning path
 -> read short lesson (concept + shortcut + example)
--> quiz: 8 template-generated questions
+-> quiz: 5 questions (first attempt) or 8 questions (subsequent)
 -> instant feedback per question (correct/wrong + explanation)
 -> session summary with XP, personal best, mastery status
 -> progress update (streak, badges, level-up)
@@ -69,9 +73,9 @@ Home / Today
 ## Learning Path
 The Learn tab presents lessons as a **zigzag path** (Duolingo-style), alternating nodes left and right. Lessons are grouped by module with banner headers. Every 3 lessons within a module, a **checkpoint review** node appears that tests across all 3 preceding lessons.
 
-### Mastery Gating
-- Each quiz requires **75% accuracy** (6/8 correct) to be considered "mastered"
-- The next lesson/review node only unlocks when the previous one is mastered
+### Progression & Mastery
+- **Completion-based progression:** any attempt at a lesson unlocks the next node (no score gate)
+- **Mastery is aspirational:** 75% accuracy (6/8 or 4/5) earns a gold star on the learning path
 - Failed quizzes can be retried from both the summary screen and the path node
 - Each retry generates fresh random values and answer choices (same templates, different numbers)
 
@@ -82,13 +86,14 @@ The Learn tab presents lessons as a **zigzag path** (Duolingo-style), alternatin
 - Reviews gate subsequent lessons just like regular lesson quizzes
 
 ## Quiz System
-- **8 questions per session** (both lessons and reviews)
+- **5 questions on first attempt, 8 on subsequent** (diagnostic calibration may adjust further)
 - Questions generated from **templates** with randomized variables
 - **Multiple choice** (4 options) or **free entry** (numeric keypad) depending on template
 - Timer per question for speed bonus XP
-- Distractor strategies: roundedNeighbor, offByDecimal, commonMistake
+- Distractor strategies: roundedNeighbor, offByDecimal, commonMistake — all use proportional step sizing (~5-8% of answer, rounded to natural numbers)
 - Each template defines: id, moduleId, difficulty, promptTemplate, variableRules, answerFormula, answerFormat, distractorStrategy, explanationTemplate
 - Templates are interleaved and shuffled for variety
+- Adaptive difficulty: onboarding diagnostic calibrates starting difficulty per module
 
 ## Progress & Gamification
 
@@ -98,7 +103,13 @@ The Learn tab presents lessons as a **zigzag path** (Duolingo-style), alternatin
 - XP displayed in session summary and on progress tab
 
 ### Streaks
-A streak is the number of consecutive calendar days on which the user completed at least one quiz session.
+A streak is the number of consecutive calendar days on which the user completed at least one quiz session. Users earn one streak freeze per 7-day milestone (max 3 banked). Freezes are auto-applied on missed days before showing a streak loss.
+
+### Numind Score (0–100)
+Composite per-module score reflecting competence:
+- Accuracy: 0–60 pts (primary driver)
+- Difficulty: 0–25 pts (weighted by adaptive difficulty tier)
+- Speed: 0–15 pts (bonus only — deliberately down-weighted so accurate-but-slow users still see a fair score)
 
 ### Badges
 27 earnable badges across categories:
@@ -120,10 +131,7 @@ When a module level increases, a full-screen animated celebration appears before
 Progress tab shows a 4-week XP bar chart with "Best week!" indicator.
 
 ### Personal Bests
-Personal bests tracked per game mode: Speed Drill, Blitz, Recall, Streak, True/False, Estimation, Comparison. Displayed as decorative orb overlays on Practice tab drill cards. Summary screens show "New personal best!" badge with confetti burst animation when a new best is achieved.
-
-### Numind Score
-Composite score per module and overall, calculated by NumindScoreEngine. Score tiers displayed via NumindScoreRing in all game mode summary views with score delta (up/down change from session).
+Personal bests tracked per game mode: Speed Drill, Blitz, Recall, Streak, Estimation, Comparison. Displayed as decorative orb overlays on Practice tab drill cards. Summary screens show "New personal best!" badge with confetti burst animation when a new best is achieved.
 
 ### High Score Celebration
 When a user achieves a new personal best in any game mode, the summary screen shows:
@@ -132,13 +140,12 @@ When a user achieves a new personal best in any game mode, the summary screen sh
 - Previous best comparison text (when applicable)
 
 ## Session Types
-- **Lesson quiz:** 8 questions from that lesson's 5 templates
+- **Lesson quiz:** 5 questions (first attempt) or 8 (subsequent) from that lesson's 5 templates
 - **Checkpoint review:** 8 questions round-robined across 3 lessons' templates
 - **Speed Drill:** 8 MCQ questions, 15s per question countdown timer
 - **Blitz:** 60-second sprint, auto-advance on tap, no feedback phase
 - **Recall:** Review mode targeting previously missed questions
 - **Streak:** Consecutive correct answers, one miss ends the game
-- **True/False (Snap):** 20 rapid-fire true/false statements
 - **Estimation:** 10 slider-based proximity questions, 10s timer per question, 3-star grading
 - **Comparison:** 15 side-by-side pairs, 8s per question, tap the larger answer
 
@@ -188,34 +195,44 @@ Welcome
 Do not build this before the core app loop exists.
 
 ## Website Layer
-The website is not the product. It supports acquisition through:
-- landing page
-- SEO calculators
-- privacy/terms/support
-- App Store conversion
+The website (`apps/web/`) is not the product. It supports acquisition through SEO-optimized calculator tools that drive App Store downloads.
+
+**Built and deployed:**
+- Landing page with 3D hero, animated counters, module showcase, and app CTA
+- 6 calculator tools: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan
+- 51 state-specific paycheck pages (programmatic SEO)
+- 40 salary amount pages (programmatic SEO, e.g. "$25/hr is $52,000/year")
+- Tools directory with staggered card grid
+- Shared CalculatorShell: calculator widget → inline shortcut teaser → mental math card → FAQ → app CTA → related tools
+- Privacy and terms pages
+
+**Conversion strategy:** Each calculator page gives the user their answer instantly (SEO hook), then shows an inline mental math teaser right below the result ("Double the hourly rate, add three zeros") with a link to the app. The mental math shortcut is Numind's differentiator — no other calculator site teaches the trick.
 
 ## V1 Build Priority
 Currently implemented:
 - SwiftUI app shell with 4-tab navigation
 - Design tokens and theme system
 - Local content model with JSON-based lessons and templates
-- Template-driven quiz engine with 40+ answer formulas
-- All 8 modules with 37 lessons
-- 187 quiz templates (5 per lesson)
-- Mastery gating at 75%
+- Template-driven quiz engine with 60+ answer formulas
+- All 10 modules with 47 lessons
+- 237 quiz templates (5 per lesson) with proportional distractor generation
+- Completion-based progression (mastery = gold star, not gate)
 - Checkpoint review quizzes
 - Zigzag learning path
 - XP, streaks, badges, levels
+- Streak freezes (earned every 7-day milestone, max 3 banked, auto-applied)
 - Personal bests and weekly leaderboard
 - Session summary with retry flow
 - Level-up ceremony
-- 7 game modes (Speed Drill, Blitz, Recall, Streak, True/False, Estimation, Comparison)
-- Practice tab with module spotlight, hero quiz card, and 7 drill cards
-- Home tab with horizontally scrollable 6-mode cards
+- 6 game modes (Speed Drill, Blitz, Recall, Streak, Estimation, Comparison)
+- Practice tab with module spotlight, hero quiz card, and 6 drill cards
+- Home tab with horizontally scrollable mode cards
 - Personal best tracking for all game modes with decorative orb display
 - High score celebration (confetti + badge) across all modes
-- Numind Score with tier system and score ring display
+- Numind Score with reweighted scoring (accuracy 60, difficulty 25, speed 15)
 - Estimation slider with anti-center positioning and proximity grading
+- Adaptive difficulty engine with onboarding diagnostic calibration
+- Dynamic question count (5 first attempt, 8 subsequent, diagnostic-adjusted)
 - previousBest/isNewBest pattern on all game mode ViewModels
 
 Not built yet:
@@ -224,6 +241,5 @@ Not built yet:
 - analytics (PostHog)
 - crash reporting (Sentry)
 - onboarding/paywall flow
-- calculator tools
 - push notifications
 - social features

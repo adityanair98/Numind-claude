@@ -1,6 +1,6 @@
 # User Flows
 
-> **Last updated:** May 2026 (after mid-session motivator checkpoints).
+> **Last updated:** May 2026 (after V1 refinement — completion-based progression, True/False removal, streak freezes, dynamic question count).
 
 ## Overview
 
@@ -49,7 +49,7 @@ Home "Start workout" OR Learn tab node tap
    → WhyCard (shortcut explanation)
    → "Start quiz" footer button
 → Phase 2: Quiz (QuizSessionView)
-   → 8 questions, each:
+   → 5 questions (first attempt) or 8 (subsequent), each:
       → QuizGraphicBanner + PromptCard
       → MCQ: 4 OptionCards OR Free entry: NumpadView
       → Optional: "Show shortcut" hint
@@ -66,10 +66,10 @@ Home "Start workout" OR Learn tab node tap
 → IF level-up: LevelUpView (.fullScreenCover) → dismiss
 → Phase 3: SessionSummaryView
    → ResultHeader:
-      → PASS (≥75%): trophy icon + "Session complete!" + animated XP + personal best chip (if applicable)
-      → FAIL (<75%): retry icon + "Almost there!" + static XP + score gap message ("You got X/N — need Y to master")
+      → PASS (≥75%): trophy icon + "Session complete!" + animated XP + personal best chip (if applicable) + gold star
+      → BELOW 75%: encouraging icon + "Great effort!" + static XP + "Practice more" framing
    → StatsCard (correct, accuracy, streak)
-   → MasteryBanner (pass only): "Lesson mastered! / Next lesson unlocked"
+   → MasteryBanner (pass only): gold star + "Lesson mastered!"
    → New badges (if any)
    → Recap (per-question results)
    → Footer actions (see below)
@@ -83,9 +83,9 @@ Home "Start workout" OR Learn tab node tap
 - "Continue learning" / "Skip & continue" → dismiss
 - "Done for today" → dismiss to Home
 
-**Not mastered (<75%):**
-- "Retry quiz" (orange, primary) → new QuizSessionViewModel with fresh seeds → Phase 2
-- "Skip for now" (secondary button — light background, blue text, visually subordinate to "Retry quiz") → dismiss
+**Below 75%:**
+- "Practice more" (primary) → new QuizSessionViewModel with fresh seeds → Phase 2
+- "Continue" (secondary) → dismiss (next lesson is already unlocked)
 - "Done for today" → dismiss to Home
 
 ---
@@ -156,23 +156,26 @@ SessionSummaryView: "Retry quiz" button (shown when <75%)
 ## Flow 7: Learning Path Progression
 
 ```
-User masters a lesson (≥75% on any attempt)
+User completes a lesson (any attempt, any score)
 → ProgressStore updated with new SessionRecord
 → LearnViewModel.refresh(using:) recomputes all path nodes
 → Next node transitions: locked → available (or current)
-→ Review nodes unlock when all 3 covered lessons are mastered
-→ Review nodes gate subsequent lessons until the review itself is mastered
+→ Gold star earned if score ≥75% (aspirational, not required)
+→ Review nodes unlock when all 3 covered lessons are completed
+→ Review nodes gate subsequent lessons until the review itself is completed
 ```
 
 ### Path Node State Machine
 
 ```
-locked → available (previous node mastered)
+locked → available (previous node completed)
 available → current (first unlocked-unattempted node)
-current → attempted (quiz taken but <75%)
-current → mastered (quiz taken and ≥75%)
+current → attempted (quiz taken but <75% — no gold star yet)
+current → mastered (quiz taken and ≥75% — gold star earned)
 attempted → mastered (retry achieves ≥75%)
 ```
+
+Note: Progression only requires completion. Mastery (≥75%) is shown as a gold star but does not gate the next lesson.
 
 ---
 
@@ -198,7 +201,7 @@ During quiz question progression (after feedback, before next question):
 ```
 
 **Eligible modes:** Lesson Quiz (8q), Daily Challenge (7q), Checkpoint Review (8q), Speed Drill (8q, max 1, no coaching), Estimation (10q).
-**Excluded:** Blitz, Streak, True/False, Comparison (auto-advance, no pause point).
+**Excluded:** Blitz, Streak, Comparison (auto-advance, no pause point).
 
 **Inline encouragement (separate):**
 ```
@@ -348,40 +351,10 @@ Session recording:
 
 ---
 
-## Flow 15: True/False (Snap)
+## Flow 15: Estimation
 
 ```
-Home tab or Practice tab: "True/False" mode card (locked until ≥1 lesson mastered)
-→ TrueFalseViewModel.generateItems(from:templates, count: 20) builds 20 items
-   → Half show the correct answer (isTrue = true), half show a distractor value (isTrue = false)
-   → Each item: statement text, scenario, correct value, answer format
-→ TrueFalseViewModel created (items: items, previousBest: progressStore.trueFalseBest)
-→ TrueFalseView presented as .fullScreenCover
-
-Playing phase:
-→ Statement displayed (e.g. "20% tip on $80 = $16.00")
-→ Optional scenario context card above statement
-→ Two buttons: True / False
-→ Tap → .flashing(Bool) state for brief feedback → auto-advance to next item
-→ After 20 items → state = .complete
-
-Summary phase:
-→ Summary shown inline with score (N/20 correct), XP earned
-→ Personal best badge + confetti if isNewBest
-→ Numind Score delta card
-→ "Done" → dismiss
-
-Session recording:
-→ SessionRecord saved (lessonId: "true_false", moduleId: "mixed")
-→ progressStore.updateTrueFalseBest(score:) updates persistent personal best
-```
-
----
-
-## Flow 16: Estimation
-
-```
-Home tab or Practice tab: "Estimate" mode card (locked until ≥1 lesson mastered)
+Home tab or Practice tab: "Estimate" mode card (locked until ≥1 lesson completed)
 → EstimationViewModel.generateItems(from:templates, count: 10)
    → Filters to difficulty ≥ 2 first, falls back to all if not enough
    → SliderRange.compute() generates adaptive slider bounds with anti-center positioning
@@ -414,10 +387,10 @@ Session recording:
 
 ---
 
-## Flow 17: Comparison
+## Flow 16: Comparison
 
 ```
-Home tab or Practice tab: "Compare" mode card (locked until ≥1 lesson mastered)
+Home tab or Practice tab: "Compare" mode card (locked until ≥1 lesson completed)
 → ComparisonViewModel.generatePairs(from:templates, count: 15)
    → Each pair uses two different templates, generating two questions with different values
 → ComparisonViewModel created (pairs: pairs, previousBest: progressStore.comparisonBest)
@@ -444,7 +417,7 @@ Session recording:
 
 ---
 
-## Flow 18: High Score Celebration
+## Flow 17: High Score Celebration
 
 ```
 Any game mode summary screen
@@ -474,10 +447,9 @@ Practice tab
 2. Module tab strip (horizontally scrollable, 64pt rounded-square tiles with module mascots)
 3. Module spotlight card (shown when specific module selected -- module stats, accuracy, sessions)
 4. Hero quiz card (mixed-mode or module-specific quick quiz, "Start Mixed Round" / "Start Quick Quiz")
-5. Drills section -- 7 game-mode drill cards in a 3-column grid:
+5. Drills section -- 6 game-mode drill cards in a 3-column grid:
    - Row 1: Speed Drill, Blitz Mode, Recall
-   - Row 2: Streak, True/False, Estimate
-   - Row 3: Compare (+ 2 spacers)
+   - Row 2: Streak, Estimate, Compare
 
 **Drill cards:**
 - Gradient-filled cards with icon tile, title, subtitle
@@ -499,7 +471,7 @@ Practice tab
 **Drill launches:**
 - Each drill card launches its respective mode as .fullScreenCover
 - PracticeQuizContainer wraps Speed Drill and Recall with score tracking
-- Other modes use their dedicated Views (StreakView, TrueFalseView, EstimationView, ComparisonView)
+- Other modes use their dedicated Views (StreakView, EstimationView, ComparisonView)
 
 ---
 
@@ -522,8 +494,6 @@ RootTabView
 │   │   └── BlitzSummaryView (inline phase) + ConfettiBurst (if isNewBest)
 │   ├── → StreakView (.fullScreenCover)
 │   │   └── Summary (inline phase) + ConfettiBurst (if isNewBest)
-│   ├── → TrueFalseView (.fullScreenCover)
-│   │   └── Summary (inline phase) + ConfettiBurst (if isNewBest)
 │   ├── → EstimationView (.fullScreenCover)
 │   │   └── Summary (inline phase) + ConfettiBurst (if isNewBest)
 │   └── → ComparisonView (.fullScreenCover)
@@ -539,7 +509,6 @@ RootTabView
 │   ├── → PracticeQuizContainer (.fullScreenCover, quick quiz / speed drill / recall)
 │   │   └── Summary (inline) + ConfettiBurst (if isNewBest)
 │   ├── → StreakView (.fullScreenCover)
-│   ├── → TrueFalseView (.fullScreenCover)
 │   ├── → EstimationView (.fullScreenCover)
 │   └── → ComparisonView (.fullScreenCover)
 ├── Progress (NavigationStack)

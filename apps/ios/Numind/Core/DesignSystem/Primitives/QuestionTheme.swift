@@ -14,6 +14,8 @@ enum QuestionTheme {
     case estimation
     case debt
     case travel
+    case housing
+    case taxes
 
     // MARK: - Display properties
 
@@ -30,6 +32,8 @@ enum QuestionTheme {
         case .estimation:    return "gauge.medium"
         case .debt:          return "exclamationmark.circle.fill"
         case .travel:        return "airplane"
+        case .housing:       return "house.fill"
+        case .taxes:         return "doc.text.fill"
         }
     }
 
@@ -46,6 +50,8 @@ enum QuestionTheme {
         case .estimation:    return "function"
         case .debt:          return "banknote.fill"
         case .travel:        return "globe.americas.fill"
+        case .housing:       return "key.fill"
+        case .taxes:         return "building.columns.fill"
         }
     }
 
@@ -62,6 +68,8 @@ enum QuestionTheme {
         case .estimation:    return "Estimation"
         case .debt:          return "Debt & Loans"
         case .travel:        return "Travel Money"
+        case .housing:       return "Housing & Rent"
+        case .taxes:         return "Taxes & Paycheck"
         }
     }
 
@@ -78,6 +86,8 @@ enum QuestionTheme {
         case .estimation:    return "Mental math shortcuts"
         case .debt:          return "Credit cards & loans"
         case .travel:        return "Currency & spending abroad"
+        case .housing:       return "Affordability & costs"
+        case .taxes:         return "Brackets & take-home pay"
         }
     }
 
@@ -94,6 +104,8 @@ enum QuestionTheme {
         case .estimation:    return .orange
         case .debt:          return .coral
         case .travel:        return .purple
+        case .housing:       return .rose
+        case .taxes:         return .slate
         }
     }
 
@@ -189,6 +201,32 @@ enum QuestionTheme {
              "split_hotel_room_calc", "hotel_per_night_calc", "split_accommodation_calc",
              "travel_insurance_cost_calc", "total_trip_with_insurance", "foreign_fee_total_saved":
             return .travel
+
+        // ── Housing & Rent ───────────────────────────────────────────────────────
+        case "rent_afford_basic_d1", "rent_afford_scenario_d1",
+             "rent_afford_reverse_d2", "rent_afford_compare_d2", "rent_afford_annual_d3",
+             "rent_increase_basic_d1", "rent_increase_new_d1",
+             "rent_increase_annual_d2", "rent_increase_scenario_d2", "rent_increase_compare_d3",
+             "move_in_basic_d1", "move_in_no_broker_d1",
+             "move_in_with_broker_d2", "move_in_scenario_d2", "move_in_compare_d3",
+             "sqft_basic_d1", "sqft_compare_d1",
+             "sqft_scenario_d2", "sqft_reverse_d2", "sqft_best_deal_d3",
+             "mortgage_basic_d1", "mortgage_compare_d2",
+             "mortgage_scenario_d2", "mortgage_interest_d2", "mortgage_vs_rent_d3":
+            return .housing
+
+        // ── Taxes & Paycheck ────────────────────────────────────────────────────
+        case "bracket_basic_d1", "bracket_two_tier_d1",
+             "bracket_scenario_d2", "bracket_compare_d2", "bracket_effective_d3",
+             "deduction_basic_d1", "deduction_net_d1",
+             "deduction_fica_d2", "deduction_scenario_d2", "deduction_compare_d3",
+             "gross_net_basic_d1", "gross_net_monthly_d1",
+             "gross_net_scenario_d2", "gross_net_compare_d2", "gross_net_reverse_d3",
+             "refund_basic_d1", "refund_owe_d1",
+             "refund_scenario_d2", "refund_compare_d2", "refund_monthly_d3",
+             "se_tax_basic_d1", "se_tax_amount_d1",
+             "se_tax_scenario_d2", "se_tax_compare_d2", "se_tax_quarterly_d3":
+            return .taxes
 
         // ── Estimation (default) ─────────────────────────────────────────────────
         default:

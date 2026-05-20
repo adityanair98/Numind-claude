@@ -267,9 +267,9 @@ struct ModuleDetailView: View {
         let isAttempted = progressStore.hasCompletedLesson(lesson.id)
         let bestAcc = progressStore.bestAccuracy(lessonId: lesson.id)
         let moduleColor = viewModel.module.color
-        // Simple unlock: previous lesson must be mastered (or first lesson)
-        let prevMastered = index == 0 || progressStore.hasMasteredLesson(viewModel.lessons[index - 1].id)
-        let isLocked = !isDone && !isAttempted && !prevMastered
+        // Unlock: previous lesson must be completed (any score). Mastery is aspirational only.
+        let prevCompleted = index == 0 || progressStore.hasCompletedLesson(viewModel.lessons[index - 1].id)
+        let isLocked = !isDone && !isAttempted && !prevCompleted
 
         return Button {
             guard !isLocked else { return }

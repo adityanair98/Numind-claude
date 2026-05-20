@@ -35,7 +35,7 @@ Brand motifs:
 The core product loop is built:
 Home → Module → Lesson → Quiz → Feedback → Progress.
 
-Current phase: retention mechanics (streak protection, notifications), onboarding conversion funnel, and paywall integration. The core app is complete — what remains is the "ship it" layer (legal, accessibility, analytics) and the monetization layer (onboarding funnel, RevenueCat paywall, streak protection as a subscription perk).
+Current phase: retention mechanics (streak freezes built, notifications pending), onboarding conversion funnel, and paywall integration. The core app has 10 modules, 47 lessons, 237 quiz templates with completion-based progression and adaptive difficulty. What remains is the "ship it" layer (legal, accessibility, analytics) and the monetization layer (onboarding funnel, RevenueCat paywall).
 
 ## Stack
 - SwiftUI
@@ -58,7 +58,7 @@ Current phase: retention mechanics (streak protection, notifications), onboardin
 6. **Privacy & legal** — PrivacyInfo.xcprivacy, privacy policy URL, terms of service.
 7. **Accessibility** — VoiceOver labels on all interactive elements.
 8. **Analytics** — PostHog (funnel/retention) + Sentry (crashes).
-9. **Content balance** — Fill Salary (4→5 lessons) and Investing (3→5 lessons).
+9. **Content balance** — Fill Salary (4→5 lessons) and Investing (3→5 lessons). Housing & Rent and Taxes & Paycheck modules are complete (5 lessons each).
 
 ## Rules
 - Do not add AI-generated content.

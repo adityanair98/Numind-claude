@@ -22,8 +22,6 @@ struct ProgressData: Codable {
     var speedDrillBestScore: Int = 0
     /// Personal best for Recall mode: highest correct count reviewing past misses.
     var recallBestScore: Int = 0
-    /// Personal best for True/False Snap: highest score out of 20.
-    var trueFalseBestScore: Int = 0
     /// Personal best for Estimation mode: highest correct count (2+ stars) in a session.
     var estimationBestScore: Int = 0
     /// Personal best for Comparison mode: highest score out of 15.
@@ -32,34 +30,108 @@ struct ProgressData: Codable {
     /// Retained for 90 days; older entries are pruned automatically.
     var scoreHistory: [ScoreEntry] = []
 
+    /// Signals collected during the onboarding funnel.
+    /// Nil for users who completed the old 3-page onboarding.
+    /// Diagnostic results live here but are explicitly excluded from `sessions`.
+    var onboardingSignals: OnboardingSignals?
+
+    /// Dates where a streak freeze was applied (start-of-day normalized).
+    /// These count as "active" days in streak computation.
+    var frozenDates: Set<Date> = []
+
+    /// The streak value recorded after the most recent session.
+    /// Used to detect streak loss on next app launch.
+    var lastKnownStreak: Int = 0
+
+    /// Number of streak freezes currently banked (max 3).
+    var availableFreezes: Int = 0
+
+    /// How many 7-day streak milestones have been rewarded with a freeze.
+    /// Prevents double-awarding when streak stays above 7.
+    var freezeMilestonesAwarded: Int = 0
+
+    /// IDs of milestones already shown to the user. Prevents repeats.
+    var shownMilestoneIds: Set<String> = []
+
     // MARK: - Streak
+
+    /// Active days = session days ∪ frozen dates. Used by streak + helpers.
+    private var activeDays: Set<Date> {
+        let calendar = Calendar.current
+        let sessionDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
+        return sessionDays.union(frozenDates)
+    }
 
     func computeStreak() -> Int {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
-        let sessionDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
+        let days = activeDays
 
-        // Start from today if practiced, otherwise from yesterday.
-        var checkDay = sessionDays.contains(today)
+        // Start from today if active, otherwise from yesterday.
+        var checkDay = days.contains(today)
             ? today
             : calendar.date(byAdding: .day, value: -1, to: today)!
 
-        // Allow one grace day (1-day gap) per streak chain.
+        // Strict consecutive days — no grace period.
+        guard days.contains(checkDay) else { return 0 }
+
         var streak = 0
-        var graceUsed = false
-        while true {
-            if sessionDays.contains(checkDay) {
-                streak += 1
-                checkDay = calendar.date(byAdding: .day, value: -1, to: checkDay)!
-            } else if !graceUsed {
-                // Skip the missed day once — grace day
-                graceUsed = true
-                checkDay = calendar.date(byAdding: .day, value: -1, to: checkDay)!
-            } else {
-                break
-            }
+        while days.contains(checkDay) {
+            streak += 1
+            checkDay = calendar.date(byAdding: .day, value: -1, to: checkDay)!
         }
         return streak
+    }
+
+    /// The streak that existed before the current gap (if any).
+    /// Walks backward past the missed days to find the last active run.
+    func computePreviousStreak() -> Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let days = activeDays
+
+        // Skip today, walk back to find the first active day past the gap.
+        var day = calendar.date(byAdding: .day, value: -1, to: today)!
+        var gapDays = 0
+        while !days.contains(day) {
+            gapDays += 1
+            // Don't scan more than 7 days back.
+            guard gapDays <= 7 else { return 0 }
+            day = calendar.date(byAdding: .day, value: -1, to: day)!
+        }
+
+        // Count the streak from this active day backward.
+        var streak = 0
+        while days.contains(day) {
+            streak += 1
+            day = calendar.date(byAdding: .day, value: -1, to: day)!
+        }
+        return streak
+    }
+
+    /// The missed dates between the last active day and today.
+    /// Only returns dates within the last 3 days (revival window).
+    func missedDates() -> [Date] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let days = activeDays
+
+        var missed: [Date] = []
+        var day = calendar.date(byAdding: .day, value: -1, to: today)!
+        while !days.contains(day) && today.timeIntervalSince(day) <= 3 * 86400 {
+            missed.append(day)
+            day = calendar.date(byAdding: .day, value: -1, to: day)!
+        }
+        return missed
+    }
+
+    /// Most recent session date.
+    var lastSessionDate: Date? {
+        sessions.map(\.date).max()
+    }
+
+    mutating func freezeDate(_ date: Date) {
+        frozenDates.insert(Calendar.current.startOfDay(for: date))
     }
 
     // MARK: - Accuracy
@@ -148,10 +220,6 @@ struct ProgressData: Codable {
 
     mutating func updateRecallBest(score: Int) {
         if score > recallBestScore { recallBestScore = score }
-    }
-
-    mutating func updateTrueFalseBest(score: Int) {
-        if score > trueFalseBestScore { trueFalseBestScore = score }
     }
 
     mutating func updateEstimationBest(score: Int) {

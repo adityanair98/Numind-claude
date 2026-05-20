@@ -26,8 +26,10 @@
 ## Crash Reporting Later
 - Sentry
 
-## Website Later
-- Next.js
-- Vercel
-- Tailwind
-- Supabase
+## Website (Built)
+- Next.js 16 (App Router, SSG)
+- Tailwind CSS v4 (brand tokens via `@theme inline`)
+- TypeScript
+- Lucide React (SVG icons)
+- Vercel (deployment)
+- 106 statically generated pages (6 calculators + 51 state pages + 40 salary amount pages + landing + tools directory + legal)

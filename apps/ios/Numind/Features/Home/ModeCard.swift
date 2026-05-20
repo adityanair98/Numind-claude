@@ -72,7 +72,7 @@ struct ModeCard: View {
                         .font(Theme.Typography.small)
                         .foregroundStyle(Theme.Colors.mutedText)
                 }
-                Text("Master a lesson")
+                Text("Complete a lesson")
                     .font(.system(size: 10, weight: .bold))
                     .foregroundStyle(Theme.Colors.mutedText)
                     .kerning(0.5)
@@ -185,20 +185,6 @@ extension ModeCard {
             subtitle: "Don't miss",
             gradientColors: [Color(red: 0.95, green: 0.30, blue: 0.25), Color(red: 0.85, green: 0.20, blue: 0.18)],
             shadowColor: Color(red: 0.95, green: 0.30, blue: 0.25),
-            bestLabel: bestLabel,
-            locked: locked,
-            action: action
-        )
-    }
-
-    /// Pre-configured True/False card.
-    static func trueFalse(bestLabel: String?, locked: Bool, action: @escaping () -> Void) -> ModeCard {
-        ModeCard(
-            icon: "hand.thumbsup.fill",
-            title: "True/False",
-            subtitle: "20 snaps \u{00B7} quick judge",
-            gradientColors: [Theme.Colors.primaryBlue, Color(red: 0.18, green: 0.30, blue: 0.72)],
-            shadowColor: Theme.Colors.primaryBlue,
             bestLabel: bestLabel,
             locked: locked,
             action: action

@@ -1,6 +1,6 @@
 # App Architecture
 
-> **Last updated:** May 2026 (after mid-session motivator checkpoints, splash screen architecture).
+> **Last updated:** May 2026 (after V1 refinement — new modules, scoring reweight, True/False removal, streak freezes, adaptive difficulty).
 
 ## Pattern
 MVVM with lightweight services. No third-party dependencies in V1.
@@ -52,9 +52,9 @@ Numind/
       ContentRepository.swift    # Protocol for content access
       LocalContentRepository.swift  # JSON-backed implementation
     Progress/
-      NumindScoreEngine.swift    # Composite Numind Score calculation + ScoreTier
-      ProgressData.swift         # Codable progress state with computed helpers + best scores
-      ProgressStore.swift        # ObservableObject wrapping ProgressData (UserDefaults)
+      NumindScoreEngine.swift    # Composite Numind Score (accuracy 60, difficulty 25, speed 15)
+      ProgressData.swift         # Codable progress state with computed helpers + best scores + streak freezes
+      ProgressStore.swift        # ObservableObject wrapping ProgressData (UserDefaults) + autoApplyFreeze()
       SessionRecord.swift        # Per-session result record
     QuizEngine/
       AdaptiveDifficultyEngine.swift  # Adaptive difficulty selection
@@ -65,7 +65,7 @@ Numind/
       FormulaOperationMap.swift  # Formula-to-operation mapping
       MasteredTemplatePool.swift # Shared gateway for game mode template access
       QuestionDifficulty.swift   # Difficulty level definitions
-      QuizEngine.swift           # Template -> QuizQuestion generator (40+ formulas)
+      QuizEngine.swift           # Template -> QuizQuestion generator (60+ formulas, proportional distractors)
       QuizQuestion.swift         # Generated question model
       ReviewMistakesEngine.swift # Review-mistakes session builder
       SeededRandomGenerator.swift # Deterministic RNG for reproducible tests
@@ -82,16 +82,16 @@ Numind/
 
   Features/
     Home/
-      HomeView.swift             # Home tab: greeting, modes, workout, resume
+      HomeView.swift             # Home tab: greeting, modes, workout, resume, freeze count
       HomeViewModel.swift        # Home data preparation
       BrandHeader.swift          # Numind brand header component
       DailyChallengeCard.swift   # Daily challenge card component
       DailyInsightView.swift     # Daily insight/tip display
-      ModeCard.swift             # Game mode card (gradient, orbs, 6 convenience constructors)
+      ModeCard.swift             # Game mode card (gradient, orbs, 5 convenience constructors)
       StreakStripCard.swift       # Streak calendar strip card
     Learn/
       LearnView.swift            # Quest-journey learning path (main Learn tab)
-      LearnViewModel.swift       # Path node generation, mastery gating, review insertion
+      LearnViewModel.swift       # Path node generation, completion-based progression, review insertion
       LearnHeader.swift          # Learn tab header
       Lesson/
         LessonView.swift         # Lesson flow: content -> quiz -> summary
@@ -116,13 +116,10 @@ Numind/
       BlitzSummaryView.swift     # Blitz summary with personal best + confetti
       SpeedDrillView.swift       # Speed drill presentation
     Practice/
-      PracticeView.swift         # Practice tab: module strip, hero card, 7 drill cards
+      PracticeView.swift         # Practice tab: module strip, hero card, 6 drill cards
       Streak/
         StreakView.swift          # Streak mode: consecutive correct answers
         StreakViewModel.swift     # Streak state: count, game over detection
-      TrueFalse/
-        TrueFalseView.swift      # True/False snap: 20 rapid-fire statements
-        TrueFalseViewModel.swift # T/F state: items, flashing, score
       Estimation/
         EstimationView.swift     # Estimation mode: slider + timer
         EstimationViewModel.swift # Estimation state: slider, grades, timer + SliderRange
@@ -141,9 +138,9 @@ Numind/
     Base.lproj/
       LaunchScreen.storyboard    # Native launch screen (logo + wordmark, Auto Layout)
     LocalContent/
-      modules.json               # 8 module definitions
-      lessons.json               # 37 lessons with template IDs
-      quiz_templates.json        # 187 quiz templates
+      modules.json               # 10 module definitions
+      lessons.json               # 47 lessons with template IDs
+      quiz_templates.json        # 237 quiz templates
     Assets.xcassets              # App icons, colors, images
       LaunchLogo.imageset        # Background-removed symbol (light + dark variants)
       LaunchWordmark.imageset    # Cropped "Numind" wordmark (white text, both modes)
@@ -185,14 +182,18 @@ This mirrors how apps like WhatsApp and Facebook handle appearance-aware launch 
 
 ### Learning Path
 - `LearnViewModel.refresh(using:)` builds the full path from modules + lessons + progress
+- Completion-based progression: `hasCompletedLesson` (any attempt) unlocks next node; `hasMasteredLesson` (≥75%) shown as gold star
 - Review nodes are inserted programmatically (not stored in content JSON)
 - Path state is recomputed on every `progressStore` change via `.onChange`
 
 ### Quiz Flow
 - `QuizSessionViewModel` owns the full quiz lifecycle
+- Dynamic question count: 5 on first attempt (gentle intro), 8 on subsequent, diagnostic-adjusted
 - Each `QuizEngine.generate()` call uses a fresh random seed
 - Retries create a new ViewModel instance -> completely new random values
 - `CheckpointQuizEngine` round-robins across multiple lessons' templates
+- `AdaptiveDifficultyEngine` uses onboarding diagnostic signals to set starting difficulty per module
+- Distractor generation uses proportional `niceStep` algorithm (~5-8% of answer, rounded to natural numbers)
 
 ### Mid-Session Motivators
 - `MotivatorEngine` is a pure, stateless evaluator — takes session state, returns optional `MotivatorType`
@@ -212,6 +213,7 @@ This mirrors how apps like WhatsApp and Facebook handle appearance-aware launch 
 - Session summary is a phase within the lesson/review view, not a separate screen
 
 ### Game Modes
+- 6 game modes (Speed Drill, Blitz, Recall, Streak, Estimation, Comparison). True/False was removed during V1 refinement.
 - Each game mode has its own dedicated ViewModel + View pair (except Speed Drill which reuses `QuizSessionViewModel` with a timer)
 - All mode ViewModels accept `previousBest: Int` at init and expose `isNewBest: Bool`
 - `MasteredTemplatePool` is the shared gateway — all modes pull from mastered templates only

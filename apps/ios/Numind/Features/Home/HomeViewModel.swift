@@ -21,7 +21,7 @@ final class HomeViewModel: ObservableObject {
     /// All ordered recommendations — used by the view to show reason chips.
     @Published private(set) var recommendations: [LessonRecommendation] = []
 
-    /// True when the user has mastered at least one lesson — unlocks game modes.
+    /// True when the user has completed at least one lesson — unlocks game modes.
     @Published private(set) var modesUnlocked: Bool = false
 
     private let repo: ContentRepository
@@ -65,6 +65,7 @@ final class HomeViewModel: ObservableObject {
         let recs = LessonRecommendationEngine.recommendations(
             repository: repo,
             sessions: store.data.sessions,
+            onboardingSignals: store.data.onboardingSignals,
             limit: 10
         )
 

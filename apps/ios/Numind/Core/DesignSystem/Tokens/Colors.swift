@@ -37,6 +37,8 @@ extension Theme {
         static let errorSoftRed  = Color(uiColor: .adaptive(light: 0xEF6B6B, dark: 0xF08080))
         static let debtCoral     = Color(uiColor: .adaptive(light: 0xEF5A3A, dark: 0xFF7055))
         static let travelPurple  = Color(uiColor: .adaptive(light: 0x7C4DBC, dark: 0xA070E0))
+        static let housingRose   = Color(uiColor: .adaptive(light: 0xD14D72, dark: 0xE06090))
+        static let taxSlate      = Color(uiColor: .adaptive(light: 0x4A7C8A, dark: 0x6BA0B0))
 
         // ── Surfaces ──────────────────────────────────────────────────────────────────
         /// Page / scroll background
@@ -59,6 +61,8 @@ extension Theme {
         static var errorSoftRedTint:  Color { errorSoftRed.opacity(0.14) }
         static var debtCoralTint:     Color { debtCoral.opacity(0.13) }
         static var travelPurpleTint:  Color { travelPurple.opacity(0.12) }
+        static var housingRoseTint:   Color { housingRose.opacity(0.12) }
+        static var taxSlateTint:      Color { taxSlate.opacity(0.12) }
         static var mutedTint:         Color { mutedText.opacity(0.12) }
 
         // ── Lines & shadows ───────────────────────────────────────────────────────────

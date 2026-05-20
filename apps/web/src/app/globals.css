@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* ── Numind Brand Tokens (Tailwind v4 @theme) ── */
+@theme inline {
+  /* Colors */
+  --color-brand-blue: #2F6BFF;
+  --color-brand-navy: #10224A;
+  --color-brand-teal: #2DC6B6;
+  --color-brand-yellow: #FFD84D;
+  --color-brand-bg: #F6F9FF;
+  --color-brand-card: #FFFFFF;
+  --color-brand-muted: #6B7280;
+  --color-brand-red: #EF6B6B;
+
+  /* Tints (semi-transparent overlays) */
+  --color-brand-blue-tint: oklch(from #2F6BFF l c h / 0.08);
+  --color-brand-teal-tint: oklch(from #2DC6B6 l c h / 0.10);
+  --color-brand-yellow-tint: oklch(from #FFD84D l c h / 0.12);
+  --color-brand-muted-tint: oklch(from #6B7280 l c h / 0.06);
+
+  /* Spacing */
+  --spacing-screen: 20px;
+  --spacing-card: 18px;
+  --spacing-section: 28px;
+
+  /* Radii */
+  --radius-card: 20px;
+  --radius-button: 18px;
+  --radius-pill: 999px;
+  --radius-icon-tile: 24px;
+
+  /* Fonts */
+  --font-display: var(--font-dm-sans);
+  --font-body: var(--font-inter);
+}
+
+/* ── Base Styles ── */
+body {
+  background: var(--color-brand-bg);
+  color: var(--color-brand-navy);
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+
+/* ── Accessibility: Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Homepage 3D Animations ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(47, 107, 255, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(47, 107, 255, 0.5), 0 0 60px rgba(45, 198, 182, 0.2); }
+}
+
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.97); }
+}
+
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 20px) scale(0.96); }
+  66% { transform: translate(15px, -30px) scale(1.04); }
+}
+
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, 25px) scale(1.03); }
+  66% { transform: translate(-30px, -10px) scale(0.98); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out both;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-orb-1 {
+  animation: orb-drift-1 12s ease-in-out infinite;
+}
+
+.animate-orb-2 {
+  animation: orb-drift-2 15s ease-in-out infinite;
+}
+
+.animate-orb-3 {
+  animation: orb-drift-3 18s ease-in-out infinite;
+}

@@ -10,6 +10,8 @@ struct ProfileView: View {
 
     @AppStorage("numind.appearance") private var appearanceRaw = "system"
 
+    @AppStorage("numind.hasCompletedOnboarding") private var hasCompletedOnboarding = true
+
     @State private var showResetAlert = false
     @State private var notificationStatus: UNAuthorizationStatus = .notDetermined
     @State private var showPermissionDeniedAlert = false
@@ -23,6 +25,9 @@ struct ProfileView: View {
                 remindersSection
                 appearanceSection
                 appSection
+                #if DEBUG
+                developerSection
+                #endif
                 brandFooter
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
@@ -239,6 +244,79 @@ struct ProfileView: View {
             }
         }
     }
+
+    // MARK: - Developer section (debug only)
+
+    #if DEBUG
+    private var developerSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Developer")
+            NumindCard {
+                VStack(spacing: 0) {
+                    // Replay onboarding
+                    Button {
+                        hasCompletedOnboarding = false
+                    } label: {
+                        HStack(spacing: 14) {
+                            IconTile(systemName: "arrow.counterclockwise.circle",
+                                     tintColor: Theme.Colors.warmOrange, size: 36)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Replay onboarding")
+                                    .font(Theme.Typography.body)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Theme.Colors.deepNavy)
+                                Text("Restarts the onboarding flow immediately")
+                                    .font(Theme.Typography.small)
+                                    .foregroundStyle(Theme.Colors.mutedText)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        }
+                        .padding(.vertical, 14)
+                        .padding(.horizontal, 18)
+                    }
+                    .buttonStyle(.plain)
+
+                    Divider()
+                        .background(Theme.Colors.hairline)
+                        .padding(.leading, 18 + 36 + 14)
+
+                    // Trigger streak loss
+                    Button {
+                        triggerStreakLossForTesting()
+                    } label: {
+                        HStack(spacing: 14) {
+                            IconTile(systemName: "flame.fill",
+                                     tintColor: Theme.Colors.errorSoftRed, size: 36)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Simulate streak loss")
+                                    .font(Theme.Typography.body)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Theme.Colors.deepNavy)
+                                Text("Sets lastKnownStreak to trigger loss screen")
+                                    .font(Theme.Typography.small)
+                                    .foregroundStyle(Theme.Colors.mutedText)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        }
+                        .padding(.vertical, 14)
+                        .padding(.horizontal, 18)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+    }
+
+    private func triggerStreakLossForTesting() {
+        progressStore.simulateStreakLoss(previousStreak: 7)
+    }
+    #endif
 
     // MARK: - Brand footer
 

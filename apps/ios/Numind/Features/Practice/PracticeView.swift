@@ -7,7 +7,6 @@ struct PracticeView: View {
     @State private var quizVM: QuizSessionViewModel?
     @State private var recallVM: QuizSessionViewModel?
     @State private var streakVM: StreakViewModel?
-    @State private var trueFalseVM: TrueFalseViewModel?
     @State private var estimationVM: EstimationViewModel?
     @State private var comparisonVM: ComparisonViewModel?
 
@@ -90,10 +89,6 @@ struct PracticeView: View {
                 generateQuestions: { generateMCQQuestions(count: 40) }
             )
             .environmentObject(progressStore)
-        }
-        .fullScreenCover(item: $trueFalseVM) { vm in
-            TrueFalseView(viewModel: vm)
-                .environmentObject(progressStore)
         }
         .fullScreenCover(item: $estimationVM) { vm in
             EstimationView(viewModel: vm)
@@ -405,7 +400,7 @@ struct PracticeView: View {
                     .padding(.bottom, 6)
 
                 Text(locked
-                    ? "Master your first lesson in the Learn tab to unlock drills and game modes."
+                    ? "Complete your first lesson in the Learn tab to unlock drills and game modes."
                     : (isAll
                         ? "Pulled from every module you've unlocked."
                         : "10 questions to sharpen your skills."))
@@ -531,18 +526,6 @@ struct PracticeView: View {
                     locked: locked
                 ) {
                     launchStreak()
-                }
-
-                drillCard(
-                    title: "True/False",
-                    subtitle: "Snap judge",
-                    icon: "hand.thumbsup.fill",
-                    gradientStart: Theme.Colors.primaryBlue,
-                    gradientEnd: Color(red: 0.18, green: 0.30, blue: 0.72),
-                    bestScore: progressStore.trueFalseBest,
-                    locked: locked
-                ) {
-                    launchTrueFalse()
                 }
 
                 drillCard(
@@ -759,14 +742,6 @@ struct PracticeView: View {
             questions: questions,
             previousBest: progressStore.streakModeBest
         )
-    }
-
-    private func launchTrueFalse() {
-        let templates = templatesForSelection()
-        guard !templates.isEmpty else { return }
-        let items = TrueFalseViewModel.generateItems(from: templates, count: 20)
-        guard !items.isEmpty else { return }
-        trueFalseVM = TrueFalseViewModel(items: items, previousBest: progressStore.trueFalseBest)
     }
 
     private func launchEstimation() {

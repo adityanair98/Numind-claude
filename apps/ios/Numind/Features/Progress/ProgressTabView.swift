@@ -113,6 +113,11 @@ struct ProgressTabView: View {
             VStack(alignment: .leading, spacing: 0) {
                 progressHeader
 
+                // Your Improvement (only shows positive stats)
+                improvementCard
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 18)
+
                 streakHeroCard
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 18)
@@ -236,6 +241,117 @@ struct ProgressTabView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Your Improvement
+    // ═══════════════════════════════════════════════════════════════
+
+    @ViewBuilder
+    private var improvementCard: some View {
+        let stats = ImprovementCalculator.compute(from: store.data, scoreDelta: store.numindScoreDelta)
+        let speedUp = ImprovementCalculator.speedImprovement(stats)
+        let accUp = ImprovementCalculator.accuracyImprovement(stats)
+        let hasPositive = speedUp != nil || accUp != nil || stats.scoreDelta > 0 || stats.skillsMastered > 0
+
+        if hasPositive {
+            NumindCard {
+                VStack(alignment: .leading, spacing: 14) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "arrow.up.right")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(Theme.Colors.growthGreen)
+                        Text("YOUR IMPROVEMENT")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .kerning(0.6)
+                    }
+
+                    // 2-column grid of positive stats
+                    let items = buildImprovementItems(stats: stats, speedUp: speedUp, accUp: accUp)
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                        ForEach(items, id: \.label) { item in
+                            improvementStatView(item)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private struct ImprovementItem {
+        let icon: String
+        let value: String
+        let label: String
+        let color: Color
+    }
+
+    private func buildImprovementItems(
+        stats: ImprovementCalculator.Stats,
+        speedUp: Int?,
+        accUp: Int?
+    ) -> [ImprovementItem] {
+        var items: [ImprovementItem] = []
+
+        if let pct = speedUp {
+            items.append(ImprovementItem(
+                icon: "bolt.fill",
+                value: "\(pct)% faster",
+                label: "Response speed",
+                color: Theme.Colors.primaryBlue
+            ))
+        }
+
+        if let pct = accUp {
+            items.append(ImprovementItem(
+                icon: "target",
+                value: "+\(pct)%",
+                label: "Accuracy",
+                color: Theme.Colors.mindTeal
+            ))
+        }
+
+        if stats.scoreDelta > 0 {
+            items.append(ImprovementItem(
+                icon: "chart.line.uptrend.xyaxis",
+                value: "+\(stats.scoreDelta) pts",
+                label: "Numind Score",
+                color: Theme.Colors.growthGreen
+            ))
+        }
+
+        if stats.skillsMastered > 0 {
+            items.append(ImprovementItem(
+                icon: "checkmark.seal.fill",
+                value: "\(stats.skillsMastered)",
+                label: "Skills mastered",
+                color: Theme.Colors.warmOrange
+            ))
+        }
+
+        return items
+    }
+
+    private func improvementStatView(_ item: ImprovementItem) -> some View {
+        HStack(spacing: 10) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(item.color.opacity(0.12))
+                    .frame(width: 34, height: 34)
+                Image(systemName: item.icon)
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(item.color)
+            }
+            VStack(alignment: .leading, spacing: 1) {
+                Text(item.value)
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                Text(item.label)
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundStyle(Theme.Colors.mutedText)
+            }
+            Spacer(minLength: 0)
         }
     }
 

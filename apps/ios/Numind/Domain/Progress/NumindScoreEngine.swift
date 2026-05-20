@@ -4,26 +4,24 @@ import Foundation
 /// user can handle questions in each module and overall.
 ///
 /// ## Per-module score (0–100)
-///   Accuracy  (0–50): recent correct rate × 50
-///   Speed     (0–30): avg time per question → 30 / 20 / 10 / 0
-///   Difficulty (0–20): weighted correct answers by adaptive difficulty tier
+///   Accuracy   (0–60): recent correct rate × 60  — primary driver
+///   Difficulty (0–25): weighted correct answers by adaptive difficulty tier
+///   Speed      (0–15): avg time per question → 15 / 10 / 5 / 0  — bonus, not penalty
 ///
 /// ## Overall score
 ///   Unweighted average across all modules (unattempted modules contribute 0).
 ///
-/// The difficulty component is an approximation until `QuestionResult` stores
-/// the actual difficulty tier that was presented (Step 11). Until then it uses
-/// `AdaptiveDifficultyEngine` to infer each template's expected difficulty from
-/// the user's history.
+/// Speed is deliberately down-weighted so anxious users who are accurate but
+/// slow still see a score that reflects their competence.
 enum NumindScoreEngine {
 
     // MARK: - Configuration
 
     static let maxScore: Int = 100
 
-    private static let accuracyMax:   Int = 50
-    private static let speedMax:      Int = 30
-    private static let difficultyMax: Int = 20
+    private static let accuracyMax:   Int = 60
+    private static let difficultyMax: Int = 25
+    private static let speedMax:      Int = 15
 
     /// Number of most-recent sessions to examine per module.
     private static let sessionWindow: Int = 10
@@ -55,7 +53,7 @@ enum NumindScoreEngine {
         return total / moduleIds.count
     }
 
-    // MARK: - Component: Accuracy (0–50)
+    // MARK: - Component: Accuracy (0–60)
 
     private static func accuracyScore(sessions: [SessionRecord]) -> Int {
         let correct   = sessions.reduce(0) { $0 + $1.correctCount }
@@ -64,7 +62,7 @@ enum NumindScoreEngine {
         return Int((Double(correct) / Double(total)) * Double(accuracyMax))
     }
 
-    // MARK: - Component: Speed (0–30)
+    // MARK: - Component: Speed (0–15)
 
     private static func speedScore(sessions: [SessionRecord]) -> Int {
         let results = sessions.flatMap(\.questionResults)
@@ -75,14 +73,14 @@ enum NumindScoreEngine {
 
         let avgTime = results.map(\.timeSpentSeconds).reduce(0, +) / Double(results.count)
         switch avgTime {
-        case ..<fastThreshold: return speedMax           // ≥ bolt-fast
-        case ..<goodThreshold: return speedMax * 2 / 3  // good
-        case ..<okThreshold:   return speedMax / 3      // ok
+        case ..<fastThreshold: return 15   // bolt-fast
+        case ..<goodThreshold: return 10   // good
+        case ..<okThreshold:   return 5    // ok
         default:               return 0
         }
     }
 
-    // MARK: - Component: Difficulty (0–20)
+    // MARK: - Component: Difficulty (0–25)
 
     private static func difficultyScore(
         sessions: [SessionRecord],

@@ -1,7 +1,8 @@
 import Foundation
 
 /// Recommends a target `QuestionDifficulty` for a quiz template based on
-/// the user's recent history with that specific template.
+/// the user's recent history with that specific template, falling back to
+/// onboarding diagnostic calibration for first encounters.
 ///
 /// Called by session builders (daily challenge, SRS workout) to pass a
 /// `targetDifficulty` to `QuizEngine.generate`, so questions adapt to
@@ -12,6 +13,8 @@ import Foundation
 ///   ≥ 80% accurate                             → Medium
 ///   ≥ 50% accurate                             → Medium
 ///   < 50% accurate                             → Easy
+///   Never seen + diagnostic intermediate       → Medium
+///   Never seen + diagnostic foundation         → Easy (faster medium unlock)
 ///   Never seen                                 → Easy (start accessible)
 enum AdaptiveDifficultyEngine {
 
@@ -27,23 +30,53 @@ enum AdaptiveDifficultyEngine {
 
     /// Returns the recommended target difficulty for `templateId` given all
     /// recorded sessions. Pass this as `targetDifficulty` to `QuizEngine.generate`.
+    ///
+    /// This overload has no diagnostic context — it defaults to `.easy` for unseen templates.
+    /// Prefer the overload that accepts `moduleId` + `signals` for diagnostic-aware calibration.
     static func targetDifficulty(for templateId: String, in sessions: [SessionRecord]) -> QuestionDifficulty {
+        return targetDifficulty(for: templateId, moduleId: nil, in: sessions, signals: nil)
+    }
+
+    /// Diagnostic-aware overload. Falls back to `startingDifficulties` for unseen templates.
+    static func targetDifficulty(
+        for templateId: String,
+        moduleId: String?,
+        in sessions: [SessionRecord],
+        signals: OnboardingSignals?
+    ) -> QuestionDifficulty {
         let recent = recentResults(for: templateId, in: sessions)
 
-        // First encounter — start at easy to build confidence.
-        guard !recent.isEmpty else { return .easy }
+        // If the user has session history for this template, use adaptive logic.
+        if !recent.isEmpty {
+            return difficultyFromHistory(recent)
+        }
 
+        // No history — fall back to diagnostic calibration if available.
+        if let modId = moduleId, let starting = signals?.startingDifficulties[modId] {
+            switch starting {
+            case .beginner:     return .easy
+            case .foundation:   return .easy     // start easy, but SRS will escalate faster
+            case .intermediate: return .medium   // skip easy entirely
+            }
+        }
+
+        // Ultimate fallback — start accessible.
+        return .easy
+    }
+
+    // MARK: - Internal
+
+    /// Pure adaptive logic from session history.
+    private static func difficultyFromHistory(_ recent: [QuestionResult]) -> QuestionDifficulty {
         let accuracy = Double(recent.filter(\.isCorrect).count) / Double(recent.count)
         let avgSpeed = recent.map(\.timeSpentSeconds).reduce(0, +) / Double(recent.count)
 
         switch accuracy {
         case 0.8...:
-            // High accuracy — escalate if also fast, else stay at medium.
             return avgSpeed < fastThreshold ? .hard : .medium
         case 0.5..<0.8:
             return .medium
         default:
-            // Struggling — back off to easy.
             return .easy
         }
     }

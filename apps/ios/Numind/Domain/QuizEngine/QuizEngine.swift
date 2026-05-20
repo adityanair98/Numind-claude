@@ -428,6 +428,89 @@ struct QuizEngine {
                   let pct = vars["insurancePercent"] else { return nil }
             return trip * (1 + pct / 100)
         },
+
+        // Housing & Rent
+        "maxRent28": { vars in
+            guard let monthly = vars["monthlySalary"] else { return nil }
+            return monthly * 0.28
+        },
+        "maxAnnualRent28": { vars in
+            guard let monthly = vars["monthlySalary"] else { return nil }
+            return monthly * 0.28 * 12
+        },
+        "rentIncrease": { vars in
+            guard let rent = vars["currentRent"],
+                  let pct = vars["increasePercent"] else { return nil }
+            return rent * pct / 100
+        },
+        "newRentAfterIncrease": { vars in
+            guard let rent = vars["currentRent"],
+                  let pct = vars["increasePercent"] else { return nil }
+            return rent * (1 + pct / 100)
+        },
+        "moveInTotal": { vars in
+            guard let first = vars["firstMonth"],
+                  let last = vars["lastMonth"],
+                  let deposit = vars["securityDeposit"] else { return nil }
+            let broker = vars["brokerFee"] ?? 0
+            return first + last + deposit + broker
+        },
+        "moveInThreeMonths": { vars in
+            guard let rent = vars["monthlyRent"] else { return nil }
+            return rent * 3
+        },
+        "moveInWithBrokerFee": { vars in
+            guard let rent = vars["monthlyRent"],
+                  let broker = vars["brokerFee"] else { return nil }
+            return rent * 3 + broker
+        },
+        "pricePerSqft": { vars in
+            guard let price = vars["monthlyRent"],
+                  let sqft = vars["squareFeet"], sqft > 0 else { return nil }
+            return price / sqft
+        },
+        "monthlyMortgage": { vars in
+            // Simplified: principal × (annualRate / 12) — interest-only approximation
+            guard let principal = vars["loanAmount"],
+                  let rate = vars["annualRate"],
+                  let years = vars["loanYears"], years > 0 else { return nil }
+            return principal * (rate / 100 / 12) + principal / (years * 12)
+        },
+
+        // Taxes & Paycheck
+        "marginalTax": { vars in
+            // Simplified 2-bracket system: first bracket taxed at rate1, remainder at rate2
+            guard let income = vars["taxableIncome"],
+                  let bracket1 = vars["bracket1Limit"],
+                  let rate1 = vars["rate1"],
+                  let rate2 = vars["rate2"] else { return nil }
+            if income <= bracket1 {
+                return income * rate1 / 100
+            }
+            return bracket1 * rate1 / 100 + (income - bracket1) * rate2 / 100
+        },
+        "paycheckNet": { vars in
+            guard let gross = vars["grossPay"],
+                  let ficaRate = vars["ficaRate"],
+                  let fedRate = vars["federalRate"],
+                  let stateRate = vars["stateRate"] else { return nil }
+            let totalRate = ficaRate + fedRate + stateRate
+            return gross * (1 - totalRate / 100)
+        },
+        "annualToMonthlyNet": { vars in
+            guard let annual = vars["annualSalary"],
+                  let totalRate = vars["totalDeductionRate"] else { return nil }
+            return annual * (1 - totalRate / 100) / 12
+        },
+        "taxRefund": { vars in
+            guard let withheld = vars["totalWithheld"],
+                  let owed = vars["taxOwed"] else { return nil }
+            return withheld - owed
+        },
+        "selfEmploymentTax": { vars in
+            guard let income = vars["freelanceIncome"] else { return nil }
+            return income * 0.153
+        },
     ]
 
     private static func compute(formula: String, variables: [String: Double]) -> Double? {
@@ -435,6 +518,44 @@ struct QuizEngine {
     }
 
     // MARK: - Distractor generation
+
+    /// Returns a proportional step size that creates believable wrong answers.
+    /// The step targets roughly 5-8% of the correct answer, rounded to a
+    /// "psychologically natural" number so distractors look like real mistakes
+    /// rather than random noise.
+    ///
+    /// Examples:
+    ///   correct = 78,000  → step = 5,000  (distractors: 73K, 83K, 68K …)
+    ///   correct = 2,083   → step = 100    (distractors: 1,983, 2,183 …)
+    ///   correct = 312     → step = 20     (distractors: 292, 332, 272 …)
+    ///   correct = 45      → step = 3      (distractors: 42, 48, 39 …)
+    ///   correct = 8.50    → step = 0.50   (distractors: 8.00, 9.00, 7.50 …)
+    ///   correct = 1.20    → step = 0.10   (distractors: 1.10, 1.30, 1.00 …)
+    private static func niceStep(for correct: Double) -> Double {
+        let magnitude = abs(correct)
+        guard magnitude > 0 else { return 1 }
+
+        // Target ~7% of the answer
+        let raw = magnitude * 0.07
+
+        // Round to a "nice" number: 1, 2, 3, 5, 10, 20, 25, 50, 100, 200, 500…
+        // Find the power-of-10 bucket, then snap to the nearest nice fraction.
+        let power = floor(log10(raw))
+        let base = pow(10, power)                // e.g., raw=350 → base=100
+        let ratio = raw / base                   // e.g., 3.5
+
+        let nice: Double
+        if ratio < 1.5      { nice = 1 }        // snap to 1×base
+        else if ratio < 3.5 { nice = 2.5 }      // snap to 2.5×base
+        else if ratio < 7.5 { nice = 5 }        // snap to 5×base
+        else                 { nice = 10 }       // snap to 10×base
+
+        let step = nice * base
+
+        // Floor: never smaller than 0.01 (our rounding precision)
+        // Also avoid sub-penny steps that produce identical rounded values.
+        return max(step, 0.01)
+    }
 
     private static func distractors(
         correct: Double,
@@ -444,43 +565,35 @@ struct QuizEngine {
     ) -> [Double] {
         var candidates: [Double] = []
 
-        // Choose a step size that matches the answer's natural granularity.
-        // • Multiples of 10 (rounding-to-nearest-$10 questions) → ±10, ±20, …
-        // • Whole numbers (integer-format answers)                → ±1, ±2, …
-        // • Decimals                                              → ±0.50, ±1.00, …
-        let step: Double = {
-            if correct >= 10 && correct.truncatingRemainder(dividingBy: 10) == 0 {
-                return 10
-            } else if correct.truncatingRemainder(dividingBy: 1) == 0 {
-                return 1
-            } else {
-                return 0.5
-            }
-        }()
+        let step = niceStep(for: correct)
 
-        // For large steps (multiples of 10), keep distractors tight (±10/±20/±30).
-        // For smaller steps, use a wider spread.
-        let multipliers: [Double] = step >= 10
-            ? [1.0, -1.0, 2.0, -2.0, 3.0, -3.0]
-            : [1.0, -1.0, 2.0, -2.0, 3.0, -3.0, 4.0, -4.0, 5.0, -5.0, 6.0]
+        // Multipliers give us ±1 step, ±2 steps, ±3 steps — enough variety to
+        // pick 3 distinct wrong answers from. We generate both directions so
+        // small correct values (where subtracting would go ≤ 0) still have
+        // enough positive candidates.
+        let multipliers: [Double] = [1, -1, 2, -2, 3, -3, 4, -4]
 
         switch strategy {
         case .roundedNeighbor:
-            for multiplier in multipliers {
-                candidates.append((correct + step * multiplier).rounded2dp)
+            for m in multipliers {
+                candidates.append((correct + step * m).rounded2dp)
             }
 
         case .offByDecimal:
-            candidates += [
-                (correct * 10).rounded2dp,
-                (correct / 10).rounded2dp,
-                (correct + step).rounded2dp,
-                (correct - step).rounded2dp,
-                (correct + step * 2).rounded2dp,
-                (correct - step * 2).rounded2dp,
-            ]
+            // Decimal-shift distractors: ×10 and ÷10 represent the classic
+            // "misplaced decimal" mistake. We also add proportional neighbors
+            // so the option set has a natural spread even when the decimal
+            // shifts land very far away.
+            let shifted10x = (correct * 10).rounded2dp
+            let shifted01x = (correct / 10).rounded2dp
+
+            candidates += [shifted10x, shifted01x]
+            for m in multipliers {
+                candidates.append((correct + step * m).rounded2dp)
+            }
 
         case .commonMistake:
+            // ── Tip-splitting mistakes ──
             if let bill = variables["billAmount"] {
                 candidates.append(bill.rounded2dp)
                 if let pct = variables["tipPercent"] {
@@ -492,9 +605,48 @@ struct QuizEngine {
                     candidates.append((bill / n).rounded2dp)              // share with no tip
                 }
             }
-            // Neighbors as fallback
-            for multiplier in [1.0, -1.0, 2.0, -2.0, 3.0, -3.0] {
-                candidates.append((correct + step * multiplier).rounded2dp)
+
+            // ── Percentage-off mistakes ──
+            // Confuse "X% off" with "pay X%" (e.g., 20% off $80 → $16 vs $64)
+            if let price = variables["price"], let pct = variables["discountPercent"] {
+                let discountAmount = price * pct / 100
+                let salePrice = price - discountAmount
+                candidates.append(discountAmount.rounded2dp)              // discount amount vs sale price
+                candidates.append(salePrice.rounded2dp)                   // sale price vs discount amount
+                candidates.append((price * (100 - pct) / 100).rounded2dp) // redundant with sale price but safe
+            }
+
+            // ── Stacked-discount mistake: additive instead of sequential ──
+            if let price = variables["price"],
+               let d1 = variables["discount1"],
+               let d2 = variables["discount2"] {
+                let additive = price * (1 - (d1 + d2) / 100)
+                candidates.append(additive.rounded2dp)
+            }
+
+            // ── Tax bracket mistake: flat rate instead of marginal ──
+            if let income = variables["income"],
+               let rate = variables["topRate"] ?? variables["rate2"] ?? variables["taxRate"] {
+                let flatTax = income * rate / 100
+                candidates.append(flatTax.rounded2dp)
+            }
+
+            // ── Rent affordability: forget ÷12 or use wrong percentage ──
+            if let salary = variables["monthlySalary"] {
+                candidates.append((salary * 0.30).rounded2dp)             // 30% rule confusion
+                candidates.append((salary * 0.25).rounded2dp)             // 25% rule confusion
+            }
+
+            // ── Interest: simple vs compound confusion / wrong period ──
+            if let principal = variables["principal"] ?? variables["amount"],
+               let rate = variables["rate"] ?? variables["annualRate"] {
+                candidates.append((principal * rate / 100).rounded2dp)     // 1-year interest only
+                candidates.append((principal * rate / 1000).rounded2dp)    // decimal shift on rate
+            }
+
+            // Proportional neighbors as fallback (always included so we have enough)
+            for m in [1.0, -1.0, 2.0, -2.0, 3.0, -3.0] {
+                candidates.append((correct + step * m).rounded2dp)
             }
         }
 
@@ -514,11 +666,11 @@ struct QuizEngine {
             unique.remove(at: idx)
         }
 
-        // Fallback: walk outward at the same step until we have 3
+        // Fallback: walk outward at the same proportional step until we have 3
         var fallbackDelta = step
         while result.count < 3 {
             let candidate = (correct + fallbackDelta).rounded2dp
-            if candidate > 0 && !result.contains(candidate) {
+            if candidate > 0 && !result.contains(candidate) && candidate != correct {
                 result.append(candidate)
             }
             fallbackDelta += step

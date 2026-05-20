@@ -19,7 +19,13 @@ import Foundation
 /// day, and naturally transitions from exposure → review as history builds.
 struct DailyChallengeEngine {
 
-    static let questionCount = 7
+    /// Default question count. Overridden by onboarding time commitment.
+    static let defaultQuestionCount = 7
+
+    /// Effective question count, reading from onboarding signals if available.
+    static func questionCount(for progressData: ProgressData?) -> Int {
+        progressData?.onboardingSignals?.dailyChallengeCount ?? defaultQuestionCount
+    }
 
     // MARK: - Public API
 
@@ -29,6 +35,7 @@ struct DailyChallengeEngine {
         progressData: ProgressData? = nil
     ) -> [QuizQuestion] {
         let sessions = progressData?.sessions ?? []
+        let count = questionCount(for: progressData)
 
         // Pool = all templates. SRS handles ordering — never-seen templates
         // get ∞ priority and surface first, naturally exposing all modules to
@@ -51,7 +58,7 @@ struct DailyChallengeEngine {
             SpacedRepetitionEngine.priorityScore(templateId: $1.id, in: sessions)
         }
 
-        let picked = Array(sorted.prefix(questionCount))
+        let picked = Array(sorted.prefix(count))
 
         // Deterministic variable values for the day (rng has advanced past the shuffle).
         return picked.map { QuizEngine.generate(from: $0, seed: rng.next()) }
@@ -74,7 +81,7 @@ struct DailyChallengeEngine {
             let j = Int(rng.next() % UInt64(i + 1))
             shuffled.swapAt(i, j)
         }
-        let picked = Array(shuffled.prefix(questionCount))
+        let picked = Array(shuffled.prefix(defaultQuestionCount))
         return picked.map { QuizEngine.generate(from: $0, seed: rng.next()) }
     }
 

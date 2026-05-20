@@ -553,5 +553,157 @@
       "insurance_total_d2",
       "insurance_scenario_d3"
     ]
+  },
+
+  {
+    "id": "housing_rent_affordability",
+    "moduleId": "housing",
+    "title": "Rent affordability (28% rule)",
+    "concept": "The 28% rule says your rent shouldn't exceed 28% of your gross monthly income. It's a quick gut check when apartment shopping — if a place costs more than 28% of what you earn before taxes, it's going to squeeze your budget.",
+    "shortcut": "Max rent = monthly gross income × 0.28. For $5,000/month salary: $5,000 × 0.28 = $1,400 max rent. Quick estimate: take a quarter of your salary and add a little.",
+    "example": "Monthly salary: $5,000\nMax rent: $5,000 × 28% = $1,400",
+    "quizTemplateIds": [
+      "rent_afford_basic_d1",
+      "rent_afford_scenario_d1",
+      "rent_afford_reverse_d2",
+      "rent_afford_compare_d2",
+      "rent_afford_annual_d3"
+    ]
+  },
+  {
+    "id": "housing_rent_increase",
+    "moduleId": "housing",
+    "title": "Rent increase math",
+    "concept": "When your landlord raises rent by a percentage, the dollar impact depends on your current rent. A 5% increase on $1,200 hits differently than 5% on $2,500. Knowing the math helps you negotiate or budget for renewals.",
+    "shortcut": "Increase = current rent × increase%. New rent = current × (1 + increase%). A 6% bump on $1,500 = $90 more per month, $1,080 more per year.",
+    "example": "Current rent: $1,500\nIncrease: 6%\nMonthly increase: $90\nNew rent: $1,590",
+    "quizTemplateIds": [
+      "rent_increase_basic_d1",
+      "rent_increase_new_d1",
+      "rent_increase_annual_d2",
+      "rent_increase_scenario_d2",
+      "rent_increase_compare_d3"
+    ]
+  },
+  {
+    "id": "housing_move_in_cost",
+    "moduleId": "housing",
+    "title": "Move-in cost calculator",
+    "concept": "Moving into a new place often requires first month's rent, last month's rent, and a security deposit upfront. Some cities add broker fees. The total can be 3–4× your monthly rent, which catches people off guard.",
+    "shortcut": "Move-in = first + last + deposit (+ broker fee). For $1,800/month with a broker fee equal to one month's rent: $1,800 × 4 = $7,200 due before you get the keys.",
+    "example": "Rent: $1,800/month\nFirst + last + deposit + broker\n$1,800 × 4 = $7,200 move-in",
+    "quizTemplateIds": [
+      "move_in_basic_d1",
+      "move_in_no_broker_d1",
+      "move_in_with_broker_d2",
+      "move_in_scenario_d2",
+      "move_in_compare_d3"
+    ]
+  },
+  {
+    "id": "housing_price_sqft",
+    "moduleId": "housing",
+    "title": "Price per square foot",
+    "concept": "Price per square foot lets you compare apartments of different sizes on equal footing. A $2,400/month apartment that's 800 sq ft costs $3.00/sqft, while a $2,000 place at 500 sq ft costs $4.00/sqft — the cheaper one is actually pricier per square foot.",
+    "shortcut": "Price per sqft = monthly rent ÷ square feet. Lower is better. Compare two places by dividing each rent by its area.",
+    "example": "Apartment A: $2,400 / 800 sqft = $3.00/sqft\nApartment B: $2,000 / 500 sqft = $4.00/sqft\nA is better value per sqft",
+    "quizTemplateIds": [
+      "sqft_basic_d1",
+      "sqft_compare_d1",
+      "sqft_scenario_d2",
+      "sqft_reverse_d2",
+      "sqft_best_deal_d3"
+    ]
+  },
+  {
+    "id": "housing_mortgage_vs_rent",
+    "moduleId": "housing",
+    "title": "Mortgage vs rent comparison",
+    "concept": "A basic mortgage payment estimate helps you compare buying vs renting. Monthly payment ≈ (loan amount × monthly interest rate) + (loan amount ÷ total months). This is simplified — real mortgages use amortization — but it gives a ballpark for quick comparisons.",
+    "shortcut": "Rough monthly payment = (principal × rate/12) + (principal ÷ years × 12). A $300,000 loan at 6% for 30 years: interest portion ≈ $1,500/month + principal portion ≈ $833 = ~$2,333/month.",
+    "example": "Loan: $300,000 at 6% for 30 years\nInterest: $300,000 × 0.5% = $1,500\nPrincipal: $300,000 ÷ 360 = $833\nEstimate: ~$2,333/month",
+    "quizTemplateIds": [
+      "mortgage_basic_d1",
+      "mortgage_compare_d2",
+      "mortgage_scenario_d2",
+      "mortgage_interest_d2",
+      "mortgage_vs_rent_d3"
+    ]
+  },
+
+  {
+    "id": "taxes_brackets",
+    "moduleId": "taxes",
+    "title": "Marginal tax brackets",
+    "concept": "Tax brackets are marginal — you don't pay your top rate on all your income. Only the income above each bracket's threshold gets taxed at the higher rate. Being 'in the 22% bracket' means only your dollars above that threshold are taxed at 22%.",
+    "shortcut": "Tax = (income up to bracket 1) × rate 1 + (remaining income) × rate 2. On $60,000 with a 10% bracket up to $40,000 and 22% above: ($40,000 × 10%) + ($20,000 × 22%) = $4,000 + $4,400 = $8,400.",
+    "example": "Income: $60,000\nFirst $40,000 at 10% = $4,000\nNext $20,000 at 22% = $4,400\nTotal tax: $8,400",
+    "quizTemplateIds": [
+      "bracket_basic_d1",
+      "bracket_two_tier_d1",
+      "bracket_scenario_d2",
+      "bracket_compare_d2",
+      "bracket_effective_d3"
+    ]
+  },
+  {
+    "id": "taxes_deductions",
+    "moduleId": "taxes",
+    "title": "Paycheck deductions",
+    "concept": "Your gross pay gets reduced by FICA (Social Security + Medicare = 7.65%), federal income tax, and state income tax before you see a dime. Understanding these deductions helps you predict your actual take-home pay from any job offer.",
+    "shortcut": "Net pay = gross × (1 − total deduction rate). If FICA is 7.65%, federal is 12%, and state is 5%, total rate = 24.65%. From $4,000 gross: $4,000 × 0.7535 = $3,014 net.",
+    "example": "Gross: $4,000\nFICA (7.65%): $306\nFederal (12%): $480\nState (5%): $200\nNet: $3,014",
+    "quizTemplateIds": [
+      "deduction_basic_d1",
+      "deduction_net_d1",
+      "deduction_fica_d2",
+      "deduction_scenario_d2",
+      "deduction_compare_d3"
+    ]
+  },
+  {
+    "id": "taxes_gross_to_net",
+    "moduleId": "taxes",
+    "title": "Gross to net calculator",
+    "concept": "When someone tells you a salary is $65,000, that's gross — before any deductions. Your monthly take-home is the number that actually matters for budgeting. Annual → monthly → after deductions gives you the real number.",
+    "shortcut": "Monthly take-home = (annual salary × (1 − deduction rate)) ÷ 12. A $65,000 salary with 25% total deductions: $65,000 × 0.75 = $48,750 ÷ 12 = $4,062.50/month.",
+    "example": "Annual: $65,000\nDeductions: 25%\nNet annual: $48,750\nMonthly: $4,062.50",
+    "quizTemplateIds": [
+      "gross_net_basic_d1",
+      "gross_net_monthly_d1",
+      "gross_net_scenario_d2",
+      "gross_net_compare_d2",
+      "gross_net_reverse_d3"
+    ]
+  },
+  {
+    "id": "taxes_refund",
+    "moduleId": "taxes",
+    "title": "Tax refund estimation",
+    "concept": "A tax refund happens when you've had more withheld from paychecks than you actually owe. Refund = total withheld − tax owed. If you owe less than was withheld, you get money back. If you owe more, you pay the difference.",
+    "shortcut": "Refund = withheld − owed. Positive = you get money back. Negative = you owe. Withheld $8,000 but owed $6,500? Refund = $1,500.",
+    "example": "Total withheld: $8,000\nTax owed: $6,500\nRefund: $8,000 − $6,500 = $1,500",
+    "quizTemplateIds": [
+      "refund_basic_d1",
+      "refund_owe_d1",
+      "refund_scenario_d2",
+      "refund_compare_d2",
+      "refund_monthly_d3"
+    ]
+  },
+  {
+    "id": "taxes_self_employment",
+    "moduleId": "taxes",
+    "title": "Self-employment tax",
+    "concept": "Freelancers and gig workers pay both the employer and employee portions of FICA — a combined 15.3% on top of income tax. This catches many people off guard because W-2 employees only see the 7.65% employee half.",
+    "shortcut": "SE tax = freelance income × 15.3%. On $5,000 of freelance income: $5,000 × 0.153 = $765. That's before income tax — plan to set aside 30–35% total from gig income.",
+    "example": "Freelance income: $5,000\nSE tax: $5,000 × 15.3% = $765\nSet aside ~$1,500–$1,750 total for all taxes",
+    "quizTemplateIds": [
+      "se_tax_basic_d1",
+      "se_tax_amount_d1",
+      "se_tax_scenario_d2",
+      "se_tax_compare_d2",
+      "se_tax_quarterly_d3"
+    ]
   }
 ]

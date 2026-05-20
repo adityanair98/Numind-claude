@@ -174,14 +174,38 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     // MARK: - Init
 
-    /// Number of questions generated per quiz session.
-    static let targetQuestionCount = 8
+    /// Default question count for non-lesson contexts (Speed Drill, etc.).
+    static let defaultQuestionCount = 8
+
+    /// Question count for a lesson session. First attempt = 5 (gentler intro).
+    /// Subsequent attempts = 8 (full session).
+    static func lessonQuestionCount(
+        lessonId: String,
+        moduleId: String,
+        sessions: [SessionRecord],
+        signals: OnboardingSignals?
+    ) -> Int {
+        let hasAttempted = sessions.contains { $0.lessonId == lessonId }
+        if !hasAttempted {
+            // First attempt — check diagnostic calibration
+            if let difficulty = signals?.startingDifficulties[moduleId] {
+                switch difficulty {
+                case .intermediate: return 5  // Strong — shorter session
+                case .foundation:   return 6  // Decent — slightly shorter
+                case .beginner:     return 8  // Needs work — full session
+                }
+            }
+            return 5 // No diagnostic data — gentle first session
+        }
+        return 8 // Subsequent attempts — full session
+    }
 
     /// Initialiser for lesson-driven quiz sessions.
     init(
         lesson: Lesson,
         moduleColor: ModuleColor = .blue,
         sessions: [SessionRecord] = [],
+        signals: OnboardingSignals? = nil,
         repository: ContentRepository = LocalContentRepository()
     ) {
         lessonTitle = lesson.title
@@ -200,6 +224,14 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
             questions = []
             return
         }
+
+        let targetCount = Self.lessonQuestionCount(
+            lessonId: lesson.id,
+            moduleId: lesson.moduleId,
+            sessions: sessions,
+            signals: signals
+        )
+
         var built: [QuizQuestion] = []
         var usedFingerprints: Set<String> = []
 
@@ -211,8 +243,15 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         }
 
         // First pass: one question per unique template — guarantees variety.
-        for template in ordered {
-            let q = QuizEngine.generate(from: template)
+        // Use diagnostic-calibrated difficulty for first encounters.
+        for template in ordered.prefix(targetCount) {
+            let diff = AdaptiveDifficultyEngine.targetDifficulty(
+                for: template.id,
+                moduleId: lesson.moduleId,
+                in: sessions,
+                signals: signals
+            )
+            let q = QuizEngine.generate(from: template, targetDifficulty: diff)
             usedFingerprints.insert(fingerprint(q))
             built.append(q)
         }
@@ -220,9 +259,15 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         // Second pass: fill remaining slots by reusing templates, re-rolling
         // variables up to 10× to avoid duplicate fingerprints in the same session.
         var reuseIdx = 0
-        while built.count < Self.targetQuestionCount {
+        while built.count < targetCount {
             let template = ordered[reuseIdx % ordered.count]
-            var q = QuizEngine.generate(from: template)
+            let diff = AdaptiveDifficultyEngine.targetDifficulty(
+                for: template.id,
+                moduleId: lesson.moduleId,
+                in: sessions,
+                signals: signals
+            )
+            var q = QuizEngine.generate(from: template, targetDifficulty: diff)
             var attempts = 1
             while usedFingerprints.contains(fingerprint(q)) && attempts < 10 {
                 q = QuizEngine.generate(from: template)

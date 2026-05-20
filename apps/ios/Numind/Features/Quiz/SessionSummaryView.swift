@@ -175,19 +175,18 @@ struct SessionSummaryView: View {
     }
 
     private var failHeader: some View {
-        let needed = Int(ceil(0.75 * Double(viewModel.total)))
         return VStack(spacing: 16) {
             ZStack {
                 Circle()
-                    .fill(Theme.Colors.warmOrangeTint)
+                    .fill(Theme.Colors.primaryBlueTint)
                     .frame(width: 96, height: 96)
-                Image(systemName: "arrow.counterclockwise")
+                Image(systemName: "checkmark.circle")
                     .font(.system(size: 40, weight: .semibold))
-                    .foregroundStyle(Theme.Colors.warmOrange)
+                    .foregroundStyle(Theme.Colors.primaryBlue)
             }
 
             VStack(spacing: 6) {
-                Text("Almost there!")
+                Text("Lesson complete!")
                     .font(Theme.Typography.display)
                     .foregroundStyle(Theme.Colors.deepNavy)
                 Text("\(viewModel.total) questions · \(viewModel.elapsedTimeString)")
@@ -206,10 +205,10 @@ struct SessionSummaryView: View {
                     .clipShape(Capsule())
 
                 HStack(spacing: 6) {
-                    Image(systemName: "target")
+                    Image(systemName: "star")
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(Theme.Colors.warmOrange)
-                    Text("You got \(viewModel.correctCount)/\(viewModel.total) — need \(needed) to master")
+                    Text("Practice more to earn the gold star (\(viewModel.correctCount)/\(viewModel.total) correct)")
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Colors.mutedText)
                 }
@@ -485,23 +484,23 @@ struct SessionSummaryView: View {
 
             VStack(spacing: 10) {
                 if !didMaster {
-                    // Not mastered: retry is the primary action
+                    // Completed but not mastered — continue is primary, practice is optional
+                    if wrongCount > 0 {
+                        reviewMistakesButton
+                    }
+
+                    PillButton("Continue") { onContinue() }
+
                     Button { onRetry() } label: {
-                        HStack(spacing: 8) {
-                            Image(systemName: "arrow.counterclockwise.circle.fill")
-                                .font(.system(size: 18, weight: .semibold))
-                            Text("Retry quiz")
-                                .font(Theme.Typography.headline)
+                        HStack(spacing: 6) {
+                            Image(systemName: "arrow.counterclockwise")
+                                .font(.system(size: 13, weight: .semibold))
+                            Text("Practice again for gold star")
+                                .font(.system(size: 14, weight: .semibold))
                         }
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: Theme.Spacing.buttonHeight)
-                        .background(Color.orange)
-                        .clipShape(Capsule())
+                        .foregroundStyle(Theme.Colors.mutedText)
                     }
                     .buttonStyle(.plain)
-
-                    PillButton("Skip for now", variant: .secondary) { onContinue() }
 
                 } else {
                     // Mastered: review mistakes (if any), then continue

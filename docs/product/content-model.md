@@ -1,15 +1,15 @@
 # Content Model
 
-> **Last updated:** May 2026 (after M60 — Game Modes expansion, Practice drills, Celebration effects).
+> **Last updated:** May 2026 (after V1 refinement — new modules, template audit, distractor fix).
 
 ## Overview
 All content is stored locally as JSON in `Resources/LocalContent/`. No backend required for V1.
 
 | File | Purpose | Count |
 |---|---|---|
-| `modules.json` | Module definitions (id, title, icon, color) | 8 |
-| `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 37 |
-| `quiz_templates.json` | Quiz question templates | 187 |
+| `modules.json` | Module definitions (id, title, icon, color) | 10 |
+| `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 47 |
+| `quiz_templates.json` | Quiz question templates | 237 |
 
 ## Module
 A group of lessons covering a topic area.
@@ -27,14 +27,16 @@ struct Module: Identifiable, Codable {
 ### V1 Modules
 | ID | Title | Icon | Lessons |
 |---|---|---|---|
-| `tips` | Tips | `percent` | 5 |
-| `discounts` | Discounts | `tag` | 5 |
-| `money_math` | Money Math | `dollarsign.circle` | 5 |
-| `salary` | Salary | `briefcase` | 4 |
-| `investing` | Investing | `chart.line.uptrend.xyaxis` | 3 |
-| `estimation` | Estimation | `eye` | 6 |
-| `debt` | Debt | `creditcard` | 5 |
-| `travel` | Travel | `airplane` | 5 |
+| `tips` | Tips, Tax & Bill Split | `percent` | 5 |
+| `discounts` | Discounts & Shopping | `tag` | 5 |
+| `money_math` | Budgets & Spending | `dollarsign.circle` | 5 |
+| `salary` | Salary & Income | `briefcase` | 4 |
+| `investing` | Investing Basics | `chart.line.uptrend.xyaxis` | 3 |
+| `estimation` | Estimation & Shortcuts | `eye` | 5 |
+| `debt` | Debt & Loans | `creditcard` | 5 |
+| `travel` | Travel Money | `airplane` | 5 |
+| `housing` | Housing & Rent | `house.fill` | 5 |
+| `taxes` | Taxes & Paycheck | `doc.text.fill` | 5 |
 
 ## Lesson
 A short learning unit with one concept, one shortcut, and one worked example.
@@ -51,7 +53,7 @@ struct Lesson: Identifiable, Codable {
 }
 ```
 
-Every lesson has exactly **5 quiz templates** assigned. The quiz engine cycles through them to generate 8 questions per session, ensuring variety while staying on-topic.
+Every lesson has exactly **5 quiz templates** assigned. The quiz engine cycles through them to generate 5 questions (first attempt) or 8 questions (subsequent attempts) per session, ensuring variety while staying on-topic.
 
 ## QuizTemplate
 Defines a parametric question that produces different numbers each time.
@@ -114,7 +116,6 @@ struct QuestionResult: Codable {
 | Speed Drill | `speed_drill` | `mixed` |
 | Blitz | `blitz_session` | `mixed` |
 | Streak | `streak_mode` | `mixed` |
-| True/False | `true_false` | `mixed` |
 | Estimation | `estimation` | `mixed` |
 | Comparison | `comparison` | `mixed` |
 
@@ -144,14 +145,21 @@ struct ProgressData: Codable {
     var streakModeBestScore: Int = 0
     var speedDrillBestScore: Int = 0
     var recallBestScore: Int = 0
-    var trueFalseBestScore: Int = 0
     var estimationBestScore: Int = 0
     var comparisonBestScore: Int = 0
 
 Each has a corresponding mutator (`updateBlitzBest(score:)`, etc.) that only updates if the new score exceeds the current best. `ProgressStore` exposes matching accessor properties and persist methods.
 
-### Mastery
-A lesson is "mastered" when any session for that lesson has `correctCount / totalCount >= 0.75` (75%). This applies identically to both lesson quizzes and checkpoint reviews. Mastery is the gate for unlocking the next node on the learning path.
+### Streak Freezes
+`ProgressData` tracks streak freeze state:
+
+    var availableFreezes: Int = 0           // max 3 banked
+    var freezeMilestonesAwarded: Int = 0    // tracks 7-day milestones
+
+Users earn one freeze per 7-day streak milestone (max 3 banked). Freezes are auto-applied on missed days before showing a streak loss screen. `freezeMilestonesAwarded` resets when the streak resets to 0.
+
+### Mastery & Progression
+A lesson is "mastered" when any session for that lesson has `correctCount / totalCount >= 0.75` (75%). Mastery earns a gold star on the learning path. However, **progression only requires completion** — any attempt at a lesson (regardless of score) unlocks the next node. This prevents anxious users from being blocked while still rewarding high performance.
 
 ## Learning Path Model
 

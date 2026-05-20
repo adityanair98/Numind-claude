@@ -189,7 +189,7 @@ struct LessonView: View {
                 Image(systemName: "bolt.fill")
                     .font(.system(size: 10, weight: .semibold))
                     .foregroundStyle(accent)
-                Text("\(QuizSessionViewModel.targetQuestionCount) questions to follow")
+                Text("\(QuizSessionViewModel.lessonQuestionCount(lessonId: viewModel.lesson.id, moduleId: viewModel.lesson.moduleId, sessions: progressStore.data.sessions, signals: progressStore.data.onboardingSignals)) questions to follow")
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(Theme.Colors.mutedText)
             }
@@ -340,7 +340,8 @@ struct LessonView: View {
         let vm = QuizSessionViewModel(
             lesson: viewModel.lesson,
             moduleColor: viewModel.moduleColor,
-            sessions: progressStore.data.sessions   // enables SR ordering on repeat visits
+            sessions: progressStore.data.sessions,   // enables SR ordering on repeat visits
+            signals: progressStore.data.onboardingSignals
         )
         sessionVM = vm
         phase = .quiz
@@ -351,7 +352,8 @@ struct LessonView: View {
         let vm = QuizSessionViewModel(
             lesson: viewModel.lesson,
             moduleColor: viewModel.moduleColor,
-            sessions: progressStore.data.sessions
+            sessions: progressStore.data.sessions,
+            signals: progressStore.data.onboardingSignals
         )
         isNewPersonalBest = false
         newBadgeIds = []

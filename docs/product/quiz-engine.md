@@ -1,13 +1,13 @@
 # Quiz Engine
 
-> **Last updated:** May 2026 (after M60 — Game Modes expansion, Estimation mode, True/False generation, Comparison generation).
+> **Last updated:** May 2026 (after V1 refinement — proportional distractors, adaptive difficulty, diagnostic calibration, new modules).
 
 ## Principle
 Questions are generated from templates, not hardcoded. Each quiz session produces different numbers, different answer choices, and different question order - even when replaying the same lesson.
 
 ## Session Parameters
-- **Questions per session:** 8 (both lesson quizzes and checkpoint reviews)
-- **Mastery threshold:** 75% (6/8 correct)
+- **Questions per session:** 5 on first attempt at any lesson (gentle intro), 8 on subsequent attempts. Diagnostic calibration may adjust: strong users get 5 questions, weaker users get up to 8 on first attempt.
+- **Mastery threshold:** 75% for gold star display (aspirational). Progression requires only completion (any attempt unlocks the next lesson).
 - **Question types:** Multiple choice (4 options) and free entry (numeric keypad)
 - **Timer:** Per-question timer; fast answers earn speed bonus XP
 
@@ -37,7 +37,7 @@ Each template is a JSON object in `Resources/LocalContent/quiz_templates.json`:
 | Field | Required | Description |
 |---|---|---|
 | `id` | yes | Unique template identifier |
-| `moduleId` | yes | Parent module (tips, discounts, money_math, salary, investing, estimation, debt, travel) |
+| `moduleId` | yes | Parent module (tips, discounts, money_math, salary, investing, estimation, debt, travel, housing, taxes) |
 | `difficulty` | yes | 1 (easy), 2 (medium), 3 (hard) |
 | `inputMode` | no | `"freeEntry"` for numeric keypad; omit for multiple choice (default) |
 | `scenarioTemplate` | no | Optional context sentence shown above the question |
@@ -63,9 +63,10 @@ Because each call uses a fresh random seed, calling `generate` twice on the same
 ## Lesson Quiz Generation (`QuizSessionViewModel`)
 For a single lesson quiz:
 1. Get the lesson's `quizTemplateIds` (5 templates per lesson)
-2. Cycle through templates: `template[idx % count]` until 8 questions are built
-3. Shuffle the question order
-4. Each `generate` call uses a fresh random seed
+2. Determine question count: 5 for first attempt (gentle intro), 8 for subsequent attempts. Diagnostic calibration adjusts: intermediate users get 5, foundation users get 6, beginner users get 8 on first attempt.
+3. Cycle through templates: `template[idx % count]` until target question count is reached
+4. Shuffle the question order
+5. Each `generate` call uses a fresh random seed
 
 ## Checkpoint Review Generation (`CheckpointQuizEngine`)
 For module review quizzes (every 3 lessons):
@@ -76,7 +77,7 @@ For module review quizzes (every 3 lessons):
 
 This ensures every covered lesson is represented roughly equally in the review.
 
-## Answer Formulas (40+)
+## Answer Formulas (60+)
 All formulas live in `QuizEngine.swift` as `[String: ([String: Double]) -> Double?]`:
 
 ### Tips
@@ -95,7 +96,7 @@ All formulas live in `QuizEngine.swift` as `[String: ([String: Double]) -> Doubl
 - `stackedTotalSaving` = price - stackedFinalPrice
 - `unitPrice` = totalPrice / quantity
 
-### Money Math
+### Budgets & Spending (formerly Money Math)
 - `taxAmount`, `priceWithTax`
 - `totalCost` = price x quantity
 - `budgetRemaining`, `budgetAfterPurchase`
@@ -108,7 +109,7 @@ All formulas live in `QuizEngine.swift` as `[String: ([String: Double]) -> Doubl
 - `raiseAmount`, `raisedSalary`
 - `overtimePay` = rate x 1.5 x hours
 - `biweeklyToAnnual` (x26), `weeklyToAnnual` (x52)
-- `hourlyFromAnnual` (/2000), `annualFromHourly` (x2000)
+- `hourlyFromAnnual` (/2080), `annualFromHourly` (x2080)
 
 ### Investing
 - `simpleInterest` = principal x rate x years
@@ -136,12 +137,41 @@ All formulas live in `QuizEngine.swift` as `[String: ([String: Double]) -> Doubl
 - `splitTravelCost`, `daysOnBudget`
 - `hotelCostPerNight`, `travelInsuranceCost`, `tripTotalWithInsurance`
 
-## Distractor Strategies
+### Housing & Rent
+- `maxRent28` = monthlySalary x 0.28
+- `maxAnnualRent28` = monthlySalary x 0.28 x 12
+- `rentIncrease` = currentRent x increasePercent / 100
+- `newRentAfterIncrease` = currentRent x (1 + increasePercent / 100)
+- `moveInThreeMonths` = monthlyRent x 3 (first + last + security)
+- `moveInWithBrokerFee` = monthlyRent x 3 + brokerFee
+- `pricePerSqft` = monthlyRent / sqft
+- `monthlyMortgage` = homePrice x (rate / 12) + homePrice / (years x 12)
+
+### Taxes & Paycheck
+- `marginalTax` = bracket1 x rate1 + (income - bracket1Top) x rate2
+- `paycheckNet` = grossPay x (1 - deductionPct / 100)
+- `grossToNet` = grossPay x (1 - deductionPct / 100)
+- `annualToMonthlyNet` = annualSalary x (1 - effectiveRate / 100) / 12
+- `taxRefund` = totalWithheld - totalOwed
+- `selfEmploymentTax` = freelanceIncome x 0.153
+
+## Distractor Generation
+
+### Proportional Step Algorithm (`niceStep`)
+Distractors use a proportional step size that targets ~5-8% of the correct answer, rounded to a psychologically natural number (multiples of 1, 2.5, 5, or 10 at the appropriate order of magnitude). This ensures wrong answers look like real mistakes regardless of answer magnitude.
+
+Examples:
+- $78,000 answer → $5,000 step → distractors: $73K, $83K, $68K
+- $2,083 answer → $100 step → distractors: $1,983, $2,183
+- $45 answer → $2.50 step → distractors: $42.50, $47.50
+- $0.67 answer → $0.05 step → distractors: $0.62, $0.72
+
+### Distractor Strategies
 | Strategy | Logic |
 |---|---|
-| `roundedNeighbor` | Correct +/- small deltas (0.5, 1.0, 1.5, 2.0, etc.) |
-| `offByDecimal` | Correct x10, /10, and similar decimal-shift errors |
-| `commonMistake` | Context-specific mistakes (e.g., dividing tip before adding to bill) |
+| `roundedNeighbor` | Correct ± proportional steps (±1, ±2, ±3 steps) |
+| `offByDecimal` | Correct x10, /10 (decimal-shift errors) + proportional neighbors |
+| `commonMistake` | Context-specific mistakes (tip confusion, flat-rate-vs-marginal tax, 30%-vs-28% rent rule, additive-vs-sequential discounts, etc.) + proportional neighbors as fallback |
 
 ## Estimation Mode
 
@@ -170,16 +200,6 @@ Error = `|estimate - correct| / |correct|`. A question with ≥2 stars is consid
 ### Timer
 10-second countdown per question. Timer expiry auto-submits the current slider position (or scores as miss if slider was never dragged).
 
-## True/False Generation
-
-`TrueFalseViewModel.generateItems(from:count:)` builds true/false items from quiz templates:
-
-1. Pick `count` templates (default 20), shuffled.
-2. For each template, generate a question via `QuizEngine.generate()`.
-3. Randomly assign as true (show correct answer) or false (show a distractor value).
-4. The statement combines the prompt with the answer value (e.g. "20% tip on $80 = $16.00").
-5. Fingerprint-based deduplication prevents identical statements.
-
 ## Comparison Generation
 
 `ComparisonViewModel.generatePairs(from:count:)` builds comparison pairs:
@@ -189,8 +209,15 @@ Error = `|estimate - correct| / |correct|`. A question with ≥2 stars is consid
 3. Each pair shows two prompts side-by-side — the player taps the one with the larger answer.
 4. 15 pairs per session, 8-second countdown per question.
 
-## Content Stats (as of M56)
-- **8 modules**, **37 lessons**, **187 templates**
+## Adaptive Difficulty
+
+`AdaptiveDifficultyEngine` selects the starting difficulty for each template:
+1. If the user has session history for this template, adaptive logic adjusts based on recent results.
+2. If no history exists, the onboarding diagnostic calibration determines starting difficulty per module (beginner → easy, foundation → easy, intermediate → medium).
+3. Ultimate fallback: easy.
+
+## Content Stats
+- **10 modules**, **47 lessons**, **237 templates**
 - Every lesson has exactly **5 templates**
-- Templates per module: tips (22), discounts (19), money_math (23), salary (17), investing (17), estimation (17), debt (18), travel (17)
+- Templates per module: tips (22), discounts (24), money_math (25), salary (22), investing (20), estimation (24), debt (25), travel (25), housing (25), taxes (25)
 - Mix of difficulty levels 1-3 across all modules

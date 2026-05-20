@@ -12,7 +12,7 @@ struct DailyChallengeCard: View {
     let onStart: () -> Void
     let onBonusRound: () -> Void
 
-    private let total = DailyChallengeEngine.questionCount
+    private let total = DailyChallengeEngine.defaultQuestionCount
 
     var body: some View {
         if isDone {
@@ -216,13 +216,13 @@ struct DailyChallengeCard: View {
 }
 
 #Preview("Done — perfect") {
-    DailyChallengeCard(isDone: true, progress: DailyChallengeEngine.questionCount, correctCount: 7, timeUntilReset: "", hasHistory: true, onStart: {}, onBonusRound: {})
+    DailyChallengeCard(isDone: true, progress: DailyChallengeEngine.defaultQuestionCount, correctCount: 7, timeUntilReset: "", hasHistory: true, onStart: {}, onBonusRound: {})
         .padding(.horizontal, Theme.Spacing.screenHorizontal)
         .background(Theme.Colors.softBackground)
 }
 
 #Preview("Done — partial") {
-    DailyChallengeCard(isDone: true, progress: DailyChallengeEngine.questionCount, correctCount: 5, timeUntilReset: "", hasHistory: true, onStart: {}, onBonusRound: {})
+    DailyChallengeCard(isDone: true, progress: DailyChallengeEngine.defaultQuestionCount, correctCount: 5, timeUntilReset: "", hasHistory: true, onStart: {}, onBonusRound: {})
         .padding(.horizontal, Theme.Spacing.screenHorizontal)
         .background(Theme.Colors.softBackground)
 }

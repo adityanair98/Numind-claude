@@ -406,6 +406,104 @@ enum FormulaOperationMap {
             return [.percentOf(pct: pct, amount: trip),
                     .add(a: trip, b: insurance)]
 
+        // MARK: - Housing & Rent
+
+        case "maxRent28":
+            guard let monthly = variables["monthlySalary"] else { return [] }
+            return [.percentOf(pct: 28, amount: monthly)]
+
+        case "maxAnnualRent28":
+            guard let monthly = variables["monthlySalary"] else { return [] }
+            let monthlyMax = monthly * 0.28
+            return [.percentOf(pct: 28, amount: monthly),
+                    .multiply(a: monthlyMax, by: 12)]
+
+        case "rentIncrease":
+            guard let rent = variables["currentRent"],
+                  let pct = variables["increasePercent"] else { return [] }
+            return [.percentOf(pct: pct, amount: rent)]
+
+        case "newRentAfterIncrease":
+            guard let rent = variables["currentRent"],
+                  let pct = variables["increasePercent"] else { return [] }
+            let inc = rent * pct / 100
+            return [.percentOf(pct: pct, amount: rent),
+                    .add(a: rent, b: inc)]
+
+        case "moveInTotal":
+            guard let first = variables["firstMonth"],
+                  let last = variables["lastMonth"],
+                  let deposit = variables["securityDeposit"] else { return [] }
+            let broker = variables["brokerFee"] ?? 0
+            return [.add(a: first, b: last),
+                    .add(a: first + last, b: deposit),
+                    .add(a: first + last + deposit, b: broker)]
+
+        case "moveInThreeMonths":
+            guard let rent = variables["monthlyRent"] else { return [] }
+            return [.multiply(a: rent, by: 3)]
+
+        case "moveInWithBrokerFee":
+            guard let rent = variables["monthlyRent"],
+                  let broker = variables["brokerFee"] else { return [] }
+            return [.multiply(a: rent, by: 3),
+                    .add(a: rent * 3, b: broker)]
+
+        case "pricePerSqft":
+            guard let price = variables["monthlyRent"],
+                  let sqft = variables["squareFeet"], sqft > 0 else { return [] }
+            return [.divide(a: price, by: sqft)]
+
+        case "monthlyMortgage":
+            guard let principal = variables["loanAmount"],
+                  let rate = variables["annualRate"],
+                  let years = variables["loanYears"], years > 0 else { return [] }
+            let interest = principal * rate / 100 / 12
+            let principalPart = principal / (years * 12)
+            return [.percentOf(pct: rate / 12, amount: principal),
+                    .divide(a: principal, by: years * 12),
+                    .add(a: interest, b: principalPart)]
+
+        // MARK: - Taxes & Paycheck
+
+        case "marginalTax":
+            guard let income = variables["taxableIncome"],
+                  let bracket1 = variables["bracket1Limit"],
+                  let rate1 = variables["rate1"],
+                  let rate2 = variables["rate2"] else { return [] }
+            let tax1 = min(income, bracket1) * rate1 / 100
+            let excess = max(0, income - bracket1)
+            return [.percentOf(pct: rate1, amount: min(income, bracket1)),
+                    .percentOf(pct: rate2, amount: excess),
+                    .add(a: tax1, b: excess * rate2 / 100)]
+
+        case "paycheckNet":
+            guard let gross = variables["grossPay"],
+                  let ficaRate = variables["ficaRate"],
+                  let fedRate = variables["federalRate"],
+                  let stateRate = variables["stateRate"] else { return [] }
+            let totalRate = ficaRate + fedRate + stateRate
+            let deductions = gross * totalRate / 100
+            return [.add(a: ficaRate, b: fedRate + stateRate),
+                    .percentOf(pct: totalRate, amount: gross),
+                    .subtract(b: deductions, from: gross)]
+
+        case "annualToMonthlyNet":
+            guard let annual = variables["annualSalary"],
+                  let totalRate = variables["totalDeductionRate"] else { return [] }
+            let net = annual * (1 - totalRate / 100)
+            return [.percentOf(pct: totalRate, amount: annual),
+                    .divide(a: net, by: 12)]
+
+        case "taxRefund":
+            guard let withheld = variables["totalWithheld"],
+                  let owed = variables["taxOwed"] else { return [] }
+            return [.subtract(b: owed, from: withheld)]
+
+        case "selfEmploymentTax":
+            guard let income = variables["freelanceIncome"] else { return [] }
+            return [.percentOf(pct: 15.3, amount: income)]
+
         default:
             return []
         }

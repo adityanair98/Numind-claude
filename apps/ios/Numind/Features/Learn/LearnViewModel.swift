@@ -14,11 +14,11 @@ final class LearnViewModel: ObservableObject {
             case review(lessonIds: [String])
         }
 
-        /// - mastered:  quiz passed at ≥ 75% — green checkmark, unlocks next
-        /// - attempted: quiz attempted but < 75% — amber retry state
+        /// - mastered:  quiz passed at ≥ 75% — gold star (aspirational)
+        /// - attempted: quiz attempted but < 75% — completed, unlocks next
         /// - current:   first unlocked-unattempted node — pulsing ring
         /// - available: unlocked but not the recommended next
-        /// - locked:    previous lesson/review not mastered yet
+        /// - locked:    previous lesson/review not yet attempted
         enum NodeState { case mastered, attempted, current, available, locked }
 
         let id: String
@@ -91,13 +91,15 @@ final class LearnViewModel: ObservableObject {
                 // ── Lesson node ──────────────────────────────────────────
                 let mastered     = store.hasMasteredLesson(lesson.id)
                 let attempted    = store.hasCompletedLesson(lesson.id)
-                let prevMastered = i == 0 || store.hasMasteredLesson(lessons[i - 1].id)
+                // Unlock requires completing (any score), not mastering (≥75%).
+                // Mastery is now aspirational (gold star) — SRS handles remediation.
+                let prevCompleted = i == 0 || store.hasCompletedLesson(lessons[i - 1].id)
 
-                // Also require the preceding review (if any) to be mastered.
+                // Also require the preceding review (if any) to be completed.
                 let prevReviewId = reviewId(module: module, beforeLessonIndex: i)
-                let prevReviewMastered = prevReviewId == nil
-                    || store.hasMasteredLesson(prevReviewId!)
-                let unlocked = prevMastered && prevReviewMastered
+                let prevReviewCompleted = prevReviewId == nil
+                    || store.hasCompletedLesson(prevReviewId!)
+                let unlocked = prevCompleted && prevReviewCompleted
 
                 let lessonState: PathNode.NodeState
                 if mastered {
@@ -134,8 +136,8 @@ final class LearnViewModel: ObservableObject {
                     let start       = max(0, i - (Self.reviewInterval - 1))
                     let covered     = Array(lessons[start...i].map(\.id))
 
-                    // Review unlocks only when all covered lessons are mastered.
-                    let allCovered  = covered.allSatisfy { store.hasMasteredLesson($0) }
+                    // Review unlocks when all covered lessons are completed (any score).
+                    let allCovered  = covered.allSatisfy { store.hasCompletedLesson($0) }
                     let rMastered   = store.hasMasteredLesson(rId)
                     let rAttempted  = store.hasCompletedLesson(rId)
 

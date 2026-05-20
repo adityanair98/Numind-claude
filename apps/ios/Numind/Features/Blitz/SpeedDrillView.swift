@@ -65,7 +65,7 @@ struct SpeedDrillView: View {
         var shuffled = templates.shuffled()
         var questions: [QuizQuestion] = []
         var idx = 0
-        while questions.count < QuizSessionViewModel.targetQuestionCount {
+        while questions.count < QuizSessionViewModel.defaultQuestionCount {
             questions.append(QuizEngine.generate(from: shuffled[idx % shuffled.count]))
             idx += 1
         }

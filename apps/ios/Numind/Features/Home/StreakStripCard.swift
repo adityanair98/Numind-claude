@@ -1,9 +1,10 @@
 import SwiftUI
 
-/// Compact streak card with flame tile, streak count, and 7-day dot strip.
+/// Compact streak card with flame tile, streak count, 7-day dot strip, and freeze bank.
 struct StreakStripCard: View {
     let streak: Int
     let completions: [Bool]
+    var availableFreezes: Int = 0
 
     private let dayLabels = ["M", "T", "W", "T", "F", "S", "S"]
 
@@ -50,10 +51,32 @@ struct StreakStripCard: View {
                     .font(Theme.Typography.small)
                     .foregroundStyle(Theme.Colors.mutedText)
             }
-            Text(tierMessage)
-                .font(.system(size: 12, weight: .bold))
-                .foregroundStyle(Theme.Colors.warmOrange)
+            HStack(spacing: 8) {
+                Text(tierMessage)
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(Theme.Colors.warmOrange)
+
+                if availableFreezes > 0 {
+                    freezeBadge
+                }
+            }
         }
+    }
+
+    // MARK: - Freeze badge
+
+    private var freezeBadge: some View {
+        HStack(spacing: 3) {
+            Image(systemName: "snowflake")
+                .font(.system(size: 10, weight: .bold))
+            Text("\u{00D7}\(availableFreezes)")
+                .font(.system(size: 11, weight: .bold, design: .rounded))
+        }
+        .foregroundStyle(Theme.Colors.primaryBlue)
+        .padding(.horizontal, 6)
+        .padding(.vertical, 2)
+        .background(Theme.Colors.primaryBlue.opacity(0.1))
+        .clipShape(Capsule())
     }
 
     private var tierMessage: String {
@@ -113,7 +136,13 @@ struct StreakStripCard: View {
     }
 }
 
-#Preview("Active streak") {
+#Preview("Active streak + freezes") {
+    StreakStripCard(streak: 12, completions: [true, true, true, true, false, false, false], availableFreezes: 2)
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+        .background(Theme.Colors.softBackground)
+}
+
+#Preview("Active streak, no freezes") {
     StreakStripCard(streak: 12, completions: [true, true, true, true, false, false, false])
         .padding(.horizontal, Theme.Spacing.screenHorizontal)
         .background(Theme.Colors.softBackground)

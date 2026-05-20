@@ -33,8 +33,8 @@
   },
   {
     "id": "money_math",
-    "title": "Money Math",
-    "subtitle": "Tax, totals, and everyday spending",
+    "title": "Budgets & Spending",
+    "subtitle": "Daily expenses, budgets, and spending smarts",
     "icon": "dollarsign.circle.fill",
     "color": "yellow",
     "mascot": "🧮",
@@ -101,6 +101,38 @@
       "travel_budget_math",
       "accommodation_cost_math",
       "travel_insurance_fees"
+    ]
+  },
+  {
+    "id": "housing",
+    "title": "Housing & Rent",
+    "subtitle": "Affordability, leases, and housing costs",
+    "icon": "house.fill",
+    "color": "rose",
+    "mascot": "🏠",
+    "glyph": "$",
+    "lessonIds": [
+      "housing_rent_affordability",
+      "housing_rent_increase",
+      "housing_move_in_cost",
+      "housing_price_sqft",
+      "housing_mortgage_vs_rent"
+    ]
+  },
+  {
+    "id": "taxes",
+    "title": "Taxes & Paycheck",
+    "subtitle": "Brackets, deductions, and take-home pay",
+    "icon": "doc.text.fill",
+    "color": "slate",
+    "mascot": "🧾",
+    "glyph": "%",
+    "lessonIds": [
+      "taxes_brackets",
+      "taxes_deductions",
+      "taxes_gross_to_net",
+      "taxes_refund",
+      "taxes_self_employment"
     ]
   }
 ]

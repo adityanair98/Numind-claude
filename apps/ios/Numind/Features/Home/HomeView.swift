@@ -9,7 +9,6 @@ struct HomeView: View {
     @State private var showSpeedDrill = false
     @State private var blitzVM: BlitzViewModel? = nil
     @State private var streakVM: StreakViewModel? = nil
-    @State private var trueFalseVM: TrueFalseViewModel? = nil
     @State private var estimationVM: EstimationViewModel? = nil
     @State private var comparisonVM: ComparisonViewModel? = nil
     // insightLesson is now computed inline in insightView(for:) from the session's modules
@@ -110,11 +109,6 @@ struct HomeView: View {
                 generateQuestions: { generateMCQQuestions(count: 40) }
             )
             .environmentObject(progressStore)
-        }
-        // True/False launch
-        .fullScreenCover(item: $trueFalseVM) { vm in
-            TrueFalseView(viewModel: vm)
-                .environmentObject(progressStore)
         }
         // Estimation launch
         .fullScreenCover(item: $estimationVM) { vm in
@@ -395,7 +389,7 @@ struct HomeView: View {
     private var dailyChallengeSection: some View {
         DailyChallengeCard(
             isDone: progressStore.isDailyChallengeCompleted,
-            progress: progressStore.isDailyChallengeCompleted ? DailyChallengeEngine.questionCount : 0,
+            progress: progressStore.isDailyChallengeCompleted ? DailyChallengeEngine.questionCount(for: progressStore.data) : 0,
             correctCount: lastDailyCorrectCount,
             timeUntilReset: viewModel.timeUntilDailyReset,
             hasHistory: progressStore.totalSessions > 0,
@@ -483,7 +477,8 @@ struct HomeView: View {
     private var streakSection: some View {
         StreakStripCard(
             streak: progressStore.streak,
-            completions: progressStore.weeklyCompletions
+            completions: progressStore.weeklyCompletions,
+            availableFreezes: progressStore.availableFreezes
         )
     }
 
@@ -639,13 +634,6 @@ struct HomeView: View {
                     )
                     .frame(width: 155)
 
-                    ModeCard.trueFalse(
-                        bestLabel: bestLabel(for: progressStore.trueFalseBest, suffix: "/20"),
-                        locked: locked,
-                        action: { startTrueFalse() }
-                    )
-                    .frame(width: 155)
-
                     ModeCard.estimation(
                         bestLabel: bestLabel(for: progressStore.estimationBest, suffix: " ★"),
                         locked: locked,
@@ -690,15 +678,6 @@ struct HomeView: View {
         let questions = generateMCQQuestions(count: 40)
         guard !questions.isEmpty else { return }
         streakVM = StreakViewModel(questions: questions, previousBest: progressStore.streakModeBest)
-    }
-
-    private func startTrueFalse() {
-        guard viewModel.modesUnlocked else { return }
-        let templates = masteredTemplates()
-        guard !templates.isEmpty else { return }
-        let items = TrueFalseViewModel.generateItems(from: templates, count: 20)
-        guard !items.isEmpty else { return }
-        trueFalseVM = TrueFalseViewModel(items: items, previousBest: progressStore.trueFalseBest)
     }
 
     private func startEstimation() {

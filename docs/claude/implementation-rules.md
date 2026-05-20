@@ -1,6 +1,6 @@
 # Implementation Rules
 
-> **Last updated:** May 2026 (after mid-session motivator checkpoints, splash screen architecture).
+> **Last updated:** May 2026 (after V1 refinement — completion-based progression, new modules, scoring reweight, streak freezes, proportional distractors).
 
 Rules for building Numind. These supplement the top-level CLAUDE.md and apply to all implementation work.
 
@@ -27,7 +27,7 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **Every lesson must have exactly 5 quiz template IDs.** The quiz engine cycles through them to produce 8 questions per session.
 - **Answer formulas** live in `QuizEngine.swift` as a `[String: ([String: Double]) -> Double?]` dictionary. New templates should reuse existing formulas when possible. Only add a new formula if no existing one covers the calculation.
 - **Template IDs** follow the pattern `{topic}_{concept}_{variant}_d{difficulty}` (e.g., `tip_percent_basic_d1`).
-- **Module IDs** are lowercase snake_case: `tips`, `discounts`, `money_math`, `salary`, `investing`, `estimation`, `debt`, `travel`.
+- **Module IDs** are lowercase snake_case: `tips`, `discounts`, `money_math`, `salary`, `investing`, `estimation`, `debt`, `travel`, `housing`, `taxes`.
 
 ## Design System
 
@@ -46,24 +46,24 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 
 ## Quiz System
 
-- **8 questions per session.** Both lesson quizzes and checkpoint reviews generate exactly 8 questions.
-- **75% mastery threshold.** 6/8 correct = mastered. This is the gate for unlocking the next node.
+- **Dynamic question count.** First attempt at any lesson = 5 questions (gentle intro). Subsequent attempts = 8. Diagnostic calibration adjusts: intermediate users get 5, foundation users get 6, beginner users get 8 on first attempt. Checkpoint reviews always use 8.
+- **Completion-based progression.** Any attempt at a lesson (regardless of score) unlocks the next node. Mastery (≥75%) earns a gold star but is NOT required to progress. The SRS handles remediation.
 - **Fresh random seeds on every generate call.** Retries produce different numbers automatically — do not cache or reuse question instances.
+- **Proportional distractors.** The `niceStep` algorithm generates wrong answers at ~5-8% of the correct answer, rounded to psychologically natural numbers. Never use fixed step sizes.
 - **Checkpoint reviews** appear after every 3 lessons within a module. They round-robin across covered lessons' templates.
 - **Review IDs** use the format `review_{moduleId}_{groupIndex}` (e.g., `review_tips_0`).
 
 ## Game Modes
 
 - **MasteredTemplatePool** is the shared gateway for all game modes. Always call `MasteredTemplatePool.mcqTemplates(from:)` or `.templates(from:)` — never read all templates directly for mode content.
-- **Game modes only show content from mastered lessons.** Users only get questions on concepts they've learned and passed (≥75%). This enforces the "unlock by learning" progression.
+- **Game modes only show content from completed lessons.** Users only get questions on concepts they've attempted. This enforces the "unlock by learning" progression.
 - **MCQ-only for timed modes** (Speed Drill, Blitz). Free-entry questions are excluded — typing under time pressure is frustrating. Filter via `.mcqTemplates(from:)`.
-- **Modes are gated** until `MasteredTemplatePool.hasUnlockedModes(progressData:)` returns true. Show locked card UI with "Master a lesson to unlock" when false.
+- **Modes are gated** until `MasteredTemplatePool.hasUnlockedModes(progressData:)` returns true. Show locked card UI with "Complete a lesson to unlock" when false. Completion-based: any attempt unlocks, not mastery (≥75%).
 - **Session ID conventions for modes:**
   - Daily Challenge: `lessonId: "daily_challenge"`, `moduleId: "mixed"`
   - Speed Drill: `lessonId: "speed_drill"`, `moduleId: "mixed"`
   - Blitz: `lessonId: "blitz_session"`, `moduleId: "mixed"`
   - Streak: `lessonId: "streak_mode"`, `moduleId: "mixed"`
-  - True/False: `lessonId: "true_false"`, `moduleId: "mixed"`
   - Estimation: `lessonId: "estimation"`, `moduleId: "mixed"`
   - Comparison: `lessonId: "comparison"`, `moduleId: "mixed"`
 - **Daily Challenge** is 10 questions (bumped from 5). Pass `progressData:` to `DailyChallengeEngine.dailyQuestions(from:progressData:)` to filter to mastered templates.
@@ -75,9 +75,6 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **No speed bonus XP for Blitz.** Everything is speed — XP is simply `score * 10`.
 - **Streak** uses dedicated `StreakViewModel` + `StreakView`. Large MCQ pool (~40 questions) from `MasteredTemplatePool.mcqTemplates(from:)`. Game continues until one wrong answer. Personal best stored in `ProgressData.streakModeBestScore`; persist via `progressStore.updateStreakBest(score:)`.
   - Session ID: `lessonId: "streak_mode"`, `moduleId: "mixed"`.
-- **True/False (Snap)** uses dedicated `TrueFalseViewModel` + `TrueFalseView`. 20 items generated from quiz templates — half show the correct answer, half show a distractor. Items generated via `TrueFalseViewModel.generateItems(from:count:)`.
-  - Session ID: `lessonId: "true_false"`, `moduleId: "mixed"`.
-  - Personal best stored in `ProgressData.trueFalseBestScore`; persist via `progressStore.updateTrueFalseBest(score:)`.
 - **Estimation** uses dedicated `EstimationViewModel` + `EstimationView` + `EstimationSlider`. 10 slider-based questions with 10-second countdown. Graded on proximity: ≤5% = 3 stars (perfect), ≤15% = 2 stars (good), ≤30% = 1 star (okay), >30% = 0 stars (miss). Templates filtered to `difficulty >= 2` first (falls back to all if not enough). Slider range computed by `SliderRange.compute()` with anti-center positioning (correct answer placed in 18–38% OR 62–82% of slider range, never near center).
   - Session ID: `lessonId: "estimation"`, `moduleId: "mixed"`.
   - Personal best stored in `ProgressData.estimationBestScore`; persist via `progressStore.updateEstimationBest(score:)`.
@@ -103,7 +100,7 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **Coaching tips** reuse `Lesson.shortcut` and `Lesson.example` — no new content fields. Look up via `ContentRepository.lesson(forTemplateId:)`.
 - **Estimation coaching** uses generic tips from `MotivatorCopy.estimationTips` since estimation questions don't map cleanly to lesson shortcuts.
 - **Speed Drill:** Max 1 motivator, no coaching (too slow for speed context).
-- **Auto-advance modes get nothing.** Blitz, Streak, True/False, Comparison have no natural pause point. Do not add motivators to these modes.
+- **Auto-advance modes get nothing.** Blitz, Streak, Comparison have no natural pause point. Do not add motivators to these modes.
 - **Inline encouragement** is non-blocking, does not count toward the 2-motivator cap, and has its own 3-question cooldown.
 - **Copy rotation.** Always use `MotivatorCopy` static methods to pick copy — they randomize from 4-5 variants per type. Never hardcode motivator text in views.
 

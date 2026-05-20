@@ -1,6 +1,6 @@
 # Numind — Screen Specs (V1)
 
-> **Last updated:** May 2026 (after mid-session motivator checkpoints, launch screen).
+> **Last updated:** May 2026 (after V1 refinement — completion-based progression, 10 modules, dynamic question count, streak freezes).
 > **Status:** Implemented screens, reflecting the current SwiftUI codebase.
 > **Tokens referenced** are the Swift constants in `apps/ios/Numind/Core/DesignSystem/Tokens/`. Do not introduce new tokens here — if a value is missing, propose it as a token first.
 
@@ -114,7 +114,7 @@ The Learn tab presents a **quest-journey path** — lesson and review nodes are 
 | State | Circle fill | Icon / decoration | Label subtitle |
 |---|---|---|---|
 | `mastered` | full accent color | white checkmark + golden star badge + sparkle decorations | "Mastered ✓" |
-| `attempted` | orange | orange retry icon | "Retry — need 75%" |
+| `attempted` | orange | orange retry icon | "Practice more" |
 | `current` | full accent color | pulsing ring animation + bouncing "START" badge | "Available" |
 | `available` | white, accent border | lesson number in accent color | "Available" |
 | `locked` | muted fill, 45% opacity | lock icon | "Locked" |
@@ -123,7 +123,7 @@ The Learn tab presents a **quest-journey path** — lesson and review nodes are 
 - **Lesson nodes** — tapping opens `LessonView` via `.fullScreenCover`.
 - **Review nodes** — tapping opens `CheckpointView` via `.fullScreenCover`. Reviews appear after every 3 lessons within a module.
 
-**Mastery gating:** locked nodes have 0.45 opacity and ignore taps. A node unlocks only when the preceding node is mastered (≥75% on any attempt).
+**Completion-based progression:** locked nodes have 0.45 opacity and ignore taps. A node unlocks when the preceding node is completed (any attempt). Mastery (≥75%) earns a gold star but is not required for progression.
 
 **Reactivity:** Path rebuilds on every `progressStore` change via `.onChange(of: progressStore.totalSessions)`.
 
@@ -147,7 +147,7 @@ The Practice tab gives users free-access browsing of all lessons across all modu
 
 **Layout (top → bottom):**
 
-1. **Module Tab Strip** — `ScrollView(.horizontal, showsIndicators: false)` at the top of the screen. Contains one icon tile per module (8 total).
+1. **Module Tab Strip** — `ScrollView(.horizontal, showsIndicators: false)` at the top of the screen. Contains one icon tile per module (10 total).
 
    **Each tile:** 60×60 rounded square (`r-card` corners), module SF Symbol icon (24pt), module short-name label below (10pt).
 
@@ -281,12 +281,12 @@ The quiz supports two input modes: **multiple choice** (4 options) and **free en
    - Speed bonus callout (if any): bolt icon + "+N XP speed bonus included" (insightText).
    - "New personal best!" chip (spring animation) — only on first mastered or higher score.
 
-   **Fail (<75%):**
-   - 96pt circle (warmOrangeTint) + counterclockwise arrow icon.
-   - `Theme.Typography.display` "Almost there!".
+   **Below 75%:**
+   - 96pt circle (warmOrangeTint) + encouraging icon.
+   - `Theme.Typography.display` "Great effort!".
    - Caption "N questions · MM:SS".
    - Static "+XP" pill (insightYellowTint, body font, no animation delay).
-   - "You got X/N — need Y to master" pill (warmOrangeTint background).
+   - "Practice more to earn the gold star" encouragement text.
    - No trophy, no personal best chip, no speed bonus callout.
 
 2. **StatsCard** — `NumindCard` with 3 `StatCell`s separated by vertical dividers:
@@ -295,8 +295,8 @@ The quiz supports two input modes: **multiple choice** (4 options) and **free en
    - **Streak** — "N🔥" in yellow.
 
 3. **MasteryBanner** — pass variant only:
-   - **Mastered (≥75%):** accent tint background + checkmark.seal.fill + "Lesson mastered!" + "Next lesson unlocked".
-   - The "Not mastered yet" variant has been removed. The fail-state score gap message is now embedded directly in the fail `ResultHeader` as a `warmOrangeTint` pill.
+   - **Mastered (≥75%):** accent tint background + checkmark.seal.fill + gold star + "Lesson mastered!".
+   - Below 75%: no mastery banner. Encouraging "Practice more" framing in footer. Next lesson is already unlocked via completion-based progression.
 
 4. **NewBadgesSection** (if badges earned) — "BADGES UNLOCKED" eyebrow + card with badge rows:
    - Each row: tier-colored circle (48pt, badge icon) + badge name (semibold) + description + teal checkmark.seal.fill.
@@ -306,13 +306,13 @@ The quiz supports two input modes: **multiple choice** (4 options) and **free en
    - 36pt result tile (teal check / red xmark) + question prompt preview + retry icon for wrong answers.
 
 6. **Footer (sticky)** — varies by mastery:
-   - **Not mastered:** "Retry quiz" (orange, primary) + "Skip for now" (`PillButton(.secondary)` — light background, blue text, visually subordinate to Retry) + "Done for today" (text link).
+   - **Below 75%:** "Practice more" (primary) + "Continue" (`PillButton(.secondary)` — light background, blue text, next lesson already unlocked) + "Done for today" (text link).
    - **Mastered with mistakes:** "Review N mistake(s)" (red capsule) + "Skip & continue" (ghost) + "Done for today".
    - **Mastered, perfect:** "Continue learning" (primary) + "Done for today".
 
 **Review mistakes:** launches a new `QuizSessionView` via `ReviewMistakesEngine.build()` as a `.fullScreenCover`.
 
-> **Rationale.** The mastery banner is the key feedback element — it makes the 75% gate visible and actionable. The retry flow (with fresh random values) is surfaced prominently when mastery isn't achieved, encouraging persistence without punishment. Personal best and badge celebrations provide positive reinforcement beyond the pass/fail binary.
+> **Rationale.** The gold star is the key feedback element — it makes 75% an aspirational goal without blocking progression. Completion-based unlocking ensures anxious users aren't stuck, while the gold star still rewards high performance. The "Practice more" framing encourages persistence without punishment.
 
 ---
 
@@ -508,7 +508,7 @@ Calculator tools (tip calculator, bill split, discount calculator) are not part 
 Duolingo-style checkpoint moments shown between quiz questions. Four full-screen types + one inline overlay.
 
 **Eligible modes:** Lesson Quiz, Daily Challenge, Checkpoint Review, Speed Drill (max 1), Estimation.
-**Excluded modes:** Blitz, Streak, True/False, Comparison (auto-advance, no pause point).
+**Excluded modes:** Blitz, Streak, Comparison (auto-advance, no pause point).
 
 ### Common Layout (all 4 full-screen types)
 

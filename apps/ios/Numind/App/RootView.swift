@@ -21,7 +21,8 @@ struct RootView: View {
                     RootTabView()
                         .environmentObject(progressStore)
                 } else {
-                    OnboardingView()
+                    OnboardingFlowView()
+                        .environmentObject(progressStore)
                 }
             }
 
