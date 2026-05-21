@@ -429,13 +429,13 @@ struct ModuleDetailView: View {
     NavigationStack {
         ModuleDetailView(
             module: Module(
-                id: "tips",
-                title: "Tips, Tax & Bill Split",
-                subtitle: "Everyday restaurant and shopping math",
-                icon: "percent",
+                id: "smart_shopping",
+                title: "Smart Shopping",
+                subtitle: "Tips, discounts, and everyday saving math",
+                icon: "cart.fill",
                 color: .blue,
                 lessonIds: ["tip_18_percent"],
-                mascot: "\u{2615}",
+                mascot: "\u{1F6D2}",
                 glyph: "%"
             ),
             moduleIndex: 0,

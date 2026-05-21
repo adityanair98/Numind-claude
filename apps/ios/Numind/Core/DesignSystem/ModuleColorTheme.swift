@@ -12,7 +12,7 @@ extension ModuleColor {
         case .green:  return Theme.Colors.growthGreen
         case .indigo: return Theme.Colors.investIndigo
         case .coral:  return Theme.Colors.debtCoral
-        case .purple: return Theme.Colors.travelPurple
+        case .purple: return Theme.Colors.insurancePurple
         case .rose:   return Theme.Colors.housingRose
         case .slate:  return Theme.Colors.taxSlate
         case .muted:  return Theme.Colors.mutedText
@@ -28,7 +28,7 @@ extension ModuleColor {
         case .green:  return Theme.Colors.growthGreenTint
         case .indigo: return Theme.Colors.investIndigoTint
         case .coral:  return Theme.Colors.debtCoralTint
-        case .purple: return Theme.Colors.travelPurpleTint
+        case .purple: return Theme.Colors.insurancePurpleTint
         case .rose:   return Theme.Colors.housingRoseTint
         case .slate:  return Theme.Colors.taxSlateTint
         case .muted:  return Theme.Colors.mutedTint

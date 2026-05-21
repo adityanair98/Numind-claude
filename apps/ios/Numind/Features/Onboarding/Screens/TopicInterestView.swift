@@ -6,12 +6,14 @@ struct TopicInterestView: View {
     let onContinue: () -> Void
 
     private let topics: [(id: String, label: String, glyph: String, color: Color)] = [
-        ("tips", "Tipping &\npercentages", "%", Theme.Colors.mindTeal),
-        ("discounts", "Shopping &\ndiscounts", "\u{1F3F7}", Theme.Colors.primaryBlue),
+        ("smart_shopping", "Tips &\nsmart shopping", "%", Theme.Colors.primaryBlue),
         ("salary", "Salary &\nincome", "\u{1F4BC}", Theme.Colors.warmOrange),
         ("investing", "Returns &\ninvesting", "\u{1F4C8}", Theme.Colors.investIndigo),
-        ("estimation", "Splitting &\nestimation", "\u{1F465}", Theme.Colors.growthGreen),
         ("debt", "Debt &\ninterest rates", "\u{1F4B3}", Theme.Colors.debtCoral),
+        ("housing", "Housing &\nrent", "\u{1F3E0}", Theme.Colors.housingRose),
+        ("taxes", "Taxes &\npaycheck", "\u{1F9FE}", Theme.Colors.taxSlate),
+        ("insurance", "Insurance &\nhealthcare", "\u{1FA7A}", Theme.Colors.insurancePurple),
+        ("car", "Car buying &\nbig purchases", "\u{1F697}", Theme.Colors.mindTeal),
     ]
 
     private var canContinue: Bool {

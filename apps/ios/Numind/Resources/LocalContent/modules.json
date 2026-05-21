@@ -1,29 +1,18 @@
 [
   {
-    "id": "tips",
-    "title": "Tips, Tax & Bill Split",
-    "subtitle": "Everyday restaurant and shopping math",
-    "icon": "percent",
+    "id": "smart_shopping",
+    "title": "Smart Shopping",
+    "subtitle": "Tips, discounts, and everyday saving math",
+    "icon": "cart.fill",
     "color": "blue",
-    "mascot": "☕",
+    "mascot": "🛒",
     "glyph": "%",
     "lessonIds": [
       "tip_18_percent",
       "tip_10_percent_trick",
       "tip_20_double",
       "tip_pre_or_post_tax",
-      "tip_split_bill"
-    ]
-  },
-  {
-    "id": "discounts",
-    "title": "Discounts & Shopping",
-    "subtitle": "Find the best price and save more",
-    "icon": "tag.fill",
-    "color": "teal",
-    "mascot": "🏷️",
-    "glyph": "-",
-    "lessonIds": [
+      "tip_split_bill",
       "discount_25_percent",
       "discount_10_percent",
       "discount_bogo",
@@ -39,7 +28,13 @@
     "color": "yellow",
     "mascot": "🧮",
     "glyph": "×",
-    "lessonIds": ["sales_tax_quick", "cart_total_estimate", "budget_check", "subscription_math", "price_per_use"]
+    "lessonIds": [
+      "sales_tax_quick",
+      "cart_total_estimate",
+      "budget_check",
+      "subscription_math",
+      "price_per_use"
+    ]
   },
   {
     "id": "salary",
@@ -49,7 +44,13 @@
     "color": "green",
     "mascot": "💼",
     "glyph": "$",
-    "lessonIds": ["net_pay_check", "raise_impact", "overtime_calc", "pay_period_convert"]
+    "lessonIds": [
+      "net_pay_check",
+      "raise_impact",
+      "overtime_calc",
+      "pay_period_convert",
+      "inflation_adjusted_raise"
+    ]
   },
   {
     "id": "investing",
@@ -59,17 +60,14 @@
     "color": "indigo",
     "mascot": "📈",
     "glyph": "$",
-    "lessonIds": ["simple_interest", "rule_of_72", "roi_basic"]
-  },
-  {
-    "id": "estimation",
-    "title": "Estimation & Shortcuts",
-    "subtitle": "Fast mental math for any situation",
-    "icon": "function",
-    "color": "orange",
-    "mascot": "🎯",
-    "glyph": "≈",
-    "lessonIds": ["round_to_estimate", "hourly_rate_check", "percent_change", "double_or_half", "multiply_by_5"]
+    "lessonIds": [
+      "simple_interest",
+      "rule_of_72",
+      "roi_basic",
+      "investing_401k_match",
+      "investing_roth_vs_traditional",
+      "investing_compound_growth"
+    ]
   },
   {
     "id": "debt",
@@ -85,22 +83,6 @@
       "loan_true_cost",
       "debt_to_income",
       "extra_payment_power"
-    ]
-  },
-  {
-    "id": "travel",
-    "title": "Travel Money",
-    "subtitle": "Currency, fees, and spending abroad",
-    "icon": "airplane",
-    "color": "purple",
-    "mascot": "✈️",
-    "glyph": "€",
-    "lessonIds": [
-      "currency_conversion",
-      "exchange_rate_traps",
-      "travel_budget_math",
-      "accommodation_cost_math",
-      "travel_insurance_fees"
     ]
   },
   {
@@ -133,6 +115,54 @@
       "taxes_gross_to_net",
       "taxes_refund",
       "taxes_self_employment"
+    ]
+  },
+  {
+    "id": "insurance",
+    "title": "Insurance & Healthcare",
+    "subtitle": "Deductibles, premiums, and plan comparison",
+    "icon": "cross.case.fill",
+    "color": "purple",
+    "mascot": "🏥",
+    "glyph": "+",
+    "lessonIds": [
+      "insurance_deductible_vs_premium",
+      "insurance_copay_coinsurance",
+      "insurance_oop_max",
+      "insurance_hdhp_vs_ppo",
+      "insurance_hsa_advantage"
+    ]
+  },
+  {
+    "id": "car",
+    "title": "Car & Big Purchases",
+    "subtitle": "Monthly payments, total cost, and smart buying",
+    "icon": "car.fill",
+    "color": "teal",
+    "mascot": "🚗",
+    "glyph": "$",
+    "lessonIds": [
+      "car_monthly_vs_total",
+      "car_loan_term",
+      "car_down_payment",
+      "car_20_4_10_rule",
+      "car_depreciation"
+    ]
+  },
+  {
+    "id": "student_loans",
+    "title": "Student Loans",
+    "subtitle": "Repayment plans, refinancing, and forgiveness",
+    "icon": "graduationcap.fill",
+    "color": "orange",
+    "mascot": "🎓",
+    "glyph": "$",
+    "lessonIds": [
+      "student_loan_monthly",
+      "student_loan_total_cost",
+      "student_loan_refinance",
+      "student_loan_idr",
+      "student_loan_pslf"
     ]
   }
 ]

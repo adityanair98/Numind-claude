@@ -142,7 +142,7 @@ struct QuizEngine {
             guard let total = vars["totalPrice"], let qty = vars["quantity"], qty > 0 else { return nil }
             return total / qty
         },
-        // Estimation formulas
+        // Shared Math Shortcuts (used by multiple modules)
         "doubleOf": { vars in
             guard let amount = vars["originalAmount"] else { return nil }
             return amount * 2
@@ -263,14 +263,103 @@ struct QuizEngine {
                   let pct = vars["roiPercent"] else { return nil }
             return cost * pct / 100
         },
-        // Estimation — rounding
+        // 401(k) Match
+        "employerMatchAmount": { vars in
+            guard let contribution = vars["contribution"],
+                  let matchPct = vars["matchPercent"] else { return nil }
+            return contribution * matchPct / 100
+        },
+        "totalWithMatch": { vars in
+            guard let contribution = vars["contribution"],
+                  let matchPct = vars["matchPercent"] else { return nil }
+            return contribution * (1 + matchPct / 100)
+        },
+        "employerMatchFromSalary": { vars in
+            guard let salary = vars["annualSalary"],
+                  let contribPct = vars["contribPercent"],
+                  let matchPct = vars["matchPercent"] else { return nil }
+            return salary * contribPct / 100 * matchPct / 100
+        },
+        "totalContribFromSalary": { vars in
+            guard let salary = vars["annualSalary"],
+                  let contribPct = vars["contribPercent"],
+                  let matchPct = vars["matchPercent"] else { return nil }
+            let contrib = salary * contribPct / 100
+            return contrib * (1 + matchPct / 100)
+        },
+        // Roth vs Traditional IRA
+        "rothTaxPaid": { vars in
+            guard let contribution = vars["contribution"],
+                  let taxRate = vars["taxRate"] else { return nil }
+            return contribution * taxRate / 100
+        },
+        "traditionalTaxSaved": { vars in
+            guard let contribution = vars["contribution"],
+                  let taxRate = vars["taxRate"] else { return nil }
+            return contribution * taxRate / 100
+        },
+        "rothAfterTaxCost": { vars in
+            guard let contribution = vars["contribution"],
+                  let taxRate = vars["taxRate"] else { return nil }
+            return contribution * (1 + taxRate / 100)
+        },
+        "traditionalNetCost": { vars in
+            guard let contribution = vars["contribution"],
+                  let taxRate = vars["taxRate"] else { return nil }
+            return contribution * (1 - taxRate / 100)
+        },
+        "rothVsTradDifference": { vars in
+            guard let contribution = vars["contribution"],
+                  let taxRate = vars["taxRate"] else { return nil }
+            return contribution * taxRate / 100
+        },
+        // Compound Growth
+        "totalContributed": { vars in
+            guard let monthly = vars["monthlyAmount"],
+                  let years = vars["years"] else { return nil }
+            return monthly * 12 * years
+        },
+        "interestEarned": { vars in
+            guard let total = vars["totalContributed"],
+                  let finalVal = vars["finalValue"] else { return nil }
+            return finalVal - total
+        },
+        "finalAccountValue": { vars in
+            guard let total = vars["totalContributed"],
+                  let growth = vars["growthAmount"] else { return nil }
+            return total + growth
+        },
+        // Inflation-Adjusted Raise
+        "inflationAdjustedRaise": { vars in
+            guard let raise_ = vars["raisePercent"],
+                  let inflation = vars["inflationPercent"] else { return nil }
+            return raise_ - inflation
+        },
+        "inflationAdjustedRaiseA": { vars in
+            guard let raise_ = vars["raisePercentA"],
+                  let inflation = vars["inflationPercent"] else { return nil }
+            return raise_ - inflation
+        },
+        "realRaiseDollars": { vars in
+            guard let salary = vars["annualSalary"],
+                  let raise_ = vars["raisePercent"],
+                  let inflation = vars["inflationPercent"] else { return nil }
+            return salary * (raise_ - inflation) / 100
+        },
+        "salaryInRealTerms": { vars in
+            guard let salary = vars["annualSalary"],
+                  let raise_ = vars["raisePercent"],
+                  let inflation = vars["inflationPercent"] else { return nil }
+            return salary * (1 + raise_ / 100) / (1 + inflation / 100)
+        },
+        // Shared Math Shortcuts — rounding
         "estimateSumNearestTen": { vars in
             guard let a = vars["priceA"], let b = vars["priceB"] else { return nil }
             let roundA = (a / 10).rounded() * 10
             let roundB = (b / 10).rounded() * 10
             return roundA + roundB
         },
-        // Estimation — salary conversion
+        // Shared Math Shortcuts — salary conversion
         "hourlyFromAnnual": { vars in
             guard let annual = vars["annualSalary"] else { return nil }
             return annual / 2000
@@ -279,7 +368,7 @@ struct QuizEngine {
             guard let hourly = vars["hourlyRate"] else { return nil }
             return hourly * 2000
         },
-        // Estimation — percent change
+        // Shared Math Shortcuts — percent change
         "percentRaise": { vars in
             guard let base = vars["basePrice"], base > 0,
                   let increase = vars["increaseAmount"] else { return nil }
@@ -308,7 +397,7 @@ struct QuizEngine {
                   let rate = vars["interestRate"] else { return nil }
             return principal * rate / 100 / 12
         },
-        // Estimation — triple / quarter / 20%
+        // Shared Math Shortcuts — triple / quarter / 20%
         "tripleOf": { vars in
             guard let amount = vars["originalAmount"] else { return nil }
             return amount * 3
@@ -375,58 +464,6 @@ struct QuizEngine {
         "totalMonthlyPayments": { vars in
             guard let p1 = vars["payment1"], let p2 = vars["payment2"] else { return nil }
             return p1 + p2
-        },
-
-        // Travel Money
-        "foreignToUSD": { vars in
-            guard let foreign = vars["foreignAmount"],
-                  let rate = vars["exchangeRate"] else { return nil }
-            return foreign * rate
-        },
-        "usdToForeign": { vars in
-            guard let usd = vars["usdAmount"],
-                  let rate = vars["foreignRate"] else { return nil }
-            return usd * rate
-        },
-        "currencyMarkupCost": { vars in
-            guard let amount = vars["convertAmount"],
-                  let markup = vars["markupPercent"] else { return nil }
-            return amount * markup / 100
-        },
-        "foreignTransactionFee": { vars in
-            guard let purchase = vars["purchaseAmount"],
-                  let fee = vars["feePercent"] else { return nil }
-            return purchase * fee / 100
-        },
-        "totalWithForeignFee": { vars in
-            guard let purchase = vars["purchaseAmount"],
-                  let fee = vars["feePercent"] else { return nil }
-            return purchase * (1 + fee / 100)
-        },
-        "splitTravelCost": { vars in
-            guard let total = vars["totalCost"],
-                  let people = vars["numPeople"], people > 0 else { return nil }
-            return total / people
-        },
-        "daysOnBudget": { vars in
-            guard let budget = vars["travelBudget"],
-                  let daily = vars["dailyCost"], daily > 0 else { return nil }
-            return budget / daily
-        },
-        "hotelCostPerNight": { vars in
-            guard let total = vars["hotelTotal"],
-                  let nights = vars["numNights"], nights > 0 else { return nil }
-            return total / nights
-        },
-        "travelInsuranceCost": { vars in
-            guard let trip = vars["tripCost"],
-                  let pct = vars["insurancePercent"] else { return nil }
-            return trip * pct / 100
-        },
-        "tripTotalWithInsurance": { vars in
-            guard let trip = vars["tripCost"],
-                  let pct = vars["insurancePercent"] else { return nil }
-            return trip * (1 + pct / 100)
         },
 
         // Housing & Rent
@@ -510,6 +547,384 @@ struct QuizEngine {
         "selfEmploymentTax": { vars in
             guard let income = vars["freelanceIncome"] else { return nil }
             return income * 0.153
+        },
+
+        // ── Insurance & Healthcare formulas ─────────────────────────────────────
+
+        "insurancePremiumAnnual": { vars in
+            guard let monthly = vars["monthlyPremium"] ?? vars["monthlyHSA"] else { return nil }
+            return monthly * 12
+        },
+        "insuranceWorstCase": { vars in
+            guard let monthly = vars["monthlyPremium"],
+                  let deductible = vars["deductible"] else { return nil }
+            return monthly * 12 + deductible
+        },
+        "premiumDifferenceAnnual": { vars in
+            guard let a = vars["premiumA"], let b = vars["premiumB"] else { return nil }
+            return (a - b) * 12
+        },
+        "insurancePremiumPlusBills": { vars in
+            guard let monthly = vars["monthlyPremium"],
+                  let bills = vars["medicalBills"] else { return nil }
+            return monthly * 12 + bills
+        },
+        "planCostDifference": { vars in
+            guard let hdhpPrem = vars["hdhpPremium"],
+                  let hdhpDed = vars["hdhpDeductible"],
+                  let ppoPrem = vars["ppoPremium"],
+                  let ppoCopay = vars["ppoCopay"],
+                  let visits = vars["visits"] else { return nil }
+            let hdhpTotal = hdhpPrem * 12 + hdhpDed
+            let ppoTotal = ppoPrem * 12 + ppoCopay * visits
+            return abs(hdhpTotal - ppoTotal)
+        },
+        "coinsuranceCost": { vars in
+            guard let bill = vars["billAmount"] ?? vars["totalBill"],
+                  let pct = vars["coinsurancePercent"] else { return nil }
+            return bill * pct / 100
+        },
+        "copayTotal": { vars in
+            guard let copay = vars["copayAmount"],
+                  let visits = vars["visitCount"] else { return nil }
+            return copay * visits
+        },
+        "copayMixed": { vars in
+            guard let primaryCopay = vars["copayPrimary"],
+                  let specCopay = vars["copaySpecialist"],
+                  let primaryVisits = vars["primaryVisits"],
+                  let specVisits = vars["specialistVisits"] else { return nil }
+            return primaryCopay * primaryVisits + specCopay * specVisits
+        },
+        "totalWithCoinsurance": { vars in
+            guard let bill = vars["totalBill"],
+                  let deductible = vars["deductible"],
+                  let pct = vars["coinsurancePercent"] else { return nil }
+            return deductible + (bill - deductible) * pct / 100
+        },
+        "oopRemaining": { vars in
+            guard let max = vars["oopMax"],
+                  let paid = vars["amountPaid"] else { return nil }
+            return max - paid
+        },
+        "oopActualCost": { vars in
+            guard let max = vars["oopMax"],
+                  let paid = vars["amountPaid"],
+                  let cost = vars["procedureCost"] else { return nil }
+            let remaining = max - paid
+            return min(remaining, cost)
+        },
+        "oopWithCap": { vars in
+            guard let deductible = vars["deductible"],
+                  let bill = vars["totalBill"],
+                  let pct = vars["coinsurancePercent"],
+                  let max = vars["oopMax"] else { return nil }
+            let uncapped = deductible + (bill - deductible) * pct / 100
+            return min(uncapped, max)
+        },
+        "oopDifference": { vars in
+            guard let a = vars["oopMaxA"], let b = vars["oopMaxB"] else { return nil }
+            return b - a
+        },
+        "maxAnnualCost": { vars in
+            guard let monthly = vars["monthlyPremium"],
+                  let max = vars["oopMax"] else { return nil }
+            return monthly * 12 + max
+        },
+        "planAnnualWithCopay": { vars in
+            guard let monthly = vars["monthlyPremium"],
+                  let copay = vars["copayAmount"],
+                  let visits = vars["visitCount"] else { return nil }
+            return monthly * 12 + copay * visits
+        },
+        "ppoPremiumExtra": { vars in
+            guard let ppo = vars["ppoPremium"],
+                  let hdhp = vars["hdhpPremium"] else { return nil }
+            return (ppo - hdhp) * 12
+        },
+        "hdhpVsPpoGap": { vars in
+            guard let hdhpPrem = vars["hdhpPremium"],
+                  let hdhpDed = vars["hdhpDeductible"],
+                  let ppoPrem = vars["ppoPremium"] else { return nil }
+            let hdhpTotal = hdhpPrem * 12 + hdhpDed
+            let ppoTotal = ppoPrem * 12
+            return abs(hdhpTotal - ppoTotal)
+        },
+        "hsaTaxSaving": { vars in
+            guard let contrib = vars["hsaContribution"] ?? vars["expenseCost"],
+                  let rate = vars["taxRate"] else { return nil }
+            return contrib * rate / 100
+        },
+        "hsaAnnualContribution": { vars in
+            guard let monthly = vars["monthlyHSA"] else { return nil }
+            return monthly * 12
+        },
+        "hsaEffectiveCost": { vars in
+            guard let cost = vars["expenseCost"],
+                  let rate = vars["taxRate"] else { return nil }
+            return cost - cost * rate / 100
+        },
+        "hdhpNetAdvantage": { vars in
+            guard let hdhp = vars["hdhpPremium"],
+                  let ppo = vars["ppoPremium"],
+                  let hsaSaving = vars["hsaTaxSaving"] else { return nil }
+            return (ppo - hdhp) * 12 + hsaSaving
+        },
+        "hsaTotalTaxSaving": { vars in
+            guard let contrib = vars["hsaContribution"],
+                  let rate = vars["taxRate"],
+                  let years = vars["years"] else { return nil }
+            return contrib * rate / 100 * years
+        },
+
+        // ── Car & Big Purchases formulas ────────────────────────────────────────
+
+        "carTotalPaid": { vars in
+            guard let payment = vars["monthlyPayment"],
+                  let months = vars["loanTermMonths"] else { return nil }
+            return payment * months
+        },
+        "carInterestPaid": { vars in
+            guard let loan = vars["loanAmount"],
+                  let total = vars["totalPaid"] else { return nil }
+            return total - loan
+        },
+        "carTotalWithDown": { vars in
+            guard let down = vars["downPayment"],
+                  let payment = vars["monthlyPayment"],
+                  let months = vars["termMonths"] else { return nil }
+            return down + payment * months
+        },
+        "loanTotalDifference": { vars in
+            guard let payA = vars["paymentA"], let termA = vars["termA"],
+                  let payB = vars["paymentB"], let termB = vars["termB"] else { return nil }
+            return abs(payB * termB - payA * termA)
+        },
+        "extraInterestCost": { vars in
+            guard let total60 = vars["total60"], let total72 = vars["total72"],
+                  let loan = vars["loanAmount"] else { return nil }
+            return (total72 - loan) - (total60 - loan)
+        },
+        "carTotalFromYears": { vars in
+            guard let payment = vars["monthlyPayment"] ?? vars["budget"],
+                  let years = vars["termYears"] else { return nil }
+            return payment * years * 12
+        },
+        "monthlyDifference": { vars in
+            // Generic: difference between two monthly amounts
+            if let a = vars["payment5"], let b = vars["payment6"] { return a - b }
+            if let a = vars["payment10"], let b = vars["payment20"] { return a - b }
+            if let a = vars["oldPayment"], let b = vars["newPayment"] { return a - b }
+            if let a = vars["standardPayment"], let b = vars["idrPayment"] { return (a - b) }
+            return nil
+        },
+        "termInterestDifference": { vars in
+            guard let loan = vars["loanAmount"],
+                  let pay48 = vars["payment48"],
+                  let pay72 = vars["payment72"] else { return nil }
+            let int48 = pay48 * 48 - loan
+            let int72 = pay72 * 72 - loan
+            return int72 - int48
+        },
+        "interestPercentOfTotal": { vars in
+            guard let loan = vars["loanAmount"],
+                  let payB = vars["paymentB"],
+                  let termB = vars["termB"] else { return nil }
+            let totalB = payB * termB
+            let interest = totalB - loan
+            return interest / totalB * 100
+        },
+        "carDownPaymentAmount": { vars in
+            guard let price = vars["carPrice"],
+                  let pct = vars["downPercent"] else { return nil }
+            return price * pct / 100
+        },
+        "carLoanAfterDown": { vars in
+            guard let price = vars["carPrice"],
+                  let down = vars["downPayment"] else { return nil }
+            return price - down
+        },
+        "carInterestOnLoan": { vars in
+            guard let price = vars["carPrice"],
+                  let downPct = vars["downPercent"],
+                  let intPct = vars["interestRate"] else { return nil }
+            let loan = price * (1 - downPct / 100)
+            return loan * intPct / 100
+        },
+        "interestSaving": { vars in
+            guard let int10 = vars["interest10"],
+                  let int20 = vars["interest20"] else { return nil }
+            return int10 - int20
+        },
+        "totalCostDifference": { vars in
+            guard let downA = vars["downA"], let payA = vars["paymentA"], let termA = vars["termA"],
+                  let downB = vars["downB"], let payB = vars["paymentB"], let termB = vars["termB"] else { return nil }
+            let totalA = downA + payA * termA
+            let totalB = downB + payB * termB
+            return abs(totalA - totalB)
+        },
+        "carMaxPayment": { vars in
+            guard let income = vars["monthlyIncome"] else { return nil }
+            return income * 0.10
+        },
+        "carMaxPaymentFromAnnual": { vars in
+            guard let annual = vars["annualSalary"] else { return nil }
+            return annual / 12 * 0.10
+        },
+        "paymentVsBudget": { vars in
+            guard let income = vars["monthlyIncome"],
+                  let payment = vars["monthlyPayment"] else { return nil }
+            return abs(income * 0.10 - payment)
+        },
+        "carMaxAffordable": { vars in
+            guard let income = vars["monthlyIncome"] else { return nil }
+            let maxPayment = income * 0.10
+            let maxFinanced = maxPayment * 48
+            return maxFinanced / 0.80
+        },
+        "carValueAfterDep": { vars in
+            guard let price = vars["carPrice"],
+                  let pct = vars["depPercent"] else { return nil }
+            return price * (1 - pct / 100)
+        },
+        "carDepreciationAmount": { vars in
+            guard let price = vars["carPrice"],
+                  let pct = vars["depPercent"] else { return nil }
+            return price * pct / 100
+        },
+        "carValueYear2": { vars in
+            guard let price = vars["carPrice"],
+                  let dep1 = vars["depYear1"],
+                  let dep2 = vars["depYear2"] else { return nil }
+            return price * (1 - dep1 / 100) * (1 - dep2 / 100)
+        },
+        "carTotalDepreciation": { vars in
+            guard let price = vars["carPrice"],
+                  let valueAfter = vars["valueAfter3"] else { return nil }
+            return price - valueAfter
+        },
+        "depreciationDifference": { vars in
+            guard let newPrice = vars["newPrice"], let newVal = vars["newValueY3"],
+                  let usedPrice = vars["usedPrice"], let usedVal = vars["usedValueY3"] else { return nil }
+            let newDep = newPrice - newVal
+            let usedDep = usedPrice - usedVal
+            return abs(newDep - usedDep)
+        },
+
+        // ── Student Loans & Education formulas ──────────────────────────────────
+
+        "annualPayment": { vars in
+            guard let monthly = vars["monthlyPayment"] else { return nil }
+            return monthly * 12
+        },
+        "estimatedMonthly": { vars in
+            guard let balance = vars["loanBalance"],
+                  let per10k = vars["paymentPer10k"] else { return nil }
+            return (balance / 10000) * per10k
+        },
+        "monthlyInterestCharge": { vars in
+            guard let balance = vars["loanBalance"],
+                  let rate = vars["interestRate"] else { return nil }
+            return balance * rate / 100 / 12
+        },
+        "principalPayment": { vars in
+            guard let payment = vars["monthlyPayment"],
+                  let interest = vars["monthlyInterest"] else { return nil }
+            return payment - interest
+        },
+        "loanTotalFromYears": { vars in
+            guard let payment = vars["monthlyPayment"],
+                  let years = vars["termYears"] else { return nil }
+            return payment * years * 12
+        },
+        "totalInterestPaid": { vars in
+            guard let total = vars["totalPaid"],
+                  let loan = vars["loanAmount"] else { return nil }
+            return total - loan
+        },
+        "termCostDifference": { vars in
+            guard let pay10 = vars["payment10"],
+                  let pay20 = vars["payment20"] else { return nil }
+            return pay20 * 240 - pay10 * 120
+        },
+        "percentMoreCost": { vars in
+            guard let standard = vars["totalStandard"],
+                  let extended = vars["totalExtended"] else { return nil }
+            return (extended - standard) / standard * 100
+        },
+        "extraPaymentSaving": { vars in
+            guard let original = vars["originalTotal"],
+                  let newTotal = vars["newTotal"] else { return nil }
+            // Also works for refi: old total - new total
+            if let old = vars["oldTotal"] { return old - newTotal }
+            return original - newTotal
+        },
+        "annualSaving": { vars in
+            guard let monthly = vars["monthlySaving"] else { return nil }
+            return monthly * 12
+        },
+        "refiTotalSaving": { vars in
+            guard let oldPay = vars["oldPayment"], let oldMonths = vars["remainingMonths"],
+                  let newPay = vars["newPayment"], let newMonths = vars["newTermMonths"] else { return nil }
+            return oldPay * oldMonths - newPay * newMonths
+        },
+        "newMonthlyInterest": { vars in
+            guard let balance = vars["loanBalance"],
+                  let rate = vars["newRate"] else { return nil }
+            return balance * rate / 100 / 12
+        },
+        "idrAnnualPayment": { vars in
+            guard let discretionary = vars["discretionaryIncome"],
+                  let pct = vars["idrPercent"] else { return nil }
+            return discretionary * pct / 100
+        },
+        "monthlyFromAnnual": { vars in
+            guard let annual = vars["annualPayment"] else { return nil }
+            return annual / 12
+        },
+        "idrMonthlyFromIncome": { vars in
+            guard let income = vars["annualIncome"],
+                  let poverty = vars["povertyLine"],
+                  let pct = vars["idrPercent"] else { return nil }
+            let discretionary = income - poverty * 1.5
+            return discretionary * pct / 100 / 12
+        },
+        "annualPaymentDifference": { vars in
+            guard let standard = vars["standardPayment"],
+                  let idr = vars["idrPayment"] else { return nil }
+            return (standard - idr) * 12
+        },
+        "idrVsStandardDifference": { vars in
+            guard let standardTotal = vars["standardTotal"],
+                  let idrTotal = vars["idrTotal"] else { return nil }
+            return abs(standardTotal - idrTotal)
+        },
+        "pslfTotalPaid": { vars in
+            guard let payment = vars["monthlyPayment"] ?? vars["idrPayment"] ?? vars["pslfPayment"] else { return nil }
+            return payment * 120
+        },
+        "pslfForgiveness": { vars in
+            guard let balance = vars["loanBalance"] else { return nil }
+            let payment = vars["idrPayment"] ?? vars["monthlyPayment"]
+            let totalPaid = vars["totalPaid"]
+            if let p = payment {
+                return balance - p * 120
+            }
+            if let t = totalPaid {
+                return balance - t
+            }
+            return nil
+        },
+        "pslfSavings": { vars in
+            guard let standardTotal = vars["standardTotal"],
+                  let idr = vars["idrPayment"] else { return nil }
+            return standardTotal - idr * 120
+        },
+        "refiVsPslfDifference": { vars in
+            guard let refiPay = vars["refiPayment"],
+                  let refiMonths = vars["refiMonths"],
+                  let pslfPay = vars["pslfPayment"] else { return nil }
+            return abs(refiPay * refiMonths - pslfPay * 120)
         },
     ]
 

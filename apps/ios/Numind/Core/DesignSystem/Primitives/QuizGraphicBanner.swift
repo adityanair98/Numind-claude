@@ -92,7 +92,12 @@ struct QuizGraphicBanner: View {
             QuizGraphicBanner(theme: .paycheck)
             QuizGraphicBanner(theme: .investing)
             QuizGraphicBanner(theme: .quickMath)
-            QuizGraphicBanner(theme: .estimation)
+            QuizGraphicBanner(theme: .debt)
+            QuizGraphicBanner(theme: .housing)
+            QuizGraphicBanner(theme: .taxes)
+            QuizGraphicBanner(theme: .insurance)
+            QuizGraphicBanner(theme: .carBuying)
+            QuizGraphicBanner(theme: .studentLoans)
         }
         .padding()
     }

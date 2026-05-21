@@ -137,20 +137,26 @@ struct DiagnosticResultsView: View {
 
     private var topicRows: [TopicRowData] {
         let colorMap: [String: Color] = [
-            "tips": Theme.Colors.mindTeal,
-            "discounts": Theme.Colors.primaryBlue,
+            "smart_shopping": Theme.Colors.primaryBlue,
             "salary": Theme.Colors.warmOrange,
             "investing": Theme.Colors.investIndigo,
-            "estimation": Theme.Colors.growthGreen,
             "debt": Theme.Colors.debtCoral,
+            "housing": Theme.Colors.housingRose,
+            "taxes": Theme.Colors.taxSlate,
+            "insurance": Theme.Colors.insurancePurple,
+            "car": Theme.Colors.mindTeal,
+            "student_loans": Theme.Colors.warmOrange,
         ]
         let nameMap: [String: String] = [
-            "tips": "Tipping & %",
-            "discounts": "Shopping & discounts",
+            "smart_shopping": "Tips & smart shopping",
             "salary": "Salary & income",
             "investing": "Returns & investing",
-            "estimation": "Splitting & estimation",
             "debt": "Debt & interest",
+            "housing": "Housing & rent",
+            "taxes": "Taxes & paycheck",
+            "insurance": "Insurance & healthcare",
+            "car": "Car buying & big purchases",
+            "student_loans": "Student loans & education",
         ]
 
         return viewModel.signals.topicInterests.sorted().compactMap { topicId in
