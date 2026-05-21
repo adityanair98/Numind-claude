@@ -311,7 +311,7 @@ struct SessionSummaryView: View {
                     Text("Lesson mastered!")
                         .font(Theme.Typography.headline)
                         .foregroundStyle(Theme.Colors.deepNavy)
-                    Text("Next lesson unlocked")
+                    Text("You earned the gold star!")
                         .font(Theme.Typography.small)
                         .foregroundStyle(Theme.Colors.mutedText)
                 }

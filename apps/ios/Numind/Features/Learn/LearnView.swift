@@ -523,7 +523,7 @@ struct LearnView: View {
     private func nodeSubtitle(for node: LearnViewModel.PathNode) -> String {
         switch node.state {
         case .mastered:  return "Mastered \u{2713}"
-        case .attempted: return "Retry \u{2014} need 75%"
+        case .attempted: return "Retry for \u{2B50}"
         case .current:   return ""
         case .available: return "Available"
         case .locked:    return "Locked"
