@@ -584,6 +584,17 @@ enum FormulaOperationMap {
                     .multiply(a: ppoPrem, by: 12), .multiply(a: ppoCopay, by: visits),
                     .subtract(b: min(hdhpTotal, ppoTotal), from: max(hdhpTotal, ppoTotal))]
 
+        case "insurancePlanCompare":
+            guard let premA = variables["premiumA"],
+                  let dedA = variables["deductibleA"],
+                  let premB = variables["premiumB"],
+                  let dedB = variables["deductibleB"] else { return [] }
+            let totalA = premA * 12 + dedA
+            let totalB = premB * 12 + dedB
+            return [.multiply(a: premA, by: 12), .add(a: premA * 12, b: dedA),
+                    .multiply(a: premB, by: 12), .add(a: premB * 12, b: dedB),
+                    .subtract(b: min(totalA, totalB), from: max(totalA, totalB))]
+
         case "coinsuranceCost":
             let bill = variables["billAmount"] ?? variables["totalBill"] ?? 0
             guard let pct = variables["coinsurancePercent"] else { return [] }

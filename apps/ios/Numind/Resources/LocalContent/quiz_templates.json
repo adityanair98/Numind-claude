@@ -6794,7 +6794,7 @@
         ]
       }
     ],
-    "answerFormula": "planCostDifference",
+    "answerFormula": "insurancePlanCompare",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Plan A total = (${{premiumA}} × 12) + ${{deductibleA}}. Plan B total = (${{premiumB}} × 12) + ${{deductibleB}}. The cheaper plan depends on how much medical care you actually use."
@@ -8114,6 +8114,12 @@
           30000,
           32000,
           35000
+        ]
+      },
+      {
+        "name": "downPercent",
+        "options": [
+          20
         ]
       }
     ],

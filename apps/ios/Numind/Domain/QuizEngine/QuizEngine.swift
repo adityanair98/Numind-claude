@@ -579,6 +579,15 @@ struct QuizEngine {
             let ppoTotal = ppoPrem * 12 + ppoCopay * visits
             return abs(hdhpTotal - ppoTotal)
         },
+        "insurancePlanCompare": { vars in
+            guard let premA = vars["premiumA"],
+                  let dedA = vars["deductibleA"],
+                  let premB = vars["premiumB"],
+                  let dedB = vars["deductibleB"] else { return nil }
+            let totalA = premA * 12 + dedA
+            let totalB = premB * 12 + dedB
+            return abs(totalA - totalB)
+        },
         "coinsuranceCost": { vars in
             guard let bill = vars["billAmount"] ?? vars["totalBill"],
                   let pct = vars["coinsurancePercent"] else { return nil }
