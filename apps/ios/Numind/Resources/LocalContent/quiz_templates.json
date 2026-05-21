@@ -176,7 +176,7 @@
   {
     "id": "tip_bill_total",
     "moduleId": "smart_shopping",
-    "difficulty": 2,
+    "difficulty": 3,
     "scenarioTemplate": "You're settling the check after lunch with a friend.",
     "promptTemplate": "The check is ${{billAmount}}. What's the total after a {{tipPercent}}% tip?",
     "variableRules": [
@@ -206,7 +206,7 @@
   {
     "id": "tip_split_tip",
     "moduleId": "smart_shopping",
-    "difficulty": 2,
+    "difficulty": 3,
     "scenarioTemplate": "Your group of {{numPeople}} just finished dinner and agreed to split the bill equally.",
     "promptTemplate": "A ${{billAmount}} bill is split evenly among {{numPeople}} people. Each person's share of the {{tipPercent}}% tip is?",
     "variableRules": [
@@ -506,7 +506,7 @@
   {
     "id": "discount_sale_price",
     "moduleId": "smart_shopping",
-    "difficulty": 2,
+    "difficulty": 3,
     "scenarioTemplate": "A jacket you've been eyeing is finally on sale for {{discountPercent}}% off.",
     "promptTemplate": "An item originally costs ${{originalPrice}}. It's {{discountPercent}}% off. What's the sale price?",
     "variableRules": [
@@ -576,7 +576,7 @@
   {
     "id": "budget_after_purchase",
     "moduleId": "money_math",
-    "difficulty": 2,
+    "difficulty": 3,
     "promptTemplate": "You have ${{budget}}. You buy {{quantity}} items at ${{itemPrice}} each. How much is left?",
     "variableRules": [
       {
@@ -705,7 +705,7 @@
   {
     "id": "cost_per_use_scenario",
     "moduleId": "money_math",
-    "difficulty": 2,
+    "difficulty": 3,
     "promptTemplate": "A gym membership costs ${{itemPrice}} for the year. You realistically go {{numberOfUses}} times. What's your cost per session?",
     "variableRules": [
       {
@@ -779,7 +779,7 @@
   {
     "id": "price_with_tax",
     "moduleId": "money_math",
-    "difficulty": 2,
+    "difficulty": 3,
     "promptTemplate": "You buy a ${{originalPrice}} item. With {{taxPercent}}% sales tax, what's the total?",
     "variableRules": [
       {
@@ -995,7 +995,7 @@
   {
     "id": "overtime_pay_calc",
     "moduleId": "salary",
-    "difficulty": 2,
+    "difficulty": 3,
     "scenarioTemplate": "Your boss asks if you can work extra hours this week. You want to know what that's worth.",
     "promptTemplate": "Your regular pay is ${{regularRate}}/hr. You work {{overtimeHours}} hours of overtime this week. How much is your overtime pay?",
     "variableRules": [
@@ -1028,24 +1028,34 @@
   {
     "id": "biweekly_to_annual",
     "moduleId": "salary",
-    "difficulty": 2,
-    "promptTemplate": "You're paid ${{biweeklySalary}} every two weeks (bi-weekly). What's your annual salary?",
+    "difficulty": 3,
+    "promptTemplate": "Job A pays ${{weeklyPay}} weekly. Job B pays ${{biweeklyPay}} biweekly. How much more per year does the higher-paying job earn?",
     "variableRules": [
       {
-        "name": "biweeklySalary",
+        "name": "weeklyPay",
         "options": [
+          900,
           1000,
-          1500,
-          2000,
+          1100,
+          1200,
+          1300
+        ]
+      },
+      {
+        "name": "biweeklyPay",
+        "options": [
+          1900,
+          2100,
+          2300,
           2500,
-          3000
+          2700
         ]
       }
     ],
-    "answerFormula": "biweeklyToAnnual",
+    "answerFormula": "payPeriodDifference",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Bi-weekly × 26 pay periods = annual. ${{biweeklySalary}} × 26 = annual salary. There are 26 bi-weekly periods in a year, not 24."
+    "explanationTemplate": "Job A annual = ${{weeklyPay}} × 52. Job B annual = ${{biweeklyPay}} × 26. The difference is the gap. Weekly has 52 pay periods, biweekly has 26."
   },
   {
     "id": "weekly_to_annual",
@@ -1178,7 +1188,7 @@
   {
     "id": "roi_percent_calc",
     "moduleId": "investing",
-    "difficulty": 2,
+    "difficulty": 3,
     "promptTemplate": "You invested ${{cost}} and made a profit of ${{gain}}. What's your return on investment (ROI)?",
     "variableRules": [
       {
@@ -1260,36 +1270,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "20% tip = bill ÷ 5. ${{billAmount}} ÷ 5 = your tip. Or move the decimal (10%) then double it."
-  },
-  {
-    "id": "tip_taxi_d1",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "promptTemplate": "Your taxi ride costs ${{billAmount}}. You tip {{tipPercent}}%. How much is the tip?",
-    "variableRules": [
-      {
-        "name": "billAmount",
-        "options": [
-          10,
-          15,
-          20,
-          25,
-          30,
-          40
-        ]
-      },
-      {
-        "name": "tipPercent",
-        "options": [
-          15,
-          20
-        ]
-      }
-    ],
-    "answerFormula": "tipAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tip = bill × tip% ÷ 100. ${{billAmount}} × {{tipPercent}}% = your tip. For {{tipPercent}}%: find 10% first, then adjust."
   },
   {
     "id": "tip_hair_salon_d2",
@@ -1537,7 +1517,7 @@
   {
     "id": "tip_total_25_d2",
     "moduleId": "smart_shopping",
-    "difficulty": 2,
+    "difficulty": 3,
     "promptTemplate": "Your spa service costs ${{billAmount}}. You leave a 25% tip. What is the total bill?",
     "variableRules": [
       {
@@ -1890,7 +1870,7 @@
   {
     "id": "discount_online_d2",
     "moduleId": "smart_shopping",
-    "difficulty": 2,
+    "difficulty": 3,
     "scenarioTemplate": "You find a ${{originalPrice}} item online with a promo code for {{discountPercent}}% off.",
     "promptTemplate": "What is the price after the discount?",
     "variableRules": [
@@ -1923,7 +1903,7 @@
   {
     "id": "unit_price_grocery_d2",
     "moduleId": "smart_shopping",
-    "difficulty": 2,
+    "difficulty": 3,
     "promptTemplate": "A {{quantity}}-pack of yogurt costs ${{totalPrice}}. What is the price per cup?",
     "variableRules": [
       {
@@ -1952,7 +1932,7 @@
   {
     "id": "unit_price_oz_d2",
     "moduleId": "smart_shopping",
-    "difficulty": 2,
+    "difficulty": 3,
     "promptTemplate": "A {{quantity}}-oz bottle of shampoo costs ${{totalPrice}}. What is the cost per ounce?",
     "variableRules": [
       {
@@ -2202,7 +2182,7 @@
   {
     "id": "price_tax_scenario_d2",
     "moduleId": "money_math",
-    "difficulty": 2,
+    "difficulty": 3,
     "scenarioTemplate": "You're buying a ${{originalPrice}} item. The cashier will add {{taxPercent}}% sales tax.",
     "promptTemplate": "What total will appear on the receipt?",
     "variableRules": [
@@ -2341,14 +2321,12 @@
   {
     "id": "subscription_compare_d2",
     "moduleId": "money_math",
-    "difficulty": 2,
-    "scenarioTemplate": "A service costs ${{monthlyPrice}}/month. They also offer an annual plan.",
-    "promptTemplate": "How much does the monthly plan cost per year?",
+    "difficulty": 3,
+    "promptTemplate": "A streaming service charges ${{monthlyPrice}}/month or ${{annualPrice}}/year. How much do you save per year by choosing the annual plan?",
     "variableRules": [
       {
         "name": "monthlyPrice",
         "options": [
-          8,
           10,
           12,
           15,
@@ -2356,12 +2334,23 @@
           18,
           20
         ]
+      },
+      {
+        "name": "annualPrice",
+        "options": [
+          99,
+          109,
+          129,
+          149,
+          169,
+          199
+        ]
       }
     ],
-    "answerFormula": "monthlyToYearly",
+    "answerFormula": "annualPlanSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual cost = monthly × 12. ${{monthlyPrice}} × 12 = what you pay per year. Compare this to any annual plan discount."
+    "explanationTemplate": "Monthly plan per year = ${{monthlyPrice}} × 12. Annual plan = ${{annualPrice}}. Saving = monthly annual cost − annual price. Always compare before auto-renewing monthly."
   },
   {
     "id": "yearly_cost_d1",
@@ -2526,31 +2515,6 @@
     "explanationTemplate": "Annual ≈ hourly × 2,000. ${{hourlyRate}} × 2,000 = approximate yearly salary. The 2,000 comes from 40 hours × 50 weeks."
   },
   {
-    "id": "salary_hourly_annual_d2",
-    "moduleId": "salary",
-    "difficulty": 2,
-    "scenarioTemplate": "A job posting lists the pay as ${{hourlyRate}}/hour. You'd work full time.",
-    "promptTemplate": "What is the approximate annual salary?",
-    "variableRules": [
-      {
-        "name": "hourlyRate",
-        "options": [
-          17,
-          19,
-          21,
-          24,
-          27,
-          32,
-          38
-        ]
-      }
-    ],
-    "answerFormula": "annualFromHourly",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual ≈ hourly × 2,000. ${{hourlyRate}}/hr × 2,000 hours = yearly total. Always convert hourly rates before comparing job offers."
-  },
-  {
     "id": "salary_annual_hourly_d2",
     "moduleId": "salary",
     "difficulty": 2,
@@ -2573,33 +2537,9 @@
     "explanationTemplate": "Hourly ≈ annual ÷ 2,000. ${{annualSalary}} ÷ 2,000 = hourly equivalent. Use this to compare salary offers with contract or hourly jobs."
   },
   {
-    "id": "salary_annual_hourly_d3",
-    "moduleId": "salary",
-    "difficulty": 3,
-    "scenarioTemplate": "You're offered a ${{annualSalary}}/year salary position.",
-    "promptTemplate": "What is your approximate hourly rate based on a 2,000-hour work year?",
-    "variableRules": [
-      {
-        "name": "annualSalary",
-        "options": [
-          45000,
-          55000,
-          65000,
-          75000,
-          90000,
-          110000
-        ]
-      }
-    ],
-    "answerFormula": "hourlyFromAnnual",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Hourly = salary ÷ 2,000. Knowing your effective hourly rate helps you evaluate overtime, consulting side work, and job switches."
-  },
-  {
     "id": "net_pay_biweekly_d2",
     "moduleId": "salary",
-    "difficulty": 2,
+    "difficulty": 3,
     "promptTemplate": "Your biweekly gross paycheck is ${{grossPay}}. After a {{deductionPercent}}% deduction, what is your net pay?",
     "variableRules": [
       {
@@ -3411,7 +3351,7 @@
   {
     "id": "simple_interest_d2",
     "moduleId": "investing",
-    "difficulty": 2,
+    "difficulty": 3,
     "scenarioTemplate": "You lend ${{principal}} to a friend at {{interestRate}}% simple interest per year.",
     "promptTemplate": "How much interest do you earn after {{years}} years?",
     "variableRules": [
@@ -3627,164 +3567,6 @@
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "ROI% = profit ÷ cost × 100. ${{gain}} ÷ ${{cost}} × 100 = your percentage return."
-  },
-  {
-    "id": "dollar_return_d1",
-    "moduleId": "investing",
-    "difficulty": 1,
-    "promptTemplate": "You invest ${{cost}} expecting a {{roiPercent}}% return. How much profit do you make?",
-    "variableRules": [
-      {
-        "name": "cost",
-        "options": [
-          100,
-          200,
-          500,
-          1000
-        ]
-      },
-      {
-        "name": "roiPercent",
-        "options": [
-          5,
-          8,
-          10,
-          12
-        ]
-      }
-    ],
-    "answerFormula": "dollarReturn",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Dollar return = investment × ROI%. ${{cost}} × {{roiPercent}}% = profit in dollars."
-  },
-  {
-    "id": "dollar_return_d2",
-    "moduleId": "investing",
-    "difficulty": 2,
-    "scenarioTemplate": "Your portfolio is worth ${{cost}}. It earns a {{roiPercent}}% return this year.",
-    "promptTemplate": "How much does your portfolio grow in dollar terms?",
-    "variableRules": [
-      {
-        "name": "cost",
-        "options": [
-          5000,
-          10000,
-          15000,
-          20000
-        ]
-      },
-      {
-        "name": "roiPercent",
-        "options": [
-          5,
-          7,
-          8,
-          10,
-          12
-        ]
-      }
-    ],
-    "answerFormula": "dollarReturn",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Growth = portfolio × return%. ${{cost}} × {{roiPercent}}% = dollar gain this year."
-  },
-  {
-    "id": "monthly_return_d2",
-    "moduleId": "investing",
-    "difficulty": 2,
-    "promptTemplate": "You have ${{principal}} in a bond earning {{interestRate}}% annual interest. How much interest do you earn each month?",
-    "variableRules": [
-      {
-        "name": "principal",
-        "options": [
-          6000,
-          12000,
-          24000,
-          36000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          4,
-          5,
-          6,
-          8
-        ]
-      }
-    ],
-    "answerFormula": "monthlyInvestmentReturn",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly interest = principal × annual rate ÷ 12. ${{principal}} × {{interestRate}}% ÷ 12 = monthly income."
-  },
-  {
-    "id": "monthly_return_d3",
-    "moduleId": "investing",
-    "difficulty": 3,
-    "scenarioTemplate": "You invest ${{principal}} in a high-yield savings account at {{interestRate}}% APY.",
-    "promptTemplate": "Approximately how much interest does it generate each month?",
-    "variableRules": [
-      {
-        "name": "principal",
-        "options": [
-          10000,
-          20000,
-          30000,
-          50000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          4,
-          5,
-          6
-        ]
-      }
-    ],
-    "answerFormula": "monthlyInvestmentReturn",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly = principal × rate ÷ 12. ${{principal}} × {{interestRate}}% ÷ 12 = monthly interest. This compounds over time."
-  },
-  {
-    "id": "bond_simple_d2",
-    "moduleId": "investing",
-    "difficulty": 2,
-    "scenarioTemplate": "You buy a ${{principal}} government bond with a {{interestRate}}% annual coupon.",
-    "promptTemplate": "How much interest do you receive in {{years}} year(s)?",
-    "variableRules": [
-      {
-        "name": "principal",
-        "options": [
-          1000,
-          5000,
-          10000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          3,
-          4,
-          5
-        ]
-      },
-      {
-        "name": "years",
-        "options": [
-          1,
-          2
-        ]
-      }
-    ],
-    "answerFormula": "simpleInterest",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Bond interest = face value × coupon rate × years. ${{principal}} × {{interestRate}}% × {{years}} = interest paid."
   },
   {
     "id": "portfolio_gain_d2",
@@ -4094,7 +3876,7 @@
   {
     "id": "cc_new_balance_d2",
     "moduleId": "debt",
-    "difficulty": 2,
+    "difficulty": 3,
     "scenarioTemplate": "You carry a balance and make no payment this month.",
     "promptTemplate": "Your balance is ${{balance}} at {{apr}}% APR. After one month with no payment, what is your new balance?",
     "variableRules": [

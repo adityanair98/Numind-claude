@@ -28,7 +28,7 @@
 ## Content
 - **10 modules**: Smart Shopping, Budgets & Spending, Salary, Investing, Debt, Housing & Rent, Taxes & Paycheck, Insurance & Healthcare, Car & Big Purchases, Student Loans & Education
 - **56 lessons** across all modules
-- **283 quiz templates** (~5 per lesson)
+- **275 quiz templates** (~5 per lesson)
 - **27 badges** across 7 categories
 
 ## Quiz System

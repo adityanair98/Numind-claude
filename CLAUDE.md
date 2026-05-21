@@ -35,7 +35,7 @@ Brand motifs:
 The core product loop is built:
 Home → Module → Lesson → Quiz → Feedback → Progress.
 
-Current phase: retention mechanics (streak freezes built, notifications pending), onboarding conversion funnel, and paywall integration. The core app has 10 modules, 56 lessons, 283 quiz templates with completion-based progression and adaptive difficulty. What remains is the "ship it" layer (legal, accessibility, analytics) and the monetization layer (onboarding funnel, RevenueCat paywall).
+Current phase: retention mechanics (streak freezes built, notifications pending), onboarding conversion funnel, and paywall integration. The core app has 10 modules, 56 lessons, 275 quiz templates with completion-based progression and adaptive difficulty. What remains is the "ship it" layer (legal, accessibility, analytics) and the monetization layer (onboarding funnel, RevenueCat paywall).
 
 ## Stack
 - SwiftUI

@@ -175,6 +175,11 @@ struct QuizEngine {
             guard let monthly = vars["monthlyPrice"] else { return nil }
             return monthly * 12
         },
+        "annualPlanSaving": { vars in
+            guard let monthly = vars["monthlyPrice"],
+                  let annual = vars["annualPrice"] else { return nil }
+            return monthly * 12 - annual
+        },
         "yearlyToMonthly": { vars in
             guard let yearly = vars["yearlyPrice"] else { return nil }
             return yearly / 12
@@ -235,6 +240,11 @@ struct QuizEngine {
         "weeklyToAnnual": { vars in
             guard let weekly = vars["weeklySalary"] else { return nil }
             return weekly * 52
+        },
+        "payPeriodDifference": { vars in
+            guard let weekly = vars["weeklyPay"],
+                  let biweekly = vars["biweeklyPay"] else { return nil }
+            return abs(weekly * 52 - biweekly * 26)
         },
         // Investing Basics
         "simpleInterest": { vars in

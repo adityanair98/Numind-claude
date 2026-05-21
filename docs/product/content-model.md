@@ -9,7 +9,7 @@ All content is stored locally as JSON in `Resources/LocalContent/`. No backend r
 |---|---|---|
 | `modules.json` | Module definitions (id, title, icon, color) | 10 |
 | `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 56 |
-| `quiz_templates.json` | Quiz question templates | 283 |
+| `quiz_templates.json` | Quiz question templates | 275 |
 
 ## Module
 A group of lessons covering a topic area.

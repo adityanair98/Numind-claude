@@ -144,6 +144,11 @@ enum FormulaOperationMap {
             guard let monthly = variables["monthlyPrice"] else { return [] }
             return [.multiply(a: monthly, by: 12)]
 
+        case "annualPlanSaving":
+            guard let monthly = variables["monthlyPrice"],
+                  let annual = variables["annualPrice"] else { return [] }
+            return [.multiply(a: monthly, by: 12), .subtract(b: annual, from: monthly * 12)]
+
         case "yearlyToMonthly":
             guard let yearly = variables["yearlyPrice"] else { return [] }
             return [.divide(a: yearly, by: 12)]
@@ -258,6 +263,12 @@ enum FormulaOperationMap {
         case "weeklyToAnnual":
             guard let weekly = variables["weeklySalary"] else { return [] }
             return [.multiply(a: weekly, by: 52)]
+
+        case "payPeriodDifference":
+            guard let weekly = variables["weeklyPay"],
+                  let biweekly = variables["biweeklyPay"] else { return [] }
+            return [.multiply(a: weekly, by: 52), .multiply(a: biweekly, by: 26),
+                    .subtract(b: min(weekly * 52, biweekly * 26), from: max(weekly * 52, biweekly * 26))]
 
         // MARK: - Investing
 
