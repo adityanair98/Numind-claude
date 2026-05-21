@@ -1,6 +1,6 @@
 # Web Architecture
 
-> **Last updated:** May 2026 (initial build — 6 calculators, programmatic SEO, animations, inline shortcut teaser).
+> **Last updated:** May 2026 (9 calculators, programmatic SEO, animations, inline shortcut teaser).
 
 ## Purpose
 The website exists solely for acquisition: drive App Store downloads through SEO-optimized calculator tools. People search "paycheck calculator" or "how much is $25 an hour" -> land on our tool -> get the answer + see the mental math shortcut -> download the app.
@@ -14,10 +14,10 @@ The website exists solely for acquisition: drive App Store downloads through SEO
 - **No runtime dependencies** beyond Next.js + Tailwind + Lucide
 
 ## Page Count
-106 statically generated pages:
+109 statically generated pages:
 - 1 landing page (`/`)
 - 1 tools directory (`/tools`)
-- 6 calculator pages (`/tools/{slug}`)
+- 9 calculator pages (`/tools/{slug}`)
 - 51 state paycheck pages (`/tools/paycheck-calculator/{state}`)
 - 40 salary amount pages (`/tools/salary-calculator/{slug}`)
 - 2 legal pages (`/privacy`, `/terms`)

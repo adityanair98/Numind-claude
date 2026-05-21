@@ -71,3 +71,39 @@ export const loanShortcut: ShortcutContent = {
   example:
     "$10,000 loan at $300/month for 40 months: total paid = $12,000. Interest = $2,000.",
 };
+
+export const insuranceShortcut: ShortcutContent = {
+  title: "The Worst-Case-Year Test",
+  teaser: "Premiums x 12 + deductible = your worst year. Compare that number across plans.",
+  steps: [
+    "Multiply monthly premium by 12 to get annual premium cost.",
+    "Add the full deductible — that is your worst-case year if you hit the deductible.",
+    "For the true ceiling, use: premiums x 12 + out-of-pocket max. That is the absolute most you will pay.",
+  ],
+  example:
+    "$350/mo premium + $2,000 deductible: $350 x 12 = $4,200 + $2,000 = $6,200 worst case. Compare to a $200/mo plan with $5,000 deductible: $2,400 + $5,000 = $7,400.",
+};
+
+export const carShortcut: ShortcutContent = {
+  title: "The 20/4/10 Rule",
+  teaser: "20% down, 4-year loan max, payment under 10% of monthly income.",
+  steps: [
+    "Put at least 20% down to avoid being underwater on the loan.",
+    "Finance for no more than 4 years (48 months) — longer loans cost thousands more in interest.",
+    "Keep the monthly payment under 10% of your gross monthly income.",
+  ],
+  example:
+    "$5,000/month income: max payment = $500. At 48 months that is $24,000 financed + 20% down = $30,000 max car price.",
+};
+
+export const studentLoanShortcut: ShortcutContent = {
+  title: "The $100 per $10K Rule",
+  teaser: "Roughly $100/month per $10,000 borrowed on a standard 10-year plan.",
+  steps: [
+    "For a quick estimate: divide your balance by $10,000, multiply by roughly $100-$120.",
+    "Total cost = monthly payment x 120 months. Subtract the balance to see total interest.",
+    "PSLF: if you qualify, total paid = IDR payment x 120. The rest is forgiven tax-free.",
+  ],
+  example:
+    "$35,000 in loans: ~$350-$420/month on a 10-year plan. Over 10 years, you pay ~$42,000-$50,400 total, meaning $7,000-$15,400 in interest.",
+};

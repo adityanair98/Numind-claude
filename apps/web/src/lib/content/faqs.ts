@@ -152,3 +152,82 @@ export const loanFAQs: FAQ[] = [
       "Generally, pay off high-interest debt first (credit cards at 15-25%). If your debt rate is below 6-7%, investing may earn more over time. Always make minimum payments on all debts regardless.",
   },
 ];
+
+export const insuranceFAQs: FAQ[] = [
+  {
+    question: "What is the difference between a deductible and a premium?",
+    answer:
+      "Your premium is the monthly amount you pay for insurance regardless of whether you use it. Your deductible is the amount you pay out of pocket before insurance starts covering costs. Lower premiums usually mean higher deductibles, and vice versa.",
+  },
+  {
+    question: "What is coinsurance and how does it work?",
+    answer:
+      "After you meet your deductible, coinsurance is the percentage of costs you share with your insurer. If your coinsurance is 20%, you pay 20% and the insurer pays 80% until you hit your out-of-pocket maximum.",
+  },
+  {
+    question: "What is an out-of-pocket maximum?",
+    answer:
+      "The out-of-pocket maximum is the most you will pay for covered services in a plan year. Once you reach this amount through deductibles, copays, and coinsurance, your plan covers 100% of covered costs for the rest of the year.",
+  },
+  {
+    question: "Is an HDHP or PPO better for me?",
+    answer:
+      "HDHPs have lower premiums but higher deductibles. They work best for healthy people who rarely visit the doctor and want to use an HSA for tax savings. PPOs cost more monthly but cover more per visit, which is better if you have regular medical needs.",
+  },
+  {
+    question: "What is an HSA and why is it valuable?",
+    answer:
+      "A Health Savings Account (HSA) is available with HDHPs. Contributions are tax-deductible, growth is tax-free, and withdrawals for medical expenses are tax-free. It is the only account with a triple tax advantage.",
+  },
+];
+
+export const carFAQs: FAQ[] = [
+  {
+    question: "What is the 20/4/10 rule for buying a car?",
+    answer:
+      "The 20/4/10 rule recommends putting at least 20% down, financing for no more than 4 years, and keeping total car costs (payment plus insurance) under 10% of your gross monthly income.",
+  },
+  {
+    question: "How much does a car depreciate in the first year?",
+    answer:
+      "New cars typically lose 15-25% of their value in the first year. After 5 years, most cars are worth about 40% of their original price. Buying a 2-3 year old car lets someone else absorb the steepest depreciation.",
+  },
+  {
+    question: "Is a longer car loan a bad idea?",
+    answer:
+      "Longer loans (72-84 months) have lower monthly payments but cost significantly more in total interest. A 72-month loan can cost $2,000-$5,000 more in interest than a 48-month loan on the same car. You also risk owing more than the car is worth.",
+  },
+  {
+    question: "How much should I put down on a car?",
+    answer:
+      "Aim for at least 20% down to avoid being upside-down on the loan, where you owe more than the car is worth. A larger down payment also reduces your loan amount, which means less interest paid over time.",
+  },
+];
+
+export const studentLoanFAQs: FAQ[] = [
+  {
+    question: "What is income-driven repayment (IDR)?",
+    answer:
+      "IDR plans cap your monthly payment at a percentage (usually 10-20%) of your discretionary income. After 20-25 years, any remaining balance is forgiven, though the forgiven amount may be taxable income.",
+  },
+  {
+    question: "What is Public Service Loan Forgiveness (PSLF)?",
+    answer:
+      "PSLF forgives your remaining federal student loan balance after 120 qualifying payments (10 years) while working full-time for a qualifying employer like government or nonprofits. The forgiven amount is tax-free.",
+  },
+  {
+    question: "Should I refinance my student loans?",
+    answer:
+      "Refinancing can lower your interest rate, but you lose federal protections like IDR, PSLF, and forbearance. It makes sense if you have a stable income, good credit, and do not need federal loan benefits.",
+  },
+  {
+    question: "How much does a $30,000 student loan cost in total?",
+    answer:
+      "On a standard 10-year plan at 5% interest, a $30,000 loan costs about $38,184 total with $318/month payments. On a 20-year extended plan, the total rises to about $47,500 even though the monthly payment drops to $198.",
+  },
+  {
+    question: "What is the $100 per $10K rule?",
+    answer:
+      "A quick estimate for student loan payments on a standard 10-year plan: you will pay roughly $100-$120 per month for every $10,000 borrowed. So $40,000 in loans means roughly $400-$480 per month.",
+  },
+];

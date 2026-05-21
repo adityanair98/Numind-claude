@@ -5,6 +5,9 @@ import {
   TrendingUp,
   Tag,
   Landmark,
+  Shield,
+  Car,
+  GraduationCap,
   type LucideProps,
 } from "lucide-react";
 import type { CalculatorIconName } from "@/lib/content/calculators";
@@ -16,6 +19,9 @@ const iconMap: Record<CalculatorIconName, React.FC<LucideProps>> = {
   "trending-up": TrendingUp,
   tag: Tag,
   landmark: Landmark,
+  shield: Shield,
+  car: Car,
+  "graduation-cap": GraduationCap,
 };
 
 interface CalculatorIconProps {

@@ -43,7 +43,7 @@ const howItWorks = [
   {
     Icon: Target,
     title: "Track your progress",
-    description: "Watch your number sense grow across 10 modules and 47 lessons.",
+    description: "Watch your number sense grow across 10 modules and 56 lessons.",
   },
 ];
 

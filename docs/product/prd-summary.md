@@ -52,14 +52,15 @@ They may feel slow or rusty with:
 2. **Discounts & Shopping** (discounts) - percentage off, BOGO, stacked discounts, unit pricing (5 lessons)
 3. **Budgets & Spending** (money_math) - budgeting, subscriptions, cost per use, sales tax, cart estimation (5 lessons)
 4. **Salary & Income** (salary) - net pay, raises, overtime, pay period conversion (4 lessons)
-5. **Investing Basics** (investing) - simple interest, Rule of 72, ROI (3 lessons)
-6. **Estimation & Shortcuts** (estimation) - rounding, percent change, doubling/halving, multiply by 5 (5 lessons)
-7. **Debt & Loans** (debt) - credit card interest, minimum payments, loans, DTI, extra payments (5 lessons)
-8. **Travel Money** (travel) - currency conversion, exchange fees, travel budgets, accommodation, insurance (5 lessons)
-9. **Housing & Rent** (housing) - rent affordability (28% rule), rent increases, move-in costs, price per sqft, mortgage vs rent (5 lessons)
-10. **Taxes & Paycheck** (taxes) - marginal tax brackets, paycheck deductions, gross-to-net, tax refund estimation, self-employment tax (5 lessons)
+5. **Investing Basics** (investing) - simple interest, Rule of 72, ROI, 401k match, Roth vs Traditional, compound growth (6 lessons)
+6. **Debt & Loans** (debt) - credit card interest, minimum payments, loans, DTI, extra payments (5 lessons)
+7. **Housing & Rent** (housing) - rent affordability (28% rule), rent increases, move-in costs, price per sqft, mortgage vs rent (5 lessons)
+8. **Taxes & Paycheck** (taxes) - marginal tax brackets, paycheck deductions, gross-to-net, tax refund estimation, self-employment tax (5 lessons)
+9. **Insurance & Healthcare** (insurance) - deductible vs premium, copays & coinsurance, OOP max, HDHP vs PPO, HSA advantage (5 lessons)
+10. **Car & Big Purchases** (car) - monthly vs total cost, loan terms, down payment, 20/4/10 rule, depreciation (5 lessons)
+11. **Student Loans & Education** (student_loans) - monthly payments, total cost, refinancing, IDR, PSLF (5 lessons)
 
-**Total: 47 lessons, 237 quiz templates**
+**Total: 56 lessons, 283 quiz templates**
 
 ## Core User Loop
 Home / Today
@@ -199,7 +200,7 @@ The website (`apps/web/`) is not the product. It supports acquisition through SE
 
 **Built and deployed:**
 - Landing page with 3D hero, animated counters, module showcase, and app CTA
-- 6 calculator tools: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan
+- 9 calculator tools: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan
 - 51 state-specific paycheck pages (programmatic SEO)
 - 40 salary amount pages (programmatic SEO, e.g. "$25/hr is $52,000/year")
 - Tools directory with staggered card grid
@@ -213,9 +214,9 @@ Currently implemented:
 - SwiftUI app shell with 4-tab navigation
 - Design tokens and theme system
 - Local content model with JSON-based lessons and templates
-- Template-driven quiz engine with 60+ answer formulas
-- All 10 modules with 47 lessons
-- 237 quiz templates (5 per lesson) with proportional distractor generation
+- Template-driven quiz engine with 120+ answer formulas
+- All 10 modules with 56 lessons
+- 283 quiz templates (5 per lesson) with proportional distractor generation
 - Completion-based progression (mastery = gold star, not gate)
 - Checkpoint review quizzes
 - Zigzag learning path

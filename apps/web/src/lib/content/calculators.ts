@@ -4,7 +4,10 @@ export type CalculatorIconName =
   | "home"
   | "trending-up"
   | "tag"
-  | "landmark";
+  | "landmark"
+  | "shield"
+  | "car"
+  | "graduation-cap";
 
 export interface CalculatorInfo {
   name: string;
@@ -55,5 +58,26 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Estimate total interest and repayment timeline for any loan.",
     icon: "landmark",
+  },
+  {
+    name: "Insurance Calculator",
+    slug: "insurance-calculator",
+    description:
+      "Compare health plan costs — premiums, deductibles, and out-of-pocket totals.",
+    icon: "shield",
+  },
+  {
+    name: "Car Calculator",
+    slug: "car-calculator",
+    description:
+      "Calculate true car cost with the 20/4/10 rule, down payment, and depreciation.",
+    icon: "car",
+  },
+  {
+    name: "Student Loan Calculator",
+    slug: "student-loan-calculator",
+    description:
+      "Compare repayment plans, refinancing savings, and PSLF forgiveness amounts.",
+    icon: "graduation-cap",
   },
 ];
