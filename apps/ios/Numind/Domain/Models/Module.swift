@@ -10,9 +10,15 @@ struct Module: Codable, Identifiable, Equatable {
     let mascot: String      // emoji mascot (e.g. "☕", "🏷️")
     let glyph: String       // math symbol watermark (e.g. "%", "÷", "$")
 
-    /// Short display name for radar chart labels and compact UI.
+    /// Short display name for radar chart labels, tab strips, and compact UI.
     var shortName: String {
-        let firstWord = title.split(separator: " ").first.map(String.init) ?? title
-        return firstWord.trimmingCharacters(in: .punctuationCharacters)
+        switch id {
+        case "smart_shopping": return "Shopping"
+        case "student_loans":  return "Loans"
+        case "money_math":     return "Budgets"
+        default:
+            let firstWord = title.split(separator: " ").first.map(String.init) ?? title
+            return firstWord.trimmingCharacters(in: .punctuationCharacters)
+        }
     }
 }

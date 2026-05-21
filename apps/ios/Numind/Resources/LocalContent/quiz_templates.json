@@ -7166,23 +7166,32 @@
     "id": "ins_hdhp_annual_d1",
     "moduleId": "insurance",
     "difficulty": 1,
-    "promptTemplate": "Your HDHP costs ${{monthlyPremium}} per month. What's the annual premium cost?",
+    "promptTemplate": "An HDHP charges ${{hdhpPremium}}/month. A PPO charges ${{ppoPremium}}/month. How much more per year does the PPO cost in premiums?",
     "variableRules": [
       {
-        "name": "monthlyPremium",
+        "name": "hdhpPremium",
         "options": [
           150,
           175,
           200,
-          225,
-          250
+          225
+        ]
+      },
+      {
+        "name": "ppoPremium",
+        "options": [
+          350,
+          400,
+          425,
+          450,
+          500
         ]
       }
     ],
-    "answerFormula": "insurancePremiumAnnual",
+    "answerFormula": "ppoPremiumExtra",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual premium = ${{monthlyPremium}} × 12. HDHPs have lower premiums but higher deductibles — you're betting on staying healthy."
+    "explanationTemplate": "PPO extra = (${{ppoPremium}} − ${{hdhpPremium}}) × 12. HDHPs save on premiums but have higher deductibles — the tradeoff depends on how much care you use."
   },
   {
     "id": "ins_ppo_annual_d1",
@@ -7383,23 +7392,32 @@
     "id": "ins_hsa_annual_d1",
     "moduleId": "insurance",
     "difficulty": 1,
-    "promptTemplate": "You put ${{monthlyHSA}} per month into your HSA. How much will you contribute this year?",
+    "promptTemplate": "A ${{expenseCost}} doctor visit paid with HSA funds. Your tax bracket is {{taxRate}}%. What's the real after-tax cost to you?",
     "variableRules": [
       {
-        "name": "monthlyHSA",
+        "name": "expenseCost",
         "options": [
-          150,
           200,
-          250,
           300,
-          350
+          500,
+          800,
+          1000
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          22,
+          24,
+          25,
+          30
         ]
       }
     ],
-    "answerFormula": "hsaAnnualContribution",
+    "answerFormula": "hsaEffectiveCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual HSA = ${{monthlyHSA}} × 12. HSA money is triple tax-advantaged: tax-free in, tax-free growth, tax-free out for medical expenses."
+    "explanationTemplate": "Effective cost = ${{expenseCost}} − (${{expenseCost}} × {{taxRate}}%). HSA money is pre-tax, so you save your tax rate on every dollar spent."
   },
   {
     "id": "ins_hsa_scenario_d2",
