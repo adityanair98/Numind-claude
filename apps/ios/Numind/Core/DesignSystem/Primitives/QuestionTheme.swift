@@ -195,31 +195,57 @@ enum QuestionTheme {
             return .paycheck
 
         // ── Investing & Growth ───────────────────────────────────────────────────
-        case "simple_interest_earned", "total_balance_with_interest",
-             "rule_of_72_years", "roi_percent_calc", "dollar_return_calc",
-             "simple_interest_d1", "simple_interest_d2",
-             "total_with_interest_d1", "total_with_interest_d2",
+        case "rule_of_72_years", "roi_percent_calc", "dollar_return_calc",
+             "total_with_interest_d2",
              "rule72_d1", "rule72_scenario_d2",
-             "roi_percent_d2", "roi_scenario_d2",
-             "dollar_return_d1", "dollar_return_d2",
-             "monthly_return_d2", "monthly_return_d3",
-             "bond_simple_d2", "portfolio_gain_d2", "investing_total_d3",
+             "roi_percent_d2", "portfolio_gain_d2", "investing_total_d3",
              "match_amount_d1", "total_with_match_d1",
              "match_scenario_d2", "match_percent_d2", "match_annual_d3",
              "roth_after_tax_d1", "traditional_tax_saved_d1",
-             "roth_scenario_d2", "traditional_scenario_d2", "roth_vs_trad_compare_d3",
+             "roth_scenario_d2", "traditional_scenario_d2",
              "compound_total_d1", "compound_interest_earned_d1",
-             "compound_10yr_d2", "compound_20yr_d2", "compound_compare_d3":
+             // Phase 3 reworks
+             "roi_compare_d3", "roth_growth_value_d3",
+             "compound_pct_interest_d2", "compound_early_vs_late_d3", "compound_backwards_d3",
+             // DCA
+             "dca_total_invested_d1", "dca_shares_bought_d1", "dca_avg_cost_d2",
+             "dca_vs_lump_sum_d3", "dca_consistency_d2",
+             // Fund fees
+             "fund_fee_annual_d1", "fund_fee_diff_d2", "fund_fee_compare_d1",
+             "fund_fee_decade_d3", "fund_fee_30yr_d3",
+             // Emergency fund
+             "ef_essentials_sum_d1", "ef_target_d1", "ef_runway_d2",
+             "ef_runway_after_cut_d3", "ef_months_to_target_d3",
+             // Rental yield
+             "yield_gross_d1", "yield_monthly_check_d1", "yield_compare_d2",
+             "yield_net_d3", "yield_decision_d3",
+             // On track
+             "on_track_multiple_d1", "on_track_target_d1", "on_track_gap_d2",
+             "on_track_close_gap_d3", "on_track_extra_save_d3":
             return .investing
 
         // ── Debt & Loans ─────────────────────────────────────────────────────────
         case "cc_monthly_interest", "cc_monthly_interest_scenario",
              "cc_annual_interest", "cc_interest_year_d3",
              "cc_minimum_payment", "cc_minimum_payment_scenario",
-             "loan_total_repayment", "loan_heavy_interest",
-             "loan_total_interest_paid",
+             "loan_total_repayment", "loan_total_interest_paid",
              "dti_ratio_basic", "dti_ratio_scenario", "dti_add_payments", "dti_housing_only",
-             "cc_extra_payment_saving", "cc_balance_after_interest":
+             "cc_extra_payment_saving",
+             "cc_rate_check_d1", "cc_min_balance_d1", "cc_new_balance_d2",
+             "cc_interest_check_d2", "loan_repayment_d1",
+             "cc_extra_d1", "cc_annual_cost_d2", "cc_balance_interest_d2",
+             // Phase 3 reworks
+             "loan_interest_tax_d3", "save_vs_borrow_d3",
+             "new_dti_with_payment_d3", "principal_reduction_d3",
+             // Avalanche/snowball
+             "debt_priority_d1", "avalanche_monthly_saving_d2",
+             "snowball_difference_d3", "debt_compare_rates_d2", "psychology_premium_d3",
+             // APR vs APY
+             "apr_apy_which_higher_d1", "monthly_rate_d1", "apy_from_apr_d2",
+             "apr_apy_compare_d3", "apy_yearly_cost_d3",
+             // BNPL
+             "bnpl_simple_d1", "bnpl_late_fee_d2", "bnpl_surcharge_pct_d3",
+             "bnpl_stacked_d3", "bnpl_annual_d2":
             return .debt
 
         // ── Housing & Rent ───────────────────────────────────────────────────────

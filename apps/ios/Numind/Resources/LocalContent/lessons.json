@@ -330,21 +330,6 @@
     ]
   },
   {
-    "id": "simple_interest",
-    "moduleId": "investing",
-    "title": "Simple interest \u2014 the baseline",
-    "concept": "Simple interest is the most transparent form of interest: you earn the same amount each period on the original principal. No compounding, no surprises. It's used in short-term loans, bonds, and savings accounts as a reference point.",
-    "shortcut": "Interest = Principal \u00d7 Rate \u00d7 Time. $1,000 at 5%/year for 3 years = $1,000 \u00d7 0.05 \u00d7 3 = $150 total interest. Total balance = $1,150. The formula never changes \u2014 just substitute your numbers.",
-    "example": "Principal: $1,000\nRate: 5%/year\nTime: 3 years\nInterest = $1,000 \u00d7 5% \u00d7 3 = $150\nBalance = $1,150",
-    "quizTemplateIds": [
-      "simple_interest_earned",
-      "total_balance_with_interest",
-      "simple_interest_d1",
-      "simple_interest_d2",
-      "total_with_interest_d1"
-    ]
-  },
-  {
     "id": "rule_of_72",
     "moduleId": "investing",
     "title": "The Rule of 72 \u2014 when does it double?",
@@ -362,16 +347,16 @@
   {
     "id": "roi_basic",
     "moduleId": "investing",
-    "title": "Return on investment \u2014 the one number",
-    "concept": "ROI (Return on Investment) puts every investment on the same scale: what percentage did you gain relative to what you put in? A $200 gain on a $1,000 investment is 20% ROI \u2014 regardless of how long it took.",
-    "shortcut": "ROI% = (gain \u00f7 cost) \u00d7 100. Gain $50 on a $500 investment \u2192 $50 \u00f7 $500 \u00d7 100 = 10% ROI. To find the dollar gain from an ROI%: cost \u00d7 ROI% \u00f7 100. Use ROI to compare any two investments directly.",
-    "example": "Bought: $500\nSold for: $600\nGain = $100\nROI = $100 \u00f7 $500 \u00d7 100 = 20%",
+    "title": "ROI \u2014 the one number that compares anything",
+    "concept": "Return on investment is the universal scale: what % did you gain relative to what you put in? A kitchen renovation ($15k \u2192 $20k home value) is 33% ROI. An index fund averages 10%/year. A $200 course leading to a $5k raise is 2,400% ROI. ROI lets you compare wildly different decisions on the same axis.",
+    "shortcut": "ROI% = (gain \u00f7 cost) \u00d7 100. Universal comparison: kitchen reno 33%, course 2,400%, index fund 10%/yr. But ROI isn't always the answer \u2014 a $3k vacation has 0% financial ROI but priceless life ROI.",
+    "example": "Course: paid $200, got $5,000 raise\nROI = $5,000 \u00f7 $200 \u00d7 100 = 2,500%\n\nKitchen reno: $15k \u2192 $20k home value\nROI = $5,000 \u00f7 $15,000 \u00d7 100 = 33%\n\nIndex fund: $1,000 \u2192 $1,100 in a year\nROI = $100 \u00f7 $1,000 \u00d7 100 = 10%",
     "quizTemplateIds": [
       "roi_percent_calc",
       "dollar_return_calc",
       "roi_percent_d2",
-      "roi_scenario_d2",
-      "portfolio_gain_d2"
+      "portfolio_gain_d2",
+      "roi_compare_d3"
     ]
   },
   {
@@ -393,30 +378,105 @@
     "id": "investing_roth_vs_traditional",
     "moduleId": "investing",
     "title": "Roth vs Traditional IRA",
-    "concept": "With a Traditional IRA, you contribute pre-tax dollars and pay taxes when you withdraw in retirement. With a Roth IRA, you contribute after-tax dollars but withdrawals are tax-free. If you're in a low tax bracket now and expect higher taxes later, Roth wins. If you're in a high bracket now, Traditional saves you more today.",
-    "shortcut": "Roth contribution = income \u00d7 (1 \u2212 tax rate). Traditional tax saved = contribution \u00d7 tax rate. Compare: young and lower income \u2192 Roth. Peak earning years \u2192 Traditional. The math is the same \u2014 it's about when you pay the tax.",
-    "example": "Contribute $5,000 at 22% tax rate\nRoth: pay $1,100 tax now, $0 later\nTraditional: save $1,100 now, pay tax later\nSame math, different timing",
+    "concept": "Both IRAs cap at $7,000/year (2025) or $8,000 if you're 50+. Roth uses after-tax dollars; Traditional uses pre-tax. The Roth's killer feature: tax-free growth AND tax-free withdrawals. Income above $150k single / $236k married phases out direct Roth contributions. Under 35 in a lower bracket? Roth usually wins \u2014 decades of tax-free growth on top of tax-free withdrawals is enormous.",
+    "shortcut": "Roth contribution = your cash. Tax saving (Traditional) = contribution \u00d7 tax rate. Roth's hidden win: $7k/yr at 22% bracket growing to $475k over 25 years = $0 tax on withdrawal vs $114k tax in a Traditional. Under 35 + lower bracket = Roth. Peak earning years = Traditional.",
+    "example": "$5,000 contribution at 22% tax rate:\nRoth: pay $1,100 tax now\nTraditional: save $1,100 now, owe tax later\n\nGrowth advantage:\n$7k/yr \u00d7 25 yrs grows to $475k Roth\n\u2192 $0 tax on withdrawal\nTraditional at 24% = $114k tax bill",
     "quizTemplateIds": [
       "roth_after_tax_d1",
       "traditional_tax_saved_d1",
       "roth_scenario_d2",
       "traditional_scenario_d2",
-      "roth_vs_trad_compare_d3"
+      "roth_growth_value_d3"
     ]
   },
   {
     "id": "investing_compound_growth",
     "moduleId": "investing",
     "title": "Compound growth over time",
-    "concept": "Compound interest means your money earns interest on its interest. $500/month at 8% annual return grows to $91,000 in 10 years, $296,000 in 20 years, and $745,000 in 30 years. Time is the most powerful variable \u2014 starting early matters far more than contributing more later.",
-    "shortcut": "Total invested = monthly \u00d7 12 \u00d7 years. Growth multiplier at 8%: ~1.5\u00d7 in 10 years, ~2.5\u00d7 in 20 years, ~4.5\u00d7 in 30 years. Quick estimate: multiply your total contributions by the growth multiplier.",
-    "example": "$500/month for 20 years\nTotal invested: $120,000\nAt 8% growth: ~$296,000\nInterest earned: ~$176,000",
+    "concept": "Compound growth is your money earning money on its earnings. $500/month at 8% grows to $91k in 10 years, $296k in 20, $745k in 30. The longer your time horizon, the more of your final balance is interest (not contributions). Time matters more than amount.",
+    "shortcut": "Total contributed = monthly \u00d7 12 \u00d7 years. At 8% growth, multiplier is ~1.5\u00d7 in 10 yrs, ~2.5\u00d7 in 20, ~4.5\u00d7 in 30. % of balance that's interest: 33% at 10 yrs, 60% at 20 yrs, 78% at 30 yrs. Start early \u2014 every decade roughly doubles your money via compounding.",
+    "example": "$500/month \u00d7 20 years:\nContributed: $120,000\nGrew to: $296,000\nInterest: $176,000 (60% of balance)\n\nStart at 25 vs 35 (both stop at 65):\n25 \u2192 $1.3M\n35 \u2192 $570k\nGap from 10 years: $730k",
     "quizTemplateIds": [
       "compound_total_d1",
       "compound_interest_earned_d1",
-      "compound_10yr_d2",
-      "compound_20yr_d2",
-      "compound_compare_d3"
+      "compound_pct_interest_d2",
+      "compound_early_vs_late_d3",
+      "compound_backwards_d3"
+    ]
+  },
+  {
+    "id": "investing_dca",
+    "moduleId": "investing",
+    "title": "The power of investing every month",
+    "concept": "Dollar-cost averaging means investing a fixed dollar amount at regular intervals \u2014 buying more shares when prices are low, fewer when high. Over time your average cost per share lands lower than the average market price. The behavior beats the math: people who try to time the market typically lose to people who just keep buying.",
+    "shortcut": "Total invested = monthly amount \u00d7 months. Shares per month = amount \u00f7 price that month. Average cost = total invested \u00f7 total shares. DCA wins on volatility \u2014 when prices dip, your fixed dollars buy more shares.",
+    "example": "Invest $500/month \u00d7 12 = $6,000\nPrices vary $40-60/share\nTotal shares: ~125\nAvg cost: $48/share\nMarket avg: $50/share\nYou paid less because you bought more when cheap.",
+    "quizTemplateIds": [
+      "dca_total_invested_d1",
+      "dca_shares_bought_d1",
+      "dca_avg_cost_d2",
+      "dca_vs_lump_sum_d3",
+      "dca_consistency_d2"
+    ]
+  },
+  {
+    "id": "investing_fund_fees",
+    "moduleId": "investing",
+    "title": "The fee that eats your retirement",
+    "concept": "A 1% expense ratio sounds small. On $100k it's $1,000/year \u2014 but the real cost is the compounding you lose. Over 30 years at 8% growth, that 1% fee costs you roughly $200,000 in lost final balance. The gap between a 0.03% index fund and a 1% managed fund is staggering.",
+    "shortcut": "Annual fee = portfolio \u00d7 expense ratio. Quick rule: every 0.5% in fees costs about 10% of your final balance over 30 years. Choose funds with expense ratios under 0.2% wherever possible.",
+    "example": "$100k portfolio, 1% expense ratio:\nAnnual fee: $1,000\n\n$200k portfolio, 0.5% vs 0.05%:\nDiff: 0.45% \u00d7 $200k = $900/yr\nOver 30 yrs \u2248 $50k+ lost\n\nAlways check expense ratios.",
+    "quizTemplateIds": [
+      "fund_fee_annual_d1",
+      "fund_fee_diff_d2",
+      "fund_fee_compare_d1",
+      "fund_fee_decade_d3",
+      "fund_fee_30yr_d3"
+    ]
+  },
+  {
+    "id": "investing_emergency_fund",
+    "moduleId": "investing",
+    "title": "How much emergency fund do you actually need?",
+    "concept": "3-6 months of ESSENTIAL expenses \u2014 not income. Essential means rent, food, insurance, transport, debt minimums. Not subscriptions, dining out, entertainment. Most people calculate against income and get an overwhelming number; calculating against essentials makes the goal achievable.",
+    "shortcut": "Sum your 4-5 non-negotiable monthly bills. That's your essential number. \u00d7 3 = minimum target, \u00d7 6 = solid. Months of runway = current savings \u00f7 essentials. Cut $X from non-essentials = (savings \u00f7 (essentials \u2212 cut)) months of runway.",
+    "example": "Essentials:\nRent $1,500 + food $400 + insurance $200 + transport $200 + debt min $300 = $2,600/month\n\nTarget (6 months): $15,600\nYou have $9,800 saved.\nRunway: $9,800 \u00f7 $2,600 = 3.8 months",
+    "quizTemplateIds": [
+      "ef_essentials_sum_d1",
+      "ef_target_d1",
+      "ef_runway_d2",
+      "ef_runway_after_cut_d3",
+      "ef_months_to_target_d3"
+    ]
+  },
+  {
+    "id": "investing_rental_yield",
+    "moduleId": "investing",
+    "title": "Rental yield \u2014 is the property worth it?",
+    "concept": "Gross rental yield = (annual rent \u00f7 purchase price) \u00d7 100. Below 5% is weak (you're banking on appreciation), 6-8% is solid, 8%+ is strong. Net yield deducts management (typically 10%) and vacancy (typically 8%). A property with great location but low yield is a speculation, not an investment.",
+    "shortcut": "Quick check: monthly rent \u00d7 12 \u2265 5% of price? If not, skip. Net yield = gross \u00d7 (1 \u2212 mgmt% \u2212 vacancy%). At 10% mgmt + 8% vacancy, you keep 82% of gross.",
+    "example": "$300k property, $2,000/month rent:\nAnnual rent: $24,000\nGross yield: 8%\nNet (after 10% mgmt + 8% vacancy):\n8% \u00d7 0.82 = 6.6% net\n\nSolid investment \u2014 gross above 5%, net above 6%.",
+    "quizTemplateIds": [
+      "yield_gross_d1",
+      "yield_monthly_check_d1",
+      "yield_compare_d2",
+      "yield_net_d3",
+      "yield_decision_d3"
+    ]
+  },
+  {
+    "id": "investing_on_track",
+    "moduleId": "investing",
+    "title": "Am I on track? The retirement savings check",
+    "concept": "Fidelity's age-based rule: 1\u00d7 salary saved by 30, 3\u00d7 by 40, 6\u00d7 by 50, 10\u00d7 by 67. Calculate your 'savings multiple' (current savings \u00f7 current salary) and compare to your age target. If behind, increase your contribution by 1% of salary each year until you catch up.",
+    "shortcut": "Multiple = savings \u00f7 salary. Age 30 target = 1\u00d7. Age 35 = 2\u00d7. Age 40 = 3\u00d7. Gap (in dollars) = (target multiple \u00d7 salary) \u2212 current savings. Monthly to close in N years = gap \u00f7 (N \u00d7 12).",
+    "example": "Age 35, salary $65k, saved $80k:\nMultiple = $80k \u00f7 $65k = 1.23\u00d7\nTarget at 35: ~2\u00d7\nGap: (2 \u00d7 $65k) \u2212 $80k = $50k\n\nClose in 5 years: $50k \u00f7 60 months = $833/mo extra savings",
+    "quizTemplateIds": [
+      "on_track_multiple_d1",
+      "on_track_target_d1",
+      "on_track_gap_d2",
+      "on_track_close_gap_d3",
+      "on_track_extra_save_d3"
     ]
   },
   {
@@ -453,15 +513,15 @@
     "id": "loan_true_cost",
     "moduleId": "debt",
     "title": "The true cost of a loan",
-    "concept": "The sticker price of a loan is not what you pay. Total repayment = monthly payment \u00d7 number of months. The difference between that total and your original loan amount is pure interest \u2014 money the lender earns.",
-    "shortcut": "Total cost = payment \u00d7 months. Interest paid = total cost \u2212 loan amount. Always calculate these before signing. A $6,000 loan at $200/month for 36 months costs $7,200 \u2014 $1,200 in interest.",
-    "example": "Loan: $6,000\nPayment: $200/month \u00d7 36 months\nTotal paid: $7,200\nInterest: $7,200 \u2212 $6,000 = $1,200",
+    "concept": "The sticker price of a loan is not what you pay. Total = monthly payment \u00d7 number of months. The difference between that and your original loan is the lender's profit \u2014 pure interest. The 'interest tax' = total interest \u00f7 loan amount. Above 15%? Question whether you really need to borrow.",
+    "shortcut": "Total cost = payment \u00d7 months. Interest = total \u2212 loan. Interest tax % = interest \u00f7 loan \u00d7 100. A $6k loan costing $1,200 interest = 20% interest tax. Save and pay cash if you can spread the wait over 12 months.",
+    "example": "Loan: $6,000\nPayment: $200/month \u00d7 36 months\nTotal: $7,200\nInterest: $1,200\nInterest tax: 20%\n\nSave $250/month for 24 months:\nYou'd have $6,000 cash, save $1,200",
     "quizTemplateIds": [
       "loan_total_repayment",
-      "loan_heavy_interest",
       "loan_total_interest_paid",
       "loan_repayment_d1",
-      "loan_interest_calc_d2"
+      "loan_interest_tax_d3",
+      "save_vs_borrow_d3"
     ]
   },
   {
@@ -476,7 +536,7 @@
       "dti_ratio_scenario",
       "dti_add_payments",
       "dti_housing_only",
-      "dti_check_d2"
+      "new_dti_with_payment_d3"
     ]
   },
   {
@@ -488,10 +548,55 @@
     "example": "Extra payment: $100 \u00b7 APR: 20%\nAnnual saving \u2248 $100 \u00d7 20% = $20\nPlus reduced principal each month",
     "quizTemplateIds": [
       "cc_extra_payment_saving",
-      "cc_balance_after_interest",
       "cc_extra_d1",
       "cc_annual_cost_d2",
-      "cc_balance_interest_d2"
+      "cc_balance_interest_d2",
+      "principal_reduction_d3"
+    ]
+  },
+  {
+    "id": "debt_avalanche_snowball",
+    "moduleId": "debt",
+    "title": "Pay off debt faster: avalanche vs snowball",
+    "concept": "Avalanche: pay minimums on all debts, throw extra money at the highest-interest one first. Saves the most money mathematically. Snowball: pay minimums on all, throw extra at the smallest balance first. Gives quicker psychological wins. Avalanche always wins on math; snowball often wins on behavior.",
+    "shortcut": "Avalanche: target the highest APR first. Snowball: target the smallest balance first. Interest saved by putting $X extra against the higher rate vs lower rate: $X \u00d7 (highRate \u2212 lowRate) \u00f7 12 per month. The difference between avalanche and snowball over time = your 'psychology premium.'",
+    "example": "Debt A: $5k at 24% APR\nDebt B: $2k at 18% APR\n\nAvalanche: pay extra on A \u2192 saves more interest\n$200 extra: $200 \u00d7 (24% \u2212 18%) \u00f7 12 = $1/month saved\n\u00d7 24 months = $24 psychology premium\n\nSnowball pays off B first (motivating!), then A.",
+    "quizTemplateIds": [
+      "debt_priority_d1",
+      "avalanche_monthly_saving_d2",
+      "snowball_difference_d3",
+      "debt_compare_rates_d2",
+      "psychology_premium_d3"
+    ]
+  },
+  {
+    "id": "debt_apr_vs_apy",
+    "moduleId": "debt",
+    "title": "APR vs APY \u2014 the number banks hide",
+    "concept": "APR is the simple annual rate. APY includes the effect of compounding. A 20% APR card compounded monthly = ~21.9% APY. Banks always show whichever number looks better for them: APY on savings (higher), APR on loans (lower). The compounding gap is real money.",
+    "shortcut": "APY \u2248 APR + (APR\u00b2 \u00f7 200) for monthly compounding. 20% APR \u2192 20 + (400 \u00f7 200) = 22% APY. Monthly rate on a loan = APR \u00f7 12. Annual interest cost = balance \u00d7 APY \u00f7 100 (not APR).",
+    "example": "Card with 24% APR:\nMonthly rate: 24% \u00f7 12 = 2%\nAPY: 24 + (576 \u00f7 200) = 26.88%\n\nOn $5,000 balance held a year:\nUsing APR: $1,200 interest\nUsing APY: $1,344 interest (real)\nDifference: $144 hidden",
+    "quizTemplateIds": [
+      "apr_apy_which_higher_d1",
+      "monthly_rate_d1",
+      "apy_from_apr_d2",
+      "apr_apy_compare_d3",
+      "apy_yearly_cost_d3"
+    ]
+  },
+  {
+    "id": "debt_bnpl_hidden_cost",
+    "moduleId": "debt",
+    "title": "Buy Now, Pay Later \u2014 the math they don't show",
+    "concept": "BNPL splits a purchase into 4 'easy payments.' Sounds free. Miss one payment = up to $35 late fee (sometimes 25% of the missed payment). On a $300 purchase that's an 11.7% surcharge. The real danger: stacking 3-4 BNPL plans creates invisible debt \u2014 none of it on your credit card statement. Research: 49% of BNPL users report financial problems, 24% have missed at least one payment.",
+    "shortcut": "Total BNPL = number of payments \u00d7 payment amount. Surcharge from one late fee = lateFee \u00f7 originalPrice \u00d7 100. Stacked monthly burden = sum of all your BNPL payments. If you can't pay cash today, you can't afford it.",
+    "example": "$300 item, 4 \u00d7 $75 BNPL:\nMiss one: $35 late fee\nTotal paid: $335\nSurcharge: 11.7%\n\nStacked plans:\n$75 (item A) + $50 (item B) + $40 (item C) = $165/mo invisible debt",
+    "quizTemplateIds": [
+      "bnpl_simple_d1",
+      "bnpl_late_fee_d2",
+      "bnpl_surcharge_pct_d3",
+      "bnpl_stacked_d3",
+      "bnpl_annual_d2"
     ]
   },
   {

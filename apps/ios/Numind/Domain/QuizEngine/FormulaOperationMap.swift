@@ -1307,6 +1307,245 @@ enum FormulaOperationMap {
             guard let w = variables["weeklyEarnings"] else { return [] }
             return [.multiply(a: w, by: 50)]
 
+        // MARK: - Investing reworks
+        case "roiPercentDiff":
+            guard let costA = variables["costA"], let gainA = variables["gainA"], costA > 0,
+                  let costB = variables["costB"], let gainB = variables["gainB"], costB > 0 else { return [] }
+            let roiA = gainA / costA * 100
+            let roiB = gainB / costB * 100
+            return [.divide(a: gainA, by: costA),
+                    .divide(a: gainB, by: costB),
+                    .subtract(b: min(roiA, roiB), from: max(roiA, roiB))]
+
+        case "rothGrowthTaxSaved":
+            guard let value = variables["finalValue"], let rate = variables["taxRate"] else { return [] }
+            return [.percentOf(pct: rate, amount: value)]
+
+        case "compoundPctInterest":
+            guard let final = variables["finalValue"], let contributed = variables["totalContributed"], final > 0 else { return [] }
+            return [.subtract(b: contributed, from: final),
+                    .divide(a: final - contributed, by: final),
+                    .multiply(a: (final - contributed) / final, by: 100)]
+
+        case "compoundDifference":
+            guard let a = variables["finalA"], let b = variables["finalB"] else { return [] }
+            return [.subtract(b: min(a, b), from: max(a, b))]
+
+        case "compoundBackwardsFromGoal":
+            guard let goal = variables["goal"], let m = variables["multiplier"], m > 0 else { return [] }
+            return [.divide(a: goal, by: m)]
+
+        // MARK: - DCA
+        case "dcaTotalInvested":
+            guard let amt = variables["monthlyAmount"], let m = variables["months"] else { return [] }
+            return [.multiply(a: amt, by: m)]
+
+        case "sharesBought":
+            guard let amt = variables["investmentAmount"], let p = variables["pricePerShare"], p > 0 else { return [] }
+            return [.divide(a: amt, by: p)]
+
+        case "dcaAverageCost":
+            guard let t = variables["totalInvested"], let s = variables["totalShares"], s > 0 else { return [] }
+            return [.divide(a: t, by: s)]
+
+        case "dcaVsLumpSumSaving":
+            guard let dca = variables["dcaCost"], let lump = variables["lumpCost"], let s = variables["shares"] else { return [] }
+            return [.subtract(b: dca, from: lump), .multiply(a: lump - dca, by: s)]
+
+        case "monthlyOverYears":
+            guard let amt = variables["monthlyAmount"], let y = variables["years"] else { return [] }
+            return [.multiply(a: amt, by: 12), .multiply(a: amt * 12, by: y)]
+
+        // MARK: - Fund fees
+        case "annualFundFee":
+            guard let pv = variables["portfolioValue"], let er = variables["expenseRatio"] else { return [] }
+            return [.percentOf(pct: er, amount: pv)]
+
+        case "feeDifferenceAnnual":
+            guard let pv = variables["portfolioValue"],
+                  let ra = variables["expenseRatioA"],
+                  let rb = variables["expenseRatioB"] else { return [] }
+            return [.percentOf(pct: ra, amount: pv),
+                    .percentOf(pct: rb, amount: pv),
+                    .subtract(b: pv * rb / 100, from: pv * ra / 100)]
+
+        case "feeCostOverYears":
+            guard let pv = variables["portfolioValue"],
+                  let ra = variables["expenseRatioA"],
+                  let rb = variables["expenseRatioB"] else { return [] }
+            let annual = pv * (ra - rb) / 100
+            return [.subtract(b: rb, from: ra),
+                    .percentOf(pct: ra - rb, amount: pv),
+                    .multiply(a: annual, by: 10)]
+
+        case "feeImpact30yr":
+            guard let proj = variables["projectedBalance"], let ef = variables["extraFee"] else { return [] }
+            return [.percentOf(pct: ef, amount: proj), .multiply(a: proj * ef / 100, by: 20)]
+
+        // MARK: - Emergency fund
+        case "essentialsMonthlyFour":
+            guard let r = variables["rent"], let f = variables["food"],
+                  let i = variables["insurance"], let t = variables["transport"] else { return [] }
+            return [.add(a: r, b: f), .add(a: r + f, b: i), .add(a: r + f + i, b: t)]
+
+        case "emergencyFundSixMonths":
+            guard let e = variables["essentials"] else { return [] }
+            return [.multiply(a: e, by: 6)]
+
+        case "monthsOfRunway":
+            guard let s = variables["savings"], let e = variables["essentials"], e > 0 else { return [] }
+            return [.divide(a: s, by: e)]
+
+        case "runwayGainFromCuts":
+            guard let s = variables["savings"], let e = variables["essentials"],
+                  let cut = variables["cutAmount"], e > cut else { return [] }
+            let orig = (s / e).rounded(.down)
+            let after = (s / (e - cut)).rounded(.down)
+            return [.divide(a: s, by: e),
+                    .subtract(b: cut, from: e),
+                    .divide(a: s, by: e - cut),
+                    .subtract(b: orig, from: after)]
+
+        case "monthsToReachEFTarget":
+            guard let target = variables["target"], let current = variables["currentSaved"],
+                  let monthly = variables["monthlyContribution"], monthly > 0 else { return [] }
+            return [.subtract(b: current, from: target),
+                    .divide(a: target - current, by: monthly)]
+
+        // MARK: - Rental yield
+        case "grossRentalYield":
+            guard let r = variables["monthlyRent"], let p = variables["propertyPrice"], p > 0 else { return [] }
+            return [.multiply(a: r, by: 12), .divide(a: r * 12, by: p), .multiply(a: r * 12 / p, by: 100)]
+
+        case "annualFromMonthlyRent":
+            guard let r = variables["monthlyRent"] else { return [] }
+            return [.multiply(a: r, by: 12)]
+
+        case "yieldComparison":
+            guard let pA = variables["priceA"], let rA = variables["rentA"], pA > 0,
+                  let pB = variables["priceB"], let rB = variables["rentB"], pB > 0 else { return [] }
+            let yA = rA * 12 / pA * 100
+            let yB = rB * 12 / pB * 100
+            return [.divide(a: rA * 12, by: pA),
+                    .divide(a: rB * 12, by: pB),
+                    .subtract(b: min(yA, yB), from: max(yA, yB))]
+
+        case "netRentalYield":
+            guard let r = variables["monthlyRent"], let p = variables["propertyPrice"], p > 0 else { return [] }
+            return [.multiply(a: r, by: 12),
+                    .multiply(a: r * 12, by: 0.82),
+                    .divide(a: r * 12 * 0.82, by: p),
+                    .multiply(a: r * 12 * 0.82 / p, by: 100)]
+
+        case "requiredRentForYield":
+            guard let p = variables["propertyPrice"], let y = variables["targetYield"] else { return [] }
+            return [.percentOf(pct: y, amount: p), .divide(a: p * y / 100, by: 12)]
+
+        // MARK: - Am I on track?
+        case "savingsMultiple":
+            guard let s = variables["currentSavings"], let sal = variables["currentSalary"], sal > 0 else { return [] }
+            return [.divide(a: s, by: sal), .multiply(a: s / sal, by: 100)]
+
+        case "savingsTargetByMultiple":
+            guard let sal = variables["currentSalary"], let m = variables["targetMultiple"] else { return [] }
+            return [.multiply(a: sal, by: m)]
+
+        case "gapToSavingsTarget":
+            guard let sal = variables["currentSalary"], let m = variables["targetMultiple"],
+                  let saved = variables["currentSavings"] else { return [] }
+            return [.multiply(a: sal, by: m), .subtract(b: saved, from: sal * m)]
+
+        case "monthlyToCloseGap":
+            guard let g = variables["gap"], let y = variables["years"], y > 0 else { return [] }
+            return [.multiply(a: y, by: 12), .divide(a: g, by: y * 12)]
+
+        case "extraMonthlyFromRateBump":
+            guard let sal = variables["currentSalary"], let cur = variables["currentRate"], let tgt = variables["targetRate"] else { return [] }
+            return [.subtract(b: cur, from: tgt),
+                    .percentOf(pct: tgt - cur, amount: sal),
+                    .divide(a: sal * (tgt - cur) / 100, by: 12)]
+
+        // MARK: - Debt reworks
+        case "interestTaxPercent":
+            guard let loan = variables["loanAmount"], let pay = variables["monthlyPayment"], let m = variables["numMonths"], loan > 0 else { return [] }
+            let totalInt = pay * m - loan
+            return [.multiply(a: pay, by: m),
+                    .subtract(b: loan, from: pay * m),
+                    .divide(a: totalInt, by: loan),
+                    .multiply(a: totalInt / loan, by: 100)]
+
+        case "saveVsBorrowDiff":
+            guard let pay = variables["monthlyPayment"], let m = variables["numMonths"], let cash = variables["purchasePrice"] else { return [] }
+            return [.multiply(a: pay, by: m), .subtract(b: cash, from: pay * m)]
+
+        case "newDTIwithPayment":
+            guard let income = variables["monthlyIncome"], let cur = variables["currentDebt"],
+                  let np = variables["newPayment"], income > 0 else { return [] }
+            return [.add(a: cur, b: np), .divide(a: cur + np, by: income), .multiply(a: (cur + np) / income, by: 100)]
+
+        case "principalReductionWithExtra":
+            guard let bal = variables["balance"], let apr = variables["apr"], let total = variables["totalPayment"] else { return [] }
+            let interest = bal * apr / 100 / 12
+            return [.percentOf(pct: apr, amount: bal),
+                    .divide(a: bal * apr / 100, by: 12),
+                    .subtract(b: interest, from: total)]
+
+        // MARK: - Avalanche vs Snowball
+        case "aprDifference":
+            guard let a = variables["aprA"], let b = variables["aprB"] else { return [] }
+            return [.subtract(b: min(a, b), from: max(a, b))]
+
+        case "monthlyInterestSavedByPriority":
+            guard let e = variables["extraPayment"], let h = variables["highRate"], let l = variables["lowRate"] else { return [] }
+            return [.subtract(b: l, from: h), .percentOf(pct: h - l, amount: e), .divide(a: e * (h - l) / 100, by: 12)]
+
+        case "avalancheVsSnowballSaving":
+            guard let e = variables["extraPayment"], let a = variables["aprA"], let b = variables["aprB"] else { return [] }
+            return [.subtract(b: b, from: a), .percentOf(pct: a - b, amount: e)]
+
+        case "psychologyPremium24mo":
+            guard let m = variables["monthlySaving"] else { return [] }
+            return [.multiply(a: m, by: 24)]
+
+        // MARK: - APR vs APY
+        case "apyFromApr":
+            guard let apr = variables["apr"] else { return [] }
+            // Approximation: APY ≈ APR + APR²/200 for monthly compounding
+            return [.divide(a: apr, by: 12), .multiply(a: apr, by: apr / 200)]
+
+        case "monthlyRatePctFromApr":
+            guard let apr = variables["apr"] else { return [] }
+            return [.divide(a: apr, by: 12)]
+
+        case "trueCardRateDiff":
+            guard let aprX = variables["aprX"], let apyY = variables["apyY"] else { return [] }
+            return [.divide(a: aprX, by: 12), .subtract(b: min(aprX, apyY), from: max(aprX, apyY))]
+
+        case "annualInterestViaApy":
+            guard let bal = variables["balance"], let apr = variables["apr"] else { return [] }
+            return [.divide(a: apr, by: 12), .percentOf(pct: apr, amount: bal)]
+
+        // MARK: - BNPL
+        case "bnplTotal":
+            guard let n = variables["numPayments"], let amt = variables["paymentAmount"] else { return [] }
+            return [.multiply(a: n, by: amt)]
+
+        case "bnplWithOneLateFee":
+            guard let amt = variables["paymentAmount"] else { return [] }
+            return [.multiply(a: 4, by: amt), .add(a: 4 * amt, b: 35)]
+
+        case "bnplSurchargePercent":
+            guard let orig = variables["originalPrice"], let paid = variables["totalPaid"], orig > 0 else { return [] }
+            return [.subtract(b: orig, from: paid), .divide(a: paid - orig, by: orig), .multiply(a: (paid - orig) / orig, by: 100)]
+
+        case "bnplStackedMonthly":
+            guard let a = variables["paymentA"], let b = variables["paymentB"], let c = variables["paymentC"] else { return [] }
+            return [.add(a: a, b: b), .add(a: a + b, b: c)]
+
+        case "bnplAnnual":
+            guard let m = variables["monthlyBnpl"] else { return [] }
+            return [.multiply(a: m, by: 12)]
+
         default:
             return []
         }

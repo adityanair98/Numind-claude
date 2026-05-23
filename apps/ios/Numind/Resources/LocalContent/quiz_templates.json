@@ -608,85 +608,6 @@
     "explanationTemplate": "Weekly \u00d7 52 = annual. ${{weeklySalary}} \u00d7 52 weeks = annual income."
   },
   {
-    "id": "simple_interest_earned",
-    "moduleId": "investing",
-    "difficulty": 1,
-    "scenarioTemplate": "You deposit ${{principal}} into a savings account that earns {{interestRate}}% simple interest per year.",
-    "promptTemplate": "You invest ${{principal}} at {{interestRate}}% simple interest per year for {{years}} years. How much interest do you earn in total?",
-    "variableRules": [
-      {
-        "name": "principal",
-        "options": [
-          500,
-          1000,
-          2000,
-          5000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          2,
-          3,
-          5,
-          8
-        ]
-      },
-      {
-        "name": "years",
-        "options": [
-          1,
-          2,
-          3,
-          5
-        ]
-      }
-    ],
-    "answerFormula": "simpleInterest",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest = Principal \u00d7 Rate \u00d7 Time. ${{principal}} \u00d7 {{interestRate}}% \u00d7 {{years}} years."
-  },
-  {
-    "id": "total_balance_with_interest",
-    "moduleId": "investing",
-    "difficulty": 1,
-    "promptTemplate": "You deposit ${{principal}} at {{interestRate}}% simple interest for {{years}} years. What's your total balance?",
-    "variableRules": [
-      {
-        "name": "principal",
-        "options": [
-          500,
-          1000,
-          2000,
-          5000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          2,
-          3,
-          5,
-          8
-        ]
-      },
-      {
-        "name": "years",
-        "options": [
-          1,
-          2,
-          3,
-          5
-        ]
-      }
-    ],
-    "answerFormula": "totalWithInterest",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = Principal \u00d7 (1 + Rate \u00d7 Time). Add the interest earned to your original ${{principal}}."
-  },
-  {
     "id": "rule_of_72_years",
     "moduleId": "investing",
     "difficulty": 2,
@@ -1878,41 +1799,6 @@
     "explanationTemplate": "Total repayment = monthly payment \u00d7 months. ${{monthlyPayment}} \u00d7 {{numMonths}} = total paid. The difference from your original loan is pure interest."
   },
   {
-    "id": "loan_heavy_interest",
-    "moduleId": "debt",
-    "difficulty": 3,
-    "scenarioTemplate": "You borrow ${{loanAmount}} and repay ${{monthlyPayment}}/month for {{numMonths}} months.",
-    "promptTemplate": "What is the total amount you repay over the life of the loan?",
-    "variableRules": [
-      {
-        "name": "loanAmount",
-        "options": [
-          5000,
-          6000,
-          7000
-        ]
-      },
-      {
-        "name": "monthlyPayment",
-        "options": [
-          220,
-          250,
-          280
-        ]
-      },
-      {
-        "name": "numMonths",
-        "options": [
-          36
-        ]
-      }
-    ],
-    "answerFormula": "loanTotalRepayment",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total repaid = ${{monthlyPayment}} \u00d7 {{numMonths}} months. Always compare this total to your original loan to see how much interest you're paying."
-  },
-  {
     "id": "loan_total_interest_paid",
     "moduleId": "debt",
     "difficulty": 3,
@@ -2111,146 +1997,6 @@
     "explanationTemplate": "Annual saving \u2248 extra payment \u00d7 APR%. ${{extraPayment}} \u00d7 {{apr}}% = approximate interest saved per year. This grows as your balance shrinks."
   },
   {
-    "id": "cc_balance_after_interest",
-    "moduleId": "debt",
-    "difficulty": 3,
-    "promptTemplate": "Your balance is ${{balance}} at {{apr}}% APR. You make no payment this month. What is your new balance after interest?",
-    "variableRules": [
-      {
-        "name": "balance",
-        "options": [
-          1000,
-          1500,
-          2000,
-          2500,
-          3000
-        ]
-      },
-      {
-        "name": "apr",
-        "options": [
-          18,
-          20,
-          22,
-          24
-        ]
-      }
-    ],
-    "answerFormula": "balanceAfterMonthlyInterest",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New balance = old balance \u00d7 (1 + APR/12%). ${{balance}} \u00d7 (1 + {{apr}}%/12) shows exactly how carrying a balance grows your debt."
-  },
-  {
-    "id": "simple_interest_d1",
-    "moduleId": "investing",
-    "difficulty": 1,
-    "promptTemplate": "You put ${{principal}} in a savings account earning {{interestRate}}% annual interest. How much interest do you earn in {{years}} year(s)?",
-    "variableRules": [
-      {
-        "name": "principal",
-        "options": [
-          500,
-          1000,
-          2000,
-          5000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          2,
-          3,
-          4,
-          5
-        ]
-      },
-      {
-        "name": "years",
-        "options": [
-          1
-        ]
-      }
-    ],
-    "answerFormula": "simpleInterest",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest = principal \u00d7 rate% \u00d7 years. ${{principal}} \u00d7 {{interestRate}}% \u00d7 {{years}} = interest earned."
-  },
-  {
-    "id": "simple_interest_d2",
-    "moduleId": "investing",
-    "difficulty": 3,
-    "scenarioTemplate": "You lend ${{principal}} to a friend at {{interestRate}}% simple interest per year.",
-    "promptTemplate": "How much interest do you earn after {{years}} years?",
-    "variableRules": [
-      {
-        "name": "principal",
-        "options": [
-          1000,
-          2000,
-          3000,
-          5000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          3,
-          4,
-          5,
-          6
-        ]
-      },
-      {
-        "name": "years",
-        "options": [
-          2,
-          3
-        ]
-      }
-    ],
-    "answerFormula": "simpleInterest",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Simple interest = principal \u00d7 rate% \u00d7 years. ${{principal}} \u00d7 {{interestRate}}% \u00d7 {{years}}."
-  },
-  {
-    "id": "total_with_interest_d1",
-    "moduleId": "investing",
-    "difficulty": 1,
-    "promptTemplate": "You invest ${{principal}} at {{interestRate}}% simple interest for {{years}} year(s). What is the total balance?",
-    "variableRules": [
-      {
-        "name": "principal",
-        "options": [
-          1000,
-          2000,
-          5000,
-          10000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          4,
-          5,
-          6
-        ]
-      },
-      {
-        "name": "years",
-        "options": [
-          1
-        ]
-      }
-    ],
-    "answerFormula": "totalWithInterest",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = principal \u00d7 (1 + rate% \u00d7 years). ${{principal}} + interest = new balance."
-  },
-  {
     "id": "total_with_interest_d2",
     "moduleId": "investing",
     "difficulty": 2,
@@ -2365,37 +2111,6 @@
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "ROI% = (gain \u00f7 cost) \u00d7 100. ${{gain}} profit on a ${{cost}} investment = ROI of that %."
-  },
-  {
-    "id": "roi_scenario_d2",
-    "moduleId": "investing",
-    "difficulty": 2,
-    "scenarioTemplate": "You bought stock for ${{cost}} and sold it for a ${{gain}} gain.",
-    "promptTemplate": "What was your return on investment (ROI)?",
-    "variableRules": [
-      {
-        "name": "cost",
-        "options": [
-          500,
-          1000,
-          2000,
-          5000
-        ]
-      },
-      {
-        "name": "gain",
-        "options": [
-          50,
-          100,
-          200,
-          500
-        ]
-      }
-    ],
-    "answerFormula": "roiPercent",
-    "answerFormat": "percent",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "ROI% = profit \u00f7 cost \u00d7 100. ${{gain}} \u00f7 ${{cost}} \u00d7 100 = your percentage return."
   },
   {
     "id": "portfolio_gain_d2",
@@ -2691,80 +2406,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Total repaid = monthly \u00d7 months. ${{monthlyPayment}} \u00d7 {{numMonths}} = everything you pay. Subtract the loan amount to find total interest."
-  },
-  {
-    "id": "loan_interest_calc_d2",
-    "moduleId": "debt",
-    "difficulty": 2,
-    "scenarioTemplate": "You borrow ${{loanAmount}} and pay it back in monthly installments.",
-    "promptTemplate": "You borrow ${{loanAmount}}, pay ${{monthlyPayment}}/month for {{numMonths}} months. How much interest do you pay total?",
-    "variableRules": [
-      {
-        "name": "loanAmount",
-        "options": [
-          3000,
-          4000,
-          5000,
-          6000
-        ]
-      },
-      {
-        "name": "monthlyPayment",
-        "options": [
-          180,
-          200,
-          250,
-          300,
-          350
-        ]
-      },
-      {
-        "name": "numMonths",
-        "options": [
-          36,
-          48
-        ]
-      }
-    ],
-    "answerFormula": "loanTotalInterest",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest = total paid \u2212 loan. (${{monthlyPayment}} \u00d7 {{numMonths}}) \u2212 ${{loanAmount}} = the lender's earnings. Always calculate before signing."
-  },
-  {
-    "id": "dti_check_d2",
-    "moduleId": "debt",
-    "difficulty": 2,
-    "scenarioTemplate": "You're applying for a new credit card and the lender reviews your finances.",
-    "promptTemplate": "Monthly income: ${{monthlyIncome}}. Total monthly debt payments: ${{totalDebt}}. What is your DTI ratio?",
-    "variableRules": [
-      {
-        "name": "monthlyIncome",
-        "options": [
-          3000,
-          4000,
-          5000,
-          6000,
-          7000,
-          8000
-        ]
-      },
-      {
-        "name": "totalDebt",
-        "options": [
-          600,
-          900,
-          1200,
-          1500,
-          1800,
-          2100
-        ]
-      }
-    ],
-    "answerFormula": "debtToIncomeRatio",
-    "answerFormat": "percent",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "DTI = debt \u00f7 income \u00d7 100. ${{totalDebt}} \u00f7 ${{monthlyIncome}} \u00d7 100 = DTI%. Lenders look for this under 36% for healthy borrowing."
   },
   {
     "id": "cc_extra_d1",
@@ -4748,35 +4389,6 @@
     "explanationTemplate": "Net cost = contribution \u2212 tax saved. You contribute ${{contribution}} but save ${{contribution}} \u00d7 {{taxRate}}% in taxes. Traditional costs less today but is taxed later."
   },
   {
-    "id": "roth_vs_trad_compare_d3",
-    "moduleId": "investing",
-    "difficulty": 3,
-    "promptTemplate": "You contribute ${{contribution}} at {{taxRate}}% tax rate. How much more does a Roth cost you today compared to a Traditional IRA?",
-    "variableRules": [
-      {
-        "name": "contribution",
-        "options": [
-          4000,
-          5000,
-          6000,
-          7000
-        ]
-      },
-      {
-        "name": "taxRate",
-        "options": [
-          12,
-          22,
-          24
-        ]
-      }
-    ],
-    "answerFormula": "rothVsTradDifference",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "The Roth costs ${{contribution}} \u00d7 {{taxRate}}% more today (you pay tax now). Traditional saves that amount now but you'll pay it in retirement."
-  },
-  {
     "id": "compound_total_d1",
     "moduleId": "investing",
     "difficulty": 1,
@@ -4840,123 +4452,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Growth = final value \u2212 contributions. ${{finalValue}} \u2212 ${{totalContributed}} = money your money earned for you."
-  },
-  {
-    "id": "compound_10yr_d2",
-    "moduleId": "investing",
-    "difficulty": 2,
-    "scenarioTemplate": "You're planning for the next decade of investing.",
-    "promptTemplate": "You invest ${{monthlyAmount}} per month. After 10 years, you'll have contributed ${{totalContributed}}. If the account grew to ${{finalValue}}, what's the growth amount?",
-    "variableRules": [
-      {
-        "name": "monthlyAmount",
-        "options": [
-          300,
-          400,
-          500
-        ]
-      },
-      {
-        "name": "totalContributed",
-        "options": [
-          36000,
-          48000,
-          60000
-        ]
-      },
-      {
-        "name": "finalValue",
-        "options": [
-          54000,
-          72000,
-          91000
-        ]
-      }
-    ],
-    "answerFormula": "interestEarned",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Growth = ${{finalValue}} \u2212 ${{totalContributed}}. In 10 years at ~8%, you earn about 50% on top of contributions."
-  },
-  {
-    "id": "compound_20yr_d2",
-    "moduleId": "investing",
-    "difficulty": 2,
-    "promptTemplate": "You invest ${{monthlyAmount}}/month for 20 years (total contributed: ${{totalContributed}}). Account value: ${{finalValue}}. How much is growth?",
-    "variableRules": [
-      {
-        "name": "monthlyAmount",
-        "options": [
-          300,
-          400,
-          500
-        ]
-      },
-      {
-        "name": "totalContributed",
-        "options": [
-          72000,
-          96000,
-          120000
-        ]
-      },
-      {
-        "name": "finalValue",
-        "options": [
-          178000,
-          237000,
-          296000
-        ]
-      }
-    ],
-    "answerFormula": "interestEarned",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{finalValue}} \u2212 ${{totalContributed}} = growth. After 20 years, compound interest often exceeds your total contributions."
-  },
-  {
-    "id": "compound_compare_d3",
-    "moduleId": "investing",
-    "difficulty": 3,
-    "promptTemplate": "You invest ${{monthlyAmount}} per month for {{years}} years. Total contributions: ${{totalContributed}}. The account grew by ${{growthAmount}}. What's the final account value?",
-    "variableRules": [
-      {
-        "name": "monthlyAmount",
-        "options": [
-          400,
-          500
-        ]
-      },
-      {
-        "name": "years",
-        "options": [
-          20,
-          30
-        ]
-      },
-      {
-        "name": "totalContributed",
-        "options": [
-          96000,
-          120000,
-          144000,
-          180000
-        ]
-      },
-      {
-        "name": "growthAmount",
-        "options": [
-          141000,
-          176000,
-          350000,
-          565000
-        ]
-      }
-    ],
-    "answerFormula": "finalAccountValue",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Final value = contributions + growth. ${{totalContributed}} + ${{growthAmount}}. Time is the biggest factor in compound growth."
   },
   {
     "id": "inflation_raise_real_d1",
@@ -9540,5 +9035,1737 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Weekly \u00d7 50 weeks (2 weeks off). ${{weeklyEarnings}} \u00d7 50 = ${{answer}}/year extra."
+  },
+  {
+    "id": "roi_compare_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "Investment A: paid ${{costA}}, gained ${{gainA}}. Investment B: paid ${{costB}}, gained ${{gainB}}. By how many percentage points is the better ROI ahead?",
+    "variableRules": [
+      {
+        "name": "costA",
+        "options": [
+          500,
+          1000,
+          2000,
+          5000
+        ]
+      },
+      {
+        "name": "gainA",
+        "options": [
+          50,
+          100,
+          200,
+          400,
+          800
+        ]
+      },
+      {
+        "name": "costB",
+        "options": [
+          200,
+          500,
+          1000,
+          2000
+        ]
+      },
+      {
+        "name": "gainB",
+        "options": [
+          20,
+          50,
+          100,
+          200,
+          400
+        ]
+      }
+    ],
+    "answerFormula": "roiPercentDiff",
+    "answerFormat": "percent",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "ROI A = ${{gainA}}/${{costA}} \u00d7 100. ROI B = ${{gainB}}/${{costB}} \u00d7 100. Difference = {{answer}} percentage points."
+  },
+  {
+    "id": "roth_growth_value_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "You'll have ${{finalValue}} in a Roth IRA when you withdraw at retirement. At a {{taxRate}}% tax rate in retirement, how much tax would you have owed had this been a Traditional IRA?",
+    "variableRules": [
+      {
+        "name": "finalValue",
+        "options": [
+          200000,
+          300000,
+          400000,
+          500000,
+          750000,
+          1000000
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          15,
+          22,
+          24
+        ]
+      }
+    ],
+    "answerFormula": "rothGrowthTaxSaved",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tax saved with Roth = ${{finalValue}} \u00d7 {{taxRate}}% = ${{answer}}. That's the lifetime advantage of tax-free withdrawals."
+  },
+  {
+    "id": "compound_pct_interest_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Your retirement account is worth ${{finalValue}}. You contributed ${{totalContributed}} over the years. What percentage of your balance is interest (free money)?",
+    "variableRules": [
+      {
+        "name": "finalValue",
+        "options": [
+          100000,
+          150000,
+          200000,
+          300000,
+          500000
+        ]
+      },
+      {
+        "name": "totalContributed",
+        "options": [
+          40000,
+          60000,
+          80000,
+          100000,
+          150000
+        ]
+      }
+    ],
+    "answerFormula": "compoundPctInterest",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(${{finalValue}} \u2212 ${{totalContributed}}) \u00f7 ${{finalValue}} \u00d7 100 = {{answer}}%. Higher % = more compounding magic."
+  },
+  {
+    "id": "compound_early_vs_late_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "Person A starts investing at 25 and stops at 65 (40 years). Final balance: ${{finalA}}. Person B starts at 35 and stops at 65 (30 years). Final balance: ${{finalB}}. How much more did Person A accumulate from starting 10 years earlier?",
+    "variableRules": [
+      {
+        "name": "finalA",
+        "options": [
+          600000,
+          800000,
+          1000000,
+          1200000
+        ]
+      },
+      {
+        "name": "finalB",
+        "options": [
+          300000,
+          400000,
+          500000,
+          600000
+        ]
+      }
+    ],
+    "answerFormula": "compoundDifference",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{finalA}} \u2212 ${{finalB}} = ${{answer}}. Starting early often doubles your final balance."
+  },
+  {
+    "id": "compound_backwards_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "You want ${{goal}} by retirement. At 8% growth over your remaining years, growth multiplier is {{multiplier}}\u00d7. How much total do you need to contribute over your career?",
+    "variableRules": [
+      {
+        "name": "goal",
+        "options": [
+          500000,
+          750000,
+          1000000,
+          1500000
+        ]
+      },
+      {
+        "name": "multiplier",
+        "options": [
+          2.5,
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "answerFormula": "compoundBackwardsFromGoal",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Required contributions = goal \u00f7 multiplier = ${{goal}} \u00f7 {{multiplier}} = ${{answer}}. The rest comes from compounding."
+  },
+  {
+    "id": "dca_total_invested_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "You invest ${{monthlyAmount}}/month for {{months}} months via dollar-cost averaging. How much have you contributed in total?",
+    "variableRules": [
+      {
+        "name": "monthlyAmount",
+        "options": [
+          200,
+          300,
+          400,
+          500,
+          600,
+          800,
+          1000
+        ]
+      },
+      {
+        "name": "months",
+        "options": [
+          6,
+          12,
+          18,
+          24,
+          36,
+          48,
+          60
+        ]
+      }
+    ],
+    "answerFormula": "dcaTotalInvested",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly \u00d7 months. ${{monthlyAmount}} \u00d7 {{months}} = ${{answer}}."
+  },
+  {
+    "id": "dca_shares_bought_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "You invest ${{investmentAmount}} this month into a fund priced at ${{pricePerShare}}/share. How many shares do you buy?",
+    "variableRules": [
+      {
+        "name": "investmentAmount",
+        "options": [
+          200,
+          300,
+          400,
+          500,
+          600,
+          800,
+          1000
+        ]
+      },
+      {
+        "name": "pricePerShare",
+        "options": [
+          10,
+          20,
+          25,
+          40,
+          50,
+          80,
+          100
+        ]
+      }
+    ],
+    "answerFormula": "sharesBought",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Investment \u00f7 price = shares. ${{investmentAmount}} \u00f7 ${{pricePerShare}} = {{answer}} shares."
+  },
+  {
+    "id": "dca_avg_cost_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Over a year you invested ${{totalInvested}} via DCA and ended up owning {{totalShares}} shares. What's your average cost per share?",
+    "variableRules": [
+      {
+        "name": "totalInvested",
+        "options": [
+          3600,
+          4800,
+          6000,
+          7200,
+          9600,
+          12000
+        ]
+      },
+      {
+        "name": "totalShares",
+        "options": [
+          60,
+          80,
+          100,
+          120,
+          150,
+          200,
+          240
+        ]
+      }
+    ],
+    "answerFormula": "dcaAverageCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Total invested \u00f7 total shares = avg cost. ${{totalInvested}} \u00f7 {{totalShares}} = ${{answer}}/share."
+  },
+  {
+    "id": "dca_vs_lump_sum_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "DCA average cost basis: ${{dcaCost}}/share. Lump sum at start price: ${{lumpCost}}/share. You ended up owning {{shares}} shares. How much MORE did DCA save you compared to lump sum?",
+    "variableRules": [
+      {
+        "name": "dcaCost",
+        "options": [
+          40,
+          45,
+          50,
+          55
+        ]
+      },
+      {
+        "name": "lumpCost",
+        "options": [
+          50,
+          55,
+          60,
+          65,
+          70
+        ]
+      },
+      {
+        "name": "shares",
+        "options": [
+          100,
+          150,
+          200,
+          250
+        ]
+      }
+    ],
+    "answerFormula": "dcaVsLumpSumSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "DCA saved (per share) = lump cost \u2212 DCA cost. Total saving = diff \u00d7 shares = ${{answer}}."
+  },
+  {
+    "id": "dca_consistency_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "You consistently invest ${{monthlyAmount}}/month for {{years}} years. How much have you contributed in total?",
+    "variableRules": [
+      {
+        "name": "monthlyAmount",
+        "options": [
+          300,
+          500,
+          700,
+          1000
+        ]
+      },
+      {
+        "name": "years",
+        "options": [
+          3,
+          5,
+          7,
+          10,
+          15,
+          20
+        ]
+      }
+    ],
+    "answerFormula": "monthlyOverYears",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly \u00d7 12 \u00d7 years. ${{monthlyAmount}} \u00d7 12 \u00d7 {{years}} = ${{answer}}."
+  },
+  {
+    "id": "fund_fee_annual_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "Your portfolio is worth ${{portfolioValue}}. Your fund has a {{expenseRatio}}% expense ratio. How much do you pay in fees per year?",
+    "variableRules": [
+      {
+        "name": "portfolioValue",
+        "options": [
+          50000,
+          100000,
+          150000,
+          200000,
+          300000,
+          500000
+        ]
+      },
+      {
+        "name": "expenseRatio",
+        "options": [
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5
+        ]
+      }
+    ],
+    "answerFormula": "annualFundFee",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Portfolio \u00d7 expense ratio. ${{portfolioValue}} \u00d7 {{expenseRatio}}% = ${{answer}}/year."
+  },
+  {
+    "id": "fund_fee_diff_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Compare Fund A ({{expenseRatioA}}%) vs Fund B ({{expenseRatioB}}%) on a ${{portfolioValue}} portfolio. What's the annual fee difference?",
+    "variableRules": [
+      {
+        "name": "portfolioValue",
+        "options": [
+          100000,
+          200000,
+          300000,
+          500000
+        ]
+      },
+      {
+        "name": "expenseRatioA",
+        "options": [
+          0.5,
+          0.75,
+          1,
+          1.25
+        ]
+      },
+      {
+        "name": "expenseRatioB",
+        "options": [
+          0.03,
+          0.05,
+          0.1,
+          0.2
+        ]
+      }
+    ],
+    "answerFormula": "feeDifferenceAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(ratioA \u2212 ratioB) \u00d7 portfolio. ({{expenseRatioA}}% \u2212 {{expenseRatioB}}%) \u00d7 ${{portfolioValue}} = ${{answer}}/year saved."
+  },
+  {
+    "id": "fund_fee_compare_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "An index fund charges {{expenseRatio}}% on a ${{portfolioValue}} portfolio. Annual fee?",
+    "variableRules": [
+      {
+        "name": "portfolioValue",
+        "options": [
+          25000,
+          50000,
+          100000,
+          150000
+        ]
+      },
+      {
+        "name": "expenseRatio",
+        "options": [
+          0.03,
+          0.05,
+          0.1,
+          0.2,
+          0.5
+        ]
+      }
+    ],
+    "answerFormula": "annualFundFee",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "${{portfolioValue}} \u00d7 {{expenseRatio}}% = ${{answer}}. Index funds typically charge under 0.2%."
+  },
+  {
+    "id": "fund_fee_decade_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "Over 10 years, a {{expenseRatioA}}% fund vs a {{expenseRatioB}}% fund on a ${{portfolioValue}} portfolio. How much MORE do you pay in fees (ignoring growth)?",
+    "variableRules": [
+      {
+        "name": "portfolioValue",
+        "options": [
+          100000,
+          150000,
+          200000,
+          300000
+        ]
+      },
+      {
+        "name": "expenseRatioA",
+        "options": [
+          1,
+          1.25,
+          1.5
+        ]
+      },
+      {
+        "name": "expenseRatioB",
+        "options": [
+          0.05,
+          0.1,
+          0.2
+        ]
+      }
+    ],
+    "answerFormula": "feeCostOverYears",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(rateA \u2212 rateB) \u00d7 portfolio \u00d7 10 years = ${{answer}}. And this ignores the lost compounding."
+  },
+  {
+    "id": "fund_fee_30yr_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "Rule of thumb: every 0.5% in extra fees costs ~10% of your 30-year final balance. If your projected balance is ${{projectedBalance}} and you're paying {{extraFee}}% more in fees than necessary, roughly how much are you losing?",
+    "variableRules": [
+      {
+        "name": "projectedBalance",
+        "options": [
+          300000,
+          500000,
+          750000,
+          1000000
+        ]
+      },
+      {
+        "name": "extraFee",
+        "options": [
+          0.5,
+          1,
+          1.5
+        ]
+      }
+    ],
+    "answerFormula": "feeImpact30yr",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Lost balance \u2248 projected \u00d7 extra fee \u00d7 20. ${{projectedBalance}} \u00d7 {{extraFee}}% \u00d7 20 = ${{answer}}."
+  },
+  {
+    "id": "ef_essentials_sum_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "Monthly essentials: rent ${{rent}}, food ${{food}}, insurance ${{insurance}}, transport ${{transport}}. What's your essential monthly expense total?",
+    "variableRules": [
+      {
+        "name": "rent",
+        "options": [
+          1200,
+          1500,
+          1800,
+          2000,
+          2400
+        ]
+      },
+      {
+        "name": "food",
+        "options": [
+          300,
+          400,
+          500,
+          600
+        ]
+      },
+      {
+        "name": "insurance",
+        "options": [
+          150,
+          200,
+          250,
+          300
+        ]
+      },
+      {
+        "name": "transport",
+        "options": [
+          100,
+          200,
+          300,
+          400
+        ]
+      }
+    ],
+    "answerFormula": "essentialsMonthlyFour",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Add them: ${{rent}} + ${{food}} + ${{insurance}} + ${{transport}} = ${{answer}}/month."
+  },
+  {
+    "id": "ef_target_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "Your essential expenses are ${{essentials}}/month. What's your 6-month emergency fund target?",
+    "variableRules": [
+      {
+        "name": "essentials",
+        "options": [
+          1800,
+          2200,
+          2600,
+          3000,
+          3500,
+          4000
+        ]
+      }
+    ],
+    "answerFormula": "emergencyFundSixMonths",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Essentials \u00d7 6. ${{essentials}} \u00d7 6 = ${{answer}}."
+  },
+  {
+    "id": "ef_runway_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "You have ${{savings}} saved. Essentials cost ${{essentials}}/month. How many months of runway does that give you?",
+    "variableRules": [
+      {
+        "name": "savings",
+        "options": [
+          5000,
+          8000,
+          12000,
+          15000,
+          20000,
+          25000
+        ]
+      },
+      {
+        "name": "essentials",
+        "options": [
+          2000,
+          2500,
+          3000,
+          3500,
+          4000
+        ]
+      }
+    ],
+    "answerFormula": "monthsOfRunway",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Savings \u00f7 essentials. ${{savings}} \u00f7 ${{essentials}} = ~{{answer}} months."
+  },
+  {
+    "id": "ef_runway_after_cut_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "You have ${{savings}} saved with ${{essentials}}/month in essentials. If you cut ${{cutAmount}} from non-essentials, how many months of runway do you gain?",
+    "variableRules": [
+      {
+        "name": "savings",
+        "options": [
+          8000,
+          10000,
+          12000,
+          15000,
+          20000
+        ]
+      },
+      {
+        "name": "essentials",
+        "options": [
+          2500,
+          3000,
+          3500,
+          4000
+        ]
+      },
+      {
+        "name": "cutAmount",
+        "options": [
+          200,
+          300,
+          500,
+          800
+        ]
+      }
+    ],
+    "answerFormula": "runwayGainFromCuts",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "New runway = savings \u00f7 (essentials \u2212 cut). Gain = new \u2212 original = {{answer}} extra months."
+  },
+  {
+    "id": "ef_months_to_target_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "You want a ${{target}} emergency fund. You have ${{currentSaved}} saved and can add ${{monthlyContribution}}/month. How many months until you hit the target?",
+    "variableRules": [
+      {
+        "name": "target",
+        "options": [
+          10000,
+          15000,
+          18000,
+          24000
+        ]
+      },
+      {
+        "name": "currentSaved",
+        "options": [
+          2000,
+          3000,
+          5000,
+          7000
+        ]
+      },
+      {
+        "name": "monthlyContribution",
+        "options": [
+          200,
+          300,
+          400,
+          500,
+          800
+        ]
+      }
+    ],
+    "answerFormula": "monthsToReachEFTarget",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(target \u2212 current) \u00f7 monthly. (${{target}} \u2212 ${{currentSaved}}) \u00f7 ${{monthlyContribution}} = ~{{answer}} months."
+  },
+  {
+    "id": "yield_gross_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "A rental property costs ${{propertyPrice}}. Monthly rent is ${{monthlyRent}}. What's the gross annual yield (%)?",
+    "variableRules": [
+      {
+        "name": "propertyPrice",
+        "options": [
+          200000,
+          250000,
+          300000,
+          400000,
+          500000
+        ]
+      },
+      {
+        "name": "monthlyRent",
+        "options": [
+          1500,
+          1800,
+          2000,
+          2400,
+          2800,
+          3000
+        ]
+      }
+    ],
+    "answerFormula": "grossRentalYield",
+    "answerFormat": "percent",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Annual rent \u00f7 price \u00d7 100. (${{monthlyRent}} \u00d7 12) \u00f7 ${{propertyPrice}} \u00d7 100 = {{answer}}%."
+  },
+  {
+    "id": "yield_monthly_check_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "Quick check: a property costs ${{propertyPrice}} and brings in ${{monthlyRent}}/month. What's the annual rent?",
+    "variableRules": [
+      {
+        "name": "propertyPrice",
+        "options": [
+          200000,
+          300000,
+          400000
+        ]
+      },
+      {
+        "name": "monthlyRent",
+        "options": [
+          1500,
+          2000,
+          2500,
+          3000
+        ]
+      }
+    ],
+    "answerFormula": "annualFromMonthlyRent",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly \u00d7 12. ${{monthlyRent}} \u00d7 12 = ${{answer}}/year. Compare to 5% of price for a quick yield check."
+  },
+  {
+    "id": "yield_compare_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Property A: ${{priceA}} price, ${{rentA}}/month rent. Property B: ${{priceB}} price, ${{rentB}}/month rent. By how many percentage points is the higher gross yield ahead?",
+    "variableRules": [
+      {
+        "name": "priceA",
+        "options": [
+          200000,
+          250000,
+          300000
+        ]
+      },
+      {
+        "name": "rentA",
+        "options": [
+          1400,
+          1600,
+          1800,
+          2000
+        ]
+      },
+      {
+        "name": "priceB",
+        "options": [
+          350000,
+          400000,
+          500000
+        ]
+      },
+      {
+        "name": "rentB",
+        "options": [
+          2000,
+          2200,
+          2500,
+          2800,
+          3000
+        ]
+      }
+    ],
+    "answerFormula": "yieldComparison",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Yield A = (${{rentA}} \u00d7 12)/${{priceA}} \u00d7 100. Yield B same with B's numbers. Diff = {{answer}} pp."
+  },
+  {
+    "id": "yield_net_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "A property costs ${{propertyPrice}} with ${{monthlyRent}}/month rent. After 10% management fee and 8% vacancy loss, what's the net yield?",
+    "variableRules": [
+      {
+        "name": "propertyPrice",
+        "options": [
+          200000,
+          300000,
+          400000,
+          500000
+        ]
+      },
+      {
+        "name": "monthlyRent",
+        "options": [
+          1500,
+          2000,
+          2500,
+          3000,
+          3500
+        ]
+      }
+    ],
+    "answerFormula": "netRentalYield",
+    "answerFormat": "percent",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Gross \u00d7 (1 \u2212 0.10 \u2212 0.08) = gross \u00d7 0.82. {{answer}}% net yield."
+  },
+  {
+    "id": "yield_decision_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "A property is listed at ${{propertyPrice}}. To hit a {{targetYield}}% gross yield, what monthly rent do you need?",
+    "variableRules": [
+      {
+        "name": "propertyPrice",
+        "options": [
+          200000,
+          250000,
+          300000,
+          400000,
+          500000
+        ]
+      },
+      {
+        "name": "targetYield",
+        "options": [
+          5,
+          6,
+          7,
+          8
+        ]
+      }
+    ],
+    "answerFormula": "requiredRentForYield",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual rent needed = price \u00d7 target%. Monthly = \u00f7 12. ${{propertyPrice}} \u00d7 {{targetYield}}% \u00f7 12 = ${{answer}}/mo."
+  },
+  {
+    "id": "on_track_multiple_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "You've saved ${{currentSavings}} for retirement. Your current salary is ${{currentSalary}}. What's your savings multiple?",
+    "variableRules": [
+      {
+        "name": "currentSavings",
+        "options": [
+          10000,
+          25000,
+          50000,
+          80000,
+          120000,
+          200000
+        ]
+      },
+      {
+        "name": "currentSalary",
+        "options": [
+          50000,
+          60000,
+          70000,
+          80000,
+          100000
+        ]
+      }
+    ],
+    "answerFormula": "savingsMultiple",
+    "answerFormat": "percent",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Savings \u00f7 salary. ${{currentSavings}} \u00f7 ${{currentSalary}} = {{answer}}% (i.e. ~{{answer}}/100 \u00d7 salary)."
+  },
+  {
+    "id": "on_track_target_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "Fidelity's rule: by age {{targetAge}}, you should have {{targetMultiple}}\u00d7 your salary saved. If your salary is ${{currentSalary}}, what's your target savings?",
+    "variableRules": [
+      {
+        "name": "currentSalary",
+        "options": [
+          50000,
+          60000,
+          70000,
+          80000,
+          90000,
+          100000
+        ]
+      },
+      {
+        "name": "targetMultiple",
+        "options": [
+          1,
+          2,
+          3,
+          6
+        ]
+      },
+      {
+        "name": "targetAge",
+        "options": [
+          30,
+          35,
+          40,
+          50
+        ]
+      }
+    ],
+    "answerFormula": "savingsTargetByMultiple",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Salary \u00d7 multiple. ${{currentSalary}} \u00d7 {{targetMultiple}} = ${{answer}}."
+  },
+  {
+    "id": "on_track_gap_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "You're {{currentAge}} years old, earning ${{currentSalary}}, with ${{currentSavings}} saved. Your age-based target is {{targetMultiple}}\u00d7 salary. How much is your savings gap?",
+    "variableRules": [
+      {
+        "name": "currentAge",
+        "options": [
+          30,
+          35,
+          40,
+          45
+        ]
+      },
+      {
+        "name": "currentSalary",
+        "options": [
+          60000,
+          70000,
+          80000,
+          90000
+        ]
+      },
+      {
+        "name": "currentSavings",
+        "options": [
+          40000,
+          60000,
+          100000,
+          150000
+        ]
+      },
+      {
+        "name": "targetMultiple",
+        "options": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    ],
+    "answerFormula": "gapToSavingsTarget",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Target = salary \u00d7 multiple. Gap = target \u2212 current = ${{answer}}."
+  },
+  {
+    "id": "on_track_close_gap_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "You're ${{gap}} behind your savings target. You want to close the gap in {{years}} years. How much extra per month do you need to save?",
+    "variableRules": [
+      {
+        "name": "gap",
+        "options": [
+          10000,
+          20000,
+          30000,
+          50000,
+          75000
+        ]
+      },
+      {
+        "name": "years",
+        "options": [
+          3,
+          5,
+          7,
+          10
+        ]
+      }
+    ],
+    "answerFormula": "monthlyToCloseGap",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Gap \u00f7 (years \u00d7 12). ${{gap}} \u00f7 ({{years}} \u00d7 12) = ${{answer}}/month."
+  },
+  {
+    "id": "on_track_extra_save_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "promptTemplate": "Salary ${{currentSalary}}, current contribution rate {{currentRate}}%. You want to bump to {{targetRate}}%. How much MORE per month do you contribute?",
+    "variableRules": [
+      {
+        "name": "currentSalary",
+        "options": [
+          50000,
+          60000,
+          70000,
+          80000
+        ]
+      },
+      {
+        "name": "currentRate",
+        "options": [
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      {
+        "name": "targetRate",
+        "options": [
+          10,
+          12,
+          15
+        ]
+      }
+    ],
+    "answerFormula": "extraMonthlyFromRateBump",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(target \u2212 current) \u00d7 salary \u00f7 12. ({{targetRate}}% \u2212 {{currentRate}}%) \u00d7 ${{currentSalary}} \u00f7 12 = ${{answer}}."
+  },
+  {
+    "id": "loan_interest_tax_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "You take out a ${{loanAmount}} loan. Monthly payment ${{monthlyPayment}} \u00d7 {{numMonths}} months. What's your 'interest tax' (total interest \u00f7 loan amount, as %)?",
+    "variableRules": [
+      {
+        "name": "loanAmount",
+        "options": [
+          5000,
+          7000,
+          10000,
+          15000
+        ]
+      },
+      {
+        "name": "monthlyPayment",
+        "options": [
+          200,
+          250,
+          300,
+          400,
+          500
+        ]
+      },
+      {
+        "name": "numMonths",
+        "options": [
+          36,
+          48,
+          60
+        ]
+      }
+    ],
+    "answerFormula": "interestTaxPercent",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = payment \u00d7 months. Interest = total \u2212 loan. Interest tax = interest \u00f7 loan \u00d7 100 = {{answer}}%."
+  },
+  {
+    "id": "save_vs_borrow_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "Buy now: ${{monthlyPayment}}/mo \u00d7 {{numMonths}} months = total. Or save ${{savedAmount}}/month for {{saveMonths}} months and pay cash for ${{purchasePrice}}. How much do you save by waiting?",
+    "variableRules": [
+      {
+        "name": "purchasePrice",
+        "options": [
+          2000,
+          3000,
+          4000,
+          5000
+        ]
+      },
+      {
+        "name": "monthlyPayment",
+        "options": [
+          100,
+          150,
+          200,
+          250
+        ]
+      },
+      {
+        "name": "numMonths",
+        "options": [
+          24,
+          36,
+          48
+        ]
+      },
+      {
+        "name": "savedAmount",
+        "options": [
+          150,
+          200,
+          250,
+          350
+        ]
+      },
+      {
+        "name": "saveMonths",
+        "options": [
+          12,
+          18,
+          24
+        ]
+      }
+    ],
+    "answerFormula": "saveVsBorrowDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Borrow total = ${{monthlyPayment}} \u00d7 {{numMonths}}. Cash = ${{purchasePrice}}. Saving = borrow \u2212 cash = ${{answer}}."
+  },
+  {
+    "id": "new_dti_with_payment_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "Monthly income ${{monthlyIncome}}. Current monthly debt payments ${{currentDebt}}. You're considering a ${{newPayment}}/month car loan. What's your new DTI ratio?",
+    "variableRules": [
+      {
+        "name": "monthlyIncome",
+        "options": [
+          4000,
+          5000,
+          6000,
+          7000,
+          8000
+        ]
+      },
+      {
+        "name": "currentDebt",
+        "options": [
+          400,
+          600,
+          800,
+          1000,
+          1200
+        ]
+      },
+      {
+        "name": "newPayment",
+        "options": [
+          250,
+          350,
+          450,
+          550
+        ]
+      }
+    ],
+    "answerFormula": "newDTIwithPayment",
+    "answerFormat": "percent",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "(currentDebt + newPayment) \u00f7 income \u00d7 100 = (${{currentDebt}} + ${{newPayment}}) \u00f7 ${{monthlyIncome}} \u00d7 100 = {{answer}}%."
+  },
+  {
+    "id": "principal_reduction_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "Credit card balance ${{balance}} at {{apr}}% APR. You pay ${{totalPayment}} this month ({{minPayment}} minimum + ${{extraPayment}} extra). How much of your payment goes to principal (after interest)?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          3000,
+          4000,
+          5000,
+          6000,
+          7500
+        ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          18,
+          20,
+          22,
+          24,
+          26
+        ]
+      },
+      {
+        "name": "minPayment",
+        "options": [
+          60,
+          80,
+          100,
+          120
+        ]
+      },
+      {
+        "name": "extraPayment",
+        "options": [
+          100,
+          150,
+          200,
+          300
+        ]
+      },
+      {
+        "name": "totalPayment",
+        "options": [
+          200,
+          250,
+          300,
+          400,
+          500
+        ]
+      }
+    ],
+    "answerFormula": "principalReductionWithExtra",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Monthly interest = balance \u00d7 APR \u00f7 1200. Principal portion = total payment \u2212 interest = ${{answer}}."
+  },
+  {
+    "id": "debt_priority_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "Debt A: {{aprA}}% APR. Debt B: {{aprB}}% APR. Under the avalanche method, by how many percentage points does the priority debt's rate exceed the other?",
+    "variableRules": [
+      {
+        "name": "aprA",
+        "options": [
+          18,
+          20,
+          22,
+          24,
+          26,
+          28
+        ]
+      },
+      {
+        "name": "aprB",
+        "options": [
+          10,
+          12,
+          14,
+          16,
+          18
+        ]
+      }
+    ],
+    "answerFormula": "aprDifference",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Higher APR \u2212 lower APR = {{answer}} percentage points. That's why avalanche targets the higher rate."
+  },
+  {
+    "id": "avalanche_monthly_saving_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "You have ${{extraPayment}} extra/month to pay debt. Putting it on a {{highRate}}% card vs a {{lowRate}}% card. How much MORE monthly interest do you save by targeting the higher rate?",
+    "variableRules": [
+      {
+        "name": "extraPayment",
+        "options": [
+          100,
+          150,
+          200,
+          300,
+          500
+        ]
+      },
+      {
+        "name": "highRate",
+        "options": [
+          22,
+          24,
+          26,
+          28
+        ]
+      },
+      {
+        "name": "lowRate",
+        "options": [
+          10,
+          12,
+          15,
+          18
+        ]
+      }
+    ],
+    "answerFormula": "monthlyInterestSavedByPriority",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Extra \u00d7 (highRate \u2212 lowRate) \u00f7 12 \u00f7 100 = ${{answer}}/month extra savings via avalanche."
+  },
+  {
+    "id": "snowball_difference_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "You have a ${{extraPayment}}/month surplus and two debts: ${{balanceA}} at {{aprA}}% APR and ${{balanceB}} at {{aprB}}% APR. Snowball targets the smaller balance. By how much more annual interest does avalanche save than snowball?",
+    "variableRules": [
+      {
+        "name": "extraPayment",
+        "options": [
+          100,
+          200,
+          300,
+          500
+        ]
+      },
+      {
+        "name": "balanceA",
+        "options": [
+          2000,
+          3000,
+          5000
+        ]
+      },
+      {
+        "name": "aprA",
+        "options": [
+          22,
+          24,
+          26
+        ]
+      },
+      {
+        "name": "balanceB",
+        "options": [
+          800,
+          1200,
+          1800
+        ]
+      },
+      {
+        "name": "aprB",
+        "options": [
+          12,
+          15,
+          18
+        ]
+      }
+    ],
+    "answerFormula": "avalancheVsSnowballSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Avalanche puts ${{extraPayment}} on A (higher rate). Snowball puts it on B. Annual diff = extra \u00d7 (aprA \u2212 aprB) \u00f7 100 = ${{answer}}."
+  },
+  {
+    "id": "debt_compare_rates_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "On a ${{balance}} balance, the monthly interest at {{apr}}% APR is what?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          1000,
+          2000,
+          3000,
+          5000,
+          7000
+        ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          15,
+          18,
+          22,
+          25
+        ]
+      }
+    ],
+    "answerFormula": "creditCardMonthlyInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Balance \u00d7 APR \u00f7 1200. ${{balance}} \u00d7 {{apr}}% \u00f7 12 = ${{answer}}/month."
+  },
+  {
+    "id": "psychology_premium_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "Over 24 months, avalanche saves ${{monthlySaving}}/month more than snowball. What's the 'psychology premium' you pay (total) for the snowball approach?",
+    "variableRules": [
+      {
+        "name": "monthlySaving",
+        "options": [
+          5,
+          10,
+          15,
+          20,
+          30
+        ]
+      }
+    ],
+    "answerFormula": "psychologyPremium24mo",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly difference \u00d7 24. ${{monthlySaving}} \u00d7 24 = ${{answer}} 'paid' for psychological wins."
+  },
+  {
+    "id": "apr_apy_which_higher_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "A credit card has {{apr}}% APR. What's the equivalent APY (with monthly compounding)?",
+    "variableRules": [
+      {
+        "name": "apr",
+        "options": [
+          12,
+          15,
+          18,
+          20,
+          22,
+          24
+        ]
+      }
+    ],
+    "answerFormula": "apyFromApr",
+    "answerFormat": "percent",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "APY = (1 + APR/12)^12 \u2212 1. {{apr}}% APR \u2192 ~{{answer}}% APY. Always higher than APR."
+  },
+  {
+    "id": "monthly_rate_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "A loan with {{apr}}% APR has what monthly interest rate?",
+    "variableRules": [
+      {
+        "name": "apr",
+        "options": [
+          12,
+          15,
+          18,
+          20,
+          24
+        ]
+      }
+    ],
+    "answerFormula": "monthlyRatePctFromApr",
+    "answerFormat": "percent",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "APR \u00f7 12. {{apr}}% \u00f7 12 = {{answer}}% monthly."
+  },
+  {
+    "id": "apy_from_apr_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "Savings account advertised at {{apr}}% APR with monthly compounding. What APY do you effectively earn?",
+    "variableRules": [
+      {
+        "name": "apr",
+        "options": [
+          3,
+          4,
+          4.5,
+          5,
+          5.5,
+          6
+        ]
+      }
+    ],
+    "answerFormula": "apyFromApr",
+    "answerFormat": "percent",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "APY = (1 + APR/12)^12 \u2212 1. {{apr}}% APR compounds to {{answer}}% APY."
+  },
+  {
+    "id": "apr_apy_compare_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "Two cards: Card X advertises {{aprX}}% APR. Card Y advertises {{apyY}}% APY. Which has the higher TRUE rate, and by how much in percentage points?",
+    "variableRules": [
+      {
+        "name": "aprX",
+        "options": [
+          18,
+          20,
+          22,
+          24
+        ]
+      },
+      {
+        "name": "apyY",
+        "options": [
+          19,
+          21,
+          23,
+          25
+        ]
+      }
+    ],
+    "answerFormula": "trueCardRateDiff",
+    "answerFormat": "percent",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Convert X to APY = (1 + APR/12)^12 \u2212 1. Then compare. Difference = {{answer}} pp."
+  },
+  {
+    "id": "apy_yearly_cost_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "Your credit card has {{apr}}% APR. On a ${{balance}} balance carried all year, what's the actual annual interest using APY (which includes compounding)?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          2000,
+          3000,
+          5000,
+          7000,
+          10000
+        ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          18,
+          20,
+          22,
+          24
+        ]
+      }
+    ],
+    "answerFormula": "annualInterestViaApy",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "APY = (1 + APR/12)^12 \u2212 1. Annual cost = balance \u00d7 APY = ${{answer}}. More than APR \u00d7 balance."
+  },
+  {
+    "id": "bnpl_simple_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "A {{numPayments}}-payment BNPL plan of ${{paymentAmount}} each. Total cost?",
+    "variableRules": [
+      {
+        "name": "numPayments",
+        "options": [
+          4,
+          6,
+          8,
+          12
+        ]
+      },
+      {
+        "name": "paymentAmount",
+        "options": [
+          25,
+          50,
+          75,
+          100,
+          150,
+          200
+        ]
+      }
+    ],
+    "answerFormula": "bnplTotal",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "{{numPayments}} \u00d7 ${{paymentAmount}} = ${{answer}}."
+  },
+  {
+    "id": "bnpl_late_fee_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "You buy a ${{originalPrice}} item on a 4-payment BNPL plan (${{paymentAmount}} each). Miss one payment, $35 late fee. What's your TOTAL out-of-pocket cost?",
+    "variableRules": [
+      {
+        "name": "originalPrice",
+        "options": [
+          100,
+          200,
+          300,
+          400,
+          500,
+          800
+        ]
+      },
+      {
+        "name": "paymentAmount",
+        "options": [
+          25,
+          50,
+          75,
+          100,
+          125,
+          200
+        ]
+      }
+    ],
+    "answerFormula": "bnplWithOneLateFee",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "4 \u00d7 payment + $35 late fee = ${{answer}}. Late fees turn 'free' BNPL into expensive credit."
+  },
+  {
+    "id": "bnpl_surcharge_pct_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "You paid ${{totalPaid}} for an item that originally cost ${{originalPrice}} (after late fees on a BNPL plan). What percentage surcharge did you pay?",
+    "variableRules": [
+      {
+        "name": "originalPrice",
+        "options": [
+          200,
+          300,
+          400,
+          500,
+          800,
+          1000
+        ]
+      },
+      {
+        "name": "totalPaid",
+        "options": [
+          235,
+          335,
+          470,
+          575,
+          870,
+          1150
+        ]
+      }
+    ],
+    "answerFormula": "bnplSurchargePercent",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(paid \u2212 original) \u00f7 original \u00d7 100. (${{totalPaid}} \u2212 ${{originalPrice}}) \u00f7 ${{originalPrice}} \u00d7 100 = {{answer}}%."
+  },
+  {
+    "id": "bnpl_stacked_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "Three active BNPL plans: ${{paymentA}}/mo, ${{paymentB}}/mo, ${{paymentC}}/mo. What's your total invisible monthly BNPL debt obligation?",
+    "variableRules": [
+      {
+        "name": "paymentA",
+        "options": [
+          25,
+          50,
+          75,
+          100
+        ]
+      },
+      {
+        "name": "paymentB",
+        "options": [
+          30,
+          40,
+          60,
+          80
+        ]
+      },
+      {
+        "name": "paymentC",
+        "options": [
+          20,
+          35,
+          50,
+          70
+        ]
+      }
+    ],
+    "answerFormula": "bnplStackedMonthly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Sum it up: ${{paymentA}} + ${{paymentB}} + ${{paymentC}} = ${{answer}}/month. Not on your credit card statement \u2014 that's the trap."
+  },
+  {
+    "id": "bnpl_annual_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "You use BNPL plans averaging ${{monthlyBnpl}}/month all year. What's your annual BNPL spending?",
+    "variableRules": [
+      {
+        "name": "monthlyBnpl",
+        "options": [
+          50,
+          100,
+          150,
+          200,
+          300
+        ]
+      }
+    ],
+    "answerFormula": "bnplAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly \u00d7 12. ${{monthlyBnpl}} \u00d7 12 = ${{answer}}/year of invisible BNPL spending."
   }
 ]

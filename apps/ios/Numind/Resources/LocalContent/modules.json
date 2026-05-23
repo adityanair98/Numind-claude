@@ -63,12 +63,16 @@
     "mascot": "📈",
     "glyph": "$",
     "lessonIds": [
-      "simple_interest",
       "rule_of_72",
       "roi_basic",
       "investing_401k_match",
       "investing_roth_vs_traditional",
-      "investing_compound_growth"
+      "investing_compound_growth",
+      "investing_dca",
+      "investing_fund_fees",
+      "investing_emergency_fund",
+      "investing_rental_yield",
+      "investing_on_track"
     ]
   },
   {
@@ -84,7 +88,10 @@
       "minimum_payment_trap",
       "loan_true_cost",
       "debt_to_income",
-      "extra_payment_power"
+      "extra_payment_power",
+      "debt_avalanche_snowball",
+      "debt_apr_vs_apy",
+      "debt_bnpl_hidden_cost"
     ]
   },
   {

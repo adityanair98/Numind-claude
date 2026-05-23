@@ -1186,6 +1186,230 @@ struct QuizEngine {
             guard let w = vars["weeklyEarnings"] else { return nil }
             return w * 50
         },
+
+        // MARK: - Investing reworks
+        "roiPercentDiff": { vars in
+            guard let costA = vars["costA"], let gainA = vars["gainA"], costA > 0,
+                  let costB = vars["costB"], let gainB = vars["gainB"], costB > 0 else { return nil }
+            return abs(gainA / costA * 100 - gainB / costB * 100)
+        },
+        "rothGrowthTaxSaved": { vars in
+            guard let value = vars["finalValue"], let rate = vars["taxRate"] else { return nil }
+            return value * rate / 100
+        },
+        "compoundPctInterest": { vars in
+            guard let final = vars["finalValue"], let contributed = vars["totalContributed"], final > 0 else { return nil }
+            return (final - contributed) / final * 100
+        },
+        "compoundDifference": { vars in
+            guard let a = vars["finalA"], let b = vars["finalB"] else { return nil }
+            return abs(a - b)
+        },
+        "compoundBackwardsFromGoal": { vars in
+            guard let goal = vars["goal"], let multiplier = vars["multiplier"], multiplier > 0 else { return nil }
+            return goal / multiplier
+        },
+
+        // MARK: - Investing: Dollar-Cost Averaging
+        "dcaTotalInvested": { vars in
+            guard let amt = vars["monthlyAmount"], let m = vars["months"] else { return nil }
+            return amt * m
+        },
+        "sharesBought": { vars in
+            guard let amt = vars["investmentAmount"], let price = vars["pricePerShare"], price > 0 else { return nil }
+            return (amt / price).rounded(.down)
+        },
+        "dcaAverageCost": { vars in
+            guard let total = vars["totalInvested"], let shares = vars["totalShares"], shares > 0 else { return nil }
+            return total / shares
+        },
+        "dcaVsLumpSumSaving": { vars in
+            guard let dca = vars["dcaCost"], let lump = vars["lumpCost"], let shares = vars["shares"] else { return nil }
+            return (lump - dca) * shares
+        },
+        "monthlyOverYears": { vars in
+            guard let amt = vars["monthlyAmount"], let yrs = vars["years"] else { return nil }
+            return amt * 12 * yrs
+        },
+
+        // MARK: - Investing: Fund fees
+        "annualFundFee": { vars in
+            guard let pv = vars["portfolioValue"], let er = vars["expenseRatio"] else { return nil }
+            return pv * er / 100
+        },
+        "feeDifferenceAnnual": { vars in
+            guard let pv = vars["portfolioValue"],
+                  let ra = vars["expenseRatioA"],
+                  let rb = vars["expenseRatioB"] else { return nil }
+            return pv * (ra - rb) / 100
+        },
+        "feeCostOverYears": { vars in
+            guard let pv = vars["portfolioValue"],
+                  let ra = vars["expenseRatioA"],
+                  let rb = vars["expenseRatioB"] else { return nil }
+            return pv * (ra - rb) / 100 * 10
+        },
+        "feeImpact30yr": { vars in
+            guard let proj = vars["projectedBalance"], let ef = vars["extraFee"] else { return nil }
+            // Rule of thumb: every 0.5% extra fee costs ~10% of final balance over 30 yrs
+            return proj * ef / 100 * 20
+        },
+
+        // MARK: - Investing: Emergency fund
+        "essentialsMonthlyFour": { vars in
+            guard let r = vars["rent"], let f = vars["food"],
+                  let i = vars["insurance"], let t = vars["transport"] else { return nil }
+            return r + f + i + t
+        },
+        "emergencyFundSixMonths": { vars in
+            guard let e = vars["essentials"] else { return nil }
+            return e * 6
+        },
+        "monthsOfRunway": { vars in
+            guard let s = vars["savings"], let e = vars["essentials"], e > 0 else { return nil }
+            return (s / e).rounded(.down)
+        },
+        "runwayGainFromCuts": { vars in
+            guard let s = vars["savings"], let e = vars["essentials"],
+                  let cut = vars["cutAmount"], e > cut else { return nil }
+            let original = (s / e).rounded(.down)
+            let after = (s / (e - cut)).rounded(.down)
+            return after - original
+        },
+        "monthsToReachEFTarget": { vars in
+            guard let target = vars["target"], let current = vars["currentSaved"],
+                  let monthly = vars["monthlyContribution"], monthly > 0 else { return nil }
+            return ((target - current) / monthly).rounded(.up)
+        },
+
+        // MARK: - Investing: Rental yield
+        "grossRentalYield": { vars in
+            guard let rent = vars["monthlyRent"], let price = vars["propertyPrice"], price > 0 else { return nil }
+            return (rent * 12) / price * 100
+        },
+        "annualFromMonthlyRent": { vars in
+            guard let rent = vars["monthlyRent"] else { return nil }
+            return rent * 12
+        },
+        "yieldComparison": { vars in
+            guard let pA = vars["priceA"], let rA = vars["rentA"], pA > 0,
+                  let pB = vars["priceB"], let rB = vars["rentB"], pB > 0 else { return nil }
+            return abs((rA * 12 / pA) - (rB * 12 / pB)) * 100
+        },
+        "netRentalYield": { vars in
+            guard let rent = vars["monthlyRent"], let price = vars["propertyPrice"], price > 0 else { return nil }
+            return (rent * 12 * 0.82) / price * 100  // 10% mgmt + 8% vacancy
+        },
+        "requiredRentForYield": { vars in
+            guard let price = vars["propertyPrice"], let yield = vars["targetYield"] else { return nil }
+            return price * yield / 100 / 12
+        },
+
+        // MARK: - Investing: On Track (Am I saving enough?)
+        "savingsMultiple": { vars in
+            guard let s = vars["currentSavings"], let sal = vars["currentSalary"], sal > 0 else { return nil }
+            return s / sal * 100  // expressed as percent (e.g., 123% = 1.23x)
+        },
+        "savingsTargetByMultiple": { vars in
+            guard let sal = vars["currentSalary"], let m = vars["targetMultiple"] else { return nil }
+            return sal * m
+        },
+        "gapToSavingsTarget": { vars in
+            guard let sal = vars["currentSalary"], let m = vars["targetMultiple"],
+                  let saved = vars["currentSavings"] else { return nil }
+            return max(0, sal * m - saved)
+        },
+        "monthlyToCloseGap": { vars in
+            guard let gap = vars["gap"], let yrs = vars["years"], yrs > 0 else { return nil }
+            return gap / (yrs * 12)
+        },
+        "extraMonthlyFromRateBump": { vars in
+            guard let sal = vars["currentSalary"], let cur = vars["currentRate"], let tgt = vars["targetRate"] else { return nil }
+            return (tgt - cur) * sal / 100 / 12
+        },
+
+        // MARK: - Debt reworks
+        "interestTaxPercent": { vars in
+            guard let loan = vars["loanAmount"], let pay = vars["monthlyPayment"], let m = vars["numMonths"], loan > 0 else { return nil }
+            let totalInterest = pay * m - loan
+            return totalInterest / loan * 100
+        },
+        "saveVsBorrowDiff": { vars in
+            guard let pay = vars["monthlyPayment"], let months = vars["numMonths"],
+                  let cash = vars["purchasePrice"] else { return nil }
+            return pay * months - cash
+        },
+        "newDTIwithPayment": { vars in
+            guard let income = vars["monthlyIncome"], let cur = vars["currentDebt"],
+                  let np = vars["newPayment"], income > 0 else { return nil }
+            return (cur + np) / income * 100
+        },
+        "principalReductionWithExtra": { vars in
+            guard let bal = vars["balance"], let apr = vars["apr"],
+                  let total = vars["totalPayment"] else { return nil }
+            let interest = bal * apr / 100 / 12
+            return total - interest
+        },
+
+        // MARK: - Debt: Avalanche vs Snowball
+        "aprDifference": { vars in
+            guard let a = vars["aprA"], let b = vars["aprB"] else { return nil }
+            return abs(a - b)
+        },
+        "monthlyInterestSavedByPriority": { vars in
+            guard let extra = vars["extraPayment"], let high = vars["highRate"], let low = vars["lowRate"] else { return nil }
+            return extra * (high - low) / 100 / 12
+        },
+        "avalancheVsSnowballSaving": { vars in
+            guard let extra = vars["extraPayment"], let aprA = vars["aprA"], let aprB = vars["aprB"] else { return nil }
+            return extra * (aprA - aprB) / 100
+        },
+        "psychologyPremium24mo": { vars in
+            guard let m = vars["monthlySaving"] else { return nil }
+            return m * 24
+        },
+
+        // MARK: - Debt: APR vs APY
+        "apyFromApr": { vars in
+            guard let apr = vars["apr"] else { return nil }
+            return (pow(1 + apr / 100 / 12, 12) - 1) * 100
+        },
+        "monthlyRatePctFromApr": { vars in
+            guard let apr = vars["apr"] else { return nil }
+            return apr / 12
+        },
+        "trueCardRateDiff": { vars in
+            guard let aprX = vars["aprX"], let apyY = vars["apyY"] else { return nil }
+            let apyX = (pow(1 + aprX / 100 / 12, 12) - 1) * 100
+            return abs(apyX - apyY)
+        },
+        "annualInterestViaApy": { vars in
+            guard let bal = vars["balance"], let apr = vars["apr"] else { return nil }
+            let apy = pow(1 + apr / 100 / 12, 12) - 1
+            return bal * apy
+        },
+
+        // MARK: - Debt: BNPL
+        "bnplTotal": { vars in
+            guard let n = vars["numPayments"], let amt = vars["paymentAmount"] else { return nil }
+            return n * amt
+        },
+        "bnplWithOneLateFee": { vars in
+            guard let amt = vars["paymentAmount"] else { return nil }
+            return 4 * amt + 35  // 4 payments + standard $35 late fee
+        },
+        "bnplSurchargePercent": { vars in
+            guard let orig = vars["originalPrice"], let paid = vars["totalPaid"], orig > 0 else { return nil }
+            return (paid - orig) / orig * 100
+        },
+        "bnplStackedMonthly": { vars in
+            guard let a = vars["paymentA"], let b = vars["paymentB"], let c = vars["paymentC"] else { return nil }
+            return a + b + c
+        },
+        "bnplAnnual": { vars in
+            guard let m = vars["monthlyBnpl"] else { return nil }
+            return m * 12
+        },
     ]
 
     private static func compute(formula: String, variables: [String: Double]) -> Double? {
