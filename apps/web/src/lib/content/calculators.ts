@@ -7,7 +7,12 @@ export type CalculatorIconName =
   | "landmark"
   | "shield"
   | "car"
-  | "graduation-cap";
+  | "graduation-cap"
+  | "credit-card"
+  | "badge-percent"
+  | "key"
+  | "heart-pulse"
+  | "shield-check";
 
 export interface CalculatorInfo {
   name: string;
@@ -79,5 +84,40 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Compare repayment plans, refinancing savings, and PSLF forgiveness amounts.",
     icon: "graduation-cap",
+  },
+  {
+    name: "BNPL Calculator",
+    slug: "bnpl-calculator",
+    description:
+      "See the real cost of Buy Now Pay Later — late fees, surcharge %, and stacked plan debt.",
+    icon: "credit-card",
+  },
+  {
+    name: "Membership Break-even",
+    slug: "membership-calculator",
+    description:
+      "Calculate when Costco, DashPass, Uber One, and other memberships actually pay for themselves.",
+    icon: "badge-percent",
+  },
+  {
+    name: "Lease vs Buy",
+    slug: "lease-vs-buy-calculator",
+    description:
+      "Compare the true 3-year cost of leasing vs buying a car, including residual value.",
+    icon: "key",
+  },
+  {
+    name: "FSA Calculator",
+    slug: "fsa-calculator",
+    description:
+      "Find your FSA break-even election — how much to elect without losing money to use-it-or-lose-it.",
+    icon: "heart-pulse",
+  },
+  {
+    name: "Life Insurance Calculator",
+    slug: "life-insurance-calculator",
+    description:
+      "Estimate how much term life insurance you need with the 10× rule and the DIME method.",
+    icon: "shield-check",
   },
 ];

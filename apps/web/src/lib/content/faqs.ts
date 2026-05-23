@@ -231,3 +231,118 @@ export const studentLoanFAQs: FAQ[] = [
       "A quick estimate for student loan payments on a standard 10-year plan: you will pay roughly $100-$120 per month for every $10,000 borrowed. So $40,000 in loans means roughly $400-$480 per month.",
   },
 ];
+
+export const bnplFAQs: FAQ[] = [
+  {
+    question: "Is Buy Now Pay Later actually free?",
+    answer:
+      "Only if you pay every installment on time. Most BNPL services charge a late fee of around $35 (or 25% of the missed payment, whichever is greater) for any payment that's even a day late. On a $300 purchase, a single $35 late fee adds an 11.7% surcharge to the original price.",
+  },
+  {
+    question: "Does BNPL hurt my credit score?",
+    answer:
+      "It depends on the provider. Affirm and some others now report to credit bureaus, including missed payments. Klarna, Afterpay, and others may report only missed payments. As of 2025, the CFPB classifies BNPL plans as credit and is increasing scrutiny.",
+  },
+  {
+    question: "How risky is stacking multiple BNPL plans?",
+    answer:
+      "Very. Per CFPB and Bankrate research, 49% of BNPL users report financial problems and 24% have made a late payment. Stacking three plans at $75/month each creates $225/month of invisible debt that doesn't show on your credit card statement.",
+  },
+  {
+    question: "What's the safest way to use BNPL?",
+    answer:
+      "Only use it when you'd otherwise pay cash, set up autopay to avoid late fees, never stack multiple plans, and treat the payment schedule as a non-negotiable bill. If you can't afford the full price today, you probably can't afford 4 payments either.",
+  },
+];
+
+export const membershipFAQs: FAQ[] = [
+  {
+    question: "How do I know if a Costco membership is worth it?",
+    answer:
+      "Calculate your break-even uses: $65 annual fee divided by your average per-visit savings. If you typically save $8 per visit, you need 9 visits per year to break even. For households that do their main grocery shopping at Costco, this is almost always worth it.",
+  },
+  {
+    question: "Is DashPass actually a good deal?",
+    answer:
+      "DashPass costs about $9.99/month and saves you the delivery fee ($3-$8) on eligible orders. Break-even is roughly 2-4 orders per month. If you order delivery less than that, you're losing money on the membership.",
+  },
+  {
+    question: "Should I cancel memberships I rarely use?",
+    answer:
+      "Yes. Most memberships auto-renew. Audit your subscriptions quarterly — calculate your actual usage vs the break-even number. If you're below break-even consistently, cancel and resubscribe later if needed.",
+  },
+  {
+    question: "What's the catch with Amazon Prime?",
+    answer:
+      "Prime is $139/year ($14.99/month). It pays for itself if you would otherwise pay $5-$15 in shipping per order on 10+ orders annually. Plus video and music. For frequent shoppers, it's almost always worth it; for occasional shoppers, the math is closer.",
+  },
+];
+
+export const leaseVsBuyFAQs: FAQ[] = [
+  {
+    question: "Is leasing or buying a car cheaper?",
+    answer:
+      "Buying is almost always cheaper if you keep the car past the loan term. Leasing locks you into perpetual payments and you own nothing at the end. Over a 10-year period of buying one car versus leasing three, you typically save $15,000-$30,000 by buying.",
+  },
+  {
+    question: "When does leasing actually make sense?",
+    answer:
+      "When you need a business write-off, drive low mileage, want a new car every 2-3 years and don't care about ownership, or have unstable income where flexibility matters. For most people, these conditions don't apply.",
+  },
+  {
+    question: "What's a residual value and why does it matter?",
+    answer:
+      "Residual value is what the car is worth at the end of your loan or lease. When you buy, the residual value offsets your total payments — you have an asset to sell. When you lease, the residual is what determines your monthly payment, but you don't keep it.",
+  },
+  {
+    question: "How do I compare lease vs buy honestly?",
+    answer:
+      "Compare over the same time period. Lease total = monthly x months. Buy net cost = (monthly payment x months) - car's value at end. The option with the lower net cost wins. If buy net is even close to lease cost, buying wins because you also have a tradeable asset.",
+  },
+];
+
+export const fsaFAQs: FAQ[] = [
+  {
+    question: "What is the FSA 'use it or lose it' rule?",
+    answer:
+      "Funds you elect to your Flexible Spending Account at the start of the year must be spent on qualified medical or dependent care expenses by year-end (or by the grace period deadline). Anything unspent is forfeited to your employer. Some plans allow up to $640 rollover.",
+  },
+  {
+    question: "How much should I elect to my FSA?",
+    answer:
+      "Only elect what you'll definitely spend on qualified expenses. Your break-even is your election times (1 minus your tax rate). In a 25% bracket, you must spend at least 75% of your election to come out ahead — otherwise the forfeited money outweighs your tax savings.",
+  },
+  {
+    question: "What's the difference between an FSA and an HSA?",
+    answer:
+      "FSAs are use-it-or-lose-it and tied to your employer (you lose the account if you leave). HSAs roll over forever, are portable, can be invested, and have a triple tax advantage. HSAs require enrollment in a High-Deductible Health Plan; FSAs don't.",
+  },
+  {
+    question: "Can I buy things with my FSA?",
+    answer:
+      "Yes, FSAs cover qualified medical expenses including prescriptions, eyeglasses, contact lenses, dental work, doctor visit copays, OTC medications, sunscreen SPF 15+, menstrual products, and more. Check FSAStore.com for a comprehensive eligible-items list.",
+  },
+];
+
+export const lifeInsuranceFAQs: FAQ[] = [
+  {
+    question: "How much life insurance do I really need?",
+    answer:
+      "The 10× rule: multiply your annual salary by 10 for a baseline. Better: use the DIME method — Debt + Income replacement (salary x 10) + Mortgage balance + Education costs - existing savings. The result is roughly how much coverage your family needs to maintain their lifestyle if you die.",
+  },
+  {
+    question: "Should I buy term or whole life insurance?",
+    answer:
+      "Term life for almost everyone under 60. Term covers a specific period (typically 20-30 years) and is 10-15 times cheaper than whole life for the same coverage. Whole life only makes sense for specific estate planning needs or high-net-worth situations — not basic family protection.",
+  },
+  {
+    question: "How much does life insurance cost?",
+    answer:
+      "For a healthy 35-year-old, a 20-year $500,000 term policy costs roughly $25-$40/month. A 30-year $1,000,000 policy is roughly $55-$80/month. Smokers, older applicants, and those with health conditions pay more. Always shop multiple quotes — premiums vary 30-50% between insurers.",
+  },
+  {
+    question: "When can I stop carrying life insurance?",
+    answer:
+      "When your dependents would be financially OK if you died. Typically when your kids are grown and self-sufficient, your mortgage is paid off, and your retirement savings can support your spouse independently. For most people that's around age 60-70.",
+  },
+];

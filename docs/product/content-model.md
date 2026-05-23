@@ -8,8 +8,8 @@ All content is stored locally as JSON in `Resources/LocalContent/`. No backend r
 | File | Purpose | Count |
 |---|---|---|
 | `modules.json` | Module definitions (id, title, icon, color) | 10 |
-| `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 56 |
-| `quiz_templates.json` | Quiz question templates | 275 |
+| `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 78 |
+| `quiz_templates.json` | Quiz question templates | 389 |
 
 ## Module
 A group of lessons covering a topic area.
@@ -27,16 +27,16 @@ struct Module: Identifiable, Codable {
 ### V1 Modules
 | ID | Title | Icon | Lessons |
 |---|---|---|---|
-| `smart_shopping` | Smart Shopping | `cart.fill` | 10 |
-| `money_math` | Budgets & Spending | `dollarsign.circle` | 5 |
-| `salary` | Salary & Income | `briefcase` | 5 |
-| `investing` | Investing Basics | `chart.line.uptrend.xyaxis` | 6 |
-| `debt` | Debt & Loans | `creditcard` | 5 |
-| `housing` | Housing & Rent | `house.fill` | 5 |
-| `taxes` | Taxes & Paycheck | `doc.text.fill` | 5 |
-| `insurance` | Insurance & Healthcare | `cross.case.fill` | 5 |
-| `car` | Car & Big Purchases | `car.fill` | 5 |
-| `student_loans` | Student Loans & Education | `graduationcap.fill` | 5 |
+| `smart_shopping` | Smart Shopping | `cart.fill` | 8 |
+| `money_math` | Budgets & Spending | `dollarsign.circle` | 6 |
+| `salary` | Salary & Income | `briefcase` | 8 |
+| `investing` | Investing Basics | `chart.line.uptrend.xyaxis` | 10 |
+| `debt` | Debt & Loans | `creditcard` | 8 |
+| `housing` | Housing & Rent | `house.fill` | 7 |
+| `taxes` | Taxes & Paycheck | `doc.text.fill` | 7 |
+| `insurance` | Insurance & Healthcare | `cross.case.fill` | 8 |
+| `car` | Car & Big Purchases | `car.fill` | 8 |
+| `student_loans` | Student Loans & Education | `graduationcap.fill` | 8 |
 
 ## Lesson
 A short learning unit with one concept, one shortcut, and one worked example.

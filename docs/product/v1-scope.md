@@ -27,8 +27,8 @@
 
 ## Content
 - **10 modules**: Smart Shopping, Budgets & Spending, Salary, Investing, Debt, Housing & Rent, Taxes & Paycheck, Insurance & Healthcare, Car & Big Purchases, Student Loans & Education
-- **56 lessons** across all modules
-- **275 quiz templates** (~5 per lesson)
+- **78 lessons** across all modules
+- **389 quiz templates** (~5 per lesson)
 - **27 badges** across 7 categories
 
 ## Quiz System
@@ -94,7 +94,7 @@ A streak is the number of consecutive calendar days on which the user completed 
 ## Website (Built)
 Marketing site at `apps/web/` for SEO acquisition → App Store downloads.
 
-- **9 calculator tools**: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan
+- **14 calculator tools**: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan, BNPL, Membership Break-even, Lease vs Buy, FSA, Life Insurance
 - **51 state paycheck pages**: programmatic SEO (`/tools/paycheck-calculator/[state]`)
 - **40 salary amount pages**: programmatic SEO (`/tools/salary-calculator/[slug]`)
 - **Landing page**: 3D hero, animated counters, scroll-reveal sections, module showcase, app CTA

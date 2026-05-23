@@ -107,3 +107,63 @@ export const studentLoanShortcut: ShortcutContent = {
   example:
     "$35,000 in loans: ~$350-$420/month on a 10-year plan. Over 10 years, you pay ~$42,000-$50,400 total, meaning $7,000-$15,400 in interest.",
 };
+
+export const bnplShortcut: ShortcutContent = {
+  title: "The BNPL Surcharge Math",
+  teaser: "4 'easy' payments + one missed = up to a 12% surcharge on the price.",
+  steps: [
+    "Total cost as advertised = price (split into 4 payments). No interest if paid on time.",
+    "Miss one payment: industry-standard $35 late fee (some hit 25% of the missed payment).",
+    "Surcharge % = late fee divided by original price x 100. On a $300 item, $35 late = 11.7% extra.",
+  ],
+  example:
+    "$300 item on 4-payment BNPL = $75 per payment. Miss one = +$35 fee = $335 total, an 11.7% surcharge. Stack three plans? $225/month of invisible debt that doesn't show on your card statement.",
+};
+
+export const membershipShortcut: ShortcutContent = {
+  title: "The Break-even Use Rule",
+  teaser: "Monthly fee divided by per-use savings = how many uses you need to break even.",
+  steps: [
+    "Break-even uses = fee divided by per-use saving (round up). Below that, you lose money.",
+    "DashPass $10/month saving $3/order = ~4 orders/month to break even. Order 8 = save $14/month.",
+    "Annual saving once you're above break-even = (uses x saving - fee) x 12.",
+  ],
+  example:
+    "Costco at $65/year, save ~$8/visit on groceries. Break-even = $65 / $8 = 9 visits/year. Go 30 times? ($30 x $8 - $65) = $175/year saved on groceries alone.",
+};
+
+export const leaseVsBuyShortcut: ShortcutContent = {
+  title: "Lease vs Buy in 3 Years",
+  teaser: "Lease total = payments. Buy net cost = payments minus residual value.",
+  steps: [
+    "Lease cost over term = monthly lease x months. You own nothing at the end.",
+    "Buy net cost over same period = monthly payment x months - car's value at term end.",
+    "If buy net cost < lease cost, buying wins. Almost always true if you keep the car past the loan.",
+  ],
+  example:
+    "Lease $350/mo x 36 = $12,600 spent, $0 owned. Buy $500/mo x 36 = $18,000 paid, car worth $20,000 (you BUILT $2,000 equity). Buying wins by $14,600 over 3 years.",
+};
+
+export const fsaShortcut: ShortcutContent = {
+  title: "The 75% Rule for FSAs",
+  teaser: "You must spend at least (1 - tax rate) of your election to come out ahead.",
+  steps: [
+    "Tax savings = election x your marginal tax rate.",
+    "Use-it-or-lose-it: unspent funds at year-end are forfeited (some plans allow $640 rollover).",
+    "Break-even spend = election x (1 - tax rate). In a 25% bracket, you must spend 75% of what you elect.",
+  ],
+  example:
+    "Elect $2,850 at 25% bracket: save $712 in tax. Must spend at least $2,137 (75%) to come out ahead. Spend $1,800? You'd forfeit $1,050 for net -$338 — worse than not electing at all.",
+};
+
+export const lifeInsuranceShortcut: ShortcutContent = {
+  title: "The 10x Salary Rule",
+  teaser: "Multiply your annual salary by 10 for a baseline life insurance need.",
+  steps: [
+    "Quick baseline: annual salary x 10 = baseline coverage.",
+    "DIME method (better): Debt + Income (10x) + Mortgage + Education costs - savings = adjusted coverage.",
+    "Buy term, not whole life. 20-30 year term is typically 10-15x cheaper than whole life.",
+  ],
+  example:
+    "$70,000 salary: baseline = $700,000. Mortgage $280k, savings $50k: adjusted = $700k + $280k - $50k = $930,000 coverage. Term life cost: roughly $40-$60/month for a healthy 35-year-old.",
+};

@@ -48,19 +48,18 @@ They may feel slow or rusty with:
 - comparing salary offers
 
 ## V1 Modules (10 total)
-1. **Tips, Tax & Bill Split** (tips) - tip calculation, pre/post-tax, bill splitting (5 lessons)
-2. **Discounts & Shopping** (discounts) - percentage off, BOGO, stacked discounts, unit pricing (5 lessons)
-3. **Budgets & Spending** (money_math) - budgeting, subscriptions, cost per use, sales tax, cart estimation (5 lessons)
-4. **Salary & Income** (salary) - net pay, raises, overtime, pay period conversion (4 lessons)
-5. **Investing Basics** (investing) - simple interest, Rule of 72, ROI, 401k match, Roth vs Traditional, compound growth (6 lessons)
-6. **Debt & Loans** (debt) - credit card interest, minimum payments, loans, DTI, extra payments (5 lessons)
-7. **Housing & Rent** (housing) - rent affordability (28% rule), rent increases, move-in costs, price per sqft, mortgage vs rent (5 lessons)
-8. **Taxes & Paycheck** (taxes) - marginal tax brackets, paycheck deductions, gross-to-net, tax refund estimation, self-employment tax (5 lessons)
-9. **Insurance & Healthcare** (insurance) - deductible vs premium, copays & coinsurance, OOP max, HDHP vs PPO, HSA advantage (5 lessons)
-10. **Car & Big Purchases** (car) - monthly vs total cost, loan terms, down payment, 20/4/10 rule, depreciation (5 lessons)
-11. **Student Loans & Education** (student_loans) - monthly payments, total cost, refinancing, IDR, PSLF (5 lessons)
+1. **Smart Shopping** (smart_shopping) - tipping shortcuts, bill splitting, stacked discounts, BOGO math, coupon vs cashback, discount + tax, membership break-even (8 lessons)
+2. **Budgets & Spending** (money_math) - subscription audits, cost per use, tax + budget, 50/30/20 rule, latte factor, weekly-to-monthly conversion (6 lessons)
+3. **Salary & Income** (salary) - net pay, raises (with after-tax), overtime totals, pay-period comparison, inflation-adjusted raises, hourly-to-salary, total comp, side hustles (8 lessons)
+4. **Investing Basics** (investing) - Rule of 72, ROI, 401k match, Roth vs Traditional, compound growth, DCA, fund fees, emergency fund, rental yield, "am I on track" (10 lessons)
+5. **Debt & Loans** (debt) - credit card interest, minimum payment trap, true loan cost, DTI, extra payments, avalanche vs snowball, APR vs APY, BNPL (8 lessons)
+6. **Housing & Rent** (housing) - rent affordability, rent increase + renewal-vs-move, move-in costs, roommate math, true cost of renting, mortgage (rate-factor method), lease break math (7 lessons)
+7. **Taxes & Paycheck** (taxes) - marginal brackets, paycheck deductions, tax refund (behavioral), self-employment, standard vs itemized, capital gains, W-4 adjustment (7 lessons)
+8. **Insurance & Healthcare** (insurance) - deductible vs premium, copay vs coinsurance, OOP max, HDHP vs PPO, HSA, FSA, life insurance, brand vs generic Rx (8 lessons)
+9. **Car & Big Purchases** (car) - monthly vs total cost, loan term delta, down payment savings, 20/4/10 rule, depreciation, TCO, lease vs buy, trade-in vs private sale (8 lessons)
+10. **Student Loans & Education** (student_loans) - monthly payment (rule of thumb), total cost, refinance vs PSLF, IDR, PSLF, employer benefit, grace period, Parent PLUS (8 lessons)
 
-**Total: 56 lessons, 275 quiz templates**
+**Total: 78 lessons, 389 quiz templates**
 
 ## Core User Loop
 Home / Today
@@ -200,7 +199,7 @@ The website (`apps/web/`) is not the product. It supports acquisition through SE
 
 **Built and deployed:**
 - Landing page with 3D hero, animated counters, module showcase, and app CTA
-- 9 calculator tools: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan
+- 14 calculator tools: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan, BNPL, Membership Break-even, Lease vs Buy, FSA, Life Insurance
 - 51 state-specific paycheck pages (programmatic SEO)
 - 40 salary amount pages (programmatic SEO, e.g. "$25/hr is $52,000/year")
 - Tools directory with staggered card grid
@@ -215,8 +214,8 @@ Currently implemented:
 - Design tokens and theme system
 - Local content model with JSON-based lessons and templates
 - Template-driven quiz engine with 120+ answer formulas
-- All 10 modules with 56 lessons
-- 275 quiz templates (5 per lesson) with proportional distractor generation
+- All 10 modules with 78 lessons
+- 389 quiz templates (5 per lesson) with proportional distractor generation
 - Completion-based progression (mastery = gold star, not gate)
 - Checkpoint review quizzes
 - Zigzag learning path

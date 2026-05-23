@@ -8,6 +8,11 @@ import {
   Shield,
   Car,
   GraduationCap,
+  CreditCard,
+  BadgePercent,
+  Key,
+  HeartPulse,
+  ShieldCheck,
   type LucideProps,
 } from "lucide-react";
 import type { CalculatorIconName } from "@/lib/content/calculators";
@@ -22,6 +27,11 @@ const iconMap: Record<CalculatorIconName, React.FC<LucideProps>> = {
   shield: Shield,
   car: Car,
   "graduation-cap": GraduationCap,
+  "credit-card": CreditCard,
+  "badge-percent": BadgePercent,
+  key: Key,
+  "heart-pulse": HeartPulse,
+  "shield-check": ShieldCheck,
 };
 
 interface CalculatorIconProps {
