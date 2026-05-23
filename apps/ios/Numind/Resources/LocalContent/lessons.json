@@ -604,29 +604,29 @@
     "moduleId": "housing",
     "title": "Rent affordability (28% rule)",
     "concept": "The 28% rule says your rent shouldn't exceed 28% of your gross monthly income. It's a quick gut check when apartment shopping \u2014 if a place costs more than 28% of what you earn before taxes, it's going to squeeze your budget.",
-    "shortcut": "Max rent = monthly gross income \u00d7 0.28. For $5,000/month salary: $5,000 \u00d7 0.28 = $1,400 max rent. Quick estimate: take a quarter of your salary and add a little.",
+    "shortcut": "Max rent = monthly gross \u00d7 0.28. Reverse: min income for a given rent = rent \u00f7 0.28. For $5,000/month: max rent = $1,400. For $2,000 rent: need $7,143/month gross = $85,714/year.",
     "example": "Monthly salary: $5,000\nMax rent: $5,000 \u00d7 28% = $1,400",
     "quizTemplateIds": [
       "rent_afford_basic_d1",
       "rent_afford_scenario_d1",
       "rent_afford_reverse_d2",
-      "rent_afford_compare_d2",
-      "rent_afford_annual_d3"
+      "rent_afford_annual_d3",
+      "rent_min_income_d3"
     ]
   },
   {
     "id": "housing_rent_increase",
     "moduleId": "housing",
     "title": "Rent increase math",
-    "concept": "When your landlord raises rent by a percentage, the dollar impact depends on your current rent. A 5% increase on $1,200 hits differently than 5% on $2,500. Knowing the math helps you negotiate or budget for renewals.",
-    "shortcut": "Increase = current rent \u00d7 increase%. New rent = current \u00d7 (1 + increase%). A 6% bump on $1,500 = $90 more per month, $1,080 more per year.",
-    "example": "Current rent: $1,500\nIncrease: 6%\nMonthly increase: $90\nNew rent: $1,590",
+    "concept": "When your landlord raises rent by a percentage, the dollar impact depends on your current rent. National average increase is 3-5% \u2014 anything above 5% is aggressive. The renewal-vs-move decision often comes down to: how many months of higher rent equals the cost of moving?",
+    "shortcut": "Increase $ = rent \u00d7 increase%. Compare to 4% average to spot aggressive hikes. Renewal-vs-move: moving cost \u00f7 monthly increase = months until staying costs more.",
+    "example": "$1,500 rent, 7% increase:\n$105 more/mo, $1,260/yr\n7% vs avg 4% = aggressive\n\nMove costs $4,200, increase $120/mo:\nBreak-even: $4,200 \u00f7 $120 = 35 months\nIf lease is 12 months, staying is cheaper.",
     "quizTemplateIds": [
       "rent_increase_basic_d1",
       "rent_increase_new_d1",
       "rent_increase_annual_d2",
-      "rent_increase_scenario_d2",
-      "rent_increase_compare_d3"
+      "rent_above_avg_d2",
+      "rent_renew_vs_move_d3"
     ]
   },
   {
@@ -645,33 +645,63 @@
     ]
   },
   {
-    "id": "housing_price_sqft",
+    "id": "housing_roommate_math",
     "moduleId": "housing",
-    "title": "Price per square foot",
-    "concept": "Price per square foot lets you compare apartments of different sizes on equal footing. A $2,400/month apartment that's 800 sq ft costs $3.00/sqft, while a $2,000 place at 500 sq ft costs $4.00/sqft \u2014 the cheaper one is actually pricier per square foot.",
-    "shortcut": "Price per sqft = monthly rent \u00f7 square feet. Lower is better. Compare two places by dividing each rent by its area.",
-    "example": "Apartment A: $2,400 / 800 sqft = $3.00/sqft\nApartment B: $2,000 / 500 sqft = $4.00/sqft\nA is better value per sqft",
+    "title": "The roommate math \u2014 $6,500/year",
+    "concept": "A roommate is the single biggest housing decision for renters. A 2025 study across 100 US cities found splitting a 2BR vs renting a 1BR solo saves an average of $541/month \u2014 $6,500/year \u2014 and that's before utilities, internet, and household supplies (which also split). In some cities you save 48%.",
+    "shortcut": "Annual saving = (1BR + 1BR utilities) \u2212 (shared 2BR + 2BR utilities) / 2. Unequal split? Bigger bedroom = 55%, smaller = 45%. Most apartment splits should be slightly uneven based on room size.",
+    "example": "1BR alone: $1,800 rent + $200 util = $2,000/mo\n2BR shared: $2,400 rent + $250 util\nYour half: $1,325/mo\nSavings: $675/mo, $8,100/yr\n\nUnequal split (bigger room):\n2BR $2,400 \u00d7 55% = $1,320 for you",
     "quizTemplateIds": [
-      "sqft_basic_d1",
-      "sqft_compare_d1",
-      "sqft_scenario_d2",
-      "sqft_reverse_d2",
-      "sqft_best_deal_d3"
+      "roommate_basic_d1",
+      "roommate_utilities_d2",
+      "roommate_unequal_d3",
+      "roommate_annual_d2",
+      "roommate_compare_d3"
+    ]
+  },
+  {
+    "id": "housing_true_cost",
+    "moduleId": "housing",
+    "title": "What renting actually costs you each month",
+    "concept": "Rent is the headline number, not the actual cost. The true monthly housing cost = rent + renter's insurance + utilities + parking + laundry + commute. Typically 15-25% more than rent alone. The 28% rule should be applied to TOTAL housing cost, not just rent.",
+    "shortcut": "Add all housing-adjacent monthly bills. That's your real monthly housing cost. Quick add-on rule: rent \u00d7 1.20 \u2248 true cost for most renters. Apply 28% rule to THAT, not the rent alone.",
+    "example": "Rent: $1,500\nInsurance: $15\nUtilities: $150\nParking: $100\nLaundry: $40\nTrue cost: $1,805/mo (+20%)\n\nIncome $5,500: 28% cap = $1,540\nApartment 'fits' at rent \u2014 fails on true cost.",
+    "quizTemplateIds": [
+      "true_cost_sum_d1",
+      "true_cost_extra_d1",
+      "true_cost_compare_d2",
+      "true_cost_pct_d2",
+      "true_cost_vs_28_d3"
     ]
   },
   {
     "id": "housing_mortgage_vs_rent",
     "moduleId": "housing",
-    "title": "Mortgage vs rent comparison",
-    "concept": "A basic mortgage payment estimate helps you compare buying vs renting. Monthly payment \u2248 (loan amount \u00d7 monthly interest rate) + (loan amount \u00f7 total months). This is simplified \u2014 real mortgages use amortization \u2014 but it gives a ballpark for quick comparisons.",
-    "shortcut": "Rough monthly payment = (principal \u00d7 rate/12) + (principal \u00f7 years \u00d7 12). A $300,000 loan at 6% for 30 years: interest portion \u2248 $1,500/month + principal portion \u2248 $833 = ~$2,333/month.",
-    "example": "Loan: $300,000 at 6% for 30 years\nInterest: $300,000 \u00d7 0.5% = $1,500\nPrincipal: $300,000 \u00f7 360 = $833\nEstimate: ~$2,333/month",
+    "title": "Mortgage payment, the right way",
+    "concept": "Mental-math mortgage estimates: at 5% over 30 years, payment \u2248 loan \u00d7 0.00537. At 6%, \u00d7 0.006. At 7%, \u00d7 0.00665. These factors come from actual amortization \u2014 they're accurate within $5 on typical loans. Old shortcut (interest + principal portions) overestimates by ~30%.",
+    "shortcut": "At 6% over 30 yrs: monthly \u2248 loan \u00d7 0.006. At 5%: \u00d7 0.0054. At 7%: \u00d7 0.0067. Per $100k borrowed at 6%: $600/mo. $300k loan? $1,800/mo. Add ~$300 for property tax + insurance.",
+    "example": "$300,000 mortgage at 6%, 30 years:\n$300k \u00d7 0.006 = $1,800/mo\nActual amortized: $1,799 \u2713\n\nVs renting $1,900?\nP&I cheaper by $100\n+ tax/insurance ~$300 = $2,100\nRent slightly cheaper",
     "quizTemplateIds": [
-      "mortgage_basic_d1",
-      "mortgage_compare_d2",
-      "mortgage_scenario_d2",
-      "mortgage_interest_d2",
-      "mortgage_vs_rent_d3"
+      "mortgage_rate_factor_d1",
+      "mortgage_per_100k_d1",
+      "mortgage_rate_compare_d2",
+      "mortgage_pi_taxes_d3",
+      "mortgage_vs_rent_decision_d3"
+    ]
+  },
+  {
+    "id": "housing_lease_break",
+    "moduleId": "housing",
+    "title": "Should I break my lease? The math",
+    "concept": "Early termination fees average 2-4 months' rent. Add moving costs ($1,200-$2,500). Compare to: how much you'd save monthly at the new place \u00d7 remaining months on lease. If break cost > near-term savings, stay.",
+    "shortcut": "Total break cost = months penalty \u00d7 rent + moving cost. Break-even = break cost \u00f7 monthly saving. If lease has fewer months left than break-even, staying is cheaper.",
+    "example": "Lease: 8 months left at $1,800\nBreak fee: 2 months = $3,600\nMoving: $1,200\nTotal break cost: $4,800\n\nNew apartment: $1,500/mo ($300 saving)\nBreak-even: $4,800 \u00f7 $300 = 16 months\nOnly 8 left \u2192 STAY, save $2,400",
+    "quizTemplateIds": [
+      "lease_break_fee_d1",
+      "lease_break_total_d2",
+      "lease_break_breakeven_d2",
+      "lease_stay_savings_d3",
+      "lease_break_decision_d3"
     ]
   },
   {
@@ -705,48 +735,78 @@
     ]
   },
   {
-    "id": "taxes_gross_to_net",
-    "moduleId": "taxes",
-    "title": "Gross to net calculator",
-    "concept": "When someone tells you a salary is $65,000, that's gross \u2014 before any deductions. Your monthly take-home is the number that actually matters for budgeting. Annual \u2192 monthly \u2192 after deductions gives you the real number.",
-    "shortcut": "Monthly take-home = (annual salary \u00d7 (1 \u2212 deduction rate)) \u00f7 12. A $65,000 salary with 25% total deductions: $65,000 \u00d7 0.75 = $48,750 \u00f7 12 = $4,062.50/month.",
-    "example": "Annual: $65,000\nDeductions: 25%\nNet annual: $48,750\nMonthly: $4,062.50",
-    "quizTemplateIds": [
-      "gross_net_basic_d1",
-      "gross_net_monthly_d1",
-      "gross_net_scenario_d2",
-      "gross_net_compare_d2",
-      "gross_net_reverse_d3"
-    ]
-  },
-  {
     "id": "taxes_refund",
     "moduleId": "taxes",
-    "title": "Tax refund estimation",
-    "concept": "A tax refund happens when you've had more withheld from paychecks than you actually owe. Refund = total withheld \u2212 tax owed. If you owe less than was withheld, you get money back. If you owe more, you pay the difference.",
-    "shortcut": "Refund = withheld \u2212 owed. Positive = you get money back. Negative = you owe. Withheld $8,000 but owed $6,500? Refund = $1,500.",
-    "example": "Total withheld: $8,000\nTax owed: $6,500\nRefund: $8,000 \u2212 $6,500 = $1,500",
+    "title": "Your tax refund is not a bonus",
+    "concept": "A $3,000 refund means you gave the government a $250/month interest-free loan all year. That's not a windfall \u2014 it's your own money returned without interest. If you'd adjusted your W-4 and invested $250/month at 6% instead, you'd have ~$3,100 by year-end \u2014 more than the refund.",
+    "shortcut": "Refund \u00f7 pay periods = how much extra you should have kept per paycheck. Refund \u00d7 ~3% = roughly what you forfeited in lost growth over the year. Big refund = poorly-set W-4, not a bonus.",
+    "example": "Refund: $3,000\nMonthly over-withholding: $250\n\nIf invested at 6%/yr:\n~$3,100 at year-end\nExtra ~$100 vs lump refund\n\nOver 10 years of same pattern:\nForfeited >$1,000 in compounding",
     "quizTemplateIds": [
       "refund_basic_d1",
       "refund_owe_d1",
-      "refund_scenario_d2",
-      "refund_compare_d2",
-      "refund_monthly_d3"
+      "refund_monthly_loan_d2",
+      "refund_invested_d2",
+      "refund_annual_loss_d3"
     ]
   },
   {
     "id": "taxes_self_employment",
     "moduleId": "taxes",
     "title": "Self-employment tax",
-    "concept": "Freelancers and gig workers pay both the employer and employee portions of FICA \u2014 a combined 15.3% on top of income tax. This catches many people off guard because W-2 employees only see the 7.65% employee half.",
-    "shortcut": "SE tax = freelance income \u00d7 15.3%. On $5,000 of freelance income: $5,000 \u00d7 0.153 = $765. That's before income tax \u2014 plan to set aside 30\u201335% total from gig income.",
-    "example": "Freelance income: $5,000\nSE tax: $5,000 \u00d7 15.3% = $765\nSet aside ~$1,500\u2013$1,750 total for all taxes",
+    "concept": "Freelancers and gig workers pay both halves of FICA (15.3% total) plus regular income tax. Worse: there's no employer withholding, so the IRS requires quarterly estimated payments (April, June, Sept, Jan). Skip them and pay a penalty.",
+    "shortcut": "Set aside 30-35% of every freelance check (covers SE 15.3% + income tax ~15-20%). Quarterly estimated payment = quarterly income \u00d7 combined rate. $8k earned in a quarter at 30% combined = $2,400 to the IRS.",
+    "example": "$5,000 freelance income:\nSE tax: 15.3% = $765\n+ income tax ~15-20%\nSet aside: $1,500-$1,750\n\nQuarterly:\n$8,000/quarter at 30% combined\n= $2,400 estimated payment due",
     "quizTemplateIds": [
       "se_tax_basic_d1",
       "se_tax_amount_d1",
       "se_tax_scenario_d2",
       "se_tax_compare_d2",
-      "se_tax_quarterly_d3"
+      "se_quarterly_combined_d3"
+    ]
+  },
+  {
+    "id": "taxes_standard_vs_itemized",
+    "moduleId": "taxes",
+    "title": "Standard vs itemized \u2014 which saves you more?",
+    "concept": "The standard deduction is $15,200 single / $30,400 married (2025). Itemize if mortgage interest + state/local taxes + charity exceeds that. After the 2017 tax law, ~90% of filers take the standard. Homeowners with mortgages and high-tax-state residents (NY, CA, NJ) often benefit from itemizing.",
+    "shortcut": "Add mortgage interest + state taxes + charity. If > $15,200 single (or $30,400 married), itemize. Tax saving vs standard = (itemized \u2212 standard) \u00d7 your tax rate.",
+    "example": "Single, 22% tax bracket:\nMortgage interest: $9,400\nState taxes: $5,100\nCharity: $1,800\nItemized: $16,300\nStandard: $15,200\nExtra saving: $1,100 \u00d7 22% = $242",
+    "quizTemplateIds": [
+      "itemized_sum_d1",
+      "itemized_vs_standard_d1",
+      "itemized_saving_d2",
+      "itemized_decision_d3",
+      "itemized_strategy_d3"
+    ]
+  },
+  {
+    "id": "taxes_capital_gains",
+    "moduleId": "taxes",
+    "title": "Sell too soon, pay double the tax",
+    "concept": "Short-term capital gains (held < 1 year) are taxed at your ordinary income rate (22-24% for most). Long-term gains (held > 1 year) are taxed at 0%, 15%, or 20%. For most of the target audience, the gap is ~7 percentage points. Waiting a few weeks past the 1-year mark can save thousands.",
+    "shortcut": "On a $10k gain at 22% ordinary rate: short-term = $2,200 tax. Long-term at 15% = $1,500. Wait one extra month = save $700. Per $10k of gain, waiting saves ~$700.",
+    "example": "Held stock 11 months, $15k gain:\nSell now (short-term, 24%):\n$15k \u00d7 24% = $3,600 tax\n\nWait 1 more month (long-term, 15%):\n$15k \u00d7 15% = $2,250 tax\nSave: $1,350",
+    "quizTemplateIds": [
+      "capgains_short_d1",
+      "capgains_long_d1",
+      "capgains_saving_d2",
+      "capgains_timing_d3",
+      "capgains_compare_d3"
+    ]
+  },
+  {
+    "id": "taxes_w4_adjust",
+    "moduleId": "taxes",
+    "title": "Stop lending the government your money",
+    "concept": "Your W-4 determines how much tax is withheld per paycheck. If you consistently get a refund over $500, you're over-withholding \u2014 handing the government an interest-free loan. Reducing withholding by refund \u00f7 pay periods means more cash each paycheck that you can invest or save.",
+    "shortcut": "Last year's refund \u00f7 pay periods = bump per paycheck. $3,000 refund \u00f7 26 biweekly = $115/check extra. Invested at 6%/year, that compounds to slightly MORE than the refund within a year.",
+    "example": "Refund: $3,000\nBiweekly paychecks: 26\nPer-paycheck bump: $115\n\nInvest $115/check at 6%:\nYear-end value: ~$3,100\nVs lump refund $3,000\nGain: ~$100 + control of cash",
+    "quizTemplateIds": [
+      "w4_bump_d1",
+      "w4_bump_biweekly_d1",
+      "w4_invested_d2",
+      "w4_annual_growth_d2",
+      "w4_lifetime_d3"
     ]
   },
   {

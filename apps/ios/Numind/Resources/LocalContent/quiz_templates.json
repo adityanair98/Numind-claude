@@ -2580,30 +2580,6 @@
     "explanationTemplate": "28% of ${{monthlySalary}} = ${{answer}}. That's a healthy housing-to-income ratio."
   },
   {
-    "id": "rent_afford_compare_d2",
-    "moduleId": "housing",
-    "difficulty": 2,
-    "scenarioTemplate": "You're comparing apartments. Your take-home pay is ${{monthlySalary}}/month.",
-    "promptTemplate": "What's the maximum monthly rent you can afford under the 28% guideline?",
-    "variableRules": [
-      {
-        "name": "monthlySalary",
-        "options": [
-          3800,
-          4500,
-          5200,
-          6000,
-          6800,
-          7200
-        ]
-      }
-    ],
-    "answerFormula": "maxRent28",
-    "answerFormat": "currency",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Max rent = ${{monthlySalary}} \u00d7 28% = ${{answer}}."
-  },
-  {
     "id": "rent_afford_annual_d3",
     "moduleId": "housing",
     "difficulty": 3,
@@ -2722,69 +2698,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Monthly increase = ${{currentRent}} \u00d7 {{increasePercent}}% = ${{answer}}."
-  },
-  {
-    "id": "rent_increase_scenario_d2",
-    "moduleId": "housing",
-    "difficulty": 2,
-    "scenarioTemplate": "Your lease renewal letter says rent goes up {{increasePercent}}%.",
-    "promptTemplate": "Current rent: ${{currentRent}}. What will you pay per month after the increase?",
-    "variableRules": [
-      {
-        "name": "currentRent",
-        "options": [
-          1400,
-          1600,
-          1800,
-          2000,
-          2200
-        ]
-      },
-      {
-        "name": "increasePercent",
-        "options": [
-          3,
-          5,
-          6,
-          7
-        ]
-      }
-    ],
-    "answerFormula": "newRentAfterIncrease",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New rent = ${{currentRent}} \u00d7 (1 + {{increasePercent}}%) = ${{answer}}."
-  },
-  {
-    "id": "rent_increase_compare_d3",
-    "moduleId": "housing",
-    "difficulty": 3,
-    "promptTemplate": "Rent was ${{currentRent}}. After a {{increasePercent}}% hike, what's the new monthly rent?",
-    "variableRules": [
-      {
-        "name": "currentRent",
-        "options": [
-          1350,
-          1650,
-          1850,
-          2150,
-          2350
-        ]
-      },
-      {
-        "name": "increasePercent",
-        "options": [
-          4,
-          6,
-          7,
-          8
-        ]
-      }
-    ],
-    "answerFormula": "newRentAfterIncrease",
-    "answerFormat": "currency",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "New rent = ${{currentRent}} + ({{increasePercent}}% of ${{currentRent}}) = ${{answer}}."
   },
   {
     "id": "move_in_basic_d1",
@@ -2915,342 +2828,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
     "explanationTemplate": "3 \u00d7 ${{monthlyRent}} = ${{answer}}."
-  },
-  {
-    "id": "sqft_basic_d1",
-    "moduleId": "housing",
-    "difficulty": 1,
-    "promptTemplate": "An apartment rents for ${{monthlyRent}}/month and is {{squareFeet}} sq ft. What's the price per square foot?",
-    "variableRules": [
-      {
-        "name": "monthlyRent",
-        "options": [
-          1200,
-          1500,
-          1800,
-          2000,
-          2400
-        ]
-      },
-      {
-        "name": "squareFeet",
-        "options": [
-          400,
-          500,
-          600,
-          800,
-          1000
-        ]
-      }
-    ],
-    "answerFormula": "pricePerSqft",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{monthlyRent}} \u00f7 {{squareFeet}} sqft = ${{answer}}/sqft."
-  },
-  {
-    "id": "sqft_compare_d1",
-    "moduleId": "housing",
-    "difficulty": 1,
-    "promptTemplate": "A {{squareFeet}} sq ft apartment costs ${{monthlyRent}}/month. Price per square foot?",
-    "variableRules": [
-      {
-        "name": "monthlyRent",
-        "options": [
-          1000,
-          1400,
-          1600,
-          2000,
-          2200
-        ]
-      },
-      {
-        "name": "squareFeet",
-        "options": [
-          400,
-          500,
-          600,
-          800
-        ]
-      }
-    ],
-    "answerFormula": "pricePerSqft",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Price/sqft = ${{monthlyRent}} \u00f7 {{squareFeet}} = ${{answer}}."
-  },
-  {
-    "id": "sqft_scenario_d2",
-    "moduleId": "housing",
-    "difficulty": 2,
-    "scenarioTemplate": "You're comparing two apartments. This one is {{squareFeet}} sq ft for ${{monthlyRent}}/month.",
-    "promptTemplate": "What's the cost per square foot?",
-    "variableRules": [
-      {
-        "name": "monthlyRent",
-        "options": [
-          1600,
-          1800,
-          2100,
-          2400,
-          2800
-        ]
-      },
-      {
-        "name": "squareFeet",
-        "options": [
-          500,
-          600,
-          700,
-          800,
-          900
-        ]
-      }
-    ],
-    "answerFormula": "pricePerSqft",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{monthlyRent}} \u00f7 {{squareFeet}} = ${{answer}}/sqft. Lower means better value."
-  },
-  {
-    "id": "sqft_reverse_d2",
-    "moduleId": "housing",
-    "difficulty": 2,
-    "promptTemplate": "Rent: ${{monthlyRent}}/month. Size: {{squareFeet}} sq ft. What do you pay per square foot?",
-    "variableRules": [
-      {
-        "name": "monthlyRent",
-        "options": [
-          1500,
-          1800,
-          2000,
-          2500,
-          3000
-        ]
-      },
-      {
-        "name": "squareFeet",
-        "options": [
-          500,
-          600,
-          750,
-          1000
-        ]
-      }
-    ],
-    "answerFormula": "pricePerSqft",
-    "answerFormat": "currency",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "${{monthlyRent}} \u00f7 {{squareFeet}} sqft = ${{answer}}/sqft."
-  },
-  {
-    "id": "sqft_best_deal_d3",
-    "moduleId": "housing",
-    "difficulty": 3,
-    "promptTemplate": "A {{squareFeet}} sq ft studio for ${{monthlyRent}}/month. How much per square foot?",
-    "variableRules": [
-      {
-        "name": "monthlyRent",
-        "options": [
-          1350,
-          1650,
-          1950,
-          2250,
-          2700
-        ]
-      },
-      {
-        "name": "squareFeet",
-        "options": [
-          450,
-          550,
-          650,
-          750,
-          900
-        ]
-      }
-    ],
-    "answerFormula": "pricePerSqft",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{monthlyRent}} \u00f7 {{squareFeet}} = ${{answer}}/sqft."
-  },
-  {
-    "id": "mortgage_basic_d1",
-    "moduleId": "housing",
-    "difficulty": 1,
-    "promptTemplate": "Loan: ${{loanAmount}} at {{annualRate}}% over {{loanYears}} years. Estimate the monthly payment (interest + principal).",
-    "variableRules": [
-      {
-        "name": "loanAmount",
-        "options": [
-          200000,
-          250000,
-          300000
-        ]
-      },
-      {
-        "name": "annualRate",
-        "options": [
-          5,
-          6,
-          7
-        ]
-      },
-      {
-        "name": "loanYears",
-        "options": [
-          30
-        ]
-      }
-    ],
-    "answerFormula": "monthlyMortgage",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly \u2248 interest (${{loanAmount}} \u00d7 {{annualRate}}% \u00f7 12) + principal (${{loanAmount}} \u00f7 {{loanYears}} \u00d7 12) = ~${{answer}}."
-  },
-  {
-    "id": "mortgage_compare_d2",
-    "moduleId": "housing",
-    "difficulty": 2,
-    "promptTemplate": "A ${{loanAmount}} mortgage at {{annualRate}}% for {{loanYears}} years. Rough monthly payment?",
-    "variableRules": [
-      {
-        "name": "loanAmount",
-        "options": [
-          200000,
-          250000,
-          300000,
-          350000
-        ]
-      },
-      {
-        "name": "annualRate",
-        "options": [
-          5,
-          6,
-          7
-        ]
-      },
-      {
-        "name": "loanYears",
-        "options": [
-          15,
-          30
-        ]
-      }
-    ],
-    "answerFormula": "monthlyMortgage",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest portion + principal portion \u2248 ${{answer}}/month."
-  },
-  {
-    "id": "mortgage_scenario_d2",
-    "moduleId": "housing",
-    "difficulty": 2,
-    "scenarioTemplate": "You're buying a home with a ${{loanAmount}} loan at {{annualRate}}% for {{loanYears}} years.",
-    "promptTemplate": "Estimate your monthly payment.",
-    "variableRules": [
-      {
-        "name": "loanAmount",
-        "options": [
-          250000,
-          300000,
-          350000,
-          400000
-        ]
-      },
-      {
-        "name": "annualRate",
-        "options": [
-          5,
-          6,
-          7
-        ]
-      },
-      {
-        "name": "loanYears",
-        "options": [
-          30
-        ]
-      }
-    ],
-    "answerFormula": "monthlyMortgage",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly \u2248 ${{answer}}. This is a rough estimate \u2014 real amortization is slightly different."
-  },
-  {
-    "id": "mortgage_interest_d2",
-    "moduleId": "housing",
-    "difficulty": 2,
-    "promptTemplate": "Loan: ${{loanAmount}} at {{annualRate}}% for {{loanYears}} years. Approximate monthly cost?",
-    "variableRules": [
-      {
-        "name": "loanAmount",
-        "options": [
-          200000,
-          300000,
-          350000
-        ]
-      },
-      {
-        "name": "annualRate",
-        "options": [
-          4,
-          5,
-          6
-        ]
-      },
-      {
-        "name": "loanYears",
-        "options": [
-          15,
-          30
-        ]
-      }
-    ],
-    "answerFormula": "monthlyMortgage",
-    "answerFormat": "currency",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "${{answer}}/month estimated from interest + principal share."
-  },
-  {
-    "id": "mortgage_vs_rent_d3",
-    "moduleId": "housing",
-    "difficulty": 3,
-    "promptTemplate": "A ${{loanAmount}} mortgage at {{annualRate}}% over {{loanYears}} years. What's the rough monthly payment?",
-    "variableRules": [
-      {
-        "name": "loanAmount",
-        "options": [
-          225000,
-          275000,
-          325000,
-          375000
-        ]
-      },
-      {
-        "name": "annualRate",
-        "options": [
-          5,
-          6,
-          7
-        ]
-      },
-      {
-        "name": "loanYears",
-        "options": [
-          30
-        ]
-      }
-    ],
-    "answerFormula": "monthlyMortgage",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "~${{answer}}/month. Compare this to local rents to decide.",
-    "scenarioTemplate": "You're deciding whether to buy or keep renting."
   },
   {
     "id": "bracket_basic_d1",
@@ -3677,156 +3254,6 @@
     "scenarioTemplate": "You're comparing two job offers and want to know the real take-home."
   },
   {
-    "id": "gross_net_basic_d1",
-    "moduleId": "taxes",
-    "difficulty": 1,
-    "promptTemplate": "Annual salary: ${{annualSalary}}. Total deductions: {{totalDeductionRate}}%. What's your monthly take-home?",
-    "variableRules": [
-      {
-        "name": "annualSalary",
-        "options": [
-          50000,
-          55000,
-          60000,
-          65000,
-          70000
-        ]
-      },
-      {
-        "name": "totalDeductionRate",
-        "options": [
-          20,
-          25,
-          30
-        ]
-      }
-    ],
-    "answerFormula": "annualToMonthlyNet",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{annualSalary}} \u00d7 (1 \u2212 {{totalDeductionRate}}%) \u00f7 12 = ${{answer}}/month."
-  },
-  {
-    "id": "gross_net_monthly_d1",
-    "moduleId": "taxes",
-    "difficulty": 1,
-    "promptTemplate": "You earn ${{annualSalary}}/year with {{totalDeductionRate}}% total deductions. Monthly take-home?",
-    "variableRules": [
-      {
-        "name": "annualSalary",
-        "options": [
-          48000,
-          52000,
-          60000,
-          72000
-        ]
-      },
-      {
-        "name": "totalDeductionRate",
-        "options": [
-          20,
-          25
-        ]
-      }
-    ],
-    "answerFormula": "annualToMonthlyNet",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Net annual = ${{annualSalary}} \u00d7 (1 \u2212 {{totalDeductionRate}}%), then \u00f7 12 = ${{answer}}/month."
-  },
-  {
-    "id": "gross_net_scenario_d2",
-    "moduleId": "taxes",
-    "difficulty": 2,
-    "scenarioTemplate": "A job offer says ${{annualSalary}}/year.",
-    "promptTemplate": "With {{totalDeductionRate}}% total deductions, what will you actually take home monthly?",
-    "variableRules": [
-      {
-        "name": "annualSalary",
-        "options": [
-          55000,
-          62000,
-          68000,
-          75000,
-          80000
-        ]
-      },
-      {
-        "name": "totalDeductionRate",
-        "options": [
-          22,
-          25,
-          28
-        ]
-      }
-    ],
-    "answerFormula": "annualToMonthlyNet",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{annualSalary}} \u00d7 (1 \u2212 {{totalDeductionRate}}%) \u00f7 12 = ${{answer}}. This is your real budget number."
-  },
-  {
-    "id": "gross_net_compare_d2",
-    "moduleId": "taxes",
-    "difficulty": 2,
-    "promptTemplate": "Salary: ${{annualSalary}}/year. Deductions: {{totalDeductionRate}}%. Monthly take-home?",
-    "variableRules": [
-      {
-        "name": "annualSalary",
-        "options": [
-          58000,
-          64000,
-          70000,
-          76000,
-          85000
-        ]
-      },
-      {
-        "name": "totalDeductionRate",
-        "options": [
-          22,
-          25,
-          28,
-          30
-        ]
-      }
-    ],
-    "answerFormula": "annualToMonthlyNet",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly net = ${{answer}}."
-  },
-  {
-    "id": "gross_net_reverse_d3",
-    "moduleId": "taxes",
-    "difficulty": 3,
-    "promptTemplate": "${{annualSalary}} annual salary, {{totalDeductionRate}}% deducted. What's your monthly deposit?",
-    "variableRules": [
-      {
-        "name": "annualSalary",
-        "options": [
-          53000,
-          67000,
-          73000,
-          82000,
-          91000
-        ]
-      },
-      {
-        "name": "totalDeductionRate",
-        "options": [
-          23,
-          26,
-          29
-        ]
-      }
-    ],
-    "answerFormula": "annualToMonthlyNet",
-    "answerFormat": "currency",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "${{annualSalary}} \u00d7 (1 \u2212 {{totalDeductionRate}}%) \u00f7 12 = ${{answer}}."
-  },
-  {
     "id": "refund_basic_d1",
     "moduleId": "taxes",
     "difficulty": 1,
@@ -3886,98 +3313,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "${{totalWithheld}} \u2212 ${{taxOwed}} = ${{answer}}."
-  },
-  {
-    "id": "refund_scenario_d2",
-    "moduleId": "taxes",
-    "difficulty": 2,
-    "scenarioTemplate": "Tax time! Your W-2 shows ${{totalWithheld}} withheld.",
-    "promptTemplate": "Your tax software says you owe ${{taxOwed}}. How much is your refund?",
-    "variableRules": [
-      {
-        "name": "totalWithheld",
-        "options": [
-          7500,
-          8500,
-          9500,
-          10500,
-          11000
-        ]
-      },
-      {
-        "name": "taxOwed",
-        "options": [
-          5500,
-          6000,
-          6500,
-          7000
-        ]
-      }
-    ],
-    "answerFormula": "taxRefund",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Refund = withheld \u2212 owed = ${{totalWithheld}} \u2212 ${{taxOwed}} = ${{answer}}."
-  },
-  {
-    "id": "refund_compare_d2",
-    "moduleId": "taxes",
-    "difficulty": 2,
-    "promptTemplate": "You had ${{totalWithheld}} withheld. You owe ${{taxOwed}}. Refund amount?",
-    "variableRules": [
-      {
-        "name": "totalWithheld",
-        "options": [
-          6800,
-          7800,
-          8800,
-          9800
-        ]
-      },
-      {
-        "name": "taxOwed",
-        "options": [
-          4500,
-          5000,
-          5500,
-          6200
-        ]
-      }
-    ],
-    "answerFormula": "taxRefund",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{totalWithheld}} \u2212 ${{taxOwed}} = ${{answer}}."
-  },
-  {
-    "id": "refund_monthly_d3",
-    "moduleId": "taxes",
-    "difficulty": 3,
-    "promptTemplate": "Your employer withheld ${{totalWithheld}} over the year. You owe ${{taxOwed}}. What's your refund?",
-    "variableRules": [
-      {
-        "name": "totalWithheld",
-        "options": [
-          8200,
-          9400,
-          10600,
-          11800
-        ]
-      },
-      {
-        "name": "taxOwed",
-        "options": [
-          6000,
-          6500,
-          7000,
-          7500
-        ]
-      }
-    ],
-    "answerFormula": "taxRefund",
-    "answerFormat": "currency",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Refund = ${{totalWithheld}} \u2212 ${{taxOwed}} = ${{answer}}."
   },
   {
     "id": "se_tax_basic_d1",
@@ -10767,5 +10102,1394 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Monthly \u00d7 12. ${{monthlyBnpl}} \u00d7 12 = ${{answer}}/year of invisible BNPL spending."
+  },
+  {
+    "id": "rent_min_income_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "promptTemplate": "You found an apartment for ${{monthlyRent}}/month. Using the 28% rule, what minimum monthly gross income do you need to afford it?",
+    "variableRules": [
+      {
+        "name": "monthlyRent",
+        "options": [
+          1400,
+          1600,
+          1800,
+          2000,
+          2200,
+          2500,
+          2800
+        ]
+      }
+    ],
+    "answerFormula": "minIncomeForRent",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Min income = rent \u00f7 0.28. ${{monthlyRent}} \u00f7 0.28 = ${{answer}}/month."
+  },
+  {
+    "id": "rent_above_avg_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Your ${{currentRent}}/month rent is going up by {{increasePercent}}%. The national average is 4%. By how much MORE per month are you paying vs the average increase?",
+    "variableRules": [
+      {
+        "name": "currentRent",
+        "options": [
+          1500,
+          1800,
+          2000,
+          2200,
+          2500
+        ]
+      },
+      {
+        "name": "increasePercent",
+        "options": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      }
+    ],
+    "answerFormula": "rentAboveAvgImpact",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Above-average = rent \u00d7 (increase \u2212 4%) \u00f7 100 = ${{answer}}/month above what an average renewal would cost."
+  },
+  {
+    "id": "rent_renew_vs_move_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "promptTemplate": "Your landlord raises rent by ${{monthlyIncrease}}/month. Moving to a similar place costs ${{movingCost}} (broker + deposits + movers). How many months until staying costs more than moving?",
+    "variableRules": [
+      {
+        "name": "monthlyIncrease",
+        "options": [
+          80,
+          100,
+          120,
+          150,
+          200
+        ]
+      },
+      {
+        "name": "movingCost",
+        "options": [
+          2400,
+          3600,
+          4200,
+          5400,
+          6500
+        ]
+      }
+    ],
+    "answerFormula": "monthsToRecoupMoving",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Months to break even = moving cost \u00f7 monthly increase = ${{movingCost}} \u00f7 ${{monthlyIncrease}} = ~{{answer}} months. Lease shorter than that? Stay."
+  },
+  {
+    "id": "mortgage_rate_factor_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "${{loanAmount}} mortgage at 6% over 30 years uses factor 0.006. Estimate the monthly payment.",
+    "variableRules": [
+      {
+        "name": "loanAmount",
+        "options": [
+          200000,
+          250000,
+          300000,
+          350000,
+          400000,
+          500000
+        ]
+      },
+      {
+        "name": "factor",
+        "options": [
+          0.006
+        ]
+      }
+    ],
+    "answerFormula": "mortgageRateFactor",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly = loan \u00d7 factor. ${{loanAmount}} \u00d7 0.006 = ${{answer}}. Accurate within $5 of actual amortization."
+  },
+  {
+    "id": "mortgage_per_100k_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "At 6% over 30 years, each $100k of mortgage costs about $600/month. What's the monthly payment on a ${{loanAmount}} loan?",
+    "variableRules": [
+      {
+        "name": "loanAmount",
+        "options": [
+          100000,
+          200000,
+          250000,
+          300000,
+          350000,
+          400000,
+          500000
+        ]
+      },
+      {
+        "name": "factor",
+        "options": [
+          0.006
+        ]
+      }
+    ],
+    "answerFormula": "mortgageRateFactor",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$600 per $100k. ${{loanAmount}} \u00f7 $100k \u00d7 $600 = ${{answer}}/mo."
+  },
+  {
+    "id": "mortgage_rate_compare_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "${{loanAmount}} mortgage. At 5% the factor is 0.0054; at 7% it's 0.0067. How much more per month does the 7% rate cost?",
+    "variableRules": [
+      {
+        "name": "loanAmount",
+        "options": [
+          200000,
+          250000,
+          300000,
+          350000,
+          400000
+        ]
+      }
+    ],
+    "answerFormula": "mortgageRateDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Diff = loan \u00d7 (0.0067 \u2212 0.0054) = loan \u00d7 0.0013. ${{loanAmount}} \u00d7 0.0013 = ${{answer}}/mo more at 7%."
+  },
+  {
+    "id": "mortgage_pi_taxes_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "promptTemplate": "${{loanAmount}} mortgage at 6% (factor 0.006) plus ${{taxAndInsurance}}/month for property tax + insurance. What's your total monthly housing cost?",
+    "variableRules": [
+      {
+        "name": "loanAmount",
+        "options": [
+          200000,
+          250000,
+          300000,
+          350000,
+          400000
+        ]
+      },
+      {
+        "name": "taxAndInsurance",
+        "options": [
+          250,
+          300,
+          400,
+          500,
+          600
+        ]
+      },
+      {
+        "name": "factor",
+        "options": [
+          0.006
+        ]
+      }
+    ],
+    "answerFormula": "mortgageWithTaxAndInsurance",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "P&I = loan \u00d7 0.006. Total = P&I + tax/ins = ${{answer}}/month."
+  },
+  {
+    "id": "mortgage_vs_rent_decision_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "promptTemplate": "Renting: ${{monthlyRent}}/month. Buying: ${{loanAmount}} mortgage at 6% (factor 0.006) + ${{taxAndInsurance}}/month for tax/insurance. Which is cheaper per month, and by how much?",
+    "variableRules": [
+      {
+        "name": "monthlyRent",
+        "options": [
+          1700,
+          1900,
+          2100,
+          2300,
+          2500
+        ]
+      },
+      {
+        "name": "loanAmount",
+        "options": [
+          250000,
+          300000,
+          350000
+        ]
+      },
+      {
+        "name": "taxAndInsurance",
+        "options": [
+          300,
+          400,
+          500
+        ]
+      },
+      {
+        "name": "factor",
+        "options": [
+          0.006
+        ]
+      }
+    ],
+    "answerFormula": "mortgageVsRentMonthlyDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Mortgage total = loan \u00d7 0.006 + tax/ins. Difference vs rent = ${{answer}}/month."
+  },
+  {
+    "id": "roommate_basic_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "A 2BR apartment rents for ${{sharedRent}}/month. Split evenly with a roommate, what do you pay?",
+    "variableRules": [
+      {
+        "name": "sharedRent",
+        "options": [
+          1800,
+          2000,
+          2400,
+          2600,
+          3000,
+          3400,
+          4000
+        ]
+      }
+    ],
+    "answerFormula": "halfOfRent",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{sharedRent}} \u00f7 2 = ${{answer}}/month per person."
+  },
+  {
+    "id": "roommate_utilities_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Living alone in a 1BR: ${{soloRent}}/month + ${{soloUtilities}} utilities. Sharing a 2BR: ${{sharedRent}}/month + ${{sharedUtilities}} utilities split with a roommate. How much do you save monthly with a roommate?",
+    "variableRules": [
+      {
+        "name": "soloRent",
+        "options": [
+          1500,
+          1800,
+          2000,
+          2200,
+          2500
+        ]
+      },
+      {
+        "name": "soloUtilities",
+        "options": [
+          150,
+          200,
+          250
+        ]
+      },
+      {
+        "name": "sharedRent",
+        "options": [
+          2000,
+          2400,
+          2800,
+          3200
+        ]
+      },
+      {
+        "name": "sharedUtilities",
+        "options": [
+          200,
+          250,
+          300
+        ]
+      }
+    ],
+    "answerFormula": "roommateSavingWithUtilities",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Solo total \u2212 (shared total \u00f7 2). (${{soloRent}} + ${{soloUtilities}}) \u2212 ((${{sharedRent}} + ${{sharedUtilities}}) \u00f7 2) = ${{answer}}/mo savings."
+  },
+  {
+    "id": "roommate_unequal_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "promptTemplate": "A 2BR is ${{sharedRent}}/month. The bigger bedroom takes {{bigShare}}% of the rent. What does the smaller-bedroom roommate pay?",
+    "variableRules": [
+      {
+        "name": "sharedRent",
+        "options": [
+          2000,
+          2400,
+          2800,
+          3200,
+          3600
+        ]
+      },
+      {
+        "name": "bigShare",
+        "options": [
+          55,
+          60,
+          55,
+          58
+        ]
+      }
+    ],
+    "answerFormula": "smallerShareRent",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Smaller-bedroom share = (100 \u2212 {{bigShare}})% \u00d7 ${{sharedRent}} = ${{answer}}/mo."
+  },
+  {
+    "id": "roommate_annual_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "You save ${{monthlySaving}}/month by having a roommate. How much do you save per year?",
+    "variableRules": [
+      {
+        "name": "monthlySaving",
+        "options": [
+          300,
+          400,
+          500,
+          541,
+          700,
+          800
+        ]
+      }
+    ],
+    "answerFormula": "monthlyToAnnualSimple",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly \u00d7 12. ${{monthlySaving}} \u00d7 12 = ${{answer}}/year."
+  },
+  {
+    "id": "roommate_compare_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "promptTemplate": "Solo 1BR: ${{soloRent}}/mo. Shared 2BR: ${{sharedRent}}/mo (your half: half of that). What's your annual savings?",
+    "variableRules": [
+      {
+        "name": "soloRent",
+        "options": [
+          1600,
+          1800,
+          2000,
+          2200,
+          2400
+        ]
+      },
+      {
+        "name": "sharedRent",
+        "options": [
+          2000,
+          2400,
+          2800,
+          3200
+        ]
+      }
+    ],
+    "answerFormula": "roommateAnnualSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly saving = solo \u2212 (shared \u00f7 2). \u00d7 12 = ${{answer}}/year."
+  },
+  {
+    "id": "true_cost_sum_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "Monthly housing: rent ${{rent}}, utilities ${{utilities}}, insurance ${{insurance}}, parking ${{parking}}. What's your TRUE monthly housing cost?",
+    "variableRules": [
+      {
+        "name": "rent",
+        "options": [
+          1200,
+          1500,
+          1800,
+          2000
+        ]
+      },
+      {
+        "name": "utilities",
+        "options": [
+          100,
+          150,
+          200
+        ]
+      },
+      {
+        "name": "insurance",
+        "options": [
+          10,
+          15,
+          20,
+          25
+        ]
+      },
+      {
+        "name": "parking",
+        "options": [
+          50,
+          100,
+          150,
+          200
+        ]
+      }
+    ],
+    "answerFormula": "trueHousingCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Add them all. ${{rent}} + ${{utilities}} + ${{insurance}} + ${{parking}} = ${{answer}}/month true cost."
+  },
+  {
+    "id": "true_cost_extra_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "Your true monthly housing cost is ${{trueCost}}. Your rent alone is ${{rent}}. How much MORE per month is the true cost above just rent?",
+    "variableRules": [
+      {
+        "name": "trueCost",
+        "options": [
+          1800,
+          2100,
+          2400,
+          2700,
+          3000
+        ]
+      },
+      {
+        "name": "rent",
+        "options": [
+          1500,
+          1800,
+          2000,
+          2200,
+          2500
+        ]
+      }
+    ],
+    "answerFormula": "housingExtraBeyondRent",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "True cost \u2212 rent = hidden housing costs. ${{trueCost}} \u2212 ${{rent}} = ${{answer}}/mo."
+  },
+  {
+    "id": "true_cost_compare_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Apartment A: rent ${{rentA}}, total housing add-ons ${{addonsA}}. Apartment B: rent ${{rentB}}, add-ons ${{addonsB}}. Which has the lower TRUE monthly cost, and by how much?",
+    "variableRules": [
+      {
+        "name": "rentA",
+        "options": [
+          1500,
+          1700,
+          1900
+        ]
+      },
+      {
+        "name": "addonsA",
+        "options": [
+          200,
+          300,
+          400,
+          500
+        ]
+      },
+      {
+        "name": "rentB",
+        "options": [
+          1700,
+          1900,
+          2100
+        ]
+      },
+      {
+        "name": "addonsB",
+        "options": [
+          150,
+          250,
+          350
+        ]
+      }
+    ],
+    "answerFormula": "trueHousingDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "A total = ${{rentA}}+${{addonsA}}. B total = ${{rentB}}+${{addonsB}}. Difference = ${{answer}}."
+  },
+  {
+    "id": "true_cost_pct_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Rent is ${{rent}}/month. True total housing cost is ${{trueCost}}. What percentage is the 'extra' above rent?",
+    "variableRules": [
+      {
+        "name": "rent",
+        "options": [
+          1500,
+          1800,
+          2000,
+          2200,
+          2500
+        ]
+      },
+      {
+        "name": "trueCost",
+        "options": [
+          1800,
+          2160,
+          2400,
+          2640,
+          3000
+        ]
+      }
+    ],
+    "answerFormula": "trueCostExtraPct",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Extra / rent \u00d7 100. (${{trueCost}} \u2212 ${{rent}}) \u00f7 ${{rent}} \u00d7 100 = {{answer}}%."
+  },
+  {
+    "id": "true_cost_vs_28_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "promptTemplate": "Monthly income ${{monthlyIncome}}. Your TRUE housing cost (rent + utilities + insurance + parking) is ${{trueCost}}. What percentage of income is housing eating?",
+    "variableRules": [
+      {
+        "name": "monthlyIncome",
+        "options": [
+          4500,
+          5000,
+          5500,
+          6000,
+          6500
+        ]
+      },
+      {
+        "name": "trueCost",
+        "options": [
+          1500,
+          1800,
+          2100,
+          2400,
+          2700
+        ]
+      }
+    ],
+    "answerFormula": "housingPctOfIncome",
+    "answerFormat": "percent",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "True cost \u00f7 income \u00d7 100. ${{trueCost}} \u00f7 ${{monthlyIncome}} \u00d7 100 = {{answer}}%. Above 28%? Budget-stressed."
+  },
+  {
+    "id": "lease_break_fee_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "Your lease has an early termination fee of {{monthsPenalty}} months' rent. Rent is ${{monthlyRent}}. What's the break fee?",
+    "variableRules": [
+      {
+        "name": "monthsPenalty",
+        "options": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "name": "monthlyRent",
+        "options": [
+          1400,
+          1600,
+          1800,
+          2000,
+          2400
+        ]
+      }
+    ],
+    "answerFormula": "leaseBreakFeeOnly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "{{monthsPenalty}} \u00d7 ${{monthlyRent}} = ${{answer}} fee."
+  },
+  {
+    "id": "lease_break_total_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Lease break fee = {{monthsPenalty}} months \u00d7 ${{monthlyRent}}. Moving costs ${{movingCost}}. Total cost to break?",
+    "variableRules": [
+      {
+        "name": "monthsPenalty",
+        "options": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "name": "monthlyRent",
+        "options": [
+          1600,
+          1800,
+          2000,
+          2400
+        ]
+      },
+      {
+        "name": "movingCost",
+        "options": [
+          1000,
+          1500,
+          2000,
+          2500
+        ]
+      }
+    ],
+    "answerFormula": "leaseBreakTotalCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(months \u00d7 rent) + moving = ${{answer}} total break cost."
+  },
+  {
+    "id": "lease_break_breakeven_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Total cost to break: ${{totalBreakCost}}. You'd save ${{monthlySaving}}/month at the new place. How many months until savings exceed break cost?",
+    "variableRules": [
+      {
+        "name": "totalBreakCost",
+        "options": [
+          3000,
+          4200,
+          5400,
+          6500,
+          7800
+        ]
+      },
+      {
+        "name": "monthlySaving",
+        "options": [
+          150,
+          200,
+          250,
+          300,
+          400
+        ]
+      }
+    ],
+    "answerFormula": "leaseBreakeven",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Break-even = break cost \u00f7 monthly saving = ${{totalBreakCost}} \u00f7 ${{monthlySaving}} = {{answer}} months."
+  },
+  {
+    "id": "lease_stay_savings_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "promptTemplate": "Lease has {{monthsLeft}} months remaining. Breaking costs ${{totalBreakCost}}. New place saves ${{monthlySaving}}/month. By staying, how much MORE money do you keep vs breaking?",
+    "variableRules": [
+      {
+        "name": "monthsLeft",
+        "options": [
+          4,
+          6,
+          8,
+          10
+        ]
+      },
+      {
+        "name": "totalBreakCost",
+        "options": [
+          3000,
+          4200,
+          5400
+        ]
+      },
+      {
+        "name": "monthlySaving",
+        "options": [
+          200,
+          250,
+          300,
+          400
+        ]
+      }
+    ],
+    "answerFormula": "leaseStaySavings",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Stay: pay $0 break, lose monthsLeft \u00d7 saving in foregone savings. Break: pay break cost, gain monthsLeft \u00d7 saving. Net: ${{answer}} more by staying when break > savings."
+  },
+  {
+    "id": "lease_break_decision_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "promptTemplate": "{{monthsLeft}} months left at ${{currentRent}}/month. New apartment: ${{newRent}}/month. Breaking costs ${{breakFee}} in penalty + ${{movingCost}} to move. Net cost to break (break costs \u2212 savings from cheaper rent for remaining months)?",
+    "variableRules": [
+      {
+        "name": "monthsLeft",
+        "options": [
+          6,
+          8,
+          10,
+          12
+        ]
+      },
+      {
+        "name": "currentRent",
+        "options": [
+          1800,
+          2000,
+          2200
+        ]
+      },
+      {
+        "name": "newRent",
+        "options": [
+          1500,
+          1600,
+          1700,
+          1800
+        ]
+      },
+      {
+        "name": "breakFee",
+        "options": [
+          3600,
+          4000,
+          4400,
+          4800
+        ]
+      },
+      {
+        "name": "movingCost",
+        "options": [
+          1200,
+          1800,
+          2400
+        ]
+      }
+    ],
+    "answerFormula": "leaseBreakNetCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Net cost = (breakFee + moving) \u2212 (monthsLeft \u00d7 (currentRent \u2212 newRent)). Positive = staying is cheaper. = ${{answer}}."
+  },
+  {
+    "id": "refund_monthly_loan_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "promptTemplate": "You got a ${{refundAmount}} tax refund this year. That means you over-withheld each month. How much extra per month was the IRS holding (interest-free)?",
+    "variableRules": [
+      {
+        "name": "refundAmount",
+        "options": [
+          1200,
+          1800,
+          2400,
+          3000,
+          3600,
+          4800
+        ]
+      }
+    ],
+    "answerFormula": "refundMonthlyLoan",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Refund \u00f7 12. ${{refundAmount}} \u00f7 12 = ${{answer}}/month extra you could've kept."
+  },
+  {
+    "id": "refund_invested_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "promptTemplate": "You got a ${{refundAmount}} refund. If you'd reduced withholding and invested the extra at 6% (~half-year avg return), how much would you have GAINED beyond the refund?",
+    "variableRules": [
+      {
+        "name": "refundAmount",
+        "options": [
+          1500,
+          2000,
+          3000,
+          4000,
+          5000
+        ]
+      }
+    ],
+    "answerFormula": "refundInvestedGain",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Approx gain \u2248 refund \u00d7 3%. ${{refundAmount}} \u00d7 3% = ${{answer}} forfeited in lost growth."
+  },
+  {
+    "id": "refund_annual_loss_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "promptTemplate": "Your employer withholds ${{monthlyWithheld}}/month. Your actual monthly tax burden is ${{monthlyOwed}}. What's your annual over-withholding (= refund you'll get)?",
+    "variableRules": [
+      {
+        "name": "monthlyWithheld",
+        "options": [
+          750,
+          850,
+          950,
+          1100
+        ]
+      },
+      {
+        "name": "monthlyOwed",
+        "options": [
+          600,
+          700,
+          800,
+          900
+        ]
+      }
+    ],
+    "answerFormula": "annualOverWithholding",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "(withheld \u2212 owed) \u00d7 12 = ${{answer}}. That's your interest-free loan to the IRS."
+  },
+  {
+    "id": "se_quarterly_combined_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "promptTemplate": "You earned ${{quarterlyIncome}} freelancing this quarter. SE tax is 15.3% + income tax ~{{incomeTaxPct}}%. What's your quarterly estimated payment to the IRS?",
+    "variableRules": [
+      {
+        "name": "quarterlyIncome",
+        "options": [
+          5000,
+          6500,
+          8000,
+          10000,
+          12500
+        ]
+      },
+      {
+        "name": "incomeTaxPct",
+        "options": [
+          12,
+          15,
+          20,
+          22
+        ]
+      }
+    ],
+    "answerFormula": "quarterlyEstimatedTax",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Combined rate = 15.3% + {{incomeTaxPct}}%. Quarter \u00d7 combined = ${{quarterlyIncome}} \u00d7 {{answer}}-ish %."
+  },
+  {
+    "id": "itemized_sum_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "promptTemplate": "Mortgage interest ${{mortgageInt}}, state/local taxes ${{stateTax}}, charitable donations ${{charity}}. What's your total itemized deduction?",
+    "variableRules": [
+      {
+        "name": "mortgageInt",
+        "options": [
+          5000,
+          8000,
+          10000,
+          12000,
+          15000
+        ]
+      },
+      {
+        "name": "stateTax",
+        "options": [
+          3000,
+          5000,
+          7000,
+          10000
+        ]
+      },
+      {
+        "name": "charity",
+        "options": [
+          500,
+          1000,
+          2000,
+          3000
+        ]
+      }
+    ],
+    "answerFormula": "itemizedTotal",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Add them: ${{mortgageInt}} + ${{stateTax}} + ${{charity}} = ${{answer}}."
+  },
+  {
+    "id": "itemized_vs_standard_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "promptTemplate": "Your itemized total is ${{itemizedAmount}}. Standard deduction is ${{standardAmount}}. By how much does itemizing exceed standard?",
+    "variableRules": [
+      {
+        "name": "itemizedAmount",
+        "options": [
+          16000,
+          17500,
+          19000,
+          22000,
+          28000
+        ]
+      },
+      {
+        "name": "standardAmount",
+        "options": [
+          15200,
+          30400
+        ]
+      }
+    ],
+    "answerFormula": "itemizedExcess",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{itemizedAmount}} \u2212 ${{standardAmount}} = ${{answer}} above standard."
+  },
+  {
+    "id": "itemized_saving_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "promptTemplate": "Your itemized exceeds standard by ${{excessAmount}}. At a {{taxRate}}% marginal rate, how much extra tax saving does itemizing give you?",
+    "variableRules": [
+      {
+        "name": "excessAmount",
+        "options": [
+          800,
+          1100,
+          1500,
+          2000,
+          3000
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          12,
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "itemizedSavingDollars",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Excess \u00d7 tax rate. ${{excessAmount}} \u00d7 {{taxRate}}% = ${{answer}} extra in refund."
+  },
+  {
+    "id": "itemized_decision_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "promptTemplate": "Mortgage interest ${{mortgageInt}} + state tax ${{stateTax}} + charity ${{charity}}. Standard deduction is $15,200. At {{taxRate}}% bracket, how much extra do you save by itemizing?",
+    "variableRules": [
+      {
+        "name": "mortgageInt",
+        "options": [
+          8000,
+          9400,
+          11000,
+          13000
+        ]
+      },
+      {
+        "name": "stateTax",
+        "options": [
+          4000,
+          5100,
+          6500,
+          8000
+        ]
+      },
+      {
+        "name": "charity",
+        "options": [
+          1000,
+          1800,
+          2500
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "itemizedDecisionSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Itemized total \u2212 $15,200 = excess. Excess \u00d7 tax rate = ${{answer}}. If negative, take standard."
+  },
+  {
+    "id": "itemized_strategy_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "promptTemplate": "You itemize and save ${{annualSaving}} more than standard. Over a {{years}}-year career of homeownership, what's the cumulative tax saving?",
+    "variableRules": [
+      {
+        "name": "annualSaving",
+        "options": [
+          150,
+          250,
+          400,
+          600,
+          1000
+        ]
+      },
+      {
+        "name": "years",
+        "options": [
+          5,
+          10,
+          15,
+          20,
+          30
+        ]
+      }
+    ],
+    "answerFormula": "itemizedLifetime",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{annualSaving}} \u00d7 {{years}} = ${{answer}} cumulative. Worth the extra paperwork at tax time."
+  },
+  {
+    "id": "capgains_short_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "promptTemplate": "You made a ${{gain}} gain on a stock held for {{months}} months (short-term). At {{ordinaryRate}}% ordinary tax rate, what's the tax?",
+    "variableRules": [
+      {
+        "name": "gain",
+        "options": [
+          2000,
+          5000,
+          8000,
+          10000,
+          15000
+        ]
+      },
+      {
+        "name": "months",
+        "options": [
+          3,
+          6,
+          9,
+          11
+        ]
+      },
+      {
+        "name": "ordinaryRate",
+        "options": [
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "shortTermCapGainsTax",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Short-term = ordinary rate. ${{gain}} \u00d7 {{ordinaryRate}}% = ${{answer}} tax."
+  },
+  {
+    "id": "capgains_long_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "promptTemplate": "You made a ${{gain}} gain on a stock held over 1 year. At {{ltcgRate}}% long-term capital gains rate, what's the tax?",
+    "variableRules": [
+      {
+        "name": "gain",
+        "options": [
+          2000,
+          5000,
+          8000,
+          10000,
+          15000
+        ]
+      },
+      {
+        "name": "ltcgRate",
+        "options": [
+          0,
+          15,
+          20
+        ]
+      }
+    ],
+    "answerFormula": "longTermCapGainsTax",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Long-term = special rate. ${{gain}} \u00d7 {{ltcgRate}}% = ${{answer}} tax."
+  },
+  {
+    "id": "capgains_saving_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "promptTemplate": "${{gain}} gain. Short-term rate {{ordinaryRate}}%. Long-term rate {{ltcgRate}}%. How much do you save by waiting past 1 year?",
+    "variableRules": [
+      {
+        "name": "gain",
+        "options": [
+          5000,
+          8000,
+          10000,
+          15000,
+          20000
+        ]
+      },
+      {
+        "name": "ordinaryRate",
+        "options": [
+          22,
+          24,
+          32
+        ]
+      },
+      {
+        "name": "ltcgRate",
+        "options": [
+          15,
+          20
+        ]
+      }
+    ],
+    "answerFormula": "capGainsTimingSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Saving = gain \u00d7 (ordinary \u2212 ltcg). ${{gain}} \u00d7 ({{ordinaryRate}}% \u2212 {{ltcgRate}}%) = ${{answer}}."
+  },
+  {
+    "id": "capgains_timing_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "promptTemplate": "You've held a stock for 11 months. ${{gain}} unrealized gain. Sell now (short-term {{ordinaryRate}}%) vs wait 1 more month (long-term {{ltcgRate}}%) \u2014 how much do you save by waiting?",
+    "variableRules": [
+      {
+        "name": "gain",
+        "options": [
+          10000,
+          15000,
+          20000,
+          25000
+        ]
+      },
+      {
+        "name": "ordinaryRate",
+        "options": [
+          22,
+          24,
+          32
+        ]
+      },
+      {
+        "name": "ltcgRate",
+        "options": [
+          15,
+          20
+        ]
+      }
+    ],
+    "answerFormula": "capGainsTimingSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "${{gain}} \u00d7 ({{ordinaryRate}}% \u2212 {{ltcgRate}}%) = ${{answer}}. One month of patience pays."
+  },
+  {
+    "id": "capgains_compare_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "promptTemplate": "Investor A: holds {{shortMonths}} months, ${{gainA}} gain at {{ordinaryRate}}%. Investor B: holds 13 months, ${{gainB}} gain at {{ltcgRate}}%. Whose tax bill is lower, and by how much?",
+    "variableRules": [
+      {
+        "name": "shortMonths",
+        "options": [
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "name": "gainA",
+        "options": [
+          10000,
+          12000,
+          15000
+        ]
+      },
+      {
+        "name": "ordinaryRate",
+        "options": [
+          22,
+          24
+        ]
+      },
+      {
+        "name": "gainB",
+        "options": [
+          10000,
+          12000,
+          15000
+        ]
+      },
+      {
+        "name": "ltcgRate",
+        "options": [
+          15,
+          20
+        ]
+      }
+    ],
+    "answerFormula": "capGainsTaxDifference",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tax A = gainA \u00d7 ordinary. Tax B = gainB \u00d7 ltcg. Difference = ${{answer}}."
+  },
+  {
+    "id": "w4_bump_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "promptTemplate": "Last year's refund: ${{refundAmount}}. You're paid monthly. How much more should you keep per paycheck by adjusting your W-4?",
+    "variableRules": [
+      {
+        "name": "refundAmount",
+        "options": [
+          1200,
+          1800,
+          2400,
+          3000,
+          3600,
+          4800,
+          6000
+        ]
+      }
+    ],
+    "answerFormula": "w4MonthlyBump",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Refund \u00f7 12. ${{refundAmount}} \u00f7 12 = ${{answer}}/check more."
+  },
+  {
+    "id": "w4_bump_biweekly_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "promptTemplate": "Last year's refund: ${{refundAmount}}. You're paid biweekly (26 paychecks). How much per check by adjusting W-4?",
+    "variableRules": [
+      {
+        "name": "refundAmount",
+        "options": [
+          1300,
+          2080,
+          2600,
+          3120,
+          3900,
+          5200
+        ]
+      }
+    ],
+    "answerFormula": "w4BiweeklyBump",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Refund \u00f7 26. ${{refundAmount}} \u00f7 26 = ${{answer}}/biweekly check."
+  },
+  {
+    "id": "w4_invested_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "promptTemplate": "You bump each biweekly paycheck by ${{biweeklyBump}} and invest it at 6%/year. Approximate end-of-year balance? (use simple 3% half-year avg return)",
+    "variableRules": [
+      {
+        "name": "biweeklyBump",
+        "options": [
+          50,
+          80,
+          100,
+          120,
+          150,
+          200
+        ]
+      }
+    ],
+    "answerFormula": "w4AnnualInvested",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total contributed \u00d7 1.03 \u2248 end value. (${{biweeklyBump}} \u00d7 26) \u00d7 1.03 = ${{answer}}."
+  },
+  {
+    "id": "w4_annual_growth_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "promptTemplate": "You'd otherwise get a ${{refundAmount}} refund. Instead, you adjust your W-4, invest the extra at 6%/year. Approximate end-of-year gain BEYOND the refund?",
+    "variableRules": [
+      {
+        "name": "refundAmount",
+        "options": [
+          2000,
+          3000,
+          4000,
+          5000,
+          6000
+        ]
+      }
+    ],
+    "answerFormula": "w4RefundGain",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Approx gain \u2248 refund \u00d7 3% = ${{answer}} extra by investing instead of waiting."
+  },
+  {
+    "id": "w4_lifetime_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "promptTemplate": "If you over-withhold ${{refundAmount}} every year for {{years}} years and invest at 6% annually instead, your approximate gain (vs taking refunds): refund \u00d7 3% \u00d7 years compounding. Simplified: refund \u00d7 0.03 \u00d7 years = ?",
+    "variableRules": [
+      {
+        "name": "refundAmount",
+        "options": [
+          2000,
+          3000,
+          4000,
+          5000
+        ]
+      },
+      {
+        "name": "years",
+        "options": [
+          5,
+          10,
+          15,
+          20,
+          30
+        ]
+      }
+    ],
+    "answerFormula": "w4LifetimeGain",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{refundAmount}} \u00d7 3% \u00d7 {{years}} = ${{answer}} approximate lifetime forfeit."
   }
 ]

@@ -1546,6 +1546,199 @@ enum FormulaOperationMap {
             guard let m = variables["monthlyBnpl"] else { return [] }
             return [.multiply(a: m, by: 12)]
 
+        // MARK: - Housing reworks
+        case "minIncomeForRent":
+            guard let r = variables["monthlyRent"] else { return [] }
+            return [.divide(a: r, by: 0.28)]
+
+        case "rentAboveAvgImpact":
+            guard let r = variables["currentRent"], let i = variables["increasePercent"] else { return [] }
+            return [.subtract(b: 4, from: i), .percentOf(pct: i - 4, amount: r)]
+
+        case "monthsToRecoupMoving":
+            guard let c = variables["movingCost"], let i = variables["monthlyIncrease"], i > 0 else { return [] }
+            return [.divide(a: c, by: i)]
+
+        case "mortgageRateFactor":
+            guard let loan = variables["loanAmount"], let f = variables["factor"] else { return [] }
+            return [.multiply(a: loan, by: f)]
+
+        case "mortgageRateDiff":
+            guard let loan = variables["loanAmount"] else { return [] }
+            return [.multiply(a: loan, by: 0.0013)]
+
+        case "mortgageWithTaxAndInsurance":
+            guard let loan = variables["loanAmount"], let f = variables["factor"], let ti = variables["taxAndInsurance"] else { return [] }
+            return [.multiply(a: loan, by: f), .add(a: loan * f, b: ti)]
+
+        case "mortgageVsRentMonthlyDiff":
+            guard let rent = variables["monthlyRent"], let loan = variables["loanAmount"],
+                  let f = variables["factor"], let ti = variables["taxAndInsurance"] else { return [] }
+            let mort = loan * f + ti
+            return [.multiply(a: loan, by: f), .add(a: loan * f, b: ti),
+                    .subtract(b: min(rent, mort), from: max(rent, mort))]
+
+        // MARK: - Roommate
+        case "halfOfRent":
+            guard let r = variables["sharedRent"] else { return [] }
+            return [.divide(a: r, by: 2)]
+
+        case "roommateSavingWithUtilities":
+            guard let sr = variables["soloRent"], let su = variables["soloUtilities"],
+                  let shr = variables["sharedRent"], let shu = variables["sharedUtilities"] else { return [] }
+            return [.add(a: sr, b: su), .add(a: shr, b: shu),
+                    .divide(a: shr + shu, by: 2),
+                    .subtract(b: (shr + shu) / 2, from: sr + su)]
+
+        case "smallerShareRent":
+            guard let r = variables["sharedRent"], let big = variables["bigShare"] else { return [] }
+            return [.subtract(b: big, from: 100), .percentOf(pct: 100 - big, amount: r)]
+
+        case "monthlyToAnnualSimple":
+            guard let m = variables["monthlySaving"] else { return [] }
+            return [.multiply(a: m, by: 12)]
+
+        case "roommateAnnualSaving":
+            guard let solo = variables["soloRent"], let shared = variables["sharedRent"] else { return [] }
+            let monthly = solo - shared / 2
+            return [.divide(a: shared, by: 2), .subtract(b: shared / 2, from: solo), .multiply(a: monthly, by: 12)]
+
+        // MARK: - True cost
+        case "trueHousingCost":
+            guard let r = variables["rent"], let u = variables["utilities"],
+                  let i = variables["insurance"], let p = variables["parking"] else { return [] }
+            return [.add(a: r, b: u), .add(a: r + u, b: i), .add(a: r + u + i, b: p)]
+
+        case "housingExtraBeyondRent":
+            guard let tc = variables["trueCost"], let r = variables["rent"] else { return [] }
+            return [.subtract(b: r, from: tc)]
+
+        case "trueHousingDiff":
+            guard let rA = variables["rentA"], let aA = variables["addonsA"],
+                  let rB = variables["rentB"], let aB = variables["addonsB"] else { return [] }
+            let tA = rA + aA
+            let tB = rB + aB
+            return [.add(a: rA, b: aA), .add(a: rB, b: aB),
+                    .subtract(b: min(tA, tB), from: max(tA, tB))]
+
+        case "trueCostExtraPct":
+            guard let r = variables["rent"], let tc = variables["trueCost"], r > 0 else { return [] }
+            return [.subtract(b: r, from: tc), .divide(a: tc - r, by: r), .multiply(a: (tc - r) / r, by: 100)]
+
+        case "housingPctOfIncome":
+            guard let i = variables["monthlyIncome"], let tc = variables["trueCost"], i > 0 else { return [] }
+            return [.divide(a: tc, by: i), .multiply(a: tc / i, by: 100)]
+
+        // MARK: - Lease break
+        case "leaseBreakFeeOnly":
+            guard let m = variables["monthsPenalty"], let r = variables["monthlyRent"] else { return [] }
+            return [.multiply(a: m, by: r)]
+
+        case "leaseBreakTotalCost":
+            guard let m = variables["monthsPenalty"], let r = variables["monthlyRent"], let mc = variables["movingCost"] else { return [] }
+            return [.multiply(a: m, by: r), .add(a: m * r, b: mc)]
+
+        case "leaseBreakeven":
+            guard let t = variables["totalBreakCost"], let s = variables["monthlySaving"], s > 0 else { return [] }
+            return [.divide(a: t, by: s)]
+
+        case "leaseStaySavings":
+            guard let ml = variables["monthsLeft"], let tc = variables["totalBreakCost"], let s = variables["monthlySaving"] else { return [] }
+            return [.multiply(a: ml, by: s), .subtract(b: ml * s, from: tc)]
+
+        case "leaseBreakNetCost":
+            guard let ml = variables["monthsLeft"], let cr = variables["currentRent"], let nr = variables["newRent"],
+                  let bf = variables["breakFee"], let mc = variables["movingCost"] else { return [] }
+            let breakTotal = bf + mc
+            let savings = ml * (cr - nr)
+            return [.add(a: bf, b: mc), .subtract(b: nr, from: cr),
+                    .multiply(a: ml, by: cr - nr),
+                    .subtract(b: savings, from: breakTotal)]
+
+        // MARK: - Taxes reworks
+        case "refundMonthlyLoan":
+            guard let r = variables["refundAmount"] else { return [] }
+            return [.divide(a: r, by: 12)]
+
+        case "refundInvestedGain":
+            guard let r = variables["refundAmount"] else { return [] }
+            return [.percentOf(pct: 3, amount: r)]
+
+        case "annualOverWithholding":
+            guard let w = variables["monthlyWithheld"], let o = variables["monthlyOwed"] else { return [] }
+            return [.subtract(b: o, from: w), .multiply(a: w - o, by: 12)]
+
+        case "quarterlyEstimatedTax":
+            guard let i = variables["quarterlyIncome"], let inc = variables["incomeTaxPct"] else { return [] }
+            return [.add(a: 15.3, b: inc), .percentOf(pct: 15.3 + inc, amount: i)]
+
+        // MARK: - Standard vs Itemized
+        case "itemizedTotal":
+            guard let m = variables["mortgageInt"], let s = variables["stateTax"], let c = variables["charity"] else { return [] }
+            return [.add(a: m, b: s), .add(a: m + s, b: c)]
+
+        case "itemizedExcess":
+            guard let i = variables["itemizedAmount"], let s = variables["standardAmount"] else { return [] }
+            return [.subtract(b: s, from: i)]
+
+        case "itemizedSavingDollars":
+            guard let e = variables["excessAmount"], let r = variables["taxRate"] else { return [] }
+            return [.percentOf(pct: r, amount: e)]
+
+        case "itemizedDecisionSaving":
+            guard let m = variables["mortgageInt"], let s = variables["stateTax"], let c = variables["charity"],
+                  let r = variables["taxRate"] else { return [] }
+            let itemized = m + s + c
+            return [.add(a: m, b: s), .add(a: m + s, b: c),
+                    .subtract(b: 15200, from: itemized),
+                    .percentOf(pct: r, amount: max(0, itemized - 15200))]
+
+        case "itemizedLifetime":
+            guard let a = variables["annualSaving"], let y = variables["years"] else { return [] }
+            return [.multiply(a: a, by: y)]
+
+        // MARK: - Capital Gains
+        case "shortTermCapGainsTax":
+            guard let g = variables["gain"], let r = variables["ordinaryRate"] else { return [] }
+            return [.percentOf(pct: r, amount: g)]
+
+        case "longTermCapGainsTax":
+            guard let g = variables["gain"], let r = variables["ltcgRate"] else { return [] }
+            return [.percentOf(pct: r, amount: g)]
+
+        case "capGainsTimingSaving":
+            guard let g = variables["gain"], let o = variables["ordinaryRate"], let l = variables["ltcgRate"] else { return [] }
+            return [.subtract(b: l, from: o), .percentOf(pct: o - l, amount: g)]
+
+        case "capGainsTaxDifference":
+            guard let gA = variables["gainA"], let o = variables["ordinaryRate"],
+                  let gB = variables["gainB"], let l = variables["ltcgRate"] else { return [] }
+            let taxA = gA * o / 100
+            let taxB = gB * l / 100
+            return [.percentOf(pct: o, amount: gA), .percentOf(pct: l, amount: gB),
+                    .subtract(b: min(taxA, taxB), from: max(taxA, taxB))]
+
+        // MARK: - W-4 Adjust
+        case "w4MonthlyBump":
+            guard let r = variables["refundAmount"] else { return [] }
+            return [.divide(a: r, by: 12)]
+
+        case "w4BiweeklyBump":
+            guard let r = variables["refundAmount"] else { return [] }
+            return [.divide(a: r, by: 26)]
+
+        case "w4AnnualInvested":
+            guard let b = variables["biweeklyBump"] else { return [] }
+            return [.multiply(a: b, by: 26), .multiply(a: b * 26, by: 1.03)]
+
+        case "w4RefundGain":
+            guard let r = variables["refundAmount"] else { return [] }
+            return [.percentOf(pct: 3, amount: r)]
+
+        case "w4LifetimeGain":
+            guard let r = variables["refundAmount"], let y = variables["years"] else { return [] }
+            return [.percentOf(pct: 3, amount: r), .multiply(a: r * 0.03, by: y)]
+
         default:
             return []
         }

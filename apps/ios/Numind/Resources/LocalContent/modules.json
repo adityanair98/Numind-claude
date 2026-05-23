@@ -106,8 +106,10 @@
       "housing_rent_affordability",
       "housing_rent_increase",
       "housing_move_in_cost",
-      "housing_price_sqft",
-      "housing_mortgage_vs_rent"
+      "housing_roommate_math",
+      "housing_true_cost",
+      "housing_mortgage_vs_rent",
+      "housing_lease_break"
     ]
   },
   {
@@ -121,9 +123,11 @@
     "lessonIds": [
       "taxes_brackets",
       "taxes_deductions",
-      "taxes_gross_to_net",
       "taxes_refund",
-      "taxes_self_employment"
+      "taxes_self_employment",
+      "taxes_standard_vs_itemized",
+      "taxes_capital_gains",
+      "taxes_w4_adjust"
     ]
   },
   {

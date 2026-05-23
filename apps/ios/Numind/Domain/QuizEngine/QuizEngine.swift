@@ -1410,6 +1410,194 @@ struct QuizEngine {
             guard let m = vars["monthlyBnpl"] else { return nil }
             return m * 12
         },
+
+        // MARK: - Housing reworks
+        "minIncomeForRent": { vars in
+            guard let rent = vars["monthlyRent"] else { return nil }
+            return rent / 0.28
+        },
+        "rentAboveAvgImpact": { vars in
+            guard let rent = vars["currentRent"], let inc = vars["increasePercent"] else { return nil }
+            return rent * (inc - 4) / 100
+        },
+        "monthsToRecoupMoving": { vars in
+            guard let cost = vars["movingCost"], let inc = vars["monthlyIncrease"], inc > 0 else { return nil }
+            return (cost / inc).rounded()
+        },
+        "mortgageRateFactor": { vars in
+            guard let loan = vars["loanAmount"], let f = vars["factor"] else { return nil }
+            return loan * f
+        },
+        "mortgageRateDiff": { vars in
+            guard let loan = vars["loanAmount"] else { return nil }
+            return loan * 0.0013  // 0.0067 - 0.0054
+        },
+        "mortgageWithTaxAndInsurance": { vars in
+            guard let loan = vars["loanAmount"], let f = vars["factor"],
+                  let ti = vars["taxAndInsurance"] else { return nil }
+            return loan * f + ti
+        },
+        "mortgageVsRentMonthlyDiff": { vars in
+            guard let rent = vars["monthlyRent"], let loan = vars["loanAmount"],
+                  let f = vars["factor"], let ti = vars["taxAndInsurance"] else { return nil }
+            return abs(rent - (loan * f + ti))
+        },
+
+        // MARK: - Housing: Roommate
+        "halfOfRent": { vars in
+            guard let r = vars["sharedRent"] else { return nil }
+            return r / 2
+        },
+        "roommateSavingWithUtilities": { vars in
+            guard let sr = vars["soloRent"], let su = vars["soloUtilities"],
+                  let shr = vars["sharedRent"], let shu = vars["sharedUtilities"] else { return nil }
+            return (sr + su) - (shr + shu) / 2
+        },
+        "smallerShareRent": { vars in
+            guard let r = vars["sharedRent"], let big = vars["bigShare"] else { return nil }
+            return r * (100 - big) / 100
+        },
+        "monthlyToAnnualSimple": { vars in
+            guard let m = vars["monthlySaving"] else { return nil }
+            return m * 12
+        },
+        "roommateAnnualSaving": { vars in
+            guard let solo = vars["soloRent"], let shared = vars["sharedRent"] else { return nil }
+            return (solo - shared / 2) * 12
+        },
+
+        // MARK: - Housing: True cost
+        "trueHousingCost": { vars in
+            guard let r = vars["rent"], let u = vars["utilities"],
+                  let i = vars["insurance"], let p = vars["parking"] else { return nil }
+            return r + u + i + p
+        },
+        "housingExtraBeyondRent": { vars in
+            guard let tc = vars["trueCost"], let r = vars["rent"] else { return nil }
+            return tc - r
+        },
+        "trueHousingDiff": { vars in
+            guard let rA = vars["rentA"], let aA = vars["addonsA"],
+                  let rB = vars["rentB"], let aB = vars["addonsB"] else { return nil }
+            return abs((rA + aA) - (rB + aB))
+        },
+        "trueCostExtraPct": { vars in
+            guard let r = vars["rent"], let tc = vars["trueCost"], r > 0 else { return nil }
+            return (tc - r) / r * 100
+        },
+        "housingPctOfIncome": { vars in
+            guard let income = vars["monthlyIncome"], let tc = vars["trueCost"], income > 0 else { return nil }
+            return tc / income * 100
+        },
+
+        // MARK: - Housing: Lease break
+        "leaseBreakFeeOnly": { vars in
+            guard let m = vars["monthsPenalty"], let r = vars["monthlyRent"] else { return nil }
+            return m * r
+        },
+        "leaseBreakTotalCost": { vars in
+            guard let m = vars["monthsPenalty"], let r = vars["monthlyRent"], let mc = vars["movingCost"] else { return nil }
+            return m * r + mc
+        },
+        "leaseBreakeven": { vars in
+            guard let total = vars["totalBreakCost"], let saving = vars["monthlySaving"], saving > 0 else { return nil }
+            return (total / saving).rounded(.up)
+        },
+        "leaseStaySavings": { vars in
+            guard let ml = vars["monthsLeft"], let tc = vars["totalBreakCost"], let s = vars["monthlySaving"] else { return nil }
+            // Money saved by staying = break cost − (savings from cheaper place over remaining months)
+            return tc - ml * s
+        },
+        "leaseBreakNetCost": { vars in
+            guard let ml = vars["monthsLeft"],
+                  let cr = vars["currentRent"], let nr = vars["newRent"],
+                  let bf = vars["breakFee"], let mc = vars["movingCost"] else { return nil }
+            return (bf + mc) - ml * (cr - nr)
+        },
+
+        // MARK: - Taxes reworks
+        "refundMonthlyLoan": { vars in
+            guard let r = vars["refundAmount"] else { return nil }
+            return r / 12
+        },
+        "refundInvestedGain": { vars in
+            guard let r = vars["refundAmount"] else { return nil }
+            return r * 0.03  // ~3% gain from half-year average return
+        },
+        "annualOverWithholding": { vars in
+            guard let w = vars["monthlyWithheld"], let o = vars["monthlyOwed"] else { return nil }
+            return (w - o) * 12
+        },
+        "quarterlyEstimatedTax": { vars in
+            guard let income = vars["quarterlyIncome"], let inc = vars["incomeTaxPct"] else { return nil }
+            return income * (15.3 + inc) / 100
+        },
+
+        // MARK: - Taxes: Standard vs Itemized
+        "itemizedTotal": { vars in
+            guard let m = vars["mortgageInt"], let s = vars["stateTax"], let c = vars["charity"] else { return nil }
+            return m + s + c
+        },
+        "itemizedExcess": { vars in
+            guard let i = vars["itemizedAmount"], let s = vars["standardAmount"] else { return nil }
+            return i - s
+        },
+        "itemizedSavingDollars": { vars in
+            guard let e = vars["excessAmount"], let r = vars["taxRate"] else { return nil }
+            return e * r / 100
+        },
+        "itemizedDecisionSaving": { vars in
+            guard let m = vars["mortgageInt"], let s = vars["stateTax"], let c = vars["charity"],
+                  let r = vars["taxRate"] else { return nil }
+            let itemized = m + s + c
+            let excess = max(0, itemized - 15200)
+            return excess * r / 100
+        },
+        "itemizedLifetime": { vars in
+            guard let a = vars["annualSaving"], let y = vars["years"] else { return nil }
+            return a * y
+        },
+
+        // MARK: - Taxes: Capital gains
+        "shortTermCapGainsTax": { vars in
+            guard let g = vars["gain"], let r = vars["ordinaryRate"] else { return nil }
+            return g * r / 100
+        },
+        "longTermCapGainsTax": { vars in
+            guard let g = vars["gain"], let r = vars["ltcgRate"] else { return nil }
+            return g * r / 100
+        },
+        "capGainsTimingSaving": { vars in
+            guard let g = vars["gain"], let o = vars["ordinaryRate"], let l = vars["ltcgRate"] else { return nil }
+            return g * (o - l) / 100
+        },
+        "capGainsTaxDifference": { vars in
+            guard let gA = vars["gainA"], let o = vars["ordinaryRate"],
+                  let gB = vars["gainB"], let l = vars["ltcgRate"] else { return nil }
+            return abs(gA * o / 100 - gB * l / 100)
+        },
+
+        // MARK: - Taxes: W-4 Adjust
+        "w4MonthlyBump": { vars in
+            guard let r = vars["refundAmount"] else { return nil }
+            return r / 12
+        },
+        "w4BiweeklyBump": { vars in
+            guard let r = vars["refundAmount"] else { return nil }
+            return r / 26
+        },
+        "w4AnnualInvested": { vars in
+            guard let b = vars["biweeklyBump"] else { return nil }
+            return b * 26 * 1.03
+        },
+        "w4RefundGain": { vars in
+            guard let r = vars["refundAmount"] else { return nil }
+            return r * 0.03
+        },
+        "w4LifetimeGain": { vars in
+            guard let r = vars["refundAmount"], let y = vars["years"] else { return nil }
+            return r * 0.03 * y
+        },
     ]
 
     private static func compute(formula: String, variables: [String: Double]) -> Double? {

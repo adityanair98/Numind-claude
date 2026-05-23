@@ -250,15 +250,23 @@ enum QuestionTheme {
 
         // ── Housing & Rent ───────────────────────────────────────────────────────
         case "rent_afford_basic_d1", "rent_afford_scenario_d1",
-             "rent_afford_reverse_d2", "rent_afford_compare_d2", "rent_afford_annual_d3",
+             "rent_afford_reverse_d2", "rent_afford_annual_d3", "rent_min_income_d3",
              "rent_increase_basic_d1", "rent_increase_new_d1",
-             "rent_increase_annual_d2", "rent_increase_scenario_d2", "rent_increase_compare_d3",
+             "rent_increase_annual_d2", "rent_above_avg_d2", "rent_renew_vs_move_d3",
              "move_in_basic_d1", "move_in_no_broker_d1",
              "move_in_with_broker_d2", "move_in_scenario_d2", "move_in_compare_d3",
-             "sqft_basic_d1", "sqft_compare_d1",
-             "sqft_scenario_d2", "sqft_reverse_d2", "sqft_best_deal_d3",
-             "mortgage_basic_d1", "mortgage_compare_d2",
-             "mortgage_scenario_d2", "mortgage_interest_d2", "mortgage_vs_rent_d3":
+             // Mortgage reworks
+             "mortgage_rate_factor_d1", "mortgage_per_100k_d1", "mortgage_rate_compare_d2",
+             "mortgage_pi_taxes_d3", "mortgage_vs_rent_decision_d3",
+             // Roommate
+             "roommate_basic_d1", "roommate_utilities_d2", "roommate_unequal_d3",
+             "roommate_annual_d2", "roommate_compare_d3",
+             // True cost
+             "true_cost_sum_d1", "true_cost_extra_d1", "true_cost_compare_d2",
+             "true_cost_pct_d2", "true_cost_vs_28_d3",
+             // Lease break
+             "lease_break_fee_d1", "lease_break_total_d2", "lease_break_breakeven_d2",
+             "lease_stay_savings_d3", "lease_break_decision_d3":
             return .housing
 
         // ── Taxes & Paycheck ────────────────────────────────────────────────────
@@ -266,12 +274,21 @@ enum QuestionTheme {
              "bracket_scenario_d2", "bracket_compare_d2", "bracket_effective_d3",
              "deduction_basic_d1", "deduction_net_d1",
              "deduction_fica_d2", "deduction_scenario_d2", "deduction_compare_d3",
-             "gross_net_basic_d1", "gross_net_monthly_d1",
-             "gross_net_scenario_d2", "gross_net_compare_d2", "gross_net_reverse_d3",
              "refund_basic_d1", "refund_owe_d1",
-             "refund_scenario_d2", "refund_compare_d2", "refund_monthly_d3",
              "se_tax_basic_d1", "se_tax_amount_d1",
-             "se_tax_scenario_d2", "se_tax_compare_d2", "se_tax_quarterly_d3":
+             "se_tax_scenario_d2", "se_tax_compare_d2",
+             // Phase 4 reworks
+             "refund_monthly_loan_d2", "refund_invested_d2", "refund_annual_loss_d3",
+             "se_quarterly_combined_d3",
+             // Standard vs itemized
+             "itemized_sum_d1", "itemized_vs_standard_d1", "itemized_saving_d2",
+             "itemized_decision_d3", "itemized_strategy_d3",
+             // Capital gains
+             "capgains_short_d1", "capgains_long_d1", "capgains_saving_d2",
+             "capgains_timing_d3", "capgains_compare_d3",
+             // W-4 adjust
+             "w4_bump_d1", "w4_bump_biweekly_d1", "w4_invested_d2",
+             "w4_annual_growth_d2", "w4_lifetime_d3":
             return .taxes
 
         // ── Insurance & Healthcare ──────────────────────────────────────────────
