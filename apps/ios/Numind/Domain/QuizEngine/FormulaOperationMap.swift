@@ -1739,6 +1739,290 @@ enum FormulaOperationMap {
             guard let r = variables["refundAmount"], let y = variables["years"] else { return [] }
             return [.percentOf(pct: 3, amount: r), .multiply(a: r * 0.03, by: y)]
 
+        // MARK: - Insurance reworks
+        case "insuranceExposureRange":
+            return [.subtract(b: 0, from: variables["deductible"] ?? 0)]  // trivial
+
+        case "erVisitCost":
+            guard let total = variables["totalBill"], let ded = variables["deductible"],
+                  let paid = variables["deductibleSoFar"], let coins = variables["coinsurancePercent"] else { return [] }
+            let remainingDed = max(0, ded - paid)
+            let postDed = max(0, total - ded)
+            return [.subtract(b: paid, from: ded),
+                    .subtract(b: ded, from: total),
+                    .percentOf(pct: coins, amount: postDed),
+                    .add(a: remainingDed, b: postDed * coins / 100)]
+
+        case "copayVsCoinsuranceDiff":
+            guard let cost = variables["visitCost"], let copay = variables["copayAmount"], let coins = variables["coinsurancePercent"] else { return [] }
+            let coinAmt = cost * coins / 100
+            return [.percentOf(pct: coins, amount: cost),
+                    .subtract(b: min(copay, coinAmt), from: max(copay, coinAmt))]
+
+        case "hdhpPpoVisitsBreakeven":
+            guard let hp = variables["hdhpPremium"], let hv = variables["hdhpVisitCost"],
+                  let pp = variables["ppoPremium"], let pc = variables["ppoCopay"] else { return [] }
+            let saving = (pp - hp) * 12
+            let gap = hv - pc
+            guard gap > 0 else { return [] }
+            return [.subtract(b: hp, from: pp), .multiply(a: pp - hp, by: 12),
+                    .subtract(b: pc, from: hv), .divide(a: saving, by: gap)]
+
+        case "hsaRetirementTaxSaved":
+            guard let m = variables["medicalAmount"], let r = variables["taxRate"] else { return [] }
+            return [.percentOf(pct: r, amount: m)]
+
+        // MARK: - FSA
+        case "fsaTaxSavings":
+            guard let e = variables["fsaElection"], let r = variables["taxRate"] else { return [] }
+            return [.percentOf(pct: r, amount: e)]
+
+        case "fsaNetResult":
+            guard let e = variables["fsaElection"], let r = variables["taxRate"], let s = variables["actualSpent"] else { return [] }
+            let saved = e * r / 100
+            let forfeit = e - s
+            return [.percentOf(pct: r, amount: e), .subtract(b: s, from: e),
+                    .subtract(b: forfeit, from: saved)]
+
+        case "fsaBreakevenSpend":
+            guard let e = variables["fsaElection"], let r = variables["taxRate"] else { return [] }
+            return [.subtract(b: r, from: 100), .percentOf(pct: 100 - r, amount: e)]
+
+        case "fsaElectionDiffSaving":
+            guard let a = variables["electionA"], let b = variables["electionB"], let r = variables["taxRate"] else { return [] }
+            return [.subtract(b: min(a, b), from: max(a, b)), .percentOf(pct: r, amount: abs(a - b))]
+
+        case "fsaMaxAdditional":
+            guard let s = variables["guaranteedSpend"], let r = variables["taxRate"], r < 100 else { return [] }
+            return [.subtract(b: r, from: 100), .divide(a: r, by: 100 - r), .multiply(a: s, by: r / (100 - r))]
+
+        // MARK: - Life Insurance
+        case "lifeBaseline10x":
+            guard let s = variables["annualSalary"] else { return [] }
+            return [.multiply(a: s, by: 10)]
+
+        case "lifeAdjustedCoverage":
+            guard let s = variables["annualSalary"], let m = variables["mortgageBalance"], let sv = variables["savings"] else { return [] }
+            return [.multiply(a: s, by: 10), .add(a: s * 10, b: m), .subtract(b: sv, from: s * 10 + m)]
+
+        case "lifeAnnualDiff":
+            guard let pA = variables["premiumA"], let pB = variables["premiumB"] else { return [] }
+            return [.subtract(b: pA, from: pB), .multiply(a: pB - pA, by: 12)]
+
+        case "lifeCostPer100k":
+            guard let c = variables["coverage"], let p = variables["premium"], c > 0 else { return [] }
+            return [.multiply(a: p, by: 12), .divide(a: c, by: 100000), .divide(a: p * 12, by: c / 100000)]
+
+        case "lifeLifetimeCost":
+            guard let p = variables["monthlyPremium"] else { return [] }
+            return [.multiply(a: p, by: 360)]
+
+        // MARK: - Prescription
+        case "rxAnnualSaving":
+            guard let b = variables["brandCopay"], let g = variables["genericCopay"] else { return [] }
+            return [.subtract(b: g, from: b), .multiply(a: b - g, by: 12)]
+
+        case "rxMultipleSaving":
+            guard let c1 = variables["copay1"], let g1 = variables["generic1"],
+                  let c2 = variables["copay2"], let g2 = variables["generic2"] else { return [] }
+            let total = (c1 - g1) + (c2 - g2)
+            return [.subtract(b: g1, from: c1), .subtract(b: g2, from: c2), .multiply(a: total, by: 12)]
+
+        case "rxGoodrxSaving":
+            guard let b = variables["brandCopay"], let g = variables["goodrxPrice"] else { return [] }
+            return [.subtract(b: g, from: b), .multiply(a: b - g, by: 12)]
+
+        case "rxMonthlyDiff":
+            guard let b = variables["brandCopay"], let g = variables["genericCopay"] else { return [] }
+            return [.subtract(b: g, from: b)]
+
+        case "rxLifetimeSaving":
+            guard let m = variables["monthlyDiff"], let y = variables["years"] else { return [] }
+            return [.multiply(a: m, by: 12), .multiply(a: m * 12, by: y)]
+
+        // MARK: - Car reworks
+        case "carTermExtraCost":
+            guard let p48 = variables["payment48"], let p72 = variables["payment72"] else { return [] }
+            return [.multiply(a: p48, by: 48), .multiply(a: p72, by: 72),
+                    .subtract(b: p48 * 48, from: p72 * 72)]
+
+        case "interestSavingFromDownPayment":
+            guard let i = variables["totalInterest"], let li = variables["lowerInterest"] else { return [] }
+            return [.subtract(b: li, from: i)]
+
+        case "carTotalCost3yr":
+            guard let p = variables["carPrice"], let dep = variables["depPercent"], let ops = variables["monthlyOps"] else { return [] }
+            return [.percentOf(pct: dep, amount: p), .multiply(a: ops, by: 36),
+                    .add(a: p * dep / 100, b: ops * 36)]
+
+        // MARK: - Car TCO
+        case "carMonthlyOwnership":
+            guard let p = variables["payment"], let i = variables["insurance"],
+                  let g = variables["gas"], let m = variables["maintenance"] else { return [] }
+            return [.add(a: p, b: i), .add(a: p + i, b: g), .add(a: p + i + g, b: m)]
+
+        case "tcoMonthlyDifference":
+            guard let pA = variables["paymentA"], let oA = variables["opsA"],
+                  let pB = variables["paymentB"], let oB = variables["opsB"] else { return [] }
+            let tA = pA + oA, tB = pB + oB
+            return [.add(a: pA, b: oA), .add(a: pB, b: oB),
+                    .subtract(b: min(tA, tB), from: max(tA, tB))]
+
+        case "keepVsBuyDiff":
+            guard let mk = variables["maintenanceKeep"], let ik = variables["insuranceKeep"], let gk = variables["gasKeep"],
+                  let pn = variables["paymentNew"], let on = variables["opsNew"] else { return [] }
+            let keep = mk + ik + gk
+            let buy = pn + on
+            return [.add(a: mk, b: ik), .add(a: pn, b: on), .subtract(b: keep, from: buy)]
+
+        case "carPctOfIncome":
+            guard let inc = variables["monthlyIncome"], let tco = variables["tcoMonthly"], inc > 0 else { return [] }
+            return [.divide(a: tco, by: inc), .multiply(a: tco / inc, by: 100)]
+
+        case "tcoAnnual":
+            guard let m = variables["tcoMonthly"] else { return [] }
+            return [.multiply(a: m, by: 12)]
+
+        // MARK: - Car Lease vs Buy
+        case "leaseTotalSpent":
+            guard let m = variables["monthlyLease"], let mo = variables["months"] else { return [] }
+            return [.multiply(a: m, by: mo)]
+
+        case "buyNetCost":
+            guard let p = variables["monthlyPayment"], let m = variables["months"], let r = variables["residualValue"] else { return [] }
+            return [.multiply(a: p, by: m), .subtract(b: r, from: p * m)]
+
+        case "leaseVsBuy3yrDiff":
+            guard let l = variables["monthlyLease"], let p = variables["monthlyPayment"], let r = variables["residualValue"] else { return [] }
+            let lease = l * 36
+            let buyNet = p * 36 - r
+            return [.multiply(a: l, by: 36), .multiply(a: p, by: 36), .subtract(b: r, from: p * 36),
+                    .subtract(b: min(lease, buyNet), from: max(lease, buyNet))]
+
+        case "leaseMonthlyFromTotal":
+            guard let t = variables["leaseTotal"] else { return [] }
+            return [.divide(a: t, by: 36)]
+
+        case "leaseVsBuyLifetime":
+            guard let l = variables["leasePerCar"], let p = variables["carPrice"] else { return [] }
+            return [.multiply(a: l, by: 3.33), .subtract(b: min(l * 3.33, p), from: max(l * 3.33, p))]
+
+        // MARK: - Car Trade-in
+        case "tradeInPremium":
+            guard let t = variables["tradeInOffer"], let p = variables["privatePrice"] else { return [] }
+            return [.subtract(b: t, from: p)]
+
+        case "tradeInHourlyValue":
+            guard let pr = variables["premium"], let h = variables["hours"], h > 0 else { return [] }
+            return [.divide(a: pr, by: h)]
+
+        case "tradeInTaxBenefit":
+            guard let t = variables["tradeInOffer"], let r = variables["taxRate"] else { return [] }
+            return [.percentOf(pct: r, amount: t)]
+
+        case "tradeInAdjustedPremium":
+            guard let p = variables["privatePrice"], let t = variables["tradeInOffer"], let ts = variables["taxSaving"] else { return [] }
+            return [.subtract(b: t, from: p), .subtract(b: ts, from: p - t)]
+
+        case "tradeInHourlyAdjusted":
+            guard let p = variables["privatePrice"], let t = variables["tradeInOffer"],
+                  let ts = variables["taxSaving"], let h = variables["hours"], h > 0 else { return [] }
+            let adjusted = (p - t) - ts
+            return [.subtract(b: t, from: p), .subtract(b: ts, from: p - t), .divide(a: adjusted, by: h)]
+
+        // MARK: - SL Rule of Thumb
+        case "slRuleOfThumb110":
+            guard let b = variables["loanBalance"] else { return [] }
+            return [.divide(a: b, by: 10000), .multiply(a: b / 10000, by: 110)]
+
+        case "slCustomPer10k":
+            guard let b = variables["loanBalance"], let r = variables["paymentPer10k"] else { return [] }
+            return [.divide(a: b, by: 10000), .multiply(a: b / 10000, by: r)]
+
+        case "slPaymentRange":
+            guard let b = variables["loanBalance"] else { return [] }
+            return [.divide(a: b, by: 10000), .multiply(a: b / 10000, by: 20)]
+
+        case "slEstByApr":
+            guard let b = variables["loanBalance"], let apr = variables["apr"] else { return [] }
+            let f: Double = apr <= 5 ? 105 : 115
+            return [.divide(a: b, by: 10000), .multiply(a: b / 10000, by: f)]
+
+        case "slInterestPercent":
+            guard let loan = variables["loanAmount"], let paid = variables["totalPaid"], loan > 0 else { return [] }
+            return [.subtract(b: loan, from: paid), .divide(a: paid - loan, by: loan), .multiply(a: (paid - loan) / loan, by: 100)]
+
+        case "refiVsPslfDiff120":
+            guard let refi = variables["refiPayment"], let pslf = variables["pslfPayment"] else { return [] }
+            return [.subtract(b: pslf, from: refi), .multiply(a: refi - pslf, by: 120)]
+
+        // MARK: - SL Employer Benefit
+        case "annualToMonthlySimple":
+            guard let a = variables["annualBenefit"] else { return [] }
+            return [.divide(a: a, by: 12)]
+
+        case "employerBenefitMultiYear":
+            guard let a = variables["annualBenefit"], let y = variables["years"] else { return [] }
+            return [.multiply(a: a, by: y)]
+
+        case "employerInterestSaving":
+            guard let a = variables["annualBenefit"], let y = variables["years"], let r = variables["interestRate"] else { return [] }
+            return [.multiply(a: a, by: y), .percentOf(pct: r, amount: a * y), .multiply(a: a * y * r / 100, by: 0.5)]
+
+        case "employerBenefitGrossUp":
+            guard let a = variables["annualBenefit"], let r = variables["taxRate"], r < 100 else { return [] }
+            return [.subtract(b: r, from: 100), .divide(a: a, by: 1 - r / 100)]
+
+        case "employerBenefitLifetimeValue":
+            guard let a = variables["annualBenefit"], let y = variables["years"], let r = variables["taxRate"], r < 100 else { return [] }
+            let grossed = a / (1 - r / 100)
+            return [.divide(a: a, by: 1 - r / 100), .multiply(a: grossed, by: y)]
+
+        // MARK: - SL Grace Period
+        case "dailyInterest":
+            guard let b = variables["balance"], let r = variables["interestRate"] else { return [] }
+            return [.percentOf(pct: r, amount: b), .divide(a: b * r / 100, by: 365)]
+
+        case "gracePeriodTotal":
+            guard let d = variables["dailyAmount"] else { return [] }
+            return [.multiply(a: d, by: 180)]
+
+        case "gracePeriodFullSaving":
+            guard let a = variables["accruedAmount"] else { return [] }
+            return [.multiply(a: a, by: 1.05)]
+
+        case "balanceAfterGrace":
+            guard let b = variables["originalBalance"], let r = variables["interestRate"] else { return [] }
+            return [.percentOf(pct: r, amount: b), .multiply(a: b * r / 100, by: 0.5), .add(a: b, b: b * r / 100 * 0.5)]
+
+        case "gracePeriodLifetimeImpact":
+            guard let a = variables["accruedAmount"], let r = variables["interestRate"] else { return [] }
+            return [.percentOf(pct: r, amount: a), .multiply(a: a * r / 100, by: 5)]
+
+        // MARK: - SL Parent PLUS
+        case "plusVsPrivateAnnualInterest":
+            guard let b = variables["loanBalance"], let p = variables["plusRate"], let pr = variables["privateRate"] else { return [] }
+            return [.subtract(b: pr, from: p), .percentOf(pct: p - pr, amount: b)]
+
+        case "plusVsPrivate10yr":
+            guard let b = variables["loanBalance"], let p = variables["plusRate"], let pr = variables["privateRate"] else { return [] }
+            return [.subtract(b: pr, from: p), .percentOf(pct: p - pr, amount: b), .multiply(a: b * (p - pr) / 100, by: 10)]
+
+        case "plusOriginationFee":
+            guard let b = variables["loanBalance"] else { return [] }
+            return [.percentOf(pct: 4.228, amount: b)]
+
+        case "plusVsPrivateTotalWithOrigination":
+            guard let b = variables["loanBalance"], let pr = variables["privateRate"] else { return [] }
+            return [.subtract(b: pr, from: 8.94), .percentOf(pct: 8.94 - pr, amount: b),
+                    .multiply(a: b * (8.94 - pr) / 100, by: 10),
+                    .percentOf(pct: 4.228, amount: b)]
+
+        case "plusVsPrivateMonthlyInterest":
+            guard let b = variables["loanBalance"], let pr = variables["privateRate"] else { return [] }
+            return [.subtract(b: pr, from: 8.94), .percentOf(pct: 8.94 - pr, amount: b),
+                    .divide(a: b * (8.94 - pr) / 100, by: 12)]
+
         default:
             return []
         }

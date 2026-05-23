@@ -3404,28 +3404,6 @@
     "explanationTemplate": "${{freelanceIncome}} \u00d7 0.153 = ${{answer}}."
   },
   {
-    "id": "se_tax_quarterly_d3",
-    "moduleId": "taxes",
-    "difficulty": 3,
-    "promptTemplate": "You made ${{freelanceIncome}} this quarter from freelancing. What's the 15.3% SE tax?",
-    "variableRules": [
-      {
-        "name": "freelanceIncome",
-        "options": [
-          4800,
-          5800,
-          6800,
-          7800,
-          9000
-        ]
-      }
-    ],
-    "answerFormula": "selfEmploymentTax",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "SE tax = ${{freelanceIncome}} \u00d7 15.3% = ${{answer}}. File quarterly to avoid penalties."
-  },
-  {
     "id": "match_amount_d1",
     "moduleId": "investing",
     "difficulty": 1,
@@ -4091,47 +4069,6 @@
     "explanationTemplate": "If bills < deductible, you pay premiums + full bills. Total = (${{monthlyPremium}} \u00d7 12) + ${{medicalBills}}. The deductible means insurance doesn't kick in until you've spent that amount."
   },
   {
-    "id": "ins_breakeven_d3",
-    "moduleId": "insurance",
-    "difficulty": 3,
-    "promptTemplate": "Plan A: ${{premiumA}}/month, ${{deductibleA}} deductible. Plan B: ${{premiumB}}/month, ${{deductibleB}} deductible. If you hit your full deductible, which plan costs less total and by how much?",
-    "variableRules": [
-      {
-        "name": "premiumA",
-        "options": [
-          400,
-          450
-        ]
-      },
-      {
-        "name": "deductibleA",
-        "options": [
-          500,
-          1000
-        ]
-      },
-      {
-        "name": "premiumB",
-        "options": [
-          250,
-          300
-        ]
-      },
-      {
-        "name": "deductibleB",
-        "options": [
-          2000,
-          2500,
-          3000
-        ]
-      }
-    ],
-    "answerFormula": "insurancePlanCompare",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Plan A total = (${{premiumA}} \u00d7 12) + ${{deductibleA}}. Plan B total = (${{premiumB}} \u00d7 12) + ${{deductibleB}}. The cheaper plan depends on how much medical care you actually use."
-  },
-  {
     "id": "ins_coinsurance_d1",
     "moduleId": "insurance",
     "difficulty": 1,
@@ -4229,86 +4166,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Deductible already met, so you just pay coinsurance: ${{totalBill}} \u00d7 {{coinsurancePercent}}%. The insurer covers the other {{coinsurancePercent}}% complement."
-  },
-  {
-    "id": "ins_copay_scenario_d2",
-    "moduleId": "insurance",
-    "difficulty": 2,
-    "promptTemplate": "You pay ${{copayPrimary}} per primary care visit and ${{copaySpecialist}} per specialist visit. You see your doctor {{primaryVisits}} times and a specialist {{specialistVisits}} times. Total copays?",
-    "variableRules": [
-      {
-        "name": "copayPrimary",
-        "options": [
-          25,
-          30
-        ]
-      },
-      {
-        "name": "copaySpecialist",
-        "options": [
-          50,
-          60,
-          75
-        ]
-      },
-      {
-        "name": "primaryVisits",
-        "options": [
-          3,
-          4,
-          5
-        ]
-      },
-      {
-        "name": "specialistVisits",
-        "options": [
-          2,
-          3,
-          4
-        ]
-      }
-    ],
-    "answerFormula": "copayMixed",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = (primary copay \u00d7 visits) + (specialist copay \u00d7 visits). (${{copayPrimary}} \u00d7 {{primaryVisits}}) + (${{copaySpecialist}} \u00d7 {{specialistVisits}}). Specialist copays are almost always higher."
-  },
-  {
-    "id": "ins_coinsurance_compare_d3",
-    "moduleId": "insurance",
-    "difficulty": 3,
-    "promptTemplate": "You have a ${{totalBill}} bill. Deductible is ${{deductible}} (not yet met). After deductible, coinsurance is {{coinsurancePercent}}%. What's your total out-of-pocket for this bill?",
-    "variableRules": [
-      {
-        "name": "totalBill",
-        "options": [
-          3000,
-          4000,
-          5000,
-          6000
-        ]
-      },
-      {
-        "name": "deductible",
-        "options": [
-          1000,
-          1500,
-          2000
-        ]
-      },
-      {
-        "name": "coinsurancePercent",
-        "options": [
-          20,
-          25,
-          30
-        ]
-      }
-    ],
-    "answerFormula": "totalWithCoinsurance",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "You pay the full deductible (${{deductible}}) first. Then coinsurance on the rest: (${{totalBill}} \u2212 ${{deductible}}) \u00d7 {{coinsurancePercent}}%. Add both parts together."
   },
   {
     "id": "ins_oop_total_d1",
@@ -4650,46 +4507,6 @@
     "explanationTemplate": "HDHP total = (${{hdhpPremium}} \u00d7 12) + ${{hdhpDeductible}}. PPO total = (${{ppoPremium}} \u00d7 12) + (${{ppoCopay}} \u00d7 {{visits}}). Compare both to find the savings."
   },
   {
-    "id": "ins_breakeven_visits_d3",
-    "moduleId": "insurance",
-    "difficulty": 3,
-    "promptTemplate": "HDHP: ${{hdhpPremium}}/month, ${{hdhpDeductible}} deductible. PPO: ${{ppoPremium}}/month, ${{ppoCopay}} copay. You'll definitely hit the HDHP deductible. What's the cost difference between the plans?",
-    "variableRules": [
-      {
-        "name": "hdhpPremium",
-        "options": [
-          175,
-          200
-        ]
-      },
-      {
-        "name": "hdhpDeductible",
-        "options": [
-          2500,
-          3000
-        ]
-      },
-      {
-        "name": "ppoPremium",
-        "options": [
-          400,
-          450
-        ]
-      },
-      {
-        "name": "ppoCopay",
-        "options": [
-          30,
-          40
-        ]
-      }
-    ],
-    "answerFormula": "hdhpVsPpoGap",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "HDHP total = (${{hdhpPremium}} \u00d7 12) + ${{hdhpDeductible}}. PPO total = ${{ppoPremium}} \u00d7 12 (copay is small). The gap shows how much your health usage changes the math."
-  },
-  {
     "id": "ins_hsa_saving_d1",
     "moduleId": "insurance",
     "difficulty": 1,
@@ -4823,42 +4640,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Net advantage = premium savings + HSA tax savings. ((${{ppoPremium}} \u2212 ${{hdhpPremium}}) \u00d7 12) + ${{hsaTaxSaving}}. The HSA tax benefit is like getting a discount on your healthcare."
-  },
-  {
-    "id": "ins_hsa_total_d3",
-    "moduleId": "insurance",
-    "difficulty": 3,
-    "promptTemplate": "You max out your HSA at ${{hsaContribution}} per year. Tax rate: {{taxRate}}%. If you invest it and don't touch it for {{years}} years, you save ${{hsaContribution}} \u00d7 {{taxRate}}% in taxes each year. Total tax savings over {{years}} years?",
-    "variableRules": [
-      {
-        "name": "hsaContribution",
-        "options": [
-          3000,
-          3500,
-          4000
-        ]
-      },
-      {
-        "name": "taxRate",
-        "options": [
-          22,
-          24,
-          25
-        ]
-      },
-      {
-        "name": "years",
-        "options": [
-          5,
-          10,
-          15
-        ]
-      }
-    ],
-    "answerFormula": "hsaTotalTaxSaving",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total tax savings = (${{hsaContribution}} \u00d7 {{taxRate}}%) \u00d7 {{years}} years. Over time, the HSA tax advantage compounds into serious money."
   },
   {
     "id": "car_total_cost_d1",
@@ -5189,52 +4970,6 @@
     "explanationTemplate": "48-mo interest = (${{payment48}} \u00d7 48) \u2212 ${{loanAmount}}. 72-mo interest = (${{payment72}} \u00d7 72) \u2212 ${{loanAmount}}. The difference is pure extra cost from stretching the loan."
   },
   {
-    "id": "car_term_interest_d3",
-    "moduleId": "car",
-    "difficulty": 3,
-    "promptTemplate": "Loan: ${{loanAmount}}. Option A: ${{paymentA}}/month \u00d7 {{termA}} months. Option B: ${{paymentB}}/month \u00d7 {{termB}} months. What percentage of each loan total is interest? Give Option B's interest percentage.",
-    "variableRules": [
-      {
-        "name": "loanAmount",
-        "options": [
-          25000,
-          30000
-        ]
-      },
-      {
-        "name": "paymentA",
-        "options": [
-          475,
-          570
-        ]
-      },
-      {
-        "name": "termA",
-        "options": [
-          60
-        ]
-      },
-      {
-        "name": "paymentB",
-        "options": [
-          400,
-          480
-        ]
-      },
-      {
-        "name": "termB",
-        "options": [
-          72,
-          84
-        ]
-      }
-    ],
-    "answerFormula": "interestPercentOfTotal",
-    "answerFormat": "percent",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest = (payment \u00d7 months) \u2212 loan. Interest % = interest / total \u00d7 100. Longer loans mean a bigger chunk of every payment goes to the bank, not your car."
-  },
-  {
     "id": "car_down_amount_d1",
     "moduleId": "car",
     "difficulty": 1,
@@ -5366,65 +5101,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Savings = ${{interest10}} \u2212 ${{interest20}}. That extra down payment doesn't just reduce your loan \u2014 it reduces the interest on the loan too."
-  },
-  {
-    "id": "car_down_savings_d3",
-    "moduleId": "car",
-    "difficulty": 3,
-    "promptTemplate": "Car: ${{carPrice}}. Option A: ${{downA}} down, finance rest at ${{paymentA}}/month \u00d7 {{termA}} months. Option B: ${{downB}} down, finance rest at ${{paymentB}}/month \u00d7 {{termB}} months. Total cost difference?",
-    "variableRules": [
-      {
-        "name": "carPrice",
-        "options": [
-          30000,
-          35000
-        ]
-      },
-      {
-        "name": "downA",
-        "options": [
-          3000,
-          3500
-        ]
-      },
-      {
-        "name": "paymentA",
-        "options": [
-          500,
-          580
-        ]
-      },
-      {
-        "name": "termA",
-        "options": [
-          60
-        ]
-      },
-      {
-        "name": "downB",
-        "options": [
-          6000,
-          7000
-        ]
-      },
-      {
-        "name": "paymentB",
-        "options": [
-          430,
-          500
-        ]
-      },
-      {
-        "name": "termB",
-        "options": [
-          60
-        ]
-      }
-    ],
-    "answerFormula": "totalCostDifference",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total A = ${{downA}} + (${{paymentA}} \u00d7 {{termA}}). Total B = ${{downB}} + (${{paymentB}} \u00d7 {{termB}}). Even though B requires more cash upfront, it can save thousands overall."
   },
   {
     "id": "car_max_payment_d1",
@@ -5687,69 +5363,6 @@
     "explanationTemplate": "Total depreciation = purchase price \u2212 current value = ${{carPrice}} \u2212 ${{valueAfter3}}. A car that's 2-3 years old has already taken the biggest depreciation hit."
   },
   {
-    "id": "car_depreciation_compare_d3",
-    "moduleId": "car",
-    "difficulty": 3,
-    "promptTemplate": "New car: ${{newPrice}}, worth ${{newValueY3}} after 3 years. Used car (2 years old): ${{usedPrice}}, worth ${{usedValueY3}} after 3 more years. Which loses less in depreciation and by how much?",
-    "variableRules": [
-      {
-        "name": "newPrice",
-        "options": [
-          30000,
-          35000
-        ]
-      },
-      {
-        "name": "newValueY3",
-        "options": [
-          17000,
-          20000
-        ]
-      },
-      {
-        "name": "usedPrice",
-        "options": [
-          20000,
-          22000
-        ]
-      },
-      {
-        "name": "usedValueY3",
-        "options": [
-          13000,
-          15000
-        ]
-      }
-    ],
-    "answerFormula": "depreciationDifference",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New loss = ${{newPrice}} \u2212 ${{newValueY3}}. Used loss = ${{usedPrice}} \u2212 ${{usedValueY3}}. Buying used lets someone else absorb the steepest depreciation."
-  },
-  {
-    "id": "sl_monthly_d1",
-    "moduleId": "student_loans",
-    "difficulty": 1,
-    "promptTemplate": "Your student loan payment is ${{monthlyPayment}} per month. How much do you pay per year?",
-    "variableRules": [
-      {
-        "name": "monthlyPayment",
-        "options": [
-          200,
-          250,
-          300,
-          350,
-          400,
-          450
-        ]
-      }
-    ],
-    "answerFormula": "annualPayment",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual = ${{monthlyPayment}} \u00d7 12. Knowing your annual student loan cost helps you see how it fits into your overall budget."
-  },
-  {
     "id": "sl_monthly_estimate_d1",
     "moduleId": "student_loans",
     "difficulty": 1,
@@ -5777,111 +5390,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Payment = (${{loanBalance}} \u00f7 10,000) \u00d7 ${{paymentPer10k}}. The ~$100-$120 per $10K rule is a quick way to estimate standard 10-year repayment."
-  },
-  {
-    "id": "sl_monthly_scenario_d2",
-    "moduleId": "student_loans",
-    "difficulty": 2,
-    "promptTemplate": "You owe ${{loanBalance}} at {{interestRate}}% interest on a 10-year plan. Monthly interest alone is ${{loanBalance}} \u00d7 {{interestRate}}% \u00f7 12. What's the monthly interest charge?",
-    "variableRules": [
-      {
-        "name": "loanBalance",
-        "options": [
-          25000,
-          30000,
-          35000,
-          40000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          5,
-          6,
-          7
-        ]
-      }
-    ],
-    "answerFormula": "monthlyInterestCharge",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly interest = ${{loanBalance}} \u00d7 {{interestRate}}% \u00f7 12. Early in repayment, most of your payment goes to interest \u2014 that's why extra payments help so much."
-  },
-  {
-    "id": "sl_payment_compare_d2",
-    "moduleId": "student_loans",
-    "difficulty": 2,
-    "promptTemplate": "10-year plan: ${{payment10}} per month. 20-year plan: ${{payment20}} per month. How much less per month is the extended plan?",
-    "variableRules": [
-      {
-        "name": "payment10",
-        "options": [
-          350,
-          400,
-          450,
-          500
-        ]
-      },
-      {
-        "name": "payment20",
-        "options": [
-          220,
-          250,
-          280,
-          310
-        ]
-      }
-    ],
-    "answerFormula": "monthlyDifference",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Savings = ${{payment10}} \u2212 ${{payment20}} per month. But the 20-year plan means 10 more years of interest \u2014 always check the total cost too."
-  },
-  {
-    "id": "sl_monthly_detail_d3",
-    "moduleId": "student_loans",
-    "difficulty": 3,
-    "promptTemplate": "Loan: ${{loanBalance}} at {{interestRate}}%. Your payment is ${{monthlyPayment}}. Monthly interest is ${{monthlyInterest}}. How much of your first payment goes to principal?",
-    "variableRules": [
-      {
-        "name": "loanBalance",
-        "options": [
-          30000,
-          35000,
-          40000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          5,
-          6,
-          7
-        ]
-      },
-      {
-        "name": "monthlyPayment",
-        "options": [
-          350,
-          400,
-          450
-        ]
-      },
-      {
-        "name": "monthlyInterest",
-        "options": [
-          125,
-          150,
-          175,
-          200,
-          233
-        ]
-      }
-    ],
-    "answerFormula": "principalPayment",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Principal = payment \u2212 interest = ${{monthlyPayment}} \u2212 ${{monthlyInterest}}. Early on, you're mostly paying interest. As principal shrinks, more goes to actually paying off the loan."
   },
   {
     "id": "sl_total_cost_d1",
@@ -6020,71 +5528,6 @@
     "explanationTemplate": "Extra = (${{totalExtended}} \u2212 ${{totalStandard}}) \u00f7 ${{totalStandard}} \u00d7 100%. The extended plan can cost 25-50% more in total even though the monthly payment feels lighter."
   },
   {
-    "id": "sl_cost_detail_d3",
-    "moduleId": "student_loans",
-    "difficulty": 3,
-    "promptTemplate": "Loan: ${{loanAmount}} at {{interestRate}}%. You pay ${{extraMonthly}} extra per month above the minimum ${{minPayment}}. Total monthly = ${{totalPayment}}. How much do you save in total interest by paying extra? Original total: ${{originalTotal}}. New total: ${{newTotal}}.",
-    "variableRules": [
-      {
-        "name": "loanAmount",
-        "options": [
-          30000,
-          35000
-        ]
-      },
-      {
-        "name": "interestRate",
-        "options": [
-          5,
-          6
-        ]
-      },
-      {
-        "name": "minPayment",
-        "options": [
-          300,
-          350
-        ]
-      },
-      {
-        "name": "extraMonthly",
-        "options": [
-          100,
-          150,
-          200
-        ]
-      },
-      {
-        "name": "totalPayment",
-        "options": [
-          400,
-          450,
-          500,
-          550
-        ]
-      },
-      {
-        "name": "originalTotal",
-        "options": [
-          36000,
-          42000
-        ]
-      },
-      {
-        "name": "newTotal",
-        "options": [
-          32000,
-          35000,
-          37000
-        ]
-      }
-    ],
-    "answerFormula": "extraPaymentSaving",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Savings = ${{originalTotal}} \u2212 ${{newTotal}}. Every extra dollar goes straight to principal, which reduces future interest. Even $100/month extra can save thousands."
-  },
-  {
     "id": "sl_refi_saving_d1",
     "moduleId": "student_loans",
     "difficulty": 1,
@@ -6219,85 +5662,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "New monthly interest = ${{loanBalance}} \u00d7 {{newRate}}% \u00f7 12. Lower rate means more of each payment goes to principal instead of interest."
-  },
-  {
-    "id": "sl_refi_total_d3",
-    "moduleId": "student_loans",
-    "difficulty": 3,
-    "promptTemplate": "Loan: ${{loanBalance}}. Current: {{oldRate}}%, ${{oldPayment}}/month, {{remainingMonths}} months left (total remaining: ${{oldTotal}}). Refi: {{newRate}}%, ${{newPayment}}/month, {{newTermMonths}} months (total: ${{newTotal}}). How much do you save?",
-    "variableRules": [
-      {
-        "name": "loanBalance",
-        "options": [
-          35000,
-          40000
-        ]
-      },
-      {
-        "name": "oldRate",
-        "options": [
-          6,
-          7
-        ]
-      },
-      {
-        "name": "oldPayment",
-        "options": [
-          450,
-          500
-        ]
-      },
-      {
-        "name": "remainingMonths",
-        "options": [
-          84,
-          96
-        ]
-      },
-      {
-        "name": "oldTotal",
-        "options": [
-          37800,
-          42000,
-          43200,
-          48000
-        ]
-      },
-      {
-        "name": "newRate",
-        "options": [
-          4,
-          5
-        ]
-      },
-      {
-        "name": "newPayment",
-        "options": [
-          400,
-          430
-        ]
-      },
-      {
-        "name": "newTermMonths",
-        "options": [
-          84,
-          96
-        ]
-      },
-      {
-        "name": "newTotal",
-        "options": [
-          33600,
-          36120,
-          38400,
-          41280
-        ]
-      }
-    ],
-    "answerFormula": "extraPaymentSaving",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Savings = ${{oldTotal}} \u2212 ${{newTotal}}. Refinancing at a lower rate with the same term length is usually a clear win \u2014 if you don't need federal protections."
   },
   {
     "id": "sl_idr_payment_d1",
@@ -11491,5 +10855,1984 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "${{refundAmount}} \u00d7 3% \u00d7 {{years}} = ${{answer}} approximate lifetime forfeit."
+  },
+  {
+    "id": "ins_exposure_range_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "promptTemplate": "Health plan: ${{monthlyPremium}}/month premium, ${{deductible}} deductible. What's your exposure range (worst-case \u2212 best-case annual cost)?",
+    "variableRules": [
+      {
+        "name": "monthlyPremium",
+        "options": [
+          200,
+          250,
+          300,
+          350,
+          400,
+          450
+        ]
+      },
+      {
+        "name": "deductible",
+        "options": [
+          500,
+          1000,
+          1500,
+          2000,
+          3000,
+          5000
+        ]
+      }
+    ],
+    "answerFormula": "insuranceExposureRange",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Range = deductible (the gap between best and worst case). Higher deductible = more exposure if you have a bad year. ${{answer}}."
+  },
+  {
+    "id": "ins_er_visit_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "promptTemplate": "ER visit: ${{totalBill}} total. Your deductible is ${{deductible}} (already paid ${{deductibleSoFar}} this year). Coinsurance is {{coinsurancePercent}}%. How much do you pay out of pocket for this visit?",
+    "variableRules": [
+      {
+        "name": "totalBill",
+        "options": [
+          3000,
+          5000,
+          8000,
+          12000,
+          15000
+        ]
+      },
+      {
+        "name": "deductible",
+        "options": [
+          1000,
+          1500,
+          2000,
+          2500
+        ]
+      },
+      {
+        "name": "deductibleSoFar",
+        "options": [
+          200,
+          500,
+          800,
+          1000
+        ]
+      },
+      {
+        "name": "coinsurancePercent",
+        "options": [
+          20,
+          25,
+          30
+        ]
+      }
+    ],
+    "answerFormula": "erVisitCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Pay remaining deductible + coinsurance on rest. (${{deductible}} \u2212 ${{deductibleSoFar}}) + (${{totalBill}} \u2212 ${{deductible}}) \u00d7 {{coinsurancePercent}}% = ${{answer}}."
+  },
+  {
+    "id": "ins_copay_vs_coins_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "promptTemplate": "Doctor visit costs ${{visitCost}}. Plan A: ${{copayAmount}} copay. Plan B: {{coinsurancePercent}}% coinsurance (deductible already met). Which costs less for THIS visit, and by how much?",
+    "variableRules": [
+      {
+        "name": "visitCost",
+        "options": [
+          150,
+          200,
+          300,
+          500,
+          800,
+          1500
+        ]
+      },
+      {
+        "name": "copayAmount",
+        "options": [
+          30,
+          40,
+          50,
+          75
+        ]
+      },
+      {
+        "name": "coinsurancePercent",
+        "options": [
+          20,
+          25,
+          30
+        ]
+      }
+    ],
+    "answerFormula": "copayVsCoinsuranceDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Copay = ${{copayAmount}}. Coinsurance = ${{visitCost}} \u00d7 {{coinsurancePercent}}%. Difference = ${{answer}}."
+  },
+  {
+    "id": "ins_visits_breakeven_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "promptTemplate": "HDHP: ${{hdhpPremium}}/mo, ${{hdhpVisitCost}}/visit until deductible met. PPO: ${{ppoPremium}}/mo, ${{ppoCopay}}/visit. Monthly premium savings on HDHP \u00d7 12 = annual savings. How many doctor visits would make the PPO cheaper than HDHP?",
+    "variableRules": [
+      {
+        "name": "hdhpPremium",
+        "options": [
+          150,
+          175,
+          200
+        ]
+      },
+      {
+        "name": "hdhpVisitCost",
+        "options": [
+          200,
+          250,
+          300
+        ]
+      },
+      {
+        "name": "ppoPremium",
+        "options": [
+          350,
+          400,
+          450
+        ]
+      },
+      {
+        "name": "ppoCopay",
+        "options": [
+          25,
+          30,
+          40
+        ]
+      }
+    ],
+    "answerFormula": "hdhpPpoVisitsBreakeven",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual premium saving on HDHP = (PPO \u2212 HDHP) \u00d7 12. Per visit, HDHP costs (HDHP visit \u2212 PPO copay) more. Break-even visits \u2248 saving \u00f7 per-visit gap = {{answer}}."
+  },
+  {
+    "id": "ins_hsa_retirement_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "promptTemplate": "You contribute ${{hsaAnnual}}/year to HSA from age 30 to 65. At 7% growth, balance \u2248 ${{projectedBalance}}. If you withdraw ${{medicalAmount}} in retirement for medical, how much tax do you save vs a Traditional IRA at {{taxRate}}%?",
+    "variableRules": [
+      {
+        "name": "hsaAnnual",
+        "options": [
+          3000,
+          3500,
+          4000
+        ]
+      },
+      {
+        "name": "projectedBalance",
+        "options": [
+          400000,
+          500000,
+          600000
+        ]
+      },
+      {
+        "name": "medicalAmount",
+        "options": [
+          20000,
+          30000,
+          50000
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          15,
+          22,
+          24
+        ]
+      }
+    ],
+    "answerFormula": "hsaRetirementTaxSaved",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Medical withdrawal from HSA = $0 tax. Same withdrawal from Traditional = withdrawal \u00d7 tax rate = ${{answer}} saved."
+  },
+  {
+    "id": "fsa_tax_saving_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "promptTemplate": "You elect ${{fsaElection}} to your FSA. Your tax rate is {{taxRate}}%. How much do you save in taxes?",
+    "variableRules": [
+      {
+        "name": "fsaElection",
+        "options": [
+          1500,
+          2000,
+          2500,
+          2850,
+          3000,
+          3300
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          12,
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "fsaTaxSavings",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tax saved = election \u00d7 tax rate. ${{fsaElection}} \u00d7 {{taxRate}}% = ${{answer}}."
+  },
+  {
+    "id": "fsa_net_result_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "promptTemplate": "FSA election: ${{fsaElection}}. Tax rate: {{taxRate}}%. You actually spend ${{actualSpent}} on medical. What's your NET financial result (tax savings minus forfeited unspent funds)?",
+    "variableRules": [
+      {
+        "name": "fsaElection",
+        "options": [
+          2000,
+          2500,
+          2850,
+          3000
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          22,
+          24,
+          32
+        ]
+      },
+      {
+        "name": "actualSpent",
+        "options": [
+          1000,
+          1500,
+          1800,
+          2200,
+          2500
+        ]
+      }
+    ],
+    "answerFormula": "fsaNetResult",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Tax saved \u2212 unspent forfeit. (${{fsaElection}} \u00d7 {{taxRate}}%) \u2212 (${{fsaElection}} \u2212 ${{actualSpent}}) = ${{answer}}."
+  },
+  {
+    "id": "fsa_breakeven_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "promptTemplate": "FSA election ${{fsaElection}} at {{taxRate}}% tax bracket. What's the MINIMUM you must spend on medical to break even (not lose money)?",
+    "variableRules": [
+      {
+        "name": "fsaElection",
+        "options": [
+          2000,
+          2500,
+          2850,
+          3000
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "fsaBreakevenSpend",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Break-even = election \u00d7 (1 \u2212 tax rate). ${{fsaElection}} \u00d7 (1 \u2212 {{taxRate}}%) = ${{answer}}. Spend less than this and you lose money."
+  },
+  {
+    "id": "fsa_election_compare_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "promptTemplate": "FSA Option A: elect ${{electionA}}. Option B: elect ${{electionB}}. At {{taxRate}}% tax rate, what's the maximum extra tax saving from electing the higher amount?",
+    "variableRules": [
+      {
+        "name": "electionA",
+        "options": [
+          1500,
+          2000
+        ]
+      },
+      {
+        "name": "electionB",
+        "options": [
+          2500,
+          2850,
+          3000
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "fsaElectionDiffSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(Higher \u2212 lower) \u00d7 tax rate. (${{electionB}} \u2212 ${{electionA}}) \u00d7 {{taxRate}}% = ${{answer}}."
+  },
+  {
+    "id": "fsa_max_safe_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "promptTemplate": "You'll definitely spend ${{guaranteedSpend}} on medical this year. At {{taxRate}}% bracket, how much MORE could you safely elect to FSA? (Hint: max election where you still break even.)",
+    "variableRules": [
+      {
+        "name": "guaranteedSpend",
+        "options": [
+          800,
+          1200,
+          1500,
+          2000
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "fsaMaxAdditional",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Max safe extra = guaranteedSpend \u00d7 (tax/(1\u2212tax)). Anything extra above this loses money if unspent. ${{answer}}."
+  },
+  {
+    "id": "life_basic_10x_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "promptTemplate": "Annual salary ${{annualSalary}}. Using the 10\u00d7 rule, what's your baseline life insurance need?",
+    "variableRules": [
+      {
+        "name": "annualSalary",
+        "options": [
+          50000,
+          60000,
+          75000,
+          90000,
+          100000,
+          120000
+        ]
+      }
+    ],
+    "answerFormula": "lifeBaseline10x",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Salary \u00d7 10. ${{annualSalary}} \u00d7 10 = ${{answer}} baseline coverage."
+  },
+  {
+    "id": "life_dime_adjusted_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "promptTemplate": "Salary ${{annualSalary}} (use 10\u00d7 rule). Mortgage balance ${{mortgageBalance}}. Savings ${{savings}}. What's your adjusted life insurance need?",
+    "variableRules": [
+      {
+        "name": "annualSalary",
+        "options": [
+          60000,
+          75000,
+          90000
+        ]
+      },
+      {
+        "name": "mortgageBalance",
+        "options": [
+          150000,
+          250000,
+          350000
+        ]
+      },
+      {
+        "name": "savings",
+        "options": [
+          20000,
+          50000,
+          100000
+        ]
+      }
+    ],
+    "answerFormula": "lifeAdjustedCoverage",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(salary \u00d7 10) + mortgage \u2212 savings = ${{answer}}."
+  },
+  {
+    "id": "life_quote_compare_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "promptTemplate": "Quote A: ${{premiumA}}/month for ${{coverageA}} coverage. Quote B: ${{premiumB}}/month for ${{coverageB}} coverage. How much MORE does Quote B cost annually?",
+    "variableRules": [
+      {
+        "name": "coverageA",
+        "options": [
+          500000,
+          750000
+        ]
+      },
+      {
+        "name": "premiumA",
+        "options": [
+          25,
+          30,
+          35,
+          45
+        ]
+      },
+      {
+        "name": "coverageB",
+        "options": [
+          750000,
+          1000000
+        ]
+      },
+      {
+        "name": "premiumB",
+        "options": [
+          40,
+          48,
+          55,
+          65
+        ]
+      }
+    ],
+    "answerFormula": "lifeAnnualDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(premiumB \u2212 premiumA) \u00d7 12. (${{premiumB}} \u2212 ${{premiumA}}) \u00d7 12 = ${{answer}}/yr extra for B."
+  },
+  {
+    "id": "life_per_100k_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "promptTemplate": "A 30-year term policy: ${{coverage}} coverage, ${{premium}}/month premium. What's the annual cost per $100,000 of coverage?",
+    "variableRules": [
+      {
+        "name": "coverage",
+        "options": [
+          500000,
+          750000,
+          1000000
+        ]
+      },
+      {
+        "name": "premium",
+        "options": [
+          30,
+          40,
+          50,
+          60,
+          75
+        ]
+      }
+    ],
+    "answerFormula": "lifeCostPer100k",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual premium \u00f7 (coverage / $100k). (${{premium}} \u00d7 12) \u00f7 ({{coverage}} / 100k) = ${{answer}} per $100k/yr."
+  },
+  {
+    "id": "life_lifetime_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "promptTemplate": "You'll pay ${{monthlyPremium}}/month for a 30-year term policy. What's the total cost over the policy lifetime?",
+    "variableRules": [
+      {
+        "name": "monthlyPremium",
+        "options": [
+          25,
+          35,
+          45,
+          55,
+          75
+        ]
+      }
+    ],
+    "answerFormula": "lifeLifetimeCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly \u00d7 12 \u00d7 30. ${{monthlyPremium}} \u00d7 360 = ${{answer}} over 30 years (vs term cost of whole life: typically 10-15\u00d7 more)."
+  },
+  {
+    "id": "rx_annual_saving_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "promptTemplate": "Brand copay: ${{brandCopay}}. Generic copay: ${{genericCopay}}. With 12 monthly refills, what's your annual saving by switching to generic?",
+    "variableRules": [
+      {
+        "name": "brandCopay",
+        "options": [
+          35,
+          45,
+          60,
+          80
+        ]
+      },
+      {
+        "name": "genericCopay",
+        "options": [
+          5,
+          10,
+          15,
+          20
+        ]
+      }
+    ],
+    "answerFormula": "rxAnnualSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(brand \u2212 generic) \u00d7 12. (${{brandCopay}} \u2212 ${{genericCopay}}) \u00d7 12 = ${{answer}}/yr saved."
+  },
+  {
+    "id": "rx_multiple_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "promptTemplate": "You take two brand-name drugs with copays of ${{copay1}} and ${{copay2}}. The generics cost ${{generic1}} and ${{generic2}}. Combined annual saving if you switch both?",
+    "variableRules": [
+      {
+        "name": "copay1",
+        "options": [
+          35,
+          45,
+          55
+        ]
+      },
+      {
+        "name": "generic1",
+        "options": [
+          5,
+          10,
+          15
+        ]
+      },
+      {
+        "name": "copay2",
+        "options": [
+          40,
+          50,
+          60
+        ]
+      },
+      {
+        "name": "generic2",
+        "options": [
+          10,
+          15,
+          20
+        ]
+      }
+    ],
+    "answerFormula": "rxMultipleSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "((${{copay1}} \u2212 ${{generic1}}) + (${{copay2}} \u2212 ${{generic2}})) \u00d7 12 = ${{answer}}/yr."
+  },
+  {
+    "id": "rx_goodrx_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "promptTemplate": "Brand with insurance: ${{brandCopay}}/month copay. Generic via GoodRx (no insurance): ${{goodrxPrice}}/month cash. Annual savings going GoodRx route?",
+    "variableRules": [
+      {
+        "name": "brandCopay",
+        "options": [
+          35,
+          45,
+          55,
+          75
+        ]
+      },
+      {
+        "name": "goodrxPrice",
+        "options": [
+          8,
+          12,
+          18,
+          25
+        ]
+      }
+    ],
+    "answerFormula": "rxGoodrxSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Sometimes cash price is cheaper than insurance. (${{brandCopay}} \u2212 ${{goodrxPrice}}) \u00d7 12 = ${{answer}}/yr."
+  },
+  {
+    "id": "rx_monthly_diff_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "promptTemplate": "Brand copay ${{brandCopay}}, generic copay ${{genericCopay}}. What's the monthly difference?",
+    "variableRules": [
+      {
+        "name": "brandCopay",
+        "options": [
+          40,
+          50,
+          65,
+          80
+        ]
+      },
+      {
+        "name": "genericCopay",
+        "options": [
+          5,
+          10,
+          15,
+          20
+        ]
+      }
+    ],
+    "answerFormula": "rxMonthlyDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{brandCopay}} \u2212 ${{genericCopay}} = ${{answer}}/month saved."
+  },
+  {
+    "id": "rx_lifetime_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "promptTemplate": "You save ${{monthlyDiff}}/month switching one prescription to generic. Over {{years}} years, total saved?",
+    "variableRules": [
+      {
+        "name": "monthlyDiff",
+        "options": [
+          25,
+          35,
+          50,
+          70
+        ]
+      },
+      {
+        "name": "years",
+        "options": [
+          5,
+          10,
+          20,
+          30
+        ]
+      }
+    ],
+    "answerFormula": "rxLifetimeSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{monthlyDiff}} \u00d7 12 \u00d7 {{years}} = ${{answer}}."
+  },
+  {
+    "id": "car_term_extra_cost_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "promptTemplate": "Same ${{loanAmount}} car loan. 48-month payment: ${{payment48}}/month. 72-month payment: ${{payment72}}/month. By choosing 72 months, your monthly drops but TOTAL cost rises by how much?",
+    "variableRules": [
+      {
+        "name": "loanAmount",
+        "options": [
+          25000,
+          30000,
+          35000
+        ]
+      },
+      {
+        "name": "payment48",
+        "options": [
+          550,
+          670,
+          780
+        ]
+      },
+      {
+        "name": "payment72",
+        "options": [
+          400,
+          480,
+          555
+        ]
+      }
+    ],
+    "answerFormula": "carTermExtraCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "(72 \u00d7 p72) \u2212 (48 \u00d7 p48) = ${{answer}} extra paid for the lower monthly. Dealer's profit, your loss."
+  },
+  {
+    "id": "car_down_savings_total_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "promptTemplate": "$30,000 car at 7% over 60 months. With ${{downPayment}} down, total interest is approximately ${{totalInterest}}. With ${{higherDown}} down instead, interest drops to ${{lowerInterest}}. How much do you save by putting more down?",
+    "variableRules": [
+      {
+        "name": "downPayment",
+        "options": [
+          3000,
+          5000
+        ]
+      },
+      {
+        "name": "higherDown",
+        "options": [
+          6000,
+          8000,
+          10000
+        ]
+      },
+      {
+        "name": "totalInterest",
+        "options": [
+          5000,
+          4800,
+          4500
+        ]
+      },
+      {
+        "name": "lowerInterest",
+        "options": [
+          4000,
+          3600,
+          3200
+        ]
+      }
+    ],
+    "answerFormula": "interestSavingFromDownPayment",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{totalInterest}} \u2212 ${{lowerInterest}} = ${{answer}} interest saved by larger down payment."
+  },
+  {
+    "id": "car_total_cost_3yr_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "promptTemplate": "New ${{carPrice}} car. Depreciates {{depPercent}}% over 3 years. Plus ${{monthlyOps}}/month for insurance + gas. What's your TOTAL 3-year cost of ownership (depreciation + ops)?",
+    "variableRules": [
+      {
+        "name": "carPrice",
+        "options": [
+          25000,
+          30000,
+          35000,
+          40000
+        ]
+      },
+      {
+        "name": "depPercent",
+        "options": [
+          30,
+          35,
+          40
+        ]
+      },
+      {
+        "name": "monthlyOps",
+        "options": [
+          200,
+          250,
+          300,
+          350
+        ]
+      }
+    ],
+    "answerFormula": "carTotalCost3yr",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Depreciation = price \u00d7 dep%. Ops = monthly \u00d7 36. Total = ${{answer}}."
+  },
+  {
+    "id": "car_tco_basic_d1",
+    "moduleId": "car",
+    "difficulty": 1,
+    "promptTemplate": "Monthly car costs: payment ${{payment}}, insurance ${{insurance}}, gas ${{gas}}, maintenance ${{maintenance}}. Total monthly ownership cost?",
+    "variableRules": [
+      {
+        "name": "payment",
+        "options": [
+          300,
+          400,
+          500,
+          600
+        ]
+      },
+      {
+        "name": "insurance",
+        "options": [
+          100,
+          150,
+          200,
+          250
+        ]
+      },
+      {
+        "name": "gas",
+        "options": [
+          100,
+          150,
+          200,
+          250
+        ]
+      },
+      {
+        "name": "maintenance",
+        "options": [
+          50,
+          80,
+          100,
+          150
+        ]
+      }
+    ],
+    "answerFormula": "carMonthlyOwnership",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Sum it all. ${{payment}} + ${{insurance}} + ${{gas}} + ${{maintenance}} = ${{answer}}/month."
+  },
+  {
+    "id": "car_tco_compare_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "promptTemplate": "Car A: ${{paymentA}}/mo payment, ${{opsA}}/mo other costs. Car B: ${{paymentB}}/mo payment, ${{opsB}}/mo other costs. Which has lower monthly TCO and by how much?",
+    "variableRules": [
+      {
+        "name": "paymentA",
+        "options": [
+          350,
+          450,
+          550
+        ]
+      },
+      {
+        "name": "opsA",
+        "options": [
+          250,
+          300,
+          350
+        ]
+      },
+      {
+        "name": "paymentB",
+        "options": [
+          400,
+          500,
+          600
+        ]
+      },
+      {
+        "name": "opsB",
+        "options": [
+          200,
+          250,
+          300
+        ]
+      }
+    ],
+    "answerFormula": "tcoMonthlyDifference",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "A total = paymentA + opsA. B total = paymentB + opsB. Difference = ${{answer}}/month."
+  },
+  {
+    "id": "car_tco_keep_vs_buy_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "promptTemplate": "Keep current paid-off car: ${{maintenanceKeep}}/mo maintenance + ${{insuranceKeep}}/mo insurance + ${{gasKeep}}/mo gas. Buy new: ${{paymentNew}}/mo payment + ${{opsNew}}/mo all other costs. How much more does buying cost per month?",
+    "variableRules": [
+      {
+        "name": "maintenanceKeep",
+        "options": [
+          100,
+          150,
+          200
+        ]
+      },
+      {
+        "name": "insuranceKeep",
+        "options": [
+          80,
+          100,
+          120
+        ]
+      },
+      {
+        "name": "gasKeep",
+        "options": [
+          100,
+          150,
+          200
+        ]
+      },
+      {
+        "name": "paymentNew",
+        "options": [
+          400,
+          500,
+          600
+        ]
+      },
+      {
+        "name": "opsNew",
+        "options": [
+          300,
+          400,
+          500
+        ]
+      }
+    ],
+    "answerFormula": "keepVsBuyDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Buy total \u2212 keep total = monthly cost of buying new. ${{answer}}/month is what you'd save by keeping."
+  },
+  {
+    "id": "car_tco_vs_income_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "promptTemplate": "Monthly income ${{monthlyIncome}}. Total monthly car cost: ${{tcoMonthly}}. What % of income is your car eating?",
+    "variableRules": [
+      {
+        "name": "monthlyIncome",
+        "options": [
+          4000,
+          5000,
+          6000,
+          7500
+        ]
+      },
+      {
+        "name": "tcoMonthly",
+        "options": [
+          600,
+          800,
+          1000,
+          1200
+        ]
+      }
+    ],
+    "answerFormula": "carPctOfIncome",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "TCO \u00f7 income \u00d7 100. ${{tcoMonthly}} \u00f7 ${{monthlyIncome}} \u00d7 100 = {{answer}}%. Above 10%? Car-poor."
+  },
+  {
+    "id": "car_tco_annual_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "promptTemplate": "Your monthly TCO is ${{tcoMonthly}}. What's your annual car cost?",
+    "variableRules": [
+      {
+        "name": "tcoMonthly",
+        "options": [
+          500,
+          700,
+          900,
+          1100
+        ]
+      }
+    ],
+    "answerFormula": "tcoAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly \u00d7 12. ${{tcoMonthly}} \u00d7 12 = ${{answer}}/year."
+  },
+  {
+    "id": "lease_total_cost_d1",
+    "moduleId": "car",
+    "difficulty": 1,
+    "promptTemplate": "Lease: ${{monthlyLease}}/month for {{months}} months. Total spent at end?",
+    "variableRules": [
+      {
+        "name": "monthlyLease",
+        "options": [
+          300,
+          350,
+          400,
+          500
+        ]
+      },
+      {
+        "name": "months",
+        "options": [
+          24,
+          36,
+          48
+        ]
+      }
+    ],
+    "answerFormula": "leaseTotalSpent",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly \u00d7 months. ${{monthlyLease}} \u00d7 {{months}} = ${{answer}} total (and you own nothing)."
+  },
+  {
+    "id": "buy_net_cost_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "promptTemplate": "Buy: ${{monthlyPayment}}/mo \u00d7 {{months}} months. After {{months}} months the car is worth ${{residualValue}}. What's your NET cost of ownership?",
+    "variableRules": [
+      {
+        "name": "monthlyPayment",
+        "options": [
+          400,
+          500,
+          600
+        ]
+      },
+      {
+        "name": "months",
+        "options": [
+          36,
+          48,
+          60
+        ]
+      },
+      {
+        "name": "residualValue",
+        "options": [
+          12000,
+          15000,
+          18000,
+          22000
+        ]
+      }
+    ],
+    "answerFormula": "buyNetCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Net = (payment \u00d7 months) \u2212 residual value. You spent money but built equity. = ${{answer}}."
+  },
+  {
+    "id": "lease_vs_buy_3yr_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "promptTemplate": "Lease ${{monthlyLease}}/mo \u00d7 36 months. Or buy ${{monthlyPayment}}/mo \u00d7 36 months; car worth ${{residualValue}} at month 36. Which is cheaper over 3 years and by how much?",
+    "variableRules": [
+      {
+        "name": "monthlyLease",
+        "options": [
+          300,
+          350,
+          400
+        ]
+      },
+      {
+        "name": "monthlyPayment",
+        "options": [
+          450,
+          500,
+          550
+        ]
+      },
+      {
+        "name": "residualValue",
+        "options": [
+          15000,
+          18000,
+          20000,
+          22000
+        ]
+      }
+    ],
+    "answerFormula": "leaseVsBuy3yrDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Lease cost: monthly \u00d7 36. Buy net: (payment \u00d7 36) \u2212 residual. Diff = ${{answer}}. Buying almost always wins if you keep the car."
+  },
+  {
+    "id": "lease_monthly_d1",
+    "moduleId": "car",
+    "difficulty": 1,
+    "promptTemplate": "3-year lease total spent: ${{leaseTotal}}. What was the monthly lease payment?",
+    "variableRules": [
+      {
+        "name": "leaseTotal",
+        "options": [
+          10800,
+          12600,
+          14400,
+          16200,
+          18000
+        ]
+      }
+    ],
+    "answerFormula": "leaseMonthlyFromTotal",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total \u00f7 36 months. ${{leaseTotal}} \u00f7 36 = ${{answer}}/month."
+  },
+  {
+    "id": "lease_vs_buy_lifetime_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "promptTemplate": "Over 10 years: lease 3 cars at ${{leasePerCar}} each (over 3 years each, 9 years coverage). Or buy 1 car ${{carPrice}}, drive 10 years (no payments after year 5). Approximate 10-yr difference?",
+    "variableRules": [
+      {
+        "name": "leasePerCar",
+        "options": [
+          12000,
+          14400,
+          18000
+        ]
+      },
+      {
+        "name": "carPrice",
+        "options": [
+          25000,
+          30000,
+          35000
+        ]
+      }
+    ],
+    "answerFormula": "leaseVsBuyLifetime",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Lease total \u2248 leasePerCar \u00d7 3.33 (rolling leases). Buy \u2248 carPrice. Difference = ${{answer}} more for leasing."
+  },
+  {
+    "id": "trade_in_premium_d1",
+    "moduleId": "car",
+    "difficulty": 1,
+    "promptTemplate": "Dealer trade-in offer: ${{tradeInOffer}}. Private sale market value: ${{privatePrice}}. What's the convenience premium you give up to the dealer?",
+    "variableRules": [
+      {
+        "name": "tradeInOffer",
+        "options": [
+          6000,
+          8000,
+          10000,
+          12000,
+          15000
+        ]
+      },
+      {
+        "name": "privatePrice",
+        "options": [
+          8000,
+          10000,
+          12500,
+          14500,
+          18000
+        ]
+      }
+    ],
+    "answerFormula": "tradeInPremium",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Private \u2212 trade-in = ${{answer}} convenience cost."
+  },
+  {
+    "id": "trade_in_hourly_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "promptTemplate": "Selling privately would gain you ${{premium}} more than trading in. Estimated hours of effort: {{hours}}. What's your effective hourly rate for selling yourself?",
+    "variableRules": [
+      {
+        "name": "premium",
+        "options": [
+          1500,
+          2000,
+          3000,
+          4000
+        ]
+      },
+      {
+        "name": "hours",
+        "options": [
+          10,
+          15,
+          20,
+          25,
+          30
+        ]
+      }
+    ],
+    "answerFormula": "tradeInHourlyValue",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Premium \u00f7 hours. ${{premium}} \u00f7 {{hours}} = ${{answer}}/hour effective wage."
+  },
+  {
+    "id": "trade_in_tax_benefit_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "promptTemplate": "In your state, trading in reduces the sales tax base on the new car. Trade-in value: ${{tradeInOffer}}. Sales tax rate: {{taxRate}}%. How much sales tax does the trade-in save you?",
+    "variableRules": [
+      {
+        "name": "tradeInOffer",
+        "options": [
+          6000,
+          8000,
+          10000,
+          12000
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    ],
+    "answerFormula": "tradeInTaxBenefit",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Trade-in \u00d7 tax rate. ${{tradeInOffer}} \u00d7 {{taxRate}}% = ${{answer}} sales tax saved."
+  },
+  {
+    "id": "trade_in_adjusted_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "promptTemplate": "Private sale would net ${{privatePrice}}. Trade-in is ${{tradeInOffer}}. The trade-in saves you ${{taxSaving}} in sales tax. What's the ADJUSTED premium for selling privately?",
+    "variableRules": [
+      {
+        "name": "privatePrice",
+        "options": [
+          10000,
+          12000,
+          14000
+        ]
+      },
+      {
+        "name": "tradeInOffer",
+        "options": [
+          7000,
+          9000,
+          11000
+        ]
+      },
+      {
+        "name": "taxSaving",
+        "options": [
+          400,
+          560,
+          720,
+          880
+        ]
+      }
+    ],
+    "answerFormula": "tradeInAdjustedPremium",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "(Private \u2212 trade-in) \u2212 tax saving = ${{answer}} real premium after accounting for tax benefit."
+  },
+  {
+    "id": "trade_in_decision_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "promptTemplate": "Private sale: ${{privatePrice}}. Trade-in: ${{tradeInOffer}} + ${{taxSaving}} sales tax saved. Estimated hours to sell privately: {{hours}}. What's the effective hourly rate for going private (after tax savings)?",
+    "variableRules": [
+      {
+        "name": "privatePrice",
+        "options": [
+          10000,
+          12000,
+          14000
+        ]
+      },
+      {
+        "name": "tradeInOffer",
+        "options": [
+          7000,
+          8500,
+          10000
+        ]
+      },
+      {
+        "name": "taxSaving",
+        "options": [
+          400,
+          600,
+          800
+        ]
+      },
+      {
+        "name": "hours",
+        "options": [
+          15,
+          20,
+          25
+        ]
+      }
+    ],
+    "answerFormula": "tradeInHourlyAdjusted",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Adjusted premium \u00f7 hours = effective hourly = ${{answer}}/hour. Above $50/hr makes private selling worth it for most people."
+  },
+  {
+    "id": "sl_rule_thumb_d1",
+    "moduleId": "student_loans",
+    "difficulty": 1,
+    "promptTemplate": "Standard 10-year repayment: ~$110 per $10,000 borrowed at 5% APR. Your balance is ${{loanBalance}}. Estimate your monthly payment.",
+    "variableRules": [
+      {
+        "name": "loanBalance",
+        "options": [
+          20000,
+          30000,
+          40000,
+          50000,
+          60000,
+          80000
+        ]
+      }
+    ],
+    "answerFormula": "slRuleOfThumb110",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Balance \u00f7 $10k \u00d7 $110. ${{loanBalance}} \u00f7 10k \u00d7 $110 = ${{answer}}/month."
+  },
+  {
+    "id": "sl_rule_apply_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "promptTemplate": "${{loanBalance}} loan. Rule of thumb says ~${{paymentPer10k}} per $10k at this APR. Estimated monthly payment?",
+    "variableRules": [
+      {
+        "name": "loanBalance",
+        "options": [
+          25000,
+          35000,
+          45000,
+          55000
+        ]
+      },
+      {
+        "name": "paymentPer10k",
+        "options": [
+          100,
+          105,
+          110,
+          115,
+          120
+        ]
+      }
+    ],
+    "answerFormula": "slCustomPer10k",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(Balance \u00f7 10k) \u00d7 ${{paymentPer10k}}. ${{loanBalance}} \u2192 ${{answer}}/mo."
+  },
+  {
+    "id": "sl_per10k_compare_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "promptTemplate": "${{loanBalance}} loan. Lower-rate estimate: $100/$10k. Higher-rate estimate: $120/$10k. What's the monthly payment RANGE (difference between high and low estimate)?",
+    "variableRules": [
+      {
+        "name": "loanBalance",
+        "options": [
+          30000,
+          40000,
+          50000,
+          60000,
+          80000
+        ]
+      }
+    ],
+    "answerFormula": "slPaymentRange",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Balance \u00f7 10k \u00d7 ($120 \u2212 $100) = $20 per $10k. ${{loanBalance}} \u2192 ${{answer}} range between low and high rate estimates."
+  },
+  {
+    "id": "sl_monthly_range_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "promptTemplate": "${{loanBalance}} loan at ~{{apr}}% APR. Using $100/$10k for 4-5% and $120/$10k for 6-7%, what's your estimated monthly payment?",
+    "variableRules": [
+      {
+        "name": "loanBalance",
+        "options": [
+          25000,
+          35000,
+          50000,
+          70000
+        ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "answerFormula": "slEstByApr",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "APR 4-5%: \u00d7 $105. APR 6-7%: \u00d7 $115. Balance/10k \u00d7 rate-appropriate factor = ${{answer}}/mo."
+  },
+  {
+    "id": "sl_interest_pct_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "promptTemplate": "You borrowed ${{loanAmount}}. Total you'll repay: ${{totalPaid}}. What percentage of the original loan are you paying in interest?",
+    "variableRules": [
+      {
+        "name": "loanAmount",
+        "options": [
+          25000,
+          30000,
+          40000,
+          50000
+        ]
+      },
+      {
+        "name": "totalPaid",
+        "options": [
+          32000,
+          38000,
+          50000,
+          65000
+        ]
+      }
+    ],
+    "answerFormula": "slInterestPercent",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(totalPaid \u2212 loan) \u00f7 loan \u00d7 100. (${{totalPaid}} \u2212 ${{loanAmount}}) \u00f7 ${{loanAmount}} \u00d7 100 = {{answer}}%."
+  },
+  {
+    "id": "sl_refi_vs_pslf_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "promptTemplate": "${{loanBalance}} loan. Refi option: ${{refiPayment}}/mo \u00d7 120 mo. PSLF option: ${{pslfPayment}}/mo \u00d7 120 mo (rest forgiven). How much more does refinancing cost vs PSLF?",
+    "variableRules": [
+      {
+        "name": "loanBalance",
+        "options": [
+          50000,
+          60000,
+          80000
+        ]
+      },
+      {
+        "name": "refiPayment",
+        "options": [
+          450,
+          550,
+          650,
+          750
+        ]
+      },
+      {
+        "name": "pslfPayment",
+        "options": [
+          250,
+          300,
+          350,
+          400
+        ]
+      }
+    ],
+    "answerFormula": "refiVsPslfDiff120",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "(refi \u2212 pslf) \u00d7 120 months = ${{answer}} more for refinancing. But: PSLF requires public service for 10 years."
+  },
+  {
+    "id": "sl_employer_monthly_d1",
+    "moduleId": "student_loans",
+    "difficulty": 1,
+    "promptTemplate": "Your employer contributes ${{annualBenefit}}/year toward your student loans (tax-free). What's the monthly equivalent going to your principal?",
+    "variableRules": [
+      {
+        "name": "annualBenefit",
+        "options": [
+          1200,
+          2400,
+          3600,
+          4800,
+          5250
+        ]
+      }
+    ],
+    "answerFormula": "annualToMonthlySimple",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{annualBenefit}} \u00f7 12 = ${{answer}}/month direct to your principal."
+  },
+  {
+    "id": "sl_employer_5yr_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "promptTemplate": "Employer contributes ${{annualBenefit}}/year. Over {{years}} years of employment, total benefit?",
+    "variableRules": [
+      {
+        "name": "annualBenefit",
+        "options": [
+          3000,
+          4000,
+          5250
+        ]
+      },
+      {
+        "name": "years",
+        "options": [
+          3,
+          5,
+          7,
+          10
+        ]
+      }
+    ],
+    "answerFormula": "employerBenefitMultiYear",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{annualBenefit}} \u00d7 {{years}} = ${{answer}} total employer-paid principal."
+  },
+  {
+    "id": "sl_employer_with_interest_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "promptTemplate": "Employer pays ${{annualBenefit}}/year \u00d7 {{years}} years toward a ${{loanBalance}} loan at {{interestRate}}% interest. Approximate additional interest saved (rough: benefit \u00d7 rate \u00d7 years / 2)?",
+    "variableRules": [
+      {
+        "name": "annualBenefit",
+        "options": [
+          3000,
+          4000,
+          5250
+        ]
+      },
+      {
+        "name": "years",
+        "options": [
+          3,
+          5,
+          7
+        ]
+      },
+      {
+        "name": "loanBalance",
+        "options": [
+          30000,
+          40000,
+          50000
+        ]
+      },
+      {
+        "name": "interestRate",
+        "options": [
+          4,
+          5,
+          6
+        ]
+      }
+    ],
+    "answerFormula": "employerInterestSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Rough: benefit \u00d7 years \u00d7 rate \u00d7 0.5 (half years of avoided interest). = ${{answer}}."
+  },
+  {
+    "id": "sl_employer_vs_raise_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "promptTemplate": "Employer offers ${{annualBenefit}}/yr tax-free student loan match. At your {{taxRate}}% tax rate, what's the equivalent pre-tax salary raise (gross-up)?",
+    "variableRules": [
+      {
+        "name": "annualBenefit",
+        "options": [
+          3000,
+          4000,
+          5250
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "employerBenefitGrossUp",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Benefit \u00f7 (1 \u2212 tax rate). ${{annualBenefit}} \u00f7 (1 \u2212 {{taxRate}}%) = ${{answer}} equivalent pre-tax raise."
+  },
+  {
+    "id": "sl_employer_lifetime_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "promptTemplate": "If you stay at the employer for {{years}} years receiving full ${{annualBenefit}}/yr benefit, and that money would otherwise have to come from after-tax pay at {{taxRate}}%, what's the total pre-tax-equivalent value?",
+    "variableRules": [
+      {
+        "name": "annualBenefit",
+        "options": [
+          3000,
+          4000,
+          5250
+        ]
+      },
+      {
+        "name": "years",
+        "options": [
+          3,
+          5,
+          7,
+          10
+        ]
+      },
+      {
+        "name": "taxRate",
+        "options": [
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "employerBenefitLifetimeValue",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(benefit \u00f7 (1 \u2212 tax rate)) \u00d7 years = ${{answer}} total equivalent salary value."
+  },
+  {
+    "id": "sl_daily_interest_d1",
+    "moduleId": "student_loans",
+    "difficulty": 1,
+    "promptTemplate": "Your unsubsidized loan balance is ${{balance}} at {{interestRate}}% APR. What's the daily interest accruing?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          15000,
+          20000,
+          25000,
+          30000,
+          40000
+        ]
+      },
+      {
+        "name": "interestRate",
+        "options": [
+          4,
+          5,
+          5.5,
+          6,
+          6.5,
+          7
+        ]
+      }
+    ],
+    "answerFormula": "dailyInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Balance \u00d7 rate \u00f7 365. ${{balance}} \u00d7 {{interestRate}}% \u00f7 365 = ${{answer}}/day accruing."
+  },
+  {
+    "id": "sl_grace_total_d1",
+    "moduleId": "student_loans",
+    "difficulty": 1,
+    "promptTemplate": "Daily interest on your loan is ${{dailyAmount}}. Over the 180-day grace period, how much interest accrues?",
+    "variableRules": [
+      {
+        "name": "dailyAmount",
+        "options": [
+          2,
+          3,
+          3.5,
+          4,
+          5,
+          6
+        ]
+      }
+    ],
+    "answerFormula": "gracePeriodTotal",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{dailyAmount}} \u00d7 180 = ${{answer}} added to your principal at grace end."
+  },
+  {
+    "id": "sl_grace_vs_interest_only_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "promptTemplate": "${{balance}} loan at {{interestRate}}% APR. If you skip grace-period payments, ${{accruedAmount}} interest capitalizes. If you make interest-only payments instead, you save the capitalized amount + future interest on it. Approximate total saving (capitalized + ~5% of capitalized for future interest)?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          25000,
+          30000,
+          40000,
+          50000
+        ]
+      },
+      {
+        "name": "interestRate",
+        "options": [
+          5,
+          5.5,
+          6
+        ]
+      },
+      {
+        "name": "accruedAmount",
+        "options": [
+          600,
+          700,
+          800,
+          1000,
+          1200
+        ]
+      }
+    ],
+    "answerFormula": "gracePeriodFullSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Saving \u2248 accrued \u00d7 1.05 = ${{answer}}. Interest-only during grace prevents capitalization."
+  },
+  {
+    "id": "sl_grace_capitalization_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "promptTemplate": "Your loan was ${{originalBalance}} when you graduated. After 6 months of grace with interest accruing at {{interestRate}}% APR, what's the new balance at repayment start?",
+    "variableRules": [
+      {
+        "name": "originalBalance",
+        "options": [
+          15000,
+          20000,
+          25000,
+          30000,
+          40000
+        ]
+      },
+      {
+        "name": "interestRate",
+        "options": [
+          4,
+          5,
+          5.5,
+          6,
+          6.5
+        ]
+      }
+    ],
+    "answerFormula": "balanceAfterGrace",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Original + (balance \u00d7 rate \u00d7 0.5). New balance = ${{answer}} at start of repayment."
+  },
+  {
+    "id": "sl_grace_lifetime_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "promptTemplate": "If grace-period interest of ${{accruedAmount}} capitalizes onto your ${{balance}} loan at {{interestRate}}% APR, approximately how much extra interest do you pay over a 10-year repayment (rough: capitalized \u00d7 rate \u00d7 5)?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          25000,
+          30000,
+          40000
+        ]
+      },
+      {
+        "name": "interestRate",
+        "options": [
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "name": "accruedAmount",
+        "options": [
+          600,
+          800,
+          1000,
+          1200
+        ]
+      }
+    ],
+    "answerFormula": "gracePeriodLifetimeImpact",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Extra \u2248 capitalized \u00d7 rate \u00d7 5 years avg. = ${{answer}} over loan life."
+  },
+  {
+    "id": "plus_vs_private_annual_d1",
+    "moduleId": "student_loans",
+    "difficulty": 1,
+    "promptTemplate": "${{loanBalance}} loan. Parent PLUS rate {{plusRate}}%. Private alternative {{privateRate}}%. What's the annual interest difference?",
+    "variableRules": [
+      {
+        "name": "loanBalance",
+        "options": [
+          20000,
+          30000,
+          40000,
+          50000
+        ]
+      },
+      {
+        "name": "plusRate",
+        "options": [
+          8.94
+        ]
+      },
+      {
+        "name": "privateRate",
+        "options": [
+          5.09,
+          5.5,
+          6,
+          6.5
+        ]
+      }
+    ],
+    "answerFormula": "plusVsPrivateAnnualInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Balance \u00d7 (plus \u2212 private) \u00f7 100 = ${{answer}}/year more on PLUS."
+  },
+  {
+    "id": "plus_vs_private_10yr_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "promptTemplate": "${{loanBalance}} loan. Parent PLUS at {{plusRate}}% vs private at {{privateRate}}%. Approximate 10-year interest difference (annual diff \u00d7 10, simplified)?",
+    "variableRules": [
+      {
+        "name": "loanBalance",
+        "options": [
+          25000,
+          30000,
+          40000,
+          50000
+        ]
+      },
+      {
+        "name": "plusRate",
+        "options": [
+          8.94
+        ]
+      },
+      {
+        "name": "privateRate",
+        "options": [
+          5.09,
+          5.5,
+          6
+        ]
+      }
+    ],
+    "answerFormula": "plusVsPrivate10yr",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Balance \u00d7 (plus \u2212 private) \u00d7 10 \u00f7 100 = ${{answer}} over 10 years (simplified)."
+  },
+  {
+    "id": "plus_origination_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "promptTemplate": "Parent PLUS loans have a 4.228% origination fee deducted upfront. On a ${{loanBalance}} loan, how much is the origination fee?",
+    "variableRules": [
+      {
+        "name": "loanBalance",
+        "options": [
+          20000,
+          30000,
+          40000,
+          50000,
+          60000
+        ]
+      }
+    ],
+    "answerFormula": "plusOriginationFee",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Balance \u00d7 4.228%. ${{loanBalance}} \u00d7 4.228% = ${{answer}} taken off the top before you receive funds."
+  },
+  {
+    "id": "plus_total_cost_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "promptTemplate": "${{loanBalance}} Parent PLUS at 8.94% + 4.228% origination. Private alternative: {{privateRate}}% no fee. Approximate total 10-yr difference (interest gap \u00d7 10 + origination)?",
+    "variableRules": [
+      {
+        "name": "loanBalance",
+        "options": [
+          25000,
+          30000,
+          40000
+        ]
+      },
+      {
+        "name": "privateRate",
+        "options": [
+          5.5,
+          6,
+          6.5
+        ]
+      }
+    ],
+    "answerFormula": "plusVsPrivateTotalWithOrigination",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(balance \u00d7 (8.94 \u2212 private) \u00d7 10 + balance \u00d7 4.228) \u00f7 100 = ${{answer}} private advantage."
+  },
+  {
+    "id": "plus_decision_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "promptTemplate": "${{loanBalance}} loan. PLUS annual interest at 8.94% vs private at {{privateRate}}%. Annual interest savings = balance \u00d7 rate difference. How much more per month does PLUS cost you in interest?",
+    "variableRules": [
+      {
+        "name": "loanBalance",
+        "options": [
+          25000,
+          30000,
+          40000,
+          50000
+        ]
+      },
+      {
+        "name": "privateRate",
+        "options": [
+          5.5,
+          6
+        ]
+      }
+    ],
+    "answerFormula": "plusVsPrivateMonthlyInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual diff \u00f7 12. Balance \u00d7 (8.94 \u2212 private) \u00f7 100 \u00f7 12 = ${{answer}}/month more on PLUS."
   }
 ]

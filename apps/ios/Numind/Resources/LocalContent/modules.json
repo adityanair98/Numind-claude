@@ -143,7 +143,10 @@
       "insurance_copay_coinsurance",
       "insurance_oop_max",
       "insurance_hdhp_vs_ppo",
-      "insurance_hsa_advantage"
+      "insurance_hsa_advantage",
+      "insurance_fsa_use_it",
+      "insurance_life_coverage",
+      "insurance_brand_vs_generic"
     ]
   },
   {
@@ -159,7 +162,10 @@
       "car_loan_term",
       "car_down_payment",
       "car_20_4_10_rule",
-      "car_depreciation"
+      "car_depreciation",
+      "car_total_cost_ownership",
+      "car_lease_vs_buy",
+      "car_trade_in_vs_private"
     ]
   },
   {
@@ -175,7 +181,10 @@
       "student_loan_total_cost",
       "student_loan_refinance",
       "student_loan_idr",
-      "student_loan_pslf"
+      "student_loan_pslf",
+      "student_loan_employer_benefit",
+      "student_loan_grace_period",
+      "student_loan_parent_plus"
     ]
   }
 ]

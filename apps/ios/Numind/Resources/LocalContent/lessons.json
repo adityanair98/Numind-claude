@@ -813,15 +813,15 @@
     "id": "insurance_deductible_vs_premium",
     "moduleId": "insurance",
     "title": "Deductible vs premium tradeoff",
-    "concept": "Your premium is what you pay every month regardless. Your deductible is what you pay out of pocket before insurance kicks in. Higher deductible = lower premium, but more risk if something happens. Total annual cost = (premium \u00d7 12) + potential deductible.",
-    "shortcut": "Annual premium = monthly \u00d7 12. Total worst-case cost = annual premium + deductible. Compare plans by their worst-case cost, not just the monthly premium.",
-    "example": "Plan A: $350/mo, $1,000 deductible\nAnnual premium: $4,200\nWorst case: $5,200\n\nPlan B: $250/mo, $3,000 deductible\nAnnual premium: $3,000\nWorst case: $6,000",
+    "concept": "Your premium is the floor \u2014 what you pay every month no matter what. Your deductible adds to your ceiling \u2014 the worst-case annual exposure if something major happens. Higher deductible = lower floor but higher ceiling. This is the simplified model; lessons 2-3 add coinsurance and the OOP cap.",
+    "shortcut": "Floor (best-case annual) = premium \u00d7 12. Ceiling (simplified worst-case) = floor + deductible. Range = deductible. That range is your financial exposure if you have a bad year.",
+    "example": "Plan A: $350/mo, $1,000 deductible\nFloor: $4,200/year (healthy year)\nCeiling: $5,200 (full deductible spent)\nExposure: $1,000\n\nPlan B: $250/mo, $3,000 deductible\nFloor: $3,000\nCeiling: $6,000\nExposure: $3,000",
     "quizTemplateIds": [
       "ins_annual_premium_d1",
       "ins_worst_case_d1",
       "ins_deduct_compare_d2",
       "ins_premium_scenario_d2",
-      "ins_breakeven_d3"
+      "ins_exposure_range_d3"
     ]
   },
   {
@@ -835,8 +835,8 @@
       "ins_coinsurance_d1",
       "ins_copay_total_d1",
       "ins_coinsurance_big_d2",
-      "ins_copay_scenario_d2",
-      "ins_coinsurance_compare_d3"
+      "ins_er_visit_d3",
+      "ins_copay_vs_coins_d2"
     ]
   },
   {
@@ -866,22 +866,67 @@
       "ins_ppo_annual_d1",
       "ins_hdhp_vs_ppo_d2",
       "ins_plan_scenario_d2",
-      "ins_breakeven_visits_d3"
+      "ins_visits_breakeven_d3"
     ]
   },
   {
     "id": "insurance_hsa_advantage",
     "moduleId": "insurance",
     "title": "HSA triple tax advantage",
-    "concept": "A Health Savings Account (HSA) has a triple tax advantage: contributions are pre-tax (reducing your taxable income), growth is tax-free, and withdrawals for medical expenses are tax-free. The tax saving on contributions alone is contribution \u00d7 your tax rate.",
-    "shortcut": "HSA tax saving = contribution \u00d7 tax rate. Contributing $3,000 at a 22% tax rate saves you $660 in taxes. Plus the money grows tax-free and comes out tax-free for medical costs.",
-    "example": "HSA contribution: $3,000\nTax rate: 22%\nTax saving: $3,000 \u00d7 22% = $660\nPlus tax-free growth\nPlus tax-free withdrawals",
+    "concept": "HSAs have the triple tax advantage: contributions are pre-tax (reduce taxable income), growth is tax-free, withdrawals for medical are tax-free. The hidden superpower: after age 65, you can withdraw HSA funds for ANY purpose (just pay income tax, like a Traditional IRA). Medical withdrawals stay tax-free at any age. This makes the HSA arguably the best retirement account in the tax code.",
+    "shortcut": "Annual tax saving = contribution \u00d7 your tax rate. Long-term: HSA grows like an investment account. $3,500/yr from 30 to 65 at 7% growth = ~$550,000, all tax-free for medical or income-taxed for anything else.",
+    "example": "Contribute $3,000 at 22% rate:\nTax saving: $660 immediate\n\nLong-term:\n$3,500/yr \u00d7 35 yrs at 7%\n= ~$550,000\nUsed for medical: $0 tax\nUsed for retirement (after 65): income tax",
     "quizTemplateIds": [
       "ins_hsa_saving_d1",
       "ins_hsa_annual_d1",
       "ins_hsa_scenario_d2",
       "ins_hsa_compare_d2",
-      "ins_hsa_total_d3"
+      "ins_hsa_retirement_d3"
+    ]
+  },
+  {
+    "id": "insurance_fsa_use_it",
+    "moduleId": "insurance",
+    "title": "FSA: free money or wasted money?",
+    "concept": "Flexible Spending Accounts are use-it-or-lose-it: any unspent balance at year-end disappears (some plans allow $640 rollover or 2.5-month grace period). The tax savings = election \u00d7 your tax rate. If you elect $2,850 at a 25% bracket, you save $712 in tax. But if you only spend $1,800, you forfeit $1,050 \u2014 for a net loss of $338.",
+    "shortcut": "Only elect what you'll definitely spend. Tax savings = election \u00d7 tax rate. Break-even: spend at least (1 \u2212 tax rate) of your election. In a 25% bracket, you need to spend at least 75% of what you elect to come out ahead.",
+    "example": "Election: $2,850 at 25% bracket\nTax savings: $712\n\nScenario A: Spend $2,850 \u2192 save $712 \u2713\nScenario B: Spend $1,800 \u2192 save $712 in tax but lose $1,050 unused\nNet: \u2212$338",
+    "quizTemplateIds": [
+      "fsa_tax_saving_d1",
+      "fsa_net_result_d2",
+      "fsa_breakeven_d3",
+      "fsa_election_compare_d2",
+      "fsa_max_safe_d3"
+    ]
+  },
+  {
+    "id": "insurance_life_coverage",
+    "moduleId": "insurance",
+    "title": "How much life insurance do you actually need?",
+    "concept": "Two methods: (1) The 10-12\u00d7 rule of thumb \u2014 multiply annual income by 10. (2) DIME method: Debt + Income replacement + Mortgage + Education costs. Add mortgage balance, subtract savings/existing coverage. Term life (20-30 years) is what most young families need \u2014 way cheaper than whole life.",
+    "shortcut": "Quick estimate: salary \u00d7 10 = baseline coverage. Adjusted: + mortgage \u2212 savings. Compare two quotes by the annual cost per $100k of coverage.",
+    "example": "Salary: $70,000\n10\u00d7 rule: $700,000 baseline\nMortgage: +$280,000\nSavings: \u2212$50,000\nAdjusted: $930,000 needed\n\nTerm quotes (30yr, healthy 35yo):\n$500k @ $35/mo = $420/yr\n$1M @ $55/mo = $660/yr",
+    "quizTemplateIds": [
+      "life_basic_10x_d1",
+      "life_dime_adjusted_d2",
+      "life_quote_compare_d2",
+      "life_per_100k_d2",
+      "life_lifetime_d3"
+    ]
+  },
+  {
+    "id": "insurance_brand_vs_generic",
+    "moduleId": "insurance",
+    "title": "Brand name vs generic \u2014 the prescription math",
+    "concept": "Generic drugs are chemically identical to brand-name versions but cost 80-85% less. With 12 monthly refills, a $35 copay difference becomes $420/year. When your doctor prescribes a brand-name drug, always ask if there's a generic.",
+    "shortcut": "Annual saving per prescription = (brand copay \u2212 generic copay) \u00d7 12. For multiple prescriptions, sum the differences. Sometimes GoodRx cash price for generics is cheaper than insurance brand copay.",
+    "example": "Brand copay: $45\nGeneric copay: $10\nMonthly diff: $35\nAnnual saving: $420\n\nTwo prescriptions switched to generic:\n($35 + $20) \u00d7 12 = $660/year saved",
+    "quizTemplateIds": [
+      "rx_annual_saving_d1",
+      "rx_multiple_d2",
+      "rx_goodrx_d3",
+      "rx_monthly_diff_d1",
+      "rx_lifetime_d2"
     ]
   },
   {
@@ -902,31 +947,31 @@
   {
     "id": "car_loan_term",
     "moduleId": "car",
-    "title": "How loan term changes total cost",
-    "concept": "Extending your loan term from 48 to 72 months lowers your monthly payment but increases total interest dramatically. The dealer trick: focusing on monthly payment to sell you a longer, more expensive loan. Always compare total cost across different terms.",
-    "shortcut": "Longer term = lower payment but higher total cost. Compare: payment \u00d7 months for each option. The difference in total cost is what the extra time costs you.",
-    "example": "Same $25,000 loan:\n48 months \u00d7 $550 = $26,400\n72 months \u00d7 $420 = $30,240\nExtra cost: $3,840",
+    "title": "The hidden cost of '24 more months'",
+    "concept": "Salespeople love long loan terms because they lower the monthly payment \u2014 and increase total interest. Extending from 48 to 72 months can drop your payment $130/month but add $3,800+ in total cost. Focus on the delta between terms, not the headline payment.",
+    "shortcut": "Total cost difference = (payment_longer \u00d7 months_longer) \u2212 (payment_shorter \u00d7 months_shorter). Lower payment \u2260 better deal. The extra months are pure interest extraction.",
+    "example": "Same $25,000 loan:\n48 months \u00d7 $550 = $26,400\n72 months \u00d7 $420 = $30,240\nExtra cost of longer term: $3,840\n\nMonthly 'savings' from 48\u219272: $130\nTotal cost increase: $3,840\nThe trade-off is bad.",
     "quizTemplateIds": [
       "car_term_total_d1",
       "car_term_difference_d1",
       "car_term_scenario_d2",
       "car_payment_compare_d2",
-      "car_term_interest_d3"
+      "car_term_extra_cost_d3"
     ]
   },
   {
     "id": "car_down_payment",
     "moduleId": "car",
     "title": "Down payment math",
-    "concept": "A down payment reduces what you borrow \u2014 and therefore what you pay in interest. Putting 20% down on a $30,000 car means borrowing $24,000 instead of $30,000. That $6,000 down saves you hundreds or thousands in interest over the loan term.",
-    "shortcut": "Down payment = price \u00d7 down%. Loan amount = price \u2212 down payment. 20% down on $30,000: $6,000 down, $24,000 financed.",
-    "example": "Car: $30,000\n20% down = $6,000\nFinanced: $24,000\nvs $0 down = $30,000 financed\nSaved interest on $6,000",
+    "concept": "A down payment doesn't just reduce what you borrow \u2014 it eliminates interest on that money. Every $1 down saves you $1 + future interest. On a 5-year loan at 7%, a $5k down payment saves $5k principal + ~$900 interest = $5,900 in total cost.",
+    "shortcut": "Down payment = price \u00d7 down%. Loan = price \u2212 down. Interest saved by larger down \u2248 extra down \u00d7 loan rate \u00d7 term/2. Quick rule: every $1 down saves $1.10-$1.20 on a 60-month loan.",
+    "example": "$30,000 car, 7% APR, 60 months:\n0% down: $5,700 interest\n20% down ($6,000): borrow $24k, $4,560 interest\nDifference: $1,140 interest saved\nTotal savings: $7,140 over loan life",
     "quizTemplateIds": [
       "car_down_amount_d1",
       "car_loan_after_down_d1",
       "car_down_scenario_d2",
       "car_down_compare_d2",
-      "car_down_savings_d3"
+      "car_down_savings_total_d3"
     ]
   },
   {
@@ -956,37 +1001,82 @@
       "car_depreciation_d1",
       "car_year2_value_d2",
       "car_depreciation_scenario_d2",
-      "car_depreciation_compare_d3"
+      "car_total_cost_3yr_d3"
+    ]
+  },
+  {
+    "id": "car_total_cost_ownership",
+    "moduleId": "car",
+    "title": "What your car really costs per month",
+    "concept": "Monthly car cost \u2260 monthly payment. The real number includes payment + insurance + gas + maintenance + depreciation. For most cars, that's $300-$400/month ON TOP of the payment. A $400 payment becomes a $700-$800/month total cost.",
+    "shortcut": "Add payment + ~$150 insurance + ~$150 gas + ~$80 maintenance as baseline non-payment costs. Total monthly ownership = payment + $380 (typical). Add depreciation if you're tracking true cost.",
+    "example": "Payment: $400\nInsurance: $150\nGas: $200\nMaintenance: $80\nTotal monthly cost: $830\n\nReality: $830 \u00d7 12 = $9,960/year of car expenses, not $4,800.",
+    "quizTemplateIds": [
+      "car_tco_basic_d1",
+      "car_tco_compare_d2",
+      "car_tco_keep_vs_buy_d3",
+      "car_tco_vs_income_d2",
+      "car_tco_annual_d2"
+    ]
+  },
+  {
+    "id": "car_lease_vs_buy",
+    "moduleId": "car",
+    "title": "Lease vs buy \u2014 the 3-year math",
+    "concept": "Leasing: $350/month \u00d7 36 months = $12,600 spent, you own nothing at the end. Buying: $500/month \u00d7 60 months = $30,000, but after 36 months the car is worth ~$20,000. Your net 'cost' after 36 months: $30k payments \u2212 $20k value = $10k net. For the same 3 years, leasing cost you $2,600 more AND you have nothing to sell.",
+    "shortcut": "Lease cost over term = monthly \u00d7 months. Buy net cost over same term = (monthly \u00d7 months) \u2212 resale value. Lower number wins. Buying almost always cheaper if you keep the car past the loan.",
+    "example": "Compare 3 years:\nLEASE: $350 \u00d7 36 = $12,600 spent (own nothing)\nBUY: $500 \u00d7 36 = $18,000 paid, car worth $20,000\nNet: $18k \u2212 $20k = \u2212$2,000 (you BUILT $2k equity)\nBuying wins by $14,600 over 3 years",
+    "quizTemplateIds": [
+      "lease_total_cost_d1",
+      "buy_net_cost_d2",
+      "lease_vs_buy_3yr_d3",
+      "lease_monthly_d1",
+      "lease_vs_buy_lifetime_d3"
+    ]
+  },
+  {
+    "id": "car_trade_in_vs_private",
+    "moduleId": "car",
+    "title": "Is the dealer trade-in rip-off worth it?",
+    "concept": "Dealers offer convenience but lowball trade-in prices. The spread between trade-in and private sale is typically $2,000-$4,000. Private selling takes time (2-4 weeks of effort) but the difference often comes out to $100-$200/hour of effort. Tax wrinkle: in most states, trading in reduces your sales tax base on the new car.",
+    "shortcut": "Trade-in premium = private sale price \u2212 trade-in offer. Effective hourly = premium \u00f7 estimated hours of selling effort. Tax benefit of trade-in = (trade-in value) \u00d7 your state sales tax rate.",
+    "example": "Car: $11,000 private market, $8,000 trade-in offer\nPremium: $3,000\nEstimated hours: 20 (photos, listings, calls, test drives, paperwork)\nEffective: $150/hour\n\nTax benefit (trade-in): $8,000 \u00d7 8% = $640 less sales tax\nAdjusted premium: $3,000 \u2212 $640 = $2,360",
+    "quizTemplateIds": [
+      "trade_in_premium_d1",
+      "trade_in_hourly_d2",
+      "trade_in_tax_benefit_d2",
+      "trade_in_adjusted_d3",
+      "trade_in_decision_d3"
     ]
   },
   {
     "id": "student_loan_monthly",
     "moduleId": "student_loans",
     "title": "Student loan monthly payment",
-    "concept": "Standard student loan repayment is 10 years (120 months). Your monthly payment depends on the balance and interest rate. A simplified estimate: monthly payment \u2248 balance \u00d7 (rate/12) / (1 \u2212 (1 + rate/12)^(\u2212months)). For quick math: $30,000 at 5% for 10 years \u2248 $318/month.",
-    "shortcut": "Quick estimate for standard 10-year repayment: monthly \u2248 (balance \u00d7 rate% / 12) + (balance / 120). A $30,000 loan at 5%: interest portion \u2248 $125 + principal portion \u2248 $250 = ~$375/month.",
-    "example": "Loan: $30,000 at 5%\nMonthly interest: $30,000 \u00d7 5% / 12 = $125\nMonthly principal: $30,000 / 120 = $250\nEstimate: ~$375/month",
+    "concept": "Standard 10-year repayment costs about $100-$120 per $10,000 borrowed at typical 4-7% rates. A $30k loan \u2248 $300-$360/month. A $50k loan \u2248 $500-$600/month. This rule is accurate within 10% of the actual amortized payment.",
+    "shortcut": "Per $10k borrowed at 4-7% APR over 10 years: ~$100-$120/month. Higher rate = closer to $120. Quick mental math: divide your balance by $10k, multiply by your per-$10k rate.",
+    "example": "Loan $40,000:\n$40k \u00f7 $10k = 4\n\u00d7 $110 (~5% APR) = $440/month\n\nLoan $25,000 at 6%:\n2.5 \u00d7 $115 = ~$287/month\nActual amortized: $278 (within $10)",
     "quizTemplateIds": [
-      "sl_monthly_d1",
+      "sl_rule_thumb_d1",
       "sl_monthly_estimate_d1",
-      "sl_monthly_scenario_d2",
-      "sl_payment_compare_d2",
-      "sl_monthly_detail_d3"
+      "sl_rule_apply_d2",
+      "sl_per10k_compare_d2",
+      "sl_monthly_range_d3"
     ]
   },
   {
     "id": "student_loan_total_cost",
     "moduleId": "student_loans",
     "title": "Total cost of student loans",
-    "concept": "Total repayment = monthly payment \u00d7 total months. The difference between that and your original loan is pure interest. On a $30,000 loan at 5% over 10 years, you pay about $38,000 total \u2014 $8,000 in interest alone.",
-    "shortcut": "Total cost = payment \u00d7 months. Interest = total cost \u2212 loan amount. Always calculate this before choosing a repayment plan.",
-    "example": "Loan: $30,000\nPayment: $318/month \u00d7 120 months\nTotal: $38,160\nInterest: $8,160",
+    "concept": "Total repayment = monthly payment \u00d7 number of months. Subtract the original loan to find total interest. A 10-year loan at 5-6% typically costs ~25-30% of original balance in interest. $40k loan? Expect $10k-$12k extra in interest.",
+    "shortcut": "Total cost = payment \u00d7 months. Interest = total \u2212 loan. Interest as % = interest \u00f7 loan \u00d7 100. Quick benchmark: 10-yr loan at 5-6% = ~28% interest premium.",
+    "example": "$30,000 loan, $318/mo \u00d7 120 months:\nTotal: $38,160\nInterest: $8,160\nInterest %: 27.2%\n\nWithin the 25-30% benchmark for standard repayment.",
     "quizTemplateIds": [
       "sl_total_cost_d1",
       "sl_total_interest_d1",
       "sl_total_scenario_d2",
       "sl_cost_compare_d2",
-      "sl_cost_detail_d3"
+      "sl_interest_pct_d3"
     ]
   },
   {
@@ -1001,7 +1091,7 @@
       "sl_refi_annual_d1",
       "sl_refi_scenario_d2",
       "sl_refi_compare_d2",
-      "sl_refi_total_d3"
+      "sl_refi_vs_pslf_d3"
     ]
   },
   {
@@ -1032,6 +1122,51 @@
       "sl_pslf_scenario_d2",
       "sl_pslf_compare_d2",
       "sl_pslf_decision_d3"
+    ]
+  },
+  {
+    "id": "student_loan_employer_benefit",
+    "moduleId": "student_loans",
+    "title": "Does your employer pay your student loans?",
+    "concept": "Section 127 of the tax code lets employers contribute up to $5,250/year tax-free toward employee student loans. Made permanent under the OBBBA in 2025. As of 2025, 26% of employers offer this. That's equivalent to a $437.50/month tax-free raise that goes directly to your loan principal.",
+    "shortcut": "Annual benefit \u00f7 12 = monthly contribution to principal. Multi-year: benefit \u00d7 years. Plus the interest you DON'T pay on principal that gets paid down earlier (rough: benefit \u00d7 4-6% \u00d7 half the years).",
+    "example": "Employer max: $5,250/yr\nMonthly: $437.50\n\n5 years of full benefit:\n$26,250 paid by employer\n+ ~$2,000 in interest you don't pay\nTotal value: ~$28,250",
+    "quizTemplateIds": [
+      "sl_employer_monthly_d1",
+      "sl_employer_5yr_d2",
+      "sl_employer_with_interest_d3",
+      "sl_employer_vs_raise_d2",
+      "sl_employer_lifetime_d3"
+    ]
+  },
+  {
+    "id": "student_loan_grace_period",
+    "moduleId": "student_loans",
+    "title": "Your loans are growing while you wait",
+    "concept": "Unsubsidized federal loans accrue interest from disbursement. The 6-month grace period after graduation doesn't pause interest \u2014 it lets it pile up and capitalize (added to principal). A $25,000 loan at 5.5% accrues ~$680 in interest during grace alone. Most new grads don't realize this.",
+    "shortcut": "Daily interest = balance \u00d7 rate \u00f7 365. Grace period total = daily \u00d7 180 days. Making interest-only payments during grace prevents capitalization and saves money long-term.",
+    "example": "$25,000 unsubsidized at 5.5%:\nDaily interest: $3.77\nGrace period (180 days): $678\nNew balance at repayment start: $25,678\n\nInterest-only during grace ($113/mo):\nBalance stays $25,000 \u2192 save $678 + future interest on it",
+    "quizTemplateIds": [
+      "sl_daily_interest_d1",
+      "sl_grace_total_d1",
+      "sl_grace_vs_interest_only_d3",
+      "sl_grace_capitalization_d2",
+      "sl_grace_lifetime_d3"
+    ]
+  },
+  {
+    "id": "student_loan_parent_plus",
+    "moduleId": "student_loans",
+    "title": "Parent PLUS vs private \u2014 which costs less?",
+    "concept": "Parent PLUS loans carry an 8.94% fixed rate + 4.228% origination fee (2025-26). Private parent loans start as low as 5.09% with no origination. For a parent with good credit, private can save $10k+ over 10 years on a $30k loan. But PLUS offers federal protections (IDR, deferment, PSLF) that private doesn't.",
+    "shortcut": "Annual interest difference = balance \u00d7 (PLUS rate \u2212 private rate). Over 10 years \u00d7 10. Origination fee adds to PLUS cost. Trade-off: ~$10k savings on private vs federal protections.",
+    "example": "$30,000 borrowed:\nPLUS at 8.94%: ~$2,682/yr interest + $1,268 origination upfront\nPrivate at 5.5%: ~$1,650/yr interest, no fee\n\nAnnual diff: ~$1,032\n10-year diff: ~$10,320 + $1,268 = $11,588 saved with private",
+    "quizTemplateIds": [
+      "plus_vs_private_annual_d1",
+      "plus_vs_private_10yr_d2",
+      "plus_origination_d2",
+      "plus_total_cost_d3",
+      "plus_decision_d3"
     ]
   }
 ]

@@ -293,41 +293,75 @@ enum QuestionTheme {
 
         // ── Insurance & Healthcare ──────────────────────────────────────────────
         case "ins_annual_premium_d1", "ins_worst_case_d1",
-             "ins_deduct_compare_d2", "ins_premium_scenario_d2", "ins_breakeven_d3",
+             "ins_deduct_compare_d2", "ins_premium_scenario_d2",
              "ins_coinsurance_d1", "ins_copay_total_d1",
-             "ins_coinsurance_big_d2", "ins_copay_scenario_d2", "ins_coinsurance_compare_d3",
+             "ins_coinsurance_big_d2",
              "ins_oop_total_d1", "ins_oop_scenario_d1",
              "ins_oop_calc_d2", "ins_oop_compare_d2", "ins_oop_cap_d3",
              "ins_hdhp_annual_d1", "ins_ppo_annual_d1",
-             "ins_hdhp_vs_ppo_d2", "ins_plan_scenario_d2", "ins_breakeven_visits_d3",
+             "ins_hdhp_vs_ppo_d2", "ins_plan_scenario_d2",
              "ins_hsa_saving_d1", "ins_hsa_annual_d1",
-             "ins_hsa_scenario_d2", "ins_hsa_compare_d2", "ins_hsa_total_d3":
+             "ins_hsa_scenario_d2", "ins_hsa_compare_d2",
+             // Phase 5 reworks
+             "ins_exposure_range_d3", "ins_er_visit_d3", "ins_copay_vs_coins_d2",
+             "ins_visits_breakeven_d3", "ins_hsa_retirement_d3",
+             // FSA
+             "fsa_tax_saving_d1", "fsa_net_result_d2", "fsa_breakeven_d3",
+             "fsa_election_compare_d2", "fsa_max_safe_d3",
+             // Life
+             "life_basic_10x_d1", "life_dime_adjusted_d2", "life_quote_compare_d2",
+             "life_per_100k_d2", "life_lifetime_d3",
+             // Prescription
+             "rx_annual_saving_d1", "rx_multiple_d2", "rx_goodrx_d3",
+             "rx_monthly_diff_d1", "rx_lifetime_d2":
             return .insurance
 
         // ── Car & Big Purchases ─────────────────────────────────────────────────
         case "car_total_cost_d1", "car_interest_paid_d1",
              "car_monthly_scenario_d2", "car_total_compare_d2", "car_term_impact_d3",
              "car_term_total_d1", "car_term_difference_d1",
-             "car_term_scenario_d2", "car_payment_compare_d2", "car_term_interest_d3",
+             "car_term_scenario_d2", "car_payment_compare_d2",
              "car_down_amount_d1", "car_loan_after_down_d1",
-             "car_down_scenario_d2", "car_down_compare_d2", "car_down_savings_d3",
+             "car_down_scenario_d2", "car_down_compare_d2",
              "car_max_payment_d1", "car_20pct_down_d1",
              "car_10pct_rule_d2", "car_rule_scenario_d2", "car_afford_check_d3",
              "car_year1_value_d1", "car_depreciation_d1",
-             "car_year2_value_d2", "car_depreciation_scenario_d2", "car_depreciation_compare_d3":
+             "car_year2_value_d2", "car_depreciation_scenario_d2",
+             // Phase 5 reworks
+             "car_term_extra_cost_d3", "car_down_savings_total_d3", "car_total_cost_3yr_d3",
+             // TCO
+             "car_tco_basic_d1", "car_tco_compare_d2", "car_tco_keep_vs_buy_d3",
+             "car_tco_vs_income_d2", "car_tco_annual_d2",
+             // Lease vs Buy
+             "lease_total_cost_d1", "buy_net_cost_d2", "lease_vs_buy_3yr_d3",
+             "lease_monthly_d1", "lease_vs_buy_lifetime_d3",
+             // Trade-in vs Private
+             "trade_in_premium_d1", "trade_in_hourly_d2", "trade_in_tax_benefit_d2",
+             "trade_in_adjusted_d3", "trade_in_decision_d3":
             return .carBuying
 
         // ── Student Loans & Education ───────────────────────────────────────────
-        case "sl_monthly_d1", "sl_monthly_estimate_d1",
-             "sl_monthly_scenario_d2", "sl_payment_compare_d2", "sl_monthly_detail_d3",
+        case "sl_monthly_estimate_d1",
              "sl_total_cost_d1", "sl_total_interest_d1",
-             "sl_total_scenario_d2", "sl_cost_compare_d2", "sl_cost_detail_d3",
+             "sl_total_scenario_d2", "sl_cost_compare_d2",
              "sl_refi_saving_d1", "sl_refi_annual_d1",
-             "sl_refi_scenario_d2", "sl_refi_compare_d2", "sl_refi_total_d3",
+             "sl_refi_scenario_d2", "sl_refi_compare_d2",
              "sl_idr_payment_d1", "sl_idr_estimate_d1",
              "sl_idr_scenario_d2", "sl_idr_compare_d2", "sl_idr_savings_d3",
              "sl_pslf_total_d1", "sl_pslf_forgiven_d1",
-             "sl_pslf_scenario_d2", "sl_pslf_compare_d2", "sl_pslf_decision_d3":
+             "sl_pslf_scenario_d2", "sl_pslf_compare_d2", "sl_pslf_decision_d3",
+             // Phase 5 reworks
+             "sl_rule_thumb_d1", "sl_rule_apply_d2", "sl_per10k_compare_d2", "sl_monthly_range_d3",
+             "sl_interest_pct_d3", "sl_refi_vs_pslf_d3",
+             // Employer Benefit
+             "sl_employer_monthly_d1", "sl_employer_5yr_d2",
+             "sl_employer_with_interest_d3", "sl_employer_vs_raise_d2", "sl_employer_lifetime_d3",
+             // Grace Period
+             "sl_daily_interest_d1", "sl_grace_total_d1",
+             "sl_grace_vs_interest_only_d3", "sl_grace_capitalization_d2", "sl_grace_lifetime_d3",
+             // Parent PLUS
+             "plus_vs_private_annual_d1", "plus_vs_private_10yr_d2",
+             "plus_origination_d2", "plus_total_cost_d3", "plus_decision_d3":
             return .studentLoans
 
         // ── Fallback ─────────────────────────────────────────────────────────────
