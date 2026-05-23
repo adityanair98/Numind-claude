@@ -26,10 +26,10 @@ final class ContentRepositoryTests: XCTestCase {
         XCTAssertEqual(m?.icon,      "cart.fill")
         XCTAssertEqual(m?.color,     .blue)
         XCTAssertEqual(m?.lessonIds, [
-            "tip_18_percent", "tip_10_percent_trick", "tip_20_double",
-            "tip_pre_or_post_tax", "tip_split_bill",
-            "discount_25_percent", "discount_10_percent", "discount_bogo",
-            "discount_stacked", "discount_unit_price"
+            "tip_10_percent_trick", "tip_18_percent", "tip_split_bill",
+            "discount_bogo", "discount_stacked",
+            "discount_coupon_vs_cashback", "discount_price_plus_tax",
+            "discount_membership_worth"
         ])
     }
 
@@ -46,7 +46,7 @@ final class ContentRepositoryTests: XCTestCase {
     func test_smartShoppingLesson_fieldsDecodeCorrectly() {
         let l = repo.lesson(id: "tip_18_percent")
         XCTAssertEqual(l?.moduleId, "smart_shopping")
-        XCTAssertEqual(l?.title,    "Calculate an 18% tip")
+        XCTAssertEqual(l?.title,    "Tipping shortcuts — 15%, 18%, 20%")
         XCTAssertFalse(l?.concept.isEmpty  ?? true)
         XCTAssertFalse(l?.shortcut.isEmpty ?? true)
         XCTAssertFalse(l?.example.isEmpty  ?? true)
@@ -59,8 +59,8 @@ final class ContentRepositoryTests: XCTestCase {
 
     func test_lessonsForModule_returnsSmartShoppingLessons() {
         let lessons = repo.lessons(for: "smart_shopping")
-        XCTAssertEqual(lessons.count, 10)
-        XCTAssertEqual(lessons.first?.id, "tip_18_percent")
+        XCTAssertEqual(lessons.count, 8)
+        XCTAssertEqual(lessons.first?.id, "tip_10_percent_trick")
     }
 
     func test_unknownLesson_returnsNil() {
@@ -77,8 +77,8 @@ final class ContentRepositoryTests: XCTestCase {
     func test_templatesForLesson_respectsDeclarationOrder() {
         let templates = repo.templates(for: "tip_18_percent")
         XCTAssertEqual(templates.map(\.id), [
-            "tip_percent_basic", "tip_bill_total", "tip_split_tip",
-            "tip_18_d2", "tip_hotel_service_d2"
+            "tip_double_ten", "tip_18_d2", "tip_per_hundred_d1",
+            "tip_total_25_d2", "tip_post_tax_scenario_d3"
         ])
     }
 

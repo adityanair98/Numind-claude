@@ -1007,6 +1007,124 @@ enum FormulaOperationMap {
                     .multiply(a: pslfPay, by: 120),
                     .subtract(b: min(refiTotal, pslfTotal), from: max(refiTotal, pslfTotal))]
 
+        // MARK: - Smart Shopping: Coupon vs Cashback
+
+        case "couponSaving":
+            guard let price = variables["price"],
+                  let pct = variables["couponPct"] else { return [] }
+            return [.percentOf(pct: pct, amount: price)]
+
+        case "cashbackAmount":
+            guard let price = variables["price"],
+                  let pct = variables["cashbackPct"] else { return [] }
+            return [.percentOf(pct: pct, amount: price)]
+
+        case "couponPlusCashback":
+            guard let price = variables["price"],
+                  let cp = variables["couponPct"],
+                  let cb = variables["cashbackPct"] else { return [] }
+            let coupon = price * cp / 100
+            let afterCoupon = price - coupon
+            let cashback = afterCoupon * cb / 100
+            return [.percentOf(pct: cp, amount: price),
+                    .subtract(b: coupon, from: price),
+                    .percentOf(pct: cb, amount: afterCoupon),
+                    .add(a: coupon, b: cashback)]
+
+        case "couponVsCashbackDiff":
+            guard let price = variables["price"],
+                  let cp = variables["couponPct"],
+                  let cb = variables["cashbackPct"] else { return [] }
+            let couponAmt = price * cp / 100
+            let cashAmt = price * cb / 100
+            return [.percentOf(pct: cp, amount: price),
+                    .percentOf(pct: cb, amount: price),
+                    .subtract(b: min(couponAmt, cashAmt), from: max(couponAmt, cashAmt))]
+
+        case "couponCashbackFinalPrice":
+            guard let price = variables["price"],
+                  let cp = variables["couponPct"],
+                  let cb = variables["cashbackPct"] else { return [] }
+            let salePrice = price * (1 - cp / 100)
+            let cashback = salePrice * cb / 100
+            let coupon = price * cp / 100
+            return [.percentOf(pct: cp, amount: price),
+                    .subtract(b: coupon, from: price),
+                    .percentOf(pct: cb, amount: salePrice),
+                    .subtract(b: cashback, from: salePrice)]
+
+        // MARK: - Smart Shopping: Discount + Tax
+
+        case "salePricePlusTax":
+            guard let price = variables["originalPrice"],
+                  let disc = variables["discountPercent"],
+                  let tax = variables["taxPercent"] else { return [] }
+            let salePrice = price * (1 - disc / 100)
+            let taxAmt = salePrice * tax / 100
+            return [.percentOf(pct: disc, amount: price),
+                    .subtract(b: price * disc / 100, from: price),
+                    .percentOf(pct: tax, amount: salePrice),
+                    .add(a: salePrice, b: taxAmt)]
+
+        case "taxOnSalePrice":
+            guard let price = variables["originalPrice"],
+                  let disc = variables["discountPercent"],
+                  let tax = variables["taxPercent"] else { return [] }
+            let salePrice = price * (1 - disc / 100)
+            return [.percentOf(pct: disc, amount: price),
+                    .subtract(b: price * disc / 100, from: price),
+                    .percentOf(pct: tax, amount: salePrice)]
+
+        case "stackedSalePricePlusTax":
+            guard let price = variables["originalPrice"],
+                  let first = variables["firstDiscount"],
+                  let second = variables["secondDiscount"],
+                  let tax = variables["taxPercent"] else { return [] }
+            let afterFirst = price * (1 - first / 100)
+            let afterSecond = afterFirst * (1 - second / 100)
+            return [.percentOf(pct: first, amount: price),
+                    .subtract(b: price * first / 100, from: price),
+                    .percentOf(pct: second, amount: afterFirst),
+                    .subtract(b: afterFirst * second / 100, from: afterFirst),
+                    .percentOf(pct: tax, amount: afterSecond),
+                    .add(a: afterSecond, b: afterSecond * tax / 100)]
+
+        case "discountTaxSaving":
+            guard let price = variables["originalPrice"],
+                  let disc = variables["discountPercent"],
+                  let tax = variables["taxPercent"] else { return [] }
+            let fullWithTax = price * (1 + tax / 100)
+            let saleWithTax = price * (1 - disc / 100) * (1 + tax / 100)
+            return [.percentOf(pct: tax, amount: price),
+                    .add(a: price, b: price * tax / 100),
+                    .percentOf(pct: disc, amount: price),
+                    .subtract(b: saleWithTax, from: fullWithTax)]
+
+        // MARK: - Smart Shopping: Membership Worth
+
+        case "membershipBreakeven":
+            let fee = variables["monthlyFee"] ?? variables["annualFee"]
+            guard let f = fee, let saving = variables["savingPerUse"], saving > 0 else { return [] }
+            return [.divide(a: f, by: saving)]
+
+        case "membershipNetSavings":
+            let fee = variables["monthlyFee"] ?? variables["annualFee"]
+            guard let f = fee,
+                  let saving = variables["savingPerUse"],
+                  let uses = variables["usesPerPeriod"] else { return [] }
+            let gross = uses * saving
+            return [.multiply(a: uses, by: saving),
+                    .subtract(b: f, from: gross)]
+
+        case "membershipBreakevenDiff":
+            guard let feeA = variables["feeA"], let saveA = variables["saveA"], saveA > 0,
+                  let feeB = variables["feeB"], let saveB = variables["saveB"], saveB > 0 else { return [] }
+            let breakA = (feeA / saveA).rounded(.up)
+            let breakB = (feeB / saveB).rounded(.up)
+            return [.divide(a: feeA, by: saveA),
+                    .divide(a: feeB, by: saveB),
+                    .subtract(b: min(breakA, breakB), from: max(breakA, breakB))]
+
         default:
             return []
         }

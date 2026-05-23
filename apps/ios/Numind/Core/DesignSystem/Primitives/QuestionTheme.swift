@@ -123,25 +123,28 @@ enum QuestionTheme {
         switch templateId {
 
         // ── Dining & Tips ────────────────────────────────────────────────────────
-        case "tip_double_ten", "tip_twenty_total", "tip_pre_tax", "tip_post_tax",
+        case "tip_double_ten",
              "tip_percent_basic", "tip_bill_total", "tip_split_tip",
-             "tip_coffee_d1", "tip_taxi_d1", "tip_hair_salon_d2", "tip_hotel_service_d2",
-             "tip_bar_d2", "tip_10_pct_d1", "tip_15_pct_d1", "tip_25_pct_d2",
-             "tip_total_20_d1", "tip_total_15_d2", "tip_total_25_d2",
+             "tip_bar_d2", "tip_10_pct_d1", "tip_15_pct_d1",
+             "tip_total_15_d2", "tip_total_25_d2",
              "tip_group_per_person_d2", "tip_group_per_person_d3",
-             "tip_18_d2", "tip_post_tax_scenario_d3":
+             "tip_18_d2", "tip_post_tax_scenario_d3",
+             "tip_per_hundred_d1":
             return .dining
 
         // ── Shopping & Discounts ─────────────────────────────────────────────────
-        case "discount_ten_basic", "discount_ten_sale_price",
-             "bogo_per_item", "bogo_savings",
+        case "bogo_per_item", "bogo_savings",
              "stacked_discount_final", "stacked_discount_saving_calc",
-             "unit_price_bulk_pack", "discount_amount_basic", "discount_sale_price",
-             "discount_15_d1", "discount_20_d1", "discount_25_d1", "discount_50_d1",
-             "discount_30_d2", "discount_clearance_d2", "discount_online_d2",
-             "unit_price_grocery_d2", "unit_price_oz_d2",
+             "discount_25_d1",
+             "unit_price_grocery_d2",
              "bogo_scenario_d2", "discount_compare_d2", "discount_budget_d3",
-             "stacked_scenario_d3":
+             "stacked_scenario_d3",
+             "coupon_save_d1", "cashback_amount_d1", "coupon_plus_cashback_d2",
+             "coupon_vs_cashback_compare_d3", "coupon_cashback_final_d3",
+             "disc_tax_simple_d1", "disc_tax_amount_d2", "disc_tax_nonround_d2",
+             "disc_tax_stacked_d3", "disc_tax_compare_d3",
+             "membership_breakeven_d1", "membership_annual_d1",
+             "membership_net_saving_d2", "membership_compare_d3", "membership_decision_d3":
             return .shopping
 
         // ── Everyday Spending ────────────────────────────────────────────────────

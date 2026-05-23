@@ -945,6 +945,90 @@ struct QuizEngine {
                   let pslfPay = vars["pslfPayment"] else { return nil }
             return abs(refiPay * refiMonths - pslfPay * 120)
         },
+
+        // MARK: - Smart Shopping: Coupon vs Cashback
+        "couponSaving": { vars in
+            guard let price = vars["price"], let pct = vars["couponPct"] else { return nil }
+            return price * pct / 100
+        },
+        "cashbackAmount": { vars in
+            guard let price = vars["price"], let pct = vars["cashbackPct"] else { return nil }
+            return price * pct / 100
+        },
+        "couponPlusCashback": { vars in
+            guard let price = vars["price"],
+                  let cp = vars["couponPct"],
+                  let cb = vars["cashbackPct"] else { return nil }
+            let couponPart = price * cp / 100
+            let afterCoupon = price - couponPart
+            let cashbackPart = afterCoupon * cb / 100
+            return couponPart + cashbackPart
+        },
+        "couponVsCashbackDiff": { vars in
+            guard let price = vars["price"],
+                  let cp = vars["couponPct"],
+                  let cb = vars["cashbackPct"] else { return nil }
+            return abs(price * cp / 100 - price * cb / 100)
+        },
+        "couponCashbackFinalPrice": { vars in
+            guard let price = vars["price"],
+                  let cp = vars["couponPct"],
+                  let cb = vars["cashbackPct"] else { return nil }
+            // Coupon first, cashback on the discounted price
+            let salePrice = price * (1 - cp / 100)
+            let cashback = salePrice * cb / 100
+            return salePrice - cashback
+        },
+
+        // MARK: - Smart Shopping: Discount + Tax
+        "salePricePlusTax": { vars in
+            guard let price = vars["originalPrice"],
+                  let disc = vars["discountPercent"],
+                  let tax = vars["taxPercent"] else { return nil }
+            return price * (1 - disc / 100) * (1 + tax / 100)
+        },
+        "taxOnSalePrice": { vars in
+            guard let price = vars["originalPrice"],
+                  let disc = vars["discountPercent"],
+                  let tax = vars["taxPercent"] else { return nil }
+            return price * (1 - disc / 100) * tax / 100
+        },
+        "stackedSalePricePlusTax": { vars in
+            guard let price = vars["originalPrice"],
+                  let first = vars["firstDiscount"],
+                  let second = vars["secondDiscount"],
+                  let tax = vars["taxPercent"] else { return nil }
+            return price * (1 - first / 100) * (1 - second / 100) * (1 + tax / 100)
+        },
+        "discountTaxSaving": { vars in
+            guard let price = vars["originalPrice"],
+                  let disc = vars["discountPercent"],
+                  let tax = vars["taxPercent"] else { return nil }
+            // Full price with tax minus sale price with tax
+            return price * (1 + tax / 100) - price * (1 - disc / 100) * (1 + tax / 100)
+        },
+
+        // MARK: - Smart Shopping: Membership Worth
+        "membershipBreakeven": { vars in
+            // Generic: works for monthly (monthlyFee) or annual (annualFee)
+            let fee = vars["monthlyFee"] ?? vars["annualFee"]
+            guard let f = fee, let saving = vars["savingPerUse"], saving > 0 else { return nil }
+            return (f / saving).rounded(.up)
+        },
+        "membershipNetSavings": { vars in
+            let fee = vars["monthlyFee"] ?? vars["annualFee"]
+            guard let f = fee,
+                  let saving = vars["savingPerUse"],
+                  let uses = vars["usesPerPeriod"] else { return nil }
+            return uses * saving - f
+        },
+        "membershipBreakevenDiff": { vars in
+            guard let feeA = vars["feeA"], let saveA = vars["saveA"], saveA > 0,
+                  let feeB = vars["feeB"], let saveB = vars["saveB"], saveB > 0 else { return nil }
+            let breakA = (feeA / saveA).rounded(.up)
+            let breakB = (feeB / saveB).rounded(.up)
+            return abs(breakA - breakB)
+        },
     ]
 
     private static func compute(formula: String, variables: [String: Double]) -> Double? {

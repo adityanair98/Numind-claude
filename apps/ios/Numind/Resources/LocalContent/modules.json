@@ -8,16 +8,14 @@
     "mascot": "🛒",
     "glyph": "%",
     "lessonIds": [
-      "tip_18_percent",
       "tip_10_percent_trick",
-      "tip_20_double",
-      "tip_pre_or_post_tax",
+      "tip_18_percent",
       "tip_split_bill",
-      "discount_25_percent",
-      "discount_10_percent",
       "discount_bogo",
       "discount_stacked",
-      "discount_unit_price"
+      "discount_coupon_vs_cashback",
+      "discount_price_plus_tax",
+      "discount_membership_worth"
     ]
   },
   {

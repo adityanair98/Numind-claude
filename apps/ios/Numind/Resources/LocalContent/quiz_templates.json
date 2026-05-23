@@ -35,114 +35,6 @@
     "explanationTemplate": "Move the decimal left: 10% of ${{billAmount}}. Double that for 20%. Two steps, done."
   },
   {
-    "id": "tip_twenty_total",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "promptTemplate": "Your bill is ${{billAmount}}. What's the total after adding a 20% tip?",
-    "variableRules": [
-      {
-        "name": "billAmount",
-        "options": [
-          25,
-          35,
-          40,
-          45,
-          50,
-          55,
-          60,
-          70,
-          80
-        ]
-      },
-      {
-        "name": "tipPercent",
-        "options": [
-          20
-        ]
-      }
-    ],
-    "answerFormula": "billWithTip",
-    "answerFormat": "currency",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Find 10% of ${{billAmount}}, double it for the tip, then add to the original bill."
-  },
-  {
-    "id": "tip_pre_tax",
-    "moduleId": "smart_shopping",
-    "difficulty": 2,
-    "promptTemplate": "Subtotal is ${{billAmount}} before {{taxPercent}}% tax. You tip {{tipPercent}}% on the subtotal only. What is your tip?",
-    "variableRules": [
-      {
-        "name": "billAmount",
-        "options": [
-          30,
-          40,
-          50,
-          60,
-          70,
-          80
-        ]
-      },
-      {
-        "name": "tipPercent",
-        "options": [
-          18,
-          20
-        ]
-      },
-      {
-        "name": "taxPercent",
-        "options": [
-          8,
-          9,
-          10
-        ]
-      }
-    ],
-    "answerFormula": "tipAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tip on subtotal only: {{tipPercent}}% of ${{billAmount}} (ignore the tax line). This is the technically correct way to tip."
-  },
-  {
-    "id": "tip_post_tax",
-    "moduleId": "smart_shopping",
-    "difficulty": 2,
-    "promptTemplate": "Subtotal is ${{billAmount}} before {{taxPercent}}% tax. You tip {{tipPercent}}% on the total bill including tax. What is your tip?",
-    "variableRules": [
-      {
-        "name": "billAmount",
-        "options": [
-          30,
-          40,
-          50,
-          60,
-          70,
-          80
-        ]
-      },
-      {
-        "name": "tipPercent",
-        "options": [
-          18,
-          20
-        ]
-      },
-      {
-        "name": "taxPercent",
-        "options": [
-          8,
-          9,
-          10
-        ]
-      }
-    ],
-    "answerFormula": "tipOnTotal",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tip on total: add {{taxPercent}}% tax to ${{billAmount}} first, then take {{tipPercent}}% of that higher number. Always slightly more than tipping pre-tax."
-  },
-  {
     "id": "tip_percent_basic",
     "moduleId": "smart_shopping",
     "difficulty": 1,
@@ -171,7 +63,7 @@
     "answerFormula": "tipAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Find 10% first — move the decimal left. Then build up: 10% + 5% + 3% = 18%, or 10% + 10% = 20%."
+    "explanationTemplate": "Find 10% first \u2014 move the decimal left. Then build up: 10% + 5% + 3% = 18%, or 10% + 10% = 20%."
   },
   {
     "id": "tip_bill_total",
@@ -239,70 +131,6 @@
     "explanationTemplate": "Calculate the full tip first: {{tipPercent}}% of ${{billAmount}}. Then divide by {{numPeople}} people."
   },
   {
-    "id": "discount_ten_basic",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "inputMode": "freeEntry",
-    "promptTemplate": "An item costs ${{originalPrice}}. It's 10% off. How much do you save?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          30,
-          40,
-          50,
-          60,
-          70,
-          80,
-          90,
-          100
-        ]
-      },
-      {
-        "name": "discountPercent",
-        "options": [
-          10
-        ]
-      }
-    ],
-    "answerFormula": "discountAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Move the decimal one place left to find 10% of ${{originalPrice}}. That's your saving."
-  },
-  {
-    "id": "discount_ten_sale_price",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "promptTemplate": "A ${{originalPrice}} item is 10% off. What do you actually pay?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          35,
-          45,
-          55,
-          65,
-          75,
-          85,
-          95,
-          120,
-          150
-        ]
-      },
-      {
-        "name": "discountPercent",
-        "options": [
-          10
-        ]
-      }
-    ],
-    "answerFormula": "salePrice",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Find 10% of ${{originalPrice}} (move decimal left), then subtract from the original price."
-  },
-  {
     "id": "bogo_per_item",
     "moduleId": "smart_shopping",
     "difficulty": 2,
@@ -327,7 +155,7 @@
     "answerFormula": "bogoPerItemPrice",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "You pay 2 × ${{itemPrice}} for 3 items. Per item: (2 × ${{itemPrice}}) ÷ 3. The deal is 33% off, not 50%."
+    "explanationTemplate": "You pay 2 \u00d7 ${{itemPrice}} for 3 items. Per item: (2 \u00d7 ${{itemPrice}}) \u00f7 3. The deal is 33% off, not 50%."
   },
   {
     "id": "bogo_savings",
@@ -354,7 +182,7 @@
     "answerFormula": "bogoSavings",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "You pay for 2 and get 1 free — your saving is exactly 1 item's price: ${{itemPrice}}."
+    "explanationTemplate": "You pay for 2 and get 1 free \u2014 your saving is exactly 1 item's price: ${{itemPrice}}."
   },
   {
     "id": "stacked_discount_final",
@@ -392,7 +220,7 @@
     "answerFormula": "stackedFinalPrice",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Apply discounts one at a time: ${{originalPrice}} − {{firstDiscount}}% first, then − {{secondDiscount}}% off that result. They don't simply add up.",
+    "explanationTemplate": "Apply discounts one at a time: ${{originalPrice}} \u2212 {{firstDiscount}}% first, then \u2212 {{secondDiscount}}% off that result. They don't simply add up.",
     "scenarioTemplate": "A store has a sale, and you also have a member coupon."
   },
   {
@@ -429,111 +257,7 @@
     "answerFormula": "stackedTotalSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total saving = original − final price. The stacked saving is always less than {{firstDiscount}}+{{secondDiscount}}% — the second cut applies to the lower price."
-  },
-  {
-    "id": "unit_price_bulk_pack",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "promptTemplate": "A {{quantity}}-pack of the same item costs ${{totalPrice}}. What is the price per item?",
-    "variableRules": [
-      {
-        "name": "totalPrice",
-        "options": [
-          3,
-          4,
-          5,
-          6,
-          8,
-          9,
-          10,
-          12,
-          15,
-          20,
-          24
-        ]
-      },
-      {
-        "name": "quantity",
-        "options": [
-          2,
-          3,
-          4,
-          5,
-          6
-        ]
-      }
-    ],
-    "answerFormula": "unitPrice",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Price per item = total ÷ quantity. ${{totalPrice}} ÷ {{quantity}} = cost of one. Compare this to the single-item price to find the real deal."
-  },
-  {
-    "id": "discount_amount_basic",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "scenarioTemplate": "You're browsing a sale rack. An item you like has a tag showing {{discountPercent}}% off.",
-    "promptTemplate": "A ${{originalPrice}} item is {{discountPercent}}% off. How much do you save?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          40,
-          60,
-          80,
-          100,
-          120,
-          160,
-          200
-        ]
-      },
-      {
-        "name": "discountPercent",
-        "options": [
-          10,
-          20,
-          25,
-          50
-        ]
-      }
-    ],
-    "answerFormula": "discountAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "{{discountPercent}}% of ${{originalPrice}}: for 25% divide by 4, for 50% divide by 2, for 10% move the decimal left."
-  },
-  {
-    "id": "discount_sale_price",
-    "moduleId": "smart_shopping",
-    "difficulty": 3,
-    "scenarioTemplate": "A jacket you've been eyeing is finally on sale for {{discountPercent}}% off.",
-    "promptTemplate": "An item originally costs ${{originalPrice}}. It's {{discountPercent}}% off. What's the sale price?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          40,
-          80,
-          100,
-          120,
-          200
-        ]
-      },
-      {
-        "name": "discountPercent",
-        "options": [
-          10,
-          20,
-          25,
-          50
-        ]
-      }
-    ],
-    "answerFormula": "salePrice",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Sale price = original × (1 − discount%). For {{discountPercent}}% off: find the saving first, then subtract from ${{originalPrice}}."
+    "explanationTemplate": "Total saving = original \u2212 final price. The stacked saving is always less than {{firstDiscount}}+{{secondDiscount}}% \u2014 the second cut applies to the lower price."
   },
   {
     "id": "budget_remaining",
@@ -571,7 +295,7 @@
     "answerFormula": "budgetRemaining",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Remaining = ${{budget}} − ${{spent}}. Simple subtraction — but tracking this in real-time is the whole skill."
+    "explanationTemplate": "Remaining = ${{budget}} \u2212 ${{spent}}. Simple subtraction \u2014 but tracking this in real-time is the whole skill."
   },
   {
     "id": "budget_after_purchase",
@@ -610,7 +334,7 @@
     "answerFormula": "budgetAfterPurchase",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Spend = {{quantity}} × ${{itemPrice}}. Remaining = ${{budget}} − that total. Find the spend first, then subtract."
+    "explanationTemplate": "Spend = {{quantity}} \u00d7 ${{itemPrice}}. Remaining = ${{budget}} \u2212 that total. Find the spend first, then subtract."
   },
   {
     "id": "monthly_to_yearly",
@@ -636,7 +360,7 @@
     "answerFormula": "monthlyToYearly",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "${{monthlyPrice}}/month × 12 months. Most people underestimate yearly costs because the monthly number looks small."
+    "explanationTemplate": "${{monthlyPrice}}/month \u00d7 12 months. Most people underestimate yearly costs because the monthly number looks small."
   },
   {
     "id": "yearly_to_monthly",
@@ -662,7 +386,7 @@
     "answerFormula": "yearlyToMonthly",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{yearlyPrice}} ÷ 12. Compare this to the monthly plan price to see which is actually cheaper."
+    "explanationTemplate": "${{yearlyPrice}} \u00f7 12. Compare this to the monthly plan price to see which is actually cheaper."
   },
   {
     "id": "cost_per_use_calc",
@@ -700,7 +424,7 @@
     "answerFormula": "costPerUse",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Cost per use = ${{itemPrice}} ÷ {{numberOfUses}}. A high price spread over many uses can be cheaper than a low price used rarely."
+    "explanationTemplate": "Cost per use = ${{itemPrice}} \u00f7 {{numberOfUses}}. A high price spread over many uses can be cheaper than a low price used rarely."
   },
   {
     "id": "cost_per_use_scenario",
@@ -739,7 +463,7 @@
     "answerFormula": "costPerUse",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{itemPrice}} ÷ {{numberOfUses}} sessions. If this is more than a drop-in class costs, the membership isn't worth it."
+    "explanationTemplate": "${{itemPrice}} \u00f7 {{numberOfUses}} sessions. If this is more than a drop-in class costs, the membership isn't worth it."
   },
   {
     "id": "tax_amount",
@@ -774,7 +498,7 @@
     "answerFormula": "taxAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tax = price × rate. Start with 10% of ${{originalPrice}} (move the decimal), then adjust down slightly for {{taxPercent}}%."
+    "explanationTemplate": "Tax = price \u00d7 rate. Start with 10% of ${{originalPrice}} (move the decimal), then adjust down slightly for {{taxPercent}}%."
   },
   {
     "id": "price_with_tax",
@@ -841,7 +565,7 @@
     "answerFormula": "totalCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = price × quantity. ${{itemPrice}} × {{quantity}}: break it into rounds — double the price, then add extras."
+    "explanationTemplate": "Total = price \u00d7 quantity. ${{itemPrice}} \u00d7 {{quantity}}: break it into rounds \u2014 double the price, then add extras."
   },
   {
     "id": "unit_price_check",
@@ -873,7 +597,7 @@
     "answerFormula": "unitPrice",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Price per item = total ÷ quantity. ${{totalPrice}} ÷ {{quantity}}: divide evenly to find the per-unit cost."
+    "explanationTemplate": "Price per item = total \u00f7 quantity. ${{totalPrice}} \u00f7 {{quantity}}: divide evenly to find the per-unit cost."
   },
   {
     "id": "net_pay_deduction",
@@ -906,7 +630,7 @@
     "answerFormula": "grossToNet",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Net pay = gross × (1 − deduction%). ${{grossPay}} × (1 − {{deductionPercent}}%) = your take-home amount."
+    "explanationTemplate": "Net pay = gross \u00d7 (1 \u2212 deduction%). ${{grossPay}} \u00d7 (1 \u2212 {{deductionPercent}}%) = your take-home amount."
   },
   {
     "id": "annual_to_monthly_pay",
@@ -929,7 +653,7 @@
     "answerFormula": "annualToMonthly",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly pay = annual ÷ 12. ${{annualSalary}} ÷ 12 = monthly gross."
+    "explanationTemplate": "Monthly pay = annual \u00f7 12. ${{annualSalary}} \u00f7 12 = monthly gross."
   },
   {
     "id": "raise_dollar_amount",
@@ -960,7 +684,7 @@
     "answerFormula": "raiseAmount",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Annual raise = salary × raise%. ${{annualSalary}} × {{raisePercent}}% = extra per year."
+    "explanationTemplate": "Annual raise = salary \u00d7 raise%. ${{annualSalary}} \u00d7 {{raisePercent}}% = extra per year."
   },
   {
     "id": "raise_new_salary",
@@ -990,7 +714,7 @@
     "answerFormula": "raisedSalary",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New salary = old × (1 + raise%). ${{annualSalary}} × (1 + {{raisePercent}}%) = new annual pay."
+    "explanationTemplate": "New salary = old \u00d7 (1 + raise%). ${{annualSalary}} \u00d7 (1 + {{raisePercent}}%) = new annual pay."
   },
   {
     "id": "overtime_pay_calc",
@@ -1023,7 +747,7 @@
     "answerFormula": "overtimePay",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Overtime pay = regular rate × 1.5 × overtime hours. ${{regularRate}} × 1.5 = ${{regularRate}} overtime rate, then × {{overtimeHours}} hours."
+    "explanationTemplate": "Overtime pay = regular rate \u00d7 1.5 \u00d7 overtime hours. ${{regularRate}} \u00d7 1.5 = ${{regularRate}} overtime rate, then \u00d7 {{overtimeHours}} hours."
   },
   {
     "id": "biweekly_to_annual",
@@ -1055,7 +779,7 @@
     "answerFormula": "payPeriodDifference",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Job A annual = ${{weeklyPay}} × 52. Job B annual = ${{biweeklyPay}} × 26. The difference is the gap. Weekly has 52 pay periods, biweekly has 26."
+    "explanationTemplate": "Job A annual = ${{weeklyPay}} \u00d7 52. Job B annual = ${{biweeklyPay}} \u00d7 26. The difference is the gap. Weekly has 52 pay periods, biweekly has 26."
   },
   {
     "id": "weekly_to_annual",
@@ -1078,7 +802,7 @@
     "answerFormula": "weeklyToAnnual",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Weekly × 52 = annual. ${{weeklySalary}} × 52 weeks = annual income."
+    "explanationTemplate": "Weekly \u00d7 52 = annual. ${{weeklySalary}} \u00d7 52 weeks = annual income."
   },
   {
     "id": "simple_interest_earned",
@@ -1118,7 +842,7 @@
     "answerFormula": "simpleInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest = Principal × Rate × Time. ${{principal}} × {{interestRate}}% × {{years}} years."
+    "explanationTemplate": "Interest = Principal \u00d7 Rate \u00d7 Time. ${{principal}} \u00d7 {{interestRate}}% \u00d7 {{years}} years."
   },
   {
     "id": "total_balance_with_interest",
@@ -1157,7 +881,7 @@
     "answerFormula": "totalWithInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = Principal × (1 + Rate × Time). Add the interest earned to your original ${{principal}}."
+    "explanationTemplate": "Total = Principal \u00d7 (1 + Rate \u00d7 Time). Add the interest earned to your original ${{principal}}."
   },
   {
     "id": "rule_of_72_years",
@@ -1183,7 +907,7 @@
     "answerFormula": "rule72",
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Rule of 72: years to double = 72 ÷ rate. 72 ÷ {{interestRate}} = {{answer}} years."
+    "explanationTemplate": "Rule of 72: years to double = 72 \u00f7 rate. 72 \u00f7 {{interestRate}} = {{answer}} years."
   },
   {
     "id": "roi_percent_calc",
@@ -1211,7 +935,7 @@
     "answerFormula": "roiPercent",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "ROI% = (gain ÷ cost) × 100. ${{gain}} ÷ ${{cost}} × 100 = your ROI."
+    "explanationTemplate": "ROI% = (gain \u00f7 cost) \u00d7 100. ${{gain}} \u00f7 ${{cost}} \u00d7 100 = your ROI."
   },
   {
     "id": "dollar_return_calc",
@@ -1241,99 +965,7 @@
     "answerFormula": "dollarReturn",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Dollar return = cost × ROI% ÷ 100. ${{cost}} × {{roiPercent}}% = profit."
-  },
-  {
-    "id": "tip_coffee_d1",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "promptTemplate": "You get a ${{billAmount}} coffee and pastry. You want to leave a 20% tip. How much is the tip?",
-    "variableRules": [
-      {
-        "name": "billAmount",
-        "options": [
-          5,
-          8,
-          10,
-          12,
-          15
-        ]
-      },
-      {
-        "name": "tipPercent",
-        "options": [
-          20
-        ]
-      }
-    ],
-    "answerFormula": "tipAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "20% tip = bill ÷ 5. ${{billAmount}} ÷ 5 = your tip. Or move the decimal (10%) then double it."
-  },
-  {
-    "id": "tip_hair_salon_d2",
-    "moduleId": "smart_shopping",
-    "difficulty": 2,
-    "scenarioTemplate": "Your haircut costs ${{billAmount}} at the salon.",
-    "promptTemplate": "You tip {{tipPercent}}%. What is the tip amount?",
-    "variableRules": [
-      {
-        "name": "billAmount",
-        "options": [
-          45,
-          55,
-          65,
-          75,
-          85,
-          95
-        ]
-      },
-      {
-        "name": "tipPercent",
-        "options": [
-          15,
-          18,
-          20
-        ]
-      }
-    ],
-    "answerFormula": "tipAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tip = bill × tip%. ${{billAmount}} × {{tipPercent}}% — find 10% (${{billAmount}} move decimal), then build up to {{tipPercent}}%."
-  },
-  {
-    "id": "tip_hotel_service_d2",
-    "moduleId": "smart_shopping",
-    "difficulty": 2,
-    "scenarioTemplate": "Room service delivers a ${{billAmount}} meal to your hotel room.",
-    "promptTemplate": "You tip {{tipPercent}}%. What is the tip?",
-    "variableRules": [
-      {
-        "name": "billAmount",
-        "options": [
-          30,
-          40,
-          50,
-          60,
-          70,
-          80
-        ]
-      },
-      {
-        "name": "tipPercent",
-        "options": [
-          18,
-          20,
-          22
-        ]
-      }
-    ],
-    "answerFormula": "tipAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tip = bill × {{tipPercent}}%. Build from 10% of ${{billAmount}}, then add or subtract to reach {{tipPercent}}%."
+    "explanationTemplate": "Dollar return = cost \u00d7 ROI% \u00f7 100. ${{cost}} \u00d7 {{roiPercent}}% = profit."
   },
   {
     "id": "tip_bar_d2",
@@ -1365,7 +997,7 @@
     "answerFormula": "tipAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tip = ${{billAmount}} × {{tipPercent}}%. Standard for bars is 18–20%. Always tip on the full tab, not just per drink."
+    "explanationTemplate": "Tip = ${{billAmount}} \u00d7 {{tipPercent}}%. Standard for bars is 18\u201320%. Always tip on the full tab, not just per drink."
   },
   {
     "id": "tip_10_pct_d1",
@@ -1397,7 +1029,7 @@
     "answerFormula": "tipAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "10% = move the decimal one place left. ${{billAmount}} → 10% = just shift the decimal. This is the foundation of all tip math."
+    "explanationTemplate": "10% = move the decimal one place left. ${{billAmount}} \u2192 10% = just shift the decimal. This is the foundation of all tip math."
   },
   {
     "id": "tip_15_pct_d1",
@@ -1428,64 +1060,6 @@
     "explanationTemplate": "15% = 10% + 5%. Find 10% (move decimal), halve it for 5%, then add. ${{billAmount}}: 10% + 5% = 15% tip."
   },
   {
-    "id": "tip_25_pct_d2",
-    "moduleId": "smart_shopping",
-    "difficulty": 2,
-    "promptTemplate": "Bill is ${{billAmount}}. Exceptional service — you tip 25%. What is the tip?",
-    "variableRules": [
-      {
-        "name": "billAmount",
-        "options": [
-          20,
-          28,
-          36,
-          44,
-          52,
-          60
-        ]
-      },
-      {
-        "name": "tipPercent",
-        "options": [
-          25
-        ]
-      }
-    ],
-    "answerFormula": "tipAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "25% = ÷4. Halve the bill, then halve again. ${{billAmount}} ÷ 2 ÷ 2 = your 25% tip."
-  },
-  {
-    "id": "tip_total_20_d1",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "promptTemplate": "Your dinner bill is ${{billAmount}}. You add a 20% tip. What is the total you pay?",
-    "variableRules": [
-      {
-        "name": "billAmount",
-        "options": [
-          25,
-          30,
-          35,
-          40,
-          45,
-          50
-        ]
-      },
-      {
-        "name": "tipPercent",
-        "options": [
-          20
-        ]
-      }
-    ],
-    "answerFormula": "billWithTip",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = bill × 1.20. Or: add 20% to ${{billAmount}}. Find 20% (10% × 2), then add to the bill."
-  },
-  {
     "id": "tip_total_15_d2",
     "moduleId": "smart_shopping",
     "difficulty": 2,
@@ -1512,7 +1086,7 @@
     "answerFormula": "billWithTip",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = bill × 1.15. Find 15% (10% + 5%) of ${{billAmount}}, then add to the bill."
+    "explanationTemplate": "Total = bill \u00d7 1.15. Find 15% (10% + 5%) of ${{billAmount}}, then add to the bill."
   },
   {
     "id": "tip_total_25_d2",
@@ -1540,7 +1114,7 @@
     "answerFormula": "billWithTip",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = bill × 1.25. That's bill + 25%. 25% = bill ÷ 4. Add to original: ${{billAmount}} + (${{billAmount}} ÷ 4)."
+    "explanationTemplate": "Total = bill \u00d7 1.25. That's bill + 25%. 25% = bill \u00f7 4. Add to original: ${{billAmount}} + (${{billAmount}} \u00f7 4)."
   },
   {
     "id": "tip_group_per_person_d2",
@@ -1578,7 +1152,7 @@
     "answerFormula": "billWithTipPerPerson",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Each person pays (bill + tip) ÷ people. ${{billAmount}} × {{tipPercent}}% tip = total, then ÷ {{numPeople}} people."
+    "explanationTemplate": "Each person pays (bill + tip) \u00f7 people. ${{billAmount}} \u00d7 {{tipPercent}}% tip = total, then \u00f7 {{numPeople}} people."
   },
   {
     "id": "tip_group_per_person_d3",
@@ -1616,7 +1190,7 @@
     "answerFormula": "billWithTipPerPerson",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Per person = bill × (1 + tip%) ÷ people. Add {{tipPercent}}% to ${{billAmount}}, then split {{numPeople}} ways."
+    "explanationTemplate": "Per person = bill \u00d7 (1 + tip%) \u00f7 people. Add {{tipPercent}}% to ${{billAmount}}, then split {{numPeople}} ways."
   },
   {
     "id": "tip_18_d2",
@@ -1685,65 +1259,7 @@
     "answerFormula": "tipOnTotal",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Post-tax total = ${{billAmount}} × (1 + {{taxPercent}}%). Tip = that total × {{tipPercent}}%. Tipping on post-tax is slightly more than on pre-tax."
-  },
-  {
-    "id": "discount_15_d1",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "promptTemplate": "An item costs ${{originalPrice}}. It's 15% off. How much do you save?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          20,
-          40,
-          60,
-          80,
-          100
-        ]
-      },
-      {
-        "name": "discountPercent",
-        "options": [
-          15
-        ]
-      }
-    ],
-    "answerFormula": "discountAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "15% off = 10% + 5%. Find 10% of ${{originalPrice}} (move decimal), halve it for 5%, add together."
-  },
-  {
-    "id": "discount_20_d1",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "promptTemplate": "A ${{originalPrice}} jacket is 20% off. What is the discount amount?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          30,
-          45,
-          60,
-          75,
-          90,
-          120,
-          150
-        ]
-      },
-      {
-        "name": "discountPercent",
-        "options": [
-          20
-        ]
-      }
-    ],
-    "answerFormula": "discountAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "20% off = ÷5. ${{originalPrice}} ÷ 5 = savings. Or: find 10% and double it."
+    "explanationTemplate": "Post-tax total = ${{billAmount}} \u00d7 (1 + {{taxPercent}}%). Tip = that total \u00d7 {{tipPercent}}%. Tipping on post-tax is slightly more than on pre-tax."
   },
   {
     "id": "discount_25_d1",
@@ -1772,133 +1288,7 @@
     "answerFormula": "discountAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "25% = ÷4. Halve ${{originalPrice}}, then halve again. That's your discount."
-  },
-  {
-    "id": "discount_50_d1",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "promptTemplate": "A ${{originalPrice}} item is 50% off. What is the sale price?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          18,
-          24,
-          36,
-          48,
-          60,
-          74,
-          90
-        ]
-      },
-      {
-        "name": "discountPercent",
-        "options": [
-          50
-        ]
-      }
-    ],
-    "answerFormula": "salePrice",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "50% off = half price. ${{originalPrice}} ÷ 2 = sale price. This is the easiest discount to calculate."
-  },
-  {
-    "id": "discount_30_d2",
-    "moduleId": "smart_shopping",
-    "difficulty": 2,
-    "promptTemplate": "An item originally priced at ${{originalPrice}} is 30% off. What do you pay?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          30,
-          40,
-          50,
-          60,
-          70,
-          80,
-          90
-        ]
-      },
-      {
-        "name": "discountPercent",
-        "options": [
-          30
-        ]
-      }
-    ],
-    "answerFormula": "salePrice",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "30% off → you pay 70%. ${{originalPrice}} × 70% = sale price. Or: find 30% (${{originalPrice}} × 3 ÷ 10) and subtract.",
-    "scenarioTemplate": "End-of-season sale — everything is 30% off."
-  },
-  {
-    "id": "discount_clearance_d2",
-    "moduleId": "smart_shopping",
-    "difficulty": 2,
-    "scenarioTemplate": "A {{originalPrice}}-dollar item is on the clearance rack at {{discountPercent}}% off.",
-    "promptTemplate": "How much money do you save?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          25,
-          35,
-          45,
-          55,
-          65,
-          75
-        ]
-      },
-      {
-        "name": "discountPercent",
-        "options": [
-          20,
-          30,
-          40
-        ]
-      }
-    ],
-    "answerFormula": "discountAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Savings = original × discount%. ${{originalPrice}} × {{discountPercent}}% = amount saved. Then subtract to get sale price."
-  },
-  {
-    "id": "discount_online_d2",
-    "moduleId": "smart_shopping",
-    "difficulty": 3,
-    "scenarioTemplate": "You find a ${{originalPrice}} item online with a promo code for {{discountPercent}}% off.",
-    "promptTemplate": "What is the price after the discount?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          35,
-          55,
-          75,
-          95,
-          115,
-          135
-        ]
-      },
-      {
-        "name": "discountPercent",
-        "options": [
-          10,
-          15,
-          20,
-          25
-        ]
-      }
-    ],
-    "answerFormula": "salePrice",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Sale price = ${{originalPrice}} × (1 − {{discountPercent}}%). You pay {{discountPercent}} less than the listed price."
+    "explanationTemplate": "25% = \u00f74. Halve ${{originalPrice}}, then halve again. That's your discount."
   },
   {
     "id": "unit_price_grocery_d2",
@@ -1927,37 +1317,7 @@
     "answerFormula": "unitPrice",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Unit price = total ÷ quantity. ${{totalPrice}} ÷ {{quantity}} = price per cup. Knowing unit price lets you compare sizes fairly."
-  },
-  {
-    "id": "unit_price_oz_d2",
-    "moduleId": "smart_shopping",
-    "difficulty": 3,
-    "promptTemplate": "A {{quantity}}-oz bottle of shampoo costs ${{totalPrice}}. What is the cost per ounce?",
-    "variableRules": [
-      {
-        "name": "totalPrice",
-        "options": [
-          4,
-          6,
-          8,
-          10,
-          12
-        ]
-      },
-      {
-        "name": "quantity",
-        "options": [
-          8,
-          12,
-          16
-        ]
-      }
-    ],
-    "answerFormula": "unitPrice",
-    "answerFormat": "currency",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Cost per oz = ${{totalPrice}} ÷ {{quantity}} oz. Always compare unit prices — bigger sizes aren't always cheaper per unit."
+    "explanationTemplate": "Unit price = total \u00f7 quantity. ${{totalPrice}} \u00f7 {{quantity}} = price per cup. Knowing unit price lets you compare sizes fairly."
   },
   {
     "id": "bogo_scenario_d2",
@@ -1981,7 +1341,7 @@
     "answerFormula": "bogoPerItemPrice",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "BOGO-3: you pay for 2, get 3. Effective price = (2 × ${{itemPrice}}) ÷ 3. That's a 33% discount per item."
+    "explanationTemplate": "BOGO-3: you pay for 2, get 3. Effective price = (2 \u00d7 ${{itemPrice}}) \u00f7 3. That's a 33% discount per item."
   },
   {
     "id": "discount_compare_d2",
@@ -2014,7 +1374,7 @@
     "answerFormula": "salePrice",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Sale price = ${{originalPrice}} × (1 − {{discountPercent}}%). That's what Store B charges."
+    "explanationTemplate": "Sale price = ${{originalPrice}} \u00d7 (1 \u2212 {{discountPercent}}%). That's what Store B charges."
   },
   {
     "id": "discount_budget_d3",
@@ -2047,7 +1407,7 @@
     "answerFormula": "salePrice",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "You pay ${{originalPrice}} × (1 − {{discountPercent}}%). Non-round discount percents require careful math — break into 10% + remainder."
+    "explanationTemplate": "You pay ${{originalPrice}} \u00d7 (1 \u2212 {{discountPercent}}%). Non-round discount percents require careful math \u2014 break into 10% + remainder."
   },
   {
     "id": "stacked_scenario_d3",
@@ -2085,7 +1445,7 @@
     "answerFormula": "stackedFinalPrice",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Stacked discounts multiply, not add. Final = ${{originalPrice}} × (1−{{firstDiscount}}%) × (1−{{secondDiscount}}%). Not the same as {{firstDiscount}}+{{secondDiscount}}% off."
+    "explanationTemplate": "Stacked discounts multiply, not add. Final = ${{originalPrice}} \u00d7 (1\u2212{{firstDiscount}}%) \u00d7 (1\u2212{{secondDiscount}}%). Not the same as {{firstDiscount}}+{{secondDiscount}}% off."
   },
   {
     "id": "tax_coffee_d1",
@@ -2116,7 +1476,7 @@
     "answerFormula": "taxAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tax = price × {{taxPercent}}%. ${{originalPrice}} × {{taxPercent}}% = tax. For 10%: move decimal. For 8–9%: find 10%, adjust slightly."
+    "explanationTemplate": "Tax = price \u00d7 {{taxPercent}}%. ${{originalPrice}} \u00d7 {{taxPercent}}% = tax. For 10%: move decimal. For 8\u20139%: find 10%, adjust slightly."
   },
   {
     "id": "tax_electronics_d2",
@@ -2149,7 +1509,7 @@
     "answerFormula": "taxAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tax = ${{originalPrice}} × {{taxPercent}}%. Always calculate tax before you reach the register — especially on big purchases."
+    "explanationTemplate": "Tax = ${{originalPrice}} \u00d7 {{taxPercent}}%. Always calculate tax before you reach the register \u2014 especially on big purchases."
   },
   {
     "id": "price_tax_d1",
@@ -2177,7 +1537,7 @@
     "answerFormula": "priceWithTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = price × 1.{{taxPercent}}. Add {{taxPercent}}% to ${{originalPrice}}. At 10%, just add 10% (move decimal, then add)."
+    "explanationTemplate": "Total = price \u00d7 1.{{taxPercent}}. Add {{taxPercent}}% to ${{originalPrice}}. At 10%, just add 10% (move decimal, then add)."
   },
   {
     "id": "price_tax_scenario_d2",
@@ -2209,7 +1569,7 @@
     "answerFormula": "priceWithTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = ${{originalPrice}} × (1 + {{taxPercent}}%). Find {{taxPercent}}% of the price and add it. Always budget for tax on top of the sticker price."
+    "explanationTemplate": "Total = ${{originalPrice}} \u00d7 (1 + {{taxPercent}}%). Find {{taxPercent}}% of the price and add it. Always budget for tax on top of the sticker price."
   },
   {
     "id": "cart_estimate_d1",
@@ -2316,7 +1676,7 @@
     "answerFormula": "budgetAfterPurchase",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Remaining = budget − (qty × price). ${{budget}} − ({{quantity}} × ${{itemPrice}}) = what's left."
+    "explanationTemplate": "Remaining = budget \u2212 (qty \u00d7 price). ${{budget}} \u2212 ({{quantity}} \u00d7 ${{itemPrice}}) = what's left."
   },
   {
     "id": "subscription_compare_d2",
@@ -2350,7 +1710,7 @@
     "answerFormula": "annualPlanSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly plan per year = ${{monthlyPrice}} × 12. Annual plan = ${{annualPrice}}. Saving = monthly annual cost − annual price. Always compare before auto-renewing monthly."
+    "explanationTemplate": "Monthly plan per year = ${{monthlyPrice}} \u00d7 12. Annual plan = ${{annualPrice}}. Saving = monthly annual cost \u2212 annual price. Always compare before auto-renewing monthly."
   },
   {
     "id": "yearly_cost_d1",
@@ -2375,7 +1735,7 @@
     "answerFormula": "monthlyToYearly",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual = monthly × 12. ${{monthlyPrice}} × 12 = total yearly cost. Subscription costs add up — always know your annual spend."
+    "explanationTemplate": "Annual = monthly \u00d7 12. ${{monthlyPrice}} \u00d7 12 = total yearly cost. Subscription costs add up \u2014 always know your annual spend."
   },
   {
     "id": "cost_per_use_gym_d2",
@@ -2409,7 +1769,7 @@
     "answerFormula": "costPerUse",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Cost per visit = ${{itemPrice}} ÷ {{numberOfUses}} visits. Knowing this makes gym membership decisions obvious."
+    "explanationTemplate": "Cost per visit = ${{itemPrice}} \u00f7 {{numberOfUses}} visits. Knowing this makes gym membership decisions obvious."
   },
   {
     "id": "budget_weekly_d2",
@@ -2443,7 +1803,7 @@
     "answerFormula": "budgetRemaining",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Remaining = ${{budget}} − ${{spent}}. Simple subtraction — but knowing your budget number upfront keeps you on track."
+    "explanationTemplate": "Remaining = ${{budget}} \u2212 ${{spent}}. Simple subtraction \u2014 but knowing your budget number upfront keeps you on track."
   },
   {
     "id": "subscription_streaming_d1",
@@ -2466,7 +1826,7 @@
     "answerFormula": "monthlyToYearly",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{monthlyPrice}} × 12 = yearly cost. The monthly price is designed to feel small — always convert to annual to see the real commitment."
+    "explanationTemplate": "${{monthlyPrice}} \u00d7 12 = yearly cost. The monthly price is designed to feel small \u2014 always convert to annual to see the real commitment."
   },
   {
     "id": "salary_monthly_annual_d1",
@@ -2489,7 +1849,7 @@
     "answerFormula": "monthlyToAnnual",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual = monthly × 12. ${{monthlyIncome}} × 12 = gross annual salary. Useful when comparing job offers quoted in monthly vs annual terms."
+    "explanationTemplate": "Annual = monthly \u00d7 12. ${{monthlyIncome}} \u00d7 12 = gross annual salary. Useful when comparing job offers quoted in monthly vs annual terms."
   },
   {
     "id": "salary_hourly_annual_d1",
@@ -2512,7 +1872,7 @@
     "answerFormula": "annualFromHourly",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual ≈ hourly × 2,000. ${{hourlyRate}} × 2,000 = approximate yearly salary. The 2,000 comes from 40 hours × 50 weeks."
+    "explanationTemplate": "Annual \u2248 hourly \u00d7 2,000. ${{hourlyRate}} \u00d7 2,000 = approximate yearly salary. The 2,000 comes from 40 hours \u00d7 50 weeks."
   },
   {
     "id": "salary_annual_hourly_d2",
@@ -2534,7 +1894,7 @@
     "answerFormula": "hourlyFromAnnual",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Hourly ≈ annual ÷ 2,000. ${{annualSalary}} ÷ 2,000 = hourly equivalent. Use this to compare salary offers with contract or hourly jobs."
+    "explanationTemplate": "Hourly \u2248 annual \u00f7 2,000. ${{annualSalary}} \u00f7 2,000 = hourly equivalent. Use this to compare salary offers with contract or hourly jobs."
   },
   {
     "id": "net_pay_biweekly_d2",
@@ -2566,7 +1926,7 @@
     "answerFormula": "grossToNet",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Net = gross × (1 − deduction%). ${{grossPay}} × (1 − {{deductionPercent}}%) = take-home pay. Deductions include taxes and benefits."
+    "explanationTemplate": "Net = gross \u00d7 (1 \u2212 deduction%). ${{grossPay}} \u00d7 (1 \u2212 {{deductionPercent}}%) = take-home pay. Deductions include taxes and benefits."
   },
   {
     "id": "net_pay_scenario_d2",
@@ -2600,7 +1960,7 @@
     "answerFormula": "grossToNet",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Net = ${{grossPay}} × (1 − {{deductionPercent}}%). Your take-home is always less than gross — plan your budget from net, not gross."
+    "explanationTemplate": "Net = ${{grossPay}} \u00d7 (1 \u2212 {{deductionPercent}}%). Your take-home is always less than gross \u2014 plan your budget from net, not gross."
   },
   {
     "id": "raise_dollar_d1",
@@ -2630,7 +1990,7 @@
     "answerFormula": "raiseAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Raise amount = salary × raise%. ${{annualSalary}} × {{raisePercent}}% = additional annual pay."
+    "explanationTemplate": "Raise amount = salary \u00d7 raise%. ${{annualSalary}} \u00d7 {{raisePercent}}% = additional annual pay."
   },
   {
     "id": "raise_new_salary_d2",
@@ -2663,7 +2023,7 @@
     "answerFormula": "raisedSalary",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New salary = current × (1 + raise%). ${{annualSalary}} × (1 + {{raisePercent}}%) = your new salary."
+    "explanationTemplate": "New salary = current \u00d7 (1 + raise%). ${{annualSalary}} \u00d7 (1 + {{raisePercent}}%) = your new salary."
   },
   {
     "id": "raise_new_salary_d3",
@@ -2696,13 +2056,13 @@
     "answerFormula": "raisedSalary",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New salary = ${{annualSalary}} × (1 + {{raisePercent}}%). Knowing this in advance helps you negotiate confidently."
+    "explanationTemplate": "New salary = ${{annualSalary}} \u00d7 (1 + {{raisePercent}}%). Knowing this in advance helps you negotiate confidently."
   },
   {
     "id": "overtime_d2",
     "moduleId": "salary",
     "difficulty": 2,
-    "promptTemplate": "Your regular pay is ${{regularRate}}/hour. You work {{overtimeHours}} hours of overtime at 1.5× rate. How much do you earn in overtime?",
+    "promptTemplate": "Your regular pay is ${{regularRate}}/hour. You work {{overtimeHours}} hours of overtime at 1.5\u00d7 rate. How much do you earn in overtime?",
     "variableRules": [
       {
         "name": "regularRate",
@@ -2727,7 +2087,7 @@
     "answerFormula": "overtimePay",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Overtime = regular rate × 1.5 × hours. ${{regularRate}} × 1.5 × {{overtimeHours}} = overtime earnings."
+    "explanationTemplate": "Overtime = regular rate \u00d7 1.5 \u00d7 hours. ${{regularRate}} \u00d7 1.5 \u00d7 {{overtimeHours}} = overtime earnings."
   },
   {
     "id": "overtime_scenario_d2",
@@ -2761,7 +2121,7 @@
     "answerFormula": "overtimePay",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Overtime pay = hourly × 1.5 × OT hours. ${{regularRate}} × 1.5 = overtime rate, then × {{overtimeHours}} hours."
+    "explanationTemplate": "Overtime pay = hourly \u00d7 1.5 \u00d7 OT hours. ${{regularRate}} \u00d7 1.5 = overtime rate, then \u00d7 {{overtimeHours}} hours."
   },
   {
     "id": "biweekly_annual_d1",
@@ -2784,7 +2144,7 @@
     "answerFormula": "biweeklyToAnnual",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual = biweekly × 26 pay periods. ${{biweeklySalary}} × 26 = gross annual salary."
+    "explanationTemplate": "Annual = biweekly \u00d7 26 pay periods. ${{biweeklySalary}} \u00d7 26 = gross annual salary."
   },
   {
     "id": "weekly_annual_d1",
@@ -2807,7 +2167,7 @@
     "answerFormula": "weeklyToAnnual",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual = weekly × 52. ${{weeklySalary}} × 52 = yearly total."
+    "explanationTemplate": "Annual = weekly \u00d7 52. ${{weeklySalary}} \u00d7 52 = yearly total."
   },
   {
     "id": "weekly_annual_d2",
@@ -2831,7 +2191,7 @@
     "answerFormula": "weeklyToAnnual",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual = weekly × 52. ${{weeklySalary}} × 52. Useful when comparing gig income to a salaried offer."
+    "explanationTemplate": "Annual = weekly \u00d7 52. ${{weeklySalary}} \u00d7 52. Useful when comparing gig income to a salaried offer."
   },
   {
     "id": "cc_monthly_interest",
@@ -2864,7 +2224,7 @@
     "answerFormula": "creditCardMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly interest = balance × APR ÷ 12. ${{balance}} × {{apr}}% ÷ 12 = your monthly charge. High APR makes even small balances expensive."
+    "explanationTemplate": "Monthly interest = balance \u00d7 APR \u00f7 12. ${{balance}} \u00d7 {{apr}}% \u00f7 12 = your monthly charge. High APR makes even small balances expensive."
   },
   {
     "id": "cc_monthly_interest_scenario",
@@ -2897,7 +2257,7 @@
     "answerFormula": "creditCardMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly interest = balance × APR ÷ 12. At {{apr}}% APR, ${{balance}} costs you that amount in interest for just one month of carrying a balance."
+    "explanationTemplate": "Monthly interest = balance \u00d7 APR \u00f7 12. At {{apr}}% APR, ${{balance}} costs you that amount in interest for just one month of carrying a balance."
   },
   {
     "id": "cc_annual_interest",
@@ -2928,7 +2288,7 @@
     "answerFormula": "creditCardAnnualInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual interest = balance × APR%. ${{balance}} × {{apr}}% = annual interest. This is why paying off your card monthly saves a lot."
+    "explanationTemplate": "Annual interest = balance \u00d7 APR%. ${{balance}} \u00d7 {{apr}}% = annual interest. This is why paying off your card monthly saves a lot."
   },
   {
     "id": "cc_interest_year_d3",
@@ -2962,7 +2322,7 @@
     "answerFormula": "creditCardAnnualInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual interest = balance × APR%. ${{balance}} × {{apr}}% = the total you pay in interest over 12 months. Carrying a large balance is very costly."
+    "explanationTemplate": "Annual interest = balance \u00d7 APR%. ${{balance}} \u00d7 {{apr}}% = the total you pay in interest over 12 months. Carrying a large balance is very costly."
   },
   {
     "id": "cc_minimum_payment",
@@ -2987,7 +2347,7 @@
     "answerFormat": "currency",
     "inputMode": "freeEntry",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Minimum payment = balance × 2%. ${{balance}} × 2% = minimum due. This keeps you in debt longest — always pay more when you can."
+    "explanationTemplate": "Minimum payment = balance \u00d7 2%. ${{balance}} \u00d7 2% = minimum due. This keeps you in debt longest \u2014 always pay more when you can."
   },
   {
     "id": "cc_minimum_payment_scenario",
@@ -3013,7 +2373,7 @@
     "answerFormula": "minimumPaymentTwoPercent",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Minimum = balance × 2%. On ${{balance}}, that's a small amount — but at high APR, nearly all of it goes to interest, not principal."
+    "explanationTemplate": "Minimum = balance \u00d7 2%. On ${{balance}}, that's a small amount \u2014 but at high APR, nearly all of it goes to interest, not principal."
   },
   {
     "id": "loan_total_repayment",
@@ -3046,7 +2406,7 @@
     "answerFormula": "loanTotalRepayment",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total repayment = monthly payment × months. ${{monthlyPayment}} × {{numMonths}} = total paid. The difference from your original loan is pure interest."
+    "explanationTemplate": "Total repayment = monthly payment \u00d7 months. ${{monthlyPayment}} \u00d7 {{numMonths}} = total paid. The difference from your original loan is pure interest."
   },
   {
     "id": "loan_heavy_interest",
@@ -3081,7 +2441,7 @@
     "answerFormula": "loanTotalRepayment",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total repaid = ${{monthlyPayment}} × {{numMonths}} months. Always compare this total to your original loan to see how much interest you're paying."
+    "explanationTemplate": "Total repaid = ${{monthlyPayment}} \u00d7 {{numMonths}} months. Always compare this total to your original loan to see how much interest you're paying."
   },
   {
     "id": "loan_total_interest_paid",
@@ -3116,7 +2476,7 @@
     "answerFormula": "loanTotalInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total interest = (payment × months) − loan amount. (${{monthlyPayment}} × {{numMonths}}) − ${{loanAmount}} = the bank's earnings on your loan."
+    "explanationTemplate": "Total interest = (payment \u00d7 months) \u2212 loan amount. (${{monthlyPayment}} \u00d7 {{numMonths}}) \u2212 ${{loanAmount}} = the bank's earnings on your loan."
   },
   {
     "id": "dti_ratio_basic",
@@ -3149,7 +2509,7 @@
     "answerFormula": "debtToIncomeRatio",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "DTI = (monthly debt ÷ monthly income) × 100. ${{totalDebt}} ÷ ${{monthlyIncome}} × 100 = your DTI%. Under 36% is healthy."
+    "explanationTemplate": "DTI = (monthly debt \u00f7 monthly income) \u00d7 100. ${{totalDebt}} \u00f7 ${{monthlyIncome}} \u00d7 100 = your DTI%. Under 36% is healthy."
   },
   {
     "id": "dti_ratio_scenario",
@@ -3182,7 +2542,7 @@
     "answerFormula": "debtToIncomeRatio",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "DTI = (debt ÷ income) × 100. ${{totalDebt}} ÷ ${{monthlyIncome}} × 100 = your housing DTI. Lenders prefer housing DTI under 28%."
+    "explanationTemplate": "DTI = (debt \u00f7 income) \u00d7 100. ${{totalDebt}} \u00f7 ${{monthlyIncome}} \u00d7 100 = your housing DTI. Lenders prefer housing DTI under 28%."
   },
   {
     "id": "dti_add_payments",
@@ -3214,7 +2574,7 @@
     "answerFormula": "debtToIncomeRatio",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "DTI = total monthly debt ÷ monthly income × 100. ${{totalDebt}} ÷ ${{monthlyIncome}} × 100. Lenders add all your debts together — not just one."
+    "explanationTemplate": "DTI = total monthly debt \u00f7 monthly income \u00d7 100. ${{totalDebt}} \u00f7 ${{monthlyIncome}} \u00d7 100. Lenders add all your debts together \u2014 not just one."
   },
   {
     "id": "dti_housing_only",
@@ -3247,7 +2607,7 @@
     "answerFormula": "debtToIncomeRatio",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Front-end DTI = mortgage payment ÷ gross income × 100. Lenders want this under 28%. ${{totalDebt}} ÷ ${{monthlyIncome}} × 100 = your ratio."
+    "explanationTemplate": "Front-end DTI = mortgage payment \u00f7 gross income \u00d7 100. Lenders want this under 28%. ${{totalDebt}} \u00f7 ${{monthlyIncome}} \u00d7 100 = your ratio."
   },
   {
     "id": "cc_extra_payment_saving",
@@ -3279,7 +2639,7 @@
     "answerFormula": "extraPaymentAnnualSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual saving ≈ extra payment × APR%. ${{extraPayment}} × {{apr}}% = approximate interest saved per year. This grows as your balance shrinks."
+    "explanationTemplate": "Annual saving \u2248 extra payment \u00d7 APR%. ${{extraPayment}} \u00d7 {{apr}}% = approximate interest saved per year. This grows as your balance shrinks."
   },
   {
     "id": "cc_balance_after_interest",
@@ -3310,7 +2670,7 @@
     "answerFormula": "balanceAfterMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New balance = old balance × (1 + APR/12%). ${{balance}} × (1 + {{apr}}%/12) shows exactly how carrying a balance grows your debt."
+    "explanationTemplate": "New balance = old balance \u00d7 (1 + APR/12%). ${{balance}} \u00d7 (1 + {{apr}}%/12) shows exactly how carrying a balance grows your debt."
   },
   {
     "id": "simple_interest_d1",
@@ -3346,7 +2706,7 @@
     "answerFormula": "simpleInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest = principal × rate% × years. ${{principal}} × {{interestRate}}% × {{years}} = interest earned."
+    "explanationTemplate": "Interest = principal \u00d7 rate% \u00d7 years. ${{principal}} \u00d7 {{interestRate}}% \u00d7 {{years}} = interest earned."
   },
   {
     "id": "simple_interest_d2",
@@ -3384,7 +2744,7 @@
     "answerFormula": "simpleInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Simple interest = principal × rate% × years. ${{principal}} × {{interestRate}}% × {{years}}."
+    "explanationTemplate": "Simple interest = principal \u00d7 rate% \u00d7 years. ${{principal}} \u00d7 {{interestRate}}% \u00d7 {{years}}."
   },
   {
     "id": "total_with_interest_d1",
@@ -3419,7 +2779,7 @@
     "answerFormula": "totalWithInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = principal × (1 + rate% × years). ${{principal}} + interest = new balance."
+    "explanationTemplate": "Total = principal \u00d7 (1 + rate% \u00d7 years). ${{principal}} + interest = new balance."
   },
   {
     "id": "total_with_interest_d2",
@@ -3457,7 +2817,7 @@
     "answerFormula": "totalWithInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Balance = principal × (1 + rate% × years). ${{principal}} grows by {{interestRate}}% each year."
+    "explanationTemplate": "Balance = principal \u00d7 (1 + rate% \u00d7 years). ${{principal}} grows by {{interestRate}}% each year."
   },
   {
     "id": "rule72_d1",
@@ -3479,7 +2839,7 @@
     "answerFormula": "rule72",
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Rule of 72: years to double = 72 ÷ rate. 72 ÷ {{interestRate}} = {{answer}} years. Simple and surprisingly accurate."
+    "explanationTemplate": "Rule of 72: years to double = 72 \u00f7 rate. 72 \u00f7 {{interestRate}} = {{answer}} years. Simple and surprisingly accurate."
   },
   {
     "id": "rule72_scenario_d2",
@@ -3503,7 +2863,7 @@
     "answerFormula": "rule72",
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "72 ÷ {{interestRate}}% = doubling time. At {{interestRate}}%, your money doubles roughly every 72 ÷ {{interestRate}} years."
+    "explanationTemplate": "72 \u00f7 {{interestRate}}% = doubling time. At {{interestRate}}%, your money doubles roughly every 72 \u00f7 {{interestRate}} years."
   },
   {
     "id": "roi_percent_d2",
@@ -3535,7 +2895,7 @@
     "answerFormula": "roiPercent",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "ROI% = (gain ÷ cost) × 100. ${{gain}} profit on a ${{cost}} investment = ROI of that %."
+    "explanationTemplate": "ROI% = (gain \u00f7 cost) \u00d7 100. ${{gain}} profit on a ${{cost}} investment = ROI of that %."
   },
   {
     "id": "roi_scenario_d2",
@@ -3566,7 +2926,7 @@
     "answerFormula": "roiPercent",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "ROI% = profit ÷ cost × 100. ${{gain}} ÷ ${{cost}} × 100 = your percentage return."
+    "explanationTemplate": "ROI% = profit \u00f7 cost \u00d7 100. ${{gain}} \u00f7 ${{cost}} \u00d7 100 = your percentage return."
   },
   {
     "id": "portfolio_gain_d2",
@@ -3598,7 +2958,7 @@
     "answerFormula": "dollarReturn",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Gain = portfolio × return%. ${{cost}} × {{roiPercent}}% = dollar increase. This is the compounding base for next year."
+    "explanationTemplate": "Gain = portfolio \u00d7 return%. ${{cost}} \u00d7 {{roiPercent}}% = dollar increase. This is the compounding base for next year."
   },
   {
     "id": "investing_total_d3",
@@ -3637,80 +2997,7 @@
     "answerFormula": "totalWithInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = ${{principal}} × (1 + {{interestRate}}% × {{years}}). Patience is the most powerful investing tool."
-  },
-  {
-    "id": "disc_stacked_extra_d2",
-    "moduleId": "smart_shopping",
-    "difficulty": 2,
-    "promptTemplate": "A ${{originalPrice}} item is {{firstDiscount}}% off, then an additional {{secondDiscount}}% off. How much do you save in total?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          80,
-          100,
-          120,
-          150,
-          200
-        ]
-      },
-      {
-        "name": "firstDiscount",
-        "options": [
-          10,
-          20,
-          25,
-          30
-        ]
-      },
-      {
-        "name": "secondDiscount",
-        "options": [
-          5,
-          10,
-          15
-        ]
-      }
-    ],
-    "answerFormula": "stackedTotalSaving",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total saving = original − final. Final = ${{originalPrice}} × (1−{{firstDiscount}}%) × (1−{{secondDiscount}}%). Stacked discounts always save less than adding the two percents together."
-  },
-  {
-    "id": "disc_unit_price_compare_d1",
-    "moduleId": "smart_shopping",
-    "difficulty": 1,
-    "promptTemplate": "A {{quantity}}-oz bottle costs ${{totalPrice}}. What is the price per ounce?",
-    "variableRules": [
-      {
-        "name": "totalPrice",
-        "options": [
-          3,
-          4,
-          5,
-          6,
-          8,
-          9,
-          10,
-          12
-        ]
-      },
-      {
-        "name": "quantity",
-        "options": [
-          4,
-          6,
-          8,
-          12
-        ]
-      }
-    ],
-    "answerFormula": "unitPrice",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Unit price = ${{totalPrice}} ÷ {{quantity}} oz. Calculate this for every size to know which is truly the better deal."
+    "explanationTemplate": "Total = ${{principal}} \u00d7 (1 + {{interestRate}}% \u00d7 {{years}}). Patience is the most powerful investing tool."
   },
   {
     "id": "mm_cpu_book_d1",
@@ -3743,7 +3030,7 @@
     "answerFormula": "costPerUse",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Cost per use = ${{itemPrice}} ÷ {{numberOfUses}} reads. Books are often very cheap per read when you re-use them."
+    "explanationTemplate": "Cost per use = ${{itemPrice}} \u00f7 {{numberOfUses}} reads. Books are often very cheap per read when you re-use them."
   },
   {
     "id": "mm_cpu_daily_d2",
@@ -3776,7 +3063,7 @@
     "answerFormula": "costPerUse",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Cost per use = ${{itemPrice}} ÷ {{numberOfUses}} uses. Durable everyday items have very low per-use costs when you actually use them."
+    "explanationTemplate": "Cost per use = ${{itemPrice}} \u00f7 {{numberOfUses}} uses. Durable everyday items have very low per-use costs when you actually use them."
   },
   {
     "id": "mm_cart_three_d1",
@@ -3812,7 +3099,7 @@
     "answerFormula": "totalCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = price × quantity. ${{itemPrice}} × {{quantity}}: round the price to the nearest $1, multiply, then adjust."
+    "explanationTemplate": "Total = price \u00d7 quantity. ${{itemPrice}} \u00d7 {{quantity}}: round the price to the nearest $1, multiply, then adjust."
   },
   {
     "id": "cc_rate_check_d1",
@@ -3845,7 +3132,7 @@
     "answerFormula": "creditCardMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly interest = balance × APR ÷ 12. ${{balance}} × {{apr}}% ÷ 12 = monthly charge. Even a small balance costs real money every month."
+    "explanationTemplate": "Monthly interest = balance \u00d7 APR \u00f7 12. ${{balance}} \u00d7 {{apr}}% \u00f7 12 = monthly charge. Even a small balance costs real money every month."
   },
   {
     "id": "cc_min_balance_d1",
@@ -3871,7 +3158,7 @@
     "answerFormat": "currency",
     "inputMode": "freeEntry",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Minimum = balance × 2%. ${{balance}} × 2% = minimum due. Always pay more — minimum payments are designed to keep you in debt longer."
+    "explanationTemplate": "Minimum = balance \u00d7 2%. ${{balance}} \u00d7 2% = minimum due. Always pay more \u2014 minimum payments are designed to keep you in debt longer."
   },
   {
     "id": "cc_new_balance_d2",
@@ -3905,7 +3192,7 @@
     "answerFormula": "balanceAfterMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New balance = old × (1 + APR/12). ${{balance}} × (1 + {{apr}}%/12). Interest adds directly to what you owe each month you don't pay."
+    "explanationTemplate": "New balance = old \u00d7 (1 + APR/12). ${{balance}} \u00d7 (1 + {{apr}}%/12). Interest adds directly to what you owe each month you don't pay."
   },
   {
     "id": "cc_interest_check_d2",
@@ -3939,7 +3226,7 @@
     "answerFormula": "creditCardMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly interest = balance × APR ÷ 12. ${{balance}} × {{apr}}% ÷ 12 = the interest line on your statement."
+    "explanationTemplate": "Monthly interest = balance \u00d7 APR \u00f7 12. ${{balance}} \u00d7 {{apr}}% \u00f7 12 = the interest line on your statement."
   },
   {
     "id": "loan_repayment_d1",
@@ -3970,7 +3257,7 @@
     "answerFormula": "loanTotalRepayment",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total repaid = monthly × months. ${{monthlyPayment}} × {{numMonths}} = everything you pay. Subtract the loan amount to find total interest."
+    "explanationTemplate": "Total repaid = monthly \u00d7 months. ${{monthlyPayment}} \u00d7 {{numMonths}} = everything you pay. Subtract the loan amount to find total interest."
   },
   {
     "id": "loan_interest_calc_d2",
@@ -4009,7 +3296,7 @@
     "answerFormula": "loanTotalInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest = total paid − loan. (${{monthlyPayment}} × {{numMonths}}) − ${{loanAmount}} = the lender's earnings. Always calculate before signing."
+    "explanationTemplate": "Interest = total paid \u2212 loan. (${{monthlyPayment}} \u00d7 {{numMonths}}) \u2212 ${{loanAmount}} = the lender's earnings. Always calculate before signing."
   },
   {
     "id": "dti_check_d2",
@@ -4044,7 +3331,7 @@
     "answerFormula": "debtToIncomeRatio",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "DTI = debt ÷ income × 100. ${{totalDebt}} ÷ ${{monthlyIncome}} × 100 = DTI%. Lenders look for this under 36% for healthy borrowing."
+    "explanationTemplate": "DTI = debt \u00f7 income \u00d7 100. ${{totalDebt}} \u00f7 ${{monthlyIncome}} \u00d7 100 = DTI%. Lenders look for this under 36% for healthy borrowing."
   },
   {
     "id": "cc_extra_d1",
@@ -4077,7 +3364,7 @@
     "answerFormula": "extraPaymentAnnualSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual saving ≈ extra × APR%. ${{extraPayment}} × {{apr}}% = interest avoided per year. Small extra payments have a big compounding impact."
+    "explanationTemplate": "Annual saving \u2248 extra \u00d7 APR%. ${{extraPayment}} \u00d7 {{apr}}% = interest avoided per year. Small extra payments have a big compounding impact."
   },
   {
     "id": "cc_annual_cost_d2",
@@ -4111,7 +3398,7 @@
     "answerFormula": "creditCardAnnualInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual interest = balance × APR%. ${{balance}} × {{apr}}% = yearly cost of the balance. Paying it off saves this every year going forward."
+    "explanationTemplate": "Annual interest = balance \u00d7 APR%. ${{balance}} \u00d7 {{apr}}% = yearly cost of the balance. Paying it off saves this every year going forward."
   },
   {
     "id": "cc_balance_interest_d2",
@@ -4144,7 +3431,7 @@
     "answerFormula": "balanceAfterMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New balance = ${{balance}} × (1 + {{apr}}%/12). One missed payment quietly grows your debt by that interest amount."
+    "explanationTemplate": "New balance = ${{balance}} \u00d7 (1 + {{apr}}%/12). One missed payment quietly grows your debt by that interest amount."
   },
   {
     "id": "rent_afford_basic_d1",
@@ -4168,7 +3455,7 @@
     "answerFormula": "maxRent28",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Max rent = ${{monthlySalary}} × 28% = ${{answer}}. The 28% rule keeps housing affordable."
+    "explanationTemplate": "Max rent = ${{monthlySalary}} \u00d7 28% = ${{answer}}. The 28% rule keeps housing affordable."
   },
   {
     "id": "rent_afford_scenario_d1",
@@ -4240,7 +3527,7 @@
     "answerFormula": "maxRent28",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Max rent = ${{monthlySalary}} × 28% = ${{answer}}."
+    "explanationTemplate": "Max rent = ${{monthlySalary}} \u00d7 28% = ${{answer}}."
   },
   {
     "id": "rent_afford_annual_d3",
@@ -4263,7 +3550,7 @@
     "answerFormula": "maxAnnualRent28",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly max = ${{monthlySalary}} × 28%. Annual = that × 12 = ${{answer}}."
+    "explanationTemplate": "Monthly max = ${{monthlySalary}} \u00d7 28%. Annual = that \u00d7 12 = ${{answer}}."
   },
   {
     "id": "rent_increase_basic_d1",
@@ -4295,7 +3582,7 @@
     "answerFormula": "rentIncrease",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Increase = ${{currentRent}} × {{increasePercent}}% = ${{answer}} more per month."
+    "explanationTemplate": "Increase = ${{currentRent}} \u00d7 {{increasePercent}}% = ${{answer}} more per month."
   },
   {
     "id": "rent_increase_new_d1",
@@ -4327,7 +3614,7 @@
     "answerFormula": "newRentAfterIncrease",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New rent = ${{currentRent}} × (1 + {{increasePercent}}%) = ${{answer}}."
+    "explanationTemplate": "New rent = ${{currentRent}} \u00d7 (1 + {{increasePercent}}%) = ${{answer}}."
   },
   {
     "id": "rent_increase_annual_d2",
@@ -4360,7 +3647,7 @@
     "answerFormula": "rentIncrease",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly increase = ${{currentRent}} × {{increasePercent}}% = ${{answer}}."
+    "explanationTemplate": "Monthly increase = ${{currentRent}} \u00d7 {{increasePercent}}% = ${{answer}}."
   },
   {
     "id": "rent_increase_scenario_d2",
@@ -4392,7 +3679,7 @@
     "answerFormula": "newRentAfterIncrease",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New rent = ${{currentRent}} × (1 + {{increasePercent}}%) = ${{answer}}."
+    "explanationTemplate": "New rent = ${{currentRent}} \u00d7 (1 + {{increasePercent}}%) = ${{answer}}."
   },
   {
     "id": "rent_increase_compare_d3",
@@ -4445,7 +3732,7 @@
     "answerFormula": "moveInThreeMonths",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "3 × ${{monthlyRent}} = ${{answer}}. First + last + deposit — that's 3 months' rent upfront."
+    "explanationTemplate": "3 \u00d7 ${{monthlyRent}} = ${{answer}}. First + last + deposit \u2014 that's 3 months' rent upfront."
   },
   {
     "id": "move_in_no_broker_d1",
@@ -4468,7 +3755,7 @@
     "answerFormula": "moveInThreeMonths",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "3 × ${{monthlyRent}} = ${{answer}}. Always budget for 3 months' rent at move-in."
+    "explanationTemplate": "3 \u00d7 ${{monthlyRent}} = ${{answer}}. Always budget for 3 months' rent at move-in."
   },
   {
     "id": "move_in_with_broker_d2",
@@ -4498,7 +3785,7 @@
     "answerFormula": "moveInWithBrokerFee",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "(3 × ${{monthlyRent}}) + ${{brokerFee}} broker = ${{answer}}."
+    "explanationTemplate": "(3 \u00d7 ${{monthlyRent}}) + ${{brokerFee}} broker = ${{answer}}."
   },
   {
     "id": "move_in_scenario_d2",
@@ -4530,7 +3817,7 @@
     "answerFormula": "moveInWithBrokerFee",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "3 months' rent (${{monthlyRent}} × 3) + ${{brokerFee}} broker = ${{answer}}."
+    "explanationTemplate": "3 months' rent (${{monthlyRent}} \u00d7 3) + ${{brokerFee}} broker = ${{answer}}."
   },
   {
     "id": "move_in_compare_d3",
@@ -4553,7 +3840,7 @@
     "answerFormula": "moveInThreeMonths",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "3 × ${{monthlyRent}} = ${{answer}}."
+    "explanationTemplate": "3 \u00d7 ${{monthlyRent}} = ${{answer}}."
   },
   {
     "id": "sqft_basic_d1",
@@ -4585,7 +3872,7 @@
     "answerFormula": "pricePerSqft",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{monthlyRent}} ÷ {{squareFeet}} sqft = ${{answer}}/sqft."
+    "explanationTemplate": "${{monthlyRent}} \u00f7 {{squareFeet}} sqft = ${{answer}}/sqft."
   },
   {
     "id": "sqft_compare_d1",
@@ -4616,7 +3903,7 @@
     "answerFormula": "pricePerSqft",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Price/sqft = ${{monthlyRent}} ÷ {{squareFeet}} = ${{answer}}."
+    "explanationTemplate": "Price/sqft = ${{monthlyRent}} \u00f7 {{squareFeet}} = ${{answer}}."
   },
   {
     "id": "sqft_scenario_d2",
@@ -4649,7 +3936,7 @@
     "answerFormula": "pricePerSqft",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{monthlyRent}} ÷ {{squareFeet}} = ${{answer}}/sqft. Lower means better value."
+    "explanationTemplate": "${{monthlyRent}} \u00f7 {{squareFeet}} = ${{answer}}/sqft. Lower means better value."
   },
   {
     "id": "sqft_reverse_d2",
@@ -4680,7 +3967,7 @@
     "answerFormula": "pricePerSqft",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "${{monthlyRent}} ÷ {{squareFeet}} sqft = ${{answer}}/sqft."
+    "explanationTemplate": "${{monthlyRent}} \u00f7 {{squareFeet}} sqft = ${{answer}}/sqft."
   },
   {
     "id": "sqft_best_deal_d3",
@@ -4712,7 +3999,7 @@
     "answerFormula": "pricePerSqft",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{monthlyRent}} ÷ {{squareFeet}} = ${{answer}}/sqft."
+    "explanationTemplate": "${{monthlyRent}} \u00f7 {{squareFeet}} = ${{answer}}/sqft."
   },
   {
     "id": "mortgage_basic_d1",
@@ -4746,7 +4033,7 @@
     "answerFormula": "monthlyMortgage",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly ≈ interest (${{loanAmount}} × {{annualRate}}% ÷ 12) + principal (${{loanAmount}} ÷ {{loanYears}} × 12) = ~${{answer}}."
+    "explanationTemplate": "Monthly \u2248 interest (${{loanAmount}} \u00d7 {{annualRate}}% \u00f7 12) + principal (${{loanAmount}} \u00f7 {{loanYears}} \u00d7 12) = ~${{answer}}."
   },
   {
     "id": "mortgage_compare_d2",
@@ -4782,7 +4069,7 @@
     "answerFormula": "monthlyMortgage",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest portion + principal portion ≈ ${{answer}}/month."
+    "explanationTemplate": "Interest portion + principal portion \u2248 ${{answer}}/month."
   },
   {
     "id": "mortgage_scenario_d2",
@@ -4818,7 +4105,7 @@
     "answerFormula": "monthlyMortgage",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly ≈ ${{answer}}. This is a rough estimate — real amortization is slightly different."
+    "explanationTemplate": "Monthly \u2248 ${{answer}}. This is a rough estimate \u2014 real amortization is slightly different."
   },
   {
     "id": "mortgage_interest_d2",
@@ -4928,7 +4215,7 @@
     "answerFormula": "marginalTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "First ${{bracket1Limit}} at {{rate1}}% + remainder at {{rate2}}% = ${{answer}}. Marginal — not flat."
+    "explanationTemplate": "First ${{bracket1Limit}} at {{rate1}}% + remainder at {{rate2}}% = ${{answer}}. Marginal \u2014 not flat."
   },
   {
     "id": "bracket_two_tier_d1",
@@ -4970,7 +4257,7 @@
     "answerFormula": "marginalTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{bracket1Limit}} × {{rate1}}% + (${{taxableIncome}} − ${{bracket1Limit}}) × {{rate2}}% = ${{answer}}."
+    "explanationTemplate": "${{bracket1Limit}} \u00d7 {{rate1}}% + (${{taxableIncome}} \u2212 ${{bracket1Limit}}) \u00d7 {{rate2}}% = ${{answer}}."
   },
   {
     "id": "bracket_scenario_d2",
@@ -5013,7 +4300,7 @@
     "answerFormula": "marginalTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "(${{bracket1Limit}} × {{rate1}}%) + (${{taxableIncome}} − ${{bracket1Limit}}) × {{rate2}}% = ${{answer}}."
+    "explanationTemplate": "(${{bracket1Limit}} \u00d7 {{rate1}}%) + (${{taxableIncome}} \u2212 ${{bracket1Limit}}) \u00d7 {{rate2}}% = ${{answer}}."
   },
   {
     "id": "bracket_compare_d2",
@@ -5099,7 +4386,7 @@
     "answerFormula": "marginalTax",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Tax = (${{bracket1Limit}} × {{rate1}}%) + (${{taxableIncome}} − ${{bracket1Limit}}) × {{rate2}}% = ${{answer}}.",
+    "explanationTemplate": "Tax = (${{bracket1Limit}} \u00d7 {{rate1}}%) + (${{taxableIncome}} \u2212 ${{bracket1Limit}}) \u00d7 {{rate2}}% = ${{answer}}.",
     "scenarioTemplate": "You're estimating how much you'll owe at tax time."
   },
   {
@@ -5140,7 +4427,7 @@
     "answerFormula": "paycheckNet",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total deductions = {{ficaRate}}% + {{federalRate}}% + {{stateRate}}%. Net = ${{grossPay}} × remaining = ${{answer}}."
+    "explanationTemplate": "Total deductions = {{ficaRate}}% + {{federalRate}}% + {{stateRate}}%. Net = ${{grossPay}} \u00d7 remaining = ${{answer}}."
   },
   {
     "id": "deduction_net_d1",
@@ -5181,7 +4468,7 @@
     "answerFormula": "paycheckNet",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Net = ${{grossPay}} × (1 − total deductions) = ${{answer}}."
+    "explanationTemplate": "Net = ${{grossPay}} \u00d7 (1 \u2212 total deductions) = ${{answer}}."
   },
   {
     "id": "deduction_fica_d2",
@@ -5231,7 +4518,7 @@
     "moduleId": "taxes",
     "difficulty": 2,
     "scenarioTemplate": "Your paycheck stub shows ${{grossPay}} gross.",
-    "promptTemplate": "After {{ficaRate}}% FICA, {{federalRate}}% federal, {{stateRate}}% state — what hits your bank account?",
+    "promptTemplate": "After {{ficaRate}}% FICA, {{federalRate}}% federal, {{stateRate}}% state \u2014 what hits your bank account?",
     "variableRules": [
       {
         "name": "grossPay",
@@ -5267,7 +4554,7 @@
     "answerFormula": "paycheckNet",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{grossPay}} × (1 − total rate) = ${{answer}} deposited."
+    "explanationTemplate": "${{grossPay}} \u00d7 (1 \u2212 total rate) = ${{answer}} deposited."
   },
   {
     "id": "deduction_compare_d3",
@@ -5343,7 +4630,7 @@
     "answerFormula": "annualToMonthlyNet",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{annualSalary}} × (1 − {{totalDeductionRate}}%) ÷ 12 = ${{answer}}/month."
+    "explanationTemplate": "${{annualSalary}} \u00d7 (1 \u2212 {{totalDeductionRate}}%) \u00f7 12 = ${{answer}}/month."
   },
   {
     "id": "gross_net_monthly_d1",
@@ -5371,7 +4658,7 @@
     "answerFormula": "annualToMonthlyNet",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Net annual = ${{annualSalary}} × (1 − {{totalDeductionRate}}%), then ÷ 12 = ${{answer}}/month."
+    "explanationTemplate": "Net annual = ${{annualSalary}} \u00d7 (1 \u2212 {{totalDeductionRate}}%), then \u00f7 12 = ${{answer}}/month."
   },
   {
     "id": "gross_net_scenario_d2",
@@ -5402,7 +4689,7 @@
     "answerFormula": "annualToMonthlyNet",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{annualSalary}} × (1 − {{totalDeductionRate}}%) ÷ 12 = ${{answer}}. This is your real budget number."
+    "explanationTemplate": "${{annualSalary}} \u00d7 (1 \u2212 {{totalDeductionRate}}%) \u00f7 12 = ${{answer}}. This is your real budget number."
   },
   {
     "id": "gross_net_compare_d2",
@@ -5463,7 +4750,7 @@
     "answerFormula": "annualToMonthlyNet",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "${{annualSalary}} × (1 − {{totalDeductionRate}}%) ÷ 12 = ${{answer}}."
+    "explanationTemplate": "${{annualSalary}} \u00d7 (1 \u2212 {{totalDeductionRate}}%) \u00f7 12 = ${{answer}}."
   },
   {
     "id": "refund_basic_d1",
@@ -5494,7 +4781,7 @@
     "answerFormula": "taxRefund",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Refund = ${{totalWithheld}} − ${{taxOwed}} = ${{answer}}. Positive means money back."
+    "explanationTemplate": "Refund = ${{totalWithheld}} \u2212 ${{taxOwed}} = ${{answer}}. Positive means money back."
   },
   {
     "id": "refund_owe_d1",
@@ -5524,7 +4811,7 @@
     "answerFormula": "taxRefund",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{totalWithheld}} − ${{taxOwed}} = ${{answer}}."
+    "explanationTemplate": "${{totalWithheld}} \u2212 ${{taxOwed}} = ${{answer}}."
   },
   {
     "id": "refund_scenario_d2",
@@ -5556,7 +4843,7 @@
     "answerFormula": "taxRefund",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Refund = withheld − owed = ${{totalWithheld}} − ${{taxOwed}} = ${{answer}}."
+    "explanationTemplate": "Refund = withheld \u2212 owed = ${{totalWithheld}} \u2212 ${{taxOwed}} = ${{answer}}."
   },
   {
     "id": "refund_compare_d2",
@@ -5586,7 +4873,7 @@
     "answerFormula": "taxRefund",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{totalWithheld}} − ${{taxOwed}} = ${{answer}}."
+    "explanationTemplate": "${{totalWithheld}} \u2212 ${{taxOwed}} = ${{answer}}."
   },
   {
     "id": "refund_monthly_d3",
@@ -5616,7 +4903,7 @@
     "answerFormula": "taxRefund",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Refund = ${{totalWithheld}} − ${{taxOwed}} = ${{answer}}."
+    "explanationTemplate": "Refund = ${{totalWithheld}} \u2212 ${{taxOwed}} = ${{answer}}."
   },
   {
     "id": "se_tax_basic_d1",
@@ -5638,7 +4925,7 @@
     "answerFormula": "selfEmploymentTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "SE tax = ${{freelanceIncome}} × 15.3% = ${{answer}}. This covers both sides of FICA."
+    "explanationTemplate": "SE tax = ${{freelanceIncome}} \u00d7 15.3% = ${{answer}}. This covers both sides of FICA."
   },
   {
     "id": "se_tax_amount_d1",
@@ -5660,7 +4947,7 @@
     "answerFormula": "selfEmploymentTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{freelanceIncome}} × 0.153 = ${{answer}}."
+    "explanationTemplate": "${{freelanceIncome}} \u00d7 0.153 = ${{answer}}."
   },
   {
     "id": "se_tax_scenario_d2",
@@ -5683,7 +4970,7 @@
     "answerFormula": "selfEmploymentTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "SE tax = ${{freelanceIncome}} × 15.3% = ${{answer}}. Plan to set aside 30%+ total."
+    "explanationTemplate": "SE tax = ${{freelanceIncome}} \u00d7 15.3% = ${{answer}}. Plan to set aside 30%+ total."
   },
   {
     "id": "se_tax_compare_d2",
@@ -5705,7 +4992,7 @@
     "answerFormula": "selfEmploymentTax",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "${{freelanceIncome}} × 0.153 = ${{answer}}."
+    "explanationTemplate": "${{freelanceIncome}} \u00d7 0.153 = ${{answer}}."
   },
   {
     "id": "se_tax_quarterly_d3",
@@ -5727,7 +5014,7 @@
     "answerFormula": "selfEmploymentTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "SE tax = ${{freelanceIncome}} × 15.3% = ${{answer}}. File quarterly to avoid penalties."
+    "explanationTemplate": "SE tax = ${{freelanceIncome}} \u00d7 15.3% = ${{answer}}. File quarterly to avoid penalties."
   },
   {
     "id": "match_amount_d1",
@@ -5758,7 +5045,7 @@
     "answerFormula": "employerMatchAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Match = contribution × match%. ${{contribution}} × {{matchPercent}}% = your employer's free contribution."
+    "explanationTemplate": "Match = contribution \u00d7 match%. ${{contribution}} \u00d7 {{matchPercent}}% = your employer's free contribution."
   },
   {
     "id": "total_with_match_d1",
@@ -5826,7 +5113,7 @@
     "answerFormula": "employerMatchFromSalary",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Your contribution = ${{annualSalary}} × {{contribPercent}}%. Employer match = that × {{matchPercent}}%. Not maxing the match = leaving free money on the table."
+    "explanationTemplate": "Your contribution = ${{annualSalary}} \u00d7 {{contribPercent}}%. Employer match = that \u00d7 {{matchPercent}}%. Not maxing the match = leaving free money on the table."
   },
   {
     "id": "match_percent_d2",
@@ -5898,7 +5185,7 @@
     "answerFormula": "totalContribFromSalary",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Your contribution + employer match. ${{annualSalary}} × {{contribPercent}}% × (1 + {{matchPercent}}%). Both pieces grow tax-deferred."
+    "explanationTemplate": "Your contribution + employer match. ${{annualSalary}} \u00d7 {{contribPercent}}% \u00d7 (1 + {{matchPercent}}%). Both pieces grow tax-deferred."
   },
   {
     "id": "roth_after_tax_d1",
@@ -5928,7 +5215,7 @@
     "answerFormula": "rothTaxPaid",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Roth contributions are after-tax: ${{contribution}} × {{taxRate}}% = tax you pay now. The upside? Zero tax on withdrawals in retirement."
+    "explanationTemplate": "Roth contributions are after-tax: ${{contribution}} \u00d7 {{taxRate}}% = tax you pay now. The upside? Zero tax on withdrawals in retirement."
   },
   {
     "id": "traditional_tax_saved_d1",
@@ -5958,7 +5245,7 @@
     "answerFormula": "traditionalTaxSaved",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Traditional contributions reduce taxable income: ${{contribution}} × {{taxRate}}% = your tax break now. You'll pay tax when you withdraw in retirement."
+    "explanationTemplate": "Traditional contributions reduce taxable income: ${{contribution}} \u00d7 {{taxRate}}% = your tax break now. You'll pay tax when you withdraw in retirement."
   },
   {
     "id": "roth_scenario_d2",
@@ -5988,7 +5275,7 @@
     "answerFormula": "rothAfterTaxCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "With Roth, you pay tax upfront: ${{contribution}} goes into the IRA, plus ${{contribution}} × {{taxRate}}% in tax. Total out of pocket = contribution + tax."
+    "explanationTemplate": "With Roth, you pay tax upfront: ${{contribution}} goes into the IRA, plus ${{contribution}} \u00d7 {{taxRate}}% in tax. Total out of pocket = contribution + tax."
   },
   {
     "id": "traditional_scenario_d2",
@@ -6025,7 +5312,7 @@
     "answerFormula": "traditionalNetCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Net cost = contribution − tax saved. You contribute ${{contribution}} but save ${{contribution}} × {{taxRate}}% in taxes. Traditional costs less today but is taxed later."
+    "explanationTemplate": "Net cost = contribution \u2212 tax saved. You contribute ${{contribution}} but save ${{contribution}} \u00d7 {{taxRate}}% in taxes. Traditional costs less today but is taxed later."
   },
   {
     "id": "roth_vs_trad_compare_d3",
@@ -6054,7 +5341,7 @@
     "answerFormula": "rothVsTradDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "The Roth costs ${{contribution}} × {{taxRate}}% more today (you pay tax now). Traditional saves that amount now but you'll pay it in retirement."
+    "explanationTemplate": "The Roth costs ${{contribution}} \u00d7 {{taxRate}}% more today (you pay tax now). Traditional saves that amount now but you'll pay it in retirement."
   },
   {
     "id": "compound_total_d1",
@@ -6087,7 +5374,7 @@
     "answerFormula": "totalContributed",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total contributed = ${{monthlyAmount}} × 12 × {{years}}. This is your baseline — compound growth adds more on top."
+    "explanationTemplate": "Total contributed = ${{monthlyAmount}} \u00d7 12 \u00d7 {{years}}. This is your baseline \u2014 compound growth adds more on top."
   },
   {
     "id": "compound_interest_earned_d1",
@@ -6119,7 +5406,7 @@
     "answerFormula": "interestEarned",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Growth = final value − contributions. ${{finalValue}} − ${{totalContributed}} = money your money earned for you."
+    "explanationTemplate": "Growth = final value \u2212 contributions. ${{finalValue}} \u2212 ${{totalContributed}} = money your money earned for you."
   },
   {
     "id": "compound_10yr_d2",
@@ -6156,7 +5443,7 @@
     "answerFormula": "interestEarned",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Growth = ${{finalValue}} − ${{totalContributed}}. In 10 years at ~8%, you earn about 50% on top of contributions."
+    "explanationTemplate": "Growth = ${{finalValue}} \u2212 ${{totalContributed}}. In 10 years at ~8%, you earn about 50% on top of contributions."
   },
   {
     "id": "compound_20yr_d2",
@@ -6192,7 +5479,7 @@
     "answerFormula": "interestEarned",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{finalValue}} − ${{totalContributed}} = growth. After 20 years, compound interest often exceeds your total contributions."
+    "explanationTemplate": "${{finalValue}} \u2212 ${{totalContributed}} = growth. After 20 years, compound interest often exceeds your total contributions."
   },
   {
     "id": "compound_compare_d3",
@@ -6267,7 +5554,7 @@
     "answerFormula": "inflationAdjustedRaise",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Real raise = {{raisePercent}}% − {{inflationPercent}}% inflation. If inflation exceeds your raise, you're actually losing purchasing power."
+    "explanationTemplate": "Real raise = {{raisePercent}}% \u2212 {{inflationPercent}}% inflation. If inflation exceeds your raise, you're actually losing purchasing power."
   },
   {
     "id": "inflation_raise_dollars_d1",
@@ -6304,7 +5591,7 @@
     "answerFormula": "realRaiseDollars",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Real change = salary × (raise% − inflation%). ${{annualSalary}} × ({{raisePercent}}% − {{inflationPercent}}%). Positive = real gain. Negative = pay cut."
+    "explanationTemplate": "Real change = salary \u00d7 (raise% \u2212 inflation%). ${{annualSalary}} \u00d7 ({{raisePercent}}% \u2212 {{inflationPercent}}%). Positive = real gain. Negative = pay cut."
   },
   {
     "id": "inflation_raise_scenario_d2",
@@ -6344,7 +5631,7 @@
     "answerFormula": "realRaiseDollars",
     "answerFormat": "currency",
     "distractorStrategy": "commonMistake",
-    "explanationTemplate": "Raise gives ${{annualSalary}} × {{raisePercent}}%. But inflation costs you ${{annualSalary}} × {{inflationPercent}}%. The difference is your real change."
+    "explanationTemplate": "Raise gives ${{annualSalary}} \u00d7 {{raisePercent}}%. But inflation costs you ${{annualSalary}} \u00d7 {{inflationPercent}}%. The difference is your real change."
   },
   {
     "id": "inflation_raise_compare_d2",
@@ -6380,7 +5667,7 @@
     "answerFormula": "inflationAdjustedRaiseA",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Real raise = nominal raise − inflation. {{raisePercentA}}% − {{inflationPercent}}% = your actual purchasing power gain."
+    "explanationTemplate": "Real raise = nominal raise \u2212 inflation. {{raisePercentA}}% \u2212 {{inflationPercent}}% = your actual purchasing power gain."
   },
   {
     "id": "inflation_raise_negative_d3",
@@ -6416,7 +5703,7 @@
     "answerFormula": "salaryInRealTerms",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New salary = ${{annualSalary}} × (1 + {{raisePercent}}%). In real terms, that's worth salary × (1 + raise%) / (1 + inflation%). When inflation beats your raise, you can buy less than before."
+    "explanationTemplate": "New salary = ${{annualSalary}} \u00d7 (1 + {{raisePercent}}%). In real terms, that's worth salary \u00d7 (1 + raise%) / (1 + inflation%). When inflation beats your raise, you can buy less than before."
   },
   {
     "id": "ins_annual_premium_d1",
@@ -6440,7 +5727,7 @@
     "answerFormula": "insurancePremiumAnnual",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual premium = ${{monthlyPremium}} × 12 months. This is the guaranteed cost you pay regardless of whether you visit the doctor."
+    "explanationTemplate": "Annual premium = ${{monthlyPremium}} \u00d7 12 months. This is the guaranteed cost you pay regardless of whether you visit the doctor."
   },
   {
     "id": "ins_worst_case_d1",
@@ -6471,7 +5758,7 @@
     "answerFormula": "insuranceWorstCase",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Worst case = annual premiums + full deductible. (${{monthlyPremium}} × 12) + ${{deductible}}. This is the most you'd pay before the plan starts sharing costs."
+    "explanationTemplate": "Worst case = annual premiums + full deductible. (${{monthlyPremium}} \u00d7 12) + ${{deductible}}. This is the most you'd pay before the plan starts sharing costs."
   },
   {
     "id": "ins_deduct_compare_d2",
@@ -6500,7 +5787,7 @@
     "answerFormula": "premiumDifferenceAnnual",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Difference = (${{premiumA}} − ${{premiumB}}) × 12. Higher premiums usually mean lower deductibles — the tradeoff is guaranteed cost vs. risk."
+    "explanationTemplate": "Difference = (${{premiumA}} \u2212 ${{premiumB}}) \u00d7 12. Higher premiums usually mean lower deductibles \u2014 the tradeoff is guaranteed cost vs. risk."
   },
   {
     "id": "ins_premium_scenario_d2",
@@ -6538,7 +5825,7 @@
     "answerFormula": "insurancePremiumPlusBills",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "If bills < deductible, you pay premiums + full bills. Total = (${{monthlyPremium}} × 12) + ${{medicalBills}}. The deductible means insurance doesn't kick in until you've spent that amount."
+    "explanationTemplate": "If bills < deductible, you pay premiums + full bills. Total = (${{monthlyPremium}} \u00d7 12) + ${{medicalBills}}. The deductible means insurance doesn't kick in until you've spent that amount."
   },
   {
     "id": "ins_breakeven_d3",
@@ -6579,7 +5866,7 @@
     "answerFormula": "insurancePlanCompare",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Plan A total = (${{premiumA}} × 12) + ${{deductibleA}}. Plan B total = (${{premiumB}} × 12) + ${{deductibleB}}. The cheaper plan depends on how much medical care you actually use."
+    "explanationTemplate": "Plan A total = (${{premiumA}} \u00d7 12) + ${{deductibleA}}. Plan B total = (${{premiumB}} \u00d7 12) + ${{deductibleB}}. The cheaper plan depends on how much medical care you actually use."
   },
   {
     "id": "ins_coinsurance_d1",
@@ -6609,7 +5896,7 @@
     "answerFormula": "coinsuranceCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Your share = ${{billAmount}} × {{coinsurancePercent}}%. Coinsurance means you split costs with your insurer after the deductible is met."
+    "explanationTemplate": "Your share = ${{billAmount}} \u00d7 {{coinsurancePercent}}%. Coinsurance means you split costs with your insurer after the deductible is met."
   },
   {
     "id": "ins_copay_total_d1",
@@ -6640,7 +5927,7 @@
     "answerFormula": "copayTotal",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total copays = ${{copayAmount}} × {{visitCount}} visits. Copays are flat fees per visit — they don't count toward your deductible on most plans."
+    "explanationTemplate": "Total copays = ${{copayAmount}} \u00d7 {{visitCount}} visits. Copays are flat fees per visit \u2014 they don't count toward your deductible on most plans."
   },
   {
     "id": "ins_coinsurance_big_d2",
@@ -6678,7 +5965,7 @@
     "answerFormula": "coinsuranceCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Deductible already met, so you just pay coinsurance: ${{totalBill}} × {{coinsurancePercent}}%. The insurer covers the other {{coinsurancePercent}}% complement."
+    "explanationTemplate": "Deductible already met, so you just pay coinsurance: ${{totalBill}} \u00d7 {{coinsurancePercent}}%. The insurer covers the other {{coinsurancePercent}}% complement."
   },
   {
     "id": "ins_copay_scenario_d2",
@@ -6721,7 +6008,7 @@
     "answerFormula": "copayMixed",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = (primary copay × visits) + (specialist copay × visits). (${{copayPrimary}} × {{primaryVisits}}) + (${{copaySpecialist}} × {{specialistVisits}}). Specialist copays are almost always higher."
+    "explanationTemplate": "Total = (primary copay \u00d7 visits) + (specialist copay \u00d7 visits). (${{copayPrimary}} \u00d7 {{primaryVisits}}) + (${{copaySpecialist}} \u00d7 {{specialistVisits}}). Specialist copays are almost always higher."
   },
   {
     "id": "ins_coinsurance_compare_d3",
@@ -6758,7 +6045,7 @@
     "answerFormula": "totalWithCoinsurance",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "You pay the full deductible (${{deductible}}) first. Then coinsurance on the rest: (${{totalBill}} − ${{deductible}}) × {{coinsurancePercent}}%. Add both parts together."
+    "explanationTemplate": "You pay the full deductible (${{deductible}}) first. Then coinsurance on the rest: (${{totalBill}} \u2212 ${{deductible}}) \u00d7 {{coinsurancePercent}}%. Add both parts together."
   },
   {
     "id": "ins_oop_total_d1",
@@ -6790,7 +6077,7 @@
     "answerFormula": "oopRemaining",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Remaining = OOP max − amount paid = ${{oopMax}} − ${{amountPaid}}. After hitting your OOP max, insurance covers 100% of covered services."
+    "explanationTemplate": "Remaining = OOP max \u2212 amount paid = ${{oopMax}} \u2212 ${{amountPaid}}. After hitting your OOP max, insurance covers 100% of covered services."
   },
   {
     "id": "ins_oop_scenario_d1",
@@ -6828,7 +6115,7 @@
     "answerFormula": "oopActualCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "You can only owe up to ${{oopMax}} − ${{amountPaid}} more. If the procedure's coinsurance exceeds that, you pay only the remaining amount to hit your max."
+    "explanationTemplate": "You can only owe up to ${{oopMax}} \u2212 ${{amountPaid}} more. If the procedure's coinsurance exceeds that, you pay only the remaining amount to hit your max."
   },
   {
     "id": "ins_oop_calc_d2",
@@ -6900,7 +6187,7 @@
     "answerFormula": "oopDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Difference = ${{oopMaxB}} − ${{oopMaxA}}. In a catastrophic year, the OOP max is what matters most — it's your true worst-case exposure."
+    "explanationTemplate": "Difference = ${{oopMaxB}} \u2212 ${{oopMaxA}}. In a catastrophic year, the OOP max is what matters most \u2014 it's your true worst-case exposure."
   },
   {
     "id": "ins_oop_cap_d3",
@@ -6942,7 +6229,7 @@
     "answerFormula": "maxAnnualCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Max cost = annual premiums + OOP max. (${{monthlyPremium}} × 12) + ${{oopMax}}. Premiums are separate from OOP max — this is the true worst case."
+    "explanationTemplate": "Max cost = annual premiums + OOP max. (${{monthlyPremium}} \u00d7 12) + ${{oopMax}}. Premiums are separate from OOP max \u2014 this is the true worst case."
   },
   {
     "id": "ins_hdhp_annual_d1",
@@ -6973,7 +6260,7 @@
     "answerFormula": "ppoPremiumExtra",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "PPO extra = (${{ppoPremium}} − ${{hdhpPremium}}) × 12. HDHPs save on premiums but have higher deductibles — the tradeoff depends on how much care you use."
+    "explanationTemplate": "PPO extra = (${{ppoPremium}} \u2212 ${{hdhpPremium}}) \u00d7 12. HDHPs save on premiums but have higher deductibles \u2014 the tradeoff depends on how much care you use."
   },
   {
     "id": "ins_ppo_annual_d1",
@@ -7011,7 +6298,7 @@
     "answerFormula": "planAnnualWithCopay",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "PPO total = (premium × 12) + (copay × visits). (${{monthlyPremium}} × 12) + (${{copayAmount}} × {{visitCount}}). PPOs cost more monthly but less per visit."
+    "explanationTemplate": "PPO total = (premium \u00d7 12) + (copay \u00d7 visits). (${{monthlyPremium}} \u00d7 12) + (${{copayAmount}} \u00d7 {{visitCount}}). PPOs cost more monthly but less per visit."
   },
   {
     "id": "ins_hdhp_vs_ppo_d2",
@@ -7047,13 +6334,13 @@
     "answerFormula": "ppoPremiumExtra",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "PPO premium extra = (${{ppoPremium}} − ${{hdhpPremium}}) × 12. This premium savings is why many healthy people choose HDHPs — plus HSA access."
+    "explanationTemplate": "PPO premium extra = (${{ppoPremium}} \u2212 ${{hdhpPremium}}) \u00d7 12. This premium savings is why many healthy people choose HDHPs \u2014 plus HSA access."
   },
   {
     "id": "ins_plan_scenario_d2",
     "moduleId": "insurance",
     "difficulty": 2,
-    "promptTemplate": "HDHP: ${{hdhpPremium}}/month + ${{hdhpDeductible}} deductible. PPO: ${{ppoPremium}}/month + ${{ppoCopay}} × {{visits}} visits. Which costs less if you hit the HDHP deductible?",
+    "promptTemplate": "HDHP: ${{hdhpPremium}}/month + ${{hdhpDeductible}} deductible. PPO: ${{ppoPremium}}/month + ${{ppoCopay}} \u00d7 {{visits}} visits. Which costs less if you hit the HDHP deductible?",
     "variableRules": [
       {
         "name": "hdhpPremium",
@@ -7097,7 +6384,7 @@
     "answerFormula": "planCostDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "HDHP total = (${{hdhpPremium}} × 12) + ${{hdhpDeductible}}. PPO total = (${{ppoPremium}} × 12) + (${{ppoCopay}} × {{visits}}). Compare both to find the savings."
+    "explanationTemplate": "HDHP total = (${{hdhpPremium}} \u00d7 12) + ${{hdhpDeductible}}. PPO total = (${{ppoPremium}} \u00d7 12) + (${{ppoCopay}} \u00d7 {{visits}}). Compare both to find the savings."
   },
   {
     "id": "ins_breakeven_visits_d3",
@@ -7137,7 +6424,7 @@
     "answerFormula": "hdhpVsPpoGap",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "HDHP total = (${{hdhpPremium}} × 12) + ${{hdhpDeductible}}. PPO total = ${{ppoPremium}} × 12 (copay is small). The gap shows how much your health usage changes the math."
+    "explanationTemplate": "HDHP total = (${{hdhpPremium}} \u00d7 12) + ${{hdhpDeductible}}. PPO total = ${{ppoPremium}} \u00d7 12 (copay is small). The gap shows how much your health usage changes the math."
   },
   {
     "id": "ins_hsa_saving_d1",
@@ -7168,7 +6455,7 @@
     "answerFormula": "hsaTaxSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tax saving = ${{hsaContribution}} × {{taxRate}}%. HSA contributions are pre-tax — every dollar you put in saves you {{taxRate}} cents in taxes."
+    "explanationTemplate": "Tax saving = ${{hsaContribution}} \u00d7 {{taxRate}}%. HSA contributions are pre-tax \u2014 every dollar you put in saves you {{taxRate}} cents in taxes."
   },
   {
     "id": "ins_hsa_annual_d1",
@@ -7199,7 +6486,7 @@
     "answerFormula": "hsaEffectiveCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Effective cost = ${{expenseCost}} − (${{expenseCost}} × {{taxRate}}%). HSA money is pre-tax, so you save your tax rate on every dollar spent."
+    "explanationTemplate": "Effective cost = ${{expenseCost}} \u2212 (${{expenseCost}} \u00d7 {{taxRate}}%). HSA money is pre-tax, so you save your tax rate on every dollar spent."
   },
   {
     "id": "ins_hsa_scenario_d2",
@@ -7236,7 +6523,7 @@
     "answerFormula": "hsaEffectiveCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Effective cost = expense − tax savings on that amount. ${{expenseCost}} − (${{expenseCost}} × {{taxRate}}%). Paying from HSA makes every medical dollar cheaper."
+    "explanationTemplate": "Effective cost = expense \u2212 tax savings on that amount. ${{expenseCost}} \u2212 (${{expenseCost}} \u00d7 {{taxRate}}%). Paying from HSA makes every medical dollar cheaper."
   },
   {
     "id": "ins_hsa_compare_d2",
@@ -7272,13 +6559,13 @@
     "answerFormula": "hdhpNetAdvantage",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Net advantage = premium savings + HSA tax savings. ((${{ppoPremium}} − ${{hdhpPremium}}) × 12) + ${{hsaTaxSaving}}. The HSA tax benefit is like getting a discount on your healthcare."
+    "explanationTemplate": "Net advantage = premium savings + HSA tax savings. ((${{ppoPremium}} \u2212 ${{hdhpPremium}}) \u00d7 12) + ${{hsaTaxSaving}}. The HSA tax benefit is like getting a discount on your healthcare."
   },
   {
     "id": "ins_hsa_total_d3",
     "moduleId": "insurance",
     "difficulty": 3,
-    "promptTemplate": "You max out your HSA at ${{hsaContribution}} per year. Tax rate: {{taxRate}}%. If you invest it and don't touch it for {{years}} years, you save ${{hsaContribution}} × {{taxRate}}% in taxes each year. Total tax savings over {{years}} years?",
+    "promptTemplate": "You max out your HSA at ${{hsaContribution}} per year. Tax rate: {{taxRate}}%. If you invest it and don't touch it for {{years}} years, you save ${{hsaContribution}} \u00d7 {{taxRate}}% in taxes each year. Total tax savings over {{years}} years?",
     "variableRules": [
       {
         "name": "hsaContribution",
@@ -7308,7 +6595,7 @@
     "answerFormula": "hsaTotalTaxSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total tax savings = (${{hsaContribution}} × {{taxRate}}%) × {{years}} years. Over time, the HSA tax advantage compounds into serious money."
+    "explanationTemplate": "Total tax savings = (${{hsaContribution}} \u00d7 {{taxRate}}%) \u00d7 {{years}} years. Over time, the HSA tax advantage compounds into serious money."
   },
   {
     "id": "car_total_cost_d1",
@@ -7339,7 +6626,7 @@
     "answerFormula": "carTotalPaid",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = ${{monthlyPayment}} × {{loanTermMonths}} months. That low monthly payment adds up — always check the total cost, not just the monthly number."
+    "explanationTemplate": "Total = ${{monthlyPayment}} \u00d7 {{loanTermMonths}} months. That low monthly payment adds up \u2014 always check the total cost, not just the monthly number."
   },
   {
     "id": "car_interest_paid_d1",
@@ -7371,7 +6658,7 @@
     "answerFormula": "carInterestPaid",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest = total paid − loan amount = ${{totalPaid}} − ${{loanAmount}}. This is the real cost of borrowing — the price tag is only part of the story."
+    "explanationTemplate": "Interest = total paid \u2212 loan amount = ${{totalPaid}} \u2212 ${{loanAmount}}. This is the real cost of borrowing \u2014 the price tag is only part of the story."
   },
   {
     "id": "car_monthly_scenario_d2",
@@ -7422,7 +6709,7 @@
     "answerFormula": "carTotalWithDown",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total cost = down payment + (monthly × months). ${{downPayment}} + (${{monthlyPayment}} × {{termMonths}}). Compare this to the sticker price to see how much interest costs you."
+    "explanationTemplate": "Total cost = down payment + (monthly \u00d7 months). ${{downPayment}} + (${{monthlyPayment}} \u00d7 {{termMonths}}). Compare this to the sticker price to see how much interest costs you."
   },
   {
     "id": "car_total_compare_d2",
@@ -7464,7 +6751,7 @@
     "answerFormula": "loanTotalDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Option A total = ${{paymentA}} × {{termA}}. Option B total = ${{paymentB}} × {{termB}}. Lower monthly payments often mean higher total cost — that's the trap of longer loans."
+    "explanationTemplate": "Option A total = ${{paymentA}} \u00d7 {{termA}}. Option B total = ${{paymentB}} \u00d7 {{termB}}. Lower monthly payments often mean higher total cost \u2014 that's the trap of longer loans."
   },
   {
     "id": "car_term_impact_d3",
@@ -7511,7 +6798,7 @@
     "answerFormula": "extraInterestCost",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Extra interest = longer loan interest − shorter loan interest. (${{total72}} − ${{loanAmount}}) − (${{total60}} − ${{loanAmount}}). The monthly savings comes with a hidden interest cost."
+    "explanationTemplate": "Extra interest = longer loan interest \u2212 shorter loan interest. (${{total72}} \u2212 ${{loanAmount}}) \u2212 (${{total60}} \u2212 ${{loanAmount}}). The monthly savings comes with a hidden interest cost."
   },
   {
     "id": "car_term_total_d1",
@@ -7541,7 +6828,7 @@
     "answerFormula": "carTotalFromYears",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = ${{monthlyPayment}} × {{termYears}} years × 12 months. Convert years to months first, then multiply by payment."
+    "explanationTemplate": "Total = ${{monthlyPayment}} \u00d7 {{termYears}} years \u00d7 12 months. Convert years to months first, then multiply by payment."
   },
   {
     "id": "car_term_difference_d1",
@@ -7571,7 +6858,7 @@
     "answerFormula": "monthlyDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly savings = ${{payment5}} − ${{payment6}}. Looks good monthly, but check the total cost — that lower payment adds 12 more months of interest."
+    "explanationTemplate": "Monthly savings = ${{payment5}} \u2212 ${{payment6}}. Looks good monthly, but check the total cost \u2014 that lower payment adds 12 more months of interest."
   },
   {
     "id": "car_term_scenario_d2",
@@ -7600,7 +6887,7 @@
     "answerFormula": "carTotalFromYears",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = ${{budget}} × {{termYears}} × 12. This is the maximum loan amount plus interest you can handle — not the car price you can afford."
+    "explanationTemplate": "Total = ${{budget}} \u00d7 {{termYears}} \u00d7 12. This is the maximum loan amount plus interest you can handle \u2014 not the car price you can afford."
   },
   {
     "id": "car_payment_compare_d2",
@@ -7636,13 +6923,13 @@
     "answerFormula": "termInterestDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "48-mo interest = (${{payment48}} × 48) − ${{loanAmount}}. 72-mo interest = (${{payment72}} × 72) − ${{loanAmount}}. The difference is pure extra cost from stretching the loan."
+    "explanationTemplate": "48-mo interest = (${{payment48}} \u00d7 48) \u2212 ${{loanAmount}}. 72-mo interest = (${{payment72}} \u00d7 72) \u2212 ${{loanAmount}}. The difference is pure extra cost from stretching the loan."
   },
   {
     "id": "car_term_interest_d3",
     "moduleId": "car",
     "difficulty": 3,
-    "promptTemplate": "Loan: ${{loanAmount}}. Option A: ${{paymentA}}/month × {{termA}} months. Option B: ${{paymentB}}/month × {{termB}} months. What percentage of each loan total is interest? Give Option B's interest percentage.",
+    "promptTemplate": "Loan: ${{loanAmount}}. Option A: ${{paymentA}}/month \u00d7 {{termA}} months. Option B: ${{paymentB}}/month \u00d7 {{termB}} months. What percentage of each loan total is interest? Give Option B's interest percentage.",
     "variableRules": [
       {
         "name": "loanAmount",
@@ -7682,7 +6969,7 @@
     "answerFormula": "interestPercentOfTotal",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest = (payment × months) − loan. Interest % = interest / total × 100. Longer loans mean a bigger chunk of every payment goes to the bank, not your car."
+    "explanationTemplate": "Interest = (payment \u00d7 months) \u2212 loan. Interest % = interest / total \u00d7 100. Longer loans mean a bigger chunk of every payment goes to the bank, not your car."
   },
   {
     "id": "car_down_amount_d1",
@@ -7712,7 +6999,7 @@
     "answerFormula": "carDownPaymentAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Down payment = ${{carPrice}} × {{downPercent}}%. A bigger down payment means a smaller loan and less interest over time."
+    "explanationTemplate": "Down payment = ${{carPrice}} \u00d7 {{downPercent}}%. A bigger down payment means a smaller loan and less interest over time."
   },
   {
     "id": "car_loan_after_down_d1",
@@ -7743,7 +7030,7 @@
     "answerFormula": "carLoanAfterDown",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Loan amount = ${{carPrice}} − ${{downPayment}}. Every dollar you put down is a dollar you don't pay interest on."
+    "explanationTemplate": "Loan amount = ${{carPrice}} \u2212 ${{downPayment}}. Every dollar you put down is a dollar you don't pay interest on."
   },
   {
     "id": "car_down_scenario_d2",
@@ -7779,7 +7066,7 @@
     "answerFormula": "carInterestOnLoan",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Loan = ${{carPrice}} × (100% − {{downPercent}}%). Interest = loan × {{interestRate}}%. Bigger down payment → smaller loan → less interest."
+    "explanationTemplate": "Loan = ${{carPrice}} \u00d7 (100% \u2212 {{downPercent}}%). Interest = loan \u00d7 {{interestRate}}%. Bigger down payment \u2192 smaller loan \u2192 less interest."
   },
   {
     "id": "car_down_compare_d2",
@@ -7815,13 +7102,13 @@
     "answerFormula": "interestSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Savings = ${{interest10}} − ${{interest20}}. That extra down payment doesn't just reduce your loan — it reduces the interest on the loan too."
+    "explanationTemplate": "Savings = ${{interest10}} \u2212 ${{interest20}}. That extra down payment doesn't just reduce your loan \u2014 it reduces the interest on the loan too."
   },
   {
     "id": "car_down_savings_d3",
     "moduleId": "car",
     "difficulty": 3,
-    "promptTemplate": "Car: ${{carPrice}}. Option A: ${{downA}} down, finance rest at ${{paymentA}}/month × {{termA}} months. Option B: ${{downB}} down, finance rest at ${{paymentB}}/month × {{termB}} months. Total cost difference?",
+    "promptTemplate": "Car: ${{carPrice}}. Option A: ${{downA}} down, finance rest at ${{paymentA}}/month \u00d7 {{termA}} months. Option B: ${{downB}} down, finance rest at ${{paymentB}}/month \u00d7 {{termB}} months. Total cost difference?",
     "variableRules": [
       {
         "name": "carPrice",
@@ -7874,7 +7161,7 @@
     "answerFormula": "totalCostDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total A = ${{downA}} + (${{paymentA}} × {{termA}}). Total B = ${{downB}} + (${{paymentB}} × {{termB}}). Even though B requires more cash upfront, it can save thousands overall."
+    "explanationTemplate": "Total A = ${{downA}} + (${{paymentA}} \u00d7 {{termA}}). Total B = ${{downB}} + (${{paymentB}} \u00d7 {{termB}}). Even though B requires more cash upfront, it can save thousands overall."
   },
   {
     "id": "car_max_payment_d1",
@@ -7897,7 +7184,7 @@
     "answerFormula": "carMaxPayment",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Max payment = ${{monthlyIncome}} × 10%. This keeps transportation costs from eating into other financial goals."
+    "explanationTemplate": "Max payment = ${{monthlyIncome}} \u00d7 10%. This keeps transportation costs from eating into other financial goals."
   },
   {
     "id": "car_20pct_down_d1",
@@ -7926,7 +7213,7 @@
     "answerFormula": "carDownPaymentAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "20% down = ${{carPrice}} × 20%. The 20/4/10 rule: 20% down, 4-year loan max, 10% of income max payment."
+    "explanationTemplate": "20% down = ${{carPrice}} \u00d7 20%. The 20/4/10 rule: 20% down, 4-year loan max, 10% of income max payment."
   },
   {
     "id": "car_10pct_rule_d2",
@@ -7949,7 +7236,7 @@
     "answerFormula": "carMaxPaymentFromAnnual",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly income = ${{annualSalary}} ÷ 12. Max payment = monthly income × 10%. Two steps: divide by 12, then take 10%."
+    "explanationTemplate": "Monthly income = ${{annualSalary}} \u00f7 12. Max payment = monthly income \u00d7 10%. Two steps: divide by 12, then take 10%."
   },
   {
     "id": "car_rule_scenario_d2",
@@ -7987,7 +7274,7 @@
     "answerFormula": "paymentVsBudget",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Budget = ${{monthlyIncome}} × 10%. Difference = budget − ${{monthlyPayment}}. If negative, the car is too expensive for your income by the 10% rule."
+    "explanationTemplate": "Budget = ${{monthlyIncome}} \u00d7 10%. Difference = budget \u2212 ${{monthlyPayment}}. If negative, the car is too expensive for your income by the 10% rule."
   },
   {
     "id": "car_afford_check_d3",
@@ -8009,7 +7296,7 @@
     "answerFormula": "carMaxAffordable",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Max payment = ${{monthlyIncome}} × 10%. Max financed = payment × 48. That's 80% of car price (you put 20% down). So max car = financed ÷ 0.80."
+    "explanationTemplate": "Max payment = ${{monthlyIncome}} \u00d7 10%. Max financed = payment \u00d7 48. That's 80% of car price (you put 20% down). So max car = financed \u00f7 0.80."
   },
   {
     "id": "car_year1_value_d1",
@@ -8039,7 +7326,7 @@
     "answerFormula": "carValueAfterDep",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Value after year 1 = ${{carPrice}} × (100% − {{depPercent}}%). New cars lose the most value in year one — that's the depreciation hit."
+    "explanationTemplate": "Value after year 1 = ${{carPrice}} \u00d7 (100% \u2212 {{depPercent}}%). New cars lose the most value in year one \u2014 that's the depreciation hit."
   },
   {
     "id": "car_depreciation_d1",
@@ -8069,7 +7356,7 @@
     "answerFormula": "carDepreciationAmount",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Depreciation = ${{carPrice}} × {{depPercent}}%. This is money you'll never get back — it's the hidden cost of buying new."
+    "explanationTemplate": "Depreciation = ${{carPrice}} \u00d7 {{depPercent}}%. This is money you'll never get back \u2014 it's the hidden cost of buying new."
   },
   {
     "id": "car_year2_value_d2",
@@ -8104,7 +7391,7 @@
     "answerFormula": "carValueYear2",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Year 1 value = ${{carPrice}} × (1 − {{depYear1}}%). Year 2 value = Year 1 value × (1 − {{depYear2}}%). Each year's depreciation is on the lower remaining value."
+    "explanationTemplate": "Year 1 value = ${{carPrice}} \u00d7 (1 \u2212 {{depYear1}}%). Year 2 value = Year 1 value \u00d7 (1 \u2212 {{depYear2}}%). Each year's depreciation is on the lower remaining value."
   },
   {
     "id": "car_depreciation_scenario_d2",
@@ -8134,7 +7421,7 @@
     "answerFormula": "carTotalDepreciation",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total depreciation = purchase price − current value = ${{carPrice}} − ${{valueAfter3}}. A car that's 2-3 years old has already taken the biggest depreciation hit."
+    "explanationTemplate": "Total depreciation = purchase price \u2212 current value = ${{carPrice}} \u2212 ${{valueAfter3}}. A car that's 2-3 years old has already taken the biggest depreciation hit."
   },
   {
     "id": "car_depreciation_compare_d3",
@@ -8174,7 +7461,7 @@
     "answerFormula": "depreciationDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New loss = ${{newPrice}} − ${{newValueY3}}. Used loss = ${{usedPrice}} − ${{usedValueY3}}. Buying used lets someone else absorb the steepest depreciation."
+    "explanationTemplate": "New loss = ${{newPrice}} \u2212 ${{newValueY3}}. Used loss = ${{usedPrice}} \u2212 ${{usedValueY3}}. Buying used lets someone else absorb the steepest depreciation."
   },
   {
     "id": "sl_monthly_d1",
@@ -8197,7 +7484,7 @@
     "answerFormula": "annualPayment",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual = ${{monthlyPayment}} × 12. Knowing your annual student loan cost helps you see how it fits into your overall budget."
+    "explanationTemplate": "Annual = ${{monthlyPayment}} \u00d7 12. Knowing your annual student loan cost helps you see how it fits into your overall budget."
   },
   {
     "id": "sl_monthly_estimate_d1",
@@ -8226,13 +7513,13 @@
     "answerFormula": "estimatedMonthly",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Payment = (${{loanBalance}} ÷ 10,000) × ${{paymentPer10k}}. The ~$100-$120 per $10K rule is a quick way to estimate standard 10-year repayment."
+    "explanationTemplate": "Payment = (${{loanBalance}} \u00f7 10,000) \u00d7 ${{paymentPer10k}}. The ~$100-$120 per $10K rule is a quick way to estimate standard 10-year repayment."
   },
   {
     "id": "sl_monthly_scenario_d2",
     "moduleId": "student_loans",
     "difficulty": 2,
-    "promptTemplate": "You owe ${{loanBalance}} at {{interestRate}}% interest on a 10-year plan. Monthly interest alone is ${{loanBalance}} × {{interestRate}}% ÷ 12. What's the monthly interest charge?",
+    "promptTemplate": "You owe ${{loanBalance}} at {{interestRate}}% interest on a 10-year plan. Monthly interest alone is ${{loanBalance}} \u00d7 {{interestRate}}% \u00f7 12. What's the monthly interest charge?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -8255,7 +7542,7 @@
     "answerFormula": "monthlyInterestCharge",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly interest = ${{loanBalance}} × {{interestRate}}% ÷ 12. Early in repayment, most of your payment goes to interest — that's why extra payments help so much."
+    "explanationTemplate": "Monthly interest = ${{loanBalance}} \u00d7 {{interestRate}}% \u00f7 12. Early in repayment, most of your payment goes to interest \u2014 that's why extra payments help so much."
   },
   {
     "id": "sl_payment_compare_d2",
@@ -8285,7 +7572,7 @@
     "answerFormula": "monthlyDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Savings = ${{payment10}} − ${{payment20}} per month. But the 20-year plan means 10 more years of interest — always check the total cost too."
+    "explanationTemplate": "Savings = ${{payment10}} \u2212 ${{payment20}} per month. But the 20-year plan means 10 more years of interest \u2014 always check the total cost too."
   },
   {
     "id": "sl_monthly_detail_d3",
@@ -8331,7 +7618,7 @@
     "answerFormula": "principalPayment",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Principal = payment − interest = ${{monthlyPayment}} − ${{monthlyInterest}}. Early on, you're mostly paying interest. As principal shrinks, more goes to actually paying off the loan."
+    "explanationTemplate": "Principal = payment \u2212 interest = ${{monthlyPayment}} \u2212 ${{monthlyInterest}}. Early on, you're mostly paying interest. As principal shrinks, more goes to actually paying off the loan."
   },
   {
     "id": "sl_total_cost_d1",
@@ -8361,7 +7648,7 @@
     "answerFormula": "loanTotalFromYears",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = ${{monthlyPayment}} × {{termYears}} × 12 months. Seeing the total number is often the wake-up call that motivates faster repayment."
+    "explanationTemplate": "Total = ${{monthlyPayment}} \u00d7 {{termYears}} \u00d7 12 months. Seeing the total number is often the wake-up call that motivates faster repayment."
   },
   {
     "id": "sl_total_interest_d1",
@@ -8401,7 +7688,7 @@
     "answerFormula": "totalInterestPaid",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Interest = total paid − borrowed = ${{totalPaid}} − ${{loanAmount}}. This is the real cost of the loan — what you pay just for the privilege of borrowing."
+    "explanationTemplate": "Interest = total paid \u2212 borrowed = ${{totalPaid}} \u2212 ${{loanAmount}}. This is the real cost of the loan \u2014 what you pay just for the privilege of borrowing."
   },
   {
     "id": "sl_total_scenario_d2",
@@ -8431,7 +7718,7 @@
     "answerFormula": "termCostDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "10-year total = ${{payment10}} × 120. 20-year total = ${{payment20}} × 240. The lower monthly payment costs massively more over the full life of the loan."
+    "explanationTemplate": "10-year total = ${{payment10}} \u00d7 120. 20-year total = ${{payment20}} \u00d7 240. The lower monthly payment costs massively more over the full life of the loan."
   },
   {
     "id": "sl_cost_compare_d2",
@@ -8467,7 +7754,7 @@
     "answerFormula": "percentMoreCost",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Extra = (${{totalExtended}} − ${{totalStandard}}) ÷ ${{totalStandard}} × 100%. The extended plan can cost 25-50% more in total even though the monthly payment feels lighter."
+    "explanationTemplate": "Extra = (${{totalExtended}} \u2212 ${{totalStandard}}) \u00f7 ${{totalStandard}} \u00d7 100%. The extended plan can cost 25-50% more in total even though the monthly payment feels lighter."
   },
   {
     "id": "sl_cost_detail_d3",
@@ -8532,7 +7819,7 @@
     "answerFormula": "extraPaymentSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Savings = ${{originalTotal}} − ${{newTotal}}. Every extra dollar goes straight to principal, which reduces future interest. Even $100/month extra can save thousands."
+    "explanationTemplate": "Savings = ${{originalTotal}} \u2212 ${{newTotal}}. Every extra dollar goes straight to principal, which reduces future interest. Even $100/month extra can save thousands."
   },
   {
     "id": "sl_refi_saving_d1",
@@ -8563,7 +7850,7 @@
     "answerFormula": "monthlyDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly savings = ${{oldPayment}} − ${{newPayment}}. Refinancing can lower your rate, but you may lose federal loan protections like IDR and PSLF."
+    "explanationTemplate": "Monthly savings = ${{oldPayment}} \u2212 ${{newPayment}}. Refinancing can lower your rate, but you may lose federal loan protections like IDR and PSLF."
   },
   {
     "id": "sl_refi_annual_d1",
@@ -8585,7 +7872,7 @@
     "answerFormula": "annualSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual savings = ${{monthlySaving}} × 12. Make sure the savings justify giving up federal loan benefits like income-driven repayment."
+    "explanationTemplate": "Annual savings = ${{monthlySaving}} \u00d7 12. Make sure the savings justify giving up federal loan benefits like income-driven repayment."
   },
   {
     "id": "sl_refi_scenario_d2",
@@ -8625,7 +7912,7 @@
     "answerFormula": "refiTotalSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Current total = ${{oldPayment}} × {{remainingMonths}}. Refi total = ${{newPayment}} × {{newTermMonths}}. Compare totals, not just monthly payments — term length matters."
+    "explanationTemplate": "Current total = ${{oldPayment}} \u00d7 {{remainingMonths}}. Refi total = ${{newPayment}} \u00d7 {{newTermMonths}}. Compare totals, not just monthly payments \u2014 term length matters."
   },
   {
     "id": "sl_refi_compare_d2",
@@ -8668,7 +7955,7 @@
     "answerFormula": "newMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New monthly interest = ${{loanBalance}} × {{newRate}}% ÷ 12. Lower rate means more of each payment goes to principal instead of interest."
+    "explanationTemplate": "New monthly interest = ${{loanBalance}} \u00d7 {{newRate}}% \u00f7 12. Lower rate means more of each payment goes to principal instead of interest."
   },
   {
     "id": "sl_refi_total_d3",
@@ -8747,7 +8034,7 @@
     "answerFormula": "extraPaymentSaving",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Savings = ${{oldTotal}} − ${{newTotal}}. Refinancing at a lower rate with the same term length is usually a clear win — if you don't need federal protections."
+    "explanationTemplate": "Savings = ${{oldTotal}} \u2212 ${{newTotal}}. Refinancing at a lower rate with the same term length is usually a clear win \u2014 if you don't need federal protections."
   },
   {
     "id": "sl_idr_payment_d1",
@@ -8776,7 +8063,7 @@
     "answerFormula": "idrAnnualPayment",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "IDR payment = ${{discretionaryIncome}} × {{idrPercent}}% per year. Discretionary income = your income minus 150% of the poverty line."
+    "explanationTemplate": "IDR payment = ${{discretionaryIncome}} \u00d7 {{idrPercent}}% per year. Discretionary income = your income minus 150% of the poverty line."
   },
   {
     "id": "sl_idr_estimate_d1",
@@ -8799,13 +8086,13 @@
     "answerFormula": "monthlyFromAnnual",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly = ${{annualPayment}} ÷ 12. IDR payments adjust each year as your income changes — they're designed to stay affordable."
+    "explanationTemplate": "Monthly = ${{annualPayment}} \u00f7 12. IDR payments adjust each year as your income changes \u2014 they're designed to stay affordable."
   },
   {
     "id": "sl_idr_scenario_d2",
     "moduleId": "student_loans",
     "difficulty": 2,
-    "promptTemplate": "You earn ${{annualIncome}} per year. The poverty guideline is ${{povertyLine}}. Your discretionary income = salary − (150% × poverty line). IDR is {{idrPercent}}% of discretionary income. What's your monthly IDR payment?",
+    "promptTemplate": "You earn ${{annualIncome}} per year. The poverty guideline is ${{povertyLine}}. Your discretionary income = salary \u2212 (150% \u00d7 poverty line). IDR is {{idrPercent}}% of discretionary income. What's your monthly IDR payment?",
     "variableRules": [
       {
         "name": "annualIncome",
@@ -8833,7 +8120,7 @@
     "answerFormula": "idrMonthlyFromIncome",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Discretionary income = ${{annualIncome}} − (150% × ${{povertyLine}}). IDR = discretionary × {{idrPercent}}% ÷ 12. This formula protects low earners from unaffordable payments."
+    "explanationTemplate": "Discretionary income = ${{annualIncome}} \u2212 (150% \u00d7 ${{povertyLine}}). IDR = discretionary \u00d7 {{idrPercent}}% \u00f7 12. This formula protects low earners from unaffordable payments."
   },
   {
     "id": "sl_idr_compare_d2",
@@ -8861,13 +8148,13 @@
     "answerFormula": "annualPaymentDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual savings = (${{standardPayment}} − ${{idrPayment}}) × 12. But lower payments mean longer repayment and more total interest — unless you qualify for forgiveness."
+    "explanationTemplate": "Annual savings = (${{standardPayment}} \u2212 ${{idrPayment}}) \u00d7 12. But lower payments mean longer repayment and more total interest \u2014 unless you qualify for forgiveness."
   },
   {
     "id": "sl_idr_savings_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "Loan: ${{loanBalance}}. Standard: ${{standardPayment}}/month × 120 months = ${{standardTotal}}. IDR: ${{idrPayment}}/month × 240 months = ${{idrTotal}}, but remaining balance forgiven after 20 years. Which costs less in total payments?",
+    "promptTemplate": "Loan: ${{loanBalance}}. Standard: ${{standardPayment}}/month \u00d7 120 months = ${{standardTotal}}. IDR: ${{idrPayment}}/month \u00d7 240 months = ${{idrTotal}}, but remaining balance forgiven after 20 years. Which costs less in total payments?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -8930,7 +8217,7 @@
     "answerFormula": "pslfTotalPaid",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = ${{monthlyPayment}} × 120 payments. After 10 years of qualifying payments in public service, the remaining balance is forgiven tax-free."
+    "explanationTemplate": "Total = ${{monthlyPayment}} \u00d7 120 payments. After 10 years of qualifying payments in public service, the remaining balance is forgiven tax-free."
   },
   {
     "id": "sl_pslf_forgiven_d1",
@@ -8960,7 +8247,7 @@
     "answerFormula": "pslfForgiveness",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Forgiven = balance − total paid = ${{loanBalance}} − ${{totalPaid}}. PSLF forgiveness is tax-free — unlike IDR forgiveness which may be taxable."
+    "explanationTemplate": "Forgiven = balance \u2212 total paid = ${{loanBalance}} \u2212 ${{totalPaid}}. PSLF forgiveness is tax-free \u2014 unlike IDR forgiveness which may be taxable."
   },
   {
     "id": "sl_pslf_scenario_d2",
@@ -8988,13 +8275,13 @@
     "answerFormula": "pslfForgiveness",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total paid = ${{idrPayment}} × 120 = your contribution. Forgiven = ${{loanBalance}} − total paid. PSLF works best with high balances and lower IDR payments."
+    "explanationTemplate": "Total paid = ${{idrPayment}} \u00d7 120 = your contribution. Forgiven = ${{loanBalance}} \u2212 total paid. PSLF works best with high balances and lower IDR payments."
   },
   {
     "id": "sl_pslf_compare_d2",
     "moduleId": "student_loans",
     "difficulty": 2,
-    "promptTemplate": "Without PSLF: pay ${{standardPayment}}/month × 120 months = ${{standardTotal}}. With PSLF: pay ${{idrPayment}}/month × 120 months. How much do you save with PSLF?",
+    "promptTemplate": "Without PSLF: pay ${{standardPayment}}/month \u00d7 120 months = ${{standardTotal}}. With PSLF: pay ${{idrPayment}}/month \u00d7 120 months. How much do you save with PSLF?",
     "variableRules": [
       {
         "name": "standardPayment",
@@ -9026,13 +8313,13 @@
     "answerFormula": "pslfSavings",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "PSLF total = ${{idrPayment}} × 120. Savings = ${{standardTotal}} − PSLF total. PSLF is most valuable for people with high debt relative to income in qualifying jobs."
+    "explanationTemplate": "PSLF total = ${{idrPayment}} \u00d7 120. Savings = ${{standardTotal}} \u2212 PSLF total. PSLF is most valuable for people with high debt relative to income in qualifying jobs."
   },
   {
     "id": "sl_pslf_decision_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "Loan: ${{loanBalance}}. Option A: Refinance to ${{refiPayment}}/month × {{refiMonths}} months. Option B: PSLF with ${{pslfPayment}}/month × 120 months, rest forgiven. Difference in total paid?",
+    "promptTemplate": "Loan: ${{loanBalance}}. Option A: Refinance to ${{refiPayment}}/month \u00d7 {{refiMonths}} months. Option B: PSLF with ${{pslfPayment}}/month \u00d7 120 months, rest forgiven. Difference in total paid?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -9069,6 +8356,608 @@
     "answerFormula": "refiVsPslfDifference",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Refi total = ${{refiPayment}} × {{refiMonths}}. PSLF total = ${{pslfPayment}} × 120. The difference can be tens of thousands — but PSLF requires 10 years in qualifying public service."
+    "explanationTemplate": "Refi total = ${{refiPayment}} \u00d7 {{refiMonths}}. PSLF total = ${{pslfPayment}} \u00d7 120. The difference can be tens of thousands \u2014 but PSLF requires 10 years in qualifying public service."
+  },
+  {
+    "id": "tip_per_hundred_d1",
+    "moduleId": "smart_shopping",
+    "difficulty": 1,
+    "inputMode": "freeEntry",
+    "promptTemplate": "Your bill is ${{billAmount}}. Using the $20-per-$100 rule, what's a 20% tip?",
+    "variableRules": [
+      {
+        "name": "billAmount",
+        "options": [
+          100,
+          200,
+          300,
+          400,
+          500,
+          600,
+          250,
+          350,
+          450
+        ]
+      },
+      {
+        "name": "tipPercent",
+        "options": [
+          20
+        ]
+      }
+    ],
+    "answerFormula": "tipAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "For every $100, 20% = $20. ${{billAmount}} \u00f7 100 = the multiplier. Multiply by $20 to get your tip."
+  },
+  {
+    "id": "coupon_save_d1",
+    "moduleId": "smart_shopping",
+    "difficulty": 1,
+    "promptTemplate": "An item costs ${{price}}. You have a {{couponPct}}% coupon. How much do you save?",
+    "variableRules": [
+      {
+        "name": "price",
+        "options": [
+          40,
+          60,
+          80,
+          100,
+          120,
+          150,
+          200
+        ]
+      },
+      {
+        "name": "couponPct",
+        "options": [
+          10,
+          15,
+          20,
+          25
+        ]
+      }
+    ],
+    "answerFormula": "couponSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Coupon saving = price \u00d7 coupon%. ${{price}} \u00d7 {{couponPct}}% = ${{answer}} off."
+  },
+  {
+    "id": "cashback_amount_d1",
+    "moduleId": "smart_shopping",
+    "difficulty": 1,
+    "promptTemplate": "You pay ${{price}} on a card that gives {{cashbackPct}}% cashback. How much cash do you get back?",
+    "variableRules": [
+      {
+        "name": "price",
+        "options": [
+          40,
+          60,
+          80,
+          100,
+          120,
+          150,
+          200,
+          250
+        ]
+      },
+      {
+        "name": "cashbackPct",
+        "options": [
+          2,
+          3,
+          5,
+          8
+        ]
+      }
+    ],
+    "answerFormula": "cashbackAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Cashback = amount paid \u00d7 cashback%. ${{price}} \u00d7 {{cashbackPct}}% = ${{answer}} back."
+  },
+  {
+    "id": "coupon_plus_cashback_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "promptTemplate": "Item ${{price}}. Apply a {{couponPct}}% coupon, then get {{cashbackPct}}% cashback on what you pay. Total saving?",
+    "variableRules": [
+      {
+        "name": "price",
+        "options": [
+          80,
+          100,
+          120,
+          150,
+          200
+        ]
+      },
+      {
+        "name": "couponPct",
+        "options": [
+          10,
+          15,
+          20
+        ]
+      },
+      {
+        "name": "cashbackPct",
+        "options": [
+          3,
+          5,
+          8
+        ]
+      }
+    ],
+    "answerFormula": "couponPlusCashback",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Coupon first: ${{price}} \u00d7 {{couponPct}}% = coupon saving. Then cashback on remainder: (${{price}} \u2212 coupon) \u00d7 {{cashbackPct}}%. Add both = ${{answer}}."
+  },
+  {
+    "id": "coupon_vs_cashback_compare_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "promptTemplate": "Option A: {{couponPct}}% coupon on ${{price}}. Option B: {{cashbackPct}}% cashback on ${{price}}. How much more does the better option save?",
+    "variableRules": [
+      {
+        "name": "price",
+        "options": [
+          100,
+          150,
+          200,
+          250,
+          300
+        ]
+      },
+      {
+        "name": "couponPct",
+        "options": [
+          15,
+          20,
+          25
+        ]
+      },
+      {
+        "name": "cashbackPct",
+        "options": [
+          3,
+          5,
+          8
+        ]
+      }
+    ],
+    "answerFormula": "couponVsCashbackDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Coupon saves ${{price}} \u00d7 {{couponPct}}%. Cashback saves ${{price}} \u00d7 {{cashbackPct}}%. Bigger % almost always wins. Difference = ${{answer}}."
+  },
+  {
+    "id": "coupon_cashback_final_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "promptTemplate": "Item ${{price}}. Stack a {{couponPct}}% coupon with {{cashbackPct}}% cashback (cashback applies to the discounted price). What's your final net cost?",
+    "variableRules": [
+      {
+        "name": "price",
+        "options": [
+          100,
+          120,
+          150,
+          200,
+          250
+        ]
+      },
+      {
+        "name": "couponPct",
+        "options": [
+          15,
+          20,
+          25
+        ]
+      },
+      {
+        "name": "cashbackPct",
+        "options": [
+          3,
+          5,
+          8
+        ]
+      }
+    ],
+    "answerFormula": "couponCashbackFinalPrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Sale price = ${{price}} \u00d7 (1 \u2212 {{couponPct}}%). Then subtract cashback \u00d7 sale price. Net = ${{answer}}."
+  },
+  {
+    "id": "disc_tax_simple_d1",
+    "moduleId": "smart_shopping",
+    "difficulty": 1,
+    "promptTemplate": "A ${{originalPrice}} item is {{discountPercent}}% off. With {{taxPercent}}% sales tax, what do you pay at checkout?",
+    "variableRules": [
+      {
+        "name": "originalPrice",
+        "options": [
+          40,
+          50,
+          60,
+          80,
+          100,
+          120
+        ]
+      },
+      {
+        "name": "discountPercent",
+        "options": [
+          10,
+          20,
+          25
+        ]
+      },
+      {
+        "name": "taxPercent",
+        "options": [
+          8,
+          9,
+          10
+        ]
+      }
+    ],
+    "answerFormula": "salePricePlusTax",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Discount first: ${{originalPrice}} \u00d7 (1 \u2212 {{discountPercent}}%) = sale price. Then add tax: \u00d7 (1 + {{taxPercent}}%). Final = ${{answer}}."
+  },
+  {
+    "id": "disc_tax_amount_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "promptTemplate": "Item ${{originalPrice}}, {{discountPercent}}% off, {{taxPercent}}% tax. How much sales tax do you pay (on the discounted price)?",
+    "variableRules": [
+      {
+        "name": "originalPrice",
+        "options": [
+          50,
+          80,
+          100,
+          150,
+          200
+        ]
+      },
+      {
+        "name": "discountPercent",
+        "options": [
+          15,
+          20,
+          25,
+          30
+        ]
+      },
+      {
+        "name": "taxPercent",
+        "options": [
+          7,
+          8,
+          9,
+          10
+        ]
+      }
+    ],
+    "answerFormula": "taxOnSalePrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Sale price = ${{originalPrice}} \u00d7 (1 \u2212 {{discountPercent}}%). Tax = sale price \u00d7 {{taxPercent}}% = ${{answer}}."
+  },
+  {
+    "id": "disc_tax_nonround_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "promptTemplate": "A ${{originalPrice}} item has {{discountPercent}}% off and {{taxPercent}}% sales tax. What's the total at checkout?",
+    "variableRules": [
+      {
+        "name": "originalPrice",
+        "options": [
+          55,
+          65,
+          75,
+          85,
+          95,
+          115,
+          135
+        ]
+      },
+      {
+        "name": "discountPercent",
+        "options": [
+          15,
+          18,
+          22,
+          27
+        ]
+      },
+      {
+        "name": "taxPercent",
+        "options": [
+          7,
+          8,
+          9
+        ]
+      }
+    ],
+    "answerFormula": "salePricePlusTax",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Sale price \u00d7 (1 + tax). ${{originalPrice}} \u00d7 (1 \u2212 {{discountPercent}}%) \u00d7 (1 + {{taxPercent}}%) = ${{answer}}."
+  },
+  {
+    "id": "disc_tax_stacked_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "promptTemplate": "${{originalPrice}} item: {{firstDiscount}}% off, then {{secondDiscount}}% off, then {{taxPercent}}% tax. What's the total?",
+    "variableRules": [
+      {
+        "name": "originalPrice",
+        "options": [
+          80,
+          100,
+          120,
+          150,
+          200
+        ]
+      },
+      {
+        "name": "firstDiscount",
+        "options": [
+          20,
+          25,
+          30
+        ]
+      },
+      {
+        "name": "secondDiscount",
+        "options": [
+          10,
+          15
+        ]
+      },
+      {
+        "name": "taxPercent",
+        "options": [
+          7,
+          8,
+          9
+        ]
+      }
+    ],
+    "answerFormula": "stackedSalePricePlusTax",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Apply discounts one at a time, then tax. ${{originalPrice}} \u00d7 (1 \u2212 {{firstDiscount}}%) \u00d7 (1 \u2212 {{secondDiscount}}%) \u00d7 (1 + {{taxPercent}}%) = ${{answer}}."
+  },
+  {
+    "id": "disc_tax_compare_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "promptTemplate": "${{originalPrice}} item. Compare paying full price + {{taxPercent}}% tax vs {{discountPercent}}% off + {{taxPercent}}% tax. How much do you save with the discount?",
+    "variableRules": [
+      {
+        "name": "originalPrice",
+        "options": [
+          80,
+          100,
+          120,
+          150,
+          200,
+          250
+        ]
+      },
+      {
+        "name": "discountPercent",
+        "options": [
+          15,
+          20,
+          25,
+          30
+        ]
+      },
+      {
+        "name": "taxPercent",
+        "options": [
+          7,
+          8,
+          9,
+          10
+        ]
+      }
+    ],
+    "answerFormula": "discountTaxSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Saving = ${{originalPrice}} \u00d7 {{discountPercent}}% \u00d7 (1 + {{taxPercent}}%). You save both the discount AND the tax on the discount = ${{answer}}."
+  },
+  {
+    "id": "membership_breakeven_d1",
+    "moduleId": "smart_shopping",
+    "difficulty": 1,
+    "promptTemplate": "DashPass costs ${{monthlyFee}}/month and saves ${{savingPerUse}} per order. How many orders per month do you need to break even?",
+    "variableRules": [
+      {
+        "name": "monthlyFee",
+        "options": [
+          8,
+          10,
+          12,
+          15
+        ]
+      },
+      {
+        "name": "savingPerUse",
+        "options": [
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "answerFormula": "membershipBreakeven",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Break-even = fee \u00f7 saving per use. ${{monthlyFee}} \u00f7 ${{savingPerUse}} = {{answer}} orders, rounded up."
+  },
+  {
+    "id": "membership_annual_d1",
+    "moduleId": "smart_shopping",
+    "difficulty": 1,
+    "promptTemplate": "Costco membership is ${{annualFee}}/year. You save ${{savingPerUse}} per visit. How many visits per year to break even?",
+    "variableRules": [
+      {
+        "name": "annualFee",
+        "options": [
+          60,
+          65,
+          100,
+          120
+        ]
+      },
+      {
+        "name": "savingPerUse",
+        "options": [
+          5,
+          8,
+          10,
+          15
+        ]
+      }
+    ],
+    "answerFormula": "membershipBreakeven",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Break-even = fee \u00f7 saving per use. ${{annualFee}} \u00f7 ${{savingPerUse}} = {{answer}} visits, rounded up."
+  },
+  {
+    "id": "membership_net_saving_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "promptTemplate": "Uber One: ${{monthlyFee}}/month, saves ${{savingPerUse}}/ride. You take {{usesPerPeriod}} rides this month. Net monthly saving after the fee?",
+    "variableRules": [
+      {
+        "name": "monthlyFee",
+        "options": [
+          8,
+          10,
+          12
+        ]
+      },
+      {
+        "name": "savingPerUse",
+        "options": [
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "name": "usesPerPeriod",
+        "options": [
+          6,
+          8,
+          10,
+          12,
+          15
+        ]
+      }
+    ],
+    "answerFormula": "membershipNetSavings",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(uses \u00d7 saving) \u2212 fee. ({{usesPerPeriod}} \u00d7 ${{savingPerUse}}) \u2212 ${{monthlyFee}} = ${{answer}}."
+  },
+  {
+    "id": "membership_compare_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "promptTemplate": "DashPass: ${{feeA}}/mo, saves ${{saveA}}/use. Uber One: ${{feeB}}/mo, saves ${{saveB}}/use. What's the difference in break-even uses between the two?",
+    "variableRules": [
+      {
+        "name": "feeA",
+        "options": [
+          10,
+          12,
+          15
+        ]
+      },
+      {
+        "name": "saveA",
+        "options": [
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "name": "feeB",
+        "options": [
+          8,
+          10,
+          12
+        ]
+      },
+      {
+        "name": "saveB",
+        "options": [
+          2,
+          3,
+          4
+        ]
+      }
+    ],
+    "answerFormula": "membershipBreakevenDiff",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Plan A break-even = ${{feeA}}/${{saveA}}. Plan B = ${{feeB}}/${{saveB}}. Difference = {{answer}} uses."
+  },
+  {
+    "id": "membership_decision_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "promptTemplate": "Costco ${{annualFee}}/year, saves ${{savingPerUse}}/visit. You go {{usesPerPeriod}} times/year. What's your annual net saving?",
+    "variableRules": [
+      {
+        "name": "annualFee",
+        "options": [
+          60,
+          65,
+          100,
+          120
+        ]
+      },
+      {
+        "name": "savingPerUse",
+        "options": [
+          5,
+          8,
+          10,
+          12
+        ]
+      },
+      {
+        "name": "usesPerPeriod",
+        "options": [
+          12,
+          20,
+          24,
+          30,
+          40
+        ]
+      }
+    ],
+    "answerFormula": "membershipNetSavings",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "({{usesPerPeriod}} visits \u00d7 ${{savingPerUse}}) \u2212 ${{annualFee}} fee = ${{answer}} annual net."
   }
 ]

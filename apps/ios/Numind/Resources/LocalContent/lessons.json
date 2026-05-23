@@ -1,20 +1,5 @@
 [
   {
-    "id": "tip_18_percent",
-    "moduleId": "smart_shopping",
-    "title": "Calculate an 18% tip",
-    "concept": "18% is one of the most common tip amounts — but it's awkward because it's not a round number. The trick is to never try to calculate 18% in one step.",
-    "shortcut": "Find 10% by moving the decimal one place left. Take half of that for 5%. Add a small 3% bump (roughly 30 cents per $10). Or skip the math entirely: double the tax line on your receipt — in most US states that's close to 18%.",
-    "example": "Bill: $46.00\n10% = $4.60\n5% = $2.30\n3% ≈ $1.38\nTip ≈ $8.28",
-    "quizTemplateIds": [
-      "tip_percent_basic",
-      "tip_bill_total",
-      "tip_split_tip",
-      "tip_18_d2",
-      "tip_hotel_service_d2"
-    ]
-  },
-  {
     "id": "tip_10_percent_trick",
     "moduleId": "smart_shopping",
     "title": "The 10% trick",
@@ -30,42 +15,27 @@
     ]
   },
   {
-    "id": "tip_20_double",
+    "id": "tip_18_percent",
     "moduleId": "smart_shopping",
-    "title": "20% in one step",
-    "concept": "20% is exactly twice 10%. Since you already know how to find 10% instantly by moving the decimal left, you can always nail a 20% tip in two steps — no guessing, no fumbling with the calculator at the table.",
-    "shortcut": "Move the decimal left (10%), then double it (20%). Bill $65 → 10% = $6.50 → double → $13.00 tip, $78.00 total. 20% is both the easiest tip to calculate precisely and the standard expectation at most restaurants in the US.",
-    "example": "Bill: $65.00\n10% = $6.50\n×2 = $13.00 tip\nTotal = $78.00",
+    "title": "Tipping shortcuts \u2014 15%, 18%, 20%",
+    "concept": "Every tip percentage builds on 10%. Once you can find 10% instantly (move the decimal left), 20% is double, 15% is 10% plus half, and 18% is 10% + 5% + a small 3% bump. The bigger your bill, the better the $X-per-$100 rule works.",
+    "shortcut": "Per $100 in bill: 20% = $20, 18% = $18, 15% = $15. For $240, multiply by 2.4. For odd amounts, find 10% first, then build from there. 18% = 10% + 5% + 3%. 20% = double 10%. 15% = 10% + half of 10%.",
+    "example": "Bill $46:\n10% = $4.60\n5% = $2.30\n3% \u2248 $1.38\n18% tip \u2248 $8.28\n\nBill $240:\n20% per $100 = $20\n\u00d7 2.4 = $48 tip",
     "quizTemplateIds": [
       "tip_double_ten",
-      "tip_twenty_total",
-      "tip_coffee_d1",
-      "tip_total_20_d1",
-      "tip_total_25_d2"
-    ]
-  },
-  {
-    "id": "tip_pre_or_post_tax",
-    "moduleId": "smart_shopping",
-    "title": "Tip on subtotal or total?",
-    "concept": "In the US, tipping on the pre-tax subtotal is technically correct — you're tipping on the service, not the government's cut. Many people tip on the full total because it's easier. The difference is small but adds up on larger bills.",
-    "shortcut": "Pre-tax tip is always the lower number. On a $50 meal with 10% tax, 20% pre-tax = $10 vs 20% post-tax = $11. Both are acceptable — knowing the difference means you're making a deliberate choice, not leaving money on the table by accident.",
-    "example": "Subtotal: $50.00\nTax (10%): $5.00\n20% on $50 = $10.00 (pre-tax)\n20% on $55 = $11.00 (post-tax)",
-    "quizTemplateIds": [
-      "tip_pre_tax",
-      "tip_post_tax",
-      "tip_post_tax_scenario_d3",
-      "tip_hair_salon_d2",
-      "tip_25_pct_d2"
+      "tip_18_d2",
+      "tip_per_hundred_d1",
+      "tip_total_25_d2",
+      "tip_post_tax_scenario_d3"
     ]
   },
   {
     "id": "tip_split_bill",
     "moduleId": "smart_shopping",
-    "title": "Split the bill right",
-    "concept": "Always add the tip to the full bill before splitting. If you split first then tip separately, each person tips on a smaller amount and the server gets shortchanged.",
-    "shortcut": "The right order: Total → add tip → divide by people. A $80 bill with 20% tip becomes $96 total. Split 4 ways: $24 each. Never divide first — you lose cents in rounding and everyone underpays.",
-    "example": "Bill: $80.00\n20% tip = $16.00\nTotal = $96.00\nPer person = $24.00",
+    "title": "Split any check in your head",
+    "concept": "Bill splitting isn't a math problem \u2014 it's a social moment. Be the person at the table who solves the check in five seconds, while everyone else is still squinting at calculators. The trick: tip the full bill first, then divide. Splitting then tipping shortchanges the server and confuses everyone.",
+    "shortcut": "Always: Total \u2192 add tip \u2192 divide by people. A $80 bill, 20% tip = $96, split 4 ways = $24 each. For odd numbers (3 or 5 people), round the per-person share up a dollar \u2014 covers the math and the awkward.",
+    "example": "Bill: $80.00\n20% tip = $16.00\nTotal = $96.00\nPer person (\u00f7 4) = $24.00\n\nOdd split:\n$120 bill, 20% tip = $144\n\u00f7 3 = $48 each",
     "quizTemplateIds": [
       "tip_split_tip",
       "tip_bill_total",
@@ -75,42 +45,12 @@
     ]
   },
   {
-    "id": "discount_25_percent",
-    "moduleId": "smart_shopping",
-    "title": "The 25% shortcut",
-    "concept": "25% off means you pay 75% of the original price. Since 25% equals one quarter (¼), you can find the discount instantly by dividing the price by 4.",
-    "shortcut": "Divide by 4 to find 25% of any price. That's your savings. Subtract from original to get the sale price. For 50% off, divide by 2. For 10% off, just move the decimal.",
-    "example": "Original: $120.00\n÷ 4 = $30.00\nYou pay = $90.00",
-    "quizTemplateIds": [
-      "discount_amount_basic",
-      "discount_sale_price",
-      "discount_25_d1",
-      "discount_30_d2",
-      "discount_clearance_d2"
-    ]
-  },
-  {
-    "id": "discount_10_percent",
-    "moduleId": "smart_shopping",
-    "title": "10% off — the gateway discount",
-    "concept": "10% is the foundation of all discount math. It's the easiest percentage to calculate: just move the decimal point one place to the left. Every other discount — 20%, 25%, 30% — is built from this single move.",
-    "shortcut": "Move the decimal left to find 10%. $80 → $8 off. $120 → $12 off. For 20% off, double that number. For 5% off, halve it. This one move unlocks every discount on any price tag.",
-    "example": "Original: $80.00\n10% = $8.00 (move decimal)\nYou pay = $72.00",
-    "quizTemplateIds": [
-      "discount_ten_basic",
-      "discount_ten_sale_price",
-      "discount_20_d1",
-      "discount_15_d1",
-      "discount_online_d2"
-    ]
-  },
-  {
     "id": "discount_bogo",
     "moduleId": "smart_shopping",
-    "title": "Buy 2 get 1 free — the real math",
-    "concept": "\"Buy 2 get 1 free\" is 33% off, not 50%. You pay for 2 items and receive 3. The free item's cost is spread across all three, so each item effectively costs two-thirds of the full price.",
-    "shortcut": "Per-item cost = (2 × full price) ÷ 3. Total saving = 1 full item's price. For $9 shampoo: pay $18 for 3 → $6 per bottle, save $9 total. Ask: do you actually need all 3?",
-    "example": "Shampoo: $9.00 each\nBuy 2 get 1 free\nYou pay: $18.00 for 3\nPer bottle = $6.00\nTotal saving = $9.00",
+    "title": "The real cost of 'free' deals",
+    "concept": "'Free' is rarely free. Buy 2 Get 1 Free is 33% off, not 50%. Buy 1 Get 1 Half Off is 25% off, not 50%. 'Buy 3 for $10' is just a unit-price calculation in disguise. The math the store hopes you skip: per-item cost = total paid \u00f7 items received.",
+    "shortcut": "Per-item cost = total paid \u00f7 items received. B2G1 free: pay 2, get 3, per-item = (2 \u00d7 price) \u00f7 3. B1G1 half off: pay 1.5, get 2, per-item = 0.75 \u00d7 price. Always ask: do I actually need all of them?",
+    "example": "Shampoo $9 each, B2G1 free:\nPay $18 for 3\nPer bottle = $6\nReal discount = 33%\n\nB1G1 50% off $20:\nPay $30 for 2\nPer item = $15\nReal discount = 25%",
     "quizTemplateIds": [
       "bogo_per_item",
       "bogo_savings",
@@ -123,84 +63,69 @@
     "id": "discount_stacked",
     "moduleId": "smart_shopping",
     "title": "Stacking discounts",
-    "concept": "Two discounts stacked together don't simply add up. 20% off plus 10% off is NOT 30% off — the second discount applies to the already-reduced price. You always save a little less than the sum suggests.",
-    "shortcut": "Apply discounts one at a time. $100 → 20% off → $80 → 10% off $80 → $72. Saving: $28, not $30. Quick rule: each 10% combo loses about 1% to stacking. Two 50%-off coupons would only be 75% off, not 100%.",
-    "example": "Original: $100.00\n− 20% = $80.00\n− 10% of $80 = $8.00\nFinal: $72.00\n(Not $70.00!)",
+    "concept": "Two discounts stacked don't add up. 20% off plus 10% off isn't 30% off \u2014 the second discount applies to the already-reduced price. You always save a little less than the sum suggests. Before you stack, know the singles: 10% = move decimal, 25% = divide by 4, 50% = halve it.",
+    "shortcut": "Apply discounts one at a time. $100 \u2192 20% off \u2192 $80 \u2192 10% off \u2192 $72. Saving: $28, not $30. Quick rule: each 10% combo loses about 1% to stacking. Two 50%-off coupons would only be 75% off, not 100%.",
+    "example": "Original: $100.00\n\u2212 20% = $80.00\n\u2212 10% of $80 = $8.00\nFinal: $72.00\n(Not $70.00!)\n\nSingles for reference:\n10% off $80 = $8 off\n25% off $80 = $20 off (\u00f74)\n50% off $80 = $40 off (\u00f72)",
     "quizTemplateIds": [
-      "stacked_discount_final",
+      "discount_25_d1",
       "stacked_discount_saving_calc",
+      "stacked_discount_final",
       "stacked_scenario_d3",
-      "discount_budget_d3",
-      "disc_stacked_extra_d2"
+      "discount_budget_d3"
     ]
   },
   {
-    "id": "discount_unit_price",
+    "id": "discount_coupon_vs_cashback",
     "moduleId": "smart_shopping",
-    "title": "Compare unit prices",
-    "concept": "Bigger packs look cheaper, but they're not always cheaper per item. Divide the total price by the number of items to find the unit price — the true cost of one — so you can make a fair comparison.",
-    "shortcut": "Unit price = total price ÷ quantity. 6-pack for $7.20 → $7.20 ÷ 6 = $1.20 each. Singles at $1.49? The pack wins. Always check before you grab the bigger size — it's not always the better deal.",
-    "example": "6-pack: $7.20\n÷ 6 items = $1.20 each\nSingles: $1.49 each\nPack saves: $0.29 per item",
+    "title": "Coupon vs cashback \u2014 which saves more?",
+    "concept": "A 20% coupon and 5% cashback aren't the same. The coupon applies to the sticker price. The cashback applies to what you actually pay after the coupon. They stack, but the order matters \u2014 coupon first, cashback second, on the smaller amount.",
+    "shortcut": "Coupon saves: price \u00d7 coupon%. Cashback saves: (price after coupon) \u00d7 cashback%. Bigger % almost always wins outright. For stacked deals: do coupon first, cashback on the remainder.",
+    "example": "Item $100:\n20% coupon = $80 paid\n5% cashback on $80 = $4 back\nNet cost = $76\n\nVs no coupon:\n5% cashback on $100 = $5\nNet cost = $95\nCoupon wins by $19",
     "quizTemplateIds": [
-      "unit_price_check",
-      "unit_price_bulk_pack",
-      "unit_price_oz_d2",
-      "discount_50_d1",
-      "disc_unit_price_compare_d1"
+      "coupon_save_d1",
+      "cashback_amount_d1",
+      "coupon_plus_cashback_d2",
+      "coupon_vs_cashback_compare_d3",
+      "coupon_cashback_final_d3"
     ]
   },
   {
-    "id": "budget_check",
-    "moduleId": "money_math",
-    "title": "Is this within my budget?",
-    "concept": "Knowing if you can afford something isn't just about the price tag — it's about what you have left after everything else. Subtract your known expenses from your total budget and compare the remainder to what you're considering buying.",
-    "shortcut": "Budget − what you've spent = what's left. If the item costs less than what's left, you're fine. Build this as a 10-second mental check before any discretionary purchase: what's my budget, what have I spent, what's remaining?",
-    "example": "Budget: $150.00\nGroceries: $45.00\nTransport: $20.00\nRemaining: $85.00\nItem costs $79.99 → within budget ✓",
+    "id": "discount_price_plus_tax",
+    "moduleId": "smart_shopping",
+    "title": "What you actually pay: discount + tax",
+    "concept": "You see '30% off' but you still pay sales tax on the sale price. The checkout total isn't the sticker price. Sale price \u00d7 (1 + tax%) = real total. Most people forget the tax or apply it to the original price.",
+    "shortcut": "Discount first, tax second. Never the other way. Sale price = original \u00d7 (1 \u2212 discount%). Final = sale \u00d7 (1 + tax%). Quick: knock off the discount, add ~10% for tax, check your budget.",
+    "example": "$80 shirt, 30% off, 9% tax:\nSale price = $80 \u00d7 0.70 = $56\nWith tax = $56 \u00d7 1.09 = $61.04\n\nForgot the tax? You'd budget $56 and be short $5.",
     "quizTemplateIds": [
-      "budget_remaining",
-      "budget_after_purchase",
-      "budget_trip_d2",
-      "budget_weekly_d2",
-      "cart_estimate_d1"
+      "disc_tax_simple_d1",
+      "disc_tax_amount_d2",
+      "disc_tax_nonround_d2",
+      "disc_tax_stacked_d3",
+      "disc_tax_compare_d3"
     ]
   },
   {
-    "id": "subscription_math",
-    "moduleId": "money_math",
-    "title": "Monthly ↔ yearly costs",
-    "concept": "Subscription services quote monthly prices because they look smaller. $12.99/month sounds cheap until you realise it's $155.88/year. Always convert to yearly before subscribing — it's the only way to see the real annual impact on your budget.",
-    "shortcut": "Monthly → yearly: multiply by 12. Yearly → monthly: divide by 12. $10/month = $120/year. $99/year = $8.25/month. When comparing plans, always put them on the same basis — monthly vs monthly, or yearly vs yearly.",
-    "example": "Streaming: $14.99/month\n× 12 = $179.88/year\nAnnual plan: $149.99\nSaving: $29.89/year",
+    "id": "discount_membership_worth",
+    "moduleId": "smart_shopping",
+    "title": "Is Uber One / Costco / DashPass worth it?",
+    "concept": "Membership programs charge a fee for per-use savings. Below break-even, the membership loses money. Above break-even, every additional use is pure savings. The math: break-even uses = fee \u00f7 saving per use.",
+    "shortcut": "Break-even uses = fee \u00f7 per-use saving (round up). If you'll use it more than that in the same period, it pays for itself. DashPass $10/mo saving $3/order \u2192 4 orders/mo breaks even. Order 8/mo \u2192 save $14/mo.",
+    "example": "DashPass: $10/month, save $3/delivery\nBreak-even = $10 \u00f7 $3 = 4 deliveries/mo\n\nCostco: $65/year, save $8/visit\nBreak-even = $65 \u00f7 $8 = 9 visits/yr\n\nUber One: $10/mo, save $2/ride\nBreak-even = 5 rides/mo",
     "quizTemplateIds": [
-      "monthly_to_yearly",
-      "yearly_to_monthly",
-      "subscription_compare_d2",
-      "yearly_cost_d1",
-      "subscription_streaming_d1"
-    ]
-  },
-  {
-    "id": "price_per_use",
-    "moduleId": "money_math",
-    "title": "Price per use",
-    "concept": "The real cost of anything isn't the sticker price — it's the cost per use. A $30 item used 100 times costs $0.30 per use. The same $30 item used only 5 times costs $6.00 per use. Thinking in cost-per-use reveals which purchases actually have value.",
-    "shortcut": "Cost per use = total price ÷ estimated uses. A $100 gym membership for 50 sessions = $2 per session. A $5 coffee machine pod = $5 per cup. Estimate your realistic usage honestly — that's the number that matters.",
-    "example": "Coffee maker: $60.00\nUses per year: 300\nCost per cup: $0.20\nCafé coffee: $4.50/cup\nAnnual saving: $1,290",
-    "quizTemplateIds": [
-      "cost_per_use_calc",
-      "cost_per_use_scenario",
-      "cost_per_use_gym_d2",
-      "mm_cpu_book_d1",
-      "mm_cpu_daily_d2"
+      "membership_breakeven_d1",
+      "membership_annual_d1",
+      "membership_net_saving_d2",
+      "membership_compare_d3",
+      "membership_decision_d3"
     ]
   },
   {
     "id": "sales_tax_quick",
     "moduleId": "money_math",
     "title": "Add sales tax in your head",
-    "concept": "Sales tax is usually 6–10% depending on your state. Since it's close to 10%, use 10% as your anchor and nudge down. You'll be within cents every time.",
+    "concept": "Sales tax is usually 6\u201310% depending on your state. Since it's close to 10%, use 10% as your anchor and nudge down. You'll be within cents every time.",
     "shortcut": "For 8% tax: find 10% (move the decimal left), then subtract 20% of that. On a $40 item: 10% = $4.00, minus $0.80 = $3.20 tax. Total = $43.20. Rounding up to 10% and ignoring the rest works fine for budgeting.",
-    "example": "Item: $40.00\n10% = $4.00\n−20% of $4 = $0.80\nTax ≈ $3.20\nTotal ≈ $43.20",
+    "example": "Item: $40.00\n10% = $4.00\n\u221220% of $4 = $0.80\nTax \u2248 $3.20\nTotal \u2248 $43.20",
     "quizTemplateIds": [
       "tax_amount",
       "price_with_tax",
@@ -214,8 +139,8 @@
     "moduleId": "money_math",
     "title": "Estimate your cart total",
     "concept": "You don't need exact prices to stay on budget. Round each item to the nearest dollar as you shop, keep a running mental sum, and you'll hit the register knowing you're covered.",
-    "shortcut": "Round every item up: $3.79 → $4, $8.49 → $9, $1.19 → $2. Add the rounded numbers. Your estimate will land a dollar or two above the actual total — exactly the right direction for budgeting. Never try to track cents.",
-    "example": "Eggs: $3.79 → $4\nBread: $2.89 → $3\n4 cans × $1.29 → $6\nEstimate = $13\nActual: $11.95",
+    "shortcut": "Round every item up: $3.79 \u2192 $4, $8.49 \u2192 $9, $1.19 \u2192 $2. Add the rounded numbers. Your estimate will land a dollar or two above the actual total \u2014 exactly the right direction for budgeting. Never try to track cents.",
+    "example": "Eggs: $3.79 \u2192 $4\nBread: $2.89 \u2192 $3\n4 cans \u00d7 $1.29 \u2192 $6\nEstimate = $13\nActual: $11.95",
     "quizTemplateIds": [
       "cart_total",
       "unit_price_check",
@@ -225,12 +150,57 @@
     ]
   },
   {
+    "id": "budget_check",
+    "moduleId": "money_math",
+    "title": "Is this within my budget?",
+    "concept": "Knowing if you can afford something isn't just about the price tag \u2014 it's about what you have left after everything else. Subtract your known expenses from your total budget and compare the remainder to what you're considering buying.",
+    "shortcut": "Budget \u2212 what you've spent = what's left. If the item costs less than what's left, you're fine. Build this as a 10-second mental check before any discretionary purchase: what's my budget, what have I spent, what's remaining?",
+    "example": "Budget: $150.00\nGroceries: $45.00\nTransport: $20.00\nRemaining: $85.00\nItem costs $79.99 \u2192 within budget \u2713",
+    "quizTemplateIds": [
+      "budget_remaining",
+      "budget_after_purchase",
+      "budget_trip_d2",
+      "budget_weekly_d2",
+      "cart_estimate_d1"
+    ]
+  },
+  {
+    "id": "subscription_math",
+    "moduleId": "money_math",
+    "title": "Monthly \u2194 yearly costs",
+    "concept": "Subscription services quote monthly prices because they look smaller. $12.99/month sounds cheap until you realise it's $155.88/year. Always convert to yearly before subscribing \u2014 it's the only way to see the real annual impact on your budget.",
+    "shortcut": "Monthly \u2192 yearly: multiply by 12. Yearly \u2192 monthly: divide by 12. $10/month = $120/year. $99/year = $8.25/month. When comparing plans, always put them on the same basis \u2014 monthly vs monthly, or yearly vs yearly.",
+    "example": "Streaming: $14.99/month\n\u00d7 12 = $179.88/year\nAnnual plan: $149.99\nSaving: $29.89/year",
+    "quizTemplateIds": [
+      "monthly_to_yearly",
+      "yearly_to_monthly",
+      "subscription_compare_d2",
+      "yearly_cost_d1",
+      "subscription_streaming_d1"
+    ]
+  },
+  {
+    "id": "price_per_use",
+    "moduleId": "money_math",
+    "title": "Price per use",
+    "concept": "The real cost of anything isn't the sticker price \u2014 it's the cost per use. A $30 item used 100 times costs $0.30 per use. The same $30 item used only 5 times costs $6.00 per use. Thinking in cost-per-use reveals which purchases actually have value.",
+    "shortcut": "Cost per use = total price \u00f7 estimated uses. A $100 gym membership for 50 sessions = $2 per session. A $5 coffee machine pod = $5 per cup. Estimate your realistic usage honestly \u2014 that's the number that matters.",
+    "example": "Coffee maker: $60.00\nUses per year: 300\nCost per cup: $0.20\nCaf\u00e9 coffee: $4.50/cup\nAnnual saving: $1,290",
+    "quizTemplateIds": [
+      "cost_per_use_calc",
+      "cost_per_use_scenario",
+      "cost_per_use_gym_d2",
+      "mm_cpu_book_d1",
+      "mm_cpu_daily_d2"
+    ]
+  },
+  {
     "id": "net_pay_check",
     "moduleId": "salary",
-    "title": "Gross vs net — what you actually keep",
-    "concept": "Your gross pay is what you earn before taxes. Net pay is what arrives in your bank account. Between federal tax, state tax, Social Security, and Medicare, most workers keep 70–75 cents of every dollar earned. Always plan your budget with net, never gross.",
-    "shortcut": "Quick estimate: take 25–30% off gross to get net. Earning $3,000/month gross? Expect $2,100–$2,250 net. For annual salary: divide by 12 to get monthly gross, then knock off 25–30% for a working budget number.",
-    "example": "Gross pay: $3,000/month\n−25% deductions = $750\nNet pay ≈ $2,250\n\n$60,000 salary\n÷ 12 = $5,000/month gross\n−25% = $3,750 net",
+    "title": "Gross vs net \u2014 what you actually keep",
+    "concept": "Your gross pay is what you earn before taxes. Net pay is what arrives in your bank account. Between federal tax, state tax, Social Security, and Medicare, most workers keep 70\u201375 cents of every dollar earned. Always plan your budget with net, never gross.",
+    "shortcut": "Quick estimate: take 25\u201330% off gross to get net. Earning $3,000/month gross? Expect $2,100\u2013$2,250 net. For annual salary: divide by 12 to get monthly gross, then knock off 25\u201330% for a working budget number.",
+    "example": "Gross pay: $3,000/month\n\u221225% deductions = $750\nNet pay \u2248 $2,250\n\n$60,000 salary\n\u00f7 12 = $5,000/month gross\n\u221225% = $3,750 net",
     "quizTemplateIds": [
       "net_pay_deduction",
       "annual_to_monthly_pay",
@@ -243,9 +213,9 @@
     "id": "raise_impact",
     "moduleId": "salary",
     "title": "What a % raise really adds",
-    "concept": "A percentage raise sounds exciting, but the real number is what lands in your paycheck. A 5% raise on $60,000 is $3,000 more per year — about $250/month before taxes. Knowing the actual dollar impact helps you negotiate and plan clearly.",
-    "shortcut": "Annual raise = current salary × raise% ÷ 100. Monthly bump = ÷ 12. After-tax estimate: multiply by 0.70. Quick mental math: 5% on any salary is half of 10% — and 10% is just move the decimal.",
-    "example": "Salary: $60,000\n5% raise = $3,000/year\nPer month = $250\nAfter tax ≈ $175/month",
+    "concept": "A percentage raise sounds exciting, but the real number is what lands in your paycheck. A 5% raise on $60,000 is $3,000 more per year \u2014 about $250/month before taxes. Knowing the actual dollar impact helps you negotiate and plan clearly.",
+    "shortcut": "Annual raise = current salary \u00d7 raise% \u00f7 100. Monthly bump = \u00f7 12. After-tax estimate: multiply by 0.70. Quick mental math: 5% on any salary is half of 10% \u2014 and 10% is just move the decimal.",
+    "example": "Salary: $60,000\n5% raise = $3,000/year\nPer month = $250\nAfter tax \u2248 $175/month",
     "quizTemplateIds": [
       "raise_dollar_amount",
       "raise_new_salary",
@@ -257,10 +227,10 @@
   {
     "id": "overtime_calc",
     "moduleId": "salary",
-    "title": "Overtime pay — time and a half",
-    "concept": "Overtime in the US is 1.5× your regular rate for hours worked beyond 40 per week. Those extra hours pay significantly more — 8 hours of overtime at $20/hr earns you $240, not $160.",
-    "shortcut": "Overtime rate = regular rate × 1.5. Multiply by overtime hours for your extra pay. At $20/hr: overtime rate = $30. 8 hours × $30 = $240 extra. Calculate before committing to a long week — overtime adds up fast.",
-    "example": "Regular rate: $20/hr\nOvertime rate: $20 × 1.5 = $30/hr\n8 OT hours × $30 = $240\nVs. 8 regular hours = $160",
+    "title": "Overtime pay \u2014 time and a half",
+    "concept": "Overtime in the US is 1.5\u00d7 your regular rate for hours worked beyond 40 per week. Those extra hours pay significantly more \u2014 8 hours of overtime at $20/hr earns you $240, not $160.",
+    "shortcut": "Overtime rate = regular rate \u00d7 1.5. Multiply by overtime hours for your extra pay. At $20/hr: overtime rate = $30. 8 hours \u00d7 $30 = $240 extra. Calculate before committing to a long week \u2014 overtime adds up fast.",
+    "example": "Regular rate: $20/hr\nOvertime rate: $20 \u00d7 1.5 = $30/hr\n8 OT hours \u00d7 $30 = $240\nVs. 8 regular hours = $160",
     "quizTemplateIds": [
       "overtime_pay_calc",
       "overtime_d2",
@@ -273,9 +243,9 @@
     "id": "pay_period_convert",
     "moduleId": "salary",
     "title": "Compare pay across periods",
-    "concept": "Job offers quote pay in different periods — weekly, bi-weekly, monthly, annual. Bi-weekly (every two weeks) is 26 pay periods per year, not 24. Converting to annual first puts every offer on the same footing.",
-    "shortcut": "Annual ÷ 52 = weekly. Annual ÷ 26 = bi-weekly. Annual ÷ 12 = monthly. In reverse: bi-weekly × 26 = annual. The most common mistake: treating bi-weekly as semi-monthly (24 periods instead of 26) — it under-counts two paychecks a year.",
-    "example": "$50,000/year\n÷ 26 = $1,923 bi-weekly\n÷ 12 = $4,167/month\n÷ 52 = $962/week",
+    "concept": "Job offers quote pay in different periods \u2014 weekly, bi-weekly, monthly, annual. Bi-weekly (every two weeks) is 26 pay periods per year, not 24. Converting to annual first puts every offer on the same footing.",
+    "shortcut": "Annual \u00f7 52 = weekly. Annual \u00f7 26 = bi-weekly. Annual \u00f7 12 = monthly. In reverse: bi-weekly \u00d7 26 = annual. The most common mistake: treating bi-weekly as semi-monthly (24 periods instead of 26) \u2014 it under-counts two paychecks a year.",
+    "example": "$50,000/year\n\u00f7 26 = $1,923 bi-weekly\n\u00f7 12 = $4,167/month\n\u00f7 52 = $962/week",
     "quizTemplateIds": [
       "biweekly_to_annual",
       "weekly_to_annual",
@@ -285,12 +255,27 @@
     ]
   },
   {
+    "id": "inflation_adjusted_raise",
+    "moduleId": "salary",
+    "title": "Is your raise actually a raise?",
+    "concept": "A 3% raise sounds great until inflation is 4%. Your purchasing power actually decreased. Real raise = nominal raise \u2212 inflation rate. If inflation outpaces your raise, you're effectively taking a pay cut \u2014 you can buy less with your new salary than you could before.",
+    "shortcut": "Real raise % = raise % \u2212 inflation %. Real dollar change = salary \u00d7 real raise %. A 3% raise with 4% inflation: real change = \u22121%, meaning you lost purchasing power. Always compare your raise to the current inflation rate.",
+    "example": "Salary: $65,000\nRaise: 3% = $1,950\nInflation: 4% = $2,600\nReal change: \u2212$650/year\nYou're actually losing money",
+    "quizTemplateIds": [
+      "inflation_raise_real_d1",
+      "inflation_raise_dollars_d1",
+      "inflation_raise_scenario_d2",
+      "inflation_raise_compare_d2",
+      "inflation_raise_negative_d3"
+    ]
+  },
+  {
     "id": "simple_interest",
     "moduleId": "investing",
-    "title": "Simple interest — the baseline",
+    "title": "Simple interest \u2014 the baseline",
     "concept": "Simple interest is the most transparent form of interest: you earn the same amount each period on the original principal. No compounding, no surprises. It's used in short-term loans, bonds, and savings accounts as a reference point.",
-    "shortcut": "Interest = Principal × Rate × Time. $1,000 at 5%/year for 3 years = $1,000 × 0.05 × 3 = $150 total interest. Total balance = $1,150. The formula never changes — just substitute your numbers.",
-    "example": "Principal: $1,000\nRate: 5%/year\nTime: 3 years\nInterest = $1,000 × 5% × 3 = $150\nBalance = $1,150",
+    "shortcut": "Interest = Principal \u00d7 Rate \u00d7 Time. $1,000 at 5%/year for 3 years = $1,000 \u00d7 0.05 \u00d7 3 = $150 total interest. Total balance = $1,150. The formula never changes \u2014 just substitute your numbers.",
+    "example": "Principal: $1,000\nRate: 5%/year\nTime: 3 years\nInterest = $1,000 \u00d7 5% \u00d7 3 = $150\nBalance = $1,150",
     "quizTemplateIds": [
       "simple_interest_earned",
       "total_balance_with_interest",
@@ -302,10 +287,10 @@
   {
     "id": "rule_of_72",
     "moduleId": "investing",
-    "title": "The Rule of 72 — when does it double?",
-    "concept": "The Rule of 72 is a mental math shortcut: divide 72 by the annual interest rate to estimate how many years it takes for money to double. It works for any growth rate — investment returns, debt interest, even inflation.",
-    "shortcut": "Years to double = 72 ÷ annual rate. At 8%: 72 ÷ 8 = 9 years. At 6%: 72 ÷ 6 = 12 years. At 12%: 72 ÷ 12 = 6 years. Works equally well in reverse: if something doubles in 10 years, the implied rate is ~7.2%.",
-    "example": "Savings at 4%/year:\n72 ÷ 4 = 18 years to double\n\nDebt at 12%/year:\n72 ÷ 12 = 6 years to double\n(if you only pay minimums)",
+    "title": "The Rule of 72 \u2014 when does it double?",
+    "concept": "The Rule of 72 is a mental math shortcut: divide 72 by the annual interest rate to estimate how many years it takes for money to double. It works for any growth rate \u2014 investment returns, debt interest, even inflation.",
+    "shortcut": "Years to double = 72 \u00f7 annual rate. At 8%: 72 \u00f7 8 = 9 years. At 6%: 72 \u00f7 6 = 12 years. At 12%: 72 \u00f7 12 = 6 years. Works equally well in reverse: if something doubles in 10 years, the implied rate is ~7.2%.",
+    "example": "Savings at 4%/year:\n72 \u00f7 4 = 18 years to double\n\nDebt at 12%/year:\n72 \u00f7 12 = 6 years to double\n(if you only pay minimums)",
     "quizTemplateIds": [
       "rule_of_72_years",
       "rule72_d1",
@@ -317,10 +302,10 @@
   {
     "id": "roi_basic",
     "moduleId": "investing",
-    "title": "Return on investment — the one number",
-    "concept": "ROI (Return on Investment) puts every investment on the same scale: what percentage did you gain relative to what you put in? A $200 gain on a $1,000 investment is 20% ROI — regardless of how long it took.",
-    "shortcut": "ROI% = (gain ÷ cost) × 100. Gain $50 on a $500 investment → $50 ÷ $500 × 100 = 10% ROI. To find the dollar gain from an ROI%: cost × ROI% ÷ 100. Use ROI to compare any two investments directly.",
-    "example": "Bought: $500\nSold for: $600\nGain = $100\nROI = $100 ÷ $500 × 100 = 20%",
+    "title": "Return on investment \u2014 the one number",
+    "concept": "ROI (Return on Investment) puts every investment on the same scale: what percentage did you gain relative to what you put in? A $200 gain on a $1,000 investment is 20% ROI \u2014 regardless of how long it took.",
+    "shortcut": "ROI% = (gain \u00f7 cost) \u00d7 100. Gain $50 on a $500 investment \u2192 $50 \u00f7 $500 \u00d7 100 = 10% ROI. To find the dollar gain from an ROI%: cost \u00d7 ROI% \u00f7 100. Use ROI to compare any two investments directly.",
+    "example": "Bought: $500\nSold for: $600\nGain = $100\nROI = $100 \u00f7 $500 \u00d7 100 = 20%",
     "quizTemplateIds": [
       "roi_percent_calc",
       "dollar_return_calc",
@@ -330,236 +315,11 @@
     ]
   },
   {
-    "id": "credit_card_interest",
-    "moduleId": "debt",
-    "title": "How credit card interest works",
-    "concept": "Credit card APR sounds small — 20% — but it compounds monthly. The interest charge each month is APR ÷ 12 × balance. On a $2,000 balance at 20% APR you're paying ~$33 every single month just in interest.",
-    "shortcut": "Monthly interest = balance × APR% ÷ 12. To estimate: move the decimal left two places (gives 1%), multiply by your APR, divide by 12. $2,000 × 20% ÷ 12 = $33.33/month.",
-    "example": "Balance: $2,000 · APR: 20%\nMonthly rate = 20% ÷ 12 = 1.67%\nInterest = $2,000 × 1.67% = $33.33",
-    "quizTemplateIds": [
-      "cc_monthly_interest",
-      "cc_monthly_interest_scenario",
-      "cc_annual_interest",
-      "cc_interest_year_d3",
-      "cc_rate_check_d1"
-    ]
-  },
-  {
-    "id": "minimum_payment_trap",
-    "moduleId": "debt",
-    "title": "The minimum payment trap",
-    "concept": "Credit card minimum payments are usually 2% of your balance. They feel manageable — but they're designed to keep you in debt longer. A $3,000 balance at 2% minimum means paying only $60/month while interest charges eat most of it.",
-    "shortcut": "Minimum payment ≈ balance × 2%. Always pay more than the minimum. Even an extra $50/month can cut years off your payoff timeline.",
-    "example": "Balance: $3,000\nMinimum = $3,000 × 2% = $60\nAt 20% APR, interest alone = $50/month\nOnly $10 goes to principal!",
-    "quizTemplateIds": [
-      "cc_minimum_payment",
-      "cc_minimum_payment_scenario",
-      "cc_min_balance_d1",
-      "cc_new_balance_d2",
-      "cc_interest_check_d2"
-    ]
-  },
-  {
-    "id": "loan_true_cost",
-    "moduleId": "debt",
-    "title": "The true cost of a loan",
-    "concept": "The sticker price of a loan is not what you pay. Total repayment = monthly payment × number of months. The difference between that total and your original loan amount is pure interest — money the lender earns.",
-    "shortcut": "Total cost = payment × months. Interest paid = total cost − loan amount. Always calculate these before signing. A $6,000 loan at $200/month for 36 months costs $7,200 — $1,200 in interest.",
-    "example": "Loan: $6,000\nPayment: $200/month × 36 months\nTotal paid: $7,200\nInterest: $7,200 − $6,000 = $1,200",
-    "quizTemplateIds": [
-      "loan_total_repayment",
-      "loan_heavy_interest",
-      "loan_total_interest_paid",
-      "loan_repayment_d1",
-      "loan_interest_calc_d2"
-    ]
-  },
-  {
-    "id": "debt_to_income",
-    "moduleId": "debt",
-    "title": "Debt-to-income ratio",
-    "concept": "DTI ratio = total monthly debt payments ÷ monthly income × 100. Lenders use this to assess risk. Under 36% is healthy; over 43% is a red flag for mortgage approval. It tells you how much of your income is already spoken for.",
-    "shortcut": "DTI% = monthly debt ÷ monthly income × 100. If you earn $5,000/month and pay $1,500 in debt: $1,500 ÷ $5,000 × 100 = 30% DTI. Keep it under 36%.",
-    "example": "Monthly income: $5,000\nDebt payments: $1,500\nDTI = $1,500 ÷ $5,000 × 100 = 30%",
-    "quizTemplateIds": [
-      "dti_ratio_basic",
-      "dti_ratio_scenario",
-      "dti_add_payments",
-      "dti_housing_only",
-      "dti_check_d2"
-    ]
-  },
-  {
-    "id": "extra_payment_power",
-    "moduleId": "debt",
-    "title": "The power of extra payments",
-    "concept": "Every extra dollar you pay toward debt saves you that dollar's worth of future interest. The annual interest saving from an extra monthly payment equals extra payment × APR%. Small extra payments compound over time into big savings.",
-    "shortcut": "Annual interest saved ≈ extra payment × APR%. Paying an extra $100/month on a 20% APR card saves $20/year per $100 — plus you reduce the principal faster, which shrinks future interest too.",
-    "example": "Extra payment: $100 · APR: 20%\nAnnual saving ≈ $100 × 20% = $20\nPlus reduced principal each month",
-    "quizTemplateIds": [
-      "cc_extra_payment_saving",
-      "cc_balance_after_interest",
-      "cc_extra_d1",
-      "cc_annual_cost_d2",
-      "cc_balance_interest_d2"
-    ]
-  },
-  {
-    "id": "housing_rent_affordability",
-    "moduleId": "housing",
-    "title": "Rent affordability (28% rule)",
-    "concept": "The 28% rule says your rent shouldn't exceed 28% of your gross monthly income. It's a quick gut check when apartment shopping — if a place costs more than 28% of what you earn before taxes, it's going to squeeze your budget.",
-    "shortcut": "Max rent = monthly gross income × 0.28. For $5,000/month salary: $5,000 × 0.28 = $1,400 max rent. Quick estimate: take a quarter of your salary and add a little.",
-    "example": "Monthly salary: $5,000\nMax rent: $5,000 × 28% = $1,400",
-    "quizTemplateIds": [
-      "rent_afford_basic_d1",
-      "rent_afford_scenario_d1",
-      "rent_afford_reverse_d2",
-      "rent_afford_compare_d2",
-      "rent_afford_annual_d3"
-    ]
-  },
-  {
-    "id": "housing_rent_increase",
-    "moduleId": "housing",
-    "title": "Rent increase math",
-    "concept": "When your landlord raises rent by a percentage, the dollar impact depends on your current rent. A 5% increase on $1,200 hits differently than 5% on $2,500. Knowing the math helps you negotiate or budget for renewals.",
-    "shortcut": "Increase = current rent × increase%. New rent = current × (1 + increase%). A 6% bump on $1,500 = $90 more per month, $1,080 more per year.",
-    "example": "Current rent: $1,500\nIncrease: 6%\nMonthly increase: $90\nNew rent: $1,590",
-    "quizTemplateIds": [
-      "rent_increase_basic_d1",
-      "rent_increase_new_d1",
-      "rent_increase_annual_d2",
-      "rent_increase_scenario_d2",
-      "rent_increase_compare_d3"
-    ]
-  },
-  {
-    "id": "housing_move_in_cost",
-    "moduleId": "housing",
-    "title": "Move-in cost calculator",
-    "concept": "Moving into a new place often requires first month's rent, last month's rent, and a security deposit upfront. Some cities add broker fees. The total can be 3–4× your monthly rent, which catches people off guard.",
-    "shortcut": "Move-in = first + last + deposit (+ broker fee). For $1,800/month with a broker fee equal to one month's rent: $1,800 × 4 = $7,200 due before you get the keys.",
-    "example": "Rent: $1,800/month\nFirst + last + deposit + broker\n$1,800 × 4 = $7,200 move-in",
-    "quizTemplateIds": [
-      "move_in_basic_d1",
-      "move_in_no_broker_d1",
-      "move_in_with_broker_d2",
-      "move_in_scenario_d2",
-      "move_in_compare_d3"
-    ]
-  },
-  {
-    "id": "housing_price_sqft",
-    "moduleId": "housing",
-    "title": "Price per square foot",
-    "concept": "Price per square foot lets you compare apartments of different sizes on equal footing. A $2,400/month apartment that's 800 sq ft costs $3.00/sqft, while a $2,000 place at 500 sq ft costs $4.00/sqft — the cheaper one is actually pricier per square foot.",
-    "shortcut": "Price per sqft = monthly rent ÷ square feet. Lower is better. Compare two places by dividing each rent by its area.",
-    "example": "Apartment A: $2,400 / 800 sqft = $3.00/sqft\nApartment B: $2,000 / 500 sqft = $4.00/sqft\nA is better value per sqft",
-    "quizTemplateIds": [
-      "sqft_basic_d1",
-      "sqft_compare_d1",
-      "sqft_scenario_d2",
-      "sqft_reverse_d2",
-      "sqft_best_deal_d3"
-    ]
-  },
-  {
-    "id": "housing_mortgage_vs_rent",
-    "moduleId": "housing",
-    "title": "Mortgage vs rent comparison",
-    "concept": "A basic mortgage payment estimate helps you compare buying vs renting. Monthly payment ≈ (loan amount × monthly interest rate) + (loan amount ÷ total months). This is simplified — real mortgages use amortization — but it gives a ballpark for quick comparisons.",
-    "shortcut": "Rough monthly payment = (principal × rate/12) + (principal ÷ years × 12). A $300,000 loan at 6% for 30 years: interest portion ≈ $1,500/month + principal portion ≈ $833 = ~$2,333/month.",
-    "example": "Loan: $300,000 at 6% for 30 years\nInterest: $300,000 × 0.5% = $1,500\nPrincipal: $300,000 ÷ 360 = $833\nEstimate: ~$2,333/month",
-    "quizTemplateIds": [
-      "mortgage_basic_d1",
-      "mortgage_compare_d2",
-      "mortgage_scenario_d2",
-      "mortgage_interest_d2",
-      "mortgage_vs_rent_d3"
-    ]
-  },
-  {
-    "id": "taxes_brackets",
-    "moduleId": "taxes",
-    "title": "Marginal tax brackets",
-    "concept": "Tax brackets are marginal — you don't pay your top rate on all your income. Only the income above each bracket's threshold gets taxed at the higher rate. Being 'in the 22% bracket' means only your dollars above that threshold are taxed at 22%.",
-    "shortcut": "Tax = (income up to bracket 1) × rate 1 + (remaining income) × rate 2. On $60,000 with a 10% bracket up to $40,000 and 22% above: ($40,000 × 10%) + ($20,000 × 22%) = $4,000 + $4,400 = $8,400.",
-    "example": "Income: $60,000\nFirst $40,000 at 10% = $4,000\nNext $20,000 at 22% = $4,400\nTotal tax: $8,400",
-    "quizTemplateIds": [
-      "bracket_basic_d1",
-      "bracket_two_tier_d1",
-      "bracket_scenario_d2",
-      "bracket_compare_d2",
-      "bracket_effective_d3"
-    ]
-  },
-  {
-    "id": "taxes_deductions",
-    "moduleId": "taxes",
-    "title": "Paycheck deductions",
-    "concept": "Your gross pay gets reduced by FICA (Social Security + Medicare = 7.65%), federal income tax, and state income tax before you see a dime. Understanding these deductions helps you predict your actual take-home pay from any job offer.",
-    "shortcut": "Net pay = gross × (1 − total deduction rate). If FICA is 7.65%, federal is 12%, and state is 5%, total rate = 24.65%. From $4,000 gross: $4,000 × 0.7535 = $3,014 net.",
-    "example": "Gross: $4,000\nFICA (7.65%): $306\nFederal (12%): $480\nState (5%): $200\nNet: $3,014",
-    "quizTemplateIds": [
-      "deduction_basic_d1",
-      "deduction_net_d1",
-      "deduction_fica_d2",
-      "deduction_scenario_d2",
-      "deduction_compare_d3"
-    ]
-  },
-  {
-    "id": "taxes_gross_to_net",
-    "moduleId": "taxes",
-    "title": "Gross to net calculator",
-    "concept": "When someone tells you a salary is $65,000, that's gross — before any deductions. Your monthly take-home is the number that actually matters for budgeting. Annual → monthly → after deductions gives you the real number.",
-    "shortcut": "Monthly take-home = (annual salary × (1 − deduction rate)) ÷ 12. A $65,000 salary with 25% total deductions: $65,000 × 0.75 = $48,750 ÷ 12 = $4,062.50/month.",
-    "example": "Annual: $65,000\nDeductions: 25%\nNet annual: $48,750\nMonthly: $4,062.50",
-    "quizTemplateIds": [
-      "gross_net_basic_d1",
-      "gross_net_monthly_d1",
-      "gross_net_scenario_d2",
-      "gross_net_compare_d2",
-      "gross_net_reverse_d3"
-    ]
-  },
-  {
-    "id": "taxes_refund",
-    "moduleId": "taxes",
-    "title": "Tax refund estimation",
-    "concept": "A tax refund happens when you've had more withheld from paychecks than you actually owe. Refund = total withheld − tax owed. If you owe less than was withheld, you get money back. If you owe more, you pay the difference.",
-    "shortcut": "Refund = withheld − owed. Positive = you get money back. Negative = you owe. Withheld $8,000 but owed $6,500? Refund = $1,500.",
-    "example": "Total withheld: $8,000\nTax owed: $6,500\nRefund: $8,000 − $6,500 = $1,500",
-    "quizTemplateIds": [
-      "refund_basic_d1",
-      "refund_owe_d1",
-      "refund_scenario_d2",
-      "refund_compare_d2",
-      "refund_monthly_d3"
-    ]
-  },
-  {
-    "id": "taxes_self_employment",
-    "moduleId": "taxes",
-    "title": "Self-employment tax",
-    "concept": "Freelancers and gig workers pay both the employer and employee portions of FICA — a combined 15.3% on top of income tax. This catches many people off guard because W-2 employees only see the 7.65% employee half.",
-    "shortcut": "SE tax = freelance income × 15.3%. On $5,000 of freelance income: $5,000 × 0.153 = $765. That's before income tax — plan to set aside 30–35% total from gig income.",
-    "example": "Freelance income: $5,000\nSE tax: $5,000 × 15.3% = $765\nSet aside ~$1,500–$1,750 total for all taxes",
-    "quizTemplateIds": [
-      "se_tax_basic_d1",
-      "se_tax_amount_d1",
-      "se_tax_scenario_d2",
-      "se_tax_compare_d2",
-      "se_tax_quarterly_d3"
-    ]
-  },
-  {
     "id": "investing_401k_match",
     "moduleId": "investing",
-    "title": "401(k) match — free money math",
+    "title": "401(k) match \u2014 free money math",
     "concept": "Many employers match your 401(k) contributions up to a percentage of your salary. If your employer matches 50% up to 6% of your salary, and you contribute 6%, they add an extra 3%. Not contributing enough to get the full match is literally leaving free money on the table.",
-    "shortcut": "Match amount = your contribution × match rate. If you earn $60,000 and contribute 6% ($3,600), a 50% match gives you $1,800 free. Total going into your 401(k): $5,400. Always contribute at least enough to max the match.",
+    "shortcut": "Match amount = your contribution \u00d7 match rate. If you earn $60,000 and contribute 6% ($3,600), a 50% match gives you $1,800 free. Total going into your 401(k): $5,400. Always contribute at least enough to max the match.",
     "example": "Salary: $60,000\nYou contribute 6% = $3,600\nEmployer matches 50% = $1,800\nTotal: $5,400/year",
     "quizTemplateIds": [
       "match_amount_d1",
@@ -574,7 +334,7 @@
     "moduleId": "investing",
     "title": "Roth vs Traditional IRA",
     "concept": "With a Traditional IRA, you contribute pre-tax dollars and pay taxes when you withdraw in retirement. With a Roth IRA, you contribute after-tax dollars but withdrawals are tax-free. If you're in a low tax bracket now and expect higher taxes later, Roth wins. If you're in a high bracket now, Traditional saves you more today.",
-    "shortcut": "Roth contribution = income × (1 − tax rate). Traditional tax saved = contribution × tax rate. Compare: young and lower income → Roth. Peak earning years → Traditional. The math is the same — it's about when you pay the tax.",
+    "shortcut": "Roth contribution = income \u00d7 (1 \u2212 tax rate). Traditional tax saved = contribution \u00d7 tax rate. Compare: young and lower income \u2192 Roth. Peak earning years \u2192 Traditional. The math is the same \u2014 it's about when you pay the tax.",
     "example": "Contribute $5,000 at 22% tax rate\nRoth: pay $1,100 tax now, $0 later\nTraditional: save $1,100 now, pay tax later\nSame math, different timing",
     "quizTemplateIds": [
       "roth_after_tax_d1",
@@ -588,8 +348,8 @@
     "id": "investing_compound_growth",
     "moduleId": "investing",
     "title": "Compound growth over time",
-    "concept": "Compound interest means your money earns interest on its interest. $500/month at 8% annual return grows to $91,000 in 10 years, $296,000 in 20 years, and $745,000 in 30 years. Time is the most powerful variable — starting early matters far more than contributing more later.",
-    "shortcut": "Total invested = monthly × 12 × years. Growth multiplier at 8%: ~1.5× in 10 years, ~2.5× in 20 years, ~4.5× in 30 years. Quick estimate: multiply your total contributions by the growth multiplier.",
+    "concept": "Compound interest means your money earns interest on its interest. $500/month at 8% annual return grows to $91,000 in 10 years, $296,000 in 20 years, and $745,000 in 30 years. Time is the most powerful variable \u2014 starting early matters far more than contributing more later.",
+    "shortcut": "Total invested = monthly \u00d7 12 \u00d7 years. Growth multiplier at 8%: ~1.5\u00d7 in 10 years, ~2.5\u00d7 in 20 years, ~4.5\u00d7 in 30 years. Quick estimate: multiply your total contributions by the growth multiplier.",
     "example": "$500/month for 20 years\nTotal invested: $120,000\nAt 8% growth: ~$296,000\nInterest earned: ~$176,000",
     "quizTemplateIds": [
       "compound_total_d1",
@@ -600,26 +360,236 @@
     ]
   },
   {
-    "id": "inflation_adjusted_raise",
-    "moduleId": "salary",
-    "title": "Is your raise actually a raise?",
-    "concept": "A 3% raise sounds great until inflation is 4%. Your purchasing power actually decreased. Real raise = nominal raise − inflation rate. If inflation outpaces your raise, you're effectively taking a pay cut — you can buy less with your new salary than you could before.",
-    "shortcut": "Real raise % = raise % − inflation %. Real dollar change = salary × real raise %. A 3% raise with 4% inflation: real change = −1%, meaning you lost purchasing power. Always compare your raise to the current inflation rate.",
-    "example": "Salary: $65,000\nRaise: 3% = $1,950\nInflation: 4% = $2,600\nReal change: −$650/year\nYou're actually losing money",
+    "id": "credit_card_interest",
+    "moduleId": "debt",
+    "title": "How credit card interest works",
+    "concept": "Credit card APR sounds small \u2014 20% \u2014 but it compounds monthly. The interest charge each month is APR \u00f7 12 \u00d7 balance. On a $2,000 balance at 20% APR you're paying ~$33 every single month just in interest.",
+    "shortcut": "Monthly interest = balance \u00d7 APR% \u00f7 12. To estimate: move the decimal left two places (gives 1%), multiply by your APR, divide by 12. $2,000 \u00d7 20% \u00f7 12 = $33.33/month.",
+    "example": "Balance: $2,000 \u00b7 APR: 20%\nMonthly rate = 20% \u00f7 12 = 1.67%\nInterest = $2,000 \u00d7 1.67% = $33.33",
     "quizTemplateIds": [
-      "inflation_raise_real_d1",
-      "inflation_raise_dollars_d1",
-      "inflation_raise_scenario_d2",
-      "inflation_raise_compare_d2",
-      "inflation_raise_negative_d3"
+      "cc_monthly_interest",
+      "cc_monthly_interest_scenario",
+      "cc_annual_interest",
+      "cc_interest_year_d3",
+      "cc_rate_check_d1"
+    ]
+  },
+  {
+    "id": "minimum_payment_trap",
+    "moduleId": "debt",
+    "title": "The minimum payment trap",
+    "concept": "Credit card minimum payments are usually 2% of your balance. They feel manageable \u2014 but they're designed to keep you in debt longer. A $3,000 balance at 2% minimum means paying only $60/month while interest charges eat most of it.",
+    "shortcut": "Minimum payment \u2248 balance \u00d7 2%. Always pay more than the minimum. Even an extra $50/month can cut years off your payoff timeline.",
+    "example": "Balance: $3,000\nMinimum = $3,000 \u00d7 2% = $60\nAt 20% APR, interest alone = $50/month\nOnly $10 goes to principal!",
+    "quizTemplateIds": [
+      "cc_minimum_payment",
+      "cc_minimum_payment_scenario",
+      "cc_min_balance_d1",
+      "cc_new_balance_d2",
+      "cc_interest_check_d2"
+    ]
+  },
+  {
+    "id": "loan_true_cost",
+    "moduleId": "debt",
+    "title": "The true cost of a loan",
+    "concept": "The sticker price of a loan is not what you pay. Total repayment = monthly payment \u00d7 number of months. The difference between that total and your original loan amount is pure interest \u2014 money the lender earns.",
+    "shortcut": "Total cost = payment \u00d7 months. Interest paid = total cost \u2212 loan amount. Always calculate these before signing. A $6,000 loan at $200/month for 36 months costs $7,200 \u2014 $1,200 in interest.",
+    "example": "Loan: $6,000\nPayment: $200/month \u00d7 36 months\nTotal paid: $7,200\nInterest: $7,200 \u2212 $6,000 = $1,200",
+    "quizTemplateIds": [
+      "loan_total_repayment",
+      "loan_heavy_interest",
+      "loan_total_interest_paid",
+      "loan_repayment_d1",
+      "loan_interest_calc_d2"
+    ]
+  },
+  {
+    "id": "debt_to_income",
+    "moduleId": "debt",
+    "title": "Debt-to-income ratio",
+    "concept": "DTI ratio = total monthly debt payments \u00f7 monthly income \u00d7 100. Lenders use this to assess risk. Under 36% is healthy; over 43% is a red flag for mortgage approval. It tells you how much of your income is already spoken for.",
+    "shortcut": "DTI% = monthly debt \u00f7 monthly income \u00d7 100. If you earn $5,000/month and pay $1,500 in debt: $1,500 \u00f7 $5,000 \u00d7 100 = 30% DTI. Keep it under 36%.",
+    "example": "Monthly income: $5,000\nDebt payments: $1,500\nDTI = $1,500 \u00f7 $5,000 \u00d7 100 = 30%",
+    "quizTemplateIds": [
+      "dti_ratio_basic",
+      "dti_ratio_scenario",
+      "dti_add_payments",
+      "dti_housing_only",
+      "dti_check_d2"
+    ]
+  },
+  {
+    "id": "extra_payment_power",
+    "moduleId": "debt",
+    "title": "The power of extra payments",
+    "concept": "Every extra dollar you pay toward debt saves you that dollar's worth of future interest. The annual interest saving from an extra monthly payment equals extra payment \u00d7 APR%. Small extra payments compound over time into big savings.",
+    "shortcut": "Annual interest saved \u2248 extra payment \u00d7 APR%. Paying an extra $100/month on a 20% APR card saves $20/year per $100 \u2014 plus you reduce the principal faster, which shrinks future interest too.",
+    "example": "Extra payment: $100 \u00b7 APR: 20%\nAnnual saving \u2248 $100 \u00d7 20% = $20\nPlus reduced principal each month",
+    "quizTemplateIds": [
+      "cc_extra_payment_saving",
+      "cc_balance_after_interest",
+      "cc_extra_d1",
+      "cc_annual_cost_d2",
+      "cc_balance_interest_d2"
+    ]
+  },
+  {
+    "id": "housing_rent_affordability",
+    "moduleId": "housing",
+    "title": "Rent affordability (28% rule)",
+    "concept": "The 28% rule says your rent shouldn't exceed 28% of your gross monthly income. It's a quick gut check when apartment shopping \u2014 if a place costs more than 28% of what you earn before taxes, it's going to squeeze your budget.",
+    "shortcut": "Max rent = monthly gross income \u00d7 0.28. For $5,000/month salary: $5,000 \u00d7 0.28 = $1,400 max rent. Quick estimate: take a quarter of your salary and add a little.",
+    "example": "Monthly salary: $5,000\nMax rent: $5,000 \u00d7 28% = $1,400",
+    "quizTemplateIds": [
+      "rent_afford_basic_d1",
+      "rent_afford_scenario_d1",
+      "rent_afford_reverse_d2",
+      "rent_afford_compare_d2",
+      "rent_afford_annual_d3"
+    ]
+  },
+  {
+    "id": "housing_rent_increase",
+    "moduleId": "housing",
+    "title": "Rent increase math",
+    "concept": "When your landlord raises rent by a percentage, the dollar impact depends on your current rent. A 5% increase on $1,200 hits differently than 5% on $2,500. Knowing the math helps you negotiate or budget for renewals.",
+    "shortcut": "Increase = current rent \u00d7 increase%. New rent = current \u00d7 (1 + increase%). A 6% bump on $1,500 = $90 more per month, $1,080 more per year.",
+    "example": "Current rent: $1,500\nIncrease: 6%\nMonthly increase: $90\nNew rent: $1,590",
+    "quizTemplateIds": [
+      "rent_increase_basic_d1",
+      "rent_increase_new_d1",
+      "rent_increase_annual_d2",
+      "rent_increase_scenario_d2",
+      "rent_increase_compare_d3"
+    ]
+  },
+  {
+    "id": "housing_move_in_cost",
+    "moduleId": "housing",
+    "title": "Move-in cost calculator",
+    "concept": "Moving into a new place often requires first month's rent, last month's rent, and a security deposit upfront. Some cities add broker fees. The total can be 3\u20134\u00d7 your monthly rent, which catches people off guard.",
+    "shortcut": "Move-in = first + last + deposit (+ broker fee). For $1,800/month with a broker fee equal to one month's rent: $1,800 \u00d7 4 = $7,200 due before you get the keys.",
+    "example": "Rent: $1,800/month\nFirst + last + deposit + broker\n$1,800 \u00d7 4 = $7,200 move-in",
+    "quizTemplateIds": [
+      "move_in_basic_d1",
+      "move_in_no_broker_d1",
+      "move_in_with_broker_d2",
+      "move_in_scenario_d2",
+      "move_in_compare_d3"
+    ]
+  },
+  {
+    "id": "housing_price_sqft",
+    "moduleId": "housing",
+    "title": "Price per square foot",
+    "concept": "Price per square foot lets you compare apartments of different sizes on equal footing. A $2,400/month apartment that's 800 sq ft costs $3.00/sqft, while a $2,000 place at 500 sq ft costs $4.00/sqft \u2014 the cheaper one is actually pricier per square foot.",
+    "shortcut": "Price per sqft = monthly rent \u00f7 square feet. Lower is better. Compare two places by dividing each rent by its area.",
+    "example": "Apartment A: $2,400 / 800 sqft = $3.00/sqft\nApartment B: $2,000 / 500 sqft = $4.00/sqft\nA is better value per sqft",
+    "quizTemplateIds": [
+      "sqft_basic_d1",
+      "sqft_compare_d1",
+      "sqft_scenario_d2",
+      "sqft_reverse_d2",
+      "sqft_best_deal_d3"
+    ]
+  },
+  {
+    "id": "housing_mortgage_vs_rent",
+    "moduleId": "housing",
+    "title": "Mortgage vs rent comparison",
+    "concept": "A basic mortgage payment estimate helps you compare buying vs renting. Monthly payment \u2248 (loan amount \u00d7 monthly interest rate) + (loan amount \u00f7 total months). This is simplified \u2014 real mortgages use amortization \u2014 but it gives a ballpark for quick comparisons.",
+    "shortcut": "Rough monthly payment = (principal \u00d7 rate/12) + (principal \u00f7 years \u00d7 12). A $300,000 loan at 6% for 30 years: interest portion \u2248 $1,500/month + principal portion \u2248 $833 = ~$2,333/month.",
+    "example": "Loan: $300,000 at 6% for 30 years\nInterest: $300,000 \u00d7 0.5% = $1,500\nPrincipal: $300,000 \u00f7 360 = $833\nEstimate: ~$2,333/month",
+    "quizTemplateIds": [
+      "mortgage_basic_d1",
+      "mortgage_compare_d2",
+      "mortgage_scenario_d2",
+      "mortgage_interest_d2",
+      "mortgage_vs_rent_d3"
+    ]
+  },
+  {
+    "id": "taxes_brackets",
+    "moduleId": "taxes",
+    "title": "Marginal tax brackets",
+    "concept": "Tax brackets are marginal \u2014 you don't pay your top rate on all your income. Only the income above each bracket's threshold gets taxed at the higher rate. Being 'in the 22% bracket' means only your dollars above that threshold are taxed at 22%.",
+    "shortcut": "Tax = (income up to bracket 1) \u00d7 rate 1 + (remaining income) \u00d7 rate 2. On $60,000 with a 10% bracket up to $40,000 and 22% above: ($40,000 \u00d7 10%) + ($20,000 \u00d7 22%) = $4,000 + $4,400 = $8,400.",
+    "example": "Income: $60,000\nFirst $40,000 at 10% = $4,000\nNext $20,000 at 22% = $4,400\nTotal tax: $8,400",
+    "quizTemplateIds": [
+      "bracket_basic_d1",
+      "bracket_two_tier_d1",
+      "bracket_scenario_d2",
+      "bracket_compare_d2",
+      "bracket_effective_d3"
+    ]
+  },
+  {
+    "id": "taxes_deductions",
+    "moduleId": "taxes",
+    "title": "Paycheck deductions",
+    "concept": "Your gross pay gets reduced by FICA (Social Security + Medicare = 7.65%), federal income tax, and state income tax before you see a dime. Understanding these deductions helps you predict your actual take-home pay from any job offer.",
+    "shortcut": "Net pay = gross \u00d7 (1 \u2212 total deduction rate). If FICA is 7.65%, federal is 12%, and state is 5%, total rate = 24.65%. From $4,000 gross: $4,000 \u00d7 0.7535 = $3,014 net.",
+    "example": "Gross: $4,000\nFICA (7.65%): $306\nFederal (12%): $480\nState (5%): $200\nNet: $3,014",
+    "quizTemplateIds": [
+      "deduction_basic_d1",
+      "deduction_net_d1",
+      "deduction_fica_d2",
+      "deduction_scenario_d2",
+      "deduction_compare_d3"
+    ]
+  },
+  {
+    "id": "taxes_gross_to_net",
+    "moduleId": "taxes",
+    "title": "Gross to net calculator",
+    "concept": "When someone tells you a salary is $65,000, that's gross \u2014 before any deductions. Your monthly take-home is the number that actually matters for budgeting. Annual \u2192 monthly \u2192 after deductions gives you the real number.",
+    "shortcut": "Monthly take-home = (annual salary \u00d7 (1 \u2212 deduction rate)) \u00f7 12. A $65,000 salary with 25% total deductions: $65,000 \u00d7 0.75 = $48,750 \u00f7 12 = $4,062.50/month.",
+    "example": "Annual: $65,000\nDeductions: 25%\nNet annual: $48,750\nMonthly: $4,062.50",
+    "quizTemplateIds": [
+      "gross_net_basic_d1",
+      "gross_net_monthly_d1",
+      "gross_net_scenario_d2",
+      "gross_net_compare_d2",
+      "gross_net_reverse_d3"
+    ]
+  },
+  {
+    "id": "taxes_refund",
+    "moduleId": "taxes",
+    "title": "Tax refund estimation",
+    "concept": "A tax refund happens when you've had more withheld from paychecks than you actually owe. Refund = total withheld \u2212 tax owed. If you owe less than was withheld, you get money back. If you owe more, you pay the difference.",
+    "shortcut": "Refund = withheld \u2212 owed. Positive = you get money back. Negative = you owe. Withheld $8,000 but owed $6,500? Refund = $1,500.",
+    "example": "Total withheld: $8,000\nTax owed: $6,500\nRefund: $8,000 \u2212 $6,500 = $1,500",
+    "quizTemplateIds": [
+      "refund_basic_d1",
+      "refund_owe_d1",
+      "refund_scenario_d2",
+      "refund_compare_d2",
+      "refund_monthly_d3"
+    ]
+  },
+  {
+    "id": "taxes_self_employment",
+    "moduleId": "taxes",
+    "title": "Self-employment tax",
+    "concept": "Freelancers and gig workers pay both the employer and employee portions of FICA \u2014 a combined 15.3% on top of income tax. This catches many people off guard because W-2 employees only see the 7.65% employee half.",
+    "shortcut": "SE tax = freelance income \u00d7 15.3%. On $5,000 of freelance income: $5,000 \u00d7 0.153 = $765. That's before income tax \u2014 plan to set aside 30\u201335% total from gig income.",
+    "example": "Freelance income: $5,000\nSE tax: $5,000 \u00d7 15.3% = $765\nSet aside ~$1,500\u2013$1,750 total for all taxes",
+    "quizTemplateIds": [
+      "se_tax_basic_d1",
+      "se_tax_amount_d1",
+      "se_tax_scenario_d2",
+      "se_tax_compare_d2",
+      "se_tax_quarterly_d3"
     ]
   },
   {
     "id": "insurance_deductible_vs_premium",
     "moduleId": "insurance",
     "title": "Deductible vs premium tradeoff",
-    "concept": "Your premium is what you pay every month regardless. Your deductible is what you pay out of pocket before insurance kicks in. Higher deductible = lower premium, but more risk if something happens. Total annual cost = (premium × 12) + potential deductible.",
-    "shortcut": "Annual premium = monthly × 12. Total worst-case cost = annual premium + deductible. Compare plans by their worst-case cost, not just the monthly premium.",
+    "concept": "Your premium is what you pay every month regardless. Your deductible is what you pay out of pocket before insurance kicks in. Higher deductible = lower premium, but more risk if something happens. Total annual cost = (premium \u00d7 12) + potential deductible.",
+    "shortcut": "Annual premium = monthly \u00d7 12. Total worst-case cost = annual premium + deductible. Compare plans by their worst-case cost, not just the monthly premium.",
     "example": "Plan A: $350/mo, $1,000 deductible\nAnnual premium: $4,200\nWorst case: $5,200\n\nPlan B: $250/mo, $3,000 deductible\nAnnual premium: $3,000\nWorst case: $6,000",
     "quizTemplateIds": [
       "ins_annual_premium_d1",
@@ -633,9 +603,9 @@
     "id": "insurance_copay_coinsurance",
     "moduleId": "insurance",
     "title": "Copay vs coinsurance",
-    "concept": "A copay is a flat fee per visit ($30 per doctor visit). Coinsurance is a percentage of the bill you pay after the deductible is met (you pay 20%, insurance pays 80%). On expensive procedures, coinsurance adds up fast — 20% of a $10,000 surgery is $2,000.",
-    "shortcut": "Your coinsurance cost = total bill × your coinsurance %. On a $5,000 bill with 20% coinsurance: $5,000 × 20% = $1,000 out of your pocket.",
-    "example": "Surgery: $8,000\nDeductible already met\nCoinsurance: 20%\nYou pay: $8,000 × 20% = $1,600\nInsurance pays: $6,400",
+    "concept": "A copay is a flat fee per visit ($30 per doctor visit). Coinsurance is a percentage of the bill you pay after the deductible is met (you pay 20%, insurance pays 80%). On expensive procedures, coinsurance adds up fast \u2014 20% of a $10,000 surgery is $2,000.",
+    "shortcut": "Your coinsurance cost = total bill \u00d7 your coinsurance %. On a $5,000 bill with 20% coinsurance: $5,000 \u00d7 20% = $1,000 out of your pocket.",
+    "example": "Surgery: $8,000\nDeductible already met\nCoinsurance: 20%\nYou pay: $8,000 \u00d7 20% = $1,600\nInsurance pays: $6,400",
     "quizTemplateIds": [
       "ins_coinsurance_d1",
       "ins_copay_total_d1",
@@ -648,7 +618,7 @@
     "id": "insurance_oop_max",
     "moduleId": "insurance",
     "title": "Out-of-pocket maximum",
-    "concept": "The out-of-pocket max is your safety net — the most you'll pay in a year. Once you hit it, insurance covers 100%. Total out-of-pocket = deductible + coinsurance payments, capped at the OOP max. If your OOP max is $6,000, that's your absolute worst-case annual expense.",
+    "concept": "The out-of-pocket max is your safety net \u2014 the most you'll pay in a year. Once you hit it, insurance covers 100%. Total out-of-pocket = deductible + coinsurance payments, capped at the OOP max. If your OOP max is $6,000, that's your absolute worst-case annual expense.",
     "shortcut": "After deductible, you pay coinsurance until you hit the OOP max. On a $50,000 hospital stay with $2,000 deductible and $6,000 OOP max: you pay at most $6,000, insurance covers the rest.",
     "example": "Hospital bill: $50,000\nDeductible: $2,000\nCoinsurance: 20%\nOOP max: $6,000\nYou pay: $6,000 (capped)\nInsurance: $44,000",
     "quizTemplateIds": [
@@ -664,7 +634,7 @@
     "moduleId": "insurance",
     "title": "HDHP vs PPO comparison",
     "concept": "A High-Deductible Health Plan (HDHP) has lower premiums but higher deductibles. A PPO has higher premiums but lower out-of-pocket costs. HDHPs make sense if you're healthy and rarely use healthcare. PPOs win if you have regular medical needs or expect major procedures.",
-    "shortcut": "HDHP total = lower premium × 12 + higher deductible. PPO total = higher premium × 12 + lower deductible. If HDHP worst-case < PPO worst-case, HDHP saves money. Also: HDHPs qualify for HSAs.",
+    "shortcut": "HDHP total = lower premium \u00d7 12 + higher deductible. PPO total = higher premium \u00d7 12 + lower deductible. If HDHP worst-case < PPO worst-case, HDHP saves money. Also: HDHPs qualify for HSAs.",
     "example": "HDHP: $200/mo, $3,000 deductible\nWorst case: $5,400\n\nPPO: $400/mo, $500 deductible\nWorst case: $5,300\n\nPPO wins by $100 in worst case\nbut HDHP saves $2,400 if healthy",
     "quizTemplateIds": [
       "ins_hdhp_annual_d1",
@@ -678,9 +648,9 @@
     "id": "insurance_hsa_advantage",
     "moduleId": "insurance",
     "title": "HSA triple tax advantage",
-    "concept": "A Health Savings Account (HSA) has a triple tax advantage: contributions are pre-tax (reducing your taxable income), growth is tax-free, and withdrawals for medical expenses are tax-free. The tax saving on contributions alone is contribution × your tax rate.",
-    "shortcut": "HSA tax saving = contribution × tax rate. Contributing $3,000 at a 22% tax rate saves you $660 in taxes. Plus the money grows tax-free and comes out tax-free for medical costs.",
-    "example": "HSA contribution: $3,000\nTax rate: 22%\nTax saving: $3,000 × 22% = $660\nPlus tax-free growth\nPlus tax-free withdrawals",
+    "concept": "A Health Savings Account (HSA) has a triple tax advantage: contributions are pre-tax (reducing your taxable income), growth is tax-free, and withdrawals for medical expenses are tax-free. The tax saving on contributions alone is contribution \u00d7 your tax rate.",
+    "shortcut": "HSA tax saving = contribution \u00d7 tax rate. Contributing $3,000 at a 22% tax rate saves you $660 in taxes. Plus the money grows tax-free and comes out tax-free for medical costs.",
+    "example": "HSA contribution: $3,000\nTax rate: 22%\nTax saving: $3,000 \u00d7 22% = $660\nPlus tax-free growth\nPlus tax-free withdrawals",
     "quizTemplateIds": [
       "ins_hsa_saving_d1",
       "ins_hsa_annual_d1",
@@ -693,9 +663,9 @@
     "id": "car_monthly_vs_total",
     "moduleId": "car",
     "title": "Monthly payment vs total cost",
-    "concept": "Dealers love to talk monthly payments because they sound affordable. But total cost = monthly payment × number of months. A $450/month payment over 72 months means you're paying $32,400 total. Always calculate the full cost before signing.",
-    "shortcut": "Total cost = payment × months. Interest paid = total cost − loan amount. A $25,000 car at $450/month for 72 months costs $32,400 — that's $7,400 in interest.",
-    "example": "Loan: $25,000\nPayment: $450/month × 72 months\nTotal: $32,400\nInterest: $7,400",
+    "concept": "Dealers love to talk monthly payments because they sound affordable. But total cost = monthly payment \u00d7 number of months. A $450/month payment over 72 months means you're paying $32,400 total. Always calculate the full cost before signing.",
+    "shortcut": "Total cost = payment \u00d7 months. Interest paid = total cost \u2212 loan amount. A $25,000 car at $450/month for 72 months costs $32,400 \u2014 that's $7,400 in interest.",
+    "example": "Loan: $25,000\nPayment: $450/month \u00d7 72 months\nTotal: $32,400\nInterest: $7,400",
     "quizTemplateIds": [
       "car_total_cost_d1",
       "car_interest_paid_d1",
@@ -709,8 +679,8 @@
     "moduleId": "car",
     "title": "How loan term changes total cost",
     "concept": "Extending your loan term from 48 to 72 months lowers your monthly payment but increases total interest dramatically. The dealer trick: focusing on monthly payment to sell you a longer, more expensive loan. Always compare total cost across different terms.",
-    "shortcut": "Longer term = lower payment but higher total cost. Compare: payment × months for each option. The difference in total cost is what the extra time costs you.",
-    "example": "Same $25,000 loan:\n48 months × $550 = $26,400\n72 months × $420 = $30,240\nExtra cost: $3,840",
+    "shortcut": "Longer term = lower payment but higher total cost. Compare: payment \u00d7 months for each option. The difference in total cost is what the extra time costs you.",
+    "example": "Same $25,000 loan:\n48 months \u00d7 $550 = $26,400\n72 months \u00d7 $420 = $30,240\nExtra cost: $3,840",
     "quizTemplateIds": [
       "car_term_total_d1",
       "car_term_difference_d1",
@@ -723,8 +693,8 @@
     "id": "car_down_payment",
     "moduleId": "car",
     "title": "Down payment math",
-    "concept": "A down payment reduces what you borrow — and therefore what you pay in interest. Putting 20% down on a $30,000 car means borrowing $24,000 instead of $30,000. That $6,000 down saves you hundreds or thousands in interest over the loan term.",
-    "shortcut": "Down payment = price × down%. Loan amount = price − down payment. 20% down on $30,000: $6,000 down, $24,000 financed.",
+    "concept": "A down payment reduces what you borrow \u2014 and therefore what you pay in interest. Putting 20% down on a $30,000 car means borrowing $24,000 instead of $30,000. That $6,000 down saves you hundreds or thousands in interest over the loan term.",
+    "shortcut": "Down payment = price \u00d7 down%. Loan amount = price \u2212 down payment. 20% down on $30,000: $6,000 down, $24,000 financed.",
     "example": "Car: $30,000\n20% down = $6,000\nFinanced: $24,000\nvs $0 down = $30,000 financed\nSaved interest on $6,000",
     "quizTemplateIds": [
       "car_down_amount_d1",
@@ -738,8 +708,8 @@
     "id": "car_20_4_10_rule",
     "moduleId": "car",
     "title": "The 20/4/10 rule",
-    "concept": "Financial experts recommend: 20% down payment, 4-year (48-month) max loan term, and total car costs under 10% of gross monthly income. This rule keeps you from being 'car poor' — spending so much on your car that it squeezes everything else.",
-    "shortcut": "Max car cost (10% rule) = monthly gross income × 10%. That includes payment + insurance + gas. If you earn $5,000/month gross, max total car costs = $500/month.",
+    "concept": "Financial experts recommend: 20% down payment, 4-year (48-month) max loan term, and total car costs under 10% of gross monthly income. This rule keeps you from being 'car poor' \u2014 spending so much on your car that it squeezes everything else.",
+    "shortcut": "Max car cost (10% rule) = monthly gross income \u00d7 10%. That includes payment + insurance + gas. If you earn $5,000/month gross, max total car costs = $500/month.",
     "example": "Monthly income: $5,000\n10% max car cost: $500/month\nIncludes: payment + insurance + gas\nIf insurance + gas = $200\nMax payment: $300/month",
     "quizTemplateIds": [
       "car_max_payment_d1",
@@ -754,8 +724,8 @@
     "moduleId": "car",
     "title": "Car depreciation math",
     "concept": "New cars lose about 20% of their value in the first year and roughly 15% per year after that. A $35,000 car is worth about $28,000 after year one. Understanding depreciation helps you decide between new, certified pre-owned, and used.",
-    "shortcut": "Value after year 1 = price × 80%. Value after year 2 ≈ year 1 value × 85%. Quick estimate: a car loses about half its value in 3-4 years.",
-    "example": "New car: $35,000\nAfter year 1 (−20%): $28,000\nAfter year 2 (−15%): $23,800\nLost $11,200 in 2 years",
+    "shortcut": "Value after year 1 = price \u00d7 80%. Value after year 2 \u2248 year 1 value \u00d7 85%. Quick estimate: a car loses about half its value in 3-4 years.",
+    "example": "New car: $35,000\nAfter year 1 (\u221220%): $28,000\nAfter year 2 (\u221215%): $23,800\nLost $11,200 in 2 years",
     "quizTemplateIds": [
       "car_year1_value_d1",
       "car_depreciation_d1",
@@ -768,9 +738,9 @@
     "id": "student_loan_monthly",
     "moduleId": "student_loans",
     "title": "Student loan monthly payment",
-    "concept": "Standard student loan repayment is 10 years (120 months). Your monthly payment depends on the balance and interest rate. A simplified estimate: monthly payment ≈ balance × (rate/12) / (1 − (1 + rate/12)^(−months)). For quick math: $30,000 at 5% for 10 years ≈ $318/month.",
-    "shortcut": "Quick estimate for standard 10-year repayment: monthly ≈ (balance × rate% / 12) + (balance / 120). A $30,000 loan at 5%: interest portion ≈ $125 + principal portion ≈ $250 = ~$375/month.",
-    "example": "Loan: $30,000 at 5%\nMonthly interest: $30,000 × 5% / 12 = $125\nMonthly principal: $30,000 / 120 = $250\nEstimate: ~$375/month",
+    "concept": "Standard student loan repayment is 10 years (120 months). Your monthly payment depends on the balance and interest rate. A simplified estimate: monthly payment \u2248 balance \u00d7 (rate/12) / (1 \u2212 (1 + rate/12)^(\u2212months)). For quick math: $30,000 at 5% for 10 years \u2248 $318/month.",
+    "shortcut": "Quick estimate for standard 10-year repayment: monthly \u2248 (balance \u00d7 rate% / 12) + (balance / 120). A $30,000 loan at 5%: interest portion \u2248 $125 + principal portion \u2248 $250 = ~$375/month.",
+    "example": "Loan: $30,000 at 5%\nMonthly interest: $30,000 \u00d7 5% / 12 = $125\nMonthly principal: $30,000 / 120 = $250\nEstimate: ~$375/month",
     "quizTemplateIds": [
       "sl_monthly_d1",
       "sl_monthly_estimate_d1",
@@ -783,9 +753,9 @@
     "id": "student_loan_total_cost",
     "moduleId": "student_loans",
     "title": "Total cost of student loans",
-    "concept": "Total repayment = monthly payment × total months. The difference between that and your original loan is pure interest. On a $30,000 loan at 5% over 10 years, you pay about $38,000 total — $8,000 in interest alone.",
-    "shortcut": "Total cost = payment × months. Interest = total cost − loan amount. Always calculate this before choosing a repayment plan.",
-    "example": "Loan: $30,000\nPayment: $318/month × 120 months\nTotal: $38,160\nInterest: $8,160",
+    "concept": "Total repayment = monthly payment \u00d7 total months. The difference between that and your original loan is pure interest. On a $30,000 loan at 5% over 10 years, you pay about $38,000 total \u2014 $8,000 in interest alone.",
+    "shortcut": "Total cost = payment \u00d7 months. Interest = total cost \u2212 loan amount. Always calculate this before choosing a repayment plan.",
+    "example": "Loan: $30,000\nPayment: $318/month \u00d7 120 months\nTotal: $38,160\nInterest: $8,160",
     "quizTemplateIds": [
       "sl_total_cost_d1",
       "sl_total_interest_d1",
@@ -799,8 +769,8 @@
     "moduleId": "student_loans",
     "title": "Refinancing savings",
     "concept": "Refinancing replaces your current loan with a new one at a lower interest rate. The savings come from the rate difference applied to your balance. Dropping from 6% to 4% on a $40,000 balance saves roughly $800/year in interest.",
-    "shortcut": "Annual interest saving ≈ balance × (old rate − new rate). $40,000 × (6% − 4%) = $800/year. Over 10 years, that's $8,000 in savings — but you lose federal loan protections.",
-    "example": "Balance: $40,000\nOld rate: 6%, New rate: 4%\nAnnual saving: $40,000 × 2% = $800\n10-year saving: ~$8,000",
+    "shortcut": "Annual interest saving \u2248 balance \u00d7 (old rate \u2212 new rate). $40,000 \u00d7 (6% \u2212 4%) = $800/year. Over 10 years, that's $8,000 in savings \u2014 but you lose federal loan protections.",
+    "example": "Balance: $40,000\nOld rate: 6%, New rate: 4%\nAnnual saving: $40,000 \u00d7 2% = $800\n10-year saving: ~$8,000",
     "quizTemplateIds": [
       "sl_refi_saving_d1",
       "sl_refi_annual_d1",
@@ -814,7 +784,7 @@
     "moduleId": "student_loans",
     "title": "Income-driven repayment",
     "concept": "Income-driven repayment (IDR) caps your monthly payment at a percentage of your discretionary income. The most common plan caps at 10% of income above 150% of the poverty line. Lower payments mean longer repayment and more total interest, but remaining balance is forgiven after 20-25 years.",
-    "shortcut": "IDR payment ≈ (income − 150% of poverty line) × 10% / 12. If you earn $50,000 and poverty line for your size is $15,000: discretionary = $50,000 − $22,500 = $27,500. Monthly = $27,500 × 10% / 12 ≈ $229.",
+    "shortcut": "IDR payment \u2248 (income \u2212 150% of poverty line) \u00d7 10% / 12. If you earn $50,000 and poverty line for your size is $15,000: discretionary = $50,000 \u2212 $22,500 = $27,500. Monthly = $27,500 \u00d7 10% / 12 \u2248 $229.",
     "example": "Income: $50,000\n150% poverty: $22,500\nDiscretionary: $27,500\n10% of that / 12 months\nIDR payment: ~$229/month",
     "quizTemplateIds": [
       "sl_idr_payment_d1",
@@ -828,8 +798,8 @@
     "id": "student_loan_pslf",
     "moduleId": "student_loans",
     "title": "PSLF forgiveness math",
-    "concept": "Public Service Loan Forgiveness (PSLF) forgives remaining federal loan balance after 120 qualifying payments (10 years) while working for a qualifying employer. The key math: total paid = IDR payment × 120 months. Forgiven amount = original balance + accrued interest − total paid.",
-    "shortcut": "PSLF total paid = monthly IDR payment × 120. Forgiveness amount = remaining balance at month 120. If you pay $250/month for 10 years = $30,000 paid. If balance started at $80,000, you could get $50,000+ forgiven.",
+    "concept": "Public Service Loan Forgiveness (PSLF) forgives remaining federal loan balance after 120 qualifying payments (10 years) while working for a qualifying employer. The key math: total paid = IDR payment \u00d7 120 months. Forgiven amount = original balance + accrued interest \u2212 total paid.",
+    "shortcut": "PSLF total paid = monthly IDR payment \u00d7 120. Forgiveness amount = remaining balance at month 120. If you pay $250/month for 10 years = $30,000 paid. If balance started at $80,000, you could get $50,000+ forgiven.",
     "example": "Loan: $80,000\nIDR payment: $250/month\n10 years = $30,000 paid\nForgiven: $50,000+\n(balance grew with interest)",
     "quizTemplateIds": [
       "sl_pslf_total_d1",
