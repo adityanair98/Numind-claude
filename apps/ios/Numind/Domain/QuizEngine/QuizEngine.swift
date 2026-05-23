@@ -1029,6 +1029,163 @@ struct QuizEngine {
             let breakB = (feeB / saveB).rounded(.up)
             return abs(breakA - breakB)
         },
+
+        // MARK: - Money Math: Subscription audit
+        "sumThreeSubscriptions": { vars in
+            guard let a = vars["sub1"], let b = vars["sub2"], let c = vars["sub3"] else { return nil }
+            return a + b + c
+        },
+        "annualizedSubscriptions": { vars in
+            guard let a = vars["sub1"], let b = vars["sub2"], let c = vars["sub3"] else { return nil }
+            return (a + b + c) * 12
+        },
+        "annualSubscriptionSaving": { vars in
+            guard let s = vars["subToCut"] else { return nil }
+            return s * 12
+        },
+
+        // MARK: - Money Math: Sales tax with budget
+        "preTaxMax": { vars in
+            guard let budget = vars["budget"], let tax = vars["taxPercent"] else { return nil }
+            return budget / (1 + tax / 100)
+        },
+        "asymmetryGap": { vars in
+            guard let budget = vars["budget"], let tax = vars["taxPercent"] else { return nil }
+            return budget / (1 + tax / 100) - budget * (1 - tax / 100)
+        },
+
+        // MARK: - Money Math: 50/30/20
+        "percentOfIncome": { vars in
+            guard let income = vars["income"], let pct = vars["pct"] else { return nil }
+            return income * pct / 100
+        },
+        "needsOverCap": { vars in
+            guard let income = vars["income"], let needs = vars["needs"] else { return nil }
+            return needs - income * 0.5
+        },
+        "monthlyToReachGoal": { vars in
+            guard let goal = vars["goal"], let months = vars["months"], months > 0 else { return nil }
+            return goal / months
+        },
+
+        // MARK: - Money Math: Latte factor
+        "dailyToAnnual": { vars in
+            guard let daily = vars["dailyCost"] else { return nil }
+            return daily * 365
+        },
+        "workdayToAnnual": { vars in
+            guard let daily = vars["dailyCost"] else { return nil }
+            return daily * 260
+        },
+        "dailyHabitSavingsAnnual": { vars in
+            guard let current = vars["currentCost"], let alt = vars["alternativeCost"] else { return nil }
+            return (current - alt) * 365
+        },
+        "dailyVsWorkdayCostDiff": { vars in
+            guard let daily = vars["habitDailyCost"], let workday = vars["habitWorkdayCost"] else { return nil }
+            return abs(daily * 365 - workday * 260)
+        },
+        "multipleHabitsAnnual": { vars in
+            guard let coffee = vars["coffeeCost"],
+                  let lunch = vars["lunchCost"],
+                  let snack = vars["snackCost"] else { return nil }
+            return (coffee + snack) * 365 + lunch * 260
+        },
+
+        // MARK: - Money Math: Weekly / monthly conversions
+        "weeklyToMonthlyCorrect": { vars in
+            guard let w = vars["weekly"] else { return nil }
+            return w * 52 / 12
+        },
+        "biweeklyToMonthly": { vars in
+            guard let b = vars["biweekly"] else { return nil }
+            return b * 26 / 12
+        },
+        "monthlyToWeekly": { vars in
+            guard let m = vars["monthly"] else { return nil }
+            return m * 12 / 52
+        },
+        "wrongMultiplierShortfall": { vars in
+            guard let w = vars["weekly"] else { return nil }
+            // Right (52 weeks) − Wrong (4 × 12 = 48 weeks) = w × 4
+            return w * 4
+        },
+        "biweeklyWrongMultiplierShortfall": { vars in
+            guard let b = vars["biweekly"] else { return nil }
+            // Right (× 26) − Wrong (× 2 × 12 = × 24) = b × 2
+            return b * 2
+        },
+
+        // MARK: - Salary: Rework additions
+        "afterTaxMonthlyRaise": { vars in
+            guard let salary = vars["annualSalary"], let pct = vars["raisePercent"] else { return nil }
+            return (salary * pct / 100) / 12 * 0.72
+        },
+        "totalWeeklyWithOT": { vars in
+            guard let rate = vars["regularRate"], let total = vars["totalHours"] else { return nil }
+            let regHours = min(total, 40.0)
+            let otHours = max(0, total - 40)
+            return regHours * rate + otHours * rate * 1.5
+        },
+        "weeklyMonthlyOfferDiff": { vars in
+            guard let w = vars["weeklyPay"], let m = vars["monthlyPay"] else { return nil }
+            return abs(w * 52 - m * 12)
+        },
+
+        // MARK: - Salary: Hourly to salary (reuses annualFromHourly, hourlyFromAnnual)
+        "offerComparisonDiff": { vars in
+            guard let h = vars["hourlyRate"], let s = vars["annualSalary"] else { return nil }
+            return abs(h * 2000 - s)
+        },
+
+        // MARK: - Salary: Total compensation
+        "totalCompensationNoBonus": { vars in
+            guard let base = vars["baseSalary"],
+                  let ins = vars["insuranceValue"],
+                  let match = vars["matchAmount"] else { return nil }
+            return base + ins + match
+        },
+        "totalCompDifference": { vars in
+            guard let bA = vars["baseA"], let bnA = vars["benefitsA"],
+                  let bB = vars["baseB"], let bnB = vars["benefitsB"] else { return nil }
+            return abs((bA + bnA) - (bB + bnB))
+        },
+        "effectiveHourlyOfTotalComp": { vars in
+            guard let tc = vars["totalComp"] else { return nil }
+            return tc / 2000
+        },
+        "totalCompMinusBase": { vars in
+            guard let tc = vars["totalComp"], let base = vars["baseSalary"] else { return nil }
+            return tc - base
+        },
+        "benefitsAsPercent": { vars in
+            guard let b = vars["benefitsValue"], let base = vars["baseSalary"], base > 0 else { return nil }
+            return b / base * 100
+        },
+
+        // MARK: - Salary: Side hustle
+        "effectiveHourlyRate": { vars in
+            guard let earnings = vars["earnings"], let exp = vars["expenses"],
+                  let hours = vars["hours"], hours > 0 else { return nil }
+            return (earnings - exp) / hours
+        },
+        "simpleHourlyRate": { vars in
+            guard let earnings = vars["earnings"], let hours = vars["hours"], hours > 0 else { return nil }
+            return earnings / hours
+        },
+        "sideVsDayJobGap": { vars in
+            guard let s = vars["sideHourly"], let d = vars["dayHourly"] else { return nil }
+            return d - s
+        },
+        "sideHustlePercentOfDayJob": { vars in
+            guard let s = vars["sideHourly"], let sal = vars["annualSalary"], sal > 0 else { return nil }
+            let dayHourly = sal / 2000
+            return s / dayHourly * 100
+        },
+        "sideHustleAnnualNet": { vars in
+            guard let w = vars["weeklyEarnings"] else { return nil }
+            return w * 50
+        },
     ]
 
     private static func compute(formula: String, variables: [String: Double]) -> Double? {

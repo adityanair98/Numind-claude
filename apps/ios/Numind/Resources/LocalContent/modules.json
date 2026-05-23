@@ -27,11 +27,12 @@
     "mascot": "🧮",
     "glyph": "×",
     "lessonIds": [
-      "sales_tax_quick",
-      "cart_total_estimate",
-      "budget_check",
       "subscription_math",
-      "price_per_use"
+      "price_per_use",
+      "sales_tax_quick",
+      "money_math_50_30_20",
+      "money_math_latte_factor",
+      "money_math_weekly_monthly"
     ]
   },
   {
@@ -47,7 +48,10 @@
       "raise_impact",
       "overtime_calc",
       "pay_period_convert",
-      "inflation_adjusted_raise"
+      "inflation_adjusted_raise",
+      "salary_hourly_2000",
+      "salary_total_comp",
+      "salary_side_hustle"
     ]
   },
   {

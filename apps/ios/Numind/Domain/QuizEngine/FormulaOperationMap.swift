@@ -1125,6 +1125,188 @@ enum FormulaOperationMap {
                     .divide(a: feeB, by: saveB),
                     .subtract(b: min(breakA, breakB), from: max(breakA, breakB))]
 
+        // MARK: - Money Math: Subscription audit
+        case "sumThreeSubscriptions":
+            guard let a = variables["sub1"], let b = variables["sub2"], let c = variables["sub3"] else { return [] }
+            return [.add(a: a, b: b), .add(a: a + b, b: c)]
+
+        case "annualizedSubscriptions":
+            guard let a = variables["sub1"], let b = variables["sub2"], let c = variables["sub3"] else { return [] }
+            let sum = a + b + c
+            return [.add(a: a, b: b), .add(a: a + b, b: c), .multiply(a: sum, by: 12)]
+
+        case "annualSubscriptionSaving":
+            guard let s = variables["subToCut"] else { return [] }
+            return [.multiply(a: s, by: 12)]
+
+        // MARK: - Money Math: Sales tax with budget
+        case "preTaxMax":
+            guard let budget = variables["budget"], let tax = variables["taxPercent"] else { return [] }
+            return [.divide(a: budget, by: 1 + tax / 100)]
+
+        case "asymmetryGap":
+            guard let budget = variables["budget"], let tax = variables["taxPercent"] else { return [] }
+            let right = budget / (1 + tax / 100)
+            let wrong = budget * (1 - tax / 100)
+            return [.divide(a: budget, by: 1 + tax / 100),
+                    .percentOf(pct: tax, amount: budget),
+                    .subtract(b: wrong, from: right)]
+
+        // MARK: - Money Math: 50/30/20
+        case "percentOfIncome":
+            guard let income = variables["income"], let pct = variables["pct"] else { return [] }
+            return [.percentOf(pct: pct, amount: income)]
+
+        case "needsOverCap":
+            guard let income = variables["income"], let needs = variables["needs"] else { return [] }
+            let cap = income * 0.5
+            return [.percentOf(pct: 50, amount: income),
+                    .subtract(b: cap, from: needs)]
+
+        case "monthlyToReachGoal":
+            guard let goal = variables["goal"], let months = variables["months"], months > 0 else { return [] }
+            return [.divide(a: goal, by: months)]
+
+        // MARK: - Money Math: Latte factor
+        case "dailyToAnnual":
+            guard let daily = variables["dailyCost"] else { return [] }
+            return [.multiply(a: daily, by: 365)]
+
+        case "workdayToAnnual":
+            guard let daily = variables["dailyCost"] else { return [] }
+            return [.multiply(a: daily, by: 260)]
+
+        case "dailyHabitSavingsAnnual":
+            guard let current = variables["currentCost"], let alt = variables["alternativeCost"] else { return [] }
+            return [.subtract(b: alt, from: current),
+                    .multiply(a: current - alt, by: 365)]
+
+        case "dailyVsWorkdayCostDiff":
+            guard let daily = variables["habitDailyCost"], let workday = variables["habitWorkdayCost"] else { return [] }
+            let a = daily * 365
+            let b = workday * 260
+            return [.multiply(a: daily, by: 365),
+                    .multiply(a: workday, by: 260),
+                    .subtract(b: min(a, b), from: max(a, b))]
+
+        case "multipleHabitsAnnual":
+            guard let coffee = variables["coffeeCost"],
+                  let lunch = variables["lunchCost"],
+                  let snack = variables["snackCost"] else { return [] }
+            let daily = coffee + snack
+            return [.add(a: coffee, b: snack),
+                    .multiply(a: daily, by: 365),
+                    .multiply(a: lunch, by: 260),
+                    .add(a: daily * 365, b: lunch * 260)]
+
+        // MARK: - Money Math: Weekly / monthly conversions
+        case "weeklyToMonthlyCorrect":
+            guard let w = variables["weekly"] else { return [] }
+            return [.multiply(a: w, by: 52), .divide(a: w * 52, by: 12)]
+
+        case "biweeklyToMonthly":
+            guard let b = variables["biweekly"] else { return [] }
+            return [.multiply(a: b, by: 26), .divide(a: b * 26, by: 12)]
+
+        case "monthlyToWeekly":
+            guard let m = variables["monthly"] else { return [] }
+            return [.multiply(a: m, by: 12), .divide(a: m * 12, by: 52)]
+
+        case "wrongMultiplierShortfall":
+            guard let w = variables["weekly"] else { return [] }
+            return [.multiply(a: w, by: 4)]
+
+        case "biweeklyWrongMultiplierShortfall":
+            guard let b = variables["biweekly"] else { return [] }
+            return [.multiply(a: b, by: 2)]
+
+        // MARK: - Salary: Rework additions
+        case "afterTaxMonthlyRaise":
+            guard let salary = variables["annualSalary"], let pct = variables["raisePercent"] else { return [] }
+            let raise = salary * pct / 100
+            let monthly = raise / 12
+            return [.percentOf(pct: pct, amount: salary),
+                    .divide(a: raise, by: 12),
+                    .multiply(a: monthly, by: 0.72)]
+
+        case "totalWeeklyWithOT":
+            guard let rate = variables["regularRate"], let total = variables["totalHours"] else { return [] }
+            let regHours = min(total, 40.0)
+            let otHours = max(0, total - 40)
+            return [.multiply(a: regHours, by: rate),
+                    .multiply(a: otHours, by: rate * 1.5),
+                    .add(a: regHours * rate, b: otHours * rate * 1.5)]
+
+        case "weeklyMonthlyOfferDiff":
+            guard let w = variables["weeklyPay"], let m = variables["monthlyPay"] else { return [] }
+            let annualW = w * 52
+            let annualM = m * 12
+            return [.multiply(a: w, by: 52),
+                    .multiply(a: m, by: 12),
+                    .subtract(b: min(annualW, annualM), from: max(annualW, annualM))]
+
+        // MARK: - Salary: Hourly to salary
+        case "offerComparisonDiff":
+            guard let h = variables["hourlyRate"], let s = variables["annualSalary"] else { return [] }
+            let annualHourly = h * 2000
+            return [.multiply(a: h, by: 2000),
+                    .subtract(b: min(annualHourly, s), from: max(annualHourly, s))]
+
+        // MARK: - Salary: Total compensation
+        case "totalCompensationNoBonus":
+            guard let base = variables["baseSalary"],
+                  let ins = variables["insuranceValue"],
+                  let match = variables["matchAmount"] else { return [] }
+            return [.add(a: base, b: ins), .add(a: base + ins, b: match)]
+
+        case "totalCompDifference":
+            guard let bA = variables["baseA"], let bnA = variables["benefitsA"],
+                  let bB = variables["baseB"], let bnB = variables["benefitsB"] else { return [] }
+            let totalA = bA + bnA
+            let totalB = bB + bnB
+            return [.add(a: bA, b: bnA),
+                    .add(a: bB, b: bnB),
+                    .subtract(b: min(totalA, totalB), from: max(totalA, totalB))]
+
+        case "effectiveHourlyOfTotalComp":
+            guard let tc = variables["totalComp"] else { return [] }
+            return [.divide(a: tc, by: 2000)]
+
+        case "totalCompMinusBase":
+            guard let tc = variables["totalComp"], let base = variables["baseSalary"] else { return [] }
+            return [.subtract(b: base, from: tc)]
+
+        case "benefitsAsPercent":
+            guard let b = variables["benefitsValue"], let base = variables["baseSalary"], base > 0 else { return [] }
+            return [.divide(a: b, by: base), .multiply(a: b / base, by: 100)]
+
+        // MARK: - Salary: Side hustle
+        case "effectiveHourlyRate":
+            guard let earnings = variables["earnings"], let exp = variables["expenses"],
+                  let hours = variables["hours"], hours > 0 else { return [] }
+            let net = earnings - exp
+            return [.subtract(b: exp, from: earnings),
+                    .divide(a: net, by: hours)]
+
+        case "simpleHourlyRate":
+            guard let earnings = variables["earnings"], let hours = variables["hours"], hours > 0 else { return [] }
+            return [.divide(a: earnings, by: hours)]
+
+        case "sideVsDayJobGap":
+            guard let s = variables["sideHourly"], let d = variables["dayHourly"] else { return [] }
+            return [.subtract(b: s, from: d)]
+
+        case "sideHustlePercentOfDayJob":
+            guard let s = variables["sideHourly"], let sal = variables["annualSalary"], sal > 0 else { return [] }
+            let dayHourly = sal / 2000
+            return [.divide(a: sal, by: 2000),
+                    .divide(a: s, by: dayHourly),
+                    .multiply(a: s / dayHourly, by: 100)]
+
+        case "sideHustleAnnualNet":
+            guard let w = variables["weeklyEarnings"] else { return [] }
+            return [.multiply(a: w, by: 50)]
+
         default:
             return []
         }

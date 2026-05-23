@@ -120,78 +120,93 @@
     ]
   },
   {
-    "id": "sales_tax_quick",
-    "moduleId": "money_math",
-    "title": "Add sales tax in your head",
-    "concept": "Sales tax is usually 6\u201310% depending on your state. Since it's close to 10%, use 10% as your anchor and nudge down. You'll be within cents every time.",
-    "shortcut": "For 8% tax: find 10% (move the decimal left), then subtract 20% of that. On a $40 item: 10% = $4.00, minus $0.80 = $3.20 tax. Total = $43.20. Rounding up to 10% and ignoring the rest works fine for budgeting.",
-    "example": "Item: $40.00\n10% = $4.00\n\u221220% of $4 = $0.80\nTax \u2248 $3.20\nTotal \u2248 $43.20",
-    "quizTemplateIds": [
-      "tax_amount",
-      "price_with_tax",
-      "tax_coffee_d1",
-      "tax_electronics_d2",
-      "price_tax_d1"
-    ]
-  },
-  {
-    "id": "cart_total_estimate",
-    "moduleId": "money_math",
-    "title": "Estimate your cart total",
-    "concept": "You don't need exact prices to stay on budget. Round each item to the nearest dollar as you shop, keep a running mental sum, and you'll hit the register knowing you're covered.",
-    "shortcut": "Round every item up: $3.79 \u2192 $4, $8.49 \u2192 $9, $1.19 \u2192 $2. Add the rounded numbers. Your estimate will land a dollar or two above the actual total \u2014 exactly the right direction for budgeting. Never try to track cents.",
-    "example": "Eggs: $3.79 \u2192 $4\nBread: $2.89 \u2192 $3\n4 cans \u00d7 $1.29 \u2192 $6\nEstimate = $13\nActual: $11.95",
-    "quizTemplateIds": [
-      "cart_total",
-      "unit_price_check",
-      "cart_estimate_d2",
-      "price_tax_scenario_d2",
-      "mm_cart_three_d1"
-    ]
-  },
-  {
-    "id": "budget_check",
-    "moduleId": "money_math",
-    "title": "Is this within my budget?",
-    "concept": "Knowing if you can afford something isn't just about the price tag \u2014 it's about what you have left after everything else. Subtract your known expenses from your total budget and compare the remainder to what you're considering buying.",
-    "shortcut": "Budget \u2212 what you've spent = what's left. If the item costs less than what's left, you're fine. Build this as a 10-second mental check before any discretionary purchase: what's my budget, what have I spent, what's remaining?",
-    "example": "Budget: $150.00\nGroceries: $45.00\nTransport: $20.00\nRemaining: $85.00\nItem costs $79.99 \u2192 within budget \u2713",
-    "quizTemplateIds": [
-      "budget_remaining",
-      "budget_after_purchase",
-      "budget_trip_d2",
-      "budget_weekly_d2",
-      "cart_estimate_d1"
-    ]
-  },
-  {
     "id": "subscription_math",
     "moduleId": "money_math",
-    "title": "Monthly \u2194 yearly costs",
-    "concept": "Subscription services quote monthly prices because they look smaller. $12.99/month sounds cheap until you realise it's $155.88/year. Always convert to yearly before subscribing \u2014 it's the only way to see the real annual impact on your budget.",
-    "shortcut": "Monthly \u2192 yearly: multiply by 12. Yearly \u2192 monthly: divide by 12. $10/month = $120/year. $99/year = $8.25/month. When comparing plans, always put them on the same basis \u2014 monthly vs monthly, or yearly vs yearly.",
-    "example": "Streaming: $14.99/month\n\u00d7 12 = $179.88/year\nAnnual plan: $149.99\nSaving: $29.89/year",
+    "title": "Your real subscription bill",
+    "concept": "Most people have no idea what their subscriptions actually cost annually. $15 Netflix + $11 Spotify + $3 iCloud + $50 gym + $10 DashPass = $89/month \u2014 but $1,068/year. Doing the multi-subscription audit is the single most actionable budgeting exercise.",
+    "shortcut": "Add all your monthly subscriptions, then \u00d7 12 for the annual shock number. Round each to the nearest $5 for speed. Drop one? Annual saving = monthly \u00d7 12.",
+    "example": "Netflix $15 + Spotify $11 + iCloud $3 + gym $50 + DashPass $10 = $89/mo\n\u00d7 12 = $1,068/year\n\nDrop the gym: save $600/year",
     "quizTemplateIds": [
-      "monthly_to_yearly",
-      "yearly_to_monthly",
-      "subscription_compare_d2",
+      "sub_audit_total_d1",
       "yearly_cost_d1",
-      "subscription_streaming_d1"
+      "sub_audit_annual_d2",
+      "subscription_compare_d2",
+      "sub_audit_cut_d3"
     ]
   },
   {
     "id": "price_per_use",
     "moduleId": "money_math",
-    "title": "Price per use",
-    "concept": "The real cost of anything isn't the sticker price \u2014 it's the cost per use. A $30 item used 100 times costs $0.30 per use. The same $30 item used only 5 times costs $6.00 per use. Thinking in cost-per-use reveals which purchases actually have value.",
-    "shortcut": "Cost per use = total price \u00f7 estimated uses. A $100 gym membership for 50 sessions = $2 per session. A $5 coffee machine pod = $5 per cup. Estimate your realistic usage honestly \u2014 that's the number that matters.",
-    "example": "Coffee maker: $60.00\nUses per year: 300\nCost per cup: $0.20\nCaf\u00e9 coffee: $4.50/cup\nAnnual saving: $1,290",
+    "title": "Is it actually worth it?",
+    "concept": "The real cost of anything isn't the sticker price \u2014 it's the cost per use. A $120 yoga unlimited pass used 4 times = $30/class (worse than drop-in). A $200 espresso machine used 300 times = $0.67/cup (way better than caf\u00e9). Cost-per-use turns 'is this a good deal?' into a calculation.",
+    "shortcut": "Cost per use = total price \u00f7 estimated uses. Compare to your alternative. Estimate uses HONESTLY \u2014 most people overestimate how often they'll use things. Unlimited yoga at $120: need 8+ classes vs $18 drop-ins.",
+    "example": "Yoga unlimited: $120/mo\n4 classes \u2192 $30/class\n12 classes \u2192 $10/class\nDrop-in: $18 each\nWorth it above 7 classes\n\nEspresso machine: $200\n300 cups \u2192 $0.67/cup\nCaf\u00e9: $4.50/cup\nSaves $1,149/yr",
     "quizTemplateIds": [
       "cost_per_use_calc",
-      "cost_per_use_scenario",
-      "cost_per_use_gym_d2",
       "mm_cpu_book_d1",
-      "mm_cpu_daily_d2"
+      "cost_per_use_gym_d2",
+      "mm_cpu_daily_d2",
+      "cost_per_use_scenario"
+    ]
+  },
+  {
+    "id": "sales_tax_quick",
+    "moduleId": "money_math",
+    "title": "Tax, totals, and budget checks",
+    "concept": "Sales tax in the US is usually 6-10% depending on your state. Two things confuse people: applying the tax to the right base, and the asymmetry that subtracting 10% from a budget doesn't give you the pre-tax max. To go from a post-tax budget to pre-tax: divide by (1 + tax%).",
+    "shortcut": "Adding tax: price \u00d7 (1 + tax%). Finding pre-tax max from a budget: budget \u00f7 (1 + tax%) \u2014 NOT budget \u00d7 (1 \u2212 tax%). The asymmetry is small but real: $100 budget at 10% tax \u2192 max pre-tax is $90.91, not $90.",
+    "example": "$40 item, 8% tax:\n10% of $40 = $4\nMinus 20% = $0.80 off\nTax \u2248 $3.20\nTotal \u2248 $43.20\n\nBudget $100, 10% tax:\nMax pre-tax = $100 \u00f7 1.10 = $90.91\nNOT $90 (which gives $99 total)",
+    "quizTemplateIds": [
+      "tax_amount",
+      "tax_electronics_d2",
+      "price_with_tax",
+      "pre_tax_max_d2",
+      "budget_asymmetry_d3"
+    ]
+  },
+  {
+    "id": "money_math_50_30_20",
+    "moduleId": "money_math",
+    "title": "The 50/30/20 rule",
+    "concept": "The simplest budgeting framework that actually works: 50% of after-tax income to needs (rent, food, transport, insurance, minimum debt), 30% to wants (dining out, entertainment, subscriptions), 20% to savings and debt payoff. The math is simple \u2014 the insight is most people have never calculated their own ratios.",
+    "shortcut": "Half / a third / a fifth of take-home. Quick check: take-home \u00d7 0.5 = your needs ceiling. If rent alone exceeds that, your budget is structurally stressed.",
+    "example": "Take-home: $4,200/month\nNeeds: $2,100 (50%)\nWants: $1,260 (30%)\nSavings: $840 (20%)\n\nRent of $2,400? Already above 50% \u2014 wants or savings must shrink.",
+    "quizTemplateIds": [
+      "needs_50_d1",
+      "savings_20_d1",
+      "all_three_buckets_d2",
+      "over_budget_d3",
+      "target_savings_d3"
+    ]
+  },
+  {
+    "id": "money_math_latte_factor",
+    "moduleId": "money_math",
+    "title": "Small daily purchases, big annual cost",
+    "concept": "The latte factor: small daily expenses compound into shocking annual numbers. A $5.50 daily coffee = $2,008/year. A $12 daily workday lunch = $3,120/year. Knowing the annual number makes the daily decision honest.",
+    "shortcut": "Daily \u00d7 365 for every-day habits. Workday \u00d7 260 for workday-only habits. Want weekly? \u00d7 7. Round up for budgeting.",
+    "example": "Daily coffee $5.50:\n\u00d7 365 = $2,008/year\n\nWorkday lunch $12:\n\u00d7 260 = $3,120/year\n\nDrop both, brew + pack:\nSave $3,000+/year",
+    "quizTemplateIds": [
+      "daily_to_annual_d1",
+      "workday_to_annual_d1",
+      "daily_habit_savings_d2",
+      "habit_compare_d2",
+      "multi_habit_annual_d3"
+    ]
+  },
+  {
+    "id": "money_math_weekly_monthly",
+    "moduleId": "money_math",
+    "title": "Why your budget is always short",
+    "concept": "Multiplying weekly cost by 4 gives you a 48-week year \u2014 you're missing 4 weeks of expenses annually. A $85/week grocery budget \u00d7 4 = $340/month, but the real monthly figure is $85 \u00d7 4.33 = $368. Over a year, the wrong multiplier underestimates by ~$336.",
+    "shortcut": "Weekly \u00d7 4.33 (= 52 \u00f7 12) for monthly. Biweekly \u00d7 2.17 (= 26 \u00f7 12). Always round up if budgeting. Monthly \u2192 weekly: \u00f7 4.33.",
+    "example": "Weekly grocery: $85\nWrong (\u00d74): $340/month\nRight (\u00d74.33): $368/month\n\nAnnual shortfall from \u00d74: $85 \u00d7 52 \u2212 ($340 \u00d7 12) = $4,420 \u2212 $4,080 = $340/year\n\nBiweekly pay $1,800:\nMonthly = $1,800 \u00d7 2.17 = $3,906",
+    "quizTemplateIds": [
+      "weekly_to_monthly_d1",
+      "biweekly_to_monthly_d1",
+      "monthly_to_weekly_d2",
+      "wrong_multiplier_shortfall_d3",
+      "biweekly_annual_check_d2"
     ]
   },
   {
@@ -214,14 +229,14 @@
     "moduleId": "salary",
     "title": "What a % raise really adds",
     "concept": "A percentage raise sounds exciting, but the real number is what lands in your paycheck. A 5% raise on $60,000 is $3,000 more per year \u2014 about $250/month before taxes. Knowing the actual dollar impact helps you negotiate and plan clearly.",
-    "shortcut": "Annual raise = current salary \u00d7 raise% \u00f7 100. Monthly bump = \u00f7 12. After-tax estimate: multiply by 0.70. Quick mental math: 5% on any salary is half of 10% \u2014 and 10% is just move the decimal.",
+    "shortcut": "Annual raise = current salary \u00d7 raise%. Monthly bump = \u00f7 12. After-tax: \u00d7 0.72 (assumes ~28% total deductions). 5% on $65k = $3,250/yr \u2192 $271/mo gross \u2192 ~$195/mo in your pocket.",
     "example": "Salary: $60,000\n5% raise = $3,000/year\nPer month = $250\nAfter tax \u2248 $175/month",
     "quizTemplateIds": [
       "raise_dollar_amount",
       "raise_new_salary",
       "raise_dollar_d1",
       "raise_new_salary_d2",
-      "raise_new_salary_d3"
+      "raise_after_tax_monthly_d3"
     ]
   },
   {
@@ -229,29 +244,29 @@
     "moduleId": "salary",
     "title": "Overtime pay \u2014 time and a half",
     "concept": "Overtime in the US is 1.5\u00d7 your regular rate for hours worked beyond 40 per week. Those extra hours pay significantly more \u2014 8 hours of overtime at $20/hr earns you $240, not $160.",
-    "shortcut": "Overtime rate = regular rate \u00d7 1.5. Multiply by overtime hours for your extra pay. At $20/hr: overtime rate = $30. 8 hours \u00d7 $30 = $240 extra. Calculate before committing to a long week \u2014 overtime adds up fast.",
+    "shortcut": "Overtime rate = regular \u00d7 1.5. Overtime pay = OT hours \u00d7 OT rate. Total week: (40 \u00d7 regular) + (OT hours \u00d7 regular \u00d7 1.5). At $20/hr working 47 hours: $800 + (7 \u00d7 $30) = $1,011 gross.",
     "example": "Regular rate: $20/hr\nOvertime rate: $20 \u00d7 1.5 = $30/hr\n8 OT hours \u00d7 $30 = $240\nVs. 8 regular hours = $160",
     "quizTemplateIds": [
       "overtime_pay_calc",
       "overtime_d2",
       "overtime_scenario_d2",
       "salary_hourly_annual_d1",
-      "salary_annual_hourly_d2"
+      "total_weekly_with_ot_d3"
     ]
   },
   {
     "id": "pay_period_convert",
     "moduleId": "salary",
-    "title": "Compare pay across periods",
-    "concept": "Job offers quote pay in different periods \u2014 weekly, bi-weekly, monthly, annual. Bi-weekly (every two weeks) is 26 pay periods per year, not 24. Converting to annual first puts every offer on the same footing.",
-    "shortcut": "Annual \u00f7 52 = weekly. Annual \u00f7 26 = bi-weekly. Annual \u00f7 12 = monthly. In reverse: bi-weekly \u00d7 26 = annual. The most common mistake: treating bi-weekly as semi-monthly (24 periods instead of 26) \u2014 it under-counts two paychecks a year.",
+    "title": "Compare any two paychecks",
+    "concept": "Job offers come in different pay periods \u2014 weekly, bi-weekly, monthly, annual. Bi-weekly is 26 paychecks/year (not 24). To compare any two offers fairly, convert both to annual first. The most expensive mistake: treating bi-weekly as semi-monthly (24 vs 26) \u2014 you under-count two paychecks.",
+    "shortcut": "Annual \u00f7 52 = weekly. Annual \u00f7 26 = bi-weekly. Annual \u00f7 12 = monthly. To compare offers: annualize each, then subtract. $1,150/week vs $4,800/month? $59,800 vs $57,600 \u2014 weekly wins by $2,200.",
     "example": "$50,000/year\n\u00f7 26 = $1,923 bi-weekly\n\u00f7 12 = $4,167/month\n\u00f7 52 = $962/week",
     "quizTemplateIds": [
       "biweekly_to_annual",
       "weekly_to_annual",
       "biweekly_annual_d1",
       "weekly_annual_d1",
-      "weekly_annual_d2"
+      "job_offer_compare_d3"
     ]
   },
   {
@@ -267,6 +282,51 @@
       "inflation_raise_scenario_d2",
       "inflation_raise_compare_d2",
       "inflation_raise_negative_d3"
+    ]
+  },
+  {
+    "id": "salary_hourly_2000",
+    "moduleId": "salary",
+    "title": "Hourly to salary in 2 seconds",
+    "concept": "Full-time work is roughly 2,000 hours per year (40 hrs \u00d7 50 weeks). The mental math: double your hourly rate, add three zeros. $25/hr \u2192 double \u2192 $50 \u2192 add three zeros \u2192 $50,000/year. To reverse: drop three zeros, halve. $70,000 \u2192 $70 \u2192 halve \u2192 $35/hr.",
+    "shortcut": "Hourly to annual: double + three zeros. Annual to hourly: drop three zeros, halve. Works because 2 \u00d7 1,000 = 2,000 hours. For part-time, scale: 1,500 hrs = double + 1,500.",
+    "example": "Hourly to annual:\n$18/hr \u2192 $36,000\n$32/hr \u2192 $64,000\n\nAnnual to hourly:\n$50,000 \u2192 $25/hr\n$80,000 \u2192 $40/hr\n\nCompare offer:\n$28/hr \u2248 $56k vs $52k salaried\nHourly wins by $4k",
+    "quizTemplateIds": [
+      "hourly_to_annual_d1",
+      "annual_to_hourly_d1",
+      "hourly_nonround_d2",
+      "offer_compare_d3",
+      "annual_nonround_d3"
+    ]
+  },
+  {
+    "id": "salary_total_comp",
+    "moduleId": "salary",
+    "title": "Your salary isn't your compensation",
+    "concept": "Total compensation = base salary + employer-paid health insurance + 401k match + bonus + stock. For most jobs, total comp is 15-25% higher than base. A $70k base with $8k insurance + $3k match + $5k bonus = $86k total comp. When comparing offers, compare total comp.",
+    "shortcut": "Add 15-25% to base for a rough total comp estimate. Employer pays $500/mo for your insurance? That's $6k/yr of compensation you never see in your paycheck.",
+    "example": "Offer A: $75k base + $6k insurance + $2k match = $83k total\nOffer B: $80k base + $3k insurance + $1k match = $84k total\n\nB wins by $1k \u2014 barely. A might have better benefits in practice.",
+    "quizTemplateIds": [
+      "total_comp_sum_d1",
+      "total_comp_difference_d2",
+      "total_comp_hourly_d3",
+      "missing_benefit_d2",
+      "benefits_pct_d2"
+    ]
+  },
+  {
+    "id": "salary_side_hustle",
+    "moduleId": "salary",
+    "title": "Is your side hustle actually worth it?",
+    "concept": "Effective hourly rate = (earnings \u2212 expenses) \u00f7 total hours including prep, travel, admin. A $200 weekend gig that takes 12 hours and costs $30 in gas is really $14.17/hr \u2014 half of what a $28/hr day job pays. Side hustles often look better than they pay.",
+    "shortcut": "Net earnings \u00f7 total hours including everything. Compare to your day job hourly equivalent (annual \u00f7 2,000). If side hustle pays < 70% of day rate, the time is better spent on rest, a promotion, or a second skill.",
+    "example": "Side hustle:\n$200 gig\n12 hours total\n$30 gas\nEffective: $14.17/hr\n\nDay job:\n$55,000 \u00f7 2,000 = $27.50/hr\n\nGap: $13.33/hr\nSide hustle pays 51% of day job \u2014 worth it?",
+    "quizTemplateIds": [
+      "net_hourly_d1",
+      "side_hustle_simple_d1",
+      "worth_it_compare_d3",
+      "hourly_compare_d3",
+      "side_hustle_annual_d2"
     ]
   },
   {

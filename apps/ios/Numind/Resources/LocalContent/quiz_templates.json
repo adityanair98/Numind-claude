@@ -260,135 +260,6 @@
     "explanationTemplate": "Total saving = original \u2212 final price. The stacked saving is always less than {{firstDiscount}}+{{secondDiscount}}% \u2014 the second cut applies to the lower price."
   },
   {
-    "id": "budget_remaining",
-    "moduleId": "money_math",
-    "difficulty": 1,
-    "scenarioTemplate": "You set yourself a ${{budget}} discretionary budget for the month.",
-    "promptTemplate": "Your budget is ${{budget}}. You've already spent ${{spent}}. How much do you have left?",
-    "variableRules": [
-      {
-        "name": "budget",
-        "options": [
-          80,
-          100,
-          120,
-          150,
-          200
-        ]
-      },
-      {
-        "name": "spent",
-        "options": [
-          15,
-          20,
-          25,
-          30,
-          35,
-          40,
-          45,
-          50,
-          60,
-          75
-        ]
-      }
-    ],
-    "answerFormula": "budgetRemaining",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Remaining = ${{budget}} \u2212 ${{spent}}. Simple subtraction \u2014 but tracking this in real-time is the whole skill."
-  },
-  {
-    "id": "budget_after_purchase",
-    "moduleId": "money_math",
-    "difficulty": 3,
-    "promptTemplate": "You have ${{budget}}. You buy {{quantity}} items at ${{itemPrice}} each. How much is left?",
-    "variableRules": [
-      {
-        "name": "budget",
-        "options": [
-          100,
-          120,
-          150,
-          200
-        ]
-      },
-      {
-        "name": "quantity",
-        "options": [
-          2,
-          3,
-          4,
-          5
-        ]
-      },
-      {
-        "name": "itemPrice",
-        "options": [
-          8,
-          10,
-          12,
-          15
-        ]
-      }
-    ],
-    "answerFormula": "budgetAfterPurchase",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Spend = {{quantity}} \u00d7 ${{itemPrice}}. Remaining = ${{budget}} \u2212 that total. Find the spend first, then subtract."
-  },
-  {
-    "id": "monthly_to_yearly",
-    "moduleId": "money_math",
-    "difficulty": 1,
-    "promptTemplate": "A subscription costs ${{monthlyPrice}} per month. What does it cost over a full year?",
-    "variableRules": [
-      {
-        "name": "monthlyPrice",
-        "options": [
-          5,
-          8,
-          9,
-          10,
-          12,
-          13,
-          15,
-          20,
-          25
-        ]
-      }
-    ],
-    "answerFormula": "monthlyToYearly",
-    "answerFormat": "currency",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "${{monthlyPrice}}/month \u00d7 12 months. Most people underestimate yearly costs because the monthly number looks small."
-  },
-  {
-    "id": "yearly_to_monthly",
-    "moduleId": "money_math",
-    "difficulty": 1,
-    "promptTemplate": "An annual plan costs ${{yearlyPrice}} per year. What is the equivalent monthly cost?",
-    "variableRules": [
-      {
-        "name": "yearlyPrice",
-        "options": [
-          60,
-          84,
-          96,
-          108,
-          120,
-          144,
-          156,
-          180,
-          240
-        ]
-      }
-    ],
-    "answerFormula": "yearlyToMonthly",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{yearlyPrice}} \u00f7 12. Compare this to the monthly plan price to see which is actually cheaper."
-  },
-  {
     "id": "cost_per_use_calc",
     "moduleId": "money_math",
     "difficulty": 1,
@@ -530,74 +401,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
     "explanationTemplate": "Total = price + tax. Find {{taxPercent}}% of ${{originalPrice}} first, then add it to the original price."
-  },
-  {
-    "id": "cart_total",
-    "moduleId": "money_math",
-    "difficulty": 1,
-    "inputMode": "freeEntry",
-    "promptTemplate": "You grab {{quantity}} items at ${{itemPrice}} each. What's the total?",
-    "variableRules": [
-      {
-        "name": "itemPrice",
-        "options": [
-          4,
-          5,
-          6,
-          7,
-          8,
-          10,
-          12,
-          15
-        ]
-      },
-      {
-        "name": "quantity",
-        "options": [
-          2,
-          3,
-          4,
-          5,
-          6
-        ]
-      }
-    ],
-    "answerFormula": "totalCost",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = price \u00d7 quantity. ${{itemPrice}} \u00d7 {{quantity}}: break it into rounds \u2014 double the price, then add extras."
-  },
-  {
-    "id": "unit_price_check",
-    "moduleId": "money_math",
-    "difficulty": 2,
-    "promptTemplate": "A pack of {{quantity}} items costs ${{totalPrice}}. What's the price per item?",
-    "variableRules": [
-      {
-        "name": "totalPrice",
-        "options": [
-          4,
-          6,
-          8,
-          10,
-          12,
-          15,
-          20
-        ]
-      },
-      {
-        "name": "quantity",
-        "options": [
-          2,
-          4,
-          5
-        ]
-      }
-    ],
-    "answerFormula": "unitPrice",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Price per item = total \u00f7 quantity. ${{totalPrice}} \u00f7 {{quantity}}: divide evenly to find the per-unit cost."
   },
   {
     "id": "net_pay_deduction",
@@ -1448,37 +1251,6 @@
     "explanationTemplate": "Stacked discounts multiply, not add. Final = ${{originalPrice}} \u00d7 (1\u2212{{firstDiscount}}%) \u00d7 (1\u2212{{secondDiscount}}%). Not the same as {{firstDiscount}}+{{secondDiscount}}% off."
   },
   {
-    "id": "tax_coffee_d1",
-    "moduleId": "money_math",
-    "difficulty": 1,
-    "promptTemplate": "Your coffee order is ${{originalPrice}}. Sales tax is {{taxPercent}}%. How much is the tax?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          4,
-          5,
-          6,
-          7,
-          8,
-          10
-        ]
-      },
-      {
-        "name": "taxPercent",
-        "options": [
-          8,
-          9,
-          10
-        ]
-      }
-    ],
-    "answerFormula": "taxAmount",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Tax = price \u00d7 {{taxPercent}}%. ${{originalPrice}} \u00d7 {{taxPercent}}% = tax. For 10%: move decimal. For 8\u20139%: find 10%, adjust slightly."
-  },
-  {
     "id": "tax_electronics_d2",
     "moduleId": "money_math",
     "difficulty": 2,
@@ -1510,173 +1282,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Tax = ${{originalPrice}} \u00d7 {{taxPercent}}%. Always calculate tax before you reach the register \u2014 especially on big purchases."
-  },
-  {
-    "id": "price_tax_d1",
-    "moduleId": "money_math",
-    "difficulty": 1,
-    "promptTemplate": "A book costs ${{originalPrice}} before tax. Tax is {{taxPercent}}%. What is the total with tax?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          10,
-          15,
-          20,
-          25,
-          30
-        ]
-      },
-      {
-        "name": "taxPercent",
-        "options": [
-          10
-        ]
-      }
-    ],
-    "answerFormula": "priceWithTax",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = price \u00d7 1.{{taxPercent}}. Add {{taxPercent}}% to ${{originalPrice}}. At 10%, just add 10% (move decimal, then add)."
-  },
-  {
-    "id": "price_tax_scenario_d2",
-    "moduleId": "money_math",
-    "difficulty": 3,
-    "scenarioTemplate": "You're buying a ${{originalPrice}} item. The cashier will add {{taxPercent}}% sales tax.",
-    "promptTemplate": "What total will appear on the receipt?",
-    "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          25,
-          35,
-          45,
-          55,
-          65,
-          75
-        ]
-      },
-      {
-        "name": "taxPercent",
-        "options": [
-          7,
-          8,
-          9
-        ]
-      }
-    ],
-    "answerFormula": "priceWithTax",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = ${{originalPrice}} \u00d7 (1 + {{taxPercent}}%). Find {{taxPercent}}% of the price and add it. Always budget for tax on top of the sticker price."
-  },
-  {
-    "id": "cart_estimate_d1",
-    "moduleId": "money_math",
-    "difficulty": 1,
-    "promptTemplate": "Two grocery items cost ${{priceA}} and ${{priceB}}. Rounding to the nearest $10, what is the estimated total?",
-    "variableRules": [
-      {
-        "name": "priceA",
-        "options": [
-          4,
-          7,
-          12,
-          16,
-          23,
-          28
-        ]
-      },
-      {
-        "name": "priceB",
-        "options": [
-          5,
-          8,
-          11,
-          17,
-          22,
-          31
-        ]
-      }
-    ],
-    "answerFormula": "estimateSumNearestTen",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Round each to the nearest $10, then add. Quick mental check before you reach the register."
-  },
-  {
-    "id": "cart_estimate_d2",
-    "moduleId": "money_math",
-    "difficulty": 2,
-    "scenarioTemplate": "You grab two items off the shelf: ${{priceA}} and ${{priceB}}.",
-    "promptTemplate": "Rounding each to the nearest $10, what is your estimated total?",
-    "variableRules": [
-      {
-        "name": "priceA",
-        "options": [
-          14,
-          19,
-          26,
-          33,
-          41,
-          47
-        ]
-      },
-      {
-        "name": "priceB",
-        "options": [
-          13,
-          22,
-          35,
-          44,
-          53,
-          67
-        ]
-      }
-    ],
-    "answerFormula": "estimateSumNearestTen",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Round each to nearest $10, then add. Fast estimation prevents register surprise on bigger purchases."
-  },
-  {
-    "id": "budget_trip_d2",
-    "moduleId": "money_math",
-    "difficulty": 2,
-    "scenarioTemplate": "You have ${{budget}} saved for gear. You buy {{quantity}} items at ${{itemPrice}} each.",
-    "promptTemplate": "How much budget do you have left?",
-    "variableRules": [
-      {
-        "name": "budget",
-        "options": [
-          120,
-          150,
-          200,
-          250
-        ]
-      },
-      {
-        "name": "quantity",
-        "options": [
-          2,
-          3
-        ]
-      },
-      {
-        "name": "itemPrice",
-        "options": [
-          20,
-          25,
-          30,
-          35
-        ]
-      }
-    ],
-    "answerFormula": "budgetAfterPurchase",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Remaining = budget \u2212 (qty \u00d7 price). ${{budget}} \u2212 ({{quantity}} \u00d7 ${{itemPrice}}) = what's left."
   },
   {
     "id": "subscription_compare_d2",
@@ -1772,63 +1377,6 @@
     "explanationTemplate": "Cost per visit = ${{itemPrice}} \u00f7 {{numberOfUses}} visits. Knowing this makes gym membership decisions obvious."
   },
   {
-    "id": "budget_weekly_d2",
-    "moduleId": "money_math",
-    "difficulty": 2,
-    "promptTemplate": "You budget ${{budget}} for groceries. After spending ${{spent}}, how much is left?",
-    "variableRules": [
-      {
-        "name": "budget",
-        "options": [
-          80,
-          100,
-          120,
-          150,
-          180,
-          200
-        ]
-      },
-      {
-        "name": "spent",
-        "options": [
-          25,
-          35,
-          45,
-          55,
-          65,
-          75
-        ]
-      }
-    ],
-    "answerFormula": "budgetRemaining",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Remaining = ${{budget}} \u2212 ${{spent}}. Simple subtraction \u2014 but knowing your budget number upfront keeps you on track."
-  },
-  {
-    "id": "subscription_streaming_d1",
-    "moduleId": "money_math",
-    "difficulty": 1,
-    "promptTemplate": "You pay ${{monthlyPrice}} a month for streaming. What does that cost you in a year?",
-    "variableRules": [
-      {
-        "name": "monthlyPrice",
-        "options": [
-          8,
-          10,
-          12,
-          14,
-          16,
-          18
-        ]
-      }
-    ],
-    "answerFormula": "monthlyToYearly",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{monthlyPrice}} \u00d7 12 = yearly cost. The monthly price is designed to feel small \u2014 always convert to annual to see the real commitment."
-  },
-  {
     "id": "salary_monthly_annual_d1",
     "moduleId": "salary",
     "difficulty": 1,
@@ -1873,28 +1421,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Annual \u2248 hourly \u00d7 2,000. ${{hourlyRate}} \u00d7 2,000 = approximate yearly salary. The 2,000 comes from 40 hours \u00d7 50 weeks."
-  },
-  {
-    "id": "salary_annual_hourly_d2",
-    "moduleId": "salary",
-    "difficulty": 2,
-    "promptTemplate": "A salaried job pays ${{annualSalary}} per year. Assuming 2,000 working hours, what is the effective hourly rate?",
-    "variableRules": [
-      {
-        "name": "annualSalary",
-        "options": [
-          40000,
-          50000,
-          60000,
-          70000,
-          80000
-        ]
-      }
-    ],
-    "answerFormula": "hourlyFromAnnual",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Hourly \u2248 annual \u00f7 2,000. ${{annualSalary}} \u00f7 2,000 = hourly equivalent. Use this to compare salary offers with contract or hourly jobs."
   },
   {
     "id": "net_pay_biweekly_d2",
@@ -2026,39 +1552,6 @@
     "explanationTemplate": "New salary = current \u00d7 (1 + raise%). ${{annualSalary}} \u00d7 (1 + {{raisePercent}}%) = your new salary."
   },
   {
-    "id": "raise_new_salary_d3",
-    "moduleId": "salary",
-    "difficulty": 3,
-    "scenarioTemplate": "You currently make ${{annualSalary}} a year and just got a performance review.",
-    "promptTemplate": "Your manager approves a {{raisePercent}}% raise. What is your new salary?",
-    "variableRules": [
-      {
-        "name": "annualSalary",
-        "options": [
-          52000,
-          63000,
-          74000,
-          86000,
-          97000
-        ]
-      },
-      {
-        "name": "raisePercent",
-        "options": [
-          3,
-          4,
-          5,
-          6,
-          7
-        ]
-      }
-    ],
-    "answerFormula": "raisedSalary",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "New salary = ${{annualSalary}} \u00d7 (1 + {{raisePercent}}%). Knowing this in advance helps you negotiate confidently."
-  },
-  {
     "id": "overtime_d2",
     "moduleId": "salary",
     "difficulty": 2,
@@ -2168,30 +1661,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Annual = weekly \u00d7 52. ${{weeklySalary}} \u00d7 52 = yearly total."
-  },
-  {
-    "id": "weekly_annual_d2",
-    "moduleId": "salary",
-    "difficulty": 2,
-    "scenarioTemplate": "A gig job pays ${{weeklySalary}} per week on average.",
-    "promptTemplate": "If you work all 52 weeks, what is the annual income?",
-    "variableRules": [
-      {
-        "name": "weeklySalary",
-        "options": [
-          550,
-          650,
-          750,
-          850,
-          950,
-          1100
-        ]
-      }
-    ],
-    "answerFormula": "weeklyToAnnual",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual = weekly \u00d7 52. ${{weeklySalary}} \u00d7 52. Useful when comparing gig income to a salaried offer."
   },
   {
     "id": "cc_monthly_interest",
@@ -3064,42 +2533,6 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Cost per use = ${{itemPrice}} \u00f7 {{numberOfUses}} uses. Durable everyday items have very low per-use costs when you actually use them."
-  },
-  {
-    "id": "mm_cart_three_d1",
-    "moduleId": "money_math",
-    "difficulty": 1,
-    "promptTemplate": "You pick up {{quantity}} items at ${{itemPrice}} each. What is the total?",
-    "variableRules": [
-      {
-        "name": "itemPrice",
-        "options": [
-          3,
-          4,
-          5,
-          6,
-          7,
-          9,
-          10,
-          11,
-          12
-        ]
-      },
-      {
-        "name": "quantity",
-        "options": [
-          3,
-          6,
-          7,
-          8,
-          9
-        ]
-      }
-    ],
-    "answerFormula": "totalCost",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Total = price \u00d7 quantity. ${{itemPrice}} \u00d7 {{quantity}}: round the price to the nearest $1, multiply, then adjust."
   },
   {
     "id": "cc_rate_check_d1",
@@ -8959,5 +8392,1153 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "({{usesPerPeriod}} visits \u00d7 ${{savingPerUse}}) \u2212 ${{annualFee}} fee = ${{answer}} annual net."
+  },
+  {
+    "id": "sub_audit_total_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "You have these subscriptions: Netflix ${{sub1}}, Spotify ${{sub2}}, gym ${{sub3}}. What's your total monthly subscription bill?",
+    "variableRules": [
+      {
+        "name": "sub1",
+        "options": [
+          10,
+          12,
+          15,
+          18,
+          20
+        ]
+      },
+      {
+        "name": "sub2",
+        "options": [
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      {
+        "name": "sub3",
+        "options": [
+          30,
+          40,
+          50,
+          60,
+          75
+        ]
+      }
+    ],
+    "answerFormula": "sumThreeSubscriptions",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Just add them up: ${{sub1}} + ${{sub2}} + ${{sub3}} = ${{answer}}/month. Multiply by 12 for the annual reveal."
+  },
+  {
+    "id": "sub_audit_annual_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "Subscriptions: ${{sub1}}/mo + ${{sub2}}/mo + ${{sub3}}/mo. What do they cost you per year?",
+    "variableRules": [
+      {
+        "name": "sub1",
+        "options": [
+          10,
+          12,
+          15,
+          18
+        ]
+      },
+      {
+        "name": "sub2",
+        "options": [
+          9,
+          11,
+          13
+        ]
+      },
+      {
+        "name": "sub3",
+        "options": [
+          30,
+          40,
+          50,
+          60
+        ]
+      }
+    ],
+    "answerFormula": "annualizedSubscriptions",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly total \u00d7 12. (${{sub1}} + ${{sub2}} + ${{sub3}}) \u00d7 12 = ${{answer}}/year."
+  },
+  {
+    "id": "sub_audit_cut_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "promptTemplate": "You pay ${{subToCut}}/month for a gym you barely use. If you cancel, how much do you save annually?",
+    "variableRules": [
+      {
+        "name": "subToCut",
+        "options": [
+          25,
+          30,
+          40,
+          50,
+          60,
+          75,
+          100
+        ]
+      }
+    ],
+    "answerFormula": "annualSubscriptionSaving",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual saving = monthly \u00d7 12. ${{subToCut}} \u00d7 12 = ${{answer}}/year back in your pocket."
+  },
+  {
+    "id": "pre_tax_max_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "You have ${{budget}} to spend including {{taxPercent}}% sales tax. What's the maximum pre-tax price you can afford?",
+    "variableRules": [
+      {
+        "name": "budget",
+        "options": [
+          50,
+          100,
+          150,
+          200,
+          250,
+          300
+        ]
+      },
+      {
+        "name": "taxPercent",
+        "options": [
+          6,
+          8,
+          9,
+          10
+        ]
+      }
+    ],
+    "answerFormula": "preTaxMax",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Divide by (1 + tax). ${{budget}} \u00f7 1.{{taxPercent}} = ${{answer}}. Common mistake: subtracting {{taxPercent}}% from budget gives the wrong answer."
+  },
+  {
+    "id": "budget_asymmetry_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "promptTemplate": "Your post-tax budget is ${{budget}}. Tax is {{taxPercent}}%. What's the gap between the WRONG method (budget \u00d7 (1 \u2212 tax%)) and the RIGHT pre-tax max (budget \u00f7 (1 + tax%))?",
+    "variableRules": [
+      {
+        "name": "budget",
+        "options": [
+          100,
+          150,
+          200,
+          300,
+          500
+        ]
+      },
+      {
+        "name": "taxPercent",
+        "options": [
+          8,
+          9,
+          10
+        ]
+      }
+    ],
+    "answerFormula": "asymmetryGap",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Right method: ${{budget}} \u00f7 1.{{taxPercent}}. Wrong method: ${{budget}} \u00d7 (1 \u2212 0.{{taxPercent}}). Gap = ${{answer}}. The asymmetry is real \u2014 small but adds up on bigger budgets."
+  },
+  {
+    "id": "needs_50_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "Your monthly take-home pay is ${{income}}. Using the 50/30/20 rule, how much can you spend on needs (rent, food, etc.)?",
+    "variableRules": [
+      {
+        "name": "income",
+        "options": [
+          3000,
+          3500,
+          4000,
+          4500,
+          5000,
+          6000,
+          7000
+        ]
+      },
+      {
+        "name": "pct",
+        "options": [
+          50
+        ]
+      }
+    ],
+    "answerFormula": "percentOfIncome",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Half of take-home. ${{income}} \u00d7 50% = ${{answer}} for needs."
+  },
+  {
+    "id": "savings_20_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "Take-home pay ${{income}}/month. The 50/30/20 rule says how much for savings?",
+    "variableRules": [
+      {
+        "name": "income",
+        "options": [
+          3000,
+          3500,
+          4000,
+          4500,
+          5000,
+          6000
+        ]
+      },
+      {
+        "name": "pct",
+        "options": [
+          20
+        ]
+      }
+    ],
+    "answerFormula": "percentOfIncome",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "20% of take-home = ${{income}} \u00d7 20% = ${{answer}}/month for savings + debt payoff."
+  },
+  {
+    "id": "all_three_buckets_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "Take-home ${{income}}/month. Using 50/30/20, what's your wants budget (30%)?",
+    "variableRules": [
+      {
+        "name": "income",
+        "options": [
+          3200,
+          3800,
+          4200,
+          4800,
+          5200,
+          5800,
+          6500
+        ]
+      },
+      {
+        "name": "pct",
+        "options": [
+          30
+        ]
+      }
+    ],
+    "answerFormula": "percentOfIncome",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Wants = 30% of take-home. ${{income}} \u00d7 30% = ${{answer}} for dining out, entertainment, subscriptions."
+  },
+  {
+    "id": "over_budget_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "promptTemplate": "Income ${{income}}/month. Your needs (rent + food + transport + insurance) total ${{needs}}. How much MORE is that than the 50% needs cap?",
+    "variableRules": [
+      {
+        "name": "income",
+        "options": [
+          4000,
+          4500,
+          5000,
+          5500,
+          6000
+        ]
+      },
+      {
+        "name": "needs",
+        "options": [
+          2400,
+          2700,
+          3000,
+          3300,
+          3500,
+          3800
+        ]
+      }
+    ],
+    "answerFormula": "needsOverCap",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Needs cap = income \u00d7 50%. Excess = actual needs \u2212 cap = ${{answer}} over. Time to shrink wants or cut a fixed cost."
+  },
+  {
+    "id": "target_savings_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "promptTemplate": "You want ${{goal}} saved in {{months}} months. What monthly amount do you need to set aside?",
+    "variableRules": [
+      {
+        "name": "goal",
+        "options": [
+          5000,
+          6000,
+          8000,
+          10000,
+          12000,
+          15000
+        ]
+      },
+      {
+        "name": "months",
+        "options": [
+          6,
+          8,
+          10,
+          12,
+          18,
+          24
+        ]
+      }
+    ],
+    "answerFormula": "monthlyToReachGoal",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Goal \u00f7 months = monthly. ${{goal}} \u00f7 {{months}} = ${{answer}}/month. Compare to your 20% savings bucket \u2014 feasible?"
+  },
+  {
+    "id": "daily_to_annual_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "You buy a ${{dailyCost}} coffee every single day. What does it cost per year?",
+    "variableRules": [
+      {
+        "name": "dailyCost",
+        "options": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ]
+      }
+    ],
+    "answerFormula": "dailyToAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Daily \u00d7 365. ${{dailyCost}} \u00d7 365 = ${{answer}}/year. Small habit, big number."
+  },
+  {
+    "id": "workday_to_annual_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "You buy a ${{dailyCost}} lunch every workday (260 days/year). Annual cost?",
+    "variableRules": [
+      {
+        "name": "dailyCost",
+        "options": [
+          10,
+          12,
+          14,
+          15,
+          18,
+          20
+        ]
+      }
+    ],
+    "answerFormula": "workdayToAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Workday \u00d7 260. ${{dailyCost}} \u00d7 260 = ${{answer}}/year. Packing lunch reclaims most of this."
+  },
+  {
+    "id": "daily_habit_savings_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "Caf\u00e9 coffee: ${{currentCost}}/day. Home brew: ${{alternativeCost}}/day. How much do you save annually by switching?",
+    "variableRules": [
+      {
+        "name": "currentCost",
+        "options": [
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "name": "alternativeCost",
+        "options": [
+          0.5,
+          1,
+          1.5,
+          2
+        ]
+      }
+    ],
+    "answerFormula": "dailyHabitSavingsAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Savings per day \u00d7 365. (${{currentCost}} \u2212 ${{alternativeCost}}) \u00d7 365 = ${{answer}}/year."
+  },
+  {
+    "id": "habit_compare_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "You spend ${{habitDailyCost}}/day on coffee every day (365 days). Your friend spends ${{habitWorkdayCost}}/day on lunch workdays only (260 days). What is the absolute difference between your annual costs?",
+    "variableRules": [
+      {
+        "name": "habitDailyCost",
+        "options": [
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "name": "habitWorkdayCost",
+        "options": [
+          8,
+          10,
+          12,
+          14,
+          16
+        ]
+      }
+    ],
+    "answerFormula": "dailyVsWorkdayCostDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual A = ${{habitDailyCost}} \u00d7 365. Annual B = ${{habitWorkdayCost}} \u00d7 260. Difference = ${{answer}}."
+  },
+  {
+    "id": "multi_habit_annual_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "promptTemplate": "Coffee ${{coffeeCost}}/day, lunch ${{lunchCost}}/workday, snack ${{snackCost}}/day. Combined annual cost?",
+    "variableRules": [
+      {
+        "name": "coffeeCost",
+        "options": [
+          4,
+          5,
+          6
+        ]
+      },
+      {
+        "name": "lunchCost",
+        "options": [
+          10,
+          12,
+          14,
+          15
+        ]
+      },
+      {
+        "name": "snackCost",
+        "options": [
+          2,
+          3,
+          4
+        ]
+      }
+    ],
+    "answerFormula": "multipleHabitsAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Daily habits \u00d7 365 + workday habits \u00d7 260. (${{coffeeCost}} + ${{snackCost}}) \u00d7 365 + ${{lunchCost}} \u00d7 260 = ${{answer}}/year."
+  },
+  {
+    "id": "weekly_to_monthly_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "Your grocery budget is ${{weekly}}/week. What's the correct monthly equivalent (using 4.33)?",
+    "variableRules": [
+      {
+        "name": "weekly",
+        "options": [
+          60,
+          75,
+          85,
+          100,
+          120,
+          150,
+          200
+        ]
+      }
+    ],
+    "answerFormula": "weeklyToMonthlyCorrect",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Weekly \u00d7 4.33 (= 52 \u00f7 12). ${{weekly}} \u00d7 4.33 = ${{answer}}/month. Multiplying by 4 (the wrong way) under-budgets by 4 weeks/year."
+  },
+  {
+    "id": "biweekly_to_monthly_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "Your biweekly paycheck is ${{biweekly}}. What's your correct monthly income (using 2.17)?",
+    "variableRules": [
+      {
+        "name": "biweekly",
+        "options": [
+          1500,
+          1800,
+          2000,
+          2200,
+          2500,
+          2800,
+          3000
+        ]
+      }
+    ],
+    "answerFormula": "biweeklyToMonthly",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Biweekly \u00d7 2.17 (= 26 \u00f7 12). ${{biweekly}} \u00d7 2.17 = ${{answer}}/month. Treating biweekly as semi-monthly (\u00d72) misses two paychecks/year."
+  },
+  {
+    "id": "monthly_to_weekly_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "Your monthly budget is ${{monthly}}. What's the weekly equivalent (using \u00f7 4.33)?",
+    "variableRules": [
+      {
+        "name": "monthly",
+        "options": [
+          400,
+          500,
+          600,
+          800,
+          1000,
+          1200,
+          1500
+        ]
+      }
+    ],
+    "answerFormula": "monthlyToWeekly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly \u00f7 4.33 (or \u00d7 12 \u00f7 52). ${{monthly}} \u00f7 4.33 = ${{answer}}/week."
+  },
+  {
+    "id": "wrong_multiplier_shortfall_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "promptTemplate": "You budget ${{weekly}}/week for groceries and multiply by 4 to get your monthly figure. By how much does this UNDERESTIMATE your annual grocery spending?",
+    "variableRules": [
+      {
+        "name": "weekly",
+        "options": [
+          60,
+          75,
+          85,
+          100,
+          120,
+          150
+        ]
+      }
+    ],
+    "answerFormula": "wrongMultiplierShortfall",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Right: ${{weekly}} \u00d7 52. Wrong: (${{weekly}} \u00d7 4) \u00d7 12 = 48 weeks. Shortfall = ${{weekly}} \u00d7 4 weeks = ${{answer}}/year missed."
+  },
+  {
+    "id": "biweekly_annual_check_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "Your biweekly paycheck is ${{biweekly}}. Many people incorrectly multiply by 2 to estimate monthly, then by 12 for annual. By how much does that wrong method under-estimate your true annual income?",
+    "variableRules": [
+      {
+        "name": "biweekly",
+        "options": [
+          1500,
+          1800,
+          2000,
+          2500,
+          3000,
+          3500
+        ]
+      }
+    ],
+    "answerFormula": "biweeklyWrongMultiplierShortfall",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Right: ${{biweekly}} \u00d7 26. Wrong: ${{biweekly}} \u00d7 2 \u00d7 12 = \u00d7 24. Shortfall = ${{biweekly}} \u00d7 2 = ${{answer}} (two missed paychecks)."
+  },
+  {
+    "id": "raise_after_tax_monthly_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "promptTemplate": "You earn ${{annualSalary}}/year and get a {{raisePercent}}% raise. What's the AFTER-TAX monthly increase in your paycheck (assume 28% deductions)?",
+    "variableRules": [
+      {
+        "name": "annualSalary",
+        "options": [
+          50000,
+          60000,
+          70000,
+          80000,
+          90000
+        ]
+      },
+      {
+        "name": "raisePercent",
+        "options": [
+          3,
+          4,
+          5,
+          6
+        ]
+      }
+    ],
+    "answerFormula": "afterTaxMonthlyRaise",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Annual raise \u00d7 0.72 \u00f7 12. (${{annualSalary}} \u00d7 {{raisePercent}}%) \u00d7 0.72 \u00f7 12 = ${{answer}}/month after tax."
+  },
+  {
+    "id": "total_weekly_with_ot_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "promptTemplate": "You earn ${{regularRate}}/hour. This week you worked {{totalHours}} hours (40 regular + the rest overtime at 1.5\u00d7). What's your total gross weekly pay?",
+    "variableRules": [
+      {
+        "name": "regularRate",
+        "options": [
+          18,
+          20,
+          22,
+          25,
+          28,
+          30
+        ]
+      },
+      {
+        "name": "totalHours",
+        "options": [
+          44,
+          46,
+          48,
+          50,
+          52,
+          55
+        ]
+      }
+    ],
+    "answerFormula": "totalWeeklyWithOT",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Total = (40 \u00d7 ${{regularRate}}) + ((hours \u2212 40) \u00d7 ${{regularRate}} \u00d7 1.5) = ${{answer}}. Overtime is rate-and-a-half on hours beyond 40."
+  },
+  {
+    "id": "job_offer_compare_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "promptTemplate": "Job A pays ${{weeklyPay}}/week. Job B pays ${{monthlyPay}}/month. Which pays MORE annually, and by how much?",
+    "variableRules": [
+      {
+        "name": "weeklyPay",
+        "options": [
+          900,
+          1000,
+          1100,
+          1200,
+          1300
+        ]
+      },
+      {
+        "name": "monthlyPay",
+        "options": [
+          3800,
+          4200,
+          4500,
+          4800,
+          5200,
+          5500
+        ]
+      }
+    ],
+    "answerFormula": "weeklyMonthlyOfferDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Annual A = ${{weeklyPay}} \u00d7 52. Annual B = ${{monthlyPay}} \u00d7 12. Difference = ${{answer}}."
+  },
+  {
+    "id": "hourly_to_annual_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "You earn ${{hourlyRate}}/hour working full-time (2,000 hours/year). What's your annual income?",
+    "variableRules": [
+      {
+        "name": "hourlyRate",
+        "options": [
+          15,
+          18,
+          20,
+          22,
+          25,
+          28,
+          30,
+          35
+        ]
+      }
+    ],
+    "answerFormula": "annualFromHourly",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Double + three zeros. ${{hourlyRate}} \u00d7 2,000 = ${{answer}}/year."
+  },
+  {
+    "id": "annual_to_hourly_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "Your salary is ${{annualSalary}}/year. Working 2,000 hours, what's your effective hourly rate?",
+    "variableRules": [
+      {
+        "name": "annualSalary",
+        "options": [
+          40000,
+          50000,
+          60000,
+          70000,
+          80000,
+          100000
+        ]
+      }
+    ],
+    "answerFormula": "hourlyFromAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Drop three zeros, halve. ${{annualSalary}} \u00f7 2,000 = ${{answer}}/hour."
+  },
+  {
+    "id": "hourly_nonround_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You earn ${{hourlyRate}}/hour full-time. What's your annual income?",
+    "variableRules": [
+      {
+        "name": "hourlyRate",
+        "options": [
+          17,
+          19,
+          23,
+          27,
+          32,
+          38
+        ]
+      }
+    ],
+    "answerFormula": "annualFromHourly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{hourlyRate}} \u00d7 2,000 = ${{answer}}. Same trick \u2014 works on any number."
+  },
+  {
+    "id": "offer_compare_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "promptTemplate": "Offer A: ${{hourlyRate}}/hr full-time. Offer B: ${{annualSalary}}/year. Which pays more, and by how much annually?",
+    "variableRules": [
+      {
+        "name": "hourlyRate",
+        "options": [
+          25,
+          28,
+          30,
+          32,
+          35
+        ]
+      },
+      {
+        "name": "annualSalary",
+        "options": [
+          48000,
+          52000,
+          56000,
+          62000,
+          68000,
+          72000
+        ]
+      }
+    ],
+    "answerFormula": "offerComparisonDiff",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Annual A = ${{hourlyRate}} \u00d7 2,000. Compare to ${{annualSalary}}. Difference = ${{answer}}."
+  },
+  {
+    "id": "annual_nonround_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "promptTemplate": "Your salary is ${{annualSalary}}. What's your hourly equivalent (2,000 hours)?",
+    "variableRules": [
+      {
+        "name": "annualSalary",
+        "options": [
+          53000,
+          67000,
+          73000,
+          82000,
+          95000
+        ]
+      }
+    ],
+    "answerFormula": "hourlyFromAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{annualSalary}} \u00f7 2,000 = ${{answer}}/hour."
+  },
+  {
+    "id": "total_comp_sum_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "Your base salary is ${{baseSalary}}. Employer pays ${{insuranceValue}} health insurance and matches ${{matchAmount}} in 401k. What's your total compensation?",
+    "variableRules": [
+      {
+        "name": "baseSalary",
+        "options": [
+          50000,
+          60000,
+          70000,
+          80000,
+          90000
+        ]
+      },
+      {
+        "name": "insuranceValue",
+        "options": [
+          4000,
+          5000,
+          6000,
+          8000,
+          10000
+        ]
+      },
+      {
+        "name": "matchAmount",
+        "options": [
+          1500,
+          2000,
+          2500,
+          3000,
+          4000
+        ]
+      }
+    ],
+    "answerFormula": "totalCompensationNoBonus",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Add it all. ${{baseSalary}} + ${{insuranceValue}} + ${{matchAmount}} = ${{answer}} total comp."
+  },
+  {
+    "id": "total_comp_difference_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Offer A: ${{baseA}} base + ${{benefitsA}} benefits. Offer B: ${{baseB}} base + ${{benefitsB}} benefits. By how much does the higher TOTAL comp offer beat the other?",
+    "variableRules": [
+      {
+        "name": "baseA",
+        "options": [
+          70000,
+          75000,
+          80000
+        ]
+      },
+      {
+        "name": "benefitsA",
+        "options": [
+          6000,
+          8000,
+          10000,
+          12000
+        ]
+      },
+      {
+        "name": "baseB",
+        "options": [
+          72000,
+          78000,
+          82000,
+          85000
+        ]
+      },
+      {
+        "name": "benefitsB",
+        "options": [
+          4000,
+          5000,
+          6000,
+          7000
+        ]
+      }
+    ],
+    "answerFormula": "totalCompDifference",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Total A = ${{baseA}} + ${{benefitsA}}. Total B = ${{baseB}} + ${{benefitsB}}. Higher \u2212 lower = ${{answer}}."
+  },
+  {
+    "id": "total_comp_hourly_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "promptTemplate": "Total comp: ${{totalComp}}. Working 2,000 hours/year, what's your effective hourly rate including benefits?",
+    "variableRules": [
+      {
+        "name": "totalComp",
+        "options": [
+          62000,
+          75000,
+          88000,
+          96000,
+          110000
+        ]
+      }
+    ],
+    "answerFormula": "effectiveHourlyOfTotalComp",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "${{totalComp}} \u00f7 2,000 = ${{answer}}/hour. Higher than your base-only rate \u2014 this is your TRUE hourly value."
+  },
+  {
+    "id": "missing_benefit_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Total comp ${{totalComp}}, base salary ${{baseSalary}}. How much is your employer paying for benefits you don't see in your paycheck?",
+    "variableRules": [
+      {
+        "name": "totalComp",
+        "options": [
+          70000,
+          82000,
+          90000,
+          100000,
+          115000
+        ]
+      },
+      {
+        "name": "baseSalary",
+        "options": [
+          60000,
+          70000,
+          75000,
+          85000,
+          95000
+        ]
+      }
+    ],
+    "answerFormula": "totalCompMinusBase",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total comp \u2212 base = invisible benefits value = ${{answer}}/year."
+  },
+  {
+    "id": "benefits_pct_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Your base salary is ${{baseSalary}}. Your benefits package (insurance + match + bonus) is worth ${{benefitsValue}}. What percentage of your base is your benefits package?",
+    "variableRules": [
+      {
+        "name": "baseSalary",
+        "options": [
+          60000,
+          70000,
+          80000,
+          90000,
+          100000
+        ]
+      },
+      {
+        "name": "benefitsValue",
+        "options": [
+          9000,
+          12000,
+          14000,
+          16000,
+          20000
+        ]
+      }
+    ],
+    "answerFormula": "benefitsAsPercent",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Benefits \u00f7 base \u00d7 100. ${{benefitsValue}} \u00f7 ${{baseSalary}} \u00d7 100 = {{answer}}% extra hidden compensation."
+  },
+  {
+    "id": "net_hourly_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "Side gig: you earn ${{earnings}} but spend ${{expenses}} on materials/gas. Job took {{hours}} hours total. What's your effective hourly rate?",
+    "variableRules": [
+      {
+        "name": "earnings",
+        "options": [
+          150,
+          200,
+          250,
+          300,
+          400,
+          500
+        ]
+      },
+      {
+        "name": "expenses",
+        "options": [
+          20,
+          30,
+          40,
+          50,
+          75,
+          100
+        ]
+      },
+      {
+        "name": "hours",
+        "options": [
+          4,
+          6,
+          8,
+          10,
+          12,
+          15
+        ]
+      }
+    ],
+    "answerFormula": "effectiveHourlyRate",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "(${{earnings}} \u2212 ${{expenses}}) \u00f7 {{hours}} = ${{answer}}/hour. Expenses matter \u2014 gross earnings overstate what you actually earned per hour."
+  },
+  {
+    "id": "side_hustle_simple_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "You earn ${{earnings}} from a side gig in {{hours}} hours (no expenses). What's your hourly rate?",
+    "variableRules": [
+      {
+        "name": "earnings",
+        "options": [
+          120,
+          180,
+          240,
+          300,
+          360,
+          420
+        ]
+      },
+      {
+        "name": "hours",
+        "options": [
+          4,
+          6,
+          8,
+          10,
+          12,
+          15
+        ]
+      }
+    ],
+    "answerFormula": "simpleHourlyRate",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Earnings \u00f7 hours. ${{earnings}} \u00f7 {{hours}} = ${{answer}}/hour."
+  },
+  {
+    "id": "worth_it_compare_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "promptTemplate": "Side hustle pays ${{sideHourly}}/hour (after expenses). Your day job equivalent is ${{dayHourly}}/hour. How much LESS per hour does the side hustle pay?",
+    "variableRules": [
+      {
+        "name": "sideHourly",
+        "options": [
+          12,
+          15,
+          18,
+          20,
+          22
+        ]
+      },
+      {
+        "name": "dayHourly",
+        "options": [
+          25,
+          28,
+          30,
+          32,
+          35
+        ]
+      }
+    ],
+    "answerFormula": "sideVsDayJobGap",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Day hourly \u2212 side hourly. ${{dayHourly}} \u2212 ${{sideHourly}} = ${{answer}}/hour gap."
+  },
+  {
+    "id": "hourly_compare_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "promptTemplate": "Day job: ${{annualSalary}}/year. Side hustle effective rate: ${{sideHourly}}/hour. What % of your day-job hourly does the side hustle pay?",
+    "variableRules": [
+      {
+        "name": "annualSalary",
+        "options": [
+          50000,
+          60000,
+          70000,
+          80000
+        ]
+      },
+      {
+        "name": "sideHourly",
+        "options": [
+          15,
+          18,
+          20,
+          22,
+          25
+        ]
+      }
+    ],
+    "answerFormula": "sideHustlePercentOfDayJob",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Day hourly = salary \u00f7 2,000. Side \u00f7 day \u00d7 100 = ${{answer}}%. Under 70%? Reconsider the time trade."
+  },
+  {
+    "id": "side_hustle_annual_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Side hustle earns you ${{weeklyEarnings}} net per week. Doing it 50 weeks/year, what's the annual extra income?",
+    "variableRules": [
+      {
+        "name": "weeklyEarnings",
+        "options": [
+          100,
+          150,
+          200,
+          300,
+          400,
+          500
+        ]
+      }
+    ],
+    "answerFormula": "sideHustleAnnualNet",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Weekly \u00d7 50 weeks (2 weeks off). ${{weeklyEarnings}} \u00d7 50 = ${{answer}}/year extra."
   }
 ]

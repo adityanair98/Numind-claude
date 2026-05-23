@@ -147,33 +147,51 @@ enum QuestionTheme {
              "membership_net_saving_d2", "membership_compare_d3", "membership_decision_d3":
             return .shopping
 
-        // ── Everyday Spending ────────────────────────────────────────────────────
-        case "cart_total", "unit_price_check", "tax_amount", "price_with_tax",
-             "tax_coffee_d1", "tax_electronics_d2", "price_tax_d1", "price_tax_scenario_d2",
-             "cart_estimate_d1", "cart_estimate_d2":
+        // ── Everyday Spending (tax) ──────────────────────────────────────────────
+        case "tax_amount", "price_with_tax", "tax_electronics_d2",
+             "pre_tax_max_d2", "budget_asymmetry_d3":
             return .everydaySpend
 
         // ── Budget & Subscriptions ───────────────────────────────────────────────
-        case "budget_remaining", "budget_after_purchase",
-             "monthly_to_yearly", "yearly_to_monthly",
-             "cost_per_use_calc", "cost_per_use_scenario",
-             "budget_trip_d2", "subscription_compare_d2", "yearly_cost_d1",
-             "cost_per_use_gym_d2", "budget_weekly_d2", "subscription_streaming_d1":
+        case "cost_per_use_calc", "cost_per_use_scenario",
+             "subscription_compare_d2", "yearly_cost_d1",
+             "cost_per_use_gym_d2", "mm_cpu_book_d1", "mm_cpu_daily_d2",
+             // Subscription audit
+             "sub_audit_total_d1", "sub_audit_annual_d2", "sub_audit_cut_d3",
+             // 50/30/20
+             "needs_50_d1", "savings_20_d1", "all_three_buckets_d2",
+             "over_budget_d3", "target_savings_d3",
+             // Latte factor
+             "daily_to_annual_d1", "workday_to_annual_d1",
+             "daily_habit_savings_d2", "habit_compare_d2", "multi_habit_annual_d3",
+             // Weekly/monthly
+             "weekly_to_monthly_d1", "biweekly_to_monthly_d1", "monthly_to_weekly_d2",
+             "wrong_multiplier_shortfall_d3", "biweekly_annual_check_d2":
             return .budget
 
         // ── Paycheck & Income ────────────────────────────────────────────────────
         case "net_pay_deduction", "annual_to_monthly_pay",
              "raise_dollar_amount", "raise_new_salary",
              "overtime_pay_calc", "biweekly_to_annual", "weekly_to_annual",
-             "salary_monthly_annual_d1", "salary_hourly_annual_d1", "salary_hourly_annual_d2",
-             "salary_annual_hourly_d2", "salary_annual_hourly_d3",
+             "salary_monthly_annual_d1", "salary_hourly_annual_d1",
              "net_pay_biweekly_d2", "net_pay_scenario_d2",
-             "raise_dollar_d1", "raise_new_salary_d2", "raise_new_salary_d3",
+             "raise_dollar_d1", "raise_new_salary_d2",
              "overtime_d2", "overtime_scenario_d2",
-             "biweekly_annual_d1", "weekly_annual_d1", "weekly_annual_d2",
+             "biweekly_annual_d1", "weekly_annual_d1",
              "inflation_raise_real_d1", "inflation_raise_dollars_d1",
              "inflation_raise_scenario_d2", "inflation_raise_compare_d2",
-             "inflation_raise_negative_d3":
+             "inflation_raise_negative_d3",
+             // Phase 2 reworks
+             "raise_after_tax_monthly_d3", "total_weekly_with_ot_d3", "job_offer_compare_d3",
+             // Hourly to salary
+             "hourly_to_annual_d1", "annual_to_hourly_d1", "hourly_nonround_d2",
+             "offer_compare_d3", "annual_nonround_d3",
+             // Total compensation
+             "total_comp_sum_d1", "total_comp_difference_d2", "total_comp_hourly_d3",
+             "missing_benefit_d2", "benefits_pct_d2",
+             // Side hustle
+             "net_hourly_d1", "side_hustle_simple_d1", "worth_it_compare_d3",
+             "hourly_compare_d3", "side_hustle_annual_d2":
             return .paycheck
 
         // ── Investing & Growth ───────────────────────────────────────────────────
