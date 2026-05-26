@@ -554,7 +554,9 @@ enum FormulaOperationMap {
 
         case "selfEmploymentTax":
             guard let income = variables["freelanceIncome"] else { return [] }
-            return [.percentOf(pct: 15.3, amount: income)]
+            // 92.35% × 15.3% — two mental operations
+            return [.multiply(a: income, by: 0.9235),
+                    .percentOf(pct: 15.3, amount: income * 0.9235)]
 
         // MARK: - Insurance & Healthcare
 
@@ -1535,8 +1537,12 @@ enum FormulaOperationMap {
             return [.multiply(a: 4, by: amt), .add(a: 4 * amt, b: 35)]
 
         case "bnplSurchargePercent":
-            guard let orig = variables["originalPrice"], let paid = variables["totalPaid"], orig > 0 else { return [] }
-            return [.subtract(b: orig, from: paid), .divide(a: paid - orig, by: orig), .multiply(a: (paid - orig) / orig, by: 100)]
+            guard let orig = variables["originalPrice"], orig > 0 else { return [] }
+            if let paid = variables["totalPaid"] {
+                return [.subtract(b: orig, from: paid), .divide(a: paid - orig, by: orig), .multiply(a: (paid - orig) / orig, by: 100)]
+            }
+            // Default: $35 late fee divided by original price
+            return [.divide(a: 35, by: orig), .multiply(a: 35 / orig, by: 100)]
 
         case "bnplStackedMonthly":
             guard let a = variables["paymentA"], let b = variables["paymentB"], let c = variables["paymentC"] else { return [] }
@@ -1670,7 +1676,10 @@ enum FormulaOperationMap {
 
         case "quarterlyEstimatedTax":
             guard let i = variables["quarterlyIncome"], let inc = variables["incomeTaxPct"] else { return [] }
-            return [.add(a: 15.3, b: inc), .percentOf(pct: 15.3 + inc, amount: i)]
+            return [.multiply(a: i, by: 0.9235),
+                    .percentOf(pct: 15.3, amount: i * 0.9235),
+                    .percentOf(pct: inc, amount: i),
+                    .add(a: i * 0.9235 * 0.153, b: i * inc / 100)]
 
         // MARK: - Standard vs Itemized
         case "itemizedTotal":
@@ -1690,8 +1699,8 @@ enum FormulaOperationMap {
                   let r = variables["taxRate"] else { return [] }
             let itemized = m + s + c
             return [.add(a: m, b: s), .add(a: m + s, b: c),
-                    .subtract(b: 15200, from: itemized),
-                    .percentOf(pct: r, amount: max(0, itemized - 15200))]
+                    .subtract(b: 15750, from: itemized),
+                    .percentOf(pct: r, amount: max(0, itemized - 15750))]
 
         case "itemizedLifetime":
             guard let a = variables["annualSaving"], let y = variables["years"] else { return [] }
@@ -2014,14 +2023,14 @@ enum FormulaOperationMap {
 
         case "plusVsPrivateTotalWithOrigination":
             guard let b = variables["loanBalance"], let pr = variables["privateRate"] else { return [] }
-            return [.subtract(b: pr, from: 8.94), .percentOf(pct: 8.94 - pr, amount: b),
-                    .multiply(a: b * (8.94 - pr) / 100, by: 10),
+            return [.subtract(b: pr, from: 9.08), .percentOf(pct: 9.08 - pr, amount: b),
+                    .multiply(a: b * (9.08 - pr) / 100, by: 10),
                     .percentOf(pct: 4.228, amount: b)]
 
         case "plusVsPrivateMonthlyInterest":
             guard let b = variables["loanBalance"], let pr = variables["privateRate"] else { return [] }
-            return [.subtract(b: pr, from: 8.94), .percentOf(pct: 8.94 - pr, amount: b),
-                    .divide(a: b * (8.94 - pr) / 100, by: 12)]
+            return [.subtract(b: pr, from: 9.08), .percentOf(pct: 9.08 - pr, amount: b),
+                    .divide(a: b * (9.08 - pr) / 100, by: 12)]
 
         default:
             return []

@@ -590,8 +590,11 @@ struct QuizEngine {
             return withheld - owed
         },
         "selfEmploymentTax": { vars in
+            // SE tax is calculated on 92.35% of net SE earnings (you deduct the
+            // employer-equivalent half before calculating). This matches IRS
+            // Schedule SE: net earnings × 0.9235 × 0.153 = effective ~14.13%.
             guard let income = vars["freelanceIncome"] else { return nil }
-            return income * 0.153
+            return income * 0.9235 * 0.153
         },
 
         // ── Insurance & Healthcare formulas ─────────────────────────────────────
@@ -1434,8 +1437,12 @@ struct QuizEngine {
             return 4 * amt + 35  // 4 payments + standard $35 late fee
         },
         "bnplSurchargePercent": { vars in
-            guard let orig = vars["originalPrice"], let paid = vars["totalPaid"], orig > 0 else { return nil }
-            return (paid - orig) / orig * 100
+            guard let orig = vars["originalPrice"], orig > 0 else { return nil }
+            if let paid = vars["totalPaid"] {
+                return (paid - orig) / orig * 100
+            }
+            // No totalPaid supplied — assume one missed payment with $35 late fee
+            return 35 / orig * 100
         },
         "bnplStackedMonthly": { vars in
             guard let a = vars["paymentA"], let b = vars["paymentB"], let c = vars["paymentC"] else { return nil }
@@ -1564,8 +1571,9 @@ struct QuizEngine {
             return (w - o) * 12
         },
         "quarterlyEstimatedTax": { vars in
+            // SE tax applies to 92.35% of earnings; income tax applies to all.
             guard let income = vars["quarterlyIncome"], let inc = vars["incomeTaxPct"] else { return nil }
-            return income * (15.3 + inc) / 100
+            return income * 0.9235 * 0.153 + income * inc / 100
         },
 
         // MARK: - Taxes: Standard vs Itemized
@@ -1585,7 +1593,7 @@ struct QuizEngine {
             guard let m = vars["mortgageInt"], let s = vars["stateTax"], let c = vars["charity"],
                   let r = vars["taxRate"] else { return nil }
             let itemized = m + s + c
-            let excess = max(0, itemized - 15200)
+            let excess = max(0, itemized - 15750)
             return excess * r / 100
         },
         "itemizedLifetime": { vars in
@@ -1904,11 +1912,11 @@ struct QuizEngine {
         },
         "plusVsPrivateTotalWithOrigination": { vars in
             guard let b = vars["loanBalance"], let pr = vars["privateRate"] else { return nil }
-            return b * (8.94 - pr) / 100 * 10 + b * 4.228 / 100
+            return b * (9.08 - pr) / 100 * 10 + b * 4.228 / 100
         },
         "plusVsPrivateMonthlyInterest": { vars in
             guard let b = vars["loanBalance"], let pr = vars["privateRate"] else { return nil }
-            return b * (8.94 - pr) / 100 / 12
+            return b * (9.08 - pr) / 100 / 12
         },
     ]
 

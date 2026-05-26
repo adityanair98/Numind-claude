@@ -3318,7 +3318,7 @@
     "id": "se_tax_basic_d1",
     "moduleId": "taxes",
     "difficulty": 1,
-    "promptTemplate": "You earned ${{freelanceIncome}} freelancing. Self-employment tax is 15.3%. How much SE tax do you owe?",
+    "promptTemplate": "You earned ${{freelanceIncome}} freelancing. Self-employment tax applies 15.3% to 92.35% of earnings. How much SE tax do you owe (rounded)?",
     "variableRules": [
       {
         "name": "freelanceIncome",
@@ -3334,13 +3334,13 @@
     "answerFormula": "selfEmploymentTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "SE tax = ${{freelanceIncome}} \u00d7 15.3% = ${{answer}}. This covers both sides of FICA."
+    "explanationTemplate": "SE tax = ${{freelanceIncome}} \u00d7 92.35% \u00d7 15.3% \u2248 ${{answer}}. The 92.35% factor is the IRS Schedule SE adjustment that deducts the employer-equivalent half before calculating."
   },
   {
     "id": "se_tax_amount_d1",
     "moduleId": "taxes",
     "difficulty": 1,
-    "promptTemplate": "Gig income: ${{freelanceIncome}}. Calculate the 15.3% self-employment tax.",
+    "promptTemplate": "Gig income: ${{freelanceIncome}}. Calculate the self-employment tax (15.3% on 92.35% of earnings).",
     "variableRules": [
       {
         "name": "freelanceIncome",
@@ -3356,14 +3356,14 @@
     "answerFormula": "selfEmploymentTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{freelanceIncome}} \u00d7 0.153 = ${{answer}}."
+    "explanationTemplate": "SE tax = ${{freelanceIncome}} \u00d7 92.35% \u00d7 15.3% \u2248 ${{answer}}. Plan to set aside 30%+ total once you add income tax."
   },
   {
     "id": "se_tax_scenario_d2",
     "moduleId": "taxes",
     "difficulty": 2,
     "scenarioTemplate": "You did freelance design work and earned ${{freelanceIncome}}.",
-    "promptTemplate": "How much self-employment tax (15.3%) will you owe?",
+    "promptTemplate": "How much self-employment tax (15.3% applied to 92.35% of earnings) will you owe?",
     "variableRules": [
       {
         "name": "freelanceIncome",
@@ -3379,13 +3379,13 @@
     "answerFormula": "selfEmploymentTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "SE tax = ${{freelanceIncome}} \u00d7 15.3% = ${{answer}}. Plan to set aside 30%+ total."
+    "explanationTemplate": "Effective SE tax \u2248 14.13% of earnings. ${{freelanceIncome}} \u00d7 92.35% \u00d7 15.3% \u2248 ${{answer}}."
   },
   {
     "id": "se_tax_compare_d2",
     "moduleId": "taxes",
     "difficulty": 2,
-    "promptTemplate": "Freelance earnings: ${{freelanceIncome}}. Self-employment tax at 15.3%. Amount owed?",
+    "promptTemplate": "Freelance earnings: ${{freelanceIncome}}. Self-employment tax (15.3% \u00d7 92.35% of earnings). Amount owed?",
     "variableRules": [
       {
         "name": "freelanceIncome",
@@ -3401,7 +3401,7 @@
     "answerFormula": "selfEmploymentTax",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "${{freelanceIncome}} \u00d7 0.153 = ${{answer}}."
+    "explanationTemplate": "Per Schedule SE: ${{freelanceIncome}} \u00d7 92.35% \u00d7 15.3% \u2248 ${{answer}}."
   },
   {
     "id": "match_amount_d1",
@@ -9342,19 +9342,8 @@
     "id": "bnpl_late_fee_d2",
     "moduleId": "debt",
     "difficulty": 2,
-    "promptTemplate": "You buy a ${{originalPrice}} item on a 4-payment BNPL plan (${{paymentAmount}} each). Miss one payment, $35 late fee. What's your TOTAL out-of-pocket cost?",
+    "promptTemplate": "You're on a 4-payment BNPL plan of ${{paymentAmount}} per payment. You miss one \u2014 the late fee is $35. What's your TOTAL out-of-pocket cost?",
     "variableRules": [
-      {
-        "name": "originalPrice",
-        "options": [
-          100,
-          200,
-          300,
-          400,
-          500,
-          800
-        ]
-      },
       {
         "name": "paymentAmount",
         "options": [
@@ -9370,17 +9359,18 @@
     "answerFormula": "bnplWithOneLateFee",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "4 \u00d7 payment + $35 late fee = ${{answer}}. Late fees turn 'free' BNPL into expensive credit."
+    "explanationTemplate": "4 \u00d7 ${{paymentAmount}} payment + $35 late fee = ${{answer}}. Late fees turn 'free' BNPL into expensive credit."
   },
   {
     "id": "bnpl_surcharge_pct_d3",
     "moduleId": "debt",
     "difficulty": 3,
-    "promptTemplate": "You paid ${{totalPaid}} for an item that originally cost ${{originalPrice}} (after late fees on a BNPL plan). What percentage surcharge did you pay?",
+    "promptTemplate": "You bought a ${{originalPrice}} item on BNPL and missed one payment, triggering a $35 late fee. What percentage of the original price was the surcharge?",
     "variableRules": [
       {
         "name": "originalPrice",
         "options": [
+          150,
           200,
           300,
           400,
@@ -9388,23 +9378,12 @@
           800,
           1000
         ]
-      },
-      {
-        "name": "totalPaid",
-        "options": [
-          235,
-          335,
-          470,
-          575,
-          870,
-          1150
-        ]
       }
     ],
     "answerFormula": "bnplSurchargePercent",
     "answerFormat": "percent",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "(paid \u2212 original) \u00f7 original \u00d7 100. (${{totalPaid}} \u2212 ${{originalPrice}}) \u00f7 ${{originalPrice}} \u00d7 100 = {{answer}}%."
+    "explanationTemplate": "Late fee \u00f7 original price \u00d7 100 = surcharge. $35 \u00f7 ${{originalPrice}} \u00d7 100 = {{answer}}%. A 'free' BNPL plan with one missed payment can add a hefty surcharge \u2014 especially on small purchases."
   },
   {
     "id": "bnpl_stacked_d3",
@@ -10336,7 +10315,7 @@
     "id": "se_quarterly_combined_d3",
     "moduleId": "taxes",
     "difficulty": 3,
-    "promptTemplate": "You earned ${{quarterlyIncome}} freelancing this quarter. SE tax is 15.3% + income tax ~{{incomeTaxPct}}%. What's your quarterly estimated payment to the IRS?",
+    "promptTemplate": "You earned ${{quarterlyIncome}} freelancing this quarter. SE tax (15.3% on 92.35% of earnings) + income tax ~{{incomeTaxPct}}%. What's your quarterly estimated payment?",
     "variableRules": [
       {
         "name": "quarterlyIncome",
@@ -10361,7 +10340,7 @@
     "answerFormula": "quarterlyEstimatedTax",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Combined rate = 15.3% + {{incomeTaxPct}}%. Quarter \u00d7 combined = ${{quarterlyIncome}} \u00d7 {{answer}}-ish %."
+    "explanationTemplate": "SE: ${{quarterlyIncome}} \u00d7 92.35% \u00d7 15.3%. + income: ${{quarterlyIncome}} \u00d7 {{incomeTaxPct}}%. Total \u2248 ${{answer}}."
   },
   {
     "id": "itemized_sum_d1",
@@ -10422,8 +10401,8 @@
       {
         "name": "standardAmount",
         "options": [
-          15200,
-          30400
+          15750,
+          31500
         ]
       }
     ],
@@ -10467,7 +10446,7 @@
     "id": "itemized_decision_d3",
     "moduleId": "taxes",
     "difficulty": 3,
-    "promptTemplate": "Mortgage interest ${{mortgageInt}} + state tax ${{stateTax}} + charity ${{charity}}. Standard deduction is $15,200. At {{taxRate}}% bracket, how much extra do you save by itemizing?",
+    "promptTemplate": "Mortgage interest ${{mortgageInt}} + state tax ${{stateTax}} + charity ${{charity}}. Standard deduction is $15,750. At {{taxRate}}% bracket, how much extra do you save by itemizing?",
     "variableRules": [
       {
         "name": "mortgageInt",
@@ -10507,7 +10486,7 @@
     "answerFormula": "itemizedDecisionSaving",
     "answerFormat": "currency",
     "distractorStrategy": "commonMistake",
-    "explanationTemplate": "Itemized total \u2212 $15,200 = excess. Excess \u00d7 tax rate = ${{answer}}. If negative, take standard."
+    "explanationTemplate": "Itemized total \u2212 $15,750 = excess. Excess \u00d7 tax rate = ${{answer}}. If negative, take standard."
   },
   {
     "id": "itemized_strategy_d3",
@@ -12704,7 +12683,7 @@
       {
         "name": "plusRate",
         "options": [
-          8.94
+          9.08
         ]
       },
       {
@@ -12740,7 +12719,7 @@
       {
         "name": "plusRate",
         "options": [
-          8.94
+          9.08
         ]
       },
       {
@@ -12783,7 +12762,7 @@
     "id": "plus_total_cost_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "${{loanBalance}} Parent PLUS at 8.94% + 4.228% origination. Private alternative: {{privateRate}}% no fee. Approximate total 10-yr difference (interest gap \u00d7 10 + origination)?",
+    "promptTemplate": "${{loanBalance}} Parent PLUS at 9.08% + 4.228% origination. Private alternative: {{privateRate}}% no fee. Approximate total 10-yr difference (interest gap \u00d7 10 + origination)?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -12805,13 +12784,13 @@
     "answerFormula": "plusVsPrivateTotalWithOrigination",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "(balance \u00d7 (8.94 \u2212 private) \u00d7 10 + balance \u00d7 4.228) \u00f7 100 = ${{answer}} private advantage."
+    "explanationTemplate": "(balance \u00d7 (9.08 \u2212 private) \u00d7 10 + balance \u00d7 4.228) \u00f7 100 = ${{answer}} private advantage."
   },
   {
     "id": "plus_decision_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "${{loanBalance}} loan. PLUS annual interest at 8.94% vs private at {{privateRate}}%. Annual interest savings = balance \u00d7 rate difference. How much more per month does PLUS cost you in interest?",
+    "promptTemplate": "${{loanBalance}} loan. PLUS annual interest at 9.08% vs private at {{privateRate}}%. Annual interest savings = balance \u00d7 rate difference. How much more per month does PLUS cost you in interest?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -12833,7 +12812,7 @@
     "answerFormula": "plusVsPrivateMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual diff \u00f7 12. Balance \u00d7 (8.94 \u2212 private) \u00f7 100 \u00f7 12 = ${{answer}}/month more on PLUS."
+    "explanationTemplate": "Annual diff \u00f7 12. Balance \u00d7 (9.08 \u2212 private) \u00f7 100 \u00f7 12 = ${{answer}}/month more on PLUS."
   },
   {
     "id": "concept_anchoring_d1",
@@ -13068,19 +13047,19 @@
     "moduleId": "salary",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "What is the federal minimum annual salary for an employee to be classified as exempt under the FLSA (2025)?",
+    "promptTemplate": "After a Texas federal court vacated the 2024 DOL overtime rule in November 2024, what's the currently enforced federal minimum salary for FLSA-exempt status?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "The 2025 federal threshold is $58,656/year ($1,128/week). Earning below this, you must be paid as non-exempt (overtime-eligible) regardless of your job title. Some states have higher thresholds.",
+    "explanationTemplate": "The federal threshold reverted to $35,568/year ($684/week \u2014 the 2019 level) after the November 2024 Texas court ruling vacated the DOL's $58,656 increase. Many states have set higher thresholds \u2014 California is around $66,560, New York and Washington are also higher. Always check both federal and state law.",
     "conceptChoices": [
-      "$35,568/year",
+      "$35,568/year (reverted federal threshold after Nov 2024 court ruling)",
       "$43,888/year",
-      "$58,656/year",
+      "$58,656/year (the vacated 2024 DOL rule)",
       "$75,000/year"
     ],
-    "correctConceptChoice": "$58,656/year"
+    "correctConceptChoice": "$35,568/year (reverted federal threshold after Nov 2024 court ruling)"
   },
   {
     "id": "concept_exempt_misclass_d2",
@@ -13092,7 +13071,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Misclassification is common. To be exempt, an employee must (1) earn at least $58,656/year AND (2) perform exempt duties (executive, administrative, professional). Admin assistants usually fail the duties test. If misclassified, you may be owed back overtime pay.",
+    "explanationTemplate": "Misclassification is common. To be exempt federally, an employee must (1) earn at least $35,568/year (the current federal floor after the Nov 2024 court ruling) AND (2) perform exempt duties (executive, administrative, professional). State thresholds are often higher \u2014 California's is around $66,560. Admin assistants usually fail the duties test. At $45k with no genuine executive duties, this is likely misclassification \u2014 you may be owed back overtime pay.",
     "conceptChoices": [
       "Yes \u2014 employers can classify any employee as exempt",
       "Yes \u2014 admin staff are always exempt",
@@ -13809,38 +13788,38 @@
     "moduleId": "taxes",
     "difficulty": 1,
     "inputMode": "multipleChoice",
-    "promptTemplate": "Which of these is a PRE-TAX deduction (reduces your taxable income)?",
+    "promptTemplate": "Which of these reduces BOTH your federal income tax AND your FICA (Social Security + Medicare) tax?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Pre-tax deductions reduce your taxable income before federal income tax and FICA are calculated. Traditional 401k contributions, traditional HSA, traditional FSA, and most health insurance premiums are pre-tax. Roth 401k contributions are post-tax (you've already paid tax on the money).",
+    "explanationTemplate": "HSA contributions made via payroll deduction (Section 125 cafeteria plan) reduce both federal income tax AND FICA. Traditional 401k contributions reduce federal income tax only \u2014 they're still subject to FICA. This is one of the HSA's underrated advantages.",
     "conceptChoices": [
-      "Roth 401k contribution",
       "Traditional 401k contribution",
-      "After-tax life insurance premium",
+      "HSA contribution via payroll deduction",
+      "Roth IRA contribution",
       "Wage garnishment for credit card debt"
     ],
-    "correctConceptChoice": "Traditional 401k contribution"
+    "correctConceptChoice": "HSA contribution via payroll deduction"
   },
   {
     "id": "concept_paycheck_401k_cost_d2",
     "moduleId": "taxes",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "You contribute $300 to your traditional 401k. At a 30% combined tax rate (federal + state + FICA), what's the actual reduction in your take-home pay?",
+    "promptTemplate": "You contribute $300 to your traditional 401k. At a 22% federal + state income tax rate, what's the actual reduction in your take-home pay?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Pre-tax contributions reduce your tax bill, so your take-home only drops by the after-tax amount. $300 contribution at 30% combined tax = $210 reduction in take-home. The other $90 'cost' was tax you would've paid anyway. This is why 401k contributions feel cheaper than they look on paper.",
+    "explanationTemplate": "Traditional 401k contributions reduce income tax but NOT FICA. At 22% income tax: tax saved = $300 \u00d7 22% = $66. Take-home reduction = $300 \u2212 $66 = $234. The full FICA (7.65%) still applies to your wages. HSA contributions via payroll are the rare deduction that reduces both income tax AND FICA.",
     "conceptChoices": [
       "$300 \u2014 the full contribution",
-      "About $210 \u2014 the $300 contribution minus the tax you would have paid on that $300",
-      "$390 \u2014 the contribution plus extra fees",
+      "About $234 \u2014 the $300 contribution minus the $66 income tax you would have paid",
+      "About $210 \u2014 assuming the contribution also avoids FICA",
       "$150 \u2014 exactly half"
     ],
-    "correctConceptChoice": "About $210 \u2014 the $300 contribution minus the tax you would have paid on that $300"
+    "correctConceptChoice": "About $234 \u2014 the $300 contribution minus the $66 income tax you would have paid"
   },
   {
     "id": "concept_paycheck_post_tax_d2",
@@ -13909,7 +13888,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "HoH requirements: unmarried (or 'considered unmarried' if separated for last 6 months), paid > 50% of household costs, and have a qualifying person (usually a dependent child) living with you for > 50% of the year. The standard deduction is significantly higher than Single ($22,800 vs $15,200 in 2025).",
+    "explanationTemplate": "HoH requirements: unmarried (or 'considered unmarried' if separated for last 6 months), paid > 50% of household costs, and have a qualifying person (usually a dependent child) living with you for > 50% of the year. The standard deduction is significantly higher than Single ($23,625 vs $15,750 in 2025).",
     "conceptChoices": [
       "Be unmarried AND pay more than half the cost of keeping up a home for a qualifying dependent (usually a child)",
       "Earn over $100,000 per year",
@@ -13966,7 +13945,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Single parents almost always qualify for Head of Household (HoH) \u2014 bigger standard deduction ($22,800 vs $15,200 in 2025), wider brackets, more generous credits. Many single parents file Single by mistake and overpay. The HoH qualification: unmarried + pay > 50% of household costs + qualifying dependent (usually a child).",
+    "explanationTemplate": "Single parents almost always qualify for Head of Household (HoH) \u2014 bigger standard deduction ($23,625 vs $15,750 in 2025), wider brackets, more generous credits. Many single parents file Single by mistake and overpay. The HoH qualification: unmarried + pay > 50% of household costs + qualifying dependent (usually a child).",
     "conceptChoices": [
       "Single (the default for unmarried filers)",
       "Head of Household (significantly larger standard deduction)",
