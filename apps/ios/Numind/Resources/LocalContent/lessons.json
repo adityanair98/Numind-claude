@@ -425,17 +425,34 @@
   {
     "id": "investing_roth_vs_traditional",
     "moduleId": "investing",
-    "title": "Roth vs Traditional IRA",
-    "concept": "Both IRAs cap at $7,000/year (2025) or $8,000 if you're 50+. Roth uses after-tax dollars; Traditional uses pre-tax. The Roth's killer feature: tax-free growth AND tax-free withdrawals. Income above $150k single / $236k married phases out direct Roth contributions. The actual decision involves more than mechanics: your current vs expected retirement tax bracket, whether you'll do Roth conversion ladders (early retirees), healthcare gap years before Medicare, RMD strategy. Default heuristic for the unsure: under 35 in a lower bracket \u2192 Roth almost always wins.",
-    "shortcut": "Roth contribution = your cash. Tax saving (Traditional) = contribution \u00d7 tax rate. Decision rules: (1) Young + lower bracket \u2192 Roth (decades of tax-free growth). (2) Peak earning years + expect lower retirement bracket \u2192 Traditional. (3) If you don't know \u2192 Roth IRA, Traditional 401k (gets you both). The 'right' answer depends on tax trajectory you can't perfectly predict.",
-    "example": "$5,000 contribution at 22% tax rate:\nRoth: pay $1,100 tax now\nTraditional: save $1,100 now, owe tax later\n\nLong-term magic of Roth:\n$7k/yr \u00d7 25 yrs grows to ~$475k\n\u2192 $0 tax on withdrawal\nTraditional at 24% in retirement = $114k tax bill\n\nNot sure? Split: Roth IRA + Traditional 401k.",
+    "title": "Roth vs Traditional IRA \u2014 the basics",
+    "concept": "Both IRAs cap at $7,000/year (2025) or $8,000 if you're 50+ (per IRS Rev Proc 2024-25). The mechanical difference: Roth uses after-tax dollars (you pay tax now, withdraw tax-free in retirement); Traditional uses pre-tax dollars (you skip tax now, pay it on withdrawal). Income above $150k single / $236k MFJ phases out direct Roth contributions (per IRS \u2014 backdoor Roth still possible). This lesson covers the mechanics math; the decision rules (which to choose) live in the next lesson, 'Roth vs Traditional \u2014 the decision.'",
+    "shortcut": "Roth: contribution comes from your post-tax cash. Traditional: contribution reduces taxable income by the full amount this year. Tax saved on a Traditional contribution = contribution \u00d7 your marginal rate. Long-term Roth value = contribution \u00d7 growth multiplier, tax-free; Traditional value = same growth, but taxed on withdrawal at your future rate.",
+    "example": "$5,000 contribution at 22% tax bracket:\nRoth: $5,000 comes from post-tax cash; you keep all of it tax-free at withdrawal\nTraditional: saves $1,100 in taxes this year; you'll owe tax on withdrawals later\n\n$7k/yr \u00d7 25 yrs at 8% growth \u2248 $510k\nRoth: $510k tax-free at withdrawal\nTraditional at 24% future bracket: $510k \u2212 $122k tax = $388k after-tax",
     "quizTemplateIds": [
       "roth_after_tax_d1",
       "traditional_tax_saved_d1",
       "roth_scenario_d2",
       "traditional_scenario_d2",
       "roth_growth_value_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "investing_roth_decision",
+    "moduleId": "investing",
+    "title": "Roth vs Traditional \u2014 the decision",
+    "concept": "Choosing Roth vs Traditional is more nuanced than 'one rate vs another' \u2014 it depends on your current tax bracket, your *expected* retirement bracket, your career trajectory, and your tolerance for future tax-code risk. The high-impact rules of thumb: (1) Young + early-career = lower bracket now = **Roth wins** (decades of tax-free growth dwarf any current tax saving). (2) Peak-earning + expect lower retirement bracket = **Traditional wins** (defer the tax to a lower-rate future). (3) If you genuinely don't know = **split** (Roth IRA + Traditional 401k captures both). (4) Income above the Roth phaseout ($150k single / $236k MFJ in 2025, per IRS): direct Roth is closed but backdoor Roth is still legal as of 2026.",
+    "shortcut": "Three questions: (1) Is your current bracket below the bracket you expect in retirement? \u2192 Roth. (2) Is your current bracket above your expected retirement bracket? \u2192 Traditional. (3) Don't know or roughly the same? \u2192 split. Default for 22-35 year olds in 12-22% brackets: Roth. Default for 35-55 year olds in 24-37% brackets: Traditional 401k + Roth IRA mix.",
+    "example": "Three example users:\n\n28 y/o earning $55k (12% bracket):\nLikely retirement bracket higher than today\n\u2192 Roth IRA + Roth 401k\n\n42 y/o earning $200k (24% bracket):\nLikely retirement bracket lower\n\u2192 Traditional 401k (defer tax), Roth IRA on the side for flexibility\n\n55 y/o earning $80k near retirement:\nRetirement bracket probably similar\n\u2192 Split: Roth IRA + Traditional 401k captures both tax regimes.",
+    "quizTemplateIds": [
+      "concept_roth_young_default_d1",
+      "concept_roth_traditional_peak_d1",
+      "concept_roth_phaseout_d2",
+      "concept_roth_backdoor_d2",
+      "concept_roth_unsure_split_d3"
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "investing_compound_growth",
@@ -456,16 +473,33 @@
     "id": "investing_dca",
     "moduleId": "investing",
     "title": "The power of investing every month",
-    "concept": "Dollar-cost averaging means investing a fixed dollar amount at regular intervals \u2014 buying more shares when prices are low, fewer when high. There's an important nuance: academic research (Vanguard, Morningstar) shows lump-sum investing beats DCA roughly two-thirds of the time on returns, because markets go up more often than they go down. So why does DCA matter? It wins on BEHAVIOR \u2014 consistency beats willpower. The investors who DCA stay invested; the investors who try to lump-sum often hesitate, wait for a 'better moment,' and miss gains entirely.",
-    "shortcut": "Total invested = monthly amount \u00d7 months. Shares per month = amount \u00f7 price that month. Average cost = total invested \u00f7 total shares. The math winner is usually lump-sum. The behavioral winner is almost always DCA. Pick what you'll actually do.",
-    "example": "Vanguard research: lump-sum beats DCA ~67% of the time on returns.\n\nBut: lump-sum requires you to invest ALL at once. Most investors who try this:\n\u2014 Hesitate ('let me wait for the dip')\n\u2014 Time the market badly\n\u2014 Eventually invest less than they meant to\n\nDCA wins because it's automated and you actually do it. Behavior > math.",
+    "concept": "Dollar-cost averaging (DCA) means investing a fixed dollar amount at regular intervals regardless of market conditions. The math story: per Vanguard's 2012 study (\"Dollar-Cost Averaging Just Means Taking Risk Later\"), lump-sum investing beats DCA roughly two-thirds of the time on returns, because markets go up more often than they go down. So why does DCA still win for most people? It wins on **behavior**. Lump-sum requires you to actually invest all at once \u2014 most investors who try to time the entry hesitate, wait for a 'better moment,' get scared by a dip, and end up investing less than they intended. DCA removes the decision and the emotion.",
+    "shortcut": "DCA isn't about beating the market \u2014 it's about beating yourself. The math says lump-sum wins ~67% of the time (Vanguard). The behavioral reality says most investors who try to lump-sum end up under-invested. Pick the strategy you'll actually execute. Automated DCA on payday > theoretically-optimal lump-sum you keep delaying.",
+    "example": "Lump-sum vs DCA (Vanguard 2012 study):\n  Lump-sum wins on returns ~67% of the time over 10-year windows.\n  But: lump-sum requires investing all at once, which most retail investors don't actually do.\n\nReal-world outcomes:\n  Investor A: $12k DCA'd over 12 months \u2192 invested all $12k.\n  Investor B: planned $12k lump-sum \u2192 kept waiting for a dip \u2192 invested $4k over 18 months.\n  Investor A wins despite the slightly lower expected return.",
     "quizTemplateIds": [
-      "dca_total_invested_d1",
-      "dca_shares_bought_d1",
-      "dca_avg_cost_d2",
-      "dca_vs_lump_sum_d3",
-      "dca_consistency_d2"
-    ]
+      "concept_dca_definition_d1",
+      "concept_dca_lump_sum_research_d1",
+      "concept_dca_behavioral_d2",
+      "concept_dca_when_use_d2",
+      "concept_dca_vs_timing_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "investing_apy_savings",
+    "moduleId": "investing",
+    "title": "APY — making your savings work",
+    "concept": "APY (Annual Percentage Yield) is the savings-side counterpart to APR — it's the simple rate WITH compounding included. Where APR is what you pay on debt, APY is what you earn on savings. The math: APY = (1 + r/n)^n − 1, where r is the nominal rate and n is the compounding periods per year. In practice, the difference between APR and APY at typical rates is small (4% APR with monthly compounding ≈ 4.07% APY). What matters more is the rate gap between accounts: a big-bank savings account at 0.01% APY vs a high-yield savings account (HYSA) at 4-5% APY differs by ~500× on the same balance. Federal law (Truth in Savings Act / Reg DD, per FDIC) requires banks to disclose APY on savings products, which makes APY the right comparison number across savings accounts, CDs, and money market funds.",
+    "shortcut": "Annual interest earned = balance × APY. Monthly interest ≈ balance × APY ÷ 12. Doubling time = 72 ÷ APY (Rule of 72 reuse). For typical rates, APR and APY differ by < 0.1 percentage points — but the gap between a 0.01% big-bank savings account and a 4.5% HYSA is enormous ($1 vs $450 per year on $10k).",
+    "example": "$10,000 in three different accounts (1 year):\n\nBig-bank savings (0.01% APY): $1 earned\nMoney market fund (4.5% APY): $450 earned\nHYSA (4.5% APY): $450 earned\n5-yr CD (4.7% APY): $470 earned (locked up)\n\nThe difference between '0.01%' and '4.5%' is 450× — far bigger than any small APR-vs-APY compounding adjustment. The first action for anyone with idle cash above their checking buffer: move it to an HYSA.",
+    "quizTemplateIds": [
+      "apy_definition_d1",
+      "apy_annual_interest_d1",
+      "apy_bank_gap_d2",
+      "apy_doubling_time_d2",
+      "apy_compounding_effect_d3"
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "investing_fund_fees",
@@ -500,17 +534,18 @@
   {
     "id": "investing_rental_yield",
     "moduleId": "investing",
-    "title": "Rental yield \u2014 is the property worth it?",
-    "concept": "Gross rental yield = (annual rent \u00f7 purchase price) \u00d7 100. Below 5% is weak (you're banking on appreciation), 6-8% is solid, 8%+ is strong. Net yield deducts management (typically 10%) and vacancy (typically 8%). A property with great location but low yield is a speculation, not an investment.",
-    "shortcut": "Quick check: monthly rent \u00d7 12 \u2265 5% of price? If not, skip. Net yield = gross \u00d7 (1 \u2212 mgmt% \u2212 vacancy%). At 10% mgmt + 8% vacancy, you keep 82% of gross.",
-    "example": "$300k property, $2,000/month rent:\nAnnual rent: $24,000\nGross yield: 8%\nNet (after 10% mgmt + 8% vacancy):\n8% \u00d7 0.82 = 6.6% net\n\nSolid investment \u2014 gross above 5%, net above 6%.",
+    "title": "Rental property \u2014 does it actually cash-flow?",
+    "concept": "A rental property's 'yield' is a marketing number. The real question is whether the property cash-flows after all real costs \u2014 and most don't. To assess honestly, subtract from monthly rent: mortgage P&I, property taxes (~1-2% of price \u00f7 12), insurance, HOA, vacancy reserve (~8% of rent), maintenance reserve (~10% of rent), capex reserve (~5-10% of rent), and management (~10% of rent if you hire it out). What's left is real cash flow. The famous '1% rule' (monthly rent \u2265 1% of purchase price) is the back-of-envelope sanity check \u2014 properties below 1% typically don't cash-flow after all-in expenses.",
+    "shortcut": "Three-check sanity test before buying: (1) Does monthly rent \u2265 1% of purchase price? (2) After mortgage + tax + insurance + 25% reserves (vacancy + maintenance + capex), is monthly cash flow positive? (3) If you're banking on appreciation rather than cash flow, you're speculating \u2014 not investing. Real-estate investing is a job; treat it as one.",
+    "example": "$300k property, $2,200/month rent (passes 1% rule barely):\n\nIncome:        $2,200\nMortgage P&I:  \u2212$1,400 (20% down, 7% rate, 30 yr)\nProperty tax:  \u2212$250\nInsurance:     \u2212$100\nVacancy 8%:    \u2212$175\nMaintenance:   \u2212$220\nCapex reserve: \u2212$165\nManagement:    \u2212$220\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nReal cash flow: \u2212$330/month\n\n'8% gross yield' becomes negative cash flow when you account for everything. This is why most first-time landlords are surprised.",
     "quizTemplateIds": [
-      "yield_gross_d1",
-      "yield_monthly_check_d1",
-      "yield_compare_d2",
-      "yield_net_d3",
-      "yield_decision_d3"
-    ]
+      "concept_rental_one_percent_d1",
+      "concept_rental_real_expenses_d1",
+      "concept_rental_reserves_d2",
+      "concept_rental_cashflow_check_d2",
+      "concept_rental_speculation_d3"
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "investing_on_track",
@@ -671,17 +706,18 @@
   {
     "id": "debt_apr_vs_apy",
     "moduleId": "debt",
-    "title": "APR vs APY \u2014 the number banks hide",
-    "concept": "APR is the simple annual rate. APY includes the effect of compounding. A 20% APR card compounded monthly = ~21.9% APY. Banks always show whichever number looks better for them: APY on savings (higher), APR on loans (lower). The compounding gap is real money.",
-    "shortcut": "APY \u2248 APR + (APR\u00b2 \u00f7 200) for monthly compounding. 20% APR \u2192 20 + (400 \u00f7 200) = 22% APY. Monthly rate on a loan = APR \u00f7 12. Annual interest cost = balance \u00d7 APY \u00f7 100 (not APR).",
-    "example": "Card with 24% APR:\nMonthly rate: 24% \u00f7 12 = 2%\nAPY: 24 + (576 \u00f7 200) = 26.88%\n\nOn $5,000 balance held a year:\nUsing APR: $1,200 interest\nUsing APY: $1,344 interest (real)\nDifference: $144 hidden",
+    "title": "APR \u2014 what it actually costs",
+    "concept": "APR (Annual Percentage Rate) is the simple annual rate banks quote on every loan, credit card, BNPL agreement, and mortgage. By federal law (Truth in Lending Act / Reg Z, per CFPB), APR must include the interest rate plus most fees expressed as an annual rate \u2014 making it the standard comparison number across lenders. For installment loans (mortgage, auto, personal), the quoted APR captures your full cost. For revolving credit (cards), APR understates slightly because monthly compounding produces an effective rate ~5-10% higher than the headline APR \u2014 the 'APY' number that banks don't post on debt. (See `investing_apy_savings` for the APY version, used on savings.)",
+    "shortcut": "Per-period rate = APR \u00f7 periods/year. Monthly rate on debt = APR \u00f7 12. Monthly interest charge \u2248 balance \u00d7 APR \u00f7 12. Annual interest cost (no compounding) = balance \u00d7 APR. For revolving debt, real annual cost is slightly higher due to monthly compounding \u2014 but APR is the right comparison number across loans because it's standardized (per Reg Z).",
+    "example": "$5,000 balance on a 24% APR credit card:\nMonthly rate: 24% \u00f7 12 = 2%\nMonthly interest charge: $100\nAnnual interest (simple): $1,200\nAnnual interest (with monthly compounding): ~$1,344\nThe ~$144 gap is the 'APR vs APY' difference banks don't highlight on debt.\n\nComparing two personal loan offers:\nLoan A: 9.5% APR, no fees\nLoan B: 8.5% rate, 2% origination fee \u2192 APR \u2248 9.7%\nLoan A is the better deal \u2014 APR captures it correctly.",
     "quizTemplateIds": [
-      "apr_apy_which_higher_d1",
-      "monthly_rate_d1",
-      "apy_from_apr_d2",
-      "apr_apy_compare_d3",
-      "apy_yearly_cost_d3"
-    ]
+      "apr_definition_d1",
+      "apr_monthly_rate_d1",
+      "apr_annual_cost_d2",
+      "apr_with_fees_d2",
+      "apr_vs_total_cost_d3"
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "debt_bnpl_hidden_cost",
@@ -717,17 +753,18 @@
   {
     "id": "concept_debt_good_vs_bad",
     "moduleId": "debt",
-    "title": "Good debt vs bad debt",
-    "concept": "Not all debt is created equal. Good debt finances an appreciating asset (mortgage on a home you'll hold 10+ years), is tax-deductible (mortgage interest, student loan interest up to AGI limits), or carries a rate below typical investment returns (~6-8%). Bad debt finances depreciating assets (cars, vacations), carries high interest (15%+), or both. The deciding factor is rate: a 3% mortgage is good; a 24% credit card is always bad, no matter what it bought.",
-    "shortcut": "Rate-based heuristic: under 6% = often good. 6-10% = neutral, decide case-by-case. Over 10% = almost always bad. The asset itself matters less than the rate. A 24% APR car loan and a 24% APR vacation loan are equally destructive.",
-    "example": "$5,000 extra cash. Two options:\nA) Pay off 22% APR credit card balance\nB) Invest in index fund averaging 8%\n\nA is mathematically correct \u2014 22% guaranteed return beats 8% expected return. Always knock out high-rate bad debt before investing.",
+    "title": "Good debt vs bad debt \u2014 the 4 factors",
+    "concept": "The 'good debt vs bad debt' label is too binary. A better framework evaluates four factors together: (1) **Rate** \u2014 under 6% usually fine, 6-10% neutral, 10%+ almost always bad. (2) **Asset** \u2014 does the borrowed money fund something that appreciates (home, education) or depreciates (car, vacation)? (3) **Cash flow** \u2014 does the debt's monthly payment cripple your budget or stay manageable? (4) **Tax treatment** \u2014 mortgage interest and student loan interest (up to AGI limits) are deductible; consumer debt isn't. A 3% mortgage on a home you'll hold 10 years scores well on all 4. A 24% credit card on a vacation fails all 4.",
+    "shortcut": "Four-factor check on any debt: Rate (<6 good / 6-10 neutral / 10+ bad) + Asset (appreciating / neutral / depreciating) + Cash flow (under 36% DTI or it strains you) + Tax (deductible or not). If 3+ factors are 'bad,' the debt almost certainly is. If 3+ are 'good,' it can be defensible even at a higher absolute rate.",
+    "example": "$5,000 extra cash. Two options:\nA) Pay off 22% APR credit card (Rate: bad, Asset: depreciating, Cashflow: ?, Tax: not deductible \u2014 3-4 bad factors)\nB) Invest in index fund averaging ~10% nominal\n\n22% guaranteed return beats 10% expected. Knock out the credit card first. Same logic doesn't apply to a 3% mortgage \u2014 that scores well on Rate, Asset, and Tax, so don't rush to pay it off ahead of investing.",
     "quizTemplateIds": [
       "concept_good_debt_d1",
       "concept_bad_debt_d1",
       "concept_interest_threshold_d2",
       "concept_mortgage_short_d3",
       "concept_payoff_vs_invest_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "housing_rent_affordability",
@@ -839,16 +876,17 @@
     "id": "concept_housing_buy_vs_rent_framework",
     "moduleId": "housing",
     "title": "Buy vs rent \u2014 the real decision framework",
-    "concept": "The buy-vs-rent decision is more behavior than math. Even when the numbers favor buying, mobility, maintenance willingness, and opportunity cost can flip the answer. Short timelines (under 5 years) almost always favor renting because closing costs and selling fees eat any equity gains. Stable, long timelines (10+ years) favor buying because amortization and appreciation compound.",
-    "shortcut": "5-year rule: if you'll stay under 5 years, rent. Beyond that, run the math (rent \u00d7 200 < purchase price = buying often wins). The 'opportunity cost' of your down payment matters: $60k down vs $60k in an index fund at 8% = $129k after 10 years.",
-    "example": "Job stability test:\nMight move in 2 years? \u2192 Rent\nCommitted to city 10+ years? \u2192 Buy (after math)\n\nQuick math check:\nMonthly rent \u00d7 200 vs purchase price\n$2,000 rent \u00d7 200 = $400,000\nIf comparable home is $400k or less \u2192 buy is reasonable\nIf comparable home is $600k \u2192 rent likely wins long-term",
+    "concept": "The buy-vs-rent decision depends on three things in this order: (1) **Timeline** \u2014 under 5 years almost always favors renting because closing costs (2-5% buying + 6% selling = ~8-11% round-trip) typically exceed any equity gained. (2) **Mortgage rate** \u2014 the old 'rent \u00d7 200 = purchase price' rule worked at 3-4% rates; in a 7% rate environment, you need to compare actual monthly PITI to rent, not a flat multiplier. (3) **Opportunity cost** \u2014 your down payment could be invested instead. $60k down vs $60k in an index fund at 10% \u2248 $156k after 10 years.",
+    "shortcut": "Three-step decision: (1) Are you staying 5+ years? If no \u2192 rent. (2) Compare monthly PITI (principal + interest + taxes + insurance + HOA) to rent. At 7% mortgage rates, you typically need rent \u00d7 150-180 < purchase price for buying to make sense (down from rent \u00d7 200 in the 3-4% era). (3) Factor opportunity cost: would the down payment grow faster invested elsewhere?",
+    "example": "Rate-sensitive multiplier:\n3-4% mortgage era: rent \u00d7 200 \u2248 break-even purchase price\n6-7% mortgage era: rent \u00d7 150-180 \u2248 break-even\n\nAt $2,000/mo rent:\n  4% rates: buying \u2264$400k makes sense\n  7% rates: buying \u2264$300-360k makes sense\n  Above those, renting + investing the difference often wins\n\nJob stability test:\nMight move in 2 years? \u2192 Rent\nCommitted to city 10+ years? \u2192 Buy (after running the math)",
     "quizTemplateIds": [
       "concept_buy_rent_short_d1",
       "concept_buy_rent_long_d2",
       "concept_buy_rent_200x_d2",
       "concept_buy_rent_opportunity_d3",
       "concept_buy_rent_mobility_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_housing_lease_clauses",
@@ -975,32 +1013,18 @@
   {
     "id": "concept_taxes_paycheck_stub",
     "moduleId": "taxes",
-    "title": "What's actually on your paycheck stub",
-    "concept": "Your paycheck stub has 10-15 line items most workers can't decode. The big categories: gross pay, federal/state/local income tax withholding, FICA (Social Security + Medicare = 7.65% combined), pre-tax deductions (401k, HSA, FSA, health insurance), post-tax deductions (Roth 401k, after-tax insurance), and garnishments. Important nuance: 401k contributions reduce income tax only \u2014 they're STILL subject to FICA. HSA and health insurance premiums (via Section 125) reduce BOTH income tax and FICA. That extra ~7.65% advantage is why HSA is the most tax-efficient account in the US tax code.",
-    "shortcut": "401k: pre-tax for income tax only (still pays FICA). HSA/health insurance via payroll: pre-tax for income tax AND FICA. Post-tax deductions (Roth, after-tax health) reduce only take-home. Tax savings on a 401k contribution = contribution \u00d7 your INCOME tax rate (not your combined rate).",
-    "example": "Sample biweekly stub on $80k salary:\nGross pay        $3,077\n\u2014 Pre-tax 401k    \u2212$308 (10%)\n\u2014 Pre-tax health  \u2212$120\n  Income-taxable  $2,649\n  FICA-taxable    $2,769  (401k still subject to FICA)\n\u2014 Federal tax     \u2212$397\n\u2014 State tax       \u2212$133\n\u2014 FICA (7.65%)    \u2212$212\n  Net pay         $1,907\n\nYour 401k contribution 'cost' is really $308 \u2212 ($308 \u00d7 0.22) \u2248 $240 after income tax savings only.",
+    "title": "Your paycheck stub + filing status",
+    "concept": "Two things on every US worker's paycheck most never decode: (1) the **stub line items** (gross pay, FICA at 7.65%, federal/state withholding, pre-tax vs post-tax deductions), and (2) the **filing status** used to compute withholding \u2014 Single, Married Filing Jointly (MFJ), Married Filing Separately (MFS), Head of Household (HoH), or Qualifying Widow(er). Filing status drives your bracket, standard deduction, and credit eligibility. Two important nuances: 401(k) contributions reduce income tax but NOT FICA; HSA contributions via Section 125 reduce BOTH (extra ~7.65% advantage per IRS Pub 15-B). And single parents providing >50% of household costs are usually HoH not Single \u2014 bigger standard deduction.",
+    "shortcut": "Pre-tax stub decoder: 401k reduces income tax only (still pays FICA); HSA/Section 125 health premiums reduce both. Filing status defaults: single \u2192 Single (unless you provide >50% of a household \u2192 HoH). Married \u2192 MFJ default, except MFS when one spouse has IBR/PAYE student loans (calculated on their income only) or huge medical bills. Check your W-4 filing status matches your actual situation \u2014 wrong status means wrong withholding all year.",
+    "example": "Sample biweekly stub on $80k MFJ filer:\nGross pay        $3,077\n\u2014 Pre-tax 401k    \u2212$308 (10%)\n\u2014 Pre-tax HSA     \u2212$150 (via Sec 125)\n  Income-taxable  $2,619\n  FICA-taxable    $2,769  (401k still pays FICA; HSA doesn't)\n\u2014 Federal tax     \u2212$315 (MFJ brackets)\n\u2014 State tax       \u2212$133\n\u2014 FICA (7.65%)    \u2212$212\n  Net pay         $2,000\n\nStandard deduction 2025 by status:\n  Single: $15,750  \u00b7  HoH: $23,625  \u00b7  MFJ: $31,500\nPicking the wrong status can cost a single parent $7,875 in extra taxable income (Single vs HoH).",
     "quizTemplateIds": [
       "concept_paycheck_fica_d1",
       "concept_paycheck_pretax_d1",
-      "concept_paycheck_401k_cost_d2",
-      "concept_paycheck_post_tax_d2",
-      "concept_paycheck_check_error_d3"
-    ]
-  },
-  {
-    "id": "concept_taxes_filing_status",
-    "moduleId": "taxes",
-    "title": "Filing status \u2014 pick wrong, pay more",
-    "concept": "Your filing status determines your tax brackets, standard deduction, and eligibility for credits. The five options: Single, Married Filing Jointly (MFJ), Married Filing Separately (MFS), Head of Household (HoH), and Qualifying Widow(er). MFJ usually wins for married couples, but MFS can save money for couples with very different incomes, large medical bills, or IDR student loan payments. HoH has special requirements but offers a bigger standard deduction than Single.",
-    "shortcut": "Married? Default to MFJ. Consider MFS if you have IBR/PAYE student loans (calculated only on your income) or one spouse has huge medical bills. Single parent providing > 50% of household costs? You're likely HoH, not Single \u2014 bigger standard deduction.",
-    "example": "Single vs HoH on $60k income:\nStandard deduction (2025):\n  Single: $15,750\n  HoH:    $23,625\n  Difference: $7,875 less taxable income\n\nMFJ vs MFS for a couple at $60k + $200k:\nMFJ usually wins by $1,000-$3,000\nMFS makes sense if the lower-income spouse has IDR student loans\n(payment calculated only on their income)",
-    "quizTemplateIds": [
       "concept_filing_default_d1",
-      "concept_filing_hoh_d2",
       "concept_filing_mfs_idr_d2",
-      "concept_filing_mfj_default_d3",
       "concept_filing_status_choice_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "insurance_deductible_vs_premium",

@@ -216,18 +216,20 @@ enum QuestionTheme {
              // Phase 3 reworks
              "roi_compare_d3", "roth_growth_value_d3",
              "compound_pct_interest_d2", "compound_early_vs_late_d3", "compound_backwards_d3",
-             // DCA
-             "dca_total_invested_d1", "dca_shares_bought_d1", "dca_avg_cost_d2",
-             "dca_vs_lump_sum_d3", "dca_consistency_d2",
+             // DCA — reframed to concept lesson in Phase 2 (5 new IDs replace the 5 numerical originals)
+             "concept_dca_definition_d1", "concept_dca_lump_sum_research_d1",
+             "concept_dca_behavioral_d2", "concept_dca_when_use_d2",
+             "concept_dca_vs_timing_d3",
              // Fund fees
              "fund_fee_annual_d1", "fund_fee_diff_d2", "fund_fee_compare_d1",
              "fund_fee_decade_d3", "fund_fee_30yr_d3",
              // Emergency fund
              "ef_essentials_sum_d1", "ef_target_d1", "ef_runway_d2",
              "ef_runway_after_cut_d3", "ef_months_to_target_d3",
-             // Rental yield
-             "yield_gross_d1", "yield_monthly_check_d1", "yield_compare_d2",
-             "yield_net_d3", "yield_decision_d3",
+             // Rental yield — reframed to concept lesson in Phase 2 (5 new IDs replace 5 numerical originals)
+             "concept_rental_one_percent_d1", "concept_rental_real_expenses_d1",
+             "concept_rental_reserves_d2", "concept_rental_cashflow_check_d2",
+             "concept_rental_speculation_d3",
              // On track
              "on_track_multiple_d1", "on_track_target_d1", "on_track_gap_d2",
              "on_track_close_gap_d3", "on_track_extra_save_d3",
@@ -237,7 +239,15 @@ enum QuestionTheme {
              "concept_alloc_120_d1", "concept_alloc_bonds_role_d2", "concept_target_date_d2",
              "concept_alloc_too_conservative_d3", "concept_crash_response_d3",
              "concept_loss_aversion_d1", "concept_panic_sell_d2", "concept_market_timing_myth_d2",
-             "concept_wait_for_dip_d3", "concept_panic_sell_2020_d3":
+             "concept_wait_for_dip_d3", "concept_panic_sell_2020_d3",
+             // APY (Phase 2 Batch 2b: split from APR/APY — APY belongs in Investing)
+             "apy_definition_d1", "apy_annual_interest_d1",
+             "apy_bank_gap_d2", "apy_doubling_time_d2",
+             "apy_compounding_effect_d3",
+             // Roth decision (Phase 2 Batch 2b: split out of Roth basics)
+             "concept_roth_young_default_d1", "concept_roth_traditional_peak_d1",
+             "concept_roth_phaseout_d2", "concept_roth_backdoor_d2",
+             "concept_roth_unsure_split_d3":
             return .investing
 
         // ── Debt & Loans ─────────────────────────────────────────────────────────
@@ -256,9 +266,10 @@ enum QuestionTheme {
              // Avalanche/snowball
              "debt_priority_d1", "avalanche_monthly_saving_d2",
              "snowball_difference_d3", "debt_compare_rates_d2", "psychology_premium_d3",
-             // APR vs APY
-             "apr_apy_which_higher_d1", "monthly_rate_d1", "apy_from_apr_d2",
-             "apr_apy_compare_d3", "apy_yearly_cost_d3",
+             // APR (Phase 2 Batch 2b: split from APR/APY — APY moved to Investing)
+             "apr_definition_d1", "apr_monthly_rate_d1",
+             "apr_annual_cost_d2", "apr_with_fees_d2",
+             "apr_vs_total_cost_d3",
              // BNPL
              "bnpl_simple_d1", "bnpl_late_fee_d2", "bnpl_surcharge_pct_d3",
              "bnpl_stacked_d3", "bnpl_annual_d2",
@@ -316,10 +327,10 @@ enum QuestionTheme {
              "w4_bump_d1", "w4_bump_biweekly_d1", "w4_invested_d2",
              "w4_annual_growth_d2", "w4_lifetime_d3",
              // V3 concept lessons
-             "concept_paycheck_fica_d1", "concept_paycheck_pretax_d1", "concept_paycheck_401k_cost_d2",
-             "concept_paycheck_post_tax_d2", "concept_paycheck_check_error_d3",
-             "concept_filing_default_d1", "concept_filing_hoh_d2", "concept_filing_mfs_idr_d2",
-             "concept_filing_mfj_default_d3", "concept_filing_status_choice_d3":
+             // Paycheck stub + Filing Status (Phase 2 Batch 2b: 7.9 merged into 7.8)
+             "concept_paycheck_fica_d1", "concept_paycheck_pretax_d1",
+             "concept_filing_default_d1", "concept_filing_mfs_idr_d2",
+             "concept_filing_status_choice_d3":
             return .taxes
 
         // ── Insurance & Healthcare ──────────────────────────────────────────────

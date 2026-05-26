@@ -70,8 +70,10 @@
       "roi_basic",
       "investing_401k_match",
       "investing_roth_vs_traditional",
+      "investing_roth_decision",
       "investing_compound_growth",
       "investing_dca",
+      "investing_apy_savings",
       "investing_fund_fees",
       "investing_emergency_fund",
       "investing_rental_yield",
@@ -138,8 +140,7 @@
       "taxes_standard_vs_itemized",
       "taxes_capital_gains",
       "taxes_w4_adjust",
-      "concept_taxes_paycheck_stub",
-      "concept_taxes_filing_status"
+      "concept_taxes_paycheck_stub"
     ]
   },
   {

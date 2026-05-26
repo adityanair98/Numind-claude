@@ -7775,6 +7775,101 @@
     "explanationTemplate": "Tax saved with Roth = ${{finalValue}} \u00d7 {{taxRate}}% = ${{answer}}. That's the lifetime advantage of tax-free withdrawals."
   },
   {
+    "id": "concept_roth_young_default_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A 26-year-old earning $55k (12% bracket) is choosing between Roth and Traditional IRA. What's the standard default recommendation?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Young + low bracket = Roth almost always wins. The 12% bracket is among the lowest you'll likely ever see \u2014 paying tax now at 12% is cheap. Decades of tax-free growth (the Roth's killer feature) then dwarf the small upfront tax cost. The general default for 22-35 year olds in the 12-22% bracket is Roth.",
+    "conceptChoices": [
+      "Traditional IRA \u2014 defer the tax to a (presumably lower) retirement bracket",
+      "Roth IRA \u2014 pay tax at today's low 12% bracket, then enjoy decades of tax-free growth",
+      "Roll the money into a 529 plan instead",
+      "Wait until they're in a higher bracket to start"
+    ],
+    "correctConceptChoice": "Roth IRA \u2014 pay tax at today's low 12% bracket, then enjoy decades of tax-free growth"
+  },
+  {
+    "id": "concept_roth_traditional_peak_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A 45-year-old in the 32% tax bracket who expects to retire in a 22% bracket should default to...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Peak-earning years + expecting a lower retirement bracket = Traditional wins. You skip the 32% tax today and pay 22% in retirement, pocketing the 10-point gap on every dollar contributed. The Roth IRA might still make sense as a side account for flexibility, but most contributions should go pre-tax (Traditional 401k).",
+    "conceptChoices": [
+      "Roth \u2014 always better for high earners",
+      "Traditional \u2014 skip the 32% tax now, pay 22% later, pocket the 10-point spread",
+      "Just save in a regular brokerage account",
+      "Wait until they retire to fund any IRA"
+    ],
+    "correctConceptChoice": "Traditional \u2014 skip the 32% tax now, pay 22% later, pocket the 10-point spread"
+  },
+  {
+    "id": "concept_roth_phaseout_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A single filer earning $170,000 (2025) wants to contribute to a Roth IRA. What's the situation?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "For 2025 (per IRS), single Roth IRA contributions phase out between $150k and $165k MAGI; above $165k, direct Roth IRA contributions are not allowed. But a 'backdoor Roth' (contribute non-deductible Traditional \u2192 convert to Roth) is still legal and widely used by high earners.",
+    "conceptChoices": [
+      "They can contribute directly to a Roth IRA \u2014 no income limits",
+      "Direct Roth IRA contributions are phased out above $165k MAGI for singles \u2014 but a 'backdoor Roth' (Traditional \u2192 conversion) is still legal",
+      "They must wait until retirement to contribute",
+      "Roth IRAs have been eliminated for high earners"
+    ],
+    "correctConceptChoice": "Direct Roth IRA contributions are phased out above $165k MAGI for singles \u2014 but a 'backdoor Roth' (Traditional \u2192 conversion) is still legal"
+  },
+  {
+    "id": "concept_roth_backdoor_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What is a 'backdoor Roth' contribution?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Backdoor Roth: contribute non-deductible dollars to a Traditional IRA, then immediately convert that Traditional IRA balance to a Roth IRA. This sidesteps the direct Roth income limits because there's no income limit on conversions. The 'pro-rata rule' complicates this if you have existing pre-tax Traditional IRA balances \u2014 research before executing.",
+    "conceptChoices": [
+      "A secret IRS-approved tax loophole only your accountant can do",
+      "Contributing non-deductible dollars to a Traditional IRA, then converting it to a Roth \u2014 bypasses the Roth IRA income limits",
+      "A way to withdraw Roth funds early without penalty",
+      "A type of Roth contribution that doesn't count toward annual limits"
+    ],
+    "correctConceptChoice": "Contributing non-deductible dollars to a Traditional IRA, then converting it to a Roth \u2014 bypasses the Roth IRA income limits"
+  },
+  {
+    "id": "concept_roth_unsure_split_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "If you're genuinely unsure whether your retirement tax bracket will be higher or lower than today's, what's the best hedge?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Splitting between Roth and Traditional gives you 'tax diversification' \u2014 in retirement you can withdraw from whichever bucket is tax-advantaged that year. The classic split: Roth IRA + Traditional 401k. You get the Roth's flexibility and tax-free growth on one side, and the Traditional's current-year tax deduction on the other. Future-you will appreciate having both buckets to draw from.",
+    "conceptChoices": [
+      "Pick whichever has the higher cap and max it out",
+      "Split contributions between Roth and Traditional accounts \u2014 gives you tax-diversified retirement income (Roth IRA + Traditional 401k is a common split)",
+      "Only contribute to a Traditional 401k \u2014 Roth is too risky",
+      "Skip retirement accounts and invest in a brokerage account"
+    ],
+    "correctConceptChoice": "Split contributions between Roth and Traditional accounts \u2014 gives you tax-diversified retirement income (Roth IRA + Traditional 401k is a common split)"
+  },
+  {
     "id": "compound_pct_interest_d2",
     "moduleId": "investing",
     "difficulty": 2,
@@ -7867,183 +7962,99 @@
     "explanationTemplate": "Required contributions = goal \u00f7 multiplier = ${{goal}} \u00f7 {{multiplier}} = ${{answer}}. The rest comes from compounding."
   },
   {
-    "id": "dca_total_invested_d1",
+    "id": "concept_dca_definition_d1",
     "moduleId": "investing",
     "difficulty": 1,
-    "promptTemplate": "You invest ${{monthlyAmount}}/month for {{months}} months via dollar-cost averaging. How much have you contributed in total?",
-    "variableRules": [
-      {
-        "name": "monthlyAmount",
-        "options": [
-          200,
-          300,
-          400,
-          500,
-          600,
-          800,
-          1000
-        ]
-      },
-      {
-        "name": "months",
-        "options": [
-          6,
-          12,
-          18,
-          24,
-          36,
-          48,
-          60
-        ]
-      }
-    ],
-    "answerFormula": "dcaTotalInvested",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly \u00d7 months. ${{monthlyAmount}} \u00d7 {{months}} = ${{answer}}."
-  },
-  {
-    "id": "dca_shares_bought_d1",
-    "moduleId": "investing",
-    "difficulty": 1,
-    "promptTemplate": "You invest ${{investmentAmount}} this month into a fund priced at ${{pricePerShare}}/share. How many shares do you buy?",
-    "variableRules": [
-      {
-        "name": "investmentAmount",
-        "options": [
-          200,
-          300,
-          400,
-          500,
-          600,
-          800,
-          1000
-        ]
-      },
-      {
-        "name": "pricePerShare",
-        "options": [
-          10,
-          20,
-          25,
-          40,
-          50,
-          80,
-          100
-        ]
-      }
-    ],
-    "answerFormula": "sharesBought",
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What does 'dollar-cost averaging' (DCA) actually mean?",
+    "variableRules": [],
+    "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Investment \u00f7 price = shares. ${{investmentAmount}} \u00f7 ${{pricePerShare}} = {{answer}} shares."
+    "explanationTemplate": "DCA is a fixed-amount, fixed-interval investing rule (e.g. $500 on the 1st of every month) regardless of market conditions. You buy more shares when prices are low and fewer when prices are high \u2014 the average cost is set by the rule, not by your judgment. The key feature is it removes the timing decision.",
+    "conceptChoices": [
+      "Investing a fixed dollar amount on a fixed schedule regardless of market conditions",
+      "Investing more when the market drops and less when it rises",
+      "Calculating the average cost basis of all your investments",
+      "Spreading your money across multiple asset classes"
+    ],
+    "correctConceptChoice": "Investing a fixed dollar amount on a fixed schedule regardless of market conditions"
   },
   {
-    "id": "dca_avg_cost_d2",
+    "id": "concept_dca_lump_sum_research_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "According to Vanguard's well-known 2012 study, lump-sum investing beats DCA on returns about...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Per Vanguard's 2012 study 'Dollar-Cost Averaging Just Means Taking Risk Later,' lump-sum investing outperformed DCA in approximately two-thirds of historical 10-year windows. The reason: markets trend up more often than down, so getting fully invested earlier captures more upside on average.",
+    "conceptChoices": [
+      "Roughly 1/3 of the time",
+      "Roughly 2/3 of the time",
+      "Roughly 9/10 of the time",
+      "Lump-sum never beats DCA"
+    ],
+    "correctConceptChoice": "Roughly 2/3 of the time"
+  },
+  {
+    "id": "concept_dca_behavioral_d2",
     "moduleId": "investing",
     "difficulty": 2,
-    "promptTemplate": "Over a year you invested ${{totalInvested}} via DCA and ended up owning {{totalShares}} shares. What's your average cost per share?",
-    "variableRules": [
-      {
-        "name": "totalInvested",
-        "options": [
-          3600,
-          4800,
-          6000,
-          7200,
-          9600,
-          12000
-        ]
-      },
-      {
-        "name": "totalShares",
-        "options": [
-          60,
-          80,
-          100,
-          120,
-          150,
-          200,
-          240
-        ]
-      }
+    "inputMode": "multipleChoice",
+    "promptTemplate": "If lump-sum statistically wins on returns, why is DCA the right choice for most retail investors?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "DCA wins on behavior. Lump-sum requires investing all at once \u2014 and most retail investors who try this hesitate, wait for a 'better entry,' get scared by a dip, and ultimately invest less than they planned. DCA removes the decision (and the emotion) by automating it. The strategy that gets executed beats the strategy that's theoretically optimal but never followed.",
+    "conceptChoices": [
+      "DCA always has higher returns when accounting for fees",
+      "Most retail investors who try lump-sum hesitate, time the market poorly, and end up under-invested \u2014 DCA removes that decision",
+      "DCA is tax-advantaged in ways lump-sum isn't",
+      "The Vanguard study was disproven by later research"
     ],
-    "answerFormula": "dcaAverageCost",
-    "answerFormat": "currency",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Total invested \u00f7 total shares = avg cost. ${{totalInvested}} \u00f7 {{totalShares}} = ${{answer}}/share."
+    "correctConceptChoice": "Most retail investors who try lump-sum hesitate, time the market poorly, and end up under-invested \u2014 DCA removes that decision"
   },
   {
-    "id": "dca_vs_lump_sum_d3",
+    "id": "concept_dca_when_use_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "When is DCA most clearly the right choice (even setting aside the behavioral angle)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Recurring paycheck contributions are textbook DCA \u2014 money arrives in chunks, you can't lump-sum what you don't yet have. 401(k) contributions, automated brokerage transfers on payday, and IRA monthly contributions all naturally fit the DCA model. For genuine one-time windfalls (inheritance, bonus, home sale proceeds), the lump-sum argument applies more directly \u2014 but only if you can actually pull the trigger.",
+    "conceptChoices": [
+      "When you have a one-time windfall like an inheritance",
+      "When you receive income on a recurring schedule (paycheck, monthly contributions) \u2014 DCA is automatic, not a choice",
+      "Only when the market is dropping",
+      "Only in tax-advantaged accounts"
+    ],
+    "correctConceptChoice": "When you receive income on a recurring schedule (paycheck, monthly contributions) \u2014 DCA is automatic, not a choice"
+  },
+  {
+    "id": "concept_dca_vs_timing_d3",
     "moduleId": "investing",
     "difficulty": 3,
-    "promptTemplate": "DCA average cost basis: ${{dcaCost}}/share. Lump sum at start price: ${{lumpCost}}/share. You ended up owning {{shares}} shares. How much MORE did DCA save you compared to lump sum?",
-    "variableRules": [
-      {
-        "name": "dcaCost",
-        "options": [
-          40,
-          45,
-          50,
-          55
-        ]
-      },
-      {
-        "name": "lumpCost",
-        "options": [
-          50,
-          55,
-          60,
-          65,
-          70
-        ]
-      },
-      {
-        "name": "shares",
-        "options": [
-          100,
-          150,
-          200,
-          250
-        ]
-      }
-    ],
-    "answerFormula": "dcaVsLumpSumSaving",
-    "answerFormat": "currency",
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You have a $12,000 windfall and plan to invest it. You think about lump-summing it but want to 'wait for the dip.' Six months later you've invested $3,000 and the market is up 8%. What's the cost of waiting?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "DCA saved (per share) = lump cost \u2212 DCA cost. Total saving = diff \u00d7 shares = ${{answer}}."
-  },
-  {
-    "id": "dca_consistency_d2",
-    "moduleId": "investing",
-    "difficulty": 2,
-    "promptTemplate": "You consistently invest ${{monthlyAmount}}/month for {{years}} years. How much have you contributed in total?",
-    "variableRules": [
-      {
-        "name": "monthlyAmount",
-        "options": [
-          300,
-          500,
-          700,
-          1000
-        ]
-      },
-      {
-        "name": "years",
-        "options": [
-          3,
-          5,
-          7,
-          10,
-          15,
-          20
-        ]
-      }
+    "explanationTemplate": "The $9,000 still sitting in cash missed an 8% gain (~$720) \u2014 and worse, you've fallen into the 'wait for the dip' trap that delays indefinitely. An automated 12-month DCA plan would have already invested ~$6,000 and captured part of the rally. The behavioral lesson: when you can't execute lump-sum, DCA's discipline beats trying to time the market every time.",
+    "conceptChoices": [
+      "Zero \u2014 you're being prudent by waiting",
+      "About $720 in missed gains on the $9,000 still in cash \u2014 plus the hidden cost of continuing to wait for a dip that may not come",
+      "Only the inflation cost on the cash",
+      "Impossible to estimate without knowing the future"
     ],
-    "answerFormula": "monthlyOverYears",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly \u00d7 12 \u00d7 years. ${{monthlyAmount}} \u00d7 12 \u00d7 {{years}} = ${{answer}}."
+    "correctConceptChoice": "About $720 in missed gains on the $9,000 still in cash \u2014 plus the hidden cost of continuing to wait for a dip that may not come"
   },
   {
     "id": "fund_fee_annual_d1",
@@ -8400,175 +8411,99 @@
     "explanationTemplate": "(target \u2212 current) \u00f7 monthly. (${{target}} \u2212 ${{currentSaved}}) \u00f7 ${{monthlyContribution}} = ~{{answer}} months."
   },
   {
-    "id": "yield_gross_d1",
+    "id": "concept_rental_one_percent_d1",
     "moduleId": "investing",
     "difficulty": 1,
-    "promptTemplate": "A rental property costs ${{propertyPrice}}. Monthly rent is ${{monthlyRent}}. What's the gross annual yield (%)?",
-    "variableRules": [
-      {
-        "name": "propertyPrice",
-        "options": [
-          200000,
-          250000,
-          300000,
-          400000,
-          500000
-        ]
-      },
-      {
-        "name": "monthlyRent",
-        "options": [
-          1500,
-          1800,
-          2000,
-          2400,
-          2800,
-          3000
-        ]
-      }
-    ],
-    "answerFormula": "grossRentalYield",
-    "answerFormat": "percent",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Annual rent \u00f7 price \u00d7 100. (${{monthlyRent}} \u00d7 12) \u00f7 ${{propertyPrice}} \u00d7 100 = {{answer}}%."
-  },
-  {
-    "id": "yield_monthly_check_d1",
-    "moduleId": "investing",
-    "difficulty": 1,
-    "promptTemplate": "Quick check: a property costs ${{propertyPrice}} and brings in ${{monthlyRent}}/month. What's the annual rent?",
-    "variableRules": [
-      {
-        "name": "propertyPrice",
-        "options": [
-          200000,
-          300000,
-          400000
-        ]
-      },
-      {
-        "name": "monthlyRent",
-        "options": [
-          1500,
-          2000,
-          2500,
-          3000
-        ]
-      }
-    ],
-    "answerFormula": "annualFromMonthlyRent",
-    "answerFormat": "currency",
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What is the '1% rule' for rental properties?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly \u00d7 12. ${{monthlyRent}} \u00d7 12 = ${{answer}}/year. Compare to 5% of price for a quick yield check."
+    "explanationTemplate": "The 1% rule is a quick screening test: monthly rent should be at least 1% of the purchase price for a property to have any chance of cash-flowing after all real expenses. A $300k property needs $3,000/month rent to pass. Most properties in HCOL US metros fail this test in 2025 \u2014 they're appreciation plays, not cash flow.",
+    "conceptChoices": [
+      "Monthly rent should be at least 1% of the purchase price as a quick cash-flow screen",
+      "1% of the property value should be set aside annually for repairs",
+      "1% is the maximum landlord profit margin allowed by federal law",
+      "The mortgage should be at most 1% of the rent"
+    ],
+    "correctConceptChoice": "Monthly rent should be at least 1% of the purchase price as a quick cash-flow screen"
   },
   {
-    "id": "yield_compare_d2",
+    "id": "concept_rental_real_expenses_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which of these is NOT a normal monthly expense for a rental property's cash-flow analysis?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Property taxes, insurance, mortgage P&I, vacancy reserve, and maintenance reserve are all legitimate monthly expenses. The 'sale price' is a future event, not a current expense \u2014 and crucially, a positive sale price is not income you can spend monthly. Real-estate beginners often forget reserves and overstate cash flow.",
+    "conceptChoices": [
+      "Property taxes",
+      "Mortgage interest",
+      "The eventual sale price of the property",
+      "Vacancy reserve"
+    ],
+    "correctConceptChoice": "The eventual sale price of the property"
+  },
+  {
+    "id": "concept_rental_reserves_d2",
     "moduleId": "investing",
     "difficulty": 2,
-    "promptTemplate": "Property A: ${{priceA}} price, ${{rentA}}/month rent. Property B: ${{priceB}} price, ${{rentB}}/month rent. By how many percentage points is the higher gross yield ahead?",
-    "variableRules": [
-      {
-        "name": "priceA",
-        "options": [
-          200000,
-          250000,
-          300000
-        ]
-      },
-      {
-        "name": "rentA",
-        "options": [
-          1400,
-          1600,
-          1800,
-          2000
-        ]
-      },
-      {
-        "name": "priceB",
-        "options": [
-          350000,
-          400000,
-          500000
-        ]
-      },
-      {
-        "name": "rentB",
-        "options": [
-          2000,
-          2200,
-          2500,
-          2800,
-          3000
-        ]
-      }
-    ],
-    "answerFormula": "yieldComparison",
-    "answerFormat": "percent",
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Roughly what % of monthly rent should be set aside for vacancy + maintenance + capex (capital expenditures) in a realistic cash-flow model?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Yield A = (${{rentA}} \u00d7 12)/${{priceA}} \u00d7 100. Yield B same with B's numbers. Diff = {{answer}} pp."
+    "explanationTemplate": "Conventional landlord rules of thumb: ~8% vacancy reserve (1 month vacant per year), ~10% maintenance, ~5-10% capex. Combined: ~25% of gross rent disappears into reserves before you even count mortgage and taxes. First-time landlords routinely miss this and overstate monthly cash flow.",
+    "conceptChoices": [
+      "1-3% \u2014 rentals are mostly hands-off",
+      "5-10% \u2014 only major repairs need reserves",
+      "~25% combined (vacancy ~8% + maintenance ~10% + capex ~5-10%)",
+      "Reserves aren't necessary if you self-manage"
+    ],
+    "correctConceptChoice": "~25% combined (vacancy ~8% + maintenance ~10% + capex ~5-10%)"
   },
   {
-    "id": "yield_net_d3",
+    "id": "concept_rental_cashflow_check_d2",
     "moduleId": "investing",
-    "difficulty": 3,
-    "promptTemplate": "A property costs ${{propertyPrice}} with ${{monthlyRent}}/month rent. After 10% management fee and 8% vacancy loss, what's the net yield?",
-    "variableRules": [
-      {
-        "name": "propertyPrice",
-        "options": [
-          200000,
-          300000,
-          400000,
-          500000
-        ]
-      },
-      {
-        "name": "monthlyRent",
-        "options": [
-          1500,
-          2000,
-          2500,
-          3000,
-          3500
-        ]
-      }
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A property collects $2,500/month rent. After mortgage ($1,500), taxes + insurance ($350), and 25% in combined reserves ($625), what's the monthly cash flow?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$2,500 \u2212 $1,500 \u2212 $350 \u2212 $625 = $25/month. Barely positive \u2014 and one major capex event (HVAC, roof, water heater) erases years of that cash flow. Most 'investment properties' people excitedly buy on gross yield numbers look like this once real reserves are applied.",
+    "conceptChoices": [
+      "+$650/month (everything after mortgage)",
+      "+$25/month \u2014 barely positive, vulnerable to any single capex event",
+      "\u2212$200/month",
+      "Positive long-term because property appreciates"
     ],
-    "answerFormula": "netRentalYield",
-    "answerFormat": "percent",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Gross \u00d7 (1 \u2212 0.10 \u2212 0.08) = gross \u00d7 0.82. {{answer}}% net yield."
+    "correctConceptChoice": "+$25/month \u2014 barely positive, vulnerable to any single capex event"
   },
   {
-    "id": "yield_decision_d3",
+    "id": "concept_rental_speculation_d3",
     "moduleId": "investing",
     "difficulty": 3,
-    "promptTemplate": "A property is listed at ${{propertyPrice}}. To hit a {{targetYield}}% gross yield, what monthly rent do you need?",
-    "variableRules": [
-      {
-        "name": "propertyPrice",
-        "options": [
-          200000,
-          250000,
-          300000,
-          400000,
-          500000
-        ]
-      },
-      {
-        "name": "targetYield",
-        "options": [
-          5,
-          6,
-          7,
-          8
-        ]
-      }
-    ],
-    "answerFormula": "requiredRentForYield",
-    "answerFormat": "currency",
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A property has negative monthly cash flow after all real expenses, but the realtor pitches it as a good investment because 'real estate always appreciates in this neighborhood.' What's the most accurate way to describe this?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual rent needed = price \u00d7 target%. Monthly = \u00f7 12. ${{propertyPrice}} \u00d7 {{targetYield}}% \u00f7 12 = ${{answer}}/mo."
+    "explanationTemplate": "A property that doesn't cash-flow is a speculative bet on future price appreciation \u2014 not an investment in the rental-income sense. Speculation isn't wrong, but it's a different risk profile: you're committing capital and paying out-of-pocket every month, hoping for a future capital gain. Be honest with yourself about which game you're actually playing.",
+    "conceptChoices": [
+      "It's an investment as long as the realtor knows the neighborhood",
+      "It's a speculation on future appreciation, not a rental investment \u2014 different risk profile, and you should be honest about which game you're playing",
+      "It's automatically a good buy because real estate always appreciates",
+      "It's a tax shelter regardless of cash flow"
+    ],
+    "correctConceptChoice": "It's a speculation on future appreciation, not a rental investment \u2014 different risk profile, and you should be honest about which game you're playing"
   },
   {
     "id": "on_track_multiple_d1",
@@ -9136,30 +9071,26 @@
     "explanationTemplate": "Monthly difference \u00d7 24. ${{monthlySaving}} \u00d7 24 = ${{answer}} 'paid' for psychological wins."
   },
   {
-    "id": "apr_apy_which_higher_d1",
+    "id": "apr_definition_d1",
     "moduleId": "debt",
     "difficulty": 1,
-    "promptTemplate": "A credit card has {{apr}}% APR. What's the equivalent APY (with monthly compounding)?",
-    "variableRules": [
-      {
-        "name": "apr",
-        "options": [
-          12,
-          15,
-          18,
-          20,
-          22,
-          24
-        ]
-      }
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What is the 'APR' on a loan or credit card?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "APR (Annual Percentage Rate) is the annualized interest rate plus most fees, expressed as a single number for comparison across lenders. By federal Reg Z (Truth in Lending Act, per CFPB), every lender must disclose APR, making it the standard comparison metric on loans and credit cards.",
+    "conceptChoices": [
+      "The annualized interest rate plus required fees, used as a standard comparison number across lenders (per Reg Z)",
+      "The monthly interest rate, multiplied by 100",
+      "Only the fees on a loan, not the interest",
+      "The interest rate after compounding is applied"
     ],
-    "answerFormula": "apyFromApr",
-    "answerFormat": "percent",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "APY = (1 + APR/12)^12 \u2212 1. {{apr}}% APR \u2192 ~{{answer}}% APY. Always higher than APR."
+    "correctConceptChoice": "The annualized interest rate plus required fees, used as a standard comparison number across lenders (per Reg Z)"
   },
   {
-    "id": "monthly_rate_d1",
+    "id": "apr_monthly_rate_d1",
     "moduleId": "debt",
     "difficulty": 1,
     "promptTemplate": "A loan with {{apr}}% APR has what monthly interest rate?",
@@ -9178,66 +9109,13 @@
     "answerFormula": "monthlyRatePctFromApr",
     "answerFormat": "percent",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "APR \u00f7 12. {{apr}}% \u00f7 12 = {{answer}}% monthly."
+    "explanationTemplate": "Per-period rate = APR \u00f7 periods/year. For monthly billing (cards, mortgages): APR \u00f7 12. {{apr}}% \u00f7 12 = {{answer}}% monthly."
   },
   {
-    "id": "apy_from_apr_d2",
+    "id": "apr_annual_cost_d2",
     "moduleId": "debt",
     "difficulty": 2,
-    "promptTemplate": "Savings account advertised at {{apr}}% APR with monthly compounding. What APY do you effectively earn?",
-    "variableRules": [
-      {
-        "name": "apr",
-        "options": [
-          3,
-          4,
-          4.5,
-          5,
-          5.5,
-          6
-        ]
-      }
-    ],
-    "answerFormula": "apyFromApr",
-    "answerFormat": "percent",
-    "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "APY = (1 + APR/12)^12 \u2212 1. {{apr}}% APR compounds to {{answer}}% APY."
-  },
-  {
-    "id": "apr_apy_compare_d3",
-    "moduleId": "debt",
-    "difficulty": 3,
-    "promptTemplate": "Two cards: Card X advertises {{aprX}}% APR. Card Y advertises {{apyY}}% APY. Which has the higher TRUE rate, and by how much in percentage points?",
-    "variableRules": [
-      {
-        "name": "aprX",
-        "options": [
-          18,
-          20,
-          22,
-          24
-        ]
-      },
-      {
-        "name": "apyY",
-        "options": [
-          19,
-          21,
-          23,
-          25
-        ]
-      }
-    ],
-    "answerFormula": "trueCardRateDiff",
-    "answerFormat": "percent",
-    "distractorStrategy": "commonMistake",
-    "explanationTemplate": "Convert X to APY = (1 + APR/12)^12 \u2212 1. Then compare. Difference = {{answer}} pp."
-  },
-  {
-    "id": "apy_yearly_cost_d3",
-    "moduleId": "debt",
-    "difficulty": 3,
-    "promptTemplate": "Your credit card has {{apr}}% APR. On a ${{balance}} balance carried all year, what's the actual annual interest using APY (which includes compounding)?",
+    "promptTemplate": "Your card balance is ${{balance}} at {{apr}}% APR carried all year (simple-interest estimate, no compounding). What's the annual interest cost?",
     "variableRules": [
       {
         "name": "balance",
@@ -9259,10 +9137,188 @@
         ]
       }
     ],
+    "answerFormula": "creditCardAnnualInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Annual cost (simple) = balance \u00d7 APR. ${{balance}} \u00d7 {{apr}}% = ${{answer}}. Real billing with monthly compounding is slightly higher (the APR-vs-APY gap), but APR is still the right comparison number across cards."
+  },
+  {
+    "id": "apr_with_fees_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Loan A: 8.5% rate + 2% origination fee. Loan B: 9.5% rate, no fees. The advertised APR captures...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "APR (per Reg Z / Truth in Lending) includes required fees expressed as an annual rate. Loan A's APR \u2248 9.7% (rate + amortized fee); Loan B's APR = 9.5%. Loan B is the better deal \u2014 but only because the standardized APR captures the apples-to-apples comparison. Comparing just the 'rate' would mislead you.",
+    "conceptChoices": [
+      "Only the interest rate \u2014 origination fees are separate",
+      "Both the interest rate and required fees, expressed as an annual rate \u2014 which is why APR is the standard comparison number",
+      "Only the fees, not the rate",
+      "Whichever number the lender wants to advertise"
+    ],
+    "correctConceptChoice": "Both the interest rate and required fees, expressed as an annual rate \u2014 which is why APR is the standard comparison number"
+  },
+  {
+    "id": "apr_vs_total_cost_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "A loan with ${{monthlyPayment}} monthly payment over {{numMonths}} months. How much total interest do you pay over the life of the loan?",
+    "variableRules": [
+      {
+        "name": "monthlyPayment",
+        "options": [
+          200,
+          250,
+          300,
+          400,
+          500
+        ]
+      },
+      {
+        "name": "numMonths",
+        "options": [
+          36,
+          48,
+          60,
+          72
+        ]
+      },
+      {
+        "name": "loanAmount",
+        "options": [
+          10000,
+          15000,
+          20000
+        ]
+      }
+    ],
+    "answerFormula": "loanTotalInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total paid = payment \u00d7 months. Interest = total \u2212 loan amount. The APR you signed for produces this total \u2014 high APR + long term = bigger 'interest tax' on what you borrowed."
+  },
+  {
+    "id": "apy_definition_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What is APY on a savings account or CD?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "APY (Annual Percentage Yield) is the rate WITH compounding included \u2014 the actual annual return on your savings. By federal law (Truth in Savings Act / Reg DD, per FDIC), banks must disclose APY on savings products, making it the right comparison number for savings accounts, money market funds, and CDs.",
+    "conceptChoices": [
+      "The rate WITH compounding included \u2014 the actual annual return on your savings (per Reg DD)",
+      "The interest rate before tax",
+      "The rate banks pay to other banks",
+      "The minimum balance fee"
+    ],
+    "correctConceptChoice": "The rate WITH compounding included \u2014 the actual annual return on your savings (per Reg DD)"
+  },
+  {
+    "id": "apy_annual_interest_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "You have ${{balance}} in a high-yield savings account at {{apy}}% APY. How much interest do you earn in one year?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          5000,
+          10000,
+          15000,
+          20000,
+          25000,
+          50000
+        ]
+      },
+      {
+        "name": "apy",
+        "options": [
+          4,
+          4.5,
+          5
+        ]
+      }
+    ],
     "answerFormula": "annualInterestViaApy",
     "answerFormat": "currency",
-    "distractorStrategy": "commonMistake",
-    "explanationTemplate": "APY = (1 + APR/12)^12 \u2212 1. Annual cost = balance \u00d7 APY = ${{answer}}. More than APR \u00d7 balance."
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Annual interest = balance \u00d7 APY. ${{balance}} \u00d7 {{apy}}% = ${{answer}}/year. In 2025, top HYSAs pay 4-5% APY (per HYSA tracking sites like Bankrate and DepositAccounts) \u2014 orders of magnitude better than the 0.01% you'd get at a major brick-and-mortar bank."
+  },
+  {
+    "id": "apy_bank_gap_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Your big-bank savings account pays 0.01% APY. A high-yield savings account pays {{apy}}% APY. On a ${{balance}} balance, how much more interest does the HYSA earn per year?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          5000,
+          10000,
+          15000,
+          25000
+        ]
+      },
+      {
+        "name": "apy",
+        "options": [
+          4,
+          4.5,
+          5
+        ]
+      }
+    ],
+    "answerFormula": "annualInterestViaApy",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "HYSA: ${{balance}} \u00d7 {{apy}}% \u2248 ${{answer}}. Big-bank savings: ${{balance}} \u00d7 0.01% = pennies. The gap is essentially the full HYSA payout \u2014 free money for the act of moving the account."
+  },
+  {
+    "id": "apy_doubling_time_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Using the Rule of 72, roughly how many years does it take for cash in a {{apy}}% APY savings account to double?",
+    "variableRules": [
+      {
+        "name": "apy",
+        "options": [
+          3,
+          4,
+          4.5,
+          5,
+          6
+        ]
+      }
+    ],
+    "answerFormula": "rule72",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "72 \u00f7 APY \u2248 years to double. At {{apy}}% APY: 72 \u00f7 {{apy}} \u2248 {{answer}} years. (Rule of 72 works the same for savings APY as for investment returns \u2014 it's just the math of compounding.)"
+  },
+  {
+    "id": "apy_compounding_effect_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Bank A advertises 4.50% APR with monthly compounding. Bank B advertises 4.55% APY. Which actually pays more?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Bank A's 4.50% APR with monthly compounding produces APY \u2248 4.59%. So Bank A actually pays slightly more \u2014 but the difference is tiny (~$5/year on $10k). The compounding-frequency effect is small at these rates; what matters far more is choosing between 0.01% and 4-5% accounts, not which 4-5% account.",
+    "conceptChoices": [
+      "Bank B \u2014 its 4.55% number is higher",
+      "Bank A \u2014 4.50% APR with monthly compounding \u2248 4.59% APY, slightly higher than B's 4.55%",
+      "They pay exactly the same",
+      "Bank A \u2014 APR always beats APY"
+    ],
+    "correctConceptChoice": "Bank A \u2014 4.50% APR with monthly compounding \u2248 4.59% APY, slightly higher than B's 4.55%"
   },
   {
     "id": "bnpl_simple_d1",
@@ -13443,12 +13499,12 @@
     "moduleId": "debt",
     "difficulty": 1,
     "inputMode": "multipleChoice",
-    "promptTemplate": "Which is typically considered 'good debt'?",
+    "promptTemplate": "Which debt scores best across the four factors (rate, asset, cash flow, tax treatment)?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Good debt finances an appreciating asset (home), at a reasonable rate (6% is below long-term stock returns), with tax-deductibility (mortgage interest). The long holding period lets you benefit from price appreciation and amortization.",
+    "explanationTemplate": "The 6% mortgage on a 10+ year hold scores well on all four factors: rate (below long-term stock returns), asset (home appreciates), cash flow (typically manageable as part of 28%-rule rent budget), and tax treatment (mortgage interest is deductible up to AGI limits).",
     "conceptChoices": [
       "Buy-now-pay-later for clothes",
       "Credit card balance at 22% APR",
@@ -13481,12 +13537,12 @@
     "moduleId": "debt",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "What's the rough interest rate threshold above which most debt becomes 'bad'?",
+    "promptTemplate": "Using the 4-factor framework (rate, asset, cash flow, tax), what's the rate band where debt becomes almost-always bad regardless of the other factors?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Long-term stock market returns average ~8-10%. Debt above that rate is mathematically destructive \u2014 you'd come out ahead investing in stocks if you could borrow at the lower rate. Under 6% is generally fine; 6-10% depends on the asset; above 10% is almost always bad regardless of what it bought.",
+    "explanationTemplate": "Above ~10%, the rate factor dominates the other three. Long-term stock returns average ~10% nominal (per S&P historical); debt above that is mathematically destructive \u2014 even if the asset is great and the loan is tax-deductible, the rate kills the math. Under 6%: usually fine. 6-10%: depends on the other factors. 10%+: almost always bad.",
     "conceptChoices": [
       "Above 2%",
       "Above 8-10% (where interest cost typically exceeds long-term investment returns)",
@@ -13576,19 +13632,19 @@
     "moduleId": "housing",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "Quick check: monthly rent \u00d7 200 < purchase price suggests...",
+    "promptTemplate": "Why does the old 'rent \u00d7 200 = break-even purchase price' rule break down in a 7% mortgage-rate environment?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "If monthly rent \u00d7 200 < purchase price, the rent-to-price ratio is low \u2014 meaning the home is expensive relative to rents. Renting and investing the down payment usually beats buying. Example: $2,000 rent \u00d7 200 = $400k. If comparable homes cost $600k, renting likely wins.",
+    "explanationTemplate": "The rent \u00d7 200 rule comes from an era of 3-4% mortgage rates. At 7%, the same purchase price has a much higher monthly mortgage payment, shifting the break-even multiplier down to roughly 150-180. At today's rates, you'd want rent \u00d7 ~165 < purchase price for buying to compete \u2014 not the old \u00d7 200.",
     "conceptChoices": [
-      "Renting is usually cheaper than buying for that home",
-      "Buying is usually cheaper than renting for that home",
-      "The home is overvalued and likely to drop",
-      "The rent is too high and likely to fall"
+      "The rule still works \u2014 interest rates don't affect the rent-vs-buy break-even",
+      "Higher mortgage rates make the same purchase price more expensive monthly, so the break-even multiplier drops to ~150-180",
+      "Property taxes have eaten the rule",
+      "Rent has stopped growing"
     ],
-    "correctConceptChoice": "Renting is usually cheaper than buying for that home"
+    "correctConceptChoice": "Higher mortgage rates make the same purchase price more expensive monthly, so the break-even multiplier drops to ~150-180"
   },
   {
     "id": "concept_buy_rent_opportunity_d3",
@@ -13762,63 +13818,6 @@
     "correctConceptChoice": "HSA contribution via payroll deduction"
   },
   {
-    "id": "concept_paycheck_401k_cost_d2",
-    "moduleId": "taxes",
-    "difficulty": 2,
-    "inputMode": "multipleChoice",
-    "promptTemplate": "You contribute $300 to your traditional 401k. At a 22% federal + state income tax rate, what's the actual reduction in your take-home pay?",
-    "variableRules": [],
-    "answerFormula": null,
-    "answerFormat": "integer",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Traditional 401k contributions reduce income tax but NOT FICA. At 22% income tax: tax saved = $300 \u00d7 22% = $66. Take-home reduction = $300 \u2212 $66 = $234. The full FICA (7.65%) still applies to your wages. HSA contributions via payroll are the rare deduction that reduces both income tax AND FICA.",
-    "conceptChoices": [
-      "$300 \u2014 the full contribution",
-      "About $234 \u2014 the $300 contribution minus the $66 income tax you would have paid",
-      "About $210 \u2014 assuming the contribution also avoids FICA",
-      "$150 \u2014 exactly half"
-    ],
-    "correctConceptChoice": "About $234 \u2014 the $300 contribution minus the $66 income tax you would have paid"
-  },
-  {
-    "id": "concept_paycheck_post_tax_d2",
-    "moduleId": "taxes",
-    "difficulty": 2,
-    "inputMode": "multipleChoice",
-    "promptTemplate": "Which of these is a POST-TAX deduction (taken AFTER federal tax + FICA)?",
-    "variableRules": [],
-    "answerFormula": null,
-    "answerFormat": "integer",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Post-tax deductions don't reduce your taxable income \u2014 they come out after taxes. Roth 401k, Roth IRA, after-tax health/dental, and most disability insurance premiums are post-tax. The tradeoff: you pay tax now but withdraw tax-free later (for Roth accounts) or get the benefit tax-free (for insurance).",
-    "conceptChoices": [
-      "Traditional 401k",
-      "Pre-tax health insurance premium",
-      "Roth 401k contribution",
-      "Traditional HSA contribution"
-    ],
-    "correctConceptChoice": "Roth 401k contribution"
-  },
-  {
-    "id": "concept_paycheck_check_error_d3",
-    "moduleId": "taxes",
-    "difficulty": 3,
-    "inputMode": "multipleChoice",
-    "promptTemplate": "Your gross is $5,000/biweekly. Your stub shows federal withholding of $2,000 (40%) \u2014 far more than expected for your income. What should you check first?",
-    "variableRules": [],
-    "answerFormula": null,
-    "answerFormat": "integer",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Excessive withholding usually means your W-4 is mis-configured. Common causes: marked 'Additional Withholding' amount accidentally, claimed Single+0 when you should be Married+2, didn't update after life changes. Submit a corrected W-4 immediately \u2014 over-withheld funds tie up cash until your refund.",
-    "conceptChoices": [
-      "Your W-4 elections \u2014 you may have claimed 0 allowances or marked additional withholding by mistake",
-      "Your union dues calculation",
-      "Whether your employer is over-withholding to keep your cash",
-      "The IRS automated system glitch"
-    ],
-    "correctConceptChoice": "Your W-4 elections \u2014 you may have claimed 0 allowances or marked additional withholding by mistake"
-  },
-  {
     "id": "concept_filing_default_d1",
     "moduleId": "taxes",
     "difficulty": 1,
@@ -13838,25 +13837,6 @@
     "correctConceptChoice": "Married Filing Jointly (MFJ) \u2014 usually lower total tax"
   },
   {
-    "id": "concept_filing_hoh_d2",
-    "moduleId": "taxes",
-    "difficulty": 2,
-    "inputMode": "multipleChoice",
-    "promptTemplate": "To file as Head of Household, you must (among other things)...",
-    "variableRules": [],
-    "answerFormula": null,
-    "answerFormat": "integer",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "HoH requirements: unmarried (or 'considered unmarried' if separated for last 6 months), paid > 50% of household costs, and have a qualifying person (usually a dependent child) living with you for > 50% of the year. The standard deduction is significantly higher than Single ($23,625 vs $15,750 in 2025).",
-    "conceptChoices": [
-      "Be unmarried AND pay more than half the cost of keeping up a home for a qualifying dependent (usually a child)",
-      "Earn over $100,000 per year",
-      "Be married but separated from your spouse",
-      "Own your own home"
-    ],
-    "correctConceptChoice": "Be unmarried AND pay more than half the cost of keeping up a home for a qualifying dependent (usually a child)"
-  },
-  {
     "id": "concept_filing_mfs_idr_d2",
     "moduleId": "taxes",
     "difficulty": 2,
@@ -13874,25 +13854,6 @@
       "It avoids garnishment of the spouse's wages"
     ],
     "correctConceptChoice": "IDR loan payments are calculated only on the borrower's income \u2014 MFS keeps the spouse's income out of the calculation"
-  },
-  {
-    "id": "concept_filing_mfj_default_d3",
-    "moduleId": "taxes",
-    "difficulty": 3,
-    "inputMode": "multipleChoice",
-    "promptTemplate": "True or false: 'Married Filing Jointly always saves a married couple money compared to Married Filing Separately.'",
-    "variableRules": [],
-    "answerFormula": null,
-    "answerFormat": "integer",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "MFJ wins for most couples (~95%), but MFS specifically helps in three cases: (1) IDR student loan payments calculated only on the borrower's income, (2) large medical bills for one spouse exceeding 7.5% of THEIR income alone, (3) separated couples wanting separate tax liability. Run both calculations annually if any apply.",
-    "conceptChoices": [
-      "True \u2014 MFJ is always cheaper",
-      "True \u2014 but only for couples with similar incomes",
-      "False \u2014 MFS can save money when one spouse has IDR student loans, large medical bills, or extensive itemized deductions",
-      "False \u2014 MFS is always cheaper than MFJ"
-    ],
-    "correctConceptChoice": "False \u2014 MFS can save money when one spouse has IDR student loans, large medical bills, or extensive itemized deductions"
   },
   {
     "id": "concept_filing_status_choice_d3",
@@ -14222,19 +14183,19 @@
     "moduleId": "car",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "Per Consumer Reports data, extended warranty buyers on average...",
+    "promptTemplate": "An extended warranty costs $2,000 for 5 years. You estimate a 30% chance of needing a covered repair averaging $2,500 in that window. What's the expected-value math?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Consumer Reports' multi-year data: extended warranty buyers recoup an average of 60% of what they paid. 55% never use the warranty at all. The expected value is negative \u2014 these are insurance products designed to be profitable for the seller, not the buyer.",
+    "explanationTemplate": "Expected value = probability \u00d7 payout \u2212 cost. Here: 30% \u00d7 $2,500 = $750 expected payout, vs $2,000 cost = \u2212$1,250 expected loss per warranty bought. Per Consumer Reports' multi-year owner surveys, this asymmetry is typical: most buyers never use the coverage, and those who do recoup less than they paid. Like most insurance, it's a transfer to the seller in exchange for peace of mind.",
     "conceptChoices": [
-      "Recoup 150% of what they paid in repairs",
-      "Recoup only ~60% of what they paid \u2014 and 55% never file a single claim",
-      "Always come out ahead",
-      "Lose 100% of their premium (no payouts)"
+      "EV = +$500 (warranty is a good deal)",
+      "EV = $0 (it's a fair bet)",
+      "EV = \u2212$1,250 (warranty costs more than expected repairs)",
+      "Can't calculate without more info"
     ],
-    "correctConceptChoice": "Recoup only ~60% of what they paid \u2014 and 55% never file a single claim"
+    "correctConceptChoice": "EV = \u2212$1,250 (warranty costs more than expected repairs)"
   },
   {
     "id": "concept_warranty_self_insure_d2",
