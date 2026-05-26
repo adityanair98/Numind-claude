@@ -1,9 +1,13 @@
 # Numind Claude Instructions
 
-You are building Numind, an iOS-first SwiftUI app for practical number sense.
+You are building Numind, an iOS-first SwiftUI **financial education** app that teaches money decisions through mental math.
 
 ## Product Summary
-Numind helps users build fast, useful mental math for everyday decisions through short lessons, quizzes, and progress tracking. The iOS app is a learning app — calculators belong to the future website, not the app.
+Numind is a **financial education app that heavily uses math as its teaching method**. Where competitors teach financial *concepts* ("what is compound interest?"), Numind teaches the *math skill* behind each concept ("how to estimate compound interest in your head") so users can actually use the knowledge in real situations — at the restaurant, the dealership, on a job-offer call, during open enrollment.
+
+The lesson structure reinforces this: every lesson is a financial literacy unit (credit-card APR, FICA, IDR, OOP max, etc.) delivered as a concept + a mental-math shortcut + practice quizzes. Concept lessons (text MCQ, no formula) cover financial knowledge that isn't reducible to arithmetic (credit-score factors, FLSA classification, IDR policy state, asset allocation rules of thumb). Numerical lessons (formula-driven, parametric quizzes) cover everything that has a real number to estimate.
+
+The iOS app is the product. Calculators live on the marketing website as an acquisition channel — they answer the user's immediate query, then surface the mental-math shortcut and route to the app for the deeper financial education.
 
 ## Business Model
 **Numind is a PAID app. There is no free version.** The app uses a free trial with a hard paywall.
@@ -27,7 +31,7 @@ Numind should feel:
 Brand motifs:
 - brain + abacus
 - beads and rails
-- number sense
+- financial literacy via mental math
 - daily reps
 - blue / teal / yellow palette
 
@@ -35,7 +39,7 @@ Brand motifs:
 The core product loop is built:
 Home → Module → Lesson → Quiz → Feedback → Progress.
 
-Current phase: retention mechanics (streak freezes built, notifications pending), onboarding conversion funnel, and paywall integration. The core app has 10 modules, 96 lessons (78 numerical + 18 concept), 479 quiz templates with completion-based progression and adaptive difficulty. What remains is the "ship it" layer (legal, accessibility, analytics) and the monetization layer (onboarding funnel, RevenueCat paywall).
+Current phase: retention mechanics (streak freezes built, notifications pending), onboarding conversion funnel, and paywall integration. The core app has 10 modules, 96 lessons (77 numerical + 19 concept), 479 quiz templates with completion-based progression and adaptive difficulty. Phase 1 of the regulated-content audit shipped (Parent PLUS rate update, IDR reframed as concept, realistic min-payment math, OOP max carve-outs, HoH standard deduction, overtime fixes). What remains is the "ship it" layer (legal, accessibility, analytics) and the monetization layer (onboarding funnel, RevenueCat paywall).
 
 ## Stack
 - SwiftUI
@@ -58,7 +62,7 @@ Current phase: retention mechanics (streak freezes built, notifications pending)
 6. **Privacy & legal** — PrivacyInfo.xcprivacy, privacy policy URL, terms of service.
 7. **Accessibility** — VoiceOver labels on all interactive elements.
 8. **Analytics** — PostHog (funnel/retention) + Sentry (crashes).
-9. **Content balance** — Complete. All 10 modules have 7+ lessons (96 total: 78 numerical + 18 concept). Module restructure done: removed Travel/Estimation, merged Tips+Discounts into Smart Shopping, added Insurance, Car, Student Loans.
+9. **Content balance** — Complete. All 10 modules have 7+ lessons (96 total: 77 numerical + 19 concept). Module restructure done: removed Travel/Estimation, merged Tips+Discounts into Smart Shopping, added Insurance, Car, Student Loans. Regulated-content accuracy audit Phase 1 shipped.
 
 ## Rules
 - Do not add AI-generated content.

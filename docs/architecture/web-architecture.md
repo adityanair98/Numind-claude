@@ -3,7 +3,7 @@
 > **Last updated:** May 2026 (14 calculators including BNPL/Membership/Lease vs Buy/FSA/Life Insurance, programmatic SEO, animations, inline shortcut teaser).
 
 ## Purpose
-The website exists solely for acquisition: drive App Store downloads through SEO-optimized calculator tools. People search "paycheck calculator" or "how much is $25 an hour" -> land on our tool -> get the answer + see the mental math shortcut -> download the app.
+The website exists solely for acquisition: drive App Store downloads through SEO-optimized calculator tools. The iOS app is a **financial education product**; the website is the top-of-funnel that converts search intent into installs. People search "paycheck calculator" or "how much is $25 an hour" → land on our tool → get the answer + see the mental-math shortcut Numind teaches → download the app to actually learn the underlying skill. The calculator answers the immediate question; the app teaches the financial literacy behind it.
 
 ## Stack
 - **Next.js 16** (App Router, SSG) — all pages statically generated at build time

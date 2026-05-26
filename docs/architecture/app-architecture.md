@@ -1,6 +1,8 @@
 # App Architecture
 
-> **Last updated:** May 2026 (after V1 refinement — new modules, scoring reweight, True/False removal, streak freezes, adaptive difficulty).
+> **Last updated:** May 2026 (after V1 refinement and Phase 1 audit fixes — Lesson.lastVerified field, realisticMinPayment formula, IDR concept reframe, Parent PLUS rate update).
+
+Numind is a **financial education iOS app** — the architecture supports a content layer (modules + lessons + templates) that delivers financial literacy via mental-math-based practice. The engine layer (`QuizEngine`, `FormulaOperationMap`, `DifficultyScorer`) generates parametric numerical questions; concept templates (text MCQ) skip formula evaluation.
 
 ## Pattern
 MVVM with lightweight services. No third-party dependencies in V1.
@@ -47,8 +49,8 @@ Numind/
     Models/
       Module.swift               # Module struct (with mascot, glyph fields)
       ModuleColor.swift          # Module color pair (tintColor + tintBackground)
-      Lesson.swift               # Lesson struct
-      QuizTemplate.swift         # Quiz template struct
+      Lesson.swift               # Lesson struct (+ optional lastVerified: String? — content audit stamp)
+      QuizTemplate.swift         # Quiz template struct (concept fields: conceptChoices, correctConceptChoice)
       ContentRepository.swift    # Protocol for content access
       LocalContentRepository.swift  # JSON-backed implementation
     Progress/
@@ -139,8 +141,8 @@ Numind/
       LaunchScreen.storyboard    # Native launch screen (logo + wordmark, Auto Layout)
     LocalContent/
       modules.json               # 10 module definitions
-      lessons.json               # 96 lessons with template IDs (78 numerical + 18 concept)
-      quiz_templates.json        # 479 quiz templates (389 numerical + 90 concept)
+      lessons.json               # 96 lessons with template IDs (77 numerical + 19 concept)
+      quiz_templates.json        # 479 quiz templates (384 numerical + 95 concept)
     Assets.xcassets              # App icons, colors, images
       LaunchLogo.imageset        # Background-removed symbol (light + dark variants)
       LaunchWordmark.imageset    # Cropped "Numind" wordmark (white text, both modes)

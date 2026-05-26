@@ -13,10 +13,10 @@ Numind will eventually use a long onboarding flow with:
 
 ## Purpose
 Onboarding should prime the user to believe:
-- Numind understands their current number sense
-- their weaknesses are practical and fixable
-- short daily reps will help
-- the paid plan is personalized and useful
+- Numind understands their current financial fluency (concepts they know vs. concepts they can actually apply)
+- their gaps are practical, common, and fixable — not "you're bad at math"
+- short daily reps will close those gaps in real money decisions, not just trivia
+- the paid plan is personalized and useful — math is just the teaching method, the outcome is financial confidence
 
 ## Diagnostic → Session Calibration
 The onboarding diagnostic collects per-module starting difficulties via `OnboardingSignals.startingDifficulties`. These now feed into the app experience:

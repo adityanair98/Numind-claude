@@ -1,6 +1,8 @@
 # Quiz Engine
 
-> **Last updated:** May 2026 (after V3 — concept template support, module restructure, proportional distractors, adaptive difficulty, diagnostic calibration).
+> **Last updated:** May 2026 (after Phase 1 audit fixes — `realisticMinPayment` formula added, Parent PLUS rate updated, IDR reframed to concept).
+
+The quiz engine is the runtime that turns the **financial-education curriculum** into adaptive practice. Numerical lessons go through the formula registry below; concept lessons (text MCQ) skip formula evaluation entirely and present the static `conceptChoices`.
 
 ## Principle
 Questions are generated from templates, not hardcoded. Each quiz session produces different numbers, different answer choices, and different question order - even when replaying the same lesson.
@@ -100,7 +102,7 @@ Subscription audit, cost-per-use, tax + total, monthly-yearly conversions, 50/30
 `simpleInterest`, `totalWithInterest`, `rule72`, `roiPercent`, `dollarReturn`, `monthlyInvestmentReturn`, 401(k) match, compound growth, fund-fee drag, emergency fund target, rental yield.
 
 ### Debt & Loans
-`creditCardMonthlyInterest`, `creditCardAnnualInterest`, `minimumPaymentTwoPercent`, `loanTotalRepayment`, `loanTotalInterest`, `debtToIncomeRatio`, `extraPaymentAnnualSaving`, `balanceAfterMonthlyInterest`, APR vs APY, BNPL stacked cost, avalanche vs snowball.
+`creditCardMonthlyInterest`, `creditCardAnnualInterest`, `minimumPaymentTwoPercent` (legacy 2%-of-balance simplification), `realisticMinPayment` (1% of principal + this month's interest — matches how real issuers calculate; replaced the 2% formula in the active min-payment templates), `loanTotalRepayment`, `loanTotalInterest`, `debtToIncomeRatio`, `extraPaymentAnnualSaving`, `balanceAfterMonthlyInterest`, APR vs APY, BNPL stacked cost, avalanche vs snowball.
 
 ### Housing & Rent
 `maxRent28`, `maxAnnualRent28`, `rentIncrease`, `newRentAfterIncrease`, `moveInThreeMonths`, `moveInWithBrokerFee`, `pricePerSqft`, `monthlyMortgage`, lease-break cost, buy-vs-rent break-even.
@@ -115,7 +117,9 @@ Deductible vs premium tradeoff, copay/coinsurance, OOP max, HDHP vs PPO total co
 Monthly vs total cost, term-extension premium, down-payment savings, 20/4/10 rule, depreciation curve, TCO, lease vs buy 3-year math, trade-in delta, warranty break-even.
 
 ### Student Loans & Education
-Monthly payment (1% rule of thumb), total cost, refinance savings, IDR payment, PSLF forgiveness, employer benefit, grace-period growth, Parent PLUS vs private, sub vs unsub interest accrual.
+Monthly payment (1% rule of thumb), total cost, refinance savings, PSLF forgiveness, employer benefit, grace-period growth, Parent PLUS vs private (8.94% 2025-26 academic year + 4.228% origination), sub vs unsub interest accrual.
+
+**IDR note:** the canonical IDR formulas (`idrAnnualPayment`, `idrMonthlyFromIncome`, `monthlyFromAnnual`, `annualPaymentDifference`, `idrVsStandardDifference`) are kept in the formula registry but currently have **no template references**. The IDR lesson (10.4) was reframed from numerical to concept in the Phase 1 audit fix because real IDR rules vary too much by plan and are in active flux post-SAVE litigation (2024-25) — a single canonical formula was misleading. The formulas survive for a future numerical sub-lesson when federal policy stabilizes.
 
 ## Distractor Generation
 
@@ -180,8 +184,8 @@ Error = `|estimate - correct| / |correct|`. A question with ≥2 stars is consid
 
 ## Content Stats
 - **10 modules**, **96 lessons**, **479 templates**
-- 78 numerical lessons (use formula-based templates) + 18 concept lessons (use text-MCQ templates)
-- 389 numerical templates + 90 concept templates
+- 77 numerical lessons (use formula-based templates) + 19 concept lessons (use text-MCQ templates) — post-Phase-1
+- 384 numerical templates + 95 concept templates — post-Phase-1
 - Every lesson references exactly **5 templates** (480 references; one template is shared between two related Smart Shopping lessons)
 - Templates per module: smart_shopping (44), money_math (35), salary (45), investing (65), debt (50), housing (45), taxes (45), insurance (50), car (50), student_loans (50)
 - Difficulty distribution across all templates: d1 = 156, d2 = 174, d3 = 149

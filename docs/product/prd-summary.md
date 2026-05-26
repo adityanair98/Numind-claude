@@ -1,11 +1,21 @@
 # Numind PRD Summary
 
-> **Last updated:** May 2026 (after V1 refinement and V3 concept lessons — module restructure, scoring reweight, adaptive difficulty, streak freezes, concept template support, distractor fix).
+> **Last updated:** May 2026 (after V1 refinement, V3 concept lessons, and Phase 1 audit fixes — module restructure, scoring reweight, adaptive difficulty, streak freezes, concept template support, regulated-content accuracy review, lastVerified field).
 
 ## Product Thesis
-Numind is an iOS-first daily training app for practical number fluency.
+Numind is an iOS **financial education app that heavily uses math as its teaching method**.
 
-It helps users get faster and more confident with real-world money math:
+The market is full of financial-literacy products that explain concepts. They tell you what compound interest is. What an IDR plan is. What the 20/4/10 rule is. They stop there. Numind keeps going: it teaches you the *mental math* behind each concept so you can actually use it the next time the situation comes up — at the restaurant, at the dealership, on a job-offer call, during open enrollment, while comparing two health plans, while signing a lease.
+
+Each lesson is a financial literacy unit (credit-card APR, FICA, IDR, OOP max, mortgage estimate, etc.) delivered as:
+1. **Concept** — what the rule is, plus the nuance most apps skip.
+2. **Shortcut** — the mental-math move that makes the concept usable in real time.
+3. **Quiz** — parametric practice with fresh numbers every retry; concept-only lessons use text MCQ where math doesn't apply.
+
+The product should feel like a short useful workout, not a textbook, calculator utility, or generic brain-training app.
+
+Coverage spans the 10 modules below — chosen to map to real US adult money decisions (search-volume + Reddit-frequency weighted), not to a math-curriculum hierarchy:
+
 - smart shopping (tips, bill splitting, discounts, membership break-even)
 - budgeting, subscriptions, and sales tax
 - salary, raises, and pay periods
@@ -17,35 +27,35 @@ It helps users get faster and more confident with real-world money math:
 - car and big purchases (20/4/10, depreciation, TCO, lease vs buy)
 - student loans (IDR, PSLF, refinance, employer benefits)
 
-The product should feel like a short useful workout, not a textbook, calculator utility, or generic brain-training app.
-
 ## Core Promise
-Get faster at everyday money math in 5 minutes a day.
+Become financially fluent in 5 minutes a day — by learning the math behind every real money decision.
 
 ## Positioning
 Do position as:
-- daily real-world number fluency
-- everyday money math for adults
-- short practical training workouts
-- confidence and speed in daily life
+- a financial education app that teaches the math behind every-day money decisions
+- usable financial literacy for adults (knowledge you can apply in real time)
+- short practical training, not a textbook or a calculator
+- confidence and speed for the moment the decision actually happens
 
 Do not position as:
-- a broad microlearning app
+- a pure mental-math drill app (math is the method, not the product)
+- a financial-concepts-only app (we go further than concept explanation)
 - a kids math app
 - a calculator replacement
 - a medical brain-health product
+- a broad microlearning app
 
 ## Target User
-Adults and young adults, roughly 22-40, who want to feel sharper, faster, and more confident with everyday math.
+Adults and young adults, roughly 22-40, who want to be financially competent and confident — without enrolling in a course, reading a personal-finance book, or sitting through a YouTube finance bro.
 
-They may feel slow or rusty with:
-- splitting bills
-- calculating tips
-- judging discounts
-- estimating totals
-- interpreting percentages
-- understanding loan costs
-- comparing salary offers
+They may feel slow or rusty when:
+- splitting a check, calculating tips, judging discounts
+- reading a paycheck stub or understanding their take-home pay
+- deciding their 401(k) contribution, picking Roth vs Traditional
+- comparing two job offers (especially across pay periods or total comp)
+- choosing a health plan during open enrollment
+- deciding whether to refinance student loans
+- sanity-checking a car-loan or mortgage offer in real time
 
 ## V1 Modules (10 total)
 1. **Smart Shopping** (smart_shopping) - tipping shortcuts, bill splitting, stacked discounts, BOGO math, coupon vs cashback, discount + tax, membership break-even, retailer manipulation (9 lessons)
@@ -59,7 +69,7 @@ They may feel slow or rusty with:
 9. **Car & Big Purchases** (car) - monthly vs total cost, loan term delta, down payment savings, 20/4/10 rule, depreciation, TCO, lease vs buy, trade-in vs private sale, dealer tactics, warranties (10 lessons)
 10. **Student Loans & Education** (student_loans) - monthly payment (rule of thumb), total cost, refinance vs PSLF, IDR, PSLF, employer benefit, grace period, Parent PLUS, subsidized vs unsubsidized, federal protections (10 lessons)
 
-**Total: 96 lessons, 479 quiz templates** (78 numerical + 18 concept lessons; 389 numerical templates + 90 concept templates)
+**Total: 96 lessons, 479 quiz templates** (77 numerical + 19 concept lessons; 384 numerical templates + 95 concept templates). Phase 1 audit fix flipped IDR (10.4) from numerical to concept, shifting Student Loans to 7 numerical + 3 concept.
 
 ## Core User Loop
 Home / Today
@@ -214,7 +224,7 @@ Currently implemented:
 - Design tokens and theme system
 - Local content model with JSON-based lessons and templates
 - Template-driven quiz engine with 300+ answer formulas
-- All 10 modules with 96 lessons (78 numerical + 18 concept)
+- All 10 modules with 96 lessons (77 numerical + 19 concept)
 - 479 quiz templates (~5 per lesson) with proportional distractor generation
 - Concept template support added (text-MCQ, no formula evaluation) for lessons covering critical financial literacy topics that aren't reducible to mental math
 - Completion-based progression (mastery = gold star, not gate)
@@ -235,6 +245,8 @@ Currently implemented:
 - Adaptive difficulty engine with onboarding diagnostic calibration
 - Dynamic question count (5 first attempt, 8 subsequent, diagnostic-adjusted)
 - previousBest/isNewBest pattern on all game mode ViewModels
+- `lastVerified` date stamp on `Lesson` (optional) so future audits surface stale regulated content systematically
+- Phase 1 audit fixes shipped: Overtime arithmetic, Parent PLUS rate update (9.08% → 8.94% for 2025-26), Overtime exempt/non-exempt caveat, realistic minimum-payment formula replacing the "2% of balance" simplification, OOP max framing carve-outs, IDR reframed as a concept lesson post-SAVE litigation, Standard deduction expanded to include Head of Household
 
 Not built yet:
 - backend (Supabase)

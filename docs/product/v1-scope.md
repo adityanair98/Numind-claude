@@ -27,7 +27,7 @@
 
 ## Content
 - **10 modules**: Smart Shopping, Budgets & Spending, Salary, Investing, Debt, Housing & Rent, Taxes & Paycheck, Insurance & Healthcare, Car & Big Purchases, Student Loans & Education
-- **96 lessons** across all modules (78 numerical + 18 concept lessons)
+- **96 lessons** across all modules (77 numerical + 19 concept lessons; concept lessons cover financial literacy that isn't reducible to mental math — credit scores, FLSA exemption, IDR landscape, asset allocation, dealer tactics, insurance policy priority, lease clauses, etc.)
 - **479 quiz templates** (~5 per lesson; ~90 are concept templates with text MCQ choices instead of computed numerical answers)
 - **27 badges** across 7 categories
 

@@ -1,13 +1,13 @@
 # Onboarding Design Brief — Claude Design Handoff
 
-> **26-screen conversion funnel for Numind, an iOS mental math app.**
+> **26-screen conversion funnel for Numind, an iOS financial education app.**
 > Design all screens in this document as high-fidelity mobile mockups (iPhone 15 Pro frame, 393×852pt).
 
 ---
 
 ## What is Numind?
 
-Numind is a **paid iOS app** (SwiftUI) that teaches practical mental math through short lessons, quizzes, and game modes. Think Duolingo for everyday number sense — tipping, discounts, salary math, investing calculations, splitting bills.
+Numind is a **paid iOS app** (SwiftUI) — a **financial education app that uses mental math as its teaching method**. Where other financial literacy apps teach concepts, Numind teaches the math behind them (tip math, paycheck math, mortgage estimates, IDR baseline, OOP exposure, etc.) so the financial knowledge is usable in real moments — not just memorizable. Think Duolingo for adult money decisions: short lessons, quizzes, and game modes covering tipping, paycheck math, investing, debt, housing, taxes, insurance, car buying, and student loans.
 
 **Business model:** 5-day free trial → hard paywall → monthly/yearly subscription. No free version.
 
@@ -217,7 +217,7 @@ Most data collection screens follow this template:
 **Standard light layout with progress bar.**
 
 **Copy:**
-- Headline: "How would you rate your everyday mental math?" — 28pt bold rounded
+- Headline: "How confident are you with everyday money math?" — 28pt bold rounded
 - No subtitle needed
 
 **4 selection cards** (single-select, vertical stack):
@@ -266,7 +266,7 @@ Card style: same as Screen 4 — NumindCard, radio indicator, blue highlight on 
 1. "Tip in my head instantly"
 2. "Feel confident with money decisions"
 3. "Know if a deal is actually good"
-4. "Do mental math faster than my phone"
+4. "Make smart money decisions in real time, without reaching for a calculator"
 
 Same card style as Screen 5 (single-select with radio).
 
@@ -576,7 +576,7 @@ Each section could be its own NumindCard, stacked vertically. Or one large card 
 **3 selection cards** (single-select):
 1. **3 days** — "Build your first habit loop" — icon: 🔥 or flame.fill
 2. **7 days** — "Complete your first module" — icon: 🏆 or trophy.fill — *recommended badge*
-3. **14 days** — "Measurable improvement in mental math speed" — icon: ⚡ or bolt.fill
+3. **14 days** — "Measurable improvement in money-math speed and confidence" — icon: ⚡ or bolt.fill
 
 **Design note:** The 7-day option should have a subtle "Recommended" badge (Primary Blue pill label) since it extends past the 5-day trial — this is an intentional conversion lever.
 

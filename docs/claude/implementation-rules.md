@@ -1,8 +1,13 @@
 # Implementation Rules
 
-> **Last updated:** May 2026 (after V1 refinement — completion-based progression, new modules, scoring reweight, streak freezes, proportional distractors).
+> **Last updated:** May 2026 (after Phase 1 audit fixes — `lastVerified` field, IDR concept reframe, realisticMinPayment formula, Parent PLUS rate update, OOP max carve-outs, HoH standard deduction).
 
 Rules for building Numind. These supplement the top-level CLAUDE.md and apply to all implementation work.
+
+## Product Framing
+
+- Numind is a **financial education app**. Math is the *teaching method*, not the product. When evaluating any change (UI, content, copy, feature), ask: "Does this help the user become more financially competent and confident?" — not "Does this make the math drill better?"
+- The differentiator vs other financial-literacy apps: we teach the **math behind** every concept so users can *apply* the knowledge in real moments. Lessons that don't compress into a usable mental-math shortcut should be concept lessons (text MCQ), not forced into numerical drills.
 
 ## Business Model
 
@@ -28,6 +33,8 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **Answer formulas** live in `QuizEngine.swift` as a `[String: ([String: Double]) -> Double?]` dictionary. New templates should reuse existing formulas when possible. Only add a new formula if no existing one covers the calculation.
 - **Template IDs** follow the pattern `{topic}_{concept}_{variant}_d{difficulty}` (e.g., `tip_percent_basic_d1`).
 - **Module IDs** are lowercase snake_case: `smart_shopping`, `money_math`, `salary`, `investing`, `debt`, `housing`, `taxes`, `insurance`, `car`, `student_loans`.
+- **`lastVerified` date** is optional but should be set on any lesson whose content references regulated numbers (tax brackets, federal loan rates, FICA, IRS limits, FLSA thresholds, deductible standards) at the time of authoring or update. ISO date string (`"yyyy-mm-dd"`). Use it to find stale content for the next audit cycle.
+- **When touching regulated content**, always update `lastVerified` to today's date in the same change. If you're updating a number sourced from a specific authority, mention the source in the relevant Swift comment or commit message (e.g. "Per Federal Student Aid, 2025-26 academic year").
 
 ## Design System
 

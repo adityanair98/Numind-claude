@@ -1,9 +1,11 @@
 # Content Model
 
-> **Last updated:** May 2026 (after V1 refinement — new modules, template audit, distractor fix).
+> **Last updated:** May 2026 (after Phase 1 audit fixes — added `lastVerified` field to Lesson, IDR reframed to concept, `realisticMinPayment` formula added, Parent PLUS rate updated).
 
 ## Overview
 All content is stored locally as JSON in `Resources/LocalContent/`. No backend required for V1.
+
+The content layer is Numind's product: it encodes the **financial education** the app delivers (mental math is the teaching method). Numerical lessons exercise mental-math shortcuts; concept lessons cover financial literacy that isn't reducible to arithmetic.
 
 | File | Purpose | Count |
 |---|---|---|
@@ -39,21 +41,28 @@ struct Module: Identifiable, Codable {
 | `student_loans` | Student Loans & Education | `graduationcap.fill` | 10 |
 
 ## Lesson
-A short learning unit with one concept, one shortcut, and one worked example.
+A short financial-education unit: one concept, one mental-math shortcut, one worked example, plus 5 quiz templates.
 
 ```swift
 struct Lesson: Identifiable, Codable {
     let id: String
     let moduleId: String
     let title: String
-    let concept: String          // one-paragraph explanation
-    let shortcut: String         // the mental math trick
-    let example: String          // worked example with numbers
+    let concept: String           // one-paragraph financial concept + nuance
+    let shortcut: String          // the mental math (or for concept lessons, the rule-of-thumb)
+    let example: String           // worked example with numbers
     let quizTemplateIds: [String] // exactly 5 template IDs
+    let lastVerified: String?     // ISO date (yyyy-mm-dd) — when content was last fact-checked
 }
 ```
 
 Every lesson has exactly **5 quiz templates** assigned. The quiz engine cycles through them to generate 5 questions (first attempt) or 8 questions (subsequent attempts) per session, ensuring variety while staying on-topic.
+
+### `lastVerified` (optional)
+ISO date string marking the last time the lesson's content (rates, thresholds, regulations, cited statistics) was fact-checked against primary sources. Optional — older lessons may not have it. The Phase 1 audit-fix pass stamped six lessons that touched regulated content (Parent PLUS, IDR, standard deduction, OOP max, minimum payment, overtime). Future audit cadence: stamp every lesson on annual or post-policy-change review; surface stale entries via tooling.
+
+### Numerical vs concept lesson type (implicit)
+A lesson is "numerical" if **any** of its 5 templates uses `answerFormula` (formula-driven math drill). It's "concept-only" if **all 5** of its templates use `conceptChoices`/`correctConceptChoice` (text MCQ). The distinction isn't a Swift field on `Lesson` — it's a property of the assigned templates. Current split: 77 numerical / 19 concept (post-Phase-1).
 
 ## QuizTemplate
 Defines a question. Numerical templates use `answerFormula` for parametric generation. Concept templates use `conceptChoices`/`correctConceptChoice` for static text-MCQ.
