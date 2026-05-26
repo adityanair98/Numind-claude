@@ -273,16 +273,17 @@
     "id": "overtime_calc",
     "moduleId": "salary",
     "title": "Overtime pay \u2014 time and a half",
-    "concept": "Overtime in the US is 1.5\u00d7 your regular rate for hours worked beyond 40 per week. Those extra hours pay significantly more \u2014 8 hours of overtime at $20/hr earns you $240, not $160.",
-    "shortcut": "Overtime rate = regular \u00d7 1.5. Overtime pay = OT hours \u00d7 OT rate. Total week: (40 \u00d7 regular) + (OT hours \u00d7 regular \u00d7 1.5). At $20/hr working 47 hours: $800 + (7 \u00d7 $30) = $1,011 gross.",
-    "example": "Regular rate: $20/hr\nOvertime rate: $20 \u00d7 1.5 = $30/hr\n8 OT hours \u00d7 $30 = $240\nVs. 8 regular hours = $160",
+    "concept": "Federal overtime (FLSA) is 1.5\u00d7 your regular rate for hours worked beyond 40 in a week \u2014 but only for non-exempt employees. Salaried workers who pass the federal exempt threshold and duties test get no OT, no matter how many hours they work. If you're hourly or below the threshold, those extra hours pay significantly more: 8 OT hours at $20/hr earns you $240, not $160. (See lesson 3.9 for exempt vs non-exempt.)",
+    "shortcut": "Overtime rate = regular \u00d7 1.5 (non-exempt only). Overtime pay = OT hours \u00d7 OT rate. Total week: (40 \u00d7 regular) + (OT hours \u00d7 regular \u00d7 1.5). At $20/hr (non-exempt) working 47 hours: $800 + (7 \u00d7 $30) = $1,010 gross.",
+    "example": "Regular rate: $20/hr (non-exempt)\nOvertime rate: $20 \u00d7 1.5 = $30/hr\n8 OT hours \u00d7 $30 = $240\nVs. 8 regular hours = $160",
     "quizTemplateIds": [
       "overtime_pay_calc",
       "overtime_d2",
       "overtime_scenario_d2",
       "salary_hourly_annual_d1",
       "total_weekly_with_ot_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "pay_period_convert",
@@ -588,16 +589,17 @@
     "id": "minimum_payment_trap",
     "moduleId": "debt",
     "title": "The minimum payment trap",
-    "concept": "Credit card minimum payments are usually 2% of your balance. They feel manageable \u2014 but they're designed to keep you in debt longer. A $3,000 balance at 2% minimum means paying only $60/month while interest charges eat most of it.",
-    "shortcut": "Minimum payment \u2248 balance \u00d7 2%. Always pay more than the minimum. Even an extra $50/month can cut years off your payoff timeline.",
-    "example": "Balance: $3,000\nMinimum = $3,000 \u00d7 2% = $60\nAt 20% APR, interest alone = $50/month\nOnly $10 goes to principal!",
+    "concept": "Older guides taught a flat '2% of balance' minimum, but most US issuers actually calculate it as roughly 1% of your principal + this month's interest charge + any fees, with a $25-$35 floor on tiny balances. That formula keeps you barely treading water \u2014 most of every minimum payment goes to interest, not what you owe. Issuers designed it that way: minimums are profitable for them.",
+    "shortcut": "Realistic minimum \u2248 (balance \u00d7 1%) + (balance \u00d7 APR \u00f7 1200). On $3,000 at 20% APR: $30 + $50 = $80/month (not the $60 the old 2% rule suggests). Floor: $25-35 for small balances. Always pay above the minimum \u2014 even +$50/month cuts years off payoff.",
+    "example": "Balance: $3,000 at 20% APR\n1% of balance = $30 (principal)\n+ monthly interest = $3,000 \u00d7 20% \u00f7 12 = $50\n= $80 minimum\n\nOf that $80, only $30 reduces what you owe \u2014 the other $50 is pure interest.",
     "quizTemplateIds": [
       "cc_minimum_payment",
       "cc_minimum_payment_scenario",
       "cc_min_balance_d1",
       "cc_new_balance_d2",
       "cc_interest_check_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "loan_true_cost",
@@ -918,16 +920,17 @@
     "id": "taxes_standard_vs_itemized",
     "moduleId": "taxes",
     "title": "Standard vs itemized \u2014 which saves you more?",
-    "concept": "The standard deduction is $15,750 single / $31,500 married (2025). Itemize if mortgage interest + state/local taxes + charity exceeds that. After the 2017 tax law, ~90% of filers take the standard. Homeowners with mortgages and high-tax-state residents (NY, CA, NJ) often benefit from itemizing.",
-    "shortcut": "Add mortgage interest + state taxes + charity. If > $15,750 single (or $31,500 married), itemize. Tax saving vs standard = (itemized \u2212 standard) \u00d7 your tax rate.",
-    "example": "Single, 22% tax bracket:\nMortgage interest: $9,400\nState taxes: $5,100\nCharity: $1,800\nItemized: $16,300\nStandard: $15,750\nExtra saving: $1,100 \u00d7 22% = $242",
+    "concept": "The 2025 standard deduction is $15,750 single / $23,625 Head of Household / $31,500 married filing jointly. Itemize only if mortgage interest + state/local taxes (SALT-capped) + charity beats your filing status's standard. After the 2017 tax law (extended by OBBBA), ~90% of filers take the standard. Homeowners with mortgages and high-tax-state residents (NY, CA, NJ) are the main itemizers.",
+    "shortcut": "Add mortgage interest + state taxes + charity. If > $15,750 (single), $23,625 (HoH), or $31,500 (MFJ) for your filing status, itemize. Extra tax saving vs standard = (itemized \u2212 standard) \u00d7 your marginal tax rate.",
+    "example": "Single, 22% tax bracket:\nMortgage interest: $9,400\nState taxes: $5,100\nCharity: $1,800\nItemized: $16,300\nStandard (single): $15,750\nExtra saving: $550 \u00d7 22% \u2248 $121\n\nHead of Household same numbers? Standard = $23,625 \u2014 itemizing loses by ~$7,300; take the standard.",
     "quizTemplateIds": [
       "itemized_sum_d1",
       "itemized_vs_standard_d1",
       "itemized_saving_d2",
       "itemized_decision_d3",
       "itemized_strategy_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "taxes_capital_gains",
@@ -1023,16 +1026,17 @@
     "id": "insurance_oop_max",
     "moduleId": "insurance",
     "title": "Out-of-pocket maximum",
-    "concept": "The out-of-pocket max is your safety net \u2014 the most you'll pay in a year. Once you hit it, insurance covers 100%. Total out-of-pocket = deductible + coinsurance payments, capped at the OOP max. If your OOP max is $6,000, that's your absolute worst-case annual expense.",
-    "shortcut": "After deductible, you pay coinsurance until you hit the OOP max. On a $50,000 hospital stay with $2,000 deductible and $6,000 OOP max: you pay at most $6,000, insurance covers the rest.",
-    "example": "Hospital bill: $50,000\nDeductible: $2,000\nCoinsurance: 20%\nOOP max: $6,000\nYou pay: $6,000 (capped)\nInsurance: $44,000",
+    "concept": "The out-of-pocket max caps what you pay for COVERED, IN-NETWORK care in a plan year. Once you hit it (deductible + coinsurance + qualifying copays), the plan pays 100% the rest of the year. It does NOT include your monthly premiums, out-of-network balance billing, or services your plan doesn't cover at all. So 'OOP max' is your worst case within the plan's rules \u2014 not necessarily your worst total spend if something falls outside them.",
+    "shortcut": "After deductible, pay coinsurance until you hit the OOP max. On a $50,000 in-network hospital stay with $2,000 deductible and $6,000 OOP max: you pay at most $6,000 for that care; insurance covers the rest. Add 12 \u00d7 premium to get your real annual outlay in a max-use year.",
+    "example": "In-network hospital bill: $50,000\nDeductible: $2,000\nCoinsurance: 20%\nOOP max: $6,000\nYou pay for that care: $6,000 (capped)\nInsurance: $44,000\n\nNot counted: premiums ($300/mo \u00d7 12 = $3,600), any out-of-network charges, non-covered services.",
     "quizTemplateIds": [
       "ins_oop_total_d1",
       "ins_oop_scenario_d1",
       "ins_oop_calc_d2",
       "ins_oop_compare_d2",
       "ins_oop_cap_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "insurance_hdhp_vs_ppo",
@@ -1338,16 +1342,17 @@
     "id": "student_loan_idr",
     "moduleId": "student_loans",
     "title": "Income-driven repayment",
-    "concept": "Income-driven repayment (IDR) caps your monthly payment at a percentage of your discretionary income. The most common plan caps at 10% of income above 150% of the poverty line. Lower payments mean longer repayment and more total interest, but remaining balance is forgiven after 20-25 years.",
-    "shortcut": "IDR payment \u2248 (income \u2212 150% of poverty line) \u00d7 10% / 12. If you earn $50,000 and poverty line for your size is $15,000: discretionary = $50,000 \u2212 $22,500 = $27,500. Monthly = $27,500 \u00d7 10% / 12 \u2248 $229.",
-    "example": "Income: $50,000\n150% poverty: $22,500\nDiscretionary: $27,500\n10% of that / 12 months\nIDR payment: ~$229/month",
+    "concept": "Income-driven repayment (IDR) caps federal student-loan payments at a percentage of your 'discretionary income' (income above a poverty-line multiplier). Different plans \u2014 SAVE, PAYE, IBR, ICR \u2014 use different formulas, family-size adjustments, and forgiveness timelines (20-25 years). After 2024-25 court rulings vacated parts of SAVE, the rules and plan availability are in active flux. Only federal Direct Loans qualify; private loans don't. Always check current Federal Student Aid plan terms before committing.",
+    "shortcut": "Mental baseline (pre-SAVE canonical formula): monthly \u2248 (income \u2212 1.5 \u00d7 poverty line) \u00d7 10% \u00f7 12. Use this for rough sanity-checks only \u2014 your actual payment depends on the specific plan (formulas vary 5%-20%), your family size, and current federal rules. Confirm on the FSA Loan Simulator before any decision.",
+    "example": "Baseline illustration (canonical 10%/150% formula):\nIncome: $50,000\nPoverty line \u00d7 1.5: $22,500\nDiscretionary: $27,500\nMonthly \u2248 $27,500 \u00d7 10% \u00f7 12 \u2248 $229\n\nReal-world: your actual IDR plan, family size, and current SAVE-era rules can move this materially. Use as a directional check, not a quote.",
     "quizTemplateIds": [
-      "sl_idr_payment_d1",
-      "sl_idr_estimate_d1",
-      "sl_idr_scenario_d2",
-      "sl_idr_compare_d2",
-      "sl_idr_savings_d3"
-    ]
+      "concept_idr_definition_d1",
+      "concept_idr_forgiveness_d1",
+      "concept_idr_eligibility_d2",
+      "concept_idr_recertification_d2",
+      "concept_idr_plans_in_flux_d3"
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "student_loan_pslf",
@@ -1398,16 +1403,17 @@
     "id": "student_loan_parent_plus",
     "moduleId": "student_loans",
     "title": "Parent PLUS vs private \u2014 which costs less?",
-    "concept": "Parent PLUS loans carry a 9.08% fixed rate (2024-25 academic year) + a 4.228% origination fee deducted upfront. Private parent loans start as low as 5.09% with no origination. For a parent with good credit, private can save $10k+ over 10 years on a $30k loan. But PLUS offers federal protections (IDR, deferment, PSLF) that private doesn't. Rates reset annually each July based on the May Treasury auction.",
+    "concept": "Parent PLUS loans carry an 8.94% fixed rate (2025-26 academic year) + a 4.228% origination fee deducted upfront. Private parent loans start as low as 5.09% with no origination. For a parent with good credit, private can save $10k+ over 10 years on a $30k loan. But PLUS offers federal protections (IDR, deferment, PSLF) that private doesn't. Rates reset annually each July based on the May Treasury auction.",
     "shortcut": "Annual interest difference = balance \u00d7 (PLUS rate \u2212 private rate). Over 10 years \u00d7 10. Origination fee adds to PLUS cost upfront. Trade-off: ~$10k savings on private vs federal protections.",
-    "example": "$30,000 borrowed:\nPLUS at 9.08%: ~$2,724/yr interest + $1,268 origination upfront\nPrivate at 5.5%: ~$1,650/yr interest, no fee\n\nAnnual diff: ~$1,074\n10-year diff: ~$10,740 + $1,268 = $12,008 saved with private",
+    "example": "$30,000 borrowed:\nPLUS at 8.94%: ~$2,682/yr interest + $1,268 origination upfront\nPrivate at 5.5%: ~$1,650/yr interest, no fee\n\nAnnual diff: ~$1,032\n10-year diff: ~$10,320 + $1,268 = $11,588 saved with private",
     "quizTemplateIds": [
       "plus_vs_private_annual_d1",
       "plus_vs_private_10yr_d2",
       "plus_origination_d2",
       "plus_total_cost_d3",
       "plus_decision_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_sl_subsidized_vs_unsubsidized",

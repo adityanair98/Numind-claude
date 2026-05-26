@@ -482,6 +482,18 @@ struct QuizEngine {
             guard let balance = vars["balance"] else { return nil }
             return balance * 0.02
         },
+        // Realistic minimum-payment estimate matching how most issuers calculate:
+        // ~1% of principal + this month's interest accrual. Issuers also apply a
+        // $25-$35 floor on small balances; the mental-math version omits the floor
+        // because the templates only present balances large enough that 1% + interest
+        // clears it. The "2% of balance" rule taught in older personal-finance books
+        // is a simplification that understates what you owe in high-APR months.
+        "realisticMinPayment": { vars in
+            guard let balance = vars["balance"], let apr = vars["apr"] else { return nil }
+            let principalPortion = balance * 0.01
+            let monthlyInterest = balance * apr / 1200   // apr% ÷ 12 months
+            return principalPortion + monthlyInterest
+        },
         "debtToIncomeRatio": { vars in
             guard let totalDebt = vars["totalDebt"],
                   let monthlyIncome = vars["monthlyIncome"], monthlyIncome > 0 else { return nil }
@@ -930,6 +942,15 @@ struct QuizEngine {
                   let rate = vars["newRate"] else { return nil }
             return balance * rate / 100 / 12
         },
+        // NOTE: idrAnnualPayment / monthlyFromAnnual / idrMonthlyFromIncome /
+        // annualPaymentDifference / idrVsStandardDifference were the formulas behind
+        // the original 5 numerical IDR templates. The IDR lesson was reframed to a
+        // concept lesson in 2026-05 because real-world IDR rules vary too much by
+        // plan and are in flux post-SAVE litigation — a single canonical formula
+        // was misleading. We keep these formula entries because:
+        //   1. They're correct as a canonical baseline mental model
+        //   2. Future numerical sub-lessons may revive them when policy stabilizes
+        // No templates currently reference them.
         "idrAnnualPayment": { vars in
             guard let discretionary = vars["discretionaryIncome"],
                   let pct = vars["idrPercent"] else { return nil }
@@ -943,7 +964,7 @@ struct QuizEngine {
             guard let income = vars["annualIncome"],
                   let poverty = vars["povertyLine"],
                   let pct = vars["idrPercent"] else { return nil }
-            let discretionary = income - poverty * 1.5
+            let discretionary = income - poverty * 1.5   // 150% poverty multiplier
             return discretionary * pct / 100 / 12
         },
         "annualPaymentDifference": { vars in
@@ -1912,11 +1933,14 @@ struct QuizEngine {
         },
         "plusVsPrivateTotalWithOrigination": { vars in
             guard let b = vars["loanBalance"], let pr = vars["privateRate"] else { return nil }
-            return b * (9.08 - pr) / 100 * 10 + b * 4.228 / 100
+            // 8.94% = Parent PLUS fixed rate, 2025-26 academic year (loans disbursed
+            // July 1, 2025 – June 30, 2026). 4.228% = origination fee, stable.
+            return b * (8.94 - pr) / 100 * 10 + b * 4.228 / 100
         },
         "plusVsPrivateMonthlyInterest": { vars in
             guard let b = vars["loanBalance"], let pr = vars["privateRate"] else { return nil }
-            return b * (9.08 - pr) / 100 / 12
+            // 8.94% = Parent PLUS fixed rate, 2025-26 academic year.
+            return b * (8.94 - pr) / 100 / 12
         },
     ]
 

@@ -388,8 +388,10 @@ enum QuestionTheme {
              "sl_total_scenario_d2", "sl_cost_compare_d2",
              "sl_refi_saving_d1", "sl_refi_annual_d1",
              "sl_refi_scenario_d2", "sl_refi_compare_d2",
-             "sl_idr_payment_d1", "sl_idr_estimate_d1",
-             "sl_idr_scenario_d2", "sl_idr_compare_d2", "sl_idr_savings_d3",
+             // IDR is now a concept lesson — old numerical templates removed.
+             "concept_idr_definition_d1", "concept_idr_forgiveness_d1",
+             "concept_idr_eligibility_d2", "concept_idr_recertification_d2",
+             "concept_idr_plans_in_flux_d3",
              "sl_pslf_total_d1", "sl_pslf_forgiven_d1",
              "sl_pslf_scenario_d2", "sl_pslf_compare_d2", "sl_pslf_decision_d3",
              // Phase 5 reworks

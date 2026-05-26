@@ -427,6 +427,15 @@ enum FormulaOperationMap {
             guard let balance = variables["balance"] else { return [] }
             return [.percentOf(pct: 2, amount: balance)]
 
+        case "realisticMinPayment":
+            guard let balance = variables["balance"],
+                  let apr = variables["apr"] else { return [] }
+            let principalPortion = balance * 0.01
+            let monthlyInterest = balance * apr / 1200
+            return [.percentOf(pct: 1, amount: balance),
+                    .percentOf(pct: apr / 12, amount: balance),
+                    .add(a: principalPortion, b: monthlyInterest)]
+
         case "debtToIncomeRatio":
             guard let debt = variables["totalDebt"],
                   let income = variables["monthlyIncome"], income > 0 else { return [] }
@@ -2023,14 +2032,16 @@ enum FormulaOperationMap {
 
         case "plusVsPrivateTotalWithOrigination":
             guard let b = variables["loanBalance"], let pr = variables["privateRate"] else { return [] }
-            return [.subtract(b: pr, from: 9.08), .percentOf(pct: 9.08 - pr, amount: b),
-                    .multiply(a: b * (9.08 - pr) / 100, by: 10),
+            // 8.94% = Parent PLUS rate, 2025-26 academic year.
+            return [.subtract(b: pr, from: 8.94), .percentOf(pct: 8.94 - pr, amount: b),
+                    .multiply(a: b * (8.94 - pr) / 100, by: 10),
                     .percentOf(pct: 4.228, amount: b)]
 
         case "plusVsPrivateMonthlyInterest":
             guard let b = variables["loanBalance"], let pr = variables["privateRate"] else { return [] }
-            return [.subtract(b: pr, from: 9.08), .percentOf(pct: 9.08 - pr, amount: b),
-                    .divide(a: b * (9.08 - pr) / 100, by: 12)]
+            // 8.94% = Parent PLUS rate, 2025-26 academic year.
+            return [.subtract(b: pr, from: 8.94), .percentOf(pct: 8.94 - pr, amount: b),
+                    .divide(a: b * (8.94 - pr) / 100, by: 12)]
 
         default:
             return []

@@ -1718,12 +1718,11 @@
     "id": "cc_minimum_payment",
     "moduleId": "debt",
     "difficulty": 1,
-    "promptTemplate": "Your credit card balance is ${{balance}}. The minimum payment is 2% of the balance. What is the minimum payment?",
+    "promptTemplate": "Your card balance is ${{balance}} at {{apr}}% APR. The realistic minimum payment is 1% of the balance plus this month's interest. What's the minimum?",
     "variableRules": [
       {
         "name": "balance",
         "options": [
-          500,
           1000,
           1500,
           2000,
@@ -1731,25 +1730,33 @@
           3000,
           4000
         ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          18,
+          20,
+          22,
+          24
+        ]
       }
     ],
-    "answerFormula": "minimumPaymentTwoPercent",
+    "answerFormula": "realisticMinPayment",
     "answerFormat": "currency",
     "inputMode": "freeEntry",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Minimum payment = balance \u00d7 2%. ${{balance}} \u00d7 2% = minimum due. This keeps you in debt longest \u2014 always pay more when you can."
+    "explanationTemplate": "Realistic min \u2248 (balance \u00d7 1%) + (balance \u00d7 APR \u00f7 1200). ${{balance}} \u00d7 1% = principal portion; ${{balance}} \u00d7 {{apr}}% \u00f7 12 = this month's interest. Sum = the minimum that barely keeps you treading water."
   },
   {
     "id": "cc_minimum_payment_scenario",
     "moduleId": "debt",
     "difficulty": 2,
-    "scenarioTemplate": "Your statement shows a ${{balance}} balance. The card requires a 2% minimum payment.",
+    "scenarioTemplate": "Your statement shows a ${{balance}} balance at {{apr}}% APR. Your issuer calculates the minimum as 1% of principal + this month's interest.",
     "promptTemplate": "What is the minimum amount due?",
     "variableRules": [
       {
         "name": "balance",
         "options": [
-          1000,
           1500,
           2000,
           2500,
@@ -1758,12 +1765,22 @@
           4000,
           4500
         ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          18,
+          20,
+          22,
+          24,
+          26
+        ]
       }
     ],
-    "answerFormula": "minimumPaymentTwoPercent",
+    "answerFormula": "realisticMinPayment",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Minimum = balance \u00d7 2%. On ${{balance}}, that's a small amount \u2014 but at high APR, nearly all of it goes to interest, not principal."
+    "explanationTemplate": "Min = 1% \u00d7 balance + balance \u00d7 APR \u00f7 1200. On ${{balance}} at {{apr}}%, the principal slice is small and the interest slice is large \u2014 paying just the minimum barely dents what you owe."
   },
   {
     "id": "loan_total_repayment",
@@ -2286,13 +2303,11 @@
     "id": "cc_min_balance_d1",
     "moduleId": "debt",
     "difficulty": 1,
-    "promptTemplate": "Your credit card balance is ${{balance}}. The minimum payment is 2% of the balance. What do you owe as a minimum?",
+    "promptTemplate": "Your credit card balance is ${{balance}} at {{apr}}% APR. Your minimum payment = 1% of principal + this month's interest. What do you owe?",
     "variableRules": [
       {
         "name": "balance",
         "options": [
-          500,
-          1000,
           1500,
           2000,
           2500,
@@ -2300,13 +2315,22 @@
           4000,
           5000
         ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          18,
+          20,
+          22,
+          24
+        ]
       }
     ],
-    "answerFormula": "minimumPaymentTwoPercent",
+    "answerFormula": "realisticMinPayment",
     "answerFormat": "currency",
     "inputMode": "freeEntry",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Minimum = balance \u00d7 2%. ${{balance}} \u00d7 2% = minimum due. Always pay more \u2014 minimum payments are designed to keep you in debt longer."
+    "explanationTemplate": "Min = balance \u00d7 1% + balance \u00d7 APR \u00f7 1200. On ${{balance}} at {{apr}}%, the interest portion dwarfs the 1% principal slice \u2014 that's why minimums keep you in debt longer."
   },
   {
     "id": "cc_new_balance_d2",
@@ -4279,7 +4303,7 @@
     "answerFormula": "oopWithCap",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Deductible (${{deductible}}) + coinsurance on the rest. But never more than the OOP max (${{oopMax}}). The OOP max is your safety net for big medical years."
+    "explanationTemplate": "Deductible (${{deductible}}) + coinsurance on the rest, capped at the OOP max (${{oopMax}}). Reminder: the OOP cap covers in-network covered services only — it doesn't include premiums or out-of-network balance billing."
   },
   {
     "id": "ins_oop_compare_d2",
@@ -5664,165 +5688,99 @@
     "explanationTemplate": "New monthly interest = ${{loanBalance}} \u00d7 {{newRate}}% \u00f7 12. Lower rate means more of each payment goes to principal instead of interest."
   },
   {
-    "id": "sl_idr_payment_d1",
+    "id": "concept_idr_definition_d1",
     "moduleId": "student_loans",
     "difficulty": 1,
-    "promptTemplate": "On an IDR plan, you pay {{idrPercent}}% of your discretionary income. If your discretionary income is ${{discretionaryIncome}} per year, what's your annual IDR payment?",
-    "variableRules": [
-      {
-        "name": "idrPercent",
-        "options": [
-          10,
-          15,
-          20
-        ]
-      },
-      {
-        "name": "discretionaryIncome",
-        "options": [
-          20000,
-          25000,
-          30000,
-          35000
-        ]
-      }
-    ],
-    "answerFormula": "idrAnnualPayment",
-    "answerFormat": "currency",
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What is 'income-driven repayment' (IDR) for federal student loans?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "IDR payment = ${{discretionaryIncome}} \u00d7 {{idrPercent}}% per year. Discretionary income = your income minus 150% of the poverty line."
+    "explanationTemplate": "IDR plans cap your monthly federal student-loan payment at a percentage of your 'discretionary income' (income above a poverty-line multiplier). Plans vary in the exact percentage and timeline, but the core idea is the same: payment scales with what you earn.",
+    "conceptChoices": [
+      "A plan that caps your monthly federal loan payment at a % of discretionary income",
+      "A type of loan forgiveness available to all student-loan borrowers",
+      "A refinancing option that lowers your interest rate",
+      "A federal grant that pays your loans for you"
+    ],
+    "correctConceptChoice": "A plan that caps your monthly federal loan payment at a % of discretionary income"
   },
   {
-    "id": "sl_idr_estimate_d1",
+    "id": "concept_idr_forgiveness_d1",
     "moduleId": "student_loans",
     "difficulty": 1,
-    "promptTemplate": "Your IDR annual payment is ${{annualPayment}}. What's your monthly payment?",
-    "variableRules": [
-      {
-        "name": "annualPayment",
-        "options": [
-          2400,
-          3000,
-          3600,
-          4200,
-          4800,
-          5400
-        ]
-      }
-    ],
-    "answerFormula": "monthlyFromAnnual",
-    "answerFormat": "currency",
+    "inputMode": "multipleChoice",
+    "promptTemplate": "After how many years on an IDR plan is the remaining federal loan balance typically forgiven?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Monthly = ${{annualPayment}} \u00f7 12. IDR payments adjust each year as your income changes \u2014 they're designed to stay affordable."
+    "explanationTemplate": "Most IDR plans forgive the remaining balance after 20-25 years of qualifying payments. The exact timeline depends on the plan (PAYE = 20 years, IBR/ICR = 25 years for many borrowers). Forgiven balances may be taxable as income.",
+    "conceptChoices": [
+      "10 years",
+      "15 years",
+      "20-25 years, depending on plan",
+      "Never \u2014 the balance is owed in full"
+    ],
+    "correctConceptChoice": "20-25 years, depending on plan"
   },
   {
-    "id": "sl_idr_scenario_d2",
+    "id": "concept_idr_eligibility_d2",
     "moduleId": "student_loans",
     "difficulty": 2,
-    "promptTemplate": "You earn ${{annualIncome}} per year. The poverty guideline is ${{povertyLine}}. Your discretionary income = salary \u2212 (150% \u00d7 poverty line). IDR is {{idrPercent}}% of discretionary income. What's your monthly IDR payment?",
-    "variableRules": [
-      {
-        "name": "annualIncome",
-        "options": [
-          40000,
-          45000,
-          50000,
-          55000
-        ]
-      },
-      {
-        "name": "povertyLine",
-        "options": [
-          15000
-        ]
-      },
-      {
-        "name": "idrPercent",
-        "options": [
-          10,
-          15
-        ]
-      }
-    ],
-    "answerFormula": "idrMonthlyFromIncome",
-    "answerFormat": "currency",
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which loan types qualify for federal IDR plans?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Discretionary income = ${{annualIncome}} \u2212 (150% \u00d7 ${{povertyLine}}). IDR = discretionary \u00d7 {{idrPercent}}% \u00f7 12. This formula protects low earners from unaffordable payments."
+    "explanationTemplate": "IDR is a federal program. Only federal Direct Loans qualify directly; older FFEL loans must usually be consolidated into a Direct Consolidation Loan first. Private student loans don't qualify for IDR at all \u2014 that's one of the protections you'd permanently lose by refinancing federal loans to private.",
+    "conceptChoices": [
+      "All student loans, including private",
+      "Federal Direct Loans (and federally-consolidated loans) only \u2014 private loans don't qualify",
+      "Only Parent PLUS loans",
+      "Only subsidized federal loans"
+    ],
+    "correctConceptChoice": "Federal Direct Loans (and federally-consolidated loans) only \u2014 private loans don't qualify"
   },
   {
-    "id": "sl_idr_compare_d2",
+    "id": "concept_idr_recertification_d2",
     "moduleId": "student_loans",
     "difficulty": 2,
-    "promptTemplate": "Standard plan: ${{standardPayment}}/month. IDR plan: ${{idrPayment}}/month. How much less per year is the IDR plan?",
-    "variableRules": [
-      {
-        "name": "standardPayment",
-        "options": [
-          400,
-          450,
-          500
-        ]
-      },
-      {
-        "name": "idrPayment",
-        "options": [
-          200,
-          250,
-          300
-        ]
-      }
-    ],
-    "answerFormula": "annualPaymentDifference",
-    "answerFormat": "currency",
+    "inputMode": "multipleChoice",
+    "promptTemplate": "On an IDR plan, what happens to your monthly payment if your income increases significantly mid-year?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual savings = (${{standardPayment}} \u2212 ${{idrPayment}}) \u00d7 12. But lower payments mean longer repayment and more total interest \u2014 unless you qualify for forgiveness."
+    "explanationTemplate": "IDR payments are recalculated each year when you 'recertify' your income and family size with your servicer. A mid-year raise doesn't bump your payment immediately \u2014 but at your next annual recertification, the new income drives the new payment.",
+    "conceptChoices": [
+      "It stays the same until you graduate or default",
+      "It's recalculated at your annual income recertification \u2014 a higher income usually means a higher payment next cycle",
+      "It doubles automatically as soon as your paycheck changes",
+      "Your plan is cancelled and you revert to the Standard plan"
+    ],
+    "correctConceptChoice": "It's recalculated at your annual income recertification \u2014 a higher income usually means a higher payment next cycle"
   },
   {
-    "id": "sl_idr_savings_d3",
+    "id": "concept_idr_plans_in_flux_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "Loan: ${{loanBalance}}. Standard: ${{standardPayment}}/month \u00d7 120 months = ${{standardTotal}}. IDR: ${{idrPayment}}/month \u00d7 240 months = ${{idrTotal}}, but remaining balance forgiven after 20 years. Which costs less in total payments?",
-    "variableRules": [
-      {
-        "name": "loanBalance",
-        "options": [
-          40000,
-          50000
-        ]
-      },
-      {
-        "name": "standardPayment",
-        "options": [
-          450,
-          550
-        ]
-      },
-      {
-        "name": "standardTotal",
-        "options": [
-          54000,
-          66000
-        ]
-      },
-      {
-        "name": "idrPayment",
-        "options": [
-          200,
-          250
-        ]
-      },
-      {
-        "name": "idrTotal",
-        "options": [
-          48000,
-          60000
-        ]
-      }
-    ],
-    "answerFormula": "idrVsStandardDifference",
-    "answerFormat": "currency",
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which statement is most accurate about IDR plans as of 2025-26?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Standard total = ${{standardTotal}}. IDR total = ${{idrTotal}} (then forgiveness). Compare the actual dollars paid. Note: forgiven amounts may be taxable income."
+    "explanationTemplate": "Plans differ on formula (10%-20% of discretionary income), family-size treatment, eligible loan types, and forgiveness window. The SAVE plan was partially vacated by federal courts in 2024-25, and Department of Education guidance has shifted multiple times since. Always check the current Federal Student Aid plan terms before relying on a payment estimate.",
+    "conceptChoices": [
+      "All IDR plans use the same formula (10% of discretionary income above 150% poverty)",
+      "Plans differ by formula, family-size treatment, and eligible loans \u2014 and current rules are in active flux after 2024-25 SAVE litigation",
+      "There is only one IDR plan; the others have been eliminated",
+      "All federal student loans automatically enroll in IDR at disbursement"
+    ],
+    "correctConceptChoice": "Plans differ by formula, family-size treatment, and eligible loans \u2014 and current rules are in active flux after 2024-25 SAVE litigation"
   },
   {
     "id": "sl_pslf_total_d1",
@@ -10402,6 +10360,7 @@
         "name": "standardAmount",
         "options": [
           15750,
+          23625,
           31500
         ]
       }
@@ -12683,7 +12642,7 @@
       {
         "name": "plusRate",
         "options": [
-          9.08
+          8.94
         ]
       },
       {
@@ -12719,7 +12678,7 @@
       {
         "name": "plusRate",
         "options": [
-          9.08
+          8.94
         ]
       },
       {
@@ -12762,7 +12721,7 @@
     "id": "plus_total_cost_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "${{loanBalance}} Parent PLUS at 9.08% + 4.228% origination. Private alternative: {{privateRate}}% no fee. Approximate total 10-yr difference (interest gap \u00d7 10 + origination)?",
+    "promptTemplate": "${{loanBalance}} Parent PLUS at 8.94% + 4.228% origination. Private alternative: {{privateRate}}% no fee. Approximate total 10-yr difference (interest gap \u00d7 10 + origination)?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -12784,13 +12743,13 @@
     "answerFormula": "plusVsPrivateTotalWithOrigination",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "(balance \u00d7 (9.08 \u2212 private) \u00d7 10 + balance \u00d7 4.228) \u00f7 100 = ${{answer}} private advantage."
+    "explanationTemplate": "(balance \u00d7 (8.94 \u2212 private) \u00d7 10 + balance \u00d7 4.228) \u00f7 100 = ${{answer}} private advantage."
   },
   {
     "id": "plus_decision_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "${{loanBalance}} loan. PLUS annual interest at 9.08% vs private at {{privateRate}}%. Annual interest savings = balance \u00d7 rate difference. How much more per month does PLUS cost you in interest?",
+    "promptTemplate": "${{loanBalance}} loan. PLUS annual interest at 8.94% vs private at {{privateRate}}%. Annual interest savings = balance \u00d7 rate difference. How much more per month does PLUS cost you in interest?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -12812,7 +12771,7 @@
     "answerFormula": "plusVsPrivateMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual diff \u00f7 12. Balance \u00d7 (9.08 \u2212 private) \u00f7 100 \u00f7 12 = ${{answer}}/month more on PLUS."
+    "explanationTemplate": "Annual diff \u00f7 12. Balance \u00d7 (8.94 \u2212 private) \u00f7 100 \u00f7 12 = ${{answer}}/month more on PLUS."
   },
   {
     "id": "concept_anchoring_d1",

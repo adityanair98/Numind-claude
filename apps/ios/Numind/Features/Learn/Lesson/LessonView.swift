@@ -372,7 +372,8 @@ struct LessonView: View {
             concept: "18% is one of the most common tip amounts. Start with 10%, then add half again for 15%, then add 3% more.",
             shortcut: "Find 10% by moving the decimal left one place. Then build up: 10% + 5% + 3% = 18%.",
             example: "Bill: $46.00\n10% = $4.60\n+8% = $3.68\nTip ≈ $8.28",
-            quizTemplateIds: ["tip_percent_basic", "tip_bill_total", "tip_split_tip"]
+            quizTemplateIds: ["tip_percent_basic", "tip_bill_total", "tip_split_tip"],
+            lastVerified: nil
         ),
         moduleTitle: "Smart Shopping",
         lessonIndex: 0,
