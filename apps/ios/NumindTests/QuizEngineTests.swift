@@ -151,4 +151,57 @@ final class QuizEngineTests: XCTestCase {
                 "\(template.id): duplicate choice texts")
         }
     }
+
+    // MARK: - Concept templates
+
+    func test_conceptTemplate_generatesValidQuestion() {
+        let template = QuizTemplate(
+            id: "test_concept",
+            moduleId: "test",
+            difficulty: 2,
+            inputMode: .multipleChoice,
+            scenarioTemplate: nil,
+            promptTemplate: "Which is the largest single factor in your FICO score?",
+            variableRules: [],
+            answerFormula: nil,
+            answerFormat: .integer,
+            distractorStrategy: .roundedNeighbor,
+            explanationTemplate: "Payment history accounts for 35% — the largest factor.",
+            conceptChoices: [
+                "Payment history",
+                "Credit utilization",
+                "Length of credit history",
+                "Number of inquiries"
+            ],
+            correctConceptChoice: "Payment history"
+        )
+        let q = QuizEngine.generate(from: template, seed: 42)
+        XCTAssertEqual(q.choices.count, 4)
+        XCTAssertTrue(q.choices.contains(where: { $0.id == q.correctChoiceId && $0.text == "Payment history" }))
+        XCTAssertEqual(q.prompt, "Which is the largest single factor in your FICO score?")
+        XCTAssertFalse(q.explanation.isEmpty)
+        // Choices should be shuffled but always include all 4
+        XCTAssertEqual(Set(q.choices.map(\.text)), Set(["Payment history", "Credit utilization", "Length of credit history", "Number of inquiries"]))
+    }
+
+    func test_conceptTemplate_sameSeedProducesSameOrder() {
+        let template = QuizTemplate(
+            id: "test_concept_seed",
+            moduleId: "test",
+            difficulty: 2,
+            inputMode: .multipleChoice,
+            scenarioTemplate: nil,
+            promptTemplate: "Pick A.",
+            variableRules: [],
+            answerFormula: nil,
+            answerFormat: .integer,
+            distractorStrategy: .roundedNeighbor,
+            explanationTemplate: "Always A.",
+            conceptChoices: ["A", "B", "C", "D"],
+            correctConceptChoice: "A"
+        )
+        let q1 = QuizEngine.generate(from: template, seed: 42)
+        let q2 = QuizEngine.generate(from: template, seed: 42)
+        XCTAssertEqual(q1.choices.map(\.text), q2.choices.map(\.text))
+    }
 }

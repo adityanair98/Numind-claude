@@ -8,10 +8,13 @@ struct QuizTemplate: Codable, Identifiable, Equatable {
     let scenarioTemplate: String?   // optional context sentence rendered before the prompt
     let promptTemplate: String      // e.g. "What is {{tipPercent}}% of ${{billAmount}}?"
     let variableRules: [VariableRule]
-    let answerFormula: String       // named formula key, evaluated by QuizEngine in M4
+    let answerFormula: String?      // named formula key (numerical templates); nil for concept templates
     let answerFormat: AnswerFormat
     let distractorStrategy: DistractorStrategy
     let explanationTemplate: String
+    // ── Concept template fields (text-MCQ, no formula evaluation) ──
+    let conceptChoices: [String]?           // 4 static text options
+    let correctConceptChoice: String?       // exact text of the correct option (must appear in conceptChoices)
 }
 
 enum InputMode: String, Codable {

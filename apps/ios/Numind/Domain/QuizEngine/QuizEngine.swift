@@ -27,15 +27,50 @@ struct QuizEngine {
     static func generate(from template: QuizTemplate, seed: UInt64 = .random(in: 1...UInt64.max)) -> QuizQuestion {
         var rng = SeededRandomGenerator(seed: seed)
 
+        // ── Concept template path (no formula, text-based MCQ) ──
+        if let conceptChoices = template.conceptChoices,
+           let correctText = template.correctConceptChoice {
+            let made = conceptChoices.map { QuizQuestion.Choice(id: UUID(), text: $0) }
+            let shuffled = made.shuffled(using: &rng)
+            guard let correctChoice = shuffled.first(where: { $0.text == correctText }) else {
+                fatalError("QuizEngine: correctConceptChoice '\(correctText)' not in conceptChoices for \(template.id)")
+            }
+            // Difficulty for concept templates comes from the static tier (no operations to score).
+            let difficulty: QuestionDifficulty = {
+                switch template.difficulty {
+                case 1:  return .easy
+                case 2:  return .medium
+                default: return .hard
+                }
+            }()
+            return QuizQuestion(
+                id: UUID(),
+                templateId: template.id,
+                difficulty: difficulty,
+                inputMode: template.inputMode ?? .multipleChoice,
+                answerFormat: template.answerFormat,
+                correctValue: -1,                       // sentinel — concept templates have no numeric answer
+                scenario: template.scenarioTemplate,
+                prompt: template.promptTemplate,        // no variable rendering — concept prompts are static
+                choices: shuffled,
+                correctChoiceId: correctChoice.id,
+                explanation: template.explanationTemplate
+            )
+        }
+
+        // ── Numerical template path (existing flow) ──
         let variables = resolveVariables(template.variableRules, using: &rng)
 
-        guard let correctRaw = compute(formula: template.answerFormula, variables: variables) else {
-            fatalError("QuizEngine: unknown formula '\(template.answerFormula)'")
+        guard let formula = template.answerFormula else {
+            fatalError("QuizEngine: template \(template.id) has neither answerFormula nor conceptChoices")
+        }
+        guard let correctRaw = compute(formula: formula, variables: variables) else {
+            fatalError("QuizEngine: unknown formula '\(formula)'")
         }
         let correctValue = correctRaw.rounded2dp
 
         // Assess difficulty from the actual generated numbers, not the template's static tier.
-        let ops = FormulaOperationMap.operations(formula: template.answerFormula, variables: variables)
+        let ops = FormulaOperationMap.operations(formula: formula, variables: variables)
         let difficulty: QuestionDifficulty = ops.isEmpty ? .easy : DifficultyScorer.score(operations: ops)
 
         let distractorValues = distractors(
