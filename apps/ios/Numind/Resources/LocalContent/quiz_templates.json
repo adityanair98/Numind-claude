@@ -12834,5 +12834,765 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Annual diff \u00f7 12. Balance \u00d7 (8.94 \u2212 private) \u00f7 100 \u00f7 12 = ${{answer}}/month more on PLUS."
+  },
+  {
+    "id": "concept_anchoring_d1",
+    "moduleId": "smart_shopping",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What is 'anchoring' in retail pricing?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Anchoring exploits the contrast between a high reference price and a 'sale' price. The original price doesn't need to be one anyone actually paid \u2014 its job is to make the current price feel like a deal.",
+    "conceptChoices": [
+      "Showing a high original price (often inflated) alongside a sale price to make the discount feel bigger",
+      "Charging different prices to different customers based on their location",
+      "Offering different prices on different days of the week",
+      "The practice of rounding prices up to the nearest dollar"
+    ],
+    "correctConceptChoice": "Showing a high original price (often inflated) alongside a sale price to make the discount feel bigger"
+  },
+  {
+    "id": "concept_decoy_pricing_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A movie theater offers small popcorn $4, medium $7, large $7.50. Which is the 'decoy' pricing tactic?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The medium is the decoy: priced just below the large so the large feels like a steal. Without the medium, you'd compare $4 vs $7.50 and likely pick the small. This is one of the most common pricing tactics in retail.",
+    "conceptChoices": [
+      "Small \u2014 it's underpriced to lure you in",
+      "Medium \u2014 it makes the large look like a great deal at only $0.50 more",
+      "Large \u2014 it's overpriced to anchor on expense",
+      "There's no decoy here \u2014 these are standard prices"
+    ],
+    "correctConceptChoice": "Medium \u2014 it makes the large look like a great deal at only $0.50 more"
+  },
+  {
+    "id": "concept_charm_pricing_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Why do stores price items at $9.99 instead of $10.00?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Charm pricing (.99 endings) exploits 'left-digit bias' \u2014 your brain reads $9.99 and registers '$9-something' rather than '$10'. Studies show this boosts conversions despite the trivial price difference.",
+    "conceptChoices": [
+      "Most shoppers anchor on the first digit, so $9 feels much less than $10 \u2014 even though the difference is one cent",
+      "It's actually 10% cheaper because of the missing dollar",
+      "It triggers an automatic discount at checkout",
+      "It's required by retail tax law"
+    ],
+    "correctConceptChoice": "Most shoppers anchor on the first digit, so $9 feels much less than $10 \u2014 even though the difference is one cent"
+  },
+  {
+    "id": "concept_inflated_msrp_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A retailer's tag reads: 'Original $200, now $129!' Which is most likely true about the 'original' price?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "MSRPs are set by manufacturers as a reference, not as a real-world price. Most stores discount permanently from MSRP \u2014 the 'sale price' IS the regular price. Comparing to competitor pricing tells you the real value.",
+    "conceptChoices": [
+      "The 'original $200' is the manufacturer's suggested retail price (MSRP) which nobody actually pays \u2014 $129 is closer to the real market price",
+      "The store is losing $71 on the sale and hoping to make it up on other items",
+      "The $200 was the price last week, before the sale started",
+      "The discount is fraud \u2014 illegal in most US states"
+    ],
+    "correctConceptChoice": "The 'original $200' is the manufacturer's suggested retail price (MSRP) which nobody actually pays \u2014 $129 is closer to the real market price"
+  },
+  {
+    "id": "concept_bogo_inflation_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A grocer normally sells chicken wings for $11.99/lb. During a BOGO Free promotion, the 'regular price' is listed as $19.99/lb. What's actually happening?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "This exact tactic was the subject of multiple 2024 grocery lawsuits. Inflating the 'regular price' during a BOGO turns the 'free' item into a fiction. Compare to recent prices you've actually paid \u2014 not the in-promotion 'regular' price.",
+    "conceptChoices": [
+      "The 'regular price' was inflated for the promotion so the 'free' pound is illusory \u2014 you're effectively paying $9.99/lb for two pounds",
+      "The store is charging $7.99 extra for the convenience of the deal",
+      "The deal is a typo on the price tag \u2014 should be honored at $11.99",
+      "Chicken prices doubled the week of the promotion"
+    ],
+    "correctConceptChoice": "The 'regular price' was inflated for the promotion so the 'free' pound is illusory \u2014 you're effectively paying $9.99/lb for two pounds"
+  },
+  {
+    "id": "concept_needs_definition_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Under the 50/30/20 rule, what counts as a 'need'?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "'Needs' under 50/30/20 means survival/non-negotiable: shelter, basic food, utilities, insurance, transportation to work, and minimum debt payments. Subscriptions, gym, dining out \u2014 those are wants no matter how routine they feel.",
+    "conceptChoices": [
+      "Anything you spend money on regularly (subscriptions, gym, takeout)",
+      "Expenses you'd struggle to live without \u2014 rent, basic groceries, utilities, insurance, work transport, debt minimums",
+      "Only housing and food",
+      "Anything under $50"
+    ],
+    "correctConceptChoice": "Expenses you'd struggle to live without \u2014 rent, basic groceries, utilities, insurance, work transport, debt minimums"
+  },
+  {
+    "id": "concept_needs_gym_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You go to the gym 4\u00d7 a week, $40/month. In a 50/30/20 budget, this is a...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Gym membership is a want, no matter how committed you are. The litmus test: if you lost your job tomorrow, would you cancel it immediately? Yes \u2192 want. Real needs (rent, insurance) can't be canceled.",
+    "conceptChoices": [
+      "Need \u2014 health is a basic necessity",
+      "Want \u2014 important for wellbeing but not survival-critical",
+      "Need if you'd otherwise have higher healthcare costs",
+      "Depends on whether you use it daily"
+    ],
+    "correctConceptChoice": "Want \u2014 important for wellbeing but not survival-critical"
+  },
+  {
+    "id": "concept_needs_streaming_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A $15/month Netflix subscription. In a 50/30/20 budget, this counts as a...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "All entertainment subscriptions are wants. The 30% 'wants' bucket exists specifically for this \u2014 guilt-free spending on things that make life enjoyable, as long as they fit within 30% of take-home.",
+    "conceptChoices": [
+      "Need (entertainment is necessary for mental health)",
+      "Want (entertainment is rarely a need)",
+      "Savings (replaces other paid entertainment)",
+      "Depends on whether you have kids"
+    ],
+    "correctConceptChoice": "Want (entertainment is rarely a need)"
+  },
+  {
+    "id": "concept_needs_over_50_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your needs total 62% of take-home pay (rent alone is 40%). What does 50/30/20 say you should do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "When needs exceed 50%, the framework is broken until something gives. Either accept lower wants + savings (often unsustainable), or address the structural issue \u2014 usually housing. Roommates, smaller place, cheaper city.",
+    "conceptChoices": [
+      "Just stop saving \u2014 increase your spending elsewhere",
+      "Move savings to a higher-yield account to make up for it",
+      "Cut wants/savings to fit, OR reduce housing costs (cheaper place, roommate)",
+      "Borrow against next month to balance it out"
+    ],
+    "correctConceptChoice": "Cut wants/savings to fit, OR reduce housing costs (cheaper place, roommate)"
+  },
+  {
+    "id": "concept_needs_job_loss_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You lose your job tomorrow. Which expense moves from 'want' to a higher priority (effectively a need)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "When you lose employer health coverage, insurance shifts from 'employer perk' to a critical need you must buy yourself. COBRA, marketplace plans, or a partner's plan become essential \u2014 this is why the emergency fund matters.",
+    "conceptChoices": [
+      "Streaming subscriptions \u2014 you'll have more free time",
+      "Gym membership \u2014 exercise is even more important",
+      "Health insurance \u2014 it's now critical to buy on your own (COBRA or marketplace)",
+      "Your daily latte \u2014 it's a small comfort during a hard time"
+    ],
+    "correctConceptChoice": "Health insurance \u2014 it's now critical to buy on your own (COBRA or marketplace)"
+  },
+  {
+    "id": "concept_exempt_def_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Under the FLSA, an 'exempt' employee is...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "'Exempt' means exempt from the Fair Labor Standards Act's overtime rules. You're paid a fixed salary regardless of how many hours you work \u2014 could be 35 or 65 a week, same paycheck.",
+    "conceptChoices": [
+      "Exempt from overtime pay rules \u2014 they earn a fixed salary regardless of hours worked",
+      "Exempt from federal income tax",
+      "Exempt from working more than 40 hours per week",
+      "Exempt from employer-provided benefits"
+    ],
+    "correctConceptChoice": "Exempt from overtime pay rules \u2014 they earn a fixed salary regardless of hours worked"
+  },
+  {
+    "id": "concept_nonexempt_def_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Under the FLSA, a 'non-exempt' employee must be paid...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Non-exempt employees are entitled to overtime pay at 1.5\u00d7 their regular rate for hours beyond 40 in a workweek. This applies regardless of job title \u2014 what matters is the legal classification.",
+    "conceptChoices": [
+      "At least minimum wage but no overtime",
+      "Overtime (1.5\u00d7) for any hours worked beyond 40 per week",
+      "The same as exempt employees with a tax deduction",
+      "Quarterly bonuses regardless of performance"
+    ],
+    "correctConceptChoice": "Overtime (1.5\u00d7) for any hours worked beyond 40 per week"
+  },
+  {
+    "id": "concept_exempt_threshold_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What is the federal minimum annual salary for an employee to be classified as exempt under the FLSA (2025)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The 2025 federal threshold is $58,656/year ($1,128/week). Earning below this, you must be paid as non-exempt (overtime-eligible) regardless of your job title. Some states have higher thresholds.",
+    "conceptChoices": [
+      "$35,568/year",
+      "$43,888/year",
+      "$58,656/year",
+      "$75,000/year"
+    ],
+    "correctConceptChoice": "$58,656/year"
+  },
+  {
+    "id": "concept_exempt_misclass_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "An admin assistant earns $45,000/year and is labeled 'exempt' (no overtime). Is this likely legal?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Misclassification is common. To be exempt, an employee must (1) earn at least $58,656/year AND (2) perform exempt duties (executive, administrative, professional). Admin assistants usually fail the duties test. If misclassified, you may be owed back overtime pay.",
+    "conceptChoices": [
+      "Yes \u2014 employers can classify any employee as exempt",
+      "Yes \u2014 admin staff are always exempt",
+      "No \u2014 below the federal salary threshold AND admin work typically fails the 'duties test' for exemption",
+      "It depends entirely on which state they work in"
+    ],
+    "correctConceptChoice": "No \u2014 below the federal salary threshold AND admin work typically fails the 'duties test' for exemption"
+  },
+  {
+    "id": "concept_exempt_tradeoff_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're offered an exempt salary of $80,000 OR a non-exempt role at $35/hr with regular 50-hour weeks. Which earns more annually?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Non-exempt calculation: (40 \u00d7 $35 \u00d7 52) + (10 \u00d7 $35 \u00d7 1.5 \u00d7 52) = $72,800 + $27,300 = $100,100/year. Exempt is fixed at $80,000. Non-exempt wins by $20k IF the overtime is consistent and tracked \u2014 but it loses flexibility and may carry stigma.",
+    "conceptChoices": [
+      "Exempt salary ($80k) \u2014 guaranteed pay regardless of hours",
+      "Non-exempt \u2014 approximately $100,100/year with the 10 hours/week of overtime",
+      "They're equivalent \u2014 exempt has better benefits to make up the difference",
+      "Depends on the state's overtime laws"
+    ],
+    "correctConceptChoice": "Non-exempt \u2014 approximately $100,100/year with the 10 hours/week of overtime"
+  },
+  {
+    "id": "concept_stock_def_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A 'share of stock' represents...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A share of stock is a small slice of ownership in a company. If the company does well, your share is worth more (and may pay dividends). If it does poorly, your share is worth less. Owners share in both upside and downside.",
+    "conceptChoices": [
+      "A loan you made to the company",
+      "Partial ownership in a company",
+      "A bet on whether the company's price will rise",
+      "A guaranteed dividend payment"
+    ],
+    "correctConceptChoice": "Partial ownership in a company"
+  },
+  {
+    "id": "concept_bond_def_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A bond represents...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "When you buy a bond, you're lending money to the issuer (a government or corporation). They pay you interest for a set period, then return your principal. Lower risk than stocks, lower expected return.",
+    "conceptChoices": [
+      "Partial ownership in a company",
+      "A loan you've made to a company or government, repaid with interest",
+      "A type of insurance policy",
+      "A bet on which way interest rates will move"
+    ],
+    "correctConceptChoice": "A loan you've made to a company or government, repaid with interest"
+  },
+  {
+    "id": "concept_index_fund_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "An index fund is...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "An index fund holds every stock in a market index in proportion. The S&P 500 index fund owns shares in all 500 companies. No manager picks winners \u2014 you 'buy the market'. Decades of data show this beats most actively managed funds long-term.",
+    "conceptChoices": [
+      "A fund managed by experts who pick winning stocks",
+      "A fund that owns all stocks in a market index (like the S&P 500), passively managed with low fees",
+      "A guaranteed-return savings account",
+      "A fund that only buys companies with low stock prices"
+    ],
+    "correctConceptChoice": "A fund that owns all stocks in a market index (like the S&P 500), passively managed with low fees"
+  },
+  {
+    "id": "concept_etf_vs_mutual_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "The main practical difference between an ETF and a mutual fund is...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Both are baskets of investments. ETFs trade on exchanges (you can buy/sell at any price during market hours). Mutual funds settle once daily at the day's close. For long-term passive investing, the difference rarely matters. Both can be index funds.",
+    "conceptChoices": [
+      "ETFs always have lower fees than mutual funds",
+      "ETFs trade like stocks throughout the day; mutual funds settle once per day at the closing price",
+      "ETFs are riskier than mutual funds",
+      "Mutual funds are tax-free; ETFs are not"
+    ],
+    "correctConceptChoice": "ETFs trade like stocks throughout the day; mutual funds settle once per day at the closing price"
+  },
+  {
+    "id": "concept_risk_return_rank_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Rank from highest historical risk AND return to lowest: index fund, individual stock, government bond, savings account.",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Individual stocks have the widest range of outcomes (could double or go to zero). Index funds spread that risk across hundreds of companies \u2014 still volatile but less extreme. Government bonds are much steadier with lower returns. Savings accounts are essentially risk-free with the lowest returns.",
+    "conceptChoices": [
+      "Savings account > Bond > Index fund > Individual stock",
+      "Individual stock > Index fund > Government bond > Savings account",
+      "Index fund > Individual stock > Savings account > Bond",
+      "All are equivalent over a long enough time horizon"
+    ],
+    "correctConceptChoice": "Individual stock > Index fund > Government bond > Savings account"
+  },
+  {
+    "id": "concept_alloc_120_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Using the '120 minus your age' rule of thumb, a 30-year-old should hold roughly what % in stocks?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "120 \u2212 30 = 90% stocks. The rule lets younger investors take more risk for higher returns because they have decades to recover from any crash. As you age, the formula shifts you toward bonds for stability.",
+    "conceptChoices": [
+      "30% in stocks, 70% in bonds",
+      "50% in stocks, 50% in bonds",
+      "90% in stocks, 10% in bonds",
+      "100% in stocks, 0% in bonds"
+    ],
+    "correctConceptChoice": "90% in stocks, 10% in bonds"
+  },
+  {
+    "id": "concept_alloc_bonds_role_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Why do most balanced portfolios include bonds alongside stocks?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Bonds typically rise (or fall less) when stocks fall, smoothing returns. The smoother ride matters because volatility tempts investors to sell at the worst moments. Even at lower expected returns, bonds keep you invested through downturns.",
+    "conceptChoices": [
+      "Bonds always outperform stocks long-term",
+      "Bonds reduce volatility \u2014 they cushion the portfolio when stocks fall, lowering the risk of selling at a bad time",
+      "Bonds are required by law in all retirement accounts",
+      "Bonds eliminate all investment risk"
+    ],
+    "correctConceptChoice": "Bonds reduce volatility \u2014 they cushion the portfolio when stocks fall, lowering the risk of selling at a bad time"
+  },
+  {
+    "id": "concept_target_date_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A 'target-date 2050' fund automatically does what?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Target-date funds 'glide' from aggressive (stocks-heavy) when you're young to conservative (bonds-heavy) as the target year nears. They auto-rebalance \u2014 set it and forget it. The right default for most 401k participants.",
+    "conceptChoices": [
+      "Pays out all your money in 2050",
+      "Shifts from stock-heavy to bond-heavy as 2050 approaches, reducing risk near retirement",
+      "Guarantees a minimum return by 2050",
+      "Only accepts contributions until 2050"
+    ],
+    "correctConceptChoice": "Shifts from stock-heavy to bond-heavy as 2050 approaches, reducing risk near retirement"
+  },
+  {
+    "id": "concept_alloc_too_conservative_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A 28-year-old has 60% bonds, 40% stocks in their 401k. What's the likely issue?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "At 28, you have 30+ years of compounding ahead. Bonds historically return ~3-5%/year; stocks ~10%. Over 30 years that gap compounds into hundreds of thousands of dollars. The 60% bonds allocation gives up returns to avoid volatility they have decades to ride out.",
+    "conceptChoices": [
+      "Perfect allocation for their age",
+      "Too conservative \u2014 they have 30+ years to compound and bonds will significantly underperform stocks over that horizon",
+      "Too aggressive \u2014 should be 100% bonds at this age",
+      "Doesn't matter \u2014 performance is identical over the long run"
+    ],
+    "correctConceptChoice": "Too conservative \u2014 they have 30+ years to compound and bonds will significantly underperform stocks over that horizon"
+  },
+  {
+    "id": "concept_crash_response_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your 100%-stocks portfolio drops 40% during a market crash. What's the historically best response?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The S&P 500 has recovered from every crash in its history, including the Great Depression. Selling locks in losses; holding lets the recovery work for you. Continuing contributions during a crash means you're buying at discounted prices \u2014 exactly what DCA is for.",
+    "conceptChoices": [
+      "Sell everything to protect against further losses",
+      "Move everything to bonds permanently \u2014 stocks are too risky",
+      "Do nothing \u2014 keep contributing on schedule. Markets have recovered from every prior crash within 1-7 years.",
+      "Try to time the bottom by buying heavily on the worst day"
+    ],
+    "correctConceptChoice": "Do nothing \u2014 keep contributing on schedule. Markets have recovered from every prior crash within 1-7 years."
+  },
+  {
+    "id": "concept_loss_aversion_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "'Loss aversion' is the finding that...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Kahneman and Tversky's research showed that losing $100 hurts about twice as much as gaining $100 feels good. This asymmetry drives panic-selling \u2014 the pain of paper losses overwhelms rational thinking.",
+    "conceptChoices": [
+      "Investors prefer losses over equivalent gains",
+      "Losses hurt about 2\u00d7 more emotionally than equivalent gains feel good",
+      "Most investors avoid the stock market entirely",
+      "Losing money makes you smarter about investing"
+    ],
+    "correctConceptChoice": "Losses hurt about 2\u00d7 more emotionally than equivalent gains feel good"
+  },
+  {
+    "id": "concept_panic_sell_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your portfolio drops 25% in a week. You feel panic and start moving everything to cash. Which behavioral trap is this?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Loss aversion (often combined with recency bias) drives panic-selling. The pain of seeing a 25% drop feels much bigger than the gain of any future recovery, so people sell to 'stop the bleeding' \u2014 locking in losses just before recoveries.",
+    "conceptChoices": [
+      "Loss aversion \u2014 emotional pain of the loss is overwhelming rational judgment",
+      "The Dunning-Kruger effect \u2014 overestimating your market knowledge",
+      "Survivor bias \u2014 only seeing successful investors",
+      "Anchoring \u2014 fixating on the original purchase price"
+    ],
+    "correctConceptChoice": "Loss aversion \u2014 emotional pain of the loss is overwhelming rational judgment"
+  },
+  {
+    "id": "concept_market_timing_myth_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "True or false: 'A smart investor can time the market by carefully reading financial news.'",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Decades of research (SPIVA reports, Morningstar studies) show that fewer than 20% of active fund managers beat their benchmarks over 10+ years. If trained professionals can't time markets, individual investors can't either. The solution: don't try \u2014 just keep buying.",
+    "conceptChoices": [
+      "True \u2014 news always reflects future market direction",
+      "True \u2014 only if you read multiple sources",
+      "False \u2014 academic studies consistently show even professional fund managers fail to time markets reliably",
+      "True for individual stocks but false for index funds"
+    ],
+    "correctConceptChoice": "False \u2014 academic studies consistently show even professional fund managers fail to time markets reliably"
+  },
+  {
+    "id": "concept_wait_for_dip_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You have $20k to invest but want to 'wait for the next dip' before buying. The market has been up 25% over the year you've waited. What happened?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Markets spend more time going up than going down. Waiting for a dip usually means watching gains compound without you. By the time a real dip arrives, the market is often still above your original entry point. Lump-sum or DCA \u2014 but get in.",
+    "conceptChoices": [
+      "You're now in a strong position \u2014 the dip is coming any day now",
+      "You missed gains while waiting. 'Wait for the dip' often means missing both the dip's start AND the subsequent recovery.",
+      "You preserved purchasing power \u2014 cash is king",
+      "You should keep waiting longer for the inevitable correction"
+    ],
+    "correctConceptChoice": "You missed gains while waiting. 'Wait for the dip' often means missing both the dip's start AND the subsequent recovery."
+  },
+  {
+    "id": "concept_panic_sell_2020_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Investors who panic-sold during the March 2020 COVID crash and stayed in cash for 12 months experienced what compared to those who held?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "From the March 2020 low to March 2021, the S&P 500 rose ~70%. Panic-sellers locked in 30%+ losses, then watched the recovery from the sidelines. The S&P hit new all-time highs by August 2020 \u2014 just five months after the crash. The behavioral discipline of doing nothing was worth more than any stock pick.",
+    "conceptChoices": [
+      "Outperformed by avoiding the second wave of the pandemic",
+      "Broke even \u2014 bought back at similar prices to where they sold",
+      "Missed a ~70% recovery in the S&P 500 within 12 months \u2014 lost both the drop AND the rebound",
+      "Made identical returns because the crash was temporary"
+    ],
+    "correctConceptChoice": "Missed a ~70% recovery in the S&P 500 within 12 months \u2014 lost both the drop AND the rebound"
+  },
+  {
+    "id": "concept_fico_largest_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which is the LARGEST single factor in your FICO credit score?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Payment history is 35% \u2014 the single biggest factor. One late payment can drop your score 50-100 points and stays on your report for 7 years. Utilization is second at 30%. Together those two factors are 65% of your score.",
+    "conceptChoices": [
+      "Payment history (35%)",
+      "Credit utilization (30%)",
+      "Length of credit history (15%)",
+      "Number of credit inquiries (10%)"
+    ],
+    "correctConceptChoice": "Payment history (35%)"
+  },
+  {
+    "id": "concept_utilization_max_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What's the generally recommended MAXIMUM credit card utilization (balance \u00f7 limit) to protect your credit score?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "30% is the widely cited threshold \u2014 above this, your score starts to drop measurably. Ideal is under 10% if you want to maximize your score. Note: utilization is reported at statement close, not when you make a payment \u2014 so timing matters.",
+    "conceptChoices": [
+      "Under 10%",
+      "Under 30%",
+      "Under 50%",
+      "Under 90% \u2014 as long as you pay it off each month"
+    ],
+    "correctConceptChoice": "Under 30%"
+  },
+  {
+    "id": "concept_close_old_card_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You decide to close your oldest credit card to 'simplify' your finances. What's the most likely impact on your score?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Closing an old card hurts two ways: it eventually drops off your report (shortening credit history) and immediately reduces your total available credit (raising your utilization ratio). If a card has no annual fee, keep it open even if unused.",
+    "conceptChoices": [
+      "It will help \u2014 fewer cards is a positive signal",
+      "It will hurt \u2014 shortens your average credit age AND reduces your total credit limit (raising utilization)",
+      "No impact \u2014 closed cards don't count toward your score",
+      "Triggers a hard inquiry that hurts temporarily"
+    ],
+    "correctConceptChoice": "It will hurt \u2014 shortens your average credit age AND reduces your total credit limit (raising utilization)"
+  },
+  {
+    "id": "concept_hard_inquiry_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You apply for a new credit card, triggering a hard inquiry. What's the typical impact on your FICO score?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Hard inquiries typically cost 5-10 points and fade within 12-24 months. They stay on your report for 2 years but stop affecting your score after about 12 months. Multiple inquiries in a short period for the same type of loan (e.g., mortgage rate shopping) usually count as one.",
+    "conceptChoices": [
+      "50-100 point drop that persists for 7 years",
+      "5-10 point temporary drop that fades over 12-24 months",
+      "No impact \u2014 only utilization and payment history matter",
+      "It actually helps your score by adding new available credit"
+    ],
+    "correctConceptChoice": "5-10 point temporary drop that fades over 12-24 months"
+  },
+  {
+    "id": "concept_no_debt_myth_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "True or false: 'You need to carry a credit card balance month-to-month to build credit.'",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The myth that you must carry debt to build credit is one of the most expensive misconceptions in personal finance. FICO rewards using credit and paying it back \u2014 the interest charges are just the cost of NOT paying in full. Use cards regularly and pay the full statement balance every month.",
+    "conceptChoices": [
+      "True \u2014 utilization above 0% is required",
+      "True \u2014 only interest charges count toward payment history",
+      "False \u2014 paying in full every month builds credit perfectly well. You need credit ACTIVITY, not interest payments.",
+      "True for the first 6 months only"
+    ],
+    "correctConceptChoice": "False \u2014 paying in full every month builds credit perfectly well. You need credit ACTIVITY, not interest payments."
+  },
+  {
+    "id": "concept_good_debt_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which is typically considered 'good debt'?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Good debt finances an appreciating asset (home), at a reasonable rate (6% is below long-term stock returns), with tax-deductibility (mortgage interest). The long holding period lets you benefit from price appreciation and amortization.",
+    "conceptChoices": [
+      "Buy-now-pay-later for clothes",
+      "Credit card balance at 22% APR",
+      "A 6% mortgage on a home you plan to live in for 10+ years",
+      "A 12% personal loan for a vacation"
+    ],
+    "correctConceptChoice": "A 6% mortgage on a home you plan to live in for 10+ years"
+  },
+  {
+    "id": "concept_bad_debt_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which is typically considered 'bad debt'?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "24% APR is far above any reasonable investment return and far above tax-deductible thresholds. Carrying a credit card balance month-to-month is the textbook definition of bad debt \u2014 high rate, no asset built, no tax benefit.",
+    "conceptChoices": [
+      "A mortgage at 5%",
+      "A federal student loan at 5%",
+      "A credit card balance at 24% APR carried month-to-month",
+      "A car loan at 4% on a needed vehicle"
+    ],
+    "correctConceptChoice": "A credit card balance at 24% APR carried month-to-month"
+  },
+  {
+    "id": "concept_interest_threshold_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What's the rough interest rate threshold above which most debt becomes 'bad'?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Long-term stock market returns average ~8-10%. Debt above that rate is mathematically destructive \u2014 you'd come out ahead investing in stocks if you could borrow at the lower rate. Under 6% is generally fine; 6-10% depends on the asset; above 10% is almost always bad regardless of what it bought.",
+    "conceptChoices": [
+      "Above 2%",
+      "Above 8-10% (where interest cost typically exceeds long-term investment returns)",
+      "Above 15%",
+      "Above 20%"
+    ],
+    "correctConceptChoice": "Above 8-10% (where interest cost typically exceeds long-term investment returns)"
+  },
+  {
+    "id": "concept_mortgage_short_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You take a $600,000 mortgage on a home. 18 months later, your job moves you to another city. Is this still 'good debt'?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The 'good debt' framing of a mortgage assumes you hold long enough to (1) recover closing costs (~3-5% of purchase price) and (2) build meaningful equity. 18 months rarely covers either. With selling costs of 6-8%, a short ownership often costs more than renting would have.",
+    "conceptChoices": [
+      "Yes \u2014 mortgages are always good debt no matter the timeline",
+      "Less so \u2014 short ownership timeline means closing costs + selling fees + potential price drop probably exceed any equity gained",
+      "Yes, as long as you can rent the property out",
+      "It depends on the federal interest rate at the time"
+    ],
+    "correctConceptChoice": "Less so \u2014 short ownership timeline means closing costs + selling fees + potential price drop probably exceed any equity gained"
+  },
+  {
+    "id": "concept_payoff_vs_invest_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You have $5,000 extra cash. Option A: pay off a $5,000 credit card balance at 22% APR. Option B: invest in an index fund averaging 8%. Which is mathematically correct?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Paying off 22% debt is mathematically a guaranteed 22% return. Investing at 8% is expected return \u2014 uncertain, possibly lower. The 14-point gap makes payoff the obvious choice. The general rule: pay off debt above 8% before investing beyond the 401k match.",
+    "conceptChoices": [
+      "Invest \u2014 index funds always beat debt payoff over time",
+      "Pay off the credit card \u2014 22% guaranteed return beats 8% expected return",
+      "Split it 50/50 to diversify",
+      "Save it as cash for an emergency"
+    ],
+    "correctConceptChoice": "Pay off the credit card \u2014 22% guaranteed return beats 8% expected return"
   }
 ]

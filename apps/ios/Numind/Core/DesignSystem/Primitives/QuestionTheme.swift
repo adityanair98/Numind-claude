@@ -144,7 +144,10 @@ enum QuestionTheme {
              "disc_tax_simple_d1", "disc_tax_amount_d2", "disc_tax_nonround_d2",
              "disc_tax_stacked_d3", "disc_tax_compare_d3",
              "membership_breakeven_d1", "membership_annual_d1",
-             "membership_net_saving_d2", "membership_compare_d3", "membership_decision_d3":
+             "membership_net_saving_d2", "membership_compare_d3", "membership_decision_d3",
+             // V3 concept lessons
+             "concept_anchoring_d1", "concept_decoy_pricing_d2", "concept_charm_pricing_d2",
+             "concept_inflated_msrp_d3", "concept_bogo_inflation_d3":
             return .shopping
 
         // ── Everyday Spending (tax) ──────────────────────────────────────────────
@@ -166,7 +169,10 @@ enum QuestionTheme {
              "daily_habit_savings_d2", "habit_compare_d2", "multi_habit_annual_d3",
              // Weekly/monthly
              "weekly_to_monthly_d1", "biweekly_to_monthly_d1", "monthly_to_weekly_d2",
-             "wrong_multiplier_shortfall_d3", "biweekly_annual_check_d2":
+             "wrong_multiplier_shortfall_d3", "biweekly_annual_check_d2",
+             // V3 concept lessons
+             "concept_needs_definition_d1", "concept_needs_gym_d2", "concept_needs_streaming_d2",
+             "concept_needs_over_50_d3", "concept_needs_job_loss_d3":
             return .budget
 
         // ── Paycheck & Income ────────────────────────────────────────────────────
@@ -191,7 +197,10 @@ enum QuestionTheme {
              "missing_benefit_d2", "benefits_pct_d2",
              // Side hustle
              "net_hourly_d1", "side_hustle_simple_d1", "worth_it_compare_d3",
-             "hourly_compare_d3", "side_hustle_annual_d2":
+             "hourly_compare_d3", "side_hustle_annual_d2",
+             // V3 concept lessons
+             "concept_exempt_def_d1", "concept_nonexempt_def_d1", "concept_exempt_threshold_d2",
+             "concept_exempt_misclass_d2", "concept_exempt_tradeoff_d3":
             return .paycheck
 
         // ── Investing & Growth ───────────────────────────────────────────────────
@@ -221,7 +230,14 @@ enum QuestionTheme {
              "yield_net_d3", "yield_decision_d3",
              // On track
              "on_track_multiple_d1", "on_track_target_d1", "on_track_gap_d2",
-             "on_track_close_gap_d3", "on_track_extra_save_d3":
+             "on_track_close_gap_d3", "on_track_extra_save_d3",
+             // V3 concept lessons
+             "concept_stock_def_d1", "concept_bond_def_d1", "concept_index_fund_d2",
+             "concept_etf_vs_mutual_d2", "concept_risk_return_rank_d3",
+             "concept_alloc_120_d1", "concept_alloc_bonds_role_d2", "concept_target_date_d2",
+             "concept_alloc_too_conservative_d3", "concept_crash_response_d3",
+             "concept_loss_aversion_d1", "concept_panic_sell_d2", "concept_market_timing_myth_d2",
+             "concept_wait_for_dip_d3", "concept_panic_sell_2020_d3":
             return .investing
 
         // ── Debt & Loans ─────────────────────────────────────────────────────────
@@ -245,7 +261,12 @@ enum QuestionTheme {
              "apr_apy_compare_d3", "apy_yearly_cost_d3",
              // BNPL
              "bnpl_simple_d1", "bnpl_late_fee_d2", "bnpl_surcharge_pct_d3",
-             "bnpl_stacked_d3", "bnpl_annual_d2":
+             "bnpl_stacked_d3", "bnpl_annual_d2",
+             // V3 concept lessons
+             "concept_fico_largest_d1", "concept_utilization_max_d2", "concept_close_old_card_d2",
+             "concept_hard_inquiry_d3", "concept_no_debt_myth_d3",
+             "concept_good_debt_d1", "concept_bad_debt_d1", "concept_interest_threshold_d2",
+             "concept_mortgage_short_d3", "concept_payoff_vs_invest_d3":
             return .debt
 
         // ── Housing & Rent ───────────────────────────────────────────────────────

@@ -29,7 +29,8 @@ final class ContentRepositoryTests: XCTestCase {
             "tip_10_percent_trick", "tip_18_percent", "tip_split_bill",
             "discount_bogo", "discount_stacked",
             "discount_coupon_vs_cashback", "discount_price_plus_tax",
-            "discount_membership_worth"
+            "discount_membership_worth",
+            "concept_shopping_manipulation"
         ])
     }
 
@@ -59,7 +60,7 @@ final class ContentRepositoryTests: XCTestCase {
 
     func test_lessonsForModule_returnsSmartShoppingLessons() {
         let lessons = repo.lessons(for: "smart_shopping")
-        XCTAssertEqual(lessons.count, 8)
+        XCTAssertEqual(lessons.count, 9)
         XCTAssertEqual(lessons.first?.id, "tip_10_percent_trick")
     }
 

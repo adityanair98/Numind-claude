@@ -120,6 +120,21 @@
     ]
   },
   {
+    "id": "concept_shopping_manipulation",
+    "moduleId": "smart_shopping",
+    "title": "How retailers manipulate value",
+    "concept": "Most pricing you see in stores is theater. Anchoring (crossed-out 'original' prices), decoy pricing (the medium size designed to make the large look like a deal), charm pricing ($9.99 vs $10), MSRP fiction, and inflated 'regular' prices during BOGO promos are all designed to bypass your math brain.",
+    "shortcut": "Always ask: would I pay this price WITHOUT the 'discount' framing? If the 'original' price is unfamiliar or unverifiable, ignore it. Compare to competitor pricing, not to the store's anchor.",
+    "example": "Movie theater popcorn:\nSmall $4 \u00b7 Medium $7 \u00b7 Large $7.50\nThe medium is the 'decoy' \u2014 it makes the large look like a steal. Without it, you'd compare $4 vs $7.50 differently.\n\nBOGO grocery scam (2024 lawsuit):\nChicken wings normally $11.99\nDuring BOGO: 'regular' price = $19.99\nReal cost: ~$9.99/lb either way",
+    "quizTemplateIds": [
+      "concept_anchoring_d1",
+      "concept_decoy_pricing_d2",
+      "concept_charm_pricing_d2",
+      "concept_inflated_msrp_d3",
+      "concept_bogo_inflation_d3"
+    ]
+  },
+  {
     "id": "subscription_math",
     "moduleId": "money_math",
     "title": "Your real subscription bill",
@@ -207,6 +222,21 @@
       "monthly_to_weekly_d2",
       "wrong_multiplier_shortfall_d3",
       "biweekly_annual_check_d2"
+    ]
+  },
+  {
+    "id": "concept_money_needs_vs_wants",
+    "moduleId": "money_math",
+    "title": "Needs vs wants \u2014 the line is fuzzier than you think",
+    "concept": "The 50/30/20 rule only works if you correctly classify your spending. The trap: most people quietly upgrade 'wants' into 'needs' (subscriptions, gym, takeout) and then wonder why they're always over budget. Real needs are non-negotiable bills you can't skip without consequence \u2014 rent, basic groceries, utilities, insurance, work transport, debt minimums.",
+    "shortcut": "Litmus test: 'If I lost my job tomorrow, would I cancel this immediately?' If yes, it's a want. If no (rent, insurance, debt minimums, basic food), it's a need. Streaming, gym, dining out, premium subscriptions = wants, no matter how routine they feel.",
+    "example": "Common miscategorizations:\nGym ($40/mo) \u2192 want\nSpotify + Netflix ($25/mo) \u2192 wants\n5 dinners out/mo \u2192 want\nGroceries \u2192 need (basic), want (specialty)\n\nWhen needs exceed 50%:\nRent alone at 40% leaves only 10% for everything else (utilities, food, insurance). Either shrink housing or cut into wants/savings.",
+    "quizTemplateIds": [
+      "concept_needs_definition_d1",
+      "concept_needs_gym_d2",
+      "concept_needs_streaming_d2",
+      "concept_needs_over_50_d3",
+      "concept_needs_job_loss_d3"
     ]
   },
   {
@@ -327,6 +357,21 @@
       "worth_it_compare_d3",
       "hourly_compare_d3",
       "side_hustle_annual_d2"
+    ]
+  },
+  {
+    "id": "concept_salary_exempt_status",
+    "moduleId": "salary",
+    "title": "What 'exempt' vs 'non-exempt' actually means",
+    "concept": "FLSA divides employees into exempt (salaried, no overtime, must pass salary + duties tests) and non-exempt (overtime-eligible at 1.5\u00d7). Most people don't know which they are or that misclassification is common. The 2025 federal salary threshold for exempt is $58,656/year \u2014 below that, you must be paid overtime regardless of title.",
+    "shortcut": "Exempt = no OT, fixed salary. Non-exempt = OT-eligible, paid by the hour. Threshold (2025): $58,656/yr minimum salary AND must pass duties test (executive, administrative, professional). Below threshold OR failing duties = legally non-exempt regardless of what HR labels you.",
+    "example": "Two job offers:\nA: $80k exempt salary, expected 50-hour weeks\nB: $35/hr non-exempt, 50-hour weeks\n\nA: $80,000/year\nB: (40\u00d7$35\u00d752) + (10\u00d7$35\u00d71.5\u00d752)\n  = $72,800 + $27,300 = $100,100/year\n\nNon-exempt wins by $20k if hours are real.",
+    "quizTemplateIds": [
+      "concept_exempt_def_d1",
+      "concept_nonexempt_def_d1",
+      "concept_exempt_threshold_d2",
+      "concept_exempt_misclass_d2",
+      "concept_exempt_tradeoff_d3"
     ]
   },
   {
@@ -480,6 +525,51 @@
     ]
   },
   {
+    "id": "concept_investing_what_are_stocks",
+    "moduleId": "investing",
+    "title": "Stocks, bonds, index funds \u2014 what they actually are",
+    "concept": "Most adults invest in a 401k without knowing what each option actually IS. Stock = partial ownership in a company. Bond = a loan you made to a company or government, repaid with interest. Index fund = a basket holding all stocks in a market index (like the S&P 500). ETF and mutual fund are different wrappers around the same idea \u2014 ETFs trade like stocks all day, mutual funds settle once daily at close.",
+    "shortcut": "Stock = ownership, highest risk and return. Bond = loan, lower risk, lower return. Index fund = the easy 'just buy the market' option, ~90% of pros can't beat it over the long run. Target-date fund = an index fund that automatically gets safer as you age.",
+    "example": "Risk/return ranking (historical):\nIndividual stock > Index fund > Bond > Savings account\n\nFor most people: a target-date fund is the right default. It's diversified, low-fee, and auto-rebalances. The S&P 500 index has averaged ~10%/year nominal returns over the long run.",
+    "quizTemplateIds": [
+      "concept_stock_def_d1",
+      "concept_bond_def_d1",
+      "concept_index_fund_d2",
+      "concept_etf_vs_mutual_d2",
+      "concept_risk_return_rank_d3"
+    ]
+  },
+  {
+    "id": "concept_investing_asset_allocation",
+    "moduleId": "investing",
+    "title": "Asset allocation: stocks vs bonds by age",
+    "concept": "How you split your portfolio between stocks (growth, volatility) and bonds (stability, lower returns) matters more than which specific funds you pick. The standard rule of thumb: 120 minus your age = % in stocks. A 30-year-old \u2192 90% stocks. A 60-year-old \u2192 60% stocks. Younger investors can stomach more risk because they have decades to recover from any crash. Target-date funds automate this glide.",
+    "shortcut": "Stocks % = 120 \u2212 your age. The rest in bonds. Override if your risk tolerance is unusually high or low. If you don't want to think about it, pick a target-date fund matching your retirement year \u2014 it does the rebalancing for you.",
+    "example": "Age 28: ~92% stocks, 8% bonds\nAge 40: ~80% stocks, 20% bonds\nAge 55: ~65% stocks, 35% bonds\n\nA 28-year-old at 60% bonds is wildly too conservative \u2014 they'd give up massive long-term returns to avoid short-term volatility they have time to recover from.",
+    "quizTemplateIds": [
+      "concept_alloc_120_d1",
+      "concept_alloc_bonds_role_d2",
+      "concept_target_date_d2",
+      "concept_alloc_too_conservative_d3",
+      "concept_crash_response_d3"
+    ]
+  },
+  {
+    "id": "concept_investing_behavioral_traps",
+    "moduleId": "investing",
+    "title": "Why you panic-sell (and how to stop)",
+    "concept": "The math of investing is simple. The behavior is hard. Loss aversion (losses hurt 2\u00d7 more than equivalent gains feel good), recency bias (recent events feel like they'll continue forever), and herd behavior (selling because everyone else is) destroy returns. Investors who panic-sold during March 2020 missed a ~70% recovery within 12 months. The cost of trying to time markets is real and measurable.",
+    "shortcut": "Two rules that beat 95% of behavioral mistakes: (1) Automate contributions on payday so you can't 'wait for a better moment'. (2) Don't check your balance during a crash \u2014 checking triggers panic, panic triggers selling, selling locks in losses.",
+    "example": "March 2020 COVID crash:\nS&P 500 dropped ~34% in 5 weeks.\nBy March 2021: full recovery + ~70% rebound.\n\nPanic-sellers locked in 34% losses. Holders watched their accounts return to all-time highs within a year. The behavioral discipline was worth more than any stock pick.",
+    "quizTemplateIds": [
+      "concept_loss_aversion_d1",
+      "concept_panic_sell_d2",
+      "concept_market_timing_myth_d2",
+      "concept_wait_for_dip_d3",
+      "concept_panic_sell_2020_d3"
+    ]
+  },
+  {
     "id": "credit_card_interest",
     "moduleId": "debt",
     "title": "How credit card interest works",
@@ -597,6 +687,36 @@
       "bnpl_surcharge_pct_d3",
       "bnpl_stacked_d3",
       "bnpl_annual_d2"
+    ]
+  },
+  {
+    "id": "concept_debt_credit_scores",
+    "moduleId": "debt",
+    "title": "How credit scores actually work",
+    "concept": "Most adults don't know what actually goes into their FICO score. The factors and weights: payment history (35%), credit utilization (30%), length of credit history (15%), credit mix (10%), recent inquiries (10%). What helps: paying on time, keeping utilization under 30%, having older accounts open. What hurts: late payments, high utilization, closing your oldest card. What doesn't matter: checking your own score, your income, your savings balance.",
+    "shortcut": "Two things drive 65% of your score: pay on time, keep utilization low. That's it. The rest is minor. Most 'credit hacks' are noise compared to those two basics. Checking your own score is harmless. Closing old cards is harmful.",
+    "example": "FICO score factors:\nPayment history     35%\nUtilization         30%\nAge of credit       15%\nCredit mix          10%\nNew inquiries       10%\n\nUtilization sweet spot: under 30%, ideally under 10%. On a $10k limit, keep balance under $3,000 (preferably under $1,000) at statement close.",
+    "quizTemplateIds": [
+      "concept_fico_largest_d1",
+      "concept_utilization_max_d2",
+      "concept_close_old_card_d2",
+      "concept_hard_inquiry_d3",
+      "concept_no_debt_myth_d3"
+    ]
+  },
+  {
+    "id": "concept_debt_good_vs_bad",
+    "moduleId": "debt",
+    "title": "Good debt vs bad debt",
+    "concept": "Not all debt is created equal. Good debt finances an appreciating asset (mortgage on a home you'll hold 10+ years), is tax-deductible (mortgage interest, student loan interest up to AGI limits), or carries a rate below typical investment returns (~6-8%). Bad debt finances depreciating assets (cars, vacations), carries high interest (15%+), or both. The deciding factor is rate: a 3% mortgage is good; a 24% credit card is always bad, no matter what it bought.",
+    "shortcut": "Rate-based heuristic: under 6% = often good. 6-10% = neutral, decide case-by-case. Over 10% = almost always bad. The asset itself matters less than the rate. A 24% APR car loan and a 24% APR vacation loan are equally destructive.",
+    "example": "$5,000 extra cash. Two options:\nA) Pay off 22% APR credit card balance\nB) Invest in index fund averaging 8%\n\nA is mathematically correct \u2014 22% guaranteed return beats 8% expected return. Always knock out high-rate bad debt before investing.",
+    "quizTemplateIds": [
+      "concept_good_debt_d1",
+      "concept_bad_debt_d1",
+      "concept_interest_threshold_d2",
+      "concept_mortgage_short_d3",
+      "concept_payoff_vs_invest_d3"
     ]
   },
   {

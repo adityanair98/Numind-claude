@@ -5,7 +5,7 @@
     "subtitle": "Tips, discounts, and everyday saving math",
     "icon": "cart.fill",
     "color": "blue",
-    "mascot": "🛒",
+    "mascot": "\ud83d\uded2",
     "glyph": "%",
     "lessonIds": [
       "tip_10_percent_trick",
@@ -15,7 +15,8 @@
       "discount_stacked",
       "discount_coupon_vs_cashback",
       "discount_price_plus_tax",
-      "discount_membership_worth"
+      "discount_membership_worth",
+      "concept_shopping_manipulation"
     ]
   },
   {
@@ -24,15 +25,16 @@
     "subtitle": "Daily expenses, budgets, and spending smarts",
     "icon": "dollarsign.circle.fill",
     "color": "yellow",
-    "mascot": "🧮",
-    "glyph": "×",
+    "mascot": "\ud83e\uddee",
+    "glyph": "\u00d7",
     "lessonIds": [
       "subscription_math",
       "price_per_use",
       "sales_tax_quick",
       "money_math_50_30_20",
       "money_math_latte_factor",
-      "money_math_weekly_monthly"
+      "money_math_weekly_monthly",
+      "concept_money_needs_vs_wants"
     ]
   },
   {
@@ -41,7 +43,7 @@
     "subtitle": "Understand your paycheck and job offers",
     "icon": "briefcase.fill",
     "color": "green",
-    "mascot": "💼",
+    "mascot": "\ud83d\udcbc",
     "glyph": "$",
     "lessonIds": [
       "net_pay_check",
@@ -51,7 +53,8 @@
       "inflation_adjusted_raise",
       "salary_hourly_2000",
       "salary_total_comp",
-      "salary_side_hustle"
+      "salary_side_hustle",
+      "concept_salary_exempt_status"
     ]
   },
   {
@@ -60,7 +63,7 @@
     "subtitle": "Interest, returns, and your money growing",
     "icon": "chart.line.uptrend.xyaxis",
     "color": "indigo",
-    "mascot": "📈",
+    "mascot": "\ud83d\udcc8",
     "glyph": "$",
     "lessonIds": [
       "rule_of_72",
@@ -72,7 +75,10 @@
       "investing_fund_fees",
       "investing_emergency_fund",
       "investing_rental_yield",
-      "investing_on_track"
+      "investing_on_track",
+      "concept_investing_what_are_stocks",
+      "concept_investing_asset_allocation",
+      "concept_investing_behavioral_traps"
     ]
   },
   {
@@ -81,7 +87,7 @@
     "subtitle": "Credit cards, loans, and the real cost of borrowing",
     "icon": "exclamationmark.circle.fill",
     "color": "coral",
-    "mascot": "💳",
+    "mascot": "\ud83d\udcb3",
     "glyph": "!",
     "lessonIds": [
       "credit_card_interest",
@@ -91,7 +97,9 @@
       "extra_payment_power",
       "debt_avalanche_snowball",
       "debt_apr_vs_apy",
-      "debt_bnpl_hidden_cost"
+      "debt_bnpl_hidden_cost",
+      "concept_debt_credit_scores",
+      "concept_debt_good_vs_bad"
     ]
   },
   {
@@ -100,7 +108,7 @@
     "subtitle": "Affordability, leases, and housing costs",
     "icon": "house.fill",
     "color": "rose",
-    "mascot": "🏠",
+    "mascot": "\ud83c\udfe0",
     "glyph": "$",
     "lessonIds": [
       "housing_rent_affordability",
@@ -118,7 +126,7 @@
     "subtitle": "Brackets, deductions, and take-home pay",
     "icon": "doc.text.fill",
     "color": "slate",
-    "mascot": "🧾",
+    "mascot": "\ud83e\uddfe",
     "glyph": "%",
     "lessonIds": [
       "taxes_brackets",
@@ -136,7 +144,7 @@
     "subtitle": "Deductibles, premiums, and plan comparison",
     "icon": "cross.case.fill",
     "color": "purple",
-    "mascot": "🏥",
+    "mascot": "\ud83c\udfe5",
     "glyph": "+",
     "lessonIds": [
       "insurance_deductible_vs_premium",
@@ -155,7 +163,7 @@
     "subtitle": "Monthly payments, total cost, and smart buying",
     "icon": "car.fill",
     "color": "teal",
-    "mascot": "🚗",
+    "mascot": "\ud83d\ude97",
     "glyph": "$",
     "lessonIds": [
       "car_monthly_vs_total",
@@ -174,7 +182,7 @@
     "subtitle": "Repayment plans, refinancing, and forgiveness",
     "icon": "graduationcap.fill",
     "color": "orange",
-    "mascot": "🎓",
+    "mascot": "\ud83c\udf93",
     "glyph": "$",
     "lessonIds": [
       "student_loan_monthly",
