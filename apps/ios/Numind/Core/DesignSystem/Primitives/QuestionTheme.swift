@@ -287,7 +287,12 @@ enum QuestionTheme {
              "true_cost_pct_d2", "true_cost_vs_28_d3",
              // Lease break
              "lease_break_fee_d1", "lease_break_total_d2", "lease_break_breakeven_d2",
-             "lease_stay_savings_d3", "lease_break_decision_d3":
+             "lease_stay_savings_d3", "lease_break_decision_d3",
+             // V3 concept lessons
+             "concept_buy_rent_short_d1", "concept_buy_rent_long_d2", "concept_buy_rent_200x_d2",
+             "concept_buy_rent_opportunity_d3", "concept_buy_rent_mobility_d3",
+             "concept_lease_termination_d1", "concept_lease_auto_renewal_d2", "concept_lease_deposit_d2",
+             "concept_lease_illegal_clause_d3", "concept_lease_wear_tear_d3":
             return .housing
 
         // ── Taxes & Paycheck ────────────────────────────────────────────────────
@@ -309,7 +314,12 @@ enum QuestionTheme {
              "capgains_timing_d3", "capgains_compare_d3",
              // W-4 adjust
              "w4_bump_d1", "w4_bump_biweekly_d1", "w4_invested_d2",
-             "w4_annual_growth_d2", "w4_lifetime_d3":
+             "w4_annual_growth_d2", "w4_lifetime_d3",
+             // V3 concept lessons
+             "concept_paycheck_fica_d1", "concept_paycheck_pretax_d1", "concept_paycheck_401k_cost_d2",
+             "concept_paycheck_post_tax_d2", "concept_paycheck_check_error_d3",
+             "concept_filing_default_d1", "concept_filing_hoh_d2", "concept_filing_mfs_idr_d2",
+             "concept_filing_mfj_default_d3", "concept_filing_status_choice_d3":
             return .taxes
 
         // ── Insurance & Healthcare ──────────────────────────────────────────────
@@ -334,7 +344,13 @@ enum QuestionTheme {
              "life_per_100k_d2", "life_lifetime_d3",
              // Prescription
              "rx_annual_saving_d1", "rx_multiple_d2", "rx_goodrx_d3",
-             "rx_monthly_diff_d1", "rx_lifetime_d2":
+             "rx_monthly_diff_d1", "rx_lifetime_d2",
+             // V3 concept lessons
+             "concept_insurance_priority_top_d1", "concept_insurance_skip_d1",
+             "concept_insurance_overinsured_d2", "concept_insurance_disability_priority_d3",
+             "concept_insurance_warranty_d3",
+             "concept_disability_prob_d1", "concept_disability_own_occ_d2", "concept_disability_cap_d2",
+             "concept_disability_elim_period_d3", "concept_disability_supplemental_d3":
             return .insurance
 
         // ── Car & Big Purchases ─────────────────────────────────────────────────
@@ -358,7 +374,12 @@ enum QuestionTheme {
              "lease_monthly_d1", "lease_vs_buy_lifetime_d3",
              // Trade-in vs Private
              "trade_in_premium_d1", "trade_in_hourly_d2", "trade_in_tax_benefit_d2",
-             "trade_in_adjusted_d3", "trade_in_decision_d3":
+             "trade_in_adjusted_d3", "trade_in_decision_d3",
+             // V3 concept lessons
+             "concept_dealer_otd_d1", "concept_dealer_payment_trap_d2", "concept_dealer_fi_office_d2",
+             "concept_dealer_finance_markup_d3", "concept_dealer_gap_insurance_d3",
+             "concept_warranty_manufacturer_d1", "concept_warranty_extended_math_d2",
+             "concept_warranty_self_insure_d2", "concept_warranty_when_worth_d3", "concept_warranty_cpo_d3":
             return .carBuying
 
         // ── Student Loans & Education ───────────────────────────────────────────
@@ -382,7 +403,12 @@ enum QuestionTheme {
              "sl_grace_vs_interest_only_d3", "sl_grace_capitalization_d2", "sl_grace_lifetime_d3",
              // Parent PLUS
              "plus_vs_private_annual_d1", "plus_vs_private_10yr_d2",
-             "plus_origination_d2", "plus_total_cost_d3", "plus_decision_d3":
+             "plus_origination_d2", "plus_total_cost_d3", "plus_decision_d3",
+             // V3 concept lessons
+             "concept_sl_sub_def_d1", "concept_sl_unsub_def_d1", "concept_sl_who_qualifies_d2",
+             "concept_sl_balance_growth_d3", "concept_sl_grad_loans_d3",
+             "concept_sl_refi_lose_idr_d1", "concept_sl_refi_one_way_d2", "concept_sl_refi_teacher_d2",
+             "concept_sl_refi_when_makes_sense_d3", "concept_sl_refi_vs_protections_d3":
             return .studentLoans
 
         // ── Fallback ─────────────────────────────────────────────────────────────

@@ -117,7 +117,9 @@
       "housing_roommate_math",
       "housing_true_cost",
       "housing_mortgage_vs_rent",
-      "housing_lease_break"
+      "housing_lease_break",
+      "concept_housing_buy_vs_rent_framework",
+      "concept_housing_lease_clauses"
     ]
   },
   {
@@ -135,7 +137,9 @@
       "taxes_self_employment",
       "taxes_standard_vs_itemized",
       "taxes_capital_gains",
-      "taxes_w4_adjust"
+      "taxes_w4_adjust",
+      "concept_taxes_paycheck_stub",
+      "concept_taxes_filing_status"
     ]
   },
   {
@@ -154,7 +158,9 @@
       "insurance_hsa_advantage",
       "insurance_fsa_use_it",
       "insurance_life_coverage",
-      "insurance_brand_vs_generic"
+      "insurance_brand_vs_generic",
+      "concept_insurance_policy_priority",
+      "concept_insurance_disability"
     ]
   },
   {
@@ -173,7 +179,9 @@
       "car_depreciation",
       "car_total_cost_ownership",
       "car_lease_vs_buy",
-      "car_trade_in_vs_private"
+      "car_trade_in_vs_private",
+      "concept_car_negotiation",
+      "concept_car_warranty"
     ]
   },
   {
@@ -192,7 +200,9 @@
       "student_loan_pslf",
       "student_loan_employer_benefit",
       "student_loan_grace_period",
-      "student_loan_parent_plus"
+      "student_loan_parent_plus",
+      "concept_sl_subsidized_vs_unsubsidized",
+      "concept_sl_refi_protections_lost"
     ]
   }
 ]

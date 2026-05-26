@@ -13594,5 +13594,955 @@
       "Save it as cash for an emergency"
     ],
     "correctConceptChoice": "Pay off the credit card \u2014 22% guaranteed return beats 8% expected return"
+  },
+  {
+    "id": "concept_buy_rent_short_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're planning to live in a city for less than 3 years. What does the standard buy-vs-rent rule say?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The 5-year rule: stay under 5 years, you rarely break even on a purchase. Closing costs alone (2-5% buying + 6% selling = ~10% round-trip) typically exceed any appreciation or principal paydown in such a short timeline.",
+    "conceptChoices": [
+      "Buy \u2014 building equity is always better than renting",
+      "Rent \u2014 closing costs (2-5%) and selling fees (~6%) usually eat any equity gains in under 5 years",
+      "Buy only if you can put 20% down",
+      "Buy a smaller property to keep costs low"
+    ],
+    "correctConceptChoice": "Rent \u2014 closing costs (2-5%) and selling fees (~6%) usually eat any equity gains in under 5 years"
+  },
+  {
+    "id": "concept_buy_rent_long_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're committed to a city for 10+ years and rents are rising 5%/year. The buy-vs-rent math typically favors...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "10+ year horizons favor buying because: (1) closing costs amortize over many years, (2) you build equity through principal paydown and (usually) appreciation, (3) your mortgage payment stays fixed while rent rises 3-5%/year. Even modest appreciation compounds significantly.",
+    "conceptChoices": [
+      "Renting \u2014 flexibility is always more valuable than equity",
+      "Buying \u2014 long timeline lets amortization and appreciation compound, and fixed mortgage payments beat rising rents",
+      "Renting \u2014 homes always lose value long-term",
+      "Either equally \u2014 it's a wash over 10 years"
+    ],
+    "correctConceptChoice": "Buying \u2014 long timeline lets amortization and appreciation compound, and fixed mortgage payments beat rising rents"
+  },
+  {
+    "id": "concept_buy_rent_200x_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Quick check: monthly rent \u00d7 200 < purchase price suggests...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "If monthly rent \u00d7 200 < purchase price, the rent-to-price ratio is low \u2014 meaning the home is expensive relative to rents. Renting and investing the down payment usually beats buying. Example: $2,000 rent \u00d7 200 = $400k. If comparable homes cost $600k, renting likely wins.",
+    "conceptChoices": [
+      "Renting is usually cheaper than buying for that home",
+      "Buying is usually cheaper than renting for that home",
+      "The home is overvalued and likely to drop",
+      "The rent is too high and likely to fall"
+    ],
+    "correctConceptChoice": "Renting is usually cheaper than buying for that home"
+  },
+  {
+    "id": "concept_buy_rent_opportunity_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're choosing between renting (and investing $60k in an index fund) vs putting $60k down on a home. What's the 'opportunity cost' factor most people forget?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The down payment isn't 'free' \u2014 it has an opportunity cost. $60k invested at the long-term S&P 500 average (~8%) becomes ~$129k after 10 years. If your home equity grows less than that over the same period (very possible in flat markets), renting + investing wins.",
+    "conceptChoices": [
+      "Investment returns are unpredictable, so they don't count",
+      "$60k invested at 8% becomes ~$129k after 10 years; your $60k home equity may not grow as much",
+      "Opportunity cost only applies to business investments",
+      "It only matters if you can guarantee 10%+ returns"
+    ],
+    "correctConceptChoice": "$60k invested at 8% becomes ~$129k after 10 years; your $60k home equity may not grow as much"
+  },
+  {
+    "id": "concept_buy_rent_mobility_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your career involves regular relocations (every 2-4 years). What does this mean for buy vs rent?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Careers with regular relocations (military, consulting, tech, medical residency) almost always favor renting. Each move triggers 6-10% in transaction costs. Renting out as a long-distance landlord adds management headaches and is rarely profitable on a primary residence.",
+    "conceptChoices": [
+      "Buy \u2014 you can rent out each home as you leave, building a rental empire",
+      "Rent strongly \u2014 mobility-required careers almost always make buying a financial loser due to transaction costs",
+      "Buy only if you can flip homes for profit",
+      "Doesn't matter \u2014 the math is the same"
+    ],
+    "correctConceptChoice": "Rent strongly \u2014 mobility-required careers almost always make buying a financial loser due to transaction costs"
+  },
+  {
+    "id": "concept_lease_termination_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What's a 'reasonable' early termination fee in most US rental markets?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Industry standard for reasonable early termination: 1-2 months of rent. Anything 3+ months is aggressive; 4+ is predatory in most markets. Some states require landlords to make 'reasonable efforts to re-rent' (mitigation duty) regardless of the contract amount.",
+    "conceptChoices": [
+      "Half of one month's rent",
+      "1-2 months of rent",
+      "6 months of rent",
+      "A full year of rent"
+    ],
+    "correctConceptChoice": "1-2 months of rent"
+  },
+  {
+    "id": "concept_lease_auto_renewal_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your lease has an automatic renewal clause requiring 90 days' notice to terminate. What's the trap?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Auto-renewal traps are designed to lock in tenants through inattention. With a 90-day notice for a 12-month lease, you must remember to act 3 months before lease end. Calendar reminders are essential. Some states have started restricting these clauses but most still allow them.",
+    "conceptChoices": [
+      "There's no trap \u2014 90 days is generous",
+      "You may forget the notice window and find yourself locked into another full lease year",
+      "Auto-renewal is illegal in all US states",
+      "The notice period only applies to month-to-month leases"
+    ],
+    "correctConceptChoice": "You may forget the notice window and find yourself locked into another full lease year"
+  },
+  {
+    "id": "concept_lease_deposit_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your landlord must return your security deposit within...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Security deposit return timelines are state-regulated. Most states require 14-60 days, with itemized deductions if any. If a landlord violates this, you may be entitled to 2-3\u00d7 the deposit back as penalty. Always document the unit's condition at move-in and move-out with photos.",
+    "conceptChoices": [
+      "30 days after you move out (varies by state, typically 14-60 days)",
+      "1 year after lease end",
+      "Only when they find a new tenant",
+      "Whenever they choose \u2014 there's no legal deadline"
+    ],
+    "correctConceptChoice": "30 days after you move out (varies by state, typically 14-60 days)"
+  },
+  {
+    "id": "concept_lease_illegal_clause_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which lease clause is likely UNENFORCEABLE in most US states (even if you sign it)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Most states require landlords to maintain habitability (working heat, plumbing, structural integrity) \u2014 clauses shifting these duties to tenants are typically unenforceable regardless of what the lease says. Other common unenforceable clauses: waivers of right to sue, blanket non-refundable deposits.",
+    "conceptChoices": [
+      "Pets prohibited",
+      "'Tenant responsible for all property repairs including landlord's responsibilities under state law'",
+      "Rent due on the 1st of the month",
+      "Security deposit of one month's rent"
+    ],
+    "correctConceptChoice": "'Tenant responsible for all property repairs including landlord's responsibilities under state law'"
+  },
+  {
+    "id": "concept_lease_wear_tear_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your landlord deducts $200 from your deposit for 'cleaning' after a normal-use tenancy. Is this legitimate?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "'Normal wear and tear' (scuffs on walls, light cleaning needs, minor carpet wear) is the cost of doing business. Deductions are legal for actual damage beyond normal use (large holes, broken fixtures, heavy stains). Many tenants successfully challenge improper deductions in small claims court.",
+    "conceptChoices": [
+      "Yes \u2014 landlords can always deduct cleaning fees",
+      "Usually no \u2014 'normal wear and tear' (including standard cleaning) is the landlord's cost, not deductible from the deposit",
+      "Yes if it's in the lease",
+      "Only if the unit was professionally cleaned at move-in"
+    ],
+    "correctConceptChoice": "Usually no \u2014 'normal wear and tear' (including standard cleaning) is the landlord's cost, not deductible from the deposit"
+  },
+  {
+    "id": "concept_paycheck_fica_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What does FICA on your paycheck cover?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "FICA = Federal Insurance Contributions Act. It funds Social Security (6.2% on wages up to $176,100 in 2025) and Medicare (1.45% on all wages, with 0.9% extra on wages over $200k). Employers match this dollar-for-dollar, so the true tax is 15.3% \u2014 self-employed people pay both halves.",
+    "conceptChoices": [
+      "Federal income tax",
+      "Social Security + Medicare (7.65% combined: 6.2% SS + 1.45% Medicare)",
+      "State income tax",
+      "Health insurance"
+    ],
+    "correctConceptChoice": "Social Security + Medicare (7.65% combined: 6.2% SS + 1.45% Medicare)"
+  },
+  {
+    "id": "concept_paycheck_pretax_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which of these is a PRE-TAX deduction (reduces your taxable income)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Pre-tax deductions reduce your taxable income before federal income tax and FICA are calculated. Traditional 401k contributions, traditional HSA, traditional FSA, and most health insurance premiums are pre-tax. Roth 401k contributions are post-tax (you've already paid tax on the money).",
+    "conceptChoices": [
+      "Roth 401k contribution",
+      "Traditional 401k contribution",
+      "After-tax life insurance premium",
+      "Wage garnishment for credit card debt"
+    ],
+    "correctConceptChoice": "Traditional 401k contribution"
+  },
+  {
+    "id": "concept_paycheck_401k_cost_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You contribute $300 to your traditional 401k. At a 30% combined tax rate (federal + state + FICA), what's the actual reduction in your take-home pay?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Pre-tax contributions reduce your tax bill, so your take-home only drops by the after-tax amount. $300 contribution at 30% combined tax = $210 reduction in take-home. The other $90 'cost' was tax you would've paid anyway. This is why 401k contributions feel cheaper than they look on paper.",
+    "conceptChoices": [
+      "$300 \u2014 the full contribution",
+      "About $210 \u2014 the $300 contribution minus the tax you would have paid on that $300",
+      "$390 \u2014 the contribution plus extra fees",
+      "$150 \u2014 exactly half"
+    ],
+    "correctConceptChoice": "About $210 \u2014 the $300 contribution minus the tax you would have paid on that $300"
+  },
+  {
+    "id": "concept_paycheck_post_tax_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which of these is a POST-TAX deduction (taken AFTER federal tax + FICA)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Post-tax deductions don't reduce your taxable income \u2014 they come out after taxes. Roth 401k, Roth IRA, after-tax health/dental, and most disability insurance premiums are post-tax. The tradeoff: you pay tax now but withdraw tax-free later (for Roth accounts) or get the benefit tax-free (for insurance).",
+    "conceptChoices": [
+      "Traditional 401k",
+      "Pre-tax health insurance premium",
+      "Roth 401k contribution",
+      "Traditional HSA contribution"
+    ],
+    "correctConceptChoice": "Roth 401k contribution"
+  },
+  {
+    "id": "concept_paycheck_check_error_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your gross is $5,000/biweekly. Your stub shows federal withholding of $2,000 (40%) \u2014 far more than expected for your income. What should you check first?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Excessive withholding usually means your W-4 is mis-configured. Common causes: marked 'Additional Withholding' amount accidentally, claimed Single+0 when you should be Married+2, didn't update after life changes. Submit a corrected W-4 immediately \u2014 over-withheld funds tie up cash until your refund.",
+    "conceptChoices": [
+      "Your W-4 elections \u2014 you may have claimed 0 allowances or marked additional withholding by mistake",
+      "Your union dues calculation",
+      "Whether your employer is over-withholding to keep your cash",
+      "The IRS automated system glitch"
+    ],
+    "correctConceptChoice": "Your W-4 elections \u2014 you may have claimed 0 allowances or marked additional withholding by mistake"
+  },
+  {
+    "id": "concept_filing_default_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "For most married couples, the default and usually-best filing status is...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "MFJ combines both incomes onto one return with wider brackets and a larger standard deduction. For most couples, this produces the lowest tax. MFS makes sense only in specific cases (IBR student loans, large itemized deductions for one spouse, separation).",
+    "conceptChoices": [
+      "Single (filed separately for each spouse)",
+      "Married Filing Jointly (MFJ) \u2014 usually lower total tax",
+      "Married Filing Separately (MFS) \u2014 always saves money",
+      "Head of Household if at least one spouse works"
+    ],
+    "correctConceptChoice": "Married Filing Jointly (MFJ) \u2014 usually lower total tax"
+  },
+  {
+    "id": "concept_filing_hoh_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "To file as Head of Household, you must (among other things)...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "HoH requirements: unmarried (or 'considered unmarried' if separated for last 6 months), paid > 50% of household costs, and have a qualifying person (usually a dependent child) living with you for > 50% of the year. The standard deduction is significantly higher than Single ($22,800 vs $15,200 in 2025).",
+    "conceptChoices": [
+      "Be unmarried AND pay more than half the cost of keeping up a home for a qualifying dependent (usually a child)",
+      "Earn over $100,000 per year",
+      "Be married but separated from your spouse",
+      "Own your own home"
+    ],
+    "correctConceptChoice": "Be unmarried AND pay more than half the cost of keeping up a home for a qualifying dependent (usually a child)"
+  },
+  {
+    "id": "concept_filing_mfs_idr_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A married couple where one spouse has heavy income-driven repayment (IDR) student loans should consider Married Filing Separately because...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "On IDR plans (IBR, PAYE, SAVE), filing jointly means BOTH spouses' incomes count toward the payment calculation, often dramatically raising the IDR payment. MFS keeps each spouse's income separate. The trade-off: you may lose some tax credits and pay slightly more federal tax \u2014 but save much more on student loan payments.",
+    "conceptChoices": [
+      "MFS always saves money for couples",
+      "IDR loan payments are calculated only on the borrower's income \u2014 MFS keeps the spouse's income out of the calculation",
+      "Student loans are tax-deductible only in MFS",
+      "It avoids garnishment of the spouse's wages"
+    ],
+    "correctConceptChoice": "IDR loan payments are calculated only on the borrower's income \u2014 MFS keeps the spouse's income out of the calculation"
+  },
+  {
+    "id": "concept_filing_mfj_default_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "True or false: 'Married Filing Jointly always saves a married couple money compared to Married Filing Separately.'",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "MFJ wins for most couples (~95%), but MFS specifically helps in three cases: (1) IDR student loan payments calculated only on the borrower's income, (2) large medical bills for one spouse exceeding 7.5% of THEIR income alone, (3) separated couples wanting separate tax liability. Run both calculations annually if any apply.",
+    "conceptChoices": [
+      "True \u2014 MFJ is always cheaper",
+      "True \u2014 but only for couples with similar incomes",
+      "False \u2014 MFS can save money when one spouse has IDR student loans, large medical bills, or extensive itemized deductions",
+      "False \u2014 MFS is always cheaper than MFJ"
+    ],
+    "correctConceptChoice": "False \u2014 MFS can save money when one spouse has IDR student loans, large medical bills, or extensive itemized deductions"
+  },
+  {
+    "id": "concept_filing_status_choice_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A single parent providing > 50% of their child's household costs typically files as...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Single parents almost always qualify for Head of Household (HoH) \u2014 bigger standard deduction ($22,800 vs $15,200 in 2025), wider brackets, more generous credits. Many single parents file Single by mistake and overpay. The HoH qualification: unmarried + pay > 50% of household costs + qualifying dependent (usually a child).",
+    "conceptChoices": [
+      "Single (the default for unmarried filers)",
+      "Head of Household (significantly larger standard deduction)",
+      "Married Filing Separately",
+      "Qualifying Widow(er) regardless of partner's status"
+    ],
+    "correctConceptChoice": "Head of Household (significantly larger standard deduction)"
+  },
+  {
+    "id": "concept_insurance_priority_top_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which insurance policy should typically be your HIGHEST priority?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Health insurance is the universal priority because medical bills can reach hundreds of thousands of dollars \u2014 they're the #1 cause of bankruptcy in the US. Even a healthy person's potential exposure (one accident, one diagnosis) is catastrophic without insurance.",
+    "conceptChoices": [
+      "Pet insurance",
+      "Health insurance",
+      "Extended warranty on electronics",
+      "Identity theft insurance"
+    ],
+    "correctConceptChoice": "Health insurance"
+  },
+  {
+    "id": "concept_insurance_skip_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which insurance is most commonly oversold and overpaid for?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Extended warranties on electronics (phones, TVs, laptops) are almost always net negative. Consumer Reports data: most consumers don't use them, and average payouts are far below cost. Self-insure with an emergency fund instead \u2014 the manufacturer warranty covers the first year of defects.",
+    "conceptChoices": [
+      "Health insurance",
+      "Disability insurance",
+      "Extended warranties on consumer electronics",
+      "Liability auto insurance"
+    ],
+    "correctConceptChoice": "Extended warranties on consumer electronics"
+  },
+  {
+    "id": "concept_insurance_overinsured_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A 28-year-old with no dependents, no mortgage, and $20k in savings is most likely OVER-insured on...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Life insurance protects dependents from losing your income. With no dependents and no mortgage, the case for $1M coverage is weak \u2014 your debts/funeral costs might justify $50k-$100k, not $1M. Save the premium and put it toward retirement. The math changes the moment you have kids or buy a home.",
+    "conceptChoices": [
+      "Health insurance",
+      "Renter's insurance",
+      "A $1 million life insurance policy",
+      "Disability insurance"
+    ],
+    "correctConceptChoice": "A $1 million life insurance policy"
+  },
+  {
+    "id": "concept_insurance_disability_priority_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "For a 32-year-old working professional with no dependents, which is statistically MORE important \u2014 life insurance or disability insurance?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "SSA data: ~25% of today's 20-year-olds will experience a disability lasting 90+ days before retirement. Death rate before 65 is ~5%. For working-age adults without dependents, disability insurance is statistically more important than life insurance \u2014 yet far fewer people carry adequate coverage.",
+    "conceptChoices": [
+      "Life insurance \u2014 without it, your family has no protection",
+      "Disability insurance \u2014 you're roughly 5\u00d7 more likely to be disabled for 90+ days than to die before retirement",
+      "Both equally important regardless of dependents",
+      "Neither matters at age 32"
+    ],
+    "correctConceptChoice": "Disability insurance \u2014 you're roughly 5\u00d7 more likely to be disabled for 90+ days than to die before retirement"
+  },
+  {
+    "id": "concept_insurance_warranty_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're offered a $300 extended warranty on a $1,200 laptop, covering years 2-3. The principle 'self-insure small risks, transfer catastrophic ones' suggests...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A $1,200 laptop is not catastrophic \u2014 you can self-insure. Save the $300 premium. Even if the laptop breaks in year 3 and needs full replacement ($1,200), your net cost is $1,200 \u2212 $300 saved = $900. But most laptops survive 3+ years, meaning you typically keep the full $300.",
+    "conceptChoices": [
+      "Buy the warranty \u2014 laptops break unpredictably",
+      "Decline \u2014 $300 lost to warranty cost is small compared to the $900 you'd net by self-insuring (laptop replacement minus warranty premium)",
+      "Buy it only if you've had laptops break before",
+      "Always buy warranties \u2014 they pay for themselves"
+    ],
+    "correctConceptChoice": "Decline \u2014 $300 lost to warranty cost is small compared to the $900 you'd net by self-insuring (laptop replacement minus warranty premium)"
+  },
+  {
+    "id": "concept_disability_prob_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Statistically, how likely is a 20-year-old today to experience a disability lasting 90+ days before retirement?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Per Social Security Administration data, ~25% of today's 20-year-olds will experience a disability lasting 90+ days before reaching retirement age. This far exceeds the rate of early death (~5%), making disability insurance arguably more important than life insurance for working-age adults.",
+    "conceptChoices": [
+      "About 5% \u2014 disability is rare",
+      "About 25% (1 in 4) \u2014 far more common than people realize",
+      "About 50% \u2014 virtually inevitable",
+      "About 1% \u2014 almost no one"
+    ],
+    "correctConceptChoice": "About 25% (1 in 4) \u2014 far more common than people realize"
+  },
+  {
+    "id": "concept_disability_own_occ_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "An 'own-occupation' disability policy pays out if you can't perform...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "'Own-occupation' is the gold standard: it pays if you can't do YOUR job. A surgeon with a hand injury still qualifies even if they could teach. 'Any-occupation' is much weaker \u2014 pays only if you can't do ANY job (including minimum wage). Always check this distinction on employer LTD policies.",
+    "conceptChoices": [
+      "ANY job at all (most restrictive)",
+      "YOUR SPECIFIC job \u2014 even if you could do a different job (much better for high earners)",
+      "Only physical labor jobs",
+      "Only your primary job, not side gigs"
+    ],
+    "correctConceptChoice": "YOUR SPECIFIC job \u2014 even if you could do a different job (much better for high earners)"
+  },
+  {
+    "id": "concept_disability_cap_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Employer-provided long-term disability typically caps monthly payouts at...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Most employer LTD plans pay 60% of base salary, capped at $5,000-$10,000/month ($60k-$120k/year). For someone earning $300k, this leaves a huge gap. High earners often need supplemental individual disability coverage to fill the gap.",
+    "conceptChoices": [
+      "$5,000-$10,000/month, which under-insures high earners",
+      "Your full salary with no cap",
+      "Minimum wage equivalent",
+      "Only $1,000/month"
+    ],
+    "correctConceptChoice": "$5,000-$10,000/month, which under-insures high earners"
+  },
+  {
+    "id": "concept_disability_elim_period_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your disability policy has a 90-day 'elimination period.' What does this mean for your emergency fund?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "An elimination period is the waiting period before benefits begin (typically 90 days for long-term disability). During those 90 days, you have no income. This is why a 3-6 month emergency fund is essential even with disability insurance \u2014 to bridge the gap.",
+    "conceptChoices": [
+      "You don't need an emergency fund \u2014 disability covers everything",
+      "You need at least 3 months of essential expenses saved to bridge the gap before benefits start",
+      "The elimination period only applies to short-term disability",
+      "You can get benefits starting day 1 if you negotiate"
+    ],
+    "correctConceptChoice": "You need at least 3 months of essential expenses saved to bridge the gap before benefits start"
+  },
+  {
+    "id": "concept_disability_supplemental_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A $250,000/year earner has employer-provided LTD at 60% of salary, capped at $10,000/month. What's their coverage gap?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "True income replacement at 60% of $250k = $12,500/month. Employer LTD caps at $10k/month. Gap = $2,500/month = $30k/year of unreplaced income during disability. Supplemental individual disability policies can fill this gap \u2014 important for high earners.",
+    "conceptChoices": [
+      "No gap \u2014 60% covers everything",
+      "$2,500/month \u2014 employer covers $10k/mo (the cap), but 60% of $250k would be ~$12,500/mo (uncapped)",
+      "$5,000/month gap because of taxes",
+      "There's no way to know without more info"
+    ],
+    "correctConceptChoice": "$2,500/month \u2014 employer covers $10k/mo (the cap), but 60% of $250k would be ~$12,500/mo (uncapped)"
+  },
+  {
+    "id": "concept_dealer_otd_d1",
+    "moduleId": "car",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "When buying a car, what's the SINGLE number you should negotiate?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Always negotiate OTD price. Dealers love to switch the conversation to monthly payment (they'll extend the loan term to lower it) or trade-in (they'll lowball that and inflate the car price). OTD locks in your total cost \u2014 everything else is theater.",
+    "conceptChoices": [
+      "Monthly payment \u2014 what you can afford",
+      "Out-the-door (OTD) price \u2014 total cost including all fees, taxes, and add-ons",
+      "Trade-in value of your old car",
+      "Down payment amount"
+    ],
+    "correctConceptChoice": "Out-the-door (OTD) price \u2014 total cost including all fees, taxes, and add-ons"
+  },
+  {
+    "id": "concept_dealer_payment_trap_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A dealer says 'I can get you down to $400/month.' Why is focusing on monthly payment a trap?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The 'monthly payment trap' lets dealers control your total cost without you noticing. $500/mo \u00d7 60 months = $30k. $400/mo \u00d7 84 months = $33,600 \u2014 same car, $3,600 more paid. Always think in total cost, not monthly comfort.",
+    "conceptChoices": [
+      "Monthly payments are illegal in some states",
+      "Dealers can lower monthly by extending the loan term \u2014 same car, more interest, more total paid",
+      "Monthly payments include hidden insurance",
+      "It's not a trap \u2014 monthly payment is what matters"
+    ],
+    "correctConceptChoice": "Dealers can lower monthly by extending the loan term \u2014 same car, more interest, more total paid"
+  },
+  {
+    "id": "concept_dealer_fi_office_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "The F&I (Finance & Insurance) office is where dealers pitch...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "F&I is where dealers make significant profit. The pitched add-ons (extended warranties at 100-300% markup, GAP insurance at 3-5\u00d7 independent prices, paint protection that's basically wax) are almost always available cheaper elsewhere. Decline everything in F&I and shop separately if interested.",
+    "conceptChoices": [
+      "Negotiable car price",
+      "Add-ons like extended warranties, GAP insurance, paint protection \u2014 almost always at marked-up prices",
+      "Free vehicle maintenance plans",
+      "Cash discounts for paying upfront"
+    ],
+    "correctConceptChoice": "Add-ons like extended warranties, GAP insurance, paint protection \u2014 almost always at marked-up prices"
+  },
+  {
+    "id": "concept_dealer_finance_markup_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your bank pre-approves you at 5.5% APR. The dealer 'magically' offers you 7% APR. What's happening?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Dealers earn commission by marking up financing rates 1-3% above what the lender quoted them. On a $30k loan over 5 years, a 1.5% markup costs you ~$1,200 extra in interest. Always get pre-approved from your bank or credit union BEFORE walking into the dealership. Then make them beat your rate or you'll bring your own.",
+    "conceptChoices": [
+      "The dealer has access to better rates than your bank",
+      "The lender quoted the dealer 5.5% and the dealer marked it up 1.5% \u2014 the markup is dealer profit on your financing",
+      "Dealer financing always has higher interest",
+      "The dealer is being honest about market rates"
+    ],
+    "correctConceptChoice": "The lender quoted the dealer 5.5% and the dealer marked it up 1.5% \u2014 the markup is dealer profit on your financing"
+  },
+  {
+    "id": "concept_dealer_gap_insurance_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "GAP insurance from the dealer costs $800. Your credit union offers the same coverage for $200. What's the smart play?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "GAP insurance from credit unions or independent providers typically costs $200-$400 for the same coverage dealers sell for $600-$1,200. Same product, 60-75% markup at the dealer. Decline at signing \u2014 you can always add it later from a cheaper source.",
+    "conceptChoices": [
+      "Take the dealer's GAP \u2014 it's bundled into your loan, easier",
+      "Decline at the dealer and buy from the credit union \u2014 saves $600 for identical coverage",
+      "Skip GAP entirely \u2014 it's never worth it",
+      "Negotiate the dealer down to $400"
+    ],
+    "correctConceptChoice": "Decline at the dealer and buy from the credit union \u2014 saves $600 for identical coverage"
+  },
+  {
+    "id": "concept_warranty_manufacturer_d1",
+    "moduleId": "car",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A typical new car's MANUFACTURER warranty covers...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Industry standard new-car coverage: 3yr/36k bumper-to-bumper (covers almost everything), 5yr/60k powertrain (engine, transmission, drivetrain). Some brands (Kia, Hyundai) offer longer powertrain warranties (10yr/100k). Extended warranties from dealers add coverage AFTER the manufacturer warranty expires.",
+    "conceptChoices": [
+      "Lifetime of the car at no extra charge",
+      "Usually 3 years / 36,000 miles bumper-to-bumper, plus 5 years / 60,000 miles powertrain",
+      "Only the engine and nothing else",
+      "Only the first 10,000 miles"
+    ],
+    "correctConceptChoice": "Usually 3 years / 36,000 miles bumper-to-bumper, plus 5 years / 60,000 miles powertrain"
+  },
+  {
+    "id": "concept_warranty_extended_math_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Per Consumer Reports data, extended warranty buyers on average...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Consumer Reports' multi-year data: extended warranty buyers recoup an average of 60% of what they paid. 55% never use the warranty at all. The expected value is negative \u2014 these are insurance products designed to be profitable for the seller, not the buyer.",
+    "conceptChoices": [
+      "Recoup 150% of what they paid in repairs",
+      "Recoup only ~60% of what they paid \u2014 and 55% never file a single claim",
+      "Always come out ahead",
+      "Lose 100% of their premium (no payouts)"
+    ],
+    "correctConceptChoice": "Recoup only ~60% of what they paid \u2014 and 55% never file a single claim"
+  },
+  {
+    "id": "concept_warranty_self_insure_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Instead of a $2,000 extended warranty, you could save $33/month for 5 years. What's the financial advantage?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Self-insurance = save the premium you would've paid into a 'repair fund.' For most reliable brands (Toyota, Honda, Lexus, Mazda), the savings exceed average repair costs over 5 years. For luxury European or first-gen EVs, extended warranties have stronger cases.",
+    "conceptChoices": [
+      "None \u2014 extended warranties are always better than self-insuring",
+      "If no major repair occurs (likely), you keep the full $2,000. Even with one major repair, you may come out ahead or break even.",
+      "Self-insuring is illegal in most states",
+      "Banks don't allow you to self-insure cars"
+    ],
+    "correctConceptChoice": "If no major repair occurs (likely), you keep the full $2,000. Even with one major repair, you may come out ahead or break even."
+  },
+  {
+    "id": "concept_warranty_when_worth_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "An extended warranty is MOST likely to be worth the cost for which type of vehicle?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Extended warranties make sense in narrow cases: (1) first-year vehicles with unknown reliability, (2) high-repair-cost vehicles like luxury European brands, (3) EVs with expensive battery replacement risk. Pass on extended warranties for Toyota/Honda/Mazda \u2014 these brands rarely need post-warranty major repairs.",
+    "conceptChoices": [
+      "A used Toyota Camry with 50k miles",
+      "A first-year electric vehicle from a new manufacturer (limited repair data, expensive battery)",
+      "Any used minivan",
+      "Vehicles you plan to sell within 2 years"
+    ],
+    "correctConceptChoice": "A first-year electric vehicle from a new manufacturer (limited repair data, expensive battery)"
+  },
+  {
+    "id": "concept_warranty_cpo_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "'Certified Pre-Owned' (CPO) from a manufacturer typically includes...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "CPO is the rare case where extended coverage is built in. The manufacturer (not a third party) extends warranty coverage AND performs an inspection. CPO cars cost more than identical non-CPO used cars but the warranty value often justifies the premium \u2014 especially for higher-end vehicles with expensive repair risks.",
+    "conceptChoices": [
+      "Nothing extra \u2014 it's just a marketing label",
+      "An extended manufacturer-backed warranty AND a multi-point inspection \u2014 adds real value vs a regular used car",
+      "A guaranteed buyback option",
+      "Free oil changes for life"
+    ],
+    "correctConceptChoice": "An extended manufacturer-backed warranty AND a multi-point inspection \u2014 adds real value vs a regular used car"
+  },
+  {
+    "id": "concept_sl_sub_def_d1",
+    "moduleId": "student_loans",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A federal SUBSIDIZED student loan means...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Subsidized loans are an enormous benefit: the government pays your interest during in-school enrollment, the 6-month grace period, and approved deferment periods. Your loan balance stays at your borrowed amount until repayment begins.",
+    "conceptChoices": [
+      "The government pays the interest while you're in school, during grace, and during deferment",
+      "You don't have to repay it at all",
+      "The interest is permanently waived",
+      "The loan has a lower interest rate than unsubsidized"
+    ],
+    "correctConceptChoice": "The government pays the interest while you're in school, during grace, and during deferment"
+  },
+  {
+    "id": "concept_sl_unsub_def_d1",
+    "moduleId": "student_loans",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A federal UNSUBSIDIZED student loan means...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Unsubsidized loans accrue interest from the moment they're disbursed. By graduation, your $25k loan may have grown to $28k+ in interest. This unpaid interest then capitalizes (added to principal), so you pay interest on interest going forward. Most graduate loans and Parent PLUS are unsubsidized.",
+    "conceptChoices": [
+      "The government waives interest if you stay enrolled",
+      "Interest accrues from day one \u2014 you owe interest while in school, during grace, and during deferment",
+      "You only pay interest if you earn over a certain income",
+      "The interest rate is variable"
+    ],
+    "correctConceptChoice": "Interest accrues from day one \u2014 you owe interest while in school, during grace, and during deferment"
+  },
+  {
+    "id": "concept_sl_who_qualifies_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Who qualifies for subsidized federal student loans?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Subsidized loans are restricted to undergraduate students with financial need (per FAFSA analysis). Graduate students and Parent PLUS borrowers don't get subsidized loans \u2014 their loans are all unsubsidized. If you qualify for any subsidized amount, take it first.",
+    "conceptChoices": [
+      "Anyone who applies for federal aid",
+      "Only undergraduates with demonstrated financial need",
+      "Graduate students only",
+      "Parents borrowing on behalf of students"
+    ],
+    "correctConceptChoice": "Only undergraduates with demonstrated financial need"
+  },
+  {
+    "id": "concept_sl_balance_growth_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You borrow $25,000 in UNSUBSIDIZED loans at 5.5% over 4 years of college plus a 6-month grace period. Approximately what's your balance at repayment start?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$25k \u00d7 5.5% \u00d7 4.5 years simple interest = $6,188 in accrued interest. At grace period end, this capitalizes (gets added to principal). Your new balance: ~$31,188. You then owe interest on the full $31k going forward \u2014 interest on interest. This is why grace period interest matters.",
+    "conceptChoices": [
+      "$25,000 (no change)",
+      "About $31,000 (interest accrued during 4.5 years and capitalized)",
+      "About $20,000 (interest forgiven during grace)",
+      "About $50,000 (compound interest doubles)"
+    ],
+    "correctConceptChoice": "About $31,000 (interest accrued during 4.5 years and capitalized)"
+  },
+  {
+    "id": "concept_sl_grad_loans_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "True or false: 'Graduate students can borrow subsidized federal loans for graduate school.'",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Since 2012, graduate students have lost access to subsidized loans. All graduate Direct Loans are unsubsidized, accruing interest from day one. This is one reason graduate school debt grows so fast \u2014 a $40k/year program can leave you owing $200k+ at repayment if you don't pay interest during enrollment.",
+    "conceptChoices": [
+      "True \u2014 graduate students get the same options as undergrads",
+      "False \u2014 graduate Direct Loans are all UNSUBSIDIZED (interest accrues from day one)",
+      "True \u2014 but only for STEM fields",
+      "True \u2014 but the interest rate is higher"
+    ],
+    "correctConceptChoice": "False \u2014 graduate Direct Loans are all UNSUBSIDIZED (interest accrues from day one)"
+  },
+  {
+    "id": "concept_sl_refi_lose_idr_d1",
+    "moduleId": "student_loans",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "When you refinance federal student loans to a private lender, what do you LOSE?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Refinancing federal loans to private is one-way and permanent. You forfeit ALL federal protections: income-driven repayment plans, Public Service Loan Forgiveness (10-year forgiveness for public service), federal forbearance during hardship, death/disability discharge, and any future federal relief programs (like COVID-era pauses). Many refi salespeople omit this.",
+    "conceptChoices": [
+      "Only the federal interest rate",
+      "Federal protections: IDR, PSLF, federal forbearance, death/disability discharge, future federal relief \u2014 permanently",
+      "Nothing \u2014 refinancing only changes the rate",
+      "The ability to make payments online"
+    ],
+    "correctConceptChoice": "Federal protections: IDR, PSLF, federal forbearance, death/disability discharge, future federal relief \u2014 permanently"
+  },
+  {
+    "id": "concept_sl_refi_one_way_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "If you refinance federal loans to private, can you refinance BACK to federal later?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "This is the single most important fact about refinancing \u2014 it's irreversible. Once you go private, you cannot return to federal loans. Make this decision carefully. If you might ever need IDR, work in public service, face job loss, or want to keep optionality, do NOT refinance.",
+    "conceptChoices": [
+      "Yes \u2014 you can switch any time",
+      "Yes, but only within 1 year",
+      "No \u2014 the move is permanent. You cannot refinance from private back to federal.",
+      "Yes, but you lose your interest rate"
+    ],
+    "correctConceptChoice": "No \u2014 the move is permanent. You cannot refinance from private back to federal."
+  },
+  {
+    "id": "concept_sl_refi_teacher_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A public school teacher with federal student loans is offered a 2% rate reduction by refinancing to private. Should they refinance?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Public school teachers qualify for PSLF \u2014 10 years of qualifying payments while working in public service leads to forgiveness of the entire remaining balance. On a $50k loan, PSLF can be worth $30k-$60k in forgiveness. Saving 2% on the rate doesn't come close. Never refinance if you're in public service.",
+    "conceptChoices": [
+      "Yes \u2014 2% rate savings is significant over 10 years",
+      "No \u2014 public school teachers qualify for PSLF, which forgives the remaining balance after 10 years. Refi forfeits this benefit.",
+      "Yes, but only if they plan to leave teaching",
+      "Yes \u2014 PSLF is being phased out anyway"
+    ],
+    "correctConceptChoice": "No \u2014 public school teachers qualify for PSLF, which forgives the remaining balance after 10 years. Refi forfeits this benefit."
+  },
+  {
+    "id": "concept_sl_refi_when_makes_sense_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Refinancing federal loans to private makes sense ONLY when which is true?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Refi makes sense in narrow conditions: stable high earner (so IDR is irrelevant), no public service work (so PSLF doesn't apply), low risk of income disruption (so forbearance/IDR aren't needed as safety nets), and rate savings 2%+ to justify giving up federal protections. Anything less, keep federal loans.",
+    "conceptChoices": [
+      "You want a lower rate (no other considerations)",
+      "ALL of these: stable high income, no public service plans, no risk of needing hardship pauses, and a meaningful (2%+) rate reduction",
+      "You're in your first job after graduation",
+      "You have less than $20k in loans"
+    ],
+    "correctConceptChoice": "ALL of these: stable high income, no public service plans, no risk of needing hardship pauses, and a meaningful (2%+) rate reduction"
+  },
+  {
+    "id": "concept_sl_refi_vs_protections_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "On a $50k loan, refinancing saves you 1% in interest ($5k over 10 years). But you'd forfeit PSLF eligibility worth potentially $40k of forgiveness. The math says...",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Even if PSLF eligibility is only 50% probable in your career path (you might leave public service), expected PSLF value is $20k. Compare to guaranteed $5k in rate savings \u2014 PSLF still wins by 4\u00d7. The math only favors refi when PSLF is essentially impossible (high earner in private sector with no public service interest).",
+    "conceptChoices": [
+      "Refi wins \u2014 $5k saved is guaranteed; PSLF is uncertain",
+      "PSLF wins \u2014 potential $40k forgiveness vastly exceeds $5k interest savings even when discounted for uncertainty",
+      "They're equivalent \u2014 go with whichever feels better",
+      "Refi wins \u2014 federal protections aren't worth anything"
+    ],
+    "correctConceptChoice": "PSLF wins \u2014 potential $40k forgiveness vastly exceeds $5k interest savings even when discounted for uncertainty"
   }
 ]

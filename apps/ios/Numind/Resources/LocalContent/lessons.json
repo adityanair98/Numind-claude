@@ -825,6 +825,36 @@
     ]
   },
   {
+    "id": "concept_housing_buy_vs_rent_framework",
+    "moduleId": "housing",
+    "title": "Buy vs rent \u2014 the real decision framework",
+    "concept": "The buy-vs-rent decision is more behavior than math. Even when the numbers favor buying, mobility, maintenance willingness, and opportunity cost can flip the answer. Short timelines (under 5 years) almost always favor renting because closing costs and selling fees eat any equity gains. Stable, long timelines (10+ years) favor buying because amortization and appreciation compound.",
+    "shortcut": "5-year rule: if you'll stay under 5 years, rent. Beyond that, run the math (rent \u00d7 200 < purchase price = buying often wins). The 'opportunity cost' of your down payment matters: $60k down vs $60k in an index fund at 8% = $129k after 10 years.",
+    "example": "Job stability test:\nMight move in 2 years? \u2192 Rent\nCommitted to city 10+ years? \u2192 Buy (after math)\n\nQuick math check:\nMonthly rent \u00d7 200 vs purchase price\n$2,000 rent \u00d7 200 = $400,000\nIf comparable home is $400k or less \u2192 buy is reasonable\nIf comparable home is $600k \u2192 rent likely wins long-term",
+    "quizTemplateIds": [
+      "concept_buy_rent_short_d1",
+      "concept_buy_rent_long_d2",
+      "concept_buy_rent_200x_d2",
+      "concept_buy_rent_opportunity_d3",
+      "concept_buy_rent_mobility_d3"
+    ]
+  },
+  {
+    "id": "concept_housing_lease_clauses",
+    "moduleId": "housing",
+    "title": "What's in a lease \u2014 clauses that matter",
+    "concept": "Most renters sign leases without reading them. The clauses that bite later: subletting (often prohibited), early termination penalties (typically 2 months rent), automatic renewal (you may be locked in 60-90 days before lease ends), security deposit return timelines (varies by state \u2014 most require 14-30 days), and what counts as 'damage' vs 'normal wear and tear'.",
+    "shortcut": "Three things to check before signing: (1) early termination penalty (2 months max is reasonable; 4+ is predatory), (2) auto-renewal clause and notice period, (3) what the security deposit can be deducted for. Negotiate before signing \u2014 landlords rarely re-open after.",
+    "example": "Common predatory clauses:\n\u2014 Auto-renewal with 90-day notice (you forget, locked in another year)\n\u2014 Sublet forbidden under any condition (no flexibility)\n\u2014 Security deposit non-refundable in certain conditions (illegal in most states)\n\u2014 'Tenant responsible for all repairs' (illegal in most states)\n\nKnow your state's tenant rights. Many cities offer free tenant advisory services.",
+    "quizTemplateIds": [
+      "concept_lease_termination_d1",
+      "concept_lease_auto_renewal_d2",
+      "concept_lease_deposit_d2",
+      "concept_lease_illegal_clause_d3",
+      "concept_lease_wear_tear_d3"
+    ]
+  },
+  {
     "id": "taxes_brackets",
     "moduleId": "taxes",
     "title": "Marginal tax brackets",
@@ -927,6 +957,36 @@
       "w4_invested_d2",
       "w4_annual_growth_d2",
       "w4_lifetime_d3"
+    ]
+  },
+  {
+    "id": "concept_taxes_paycheck_stub",
+    "moduleId": "taxes",
+    "title": "What's actually on your paycheck stub",
+    "concept": "Your paycheck stub has 10-15 line items most workers can't decode. The big categories: gross pay, federal/state/local income tax withholding, FICA (Social Security + Medicare = 7.65% combined), pre-tax deductions (401k, HSA, FSA, health insurance \u2014 these reduce taxable income), post-tax deductions (Roth 401k, after-tax insurance), and garnishments. Understanding each line means you can spot errors and optimize.",
+    "shortcut": "Pre-tax deductions (401k, HSA, traditional FSA, health insurance) reduce both your federal AND FICA taxable wages. Post-tax deductions (Roth, after-tax health) reduce only what you take home, not what's taxed. This is why 401k contributions feel less expensive \u2014 they save tax + reduce gross at the same time.",
+    "example": "Sample biweekly stub on $80k salary:\nGross pay        $3,077\n\u2014 Pre-tax 401k    \u2212$308 (10%)\n\u2014 Pre-tax health  \u2212$120\n  Taxable wages   $2,649\n\u2014 Federal tax     \u2212$397\n\u2014 State tax       \u2212$133\n\u2014 FICA (7.65%)    \u2212$203\n  Net pay         $1,916\n\nYour 401k contribution 'cost' is really $308 \u2212 ($308 \u00d7 0.30) \u2248 $216 after tax.",
+    "quizTemplateIds": [
+      "concept_paycheck_fica_d1",
+      "concept_paycheck_pretax_d1",
+      "concept_paycheck_401k_cost_d2",
+      "concept_paycheck_post_tax_d2",
+      "concept_paycheck_check_error_d3"
+    ]
+  },
+  {
+    "id": "concept_taxes_filing_status",
+    "moduleId": "taxes",
+    "title": "Filing status \u2014 pick wrong, pay more",
+    "concept": "Your filing status determines your tax brackets, standard deduction, and eligibility for credits. The five options: Single, Married Filing Jointly (MFJ), Married Filing Separately (MFS), Head of Household (HoH), and Qualifying Widow(er). MFJ usually wins for married couples, but MFS can save money for couples with very different incomes, large medical bills, or IDR student loan payments. HoH has special requirements but offers a bigger standard deduction than Single.",
+    "shortcut": "Married? Default to MFJ. Consider MFS if you have IBR/PAYE student loans (calculated only on your income) or one spouse has huge medical bills. Single parent providing > 50% of household costs? You're likely HoH, not Single \u2014 bigger standard deduction.",
+    "example": "Single vs HoH on $60k income:\nStandard deduction (2025):\n  Single: $15,200\n  HoH:    $22,800\n  Difference: $7,600 less taxable income\n\nMFJ vs MFS for a couple at $60k + $200k:\nMFJ usually wins by $1,000-$3,000\nMFS makes sense if the lower-income spouse has IDR student loans\n(payment calculated only on their income)",
+    "quizTemplateIds": [
+      "concept_filing_default_d1",
+      "concept_filing_hoh_d2",
+      "concept_filing_mfs_idr_d2",
+      "concept_filing_mfj_default_d3",
+      "concept_filing_status_choice_d3"
     ]
   },
   {
@@ -1050,6 +1110,36 @@
     ]
   },
   {
+    "id": "concept_insurance_policy_priority",
+    "moduleId": "insurance",
+    "title": "What insurance policies do you actually need?",
+    "concept": "Most adults are over-insured on some policies (extended warranties, pet insurance) and under-insured on others (disability, umbrella liability). The priority order: health > auto/renter's-or-home > life (with dependents) > disability > umbrella > pet > extended warranty. The principle: SELF-INSURE small risks (extended warranties, low deductibles), TRANSFER catastrophic ones (health, disability, liability).",
+    "shortcut": "Rule: insure against what would be financially ruinous, NOT against minor inconveniences. A broken phone is annoying ($800). A hospital stay or year of disability is ruinous ($50k-$500k). Skip extended warranties, raise your auto deductible, but max out health and consider disability.",
+    "example": "Priority order (essential to optional):\n1. Health insurance       \u2014 catastrophic protection\n2. Auto + renter's/home   \u2014 required + liability\n3. Life (if dependents)   \u2014 replace your income\n4. Disability             \u2014 far more likely than death\n5. Umbrella liability     \u2014 once net worth > $500k\n6. Pet insurance          \u2014 optional\n7. Extended warranties    \u2014 almost never worth it",
+    "quizTemplateIds": [
+      "concept_insurance_priority_top_d1",
+      "concept_insurance_skip_d1",
+      "concept_insurance_overinsured_d2",
+      "concept_insurance_disability_priority_d3",
+      "concept_insurance_warranty_d3"
+    ]
+  },
+  {
+    "id": "concept_insurance_disability",
+    "moduleId": "insurance",
+    "title": "Disability insurance \u2014 the one no one talks about",
+    "concept": "You're statistically far more likely to be disabled than to die during your working years. About 1 in 4 of today's 20-year-olds will experience a disability lasting 90+ days before retirement (Social Security Administration). Yet most workers carry only basic employer-provided long-term disability \u2014 typically 60% of base salary, capped, and 'any-occupation' (no payout if you can do ANY job, even minimum-wage).",
+    "shortcut": "Three things to check on your disability coverage: (1) own-occupation vs any-occupation (own-occ pays if you can't do YOUR job \u2014 much better), (2) coverage cap (employer LTD caps low for high earners), (3) elimination period (waiting period before benefits start \u2014 typically 90 days, so you need an emergency fund).",
+    "example": "Why disability > life insurance for working-age adults:\nProbability of disability vs early death:\n  Disability 90+ days by 65: ~25%\n  Death by 65: ~5%\n\nEmployer LTD limits hurt high earners:\n  Salary $200k, LTD pays 60% = $120k\n  Capped at $10k/month = $120k/yr cap\n  Above $200k earners may need supplemental coverage",
+    "quizTemplateIds": [
+      "concept_disability_prob_d1",
+      "concept_disability_own_occ_d2",
+      "concept_disability_cap_d2",
+      "concept_disability_elim_period_d3",
+      "concept_disability_supplemental_d3"
+    ]
+  },
+  {
     "id": "car_monthly_vs_total",
     "moduleId": "car",
     "title": "Monthly payment vs total cost",
@@ -1170,6 +1260,36 @@
     ]
   },
   {
+    "id": "concept_car_negotiation",
+    "moduleId": "car",
+    "title": "Dealer tactics \u2014 what to watch for",
+    "concept": "Car dealerships have refined their tactics over decades. The 'four-square' worksheet that combines trade-in, down payment, monthly payment, and price into one confusing grid (designed to hide markup). The 'what payment can you afford?' trap (extends the term to inflate your total cost). The F&I (Finance & Insurance) office where they pitch GAP insurance, paint protection, and extended warranties at markup. Financing markup (dealers add 1-3% to the rate the lender quoted them). Document fees (often $300-$700, sometimes negotiable).",
+    "shortcut": "Negotiate ONE number: out-the-door price. Refuse to discuss monthly payment or trade-in until OTD is locked. Get pre-approved financing from your bank BEFORE walking in. Decline everything in the F&I office (extended warranty, GAP, paint protection) \u2014 you can buy these elsewhere for half the price.",
+    "example": "The 'monthly payment' trap:\n$30,000 car at $500/mo for 60 months = $30,000 paid (0% interest example, ignore)\nBut $30,000 car at $500/mo for 72 months = $36,000 paid\nSame monthly comfort, $6,000 more paid\n\nDealer F&I markup example:\nLender quotes 6% APR to dealer\nDealer offers you 7.5%\nOn $25k loan over 5 years: $1,000+ in extra interest, paid as F&I commission",
+    "quizTemplateIds": [
+      "concept_dealer_otd_d1",
+      "concept_dealer_payment_trap_d2",
+      "concept_dealer_fi_office_d2",
+      "concept_dealer_finance_markup_d3",
+      "concept_dealer_gap_insurance_d3"
+    ]
+  },
+  {
+    "id": "concept_car_warranty",
+    "moduleId": "car",
+    "title": "Manufacturer vs extended warranty",
+    "concept": "Most new cars come with a manufacturer warranty: typically 3 years / 36,000 miles bumper-to-bumper, 5 years / 60,000 miles powertrain. Extended warranties (sold by the dealer) add 1-7 years for $1,000-$3,000. Consumer Reports data: 55% of buyers never use their extended warranty, and those who do recoup only 60% of what they paid on average. The expected value is negative \u2014 it's insurance against repair anxiety, not a financial product.",
+    "shortcut": "Pass on extended warranties for: reliable brands (Toyota, Honda, Lexus), cars you'll sell before warranty expires, anyone who can self-insure (save $30/month for repairs instead). Consider extended warranties only for: first-year electric vehicles (high parts cost, less proven), or luxury European brands with notoriously expensive repairs.",
+    "example": "Extended warranty math:\nCost: $2,000 for 5 extra years\nConsumer Reports avg payout: $1,200\nExpected loss: $800\n\nAlternative: self-insure\nSave $33/month \u2192 $2,000 by year 5\nIf no major repair: you keep $2,000\nIf major repair ($1,500): still net positive $500",
+    "quizTemplateIds": [
+      "concept_warranty_manufacturer_d1",
+      "concept_warranty_extended_math_d2",
+      "concept_warranty_self_insure_d2",
+      "concept_warranty_when_worth_d3",
+      "concept_warranty_cpo_d3"
+    ]
+  },
+  {
     "id": "student_loan_monthly",
     "moduleId": "student_loans",
     "title": "Student loan monthly payment",
@@ -1287,6 +1407,36 @@
       "plus_origination_d2",
       "plus_total_cost_d3",
       "plus_decision_d3"
+    ]
+  },
+  {
+    "id": "concept_sl_subsidized_vs_unsubsidized",
+    "moduleId": "student_loans",
+    "title": "Subsidized vs unsubsidized loans",
+    "concept": "Subsidized loans (only available to undergrads with demonstrated financial need): the government pays the interest while you're in school, during grace period, and during deferment. Unsubsidized loans (available to all students): interest accrues from day one of disbursement. Most graduate loans and Parent PLUS are unsubsidized. The difference matters enormously: a $25k subsidized loan stays at $25k through graduation, while a $25k unsubsidized loan grows to ~$28k.",
+    "shortcut": "Subsidized = government pays interest while you're in school. Unsubsidized = you owe interest from day one. If you have any subsidized loan capacity unused (check your aid letter), take it first. Even if you don't need the money \u2014 borrow at the subsidized rate, hold the cash, and use it to pay down unsubsidized later.",
+    "example": "$25,000 borrowed, 4 years in school + 6 months grace, 5.5% interest:\nSubsidized: balance at repayment start = $25,000\nUnsubsidized: balance at repayment start \u2248 $31,000\n\nDifference: $6,000 added to principal you'll then pay interest on for 10 more years",
+    "quizTemplateIds": [
+      "concept_sl_sub_def_d1",
+      "concept_sl_unsub_def_d1",
+      "concept_sl_who_qualifies_d2",
+      "concept_sl_balance_growth_d3",
+      "concept_sl_grad_loans_d3"
+    ]
+  },
+  {
+    "id": "concept_sl_refi_protections_lost",
+    "moduleId": "student_loans",
+    "title": "Federal loan protections you lose by refinancing",
+    "concept": "Refinance salespeople pitch lower rates without mentioning what you give up. Refinancing federal loans to private permanently forfeits: IDR plans (payment based on income), PSLF (forgiveness after 10 years in public service), federal forbearance (pause payments during hardship), death/disability discharge (federal loans wiped if you die or become totally disabled), and any future federal relief (like COVID-era pauses). You CANNOT refi back to federal once you've gone private.",
+    "shortcut": "Refi makes sense only if ALL apply: (1) stable high income, (2) no chance of public-service work, (3) no risk of needing IDR/hardship pauses, (4) you can save 2%+ on rate. For everyone else, federal protections are worth more than the rate difference. Public school teachers, nurses in non-profits, gov't workers: NEVER refi.",
+    "example": "Refi tradeoff example:\nFederal loan: $40k at 6%, 10-year repayment, $444/mo\nPrivate refi: $40k at 4.5%, 10-year repayment, $415/mo\nSavings: $29/month = $3,480 over 10 years\n\nWhat you lose:\n\u2014 PSLF (could be $20k-$80k forgiven)\n\u2014 IDR (payments could drop to $0 if you lose your job)\n\u2014 COVID-era pause (saved typical borrower $5k-$10k)",
+    "quizTemplateIds": [
+      "concept_sl_refi_lose_idr_d1",
+      "concept_sl_refi_one_way_d2",
+      "concept_sl_refi_teacher_d2",
+      "concept_sl_refi_when_makes_sense_d3",
+      "concept_sl_refi_vs_protections_d3"
     ]
   }
 ]
