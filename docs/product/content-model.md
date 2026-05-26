@@ -8,8 +8,8 @@ All content is stored locally as JSON in `Resources/LocalContent/`. No backend r
 | File | Purpose | Count |
 |---|---|---|
 | `modules.json` | Module definitions (id, title, icon, color) | 10 |
-| `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 78 |
-| `quiz_templates.json` | Quiz question templates | 389 |
+| `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 96 |
+| `quiz_templates.json` | Quiz question templates (numerical + concept) | 479 |
 
 ## Module
 A group of lessons covering a topic area.
@@ -27,16 +27,16 @@ struct Module: Identifiable, Codable {
 ### V1 Modules
 | ID | Title | Icon | Lessons |
 |---|---|---|---|
-| `smart_shopping` | Smart Shopping | `cart.fill` | 8 |
-| `money_math` | Budgets & Spending | `dollarsign.circle` | 6 |
-| `salary` | Salary & Income | `briefcase` | 8 |
-| `investing` | Investing Basics | `chart.line.uptrend.xyaxis` | 10 |
-| `debt` | Debt & Loans | `creditcard` | 8 |
-| `housing` | Housing & Rent | `house.fill` | 7 |
-| `taxes` | Taxes & Paycheck | `doc.text.fill` | 7 |
-| `insurance` | Insurance & Healthcare | `cross.case.fill` | 8 |
-| `car` | Car & Big Purchases | `car.fill` | 8 |
-| `student_loans` | Student Loans & Education | `graduationcap.fill` | 8 |
+| `smart_shopping` | Smart Shopping | `cart.fill` | 9 |
+| `money_math` | Budgets & Spending | `dollarsign.circle` | 7 |
+| `salary` | Salary & Income | `briefcase` | 9 |
+| `investing` | Investing Basics | `chart.line.uptrend.xyaxis` | 13 |
+| `debt` | Debt & Loans | `creditcard` | 10 |
+| `housing` | Housing & Rent | `house.fill` | 9 |
+| `taxes` | Taxes & Paycheck | `doc.text.fill` | 9 |
+| `insurance` | Insurance & Healthcare | `cross.case.fill` | 10 |
+| `car` | Car & Big Purchases | `car.fill` | 10 |
+| `student_loans` | Student Loans & Education | `graduationcap.fill` | 10 |
 
 ## Lesson
 A short learning unit with one concept, one shortcut, and one worked example.
@@ -56,25 +56,28 @@ struct Lesson: Identifiable, Codable {
 Every lesson has exactly **5 quiz templates** assigned. The quiz engine cycles through them to generate 5 questions (first attempt) or 8 questions (subsequent attempts) per session, ensuring variety while staying on-topic.
 
 ## QuizTemplate
-Defines a parametric question that produces different numbers each time.
+Defines a question. Numerical templates use `answerFormula` for parametric generation. Concept templates use `conceptChoices`/`correctConceptChoice` for static text-MCQ.
 
 ```swift
 struct QuizTemplate: Identifiable, Codable {
     let id: String
     let moduleId: String
-    let difficulty: Int              // 1, 2, or 3
-    let inputMode: String?           // "freeEntry" or nil (= multiple choice)
-    let scenarioTemplate: String?    // optional context sentence
-    let promptTemplate: String       // question with {{variable}} placeholders
+    let difficulty: Int                   // 1, 2, or 3
+    let inputMode: String?                // "freeEntry" or nil (= multiple choice)
+    let scenarioTemplate: String?         // optional context sentence
+    let promptTemplate: String            // question with {{variable}} placeholders (numerical only)
     let variableRules: [VariableRule]
-    let answerFormula: String        // maps to QuizEngine formula
-    let answerFormat: String         // "currency", "percent", or "integer"
-    let distractorStrategy: String   // "roundedNeighbor", "offByDecimal", "commonMistake"
-    let explanationTemplate: String  // feedback with {{variable}} placeholders
+    let answerFormula: String?            // formula key (numerical); nil for concept templates
+    let answerFormat: String              // "currency", "percent", or "integer"
+    let distractorStrategy: String        // "roundedNeighbor", "offByDecimal", "commonMistake"
+    let explanationTemplate: String       // feedback with {{variable}} placeholders
+    // Concept template fields (text-MCQ, no formula evaluation)
+    let conceptChoices: [String]?         // 4 static text options
+    let correctConceptChoice: String?     // must match one entry in conceptChoices
 }
 ```
 
-See `docs/product/quiz-engine.md` for the full formula reference and generation logic.
+A template is either numerical (has `answerFormula`) or concept (has `conceptChoices` + `correctConceptChoice`). The QuizEngine branches on which fields are present. See `docs/product/quiz-engine.md` for the full formula reference and generation logic.
 
 ## SessionRecord
 Records the result of one completed quiz session.

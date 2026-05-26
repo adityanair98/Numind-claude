@@ -59,7 +59,7 @@ They may feel slow or rusty with:
 9. **Car & Big Purchases** (car) - monthly vs total cost, loan term delta, down payment savings, 20/4/10 rule, depreciation, TCO, lease vs buy, trade-in vs private sale (8 lessons)
 10. **Student Loans & Education** (student_loans) - monthly payment (rule of thumb), total cost, refinance vs PSLF, IDR, PSLF, employer benefit, grace period, Parent PLUS (8 lessons)
 
-**Total: 78 lessons, 389 quiz templates**
+**Total: 96 lessons, 479 quiz templates** (78 numerical + 18 concept lessons; ~389 numerical templates + ~90 concept templates)
 
 ## Core User Loop
 Home / Today
@@ -214,8 +214,9 @@ Currently implemented:
 - Design tokens and theme system
 - Local content model with JSON-based lessons and templates
 - Template-driven quiz engine with 120+ answer formulas
-- All 10 modules with 78 lessons
-- 389 quiz templates (5 per lesson) with proportional distractor generation
+- All 10 modules with 96 lessons (78 numerical + 18 concept)
+- 479 quiz templates (~5 per lesson) with proportional distractor generation
+- Concept template support added (text-MCQ, no formula evaluation) for lessons covering critical financial literacy topics that aren't reducible to mental math
 - Completion-based progression (mastery = gold star, not gate)
 - Checkpoint review quizzes
 - Zigzag learning path

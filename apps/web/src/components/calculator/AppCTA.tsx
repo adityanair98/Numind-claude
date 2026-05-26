@@ -29,7 +29,7 @@ export function AppCTA({ className = "" }: AppCTAProps) {
         </PillButton>
       </div>
       <p className="mt-3 text-xs text-white/40">
-        10 modules &middot; 78 lessons &middot; 389 practice questions
+        10 modules &middot; 96 lessons &middot; 479 practice questions
       </p>
     </section>
   );
