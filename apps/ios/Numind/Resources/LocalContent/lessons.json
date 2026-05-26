@@ -243,16 +243,17 @@
     "id": "net_pay_check",
     "moduleId": "salary",
     "title": "Gross vs net \u2014 what you actually keep",
-    "concept": "Your gross pay is what you earn before taxes. Net pay is what arrives in your bank account. Between federal tax, state tax, Social Security, and Medicare, most workers keep 70\u201375 cents of every dollar earned. Always plan your budget with net, never gross.",
-    "shortcut": "Quick estimate: take 25\u201330% off gross to get net. Earning $3,000/month gross? Expect $2,100\u2013$2,250 net. For annual salary: divide by 12 to get monthly gross, then knock off 25\u201330% for a working budget number.",
-    "example": "Gross pay: $3,000/month\n\u221225% deductions = $750\nNet pay \u2248 $2,250\n\n$60,000 salary\n\u00f7 12 = $5,000/month gross\n\u221225% = $3,750 net",
+    "concept": "Your gross pay is what you earn before taxes. Net pay is what arrives in your bank account. Between federal income tax, state tax, Social Security (6.2%), and Medicare (1.45%), most US workers keep roughly 65-80 cents of every dollar earned \u2014 the exact share depends on your bracket (per IRS Pub 15) and your state's income tax (zero in TX/FL/WA/NV/AK/SD/TN/WY; 5%+ in CA/NY/NJ/HI). Always plan your budget with net, never gross.",
+    "shortcut": "Quick estimate: take 25-30% off gross to get net (more in high-tax states, less in no-state-tax states). Earning $3,000/month gross? Expect $2,100-$2,250 net in most states. For annual salary: divide by 12 for monthly gross, then knock off 25-30% for a working budget number.",
+    "example": "Gross pay: $3,000/month\nFICA (7.65%) + fed (~12%) + state (~5%) \u2248 25%\nNet pay \u2248 $2,250\n\n$60,000 salary\n\u00f7 12 = $5,000/month gross\nIn TX (no state tax): ~$3,950 net\nIn CA (high state tax): ~$3,700 net",
     "quizTemplateIds": [
       "net_pay_deduction",
       "annual_to_monthly_pay",
       "net_pay_biweekly_d2",
       "net_pay_scenario_d2",
       "salary_monthly_annual_d1"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "raise_impact",
@@ -394,16 +395,17 @@
     "id": "roi_basic",
     "moduleId": "investing",
     "title": "ROI \u2014 the one number that compares anything",
-    "concept": "Return on investment is the universal scale: what % did you gain relative to what you put in? A kitchen renovation ($15k \u2192 $20k home value) is 33% ROI. An index fund averages 10%/year. A $200 course leading to a $5k raise is 2,400% ROI. ROI lets you compare wildly different decisions on the same axis.",
-    "shortcut": "ROI% = (gain \u00f7 cost) \u00d7 100. Universal comparison: kitchen reno 33%, course 2,400%, index fund 10%/yr. But ROI isn't always the answer \u2014 a $3k vacation has 0% financial ROI but priceless life ROI.",
-    "example": "Course: paid $200, got $5,000 raise\nROI = $5,000 \u00f7 $200 \u00d7 100 = 2,500%\n\nKitchen reno: $15k \u2192 $20k home value\nROI = $5,000 \u00f7 $15,000 \u00d7 100 = 33%\n\nIndex fund: $1,000 \u2192 $1,100 in a year\nROI = $100 \u00f7 $1,000 \u00d7 100 = 10%",
+    "concept": "Return on investment is the universal scale: what % did you gain relative to what you put in? A kitchen renovation ($15k \u2192 $20k home value) is 33% ROI. The S&P 500 has historically returned ~10%/year nominal long-run average (per S&P 500 historical data; ~7%/year after inflation per Robert Shiller's data series) \u2014 but any single year ranges from \u221237% (2008) to +30%+. A $200 course leading to a $5k raise is 2,500% ROI. ROI lets you compare wildly different decisions on the same axis.",
+    "shortcut": "ROI% = (gain \u00f7 cost) \u00d7 100. Universal comparison: kitchen reno 33%, course 2,500%, S&P long-run ~10%/yr nominal (~7% real). But ROI isn't always the answer \u2014 a $3k vacation has 0% financial ROI but priceless life ROI. And the 10% index-fund figure is a multi-decade average \u2014 don't assume next year will hit it.",
+    "example": "Course: paid $200, got $5,000 raise\nROI = $5,000 \u00f7 $200 \u00d7 100 = 2,500%\n\nKitchen reno: $15k \u2192 $20k home value\nROI = $5,000 \u00f7 $15,000 \u00d7 100 = 33%\n\nS&P 500 historical:\n~10%/yr nominal long-run average (1928-2023)\n~7%/yr real (after inflation)\nIndividual year range: \u221237% to +30%+",
     "quizTemplateIds": [
       "roi_percent_calc",
       "dollar_return_calc",
       "roi_percent_d2",
       "portfolio_gain_d2",
       "roi_compare_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "investing_401k_match",
@@ -530,60 +532,64 @@
     "moduleId": "investing",
     "title": "Stocks, bonds, index funds \u2014 what they actually are",
     "concept": "Most adults invest in a 401k without knowing what each option actually IS. Stock = partial ownership in a company. Bond = a loan you made to a company or government, repaid with interest. Index fund = a basket holding all stocks in a market index (like the S&P 500). ETF and mutual fund are different wrappers around the same idea \u2014 ETFs trade like stocks all day, mutual funds settle once daily at close.",
-    "shortcut": "Stock = ownership, highest risk and return. Bond = loan, lower risk, lower return. Index fund = the easy 'just buy the market' option, ~90% of pros can't beat it over the long run. Target-date fund = an index fund that automatically gets safer as you age.",
-    "example": "Risk/return ranking (historical):\nIndividual stock > Index fund > Bond > Savings account\n\nFor most people: a target-date fund is the right default. It's diversified, low-fee, and auto-rebalances. The S&P 500 index has averaged ~10%/year nominal returns over the long run.",
+    "shortcut": "Stock = ownership, highest risk and return. Bond = loan, lower risk, lower return. Index fund = the easy 'just buy the market' option \u2014 over 20-year windows, ~85-95% of active US large-cap fund managers underperform the S&P 500 (per S&P SPIVA Scorecard, multi-year). Target-date fund = an index fund that automatically gets safer as you age.",
+    "example": "Risk/return ranking (historical):\nIndividual stock > Index fund > Bond > Savings account\n\nFor most people: a target-date fund is the right default. It's diversified, low-fee, and auto-rebalances. The S&P 500 has averaged ~10%/year nominal long-run returns (per S&P historical data) \u2014 versus most active managers who can't beat it net of fees (per SPIVA).",
     "quizTemplateIds": [
       "concept_stock_def_d1",
       "concept_bond_def_d1",
       "concept_index_fund_d2",
       "concept_etf_vs_mutual_d2",
       "concept_risk_return_rank_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_investing_asset_allocation",
     "moduleId": "investing",
     "title": "Asset allocation: stocks vs bonds by age",
-    "concept": "How you split your portfolio between stocks (growth, volatility) and bonds (stability, lower returns) matters more than which specific funds you pick. The standard rule of thumb: 120 minus your age = % in stocks. A 30-year-old \u2192 90% stocks. A 60-year-old \u2192 60% stocks. Younger investors can stomach more risk because they have decades to recover from any crash. Target-date funds automate this glide.",
-    "shortcut": "Stocks % = 120 \u2212 your age. The rest in bonds. Override if your risk tolerance is unusually high or low. If you don't want to think about it, pick a target-date fund matching your retirement year \u2014 it does the rebalancing for you.",
-    "example": "Age 28: ~92% stocks, 8% bonds\nAge 40: ~80% stocks, 20% bonds\nAge 55: ~65% stocks, 35% bonds\n\nA 28-year-old at 60% bonds is wildly too conservative \u2014 they'd give up massive long-term returns to avoid short-term volatility they have time to recover from.",
+    "concept": "How you split between stocks (growth, volatility) and bonds (stability, lower return) matters more than which specific funds you pick. Two separate things drive the right mix: **risk capacity** (how long until you need the money \u2014 long horizons can absorb crashes) and **risk tolerance** (how you actually behave when the market drops 30%). The famous '120 minus your age' rule is a starting point, not gospel \u2014 Vanguard and Fidelity both now suggest more equity exposure than the older '100 minus your age' rule because lifespans are longer. Use the rule as a default; let your tolerance push you \u00b1 10-20%.",
+    "shortcut": "Default: stocks % \u2248 110-120 minus your age. Then adjust: if you'd panic-sell at a 30% drop, dial down 10-20%; if you'd see a crash as a buying opportunity, dial up. If you don't want to think about it, pick a **target-date fund** matching your retirement year \u2014 it does the glide path and rebalancing for you.",
+    "example": "Age 28, retirement ~40 yrs away:\nDefault (110-age): ~82% stocks \u00b7 (120-age): ~92% stocks\nBoth defensible; depends on tolerance.\n\nAge 28 with 60% bonds: too conservative \u2014 gives up decades of compounding to avoid volatility you have time to ride out.\nAge 55 with 100% stocks: too aggressive \u2014 a major crash within 10 years of retirement is hard to recover from on a fixed timeline.",
     "quizTemplateIds": [
       "concept_alloc_120_d1",
       "concept_alloc_bonds_role_d2",
       "concept_target_date_d2",
       "concept_alloc_too_conservative_d3",
       "concept_crash_response_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_investing_behavioral_traps",
     "moduleId": "investing",
     "title": "Why you panic-sell (and how to stop)",
-    "concept": "The math of investing is simple. The behavior is hard. Loss aversion (losses hurt 2\u00d7 more than equivalent gains feel good), recency bias (recent events feel like they'll continue forever), and herd behavior (selling because everyone else is) destroy returns. Investors who panic-sold during March 2020 missed a ~70% recovery within 12 months. The cost of trying to time markets is real and measurable.",
-    "shortcut": "Two rules that beat 95% of behavioral mistakes: (1) Automate contributions on payday so you can't 'wait for a better moment'. (2) Don't check your balance during a crash \u2014 checking triggers panic, panic triggers selling, selling locks in losses.",
-    "example": "March 2020 COVID crash:\nS&P 500 dropped ~34% in 5 weeks.\nBy March 2021: full recovery + ~70% rebound.\n\nPanic-sellers locked in 34% losses. Holders watched their accounts return to all-time highs within a year. The behavioral discipline was worth more than any stock pick.",
+    "concept": "The math of investing is simple. The behavior is hard. Loss aversion (losses hurt ~2\u00d7 more than equivalent gains feel good, per Kahneman & Tversky's prospect theory research), recency bias (recent events feel like they'll continue forever), and herd behavior (selling because everyone else is) destroy returns. Investors who sold during the March 2020 COVID crash missed a recovery that took the S&P 500 from its March 23 low back to its February high by August 2020, and ~70% above the low by year-end (per S&P 500 historical data).",
+    "shortcut": "Two rules that beat 95% of behavioral mistakes: (1) Automate contributions on payday so you can't 'wait for a better moment.' (2) Don't check your balance during a crash \u2014 checking triggers panic, panic triggers selling, selling locks in losses.",
+    "example": "March 2020 COVID crash (S&P 500):\nDropped ~34% over Feb 19 - Mar 23, 2020.\nRecovered to pre-crash high by August 2020.\nBy Dec 31, 2020: ~+70% from the March 23 low.\n\nPanic-sellers in March locked in 34% losses. Holders who did nothing watched their accounts surpass all-time highs within a year. The behavioral discipline was worth more than any stock pick.",
     "quizTemplateIds": [
       "concept_loss_aversion_d1",
       "concept_panic_sell_d2",
       "concept_market_timing_myth_d2",
       "concept_wait_for_dip_d3",
       "concept_panic_sell_2020_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "credit_card_interest",
     "moduleId": "debt",
     "title": "How credit card interest works",
-    "concept": "Credit card APR sounds small \u2014 20% \u2014 but it compounds monthly. The interest charge each month is APR \u00f7 12 \u00d7 balance. On a $2,000 balance at 20% APR you're paying ~$33 every single month just in interest.",
-    "shortcut": "Monthly interest = balance \u00d7 APR% \u00f7 12. To estimate: move the decimal left two places (gives 1%), multiply by your APR, divide by 12. $2,000 \u00d7 20% \u00f7 12 = $33.33/month.",
-    "example": "Balance: $2,000 \u00b7 APR: 20%\nMonthly rate = 20% \u00f7 12 = 1.67%\nInterest = $2,000 \u00d7 1.67% = $33.33",
+    "concept": "Credit card APR sounds small \u2014 20% \u2014 but it compounds. As a mental approximation, the monthly interest charge \u2248 balance \u00d7 APR \u00f7 12. Real billing is slightly different: most US issuers use the 'average daily balance' method with a daily periodic rate of APR \u00f7 365 (per CFPB Credit Card Agreement standards), so balances that fluctuate within the month produce a slightly different exact charge. For sanity-checking your statement, the APR \u00f7 12 mental model lands within a few dollars on typical balances.",
+    "shortcut": "Mental estimate: monthly interest \u2248 balance \u00d7 APR \u00f7 12. To compute: move the decimal left two places to get 1%, multiply by your APR, divide by 12. $2,000 \u00d7 20% \u00f7 12 = $33.33/month. Real issuer billing (daily periodic rate \u00d7 average daily balance) lands within ~$1-2 of this.",
+    "example": "Balance: $2,000 \u00b7 APR: 20%\nMonthly approximation: 20% \u00f7 12 = 1.67%\nInterest \u2248 $2,000 \u00d7 1.67% = $33.33\n\nReal billing on a stable balance: identical.\nReal billing on a balance that swung from $1,500 \u2192 $2,500 mid-month: based on average daily balance \u2248 $2,000 \u2014 still ~$33.",
     "quizTemplateIds": [
       "cc_monthly_interest",
       "cc_monthly_interest_scenario",
       "cc_annual_interest",
       "cc_interest_year_d3",
       "cc_rate_check_d1"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "minimum_payment_trap",
@@ -635,16 +641,17 @@
     "id": "extra_payment_power",
     "moduleId": "debt",
     "title": "The power of extra payments",
-    "concept": "Every extra dollar you pay toward debt saves you that dollar's worth of future interest. The annual interest saving from an extra monthly payment equals extra payment \u00d7 APR%. Small extra payments compound over time into big savings.",
-    "shortcut": "Annual interest saved \u2248 extra payment \u00d7 APR%. Paying an extra $100/month on a 20% APR card saves $20/year per $100 \u2014 plus you reduce the principal faster, which shrinks future interest too.",
-    "example": "Extra payment: $100 \u00b7 APR: 20%\nAnnual saving \u2248 $100 \u00d7 20% = $20\nPlus reduced principal each month",
+    "concept": "Every extra dollar you pay toward debt does two things: kills the interest that dollar would have generated this year, AND shrinks the principal so every future month accrues less interest too. The first-year saving (~extra \u00d7 APR%) is just the floor \u2014 the cumulative saving over the full payoff window is several multiples larger because each smaller balance keeps compounding less.",
+    "shortcut": "First-year interest saved \u2248 extra payment \u00d7 APR%. Cumulative saving over the full payoff is typically 2-4\u00d7 that, depending on how long until payoff. On 20% APR debt: $100/mo extra saves ~$240 in year 1, but ~$600-1,200 over a 3-5 year payoff (the principal shrinks each month, so future interest shrinks with it).",
+    "example": "Extra: $100/mo \u00b7 APR: 20%\nYear 1 interest saved: ~$240 ($100 \u00d7 20% \u00d7 12)\n\nFull payoff (~3 yrs on a $3k balance):\nTotal interest saved: ~$700\nReason: each $100 of extra principal kills not just its own 20% APR, but every future month's interest on that $100 too.",
     "quizTemplateIds": [
       "cc_extra_payment_saving",
       "cc_extra_d1",
       "cc_annual_cost_d2",
       "cc_balance_interest_d2",
       "principal_reduction_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "debt_avalanche_snowball",
@@ -680,16 +687,17 @@
     "id": "debt_bnpl_hidden_cost",
     "moduleId": "debt",
     "title": "Buy Now, Pay Later \u2014 the math they don't show",
-    "concept": "BNPL splits a purchase into 4 'easy payments.' Sounds free. Miss one payment = up to $35 late fee (sometimes 25% of the missed payment). On a $300 purchase that's an 11.7% surcharge. The real danger: stacking 3-4 BNPL plans creates invisible debt \u2014 none of it on your credit card statement. Research: 49% of BNPL users report financial problems, 24% have missed at least one payment.",
-    "shortcut": "Total BNPL = number of payments \u00d7 payment amount. Surcharge from one late fee = lateFee \u00f7 originalPrice \u00d7 100. Stacked monthly burden = sum of all your BNPL payments. If you can't pay cash today, you can't afford it.",
-    "example": "$300 item, 4 \u00d7 $75 BNPL:\nMiss one: $35 late fee\nTotal paid: $335\nSurcharge: 11.7%\n\nStacked plans:\n$75 (item A) + $50 (item B) + $40 (item C) = $165/mo invisible debt",
+    "concept": "BNPL splits a purchase into 4 'easy payments.' Sounds free. Miss one payment = up to $35 late fee (sometimes 25% of the missed payment). On a $300 purchase that's an 11.7% surcharge \u2014 higher than most credit card APRs. The real danger is stacking: research from CFPB's BNPL industry studies shows BNPL users carry an average of 9 loans per year, and BNPL borrowers are roughly twice as likely as non-users to overdraft their bank account in the same period (per CFPB BNPL Market Trends Reports, 2022-23). None of these loans show up on your credit card statement, making the total cash drain invisible.",
+    "shortcut": "Total BNPL = number of payments \u00d7 payment amount. Surcharge from one late fee = lateFee \u00f7 originalPrice \u00d7 100. Stacked monthly burden = sum of all your BNPL payments across providers. The clean test: if you can't pay cash today, you can't afford it.",
+    "example": "$300 item, 4 \u00d7 $75 BNPL:\nMiss one: $35 late fee\nTotal paid: $335\nSurcharge: 11.7%\n\nTypical user (per CFPB):\n~9 BNPL loans/year stacked across Affirm/Klarna/Afterpay\nMonthly burden invisible to credit reports\n2\u00d7 more likely to overdraft than non-users",
     "quizTemplateIds": [
       "bnpl_simple_d1",
       "bnpl_late_fee_d2",
       "bnpl_surcharge_pct_d3",
       "bnpl_stacked_d3",
       "bnpl_annual_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_debt_credit_scores",
@@ -770,7 +778,7 @@
     "id": "housing_roommate_math",
     "moduleId": "housing",
     "title": "The roommate math \u2014 $6,500/year",
-    "concept": "A roommate is the single biggest housing decision for renters. A 2025 study across 100 US cities found splitting a 2BR vs renting a 1BR solo saves an average of $541/month \u2014 $6,500/year \u2014 and that's before utilities, internet, and household supplies (which also split). In some cities you save 48%.",
+    "concept": "A roommate is the single biggest housing decision for renters. Studies of rent-vs-1BR-vs-shared-2BR across major US cities (e.g. Apartment List, Zumper, RentCafe annual rental reports) consistently find a ~$500-700/month savings \u2014 roughly $6,000-$8,500/year \u2014 from sharing a 2BR vs renting a 1BR solo, before utilities and household supplies (which also split). In the highest-rent cities (SF, NYC, Boston), the savings can hit 40-50%.",
     "shortcut": "Annual saving = (1BR + 1BR utilities) \u2212 (shared 2BR + 2BR utilities) / 2. Unequal split? Bigger bedroom = 55%, smaller = 45%. Most apartment splits should be slightly uneven based on room size.",
     "example": "1BR alone: $1,800 rent + $200 util = $2,000/mo\n2BR shared: $2,400 rent + $250 util\nYour half: $1,325/mo\nSavings: $675/mo, $8,100/yr\n\nUnequal split (bigger room):\n2BR $2,400 \u00d7 55% = $1,320 for you",
     "quizTemplateIds": [
@@ -779,7 +787,8 @@
       "roommate_unequal_d3",
       "roommate_annual_d2",
       "roommate_compare_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "housing_true_cost",
@@ -875,16 +884,17 @@
     "id": "taxes_deductions",
     "moduleId": "taxes",
     "title": "Paycheck deductions",
-    "concept": "Your gross pay gets reduced by FICA (Social Security + Medicare = 7.65%), federal income tax, and state income tax before you see a dime. Understanding these deductions helps you predict your actual take-home pay from any job offer.",
-    "shortcut": "Net pay = gross \u00d7 (1 \u2212 total deduction rate). If FICA is 7.65%, federal is 12%, and state is 5%, total rate = 24.65%. From $4,000 gross: $4,000 \u00d7 0.7535 = $3,014 net.",
-    "example": "Gross: $4,000\nFICA (7.65%): $306\nFederal (12%): $480\nState (5%): $200\nNet: $3,014",
+    "concept": "Your gross pay gets reduced by FICA (6.2% Social Security + 1.45% Medicare = 7.65% combined), federal income tax, and state income tax before you see a dime. Two FICA nuances for higher earners: Social Security applies only up to the annual wage base (~$176,100 for 2025 per SSA) \u2014 above that, only the 1.45% Medicare portion continues. Workers earning over $200k single / $250k MFJ also pay the Additional Medicare Tax of 0.9% on income above that threshold (per IRS).",
+    "shortcut": "Net pay = gross \u00d7 (1 \u2212 total deduction rate). If FICA is 7.65%, federal is 12%, and state is 5%, total rate = 24.65%. From $4,000 gross: $4,000 \u00d7 0.7535 = $3,014 net. Earning above the SS wage base? Knock the rate down by 6.2% on dollars above the cap.",
+    "example": "Gross: $4,000/mo (~$48k/yr, below SS cap)\nFICA (7.65%): $306\nFederal (12%): $480\nState (5%): $200\nNet: $3,014\n\nHigh earner above $176,100 (2025):\nOn dollars above the cap, only 1.45% Medicare applies (plus 0.9% Additional Medicare above $200k single).",
     "quizTemplateIds": [
       "deduction_basic_d1",
       "deduction_net_d1",
       "deduction_fica_d2",
       "deduction_scenario_d2",
       "deduction_compare_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "taxes_refund",
@@ -1057,22 +1067,23 @@
     "id": "insurance_hsa_advantage",
     "moduleId": "insurance",
     "title": "HSA triple tax advantage",
-    "concept": "HSAs have the triple tax advantage: contributions are pre-tax (reduce taxable income), growth is tax-free, withdrawals for medical are tax-free. The hidden superpower: after age 65, you can withdraw HSA funds for ANY purpose (just pay income tax, like a Traditional IRA). Medical withdrawals stay tax-free at any age. This makes the HSA arguably the best retirement account in the tax code.",
-    "shortcut": "Annual tax saving = contribution \u00d7 your tax rate. Long-term: HSA grows like an investment account. $3,500/yr from 30 to 65 at 7% growth = ~$550,000, all tax-free for medical or income-taxed for anything else.",
-    "example": "Contribute $3,000 at 22% rate:\nTax saving: $660 immediate\n\nLong-term:\n$3,500/yr \u00d7 35 yrs at 7%\n= ~$550,000\nUsed for medical: $0 tax\nUsed for retirement (after 65): income tax",
+    "concept": "HSAs have the triple tax advantage: contributions are pre-tax (reduce taxable income AND payroll tax if via Section 125), growth is tax-free, and withdrawals for qualified medical are tax-free at any age. The hidden superpower: after age 65, you can withdraw HSA funds for ANY purpose (just pay ordinary income tax, like a Traditional IRA). 2025 contribution limits: $4,300 self-only / $8,550 family (per IRS Rev Proc 2024-25). You must be enrolled in a qualifying HDHP (2025 minimum deductible: $1,650 self / $3,300 family) to contribute. This combination makes the HSA arguably the most tax-efficient retirement account in the US code.",
+    "shortcut": "Annual tax saving = contribution \u00d7 (your income tax rate + ~7.65% FICA if contributed via payroll). Long-term: HSA grows like an investment account. $3,500/yr from age 30 to 65 at 7% growth \u2248 $550,000, all tax-free for medical or income-taxed for anything else.",
+    "example": "Contribute $3,000 at 22% rate via payroll:\nIncome tax saved: $660\nFICA saved (7.65%): $230\nTotal immediate saving: $890\n\nLong-term:\n$3,500/yr \u00d7 35 yrs at 7% growth\n\u2248 $550,000\nUsed for medical: $0 tax\nUsed for retirement (after 65): ordinary income tax only",
     "quizTemplateIds": [
       "ins_hsa_saving_d1",
       "ins_hsa_annual_d1",
       "ins_hsa_scenario_d2",
       "ins_hsa_compare_d2",
       "ins_hsa_retirement_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "insurance_fsa_use_it",
     "moduleId": "insurance",
     "title": "FSA: free money or wasted money?",
-    "concept": "Flexible Spending Accounts are use-it-or-lose-it: any unspent balance at year-end disappears (some plans allow $640 rollover or 2.5-month grace period). The tax savings = election \u00d7 your tax rate. If you elect $2,850 at a 25% bracket, you save $712 in tax. But if you only spend $1,800, you forfeit $1,050 \u2014 for a net loss of $338.",
+    "concept": "Flexible Spending Accounts are use-it-or-lose-it: any unspent balance at year-end is generally forfeited. Employers can offer one (not both) of two grace mechanisms: a 2.5-month grace period to spend prior-year funds, or a limited rollover (IRS-indexed; ~$660 for 2025 per IRS Rev Proc). 2025 contribution cap: $3,300 per employee (per IRS). Tax savings = election \u00d7 your tax rate. If you elect $3,000 at a 25% bracket, you save $750 in tax. But if you only spend $1,800, you forfeit $1,200 \u2014 for a net loss of $450.",
     "shortcut": "Only elect what you'll definitely spend. Tax savings = election \u00d7 tax rate. Break-even: spend at least (1 \u2212 tax rate) of your election. In a 25% bracket, you need to spend at least 75% of what you elect to come out ahead.",
     "example": "Election: $2,850 at 25% bracket\nTax savings: $712\n\nScenario A: Spend $2,850 \u2192 save $712 \u2713\nScenario B: Spend $1,800 \u2192 save $712 in tax but lose $1,050 unused\nNet: \u2212$338",
     "quizTemplateIds": [
@@ -1081,7 +1092,8 @@
       "fsa_breakeven_d3",
       "fsa_election_compare_d2",
       "fsa_max_safe_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "insurance_life_coverage",
@@ -1132,16 +1144,17 @@
     "id": "concept_insurance_disability",
     "moduleId": "insurance",
     "title": "Disability insurance \u2014 the one no one talks about",
-    "concept": "You're statistically far more likely to be disabled than to die during your working years. About 1 in 4 of today's 20-year-olds will experience a disability lasting 90+ days before retirement (Social Security Administration). Yet most workers carry only basic employer-provided long-term disability \u2014 typically 60% of base salary, capped, and 'any-occupation' (no payout if you can do ANY job, even minimum-wage).",
-    "shortcut": "Three things to check on your disability coverage: (1) own-occupation vs any-occupation (own-occ pays if you can't do YOUR job \u2014 much better), (2) coverage cap (employer LTD caps low for high earners), (3) elimination period (waiting period before benefits start \u2014 typically 90 days, so you need an emergency fund).",
-    "example": "Why disability > life insurance for working-age adults:\nProbability of disability vs early death:\n  Disability 90+ days by 65: ~25%\n  Death by 65: ~5%\n\nEmployer LTD limits hurt high earners:\n  Salary $200k, LTD pays 60% = $120k\n  Capped at $10k/month = $120k/yr cap\n  Above $200k earners may need supplemental coverage",
+    "concept": "You're statistically far more likely to be disabled than to die during your working years. The Social Security Administration estimates about 1 in 4 of today's 20-year-olds will become disabled before reaching retirement age (per SSA Disability Basic Facts). Yet most workers carry only basic employer-provided long-term disability \u2014 typically 60% of base salary, capped, and on an 'any-occupation' definition (no payout if you can do ANY job, even minimum-wage).",
+    "shortcut": "Three things to check on your disability coverage: (1) own-occupation vs any-occupation (own-occ pays if you can't do YOUR specific job \u2014 much better, much pricier), (2) coverage cap (employer LTD caps low for high earners), (3) elimination period (the waiting period before benefits start \u2014 typically 90 days, so you need an emergency fund to bridge that gap).",
+    "example": "Why disability > life insurance for most working-age adults (per SSA):\nProbability before age 65:\n  Disability 90+ days: ~25%\n  Death: ~5-7%\n\nEmployer LTD limits hurt high earners:\n  Salary $200k, LTD pays 60% = $120k\n  Capped at $10k/month = $120k/yr cap\n  Above $200k earners may need supplemental private coverage.",
     "quizTemplateIds": [
       "concept_disability_prob_d1",
       "concept_disability_own_occ_d2",
       "concept_disability_cap_d2",
       "concept_disability_elim_period_d3",
       "concept_disability_supplemental_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "car_monthly_vs_total",
@@ -1282,16 +1295,17 @@
     "id": "concept_car_warranty",
     "moduleId": "car",
     "title": "Manufacturer vs extended warranty",
-    "concept": "Most new cars come with a manufacturer warranty: typically 3 years / 36,000 miles bumper-to-bumper, 5 years / 60,000 miles powertrain. Extended warranties (sold by the dealer) add 1-7 years for $1,000-$3,000. Consumer Reports data: 55% of buyers never use their extended warranty, and those who do recoup only 60% of what they paid on average. The expected value is negative \u2014 it's insurance against repair anxiety, not a financial product.",
-    "shortcut": "Pass on extended warranties for: reliable brands (Toyota, Honda, Lexus), cars you'll sell before warranty expires, anyone who can self-insure (save $30/month for repairs instead). Consider extended warranties only for: first-year electric vehicles (high parts cost, less proven), or luxury European brands with notoriously expensive repairs.",
-    "example": "Extended warranty math:\nCost: $2,000 for 5 extra years\nConsumer Reports avg payout: $1,200\nExpected loss: $800\n\nAlternative: self-insure\nSave $33/month \u2192 $2,000 by year 5\nIf no major repair: you keep $2,000\nIf major repair ($1,500): still net positive $500",
+    "concept": "Most new cars come with a manufacturer warranty: typically 3 years / 36,000 miles bumper-to-bumper, 5 years / 60,000 miles powertrain (varies by automaker \u2014 Hyundai/Kia and Mitsubishi offer 10-year powertrain). Extended warranties / service contracts (sold by the dealer F&I office) add 1-7 years for $1,000-$3,000. Consumer Reports surveys of car owners consistently find the majority never use their extended warranty, and those who do recoup less than what they paid on average (per Consumer Reports auto reliability surveys). The expected value is negative \u2014 it's insurance against repair anxiety, not a financial product.",
+    "shortcut": "Pass on extended warranties for: reliable brands (Toyota, Honda, Lexus \u2014 per Consumer Reports reliability rankings), cars you'll sell before warranty expires, anyone who can self-insure (save $30/month for repairs instead). Consider extended warranties only for: first-year electric vehicles (high parts cost, less proven), or luxury European brands with notoriously expensive repairs (BMW, Mercedes, Audi, Land Rover).",
+    "example": "Extended warranty math:\nCost: $2,000 for 5 extra years\nAvg payout (per CR surveys): well under $2k for most buyers\nExpected loss: typically several hundred dollars\n\nAlternative: self-insure\nSave $33/month \u2192 $2,000 by year 5\nIf no major repair: you keep $2,000\nIf major repair ($1,500): still net positive $500",
     "quizTemplateIds": [
       "concept_warranty_manufacturer_d1",
       "concept_warranty_extended_math_d2",
       "concept_warranty_self_insure_d2",
       "concept_warranty_when_worth_d3",
       "concept_warranty_cpo_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "student_loan_monthly",
@@ -1373,16 +1387,17 @@
     "id": "student_loan_employer_benefit",
     "moduleId": "student_loans",
     "title": "Does your employer pay your student loans?",
-    "concept": "Section 127 of the tax code lets employers contribute up to $5,250/year tax-free toward employee student loans. Made permanent under the OBBBA in 2025. As of 2025, 26% of employers offer this. That's equivalent to a $437.50/month tax-free raise that goes directly to your loan principal.",
-    "shortcut": "Annual benefit \u00f7 12 = monthly contribution to principal. Multi-year: benefit \u00d7 years. Plus the interest you DON'T pay on principal that gets paid down earlier (rough: benefit \u00d7 4-6% \u00d7 half the years).",
-    "example": "Employer max: $5,250/yr\nMonthly: $437.50\n\n5 years of full benefit:\n$26,250 paid by employer\n+ ~$2,000 in interest you don't pay\nTotal value: ~$28,250",
+    "concept": "If your employer offers it, IRC \u00a7 127 lets them contribute up to $5,250/year tax-free toward your student loans \u2014 made permanent under the OBBBA in 2025. Adoption is still uncommon: around 26% of employers offered it in 2024 (per SHRM 2024 Employee Benefits Survey), heavily skewed toward larger employers, professional services, healthcare, and tech. So this isn't a default benefit to assume \u2014 but if your benefits package includes it, it's effectively a $437.50/month tax-free raise that goes straight to principal.",
+    "shortcut": "Annual benefit \u00f7 12 = monthly principal contribution. Multi-year value: benefit \u00d7 years + interest you avoid (rough: benefit \u00d7 your rate \u00d7 half the remaining years, because the principal shrinks linearly). Check your benefits portal for 'student loan repayment' or 'education assistance' line items \u2014 it's often filed under the wrong header.",
+    "example": "Your employer offers the max $5,250/yr (per IRC \u00a7 127):\nMonthly: $437.50 straight to principal\n\n5 years of full benefit:\n$26,250 paid by employer\n+ ~$2,000 in interest you avoid (on a 6% loan)\nTotal value: ~$28,250 \u2014 equivalent to a $5,650/yr tax-free raise.",
     "quizTemplateIds": [
       "sl_employer_monthly_d1",
       "sl_employer_5yr_d2",
       "sl_employer_with_interest_d3",
       "sl_employer_vs_raise_d2",
       "sl_employer_lifetime_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "student_loan_grace_period",
@@ -1419,30 +1434,32 @@
     "id": "concept_sl_subsidized_vs_unsubsidized",
     "moduleId": "student_loans",
     "title": "Subsidized vs unsubsidized loans",
-    "concept": "Subsidized loans (only available to undergrads with demonstrated financial need): the government pays the interest while you're in school, during grace period, and during deferment. Unsubsidized loans (available to all students): interest accrues from day one of disbursement. Most graduate loans and Parent PLUS are unsubsidized. The difference matters enormously: a $25k subsidized loan stays at $25k through graduation, while a $25k unsubsidized loan grows to ~$28k.",
-    "shortcut": "Subsidized = government pays interest while you're in school. Unsubsidized = you owe interest from day one. If you have any subsidized loan capacity unused (check your aid letter), take it first. Even if you don't need the money \u2014 borrow at the subsidized rate, hold the cash, and use it to pay down unsubsidized later.",
-    "example": "$25,000 borrowed, 4 years in school + 6 months grace, 5.5% interest:\nSubsidized: balance at repayment start = $25,000\nUnsubsidized: balance at repayment start \u2248 $31,000\n\nDifference: $6,000 added to principal you'll then pay interest on for 10 more years",
+    "concept": "Subsidized loans are need-based and capped \u2014 undergrads with demonstrated financial need on their FAFSA may qualify, up to annual limits ($3,500-$5,500/year per Federal Student Aid). On a subsidized loan, the government pays the interest while you're in school, during the 6-month grace period, and during qualified deferment. Unsubsidized loans are available to all eligible students but accrue interest from disbursement onward. Most graduate loans and Parent PLUS are unsubsidized. The difference compounds: a $25k subsidized loan stays at $25k through graduation; a $25k unsubsidized loan grows to ~$28k over four years at 5.5%.",
+    "shortcut": "Borrowing order if you have a mix offered: subsidized first (free money on the interest), unsubsidized second, federal Parent PLUS third (worst rate + origination), private last (no federal protections). Don't decline offered subsidized aid because the amount is small \u2014 every dollar that doesn't accrue interest in school is worth more than a dollar of unsubsidized borrowing.",
+    "example": "$25,000 borrowed, 4 years in school + 6 months grace, 5.5% interest:\nSubsidized: balance at repayment start = $25,000\nUnsubsidized: balance at repayment start \u2248 $31,000\n\nDifference: $6,000 added to principal you'll then pay 5.5% on for 10 more years \u2014 another ~$5,000 in lifetime interest.",
     "quizTemplateIds": [
       "concept_sl_sub_def_d1",
       "concept_sl_unsub_def_d1",
       "concept_sl_who_qualifies_d2",
       "concept_sl_balance_growth_d3",
       "concept_sl_grad_loans_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_sl_refi_protections_lost",
     "moduleId": "student_loans",
     "title": "Federal loan protections you lose by refinancing",
-    "concept": "Refinance salespeople pitch lower rates without mentioning what you give up. Refinancing federal loans to private permanently forfeits: IDR plans (payment based on income), PSLF (forgiveness after 10 years in public service), federal forbearance (pause payments during hardship), death/disability discharge (federal loans wiped if you die or become totally disabled), and any future federal relief (like COVID-era pauses). You CANNOT refi back to federal once you've gone private.",
-    "shortcut": "Refi makes sense only if ALL apply: (1) stable high income, (2) no chance of public-service work, (3) no risk of needing IDR/hardship pauses, (4) you can save 2%+ on rate. For everyone else, federal protections are worth more than the rate difference. Public school teachers, nurses in non-profits, gov't workers: NEVER refi.",
-    "example": "Refi tradeoff example:\nFederal loan: $40k at 6%, 10-year repayment, $444/mo\nPrivate refi: $40k at 4.5%, 10-year repayment, $415/mo\nSavings: $29/month = $3,480 over 10 years\n\nWhat you lose:\n\u2014 PSLF (could be $20k-$80k forgiven)\n\u2014 IDR (payments could drop to $0 if you lose your job)\n\u2014 COVID-era pause (saved typical borrower $5k-$10k)",
+    "concept": "Refinance salespeople pitch lower rates without mentioning what you give up. Refinancing federal loans to private permanently forfeits: IDR plans (payment based on income), PSLF (forgiveness after 10 years in public service), federal forbearance (pause payments during hardship), death/disability discharge (federal loans wiped if you die or become totally disabled), and any future federal relief (like the COVID-era pause). You CANNOT refi back to federal once you've gone private \u2014 it's a one-way door.",
+    "shortcut": "Refi makes sense only if ALL apply: (1) stable high income, (2) no chance of public-service work, (3) no realistic risk of needing IDR or a hardship pause, (4) you can save 2%+ on rate. For most public-service workers (teachers, non-profit nurses, government employees, public defenders), refi almost never makes sense \u2014 the PSLF math alone usually beats any rate savings. If you're not sure about your career trajectory, keep federal until you are.",
+    "example": "Refi tradeoff example:\nFederal loan: $40k at 6%, 10-year repayment, $444/mo\nPrivate refi: $40k at 4.5%, 10-year repayment, $415/mo\nSavings: $29/month = $3,480 over 10 years\n\nWhat you give up:\n\u2014 PSLF (could be $20k-$80k forgiven if you'd qualify)\n\u2014 IDR (payments could drop dramatically if you lose your job)\n\u2014 COVID-era pause (saved typical borrower $5k-$10k)\nVerdict: only worth it if you're confident none of those protections matter for you.",
     "quizTemplateIds": [
       "concept_sl_refi_lose_idr_d1",
       "concept_sl_refi_one_way_d2",
       "concept_sl_refi_teacher_d2",
       "concept_sl_refi_when_makes_sense_d3",
       "concept_sl_refi_vs_protections_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   }
 ]
