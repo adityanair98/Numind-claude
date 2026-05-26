@@ -58,7 +58,7 @@ Current phase: retention mechanics (streak freezes built, notifications pending)
 6. **Privacy & legal** — PrivacyInfo.xcprivacy, privacy policy URL, terms of service.
 7. **Accessibility** — VoiceOver labels on all interactive elements.
 8. **Analytics** — PostHog (funnel/retention) + Sentry (crashes).
-9. **Content balance** — Complete. All 10 modules have 5+ lessons (56 total). Module restructure done: removed Travel/Estimation, merged Tips+Discounts into Smart Shopping, added Insurance, Car, Student Loans.
+9. **Content balance** — Complete. All 10 modules have 7+ lessons (96 total: 78 numerical + 18 concept). Module restructure done: removed Travel/Estimation, merged Tips+Discounts into Smart Shopping, added Insurance, Car, Student Loans.
 
 ## Rules
 - Do not add AI-generated content.

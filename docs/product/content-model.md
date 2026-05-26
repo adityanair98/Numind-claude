@@ -195,7 +195,7 @@ struct PathNode: Identifiable {
 
 ### Review Nodes
 - Inserted after every 3 lessons within a module
-- ID format: `review_{moduleId}_{groupIndex}` (e.g., `review_tips_0`)
+- ID format: `review_{moduleId}_{groupIndex}` (e.g., `review_smart_shopping_0`)
 - Unlock only when all 3 covered lessons are mastered
 - Gate subsequent lessons until the review itself is mastered
 

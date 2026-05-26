@@ -1,6 +1,6 @@
 # Quiz Engine
 
-> **Last updated:** May 2026 (after V1 refinement — proportional distractors, adaptive difficulty, diagnostic calibration, new modules).
+> **Last updated:** May 2026 (after V3 — concept template support, module restructure, proportional distractors, adaptive difficulty, diagnostic calibration).
 
 ## Principle
 Questions are generated from templates, not hardcoded. Each quiz session produces different numbers, different answer choices, and different question order - even when replaying the same lesson.
@@ -17,7 +17,7 @@ Each template is a JSON object in `Resources/LocalContent/quiz_templates.json`:
 ```json
 {
   "id": "tip_percent_basic",
-  "moduleId": "tips",
+  "moduleId": "smart_shopping",
   "difficulty": 1,
   "inputMode": "freeEntry",
   "scenarioTemplate": "You're at a restaurant. Your bill comes to ${{billAmount}}.",
@@ -37,16 +37,18 @@ Each template is a JSON object in `Resources/LocalContent/quiz_templates.json`:
 | Field | Required | Description |
 |---|---|---|
 | `id` | yes | Unique template identifier |
-| `moduleId` | yes | Parent module (tips, discounts, money_math, salary, investing, estimation, debt, travel, housing, taxes) |
+| `moduleId` | yes | Parent module (smart_shopping, money_math, salary, investing, debt, housing, taxes, insurance, car, student_loans) |
 | `difficulty` | yes | 1 (easy), 2 (medium), 3 (hard) |
 | `inputMode` | no | `"freeEntry"` for numeric keypad; omit for multiple choice (default) |
 | `scenarioTemplate` | no | Optional context sentence shown above the question |
 | `promptTemplate` | yes | The question text with `{{variable}}` placeholders |
 | `variableRules` | yes | Array of `{ name, options }` defining the random value pool per variable |
-| `answerFormula` | yes | Name of the formula function in `QuizEngine.swift` |
+| `answerFormula` | numerical only | Name of the formula function in `QuizEngine.swift`. Omit for concept templates. |
 | `answerFormat` | yes | `"currency"`, `"percent"`, or `"integer"` |
 | `distractorStrategy` | yes | How wrong answers are generated (MCQ only) |
 | `explanationTemplate` | yes | Feedback text with `{{variable}}` placeholders |
+| `conceptChoices` | concept only | Array of 4 static MCQ options (text). Indicates a concept template. |
+| `correctConceptChoice` | concept only | Which entry of `conceptChoices` is correct. |
 
 ## Question Generation Flow (`QuizEngine.generate`)
 1. Pick a random seed (`UInt64.random`)
@@ -77,83 +79,43 @@ For module review quizzes (every 3 lessons):
 
 This ensures every covered lesson is represented roughly equally in the review.
 
-## Answer Formulas (60+)
-All formulas live in `QuizEngine.swift` as `[String: ([String: Double]) -> Double?]`:
+## Answer Formulas (300+)
 
-### Tips
-- `tipAmount` = bill x tipPercent / 100
-- `billWithTip` = bill x (1 + tipPercent / 100)
-- `tipPerPerson` = (bill x tipPercent / 100) / numPeople
-- `tipOnTotal` = (bill x (1 + taxPercent / 100)) x tipPercent / 100
-- `billWithTipPerPerson` = bill x (1 + tipPercent / 100) / numPeople
+All formulas live in `QuizEngine.swift` as `[String: ([String: Double]) -> Double?]`. Each formula is also mapped to a sequence of mental operations in `FormulaOperationMap.swift`, which `DifficultyScorer` uses to score a question's mental difficulty.
 
-### Discounts
-- `discountAmount` = price x discountPercent / 100
-- `salePrice` = price x (1 - discountPercent / 100)
-- `bogoPerItemPrice` = (2 x price) / 3
-- `bogoSavings` = price (one free item)
-- `stackedFinalPrice` = price x (1 - first/100) x (1 - second/100)
-- `stackedTotalSaving` = price - stackedFinalPrice
-- `unitPrice` = totalPrice / quantity
+For the canonical list, read `apps/ios/Numind/Domain/QuizEngine/QuizEngine.swift` (formula registry) and `apps/ios/Numind/Domain/QuizEngine/FormulaOperationMap.swift` (operation chains).
 
-### Budgets & Spending (formerly Money Math)
-- `taxAmount`, `priceWithTax`
-- `totalCost` = price x quantity
-- `budgetRemaining`, `budgetAfterPurchase`
-- `monthlyToYearly`, `yearlyToMonthly`
-- `costPerUse` = price / uses
-- `estimateSumNearestTen` (rounds each to nearest 10, sums)
+Conceptually, formulas span 10 module families:
 
-### Salary
-- `grossToNet`, `annualToMonthly`, `monthlyToAnnual`
-- `raiseAmount`, `raisedSalary`
-- `overtimePay` = rate x 1.5 x hours
-- `biweeklyToAnnual` (x26), `weeklyToAnnual` (x52)
-- `hourlyFromAnnual` (/2080), `annualFromHourly` (x2080)
+### Smart Shopping (tips + discounts + memberships)
+Tip math (`tipAmount`, `billWithTip`, `tipPerPerson`, `tipOnTotal`, `billWithTipPerPerson`), discount math (`discountAmount`, `salePrice`, `stackedFinalPrice`, `bogoPerItemPrice`, `unitPrice`), and membership break-even.
 
-### Investing
-- `simpleInterest` = principal x rate x years
-- `totalWithInterest`
-- `rule72` = 72 / rate
-- `roiPercent` = (gain / cost) x 100
-- `dollarReturn`, `monthlyInvestmentReturn`
+### Budgets & Spending
+Subscription audit, cost-per-use, tax + total, monthly-yearly conversions, 50/30/20 splits, latte factor.
 
-### Estimation
-- `doubleOf`, `halfOf`, `tripleOf`, `quarterOf`
-- `multiplyBy5`, `splitFive`, `twentyPercentOf`
-- `percentRaise`, `percentDrop`
+### Salary & Income
+`grossToNet`, raises (`raiseAmount`, `raisedSalary`, after-tax raise variants), `overtimePay`, pay-period conversions (`biweeklyToAnnual`, `weeklyToAnnual`, `hourlyFromAnnual`, `annualFromHourly`), inflation-adjusted raise, total comp, side-hustle net.
 
-### Debt
-- `creditCardMonthlyInterest` = balance x APR / 12
-- `creditCardAnnualInterest` = balance x APR
-- `minimumPaymentTwoPercent` = balance x 0.02
-- `loanTotalRepayment`, `loanTotalInterest`
-- `debtToIncomeRatio` = debt / income x 100
-- `extraPaymentAnnualSaving`, `balanceAfterMonthlyInterest`
+### Investing Basics
+`simpleInterest`, `totalWithInterest`, `rule72`, `roiPercent`, `dollarReturn`, `monthlyInvestmentReturn`, 401(k) match, compound growth, fund-fee drag, emergency fund target, rental yield.
 
-### Travel
-- `foreignToUSD`, `usdToForeign`
-- `currencyMarkupCost`, `foreignTransactionFee`, `totalWithForeignFee`
-- `splitTravelCost`, `daysOnBudget`
-- `hotelCostPerNight`, `travelInsuranceCost`, `tripTotalWithInsurance`
+### Debt & Loans
+`creditCardMonthlyInterest`, `creditCardAnnualInterest`, `minimumPaymentTwoPercent`, `loanTotalRepayment`, `loanTotalInterest`, `debtToIncomeRatio`, `extraPaymentAnnualSaving`, `balanceAfterMonthlyInterest`, APR vs APY, BNPL stacked cost, avalanche vs snowball.
 
 ### Housing & Rent
-- `maxRent28` = monthlySalary x 0.28
-- `maxAnnualRent28` = monthlySalary x 0.28 x 12
-- `rentIncrease` = currentRent x increasePercent / 100
-- `newRentAfterIncrease` = currentRent x (1 + increasePercent / 100)
-- `moveInThreeMonths` = monthlyRent x 3 (first + last + security)
-- `moveInWithBrokerFee` = monthlyRent x 3 + brokerFee
-- `pricePerSqft` = monthlyRent / sqft
-- `monthlyMortgage` = homePrice x (rate / 12) + homePrice / (years x 12)
+`maxRent28`, `maxAnnualRent28`, `rentIncrease`, `newRentAfterIncrease`, `moveInThreeMonths`, `moveInWithBrokerFee`, `pricePerSqft`, `monthlyMortgage`, lease-break cost, buy-vs-rent break-even.
 
 ### Taxes & Paycheck
-- `marginalTax` = bracket1 x rate1 + (income - bracket1Top) x rate2
-- `paycheckNet` = grossPay x (1 - deductionPct / 100)
-- `grossToNet` = grossPay x (1 - deductionPct / 100)
-- `annualToMonthlyNet` = annualSalary x (1 - effectiveRate / 100) / 12
-- `taxRefund` = totalWithheld - totalOwed
-- `selfEmploymentTax` = freelanceIncome x 0.153
+`marginalTax`, `paycheckNet`, `grossToNet`, `annualToMonthlyNet`, `taxRefund`, `selfEmploymentTax`, standard vs itemized delta, capital-gains short vs long, W-4 adjustment, filing-status delta.
+
+### Insurance & Healthcare
+Deductible vs premium tradeoff, copay/coinsurance, OOP max, HDHP vs PPO total cost, HSA triple tax advantage, FSA forfeiture, term life need.
+
+### Car & Big Purchases
+Monthly vs total cost, term-extension premium, down-payment savings, 20/4/10 rule, depreciation curve, TCO, lease vs buy 3-year math, trade-in delta, warranty break-even.
+
+### Student Loans & Education
+Monthly payment (1% rule of thumb), total cost, refinance savings, IDR payment, PSLF forgiveness, employer benefit, grace-period growth, Parent PLUS vs private, sub vs unsub interest accrual.
 
 ## Distractor Generation
 
@@ -217,7 +179,9 @@ Error = `|estimate - correct| / |correct|`. A question with ≥2 stars is consid
 3. Ultimate fallback: easy.
 
 ## Content Stats
-- **10 modules**, **47 lessons**, **237 templates**
-- Every lesson has exactly **5 templates**
-- Templates per module: tips (22), discounts (24), money_math (25), salary (22), investing (20), estimation (24), debt (25), travel (25), housing (25), taxes (25)
-- Mix of difficulty levels 1-3 across all modules
+- **10 modules**, **96 lessons**, **479 templates**
+- 78 numerical lessons (use formula-based templates) + 18 concept lessons (use text-MCQ templates)
+- 389 numerical templates + 90 concept templates
+- Every lesson references exactly **5 templates** (480 references; one template is shared between two related Smart Shopping lessons)
+- Templates per module: smart_shopping (44), money_math (35), salary (45), investing (65), debt (50), housing (45), taxes (45), insurance (50), car (50), student_loans (50)
+- Difficulty distribution across all templates: d1 = 156, d2 = 174, d3 = 149

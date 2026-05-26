@@ -24,10 +24,10 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 
 - **All quiz content lives in JSON** (`Resources/LocalContent/`). Never hardcode questions, answers, or explanations in Swift files.
 - **Quiz templates are parametric.** Variables are randomized at generation time via `QuizEngine.generate()`. Do not create templates with fixed values.
-- **Every lesson must have exactly 5 quiz template IDs.** The quiz engine cycles through them to produce 8 questions per session.
+- **Every lesson must have exactly 5 quiz template IDs.** The quiz engine cycles through them to produce 5 questions on first attempt or 8 on subsequent attempts (diagnostic calibration may adjust).
 - **Answer formulas** live in `QuizEngine.swift` as a `[String: ([String: Double]) -> Double?]` dictionary. New templates should reuse existing formulas when possible. Only add a new formula if no existing one covers the calculation.
 - **Template IDs** follow the pattern `{topic}_{concept}_{variant}_d{difficulty}` (e.g., `tip_percent_basic_d1`).
-- **Module IDs** are lowercase snake_case: `tips`, `discounts`, `money_math`, `salary`, `investing`, `estimation`, `debt`, `travel`, `housing`, `taxes`.
+- **Module IDs** are lowercase snake_case: `smart_shopping`, `money_math`, `salary`, `investing`, `debt`, `housing`, `taxes`, `insurance`, `car`, `student_loans`.
 
 ## Design System
 
@@ -51,7 +51,7 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **Fresh random seeds on every generate call.** Retries produce different numbers automatically — do not cache or reuse question instances.
 - **Proportional distractors.** The `niceStep` algorithm generates wrong answers at ~5-8% of the correct answer, rounded to psychologically natural numbers. Never use fixed step sizes.
 - **Checkpoint reviews** appear after every 3 lessons within a module. They round-robin across covered lessons' templates.
-- **Review IDs** use the format `review_{moduleId}_{groupIndex}` (e.g., `review_tips_0`).
+- **Review IDs** use the format `review_{moduleId}_{groupIndex}` (e.g., `review_smart_shopping_0`).
 
 ## Game Modes
 

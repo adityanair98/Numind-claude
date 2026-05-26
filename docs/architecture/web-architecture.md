@@ -14,14 +14,15 @@ The website exists solely for acquisition: drive App Store downloads through SEO
 - **No runtime dependencies** beyond Next.js + Tailwind + Lucide
 
 ## Page Count
-114 statically generated pages:
+109 statically generated pages:
 - 1 landing page (`/`)
 - 1 tools directory (`/tools`)
 - 14 calculator pages (`/tools/{slug}`)
 - 51 state paycheck pages (`/tools/paycheck-calculator/{state}`)
 - 40 salary amount pages (`/tools/salary-calculator/{slug}`)
 - 2 legal pages (`/privacy`, `/terms`)
-- `robots.txt` + `sitemap.xml`
+
+Plus `robots.txt` and `sitemap.xml` from `robots.ts` and `sitemap.ts`.
 
 ## Project Structure
 

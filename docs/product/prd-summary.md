@@ -1,21 +1,21 @@
 # Numind PRD Summary
 
-> **Last updated:** May 2026 (after V1 refinement — new modules, scoring reweight, adaptive difficulty, streak freezes, distractor fix).
+> **Last updated:** May 2026 (after V1 refinement and V3 concept lessons — module restructure, scoring reweight, adaptive difficulty, streak freezes, concept template support, distractor fix).
 
 ## Product Thesis
 Numind is an iOS-first daily training app for practical number fluency.
 
 It helps users get faster and more confident with real-world money math:
-- tips and bill splitting
-- discounts and shopping
+- smart shopping (tips, bill splitting, discounts, membership break-even)
 - budgeting, subscriptions, and sales tax
 - salary, raises, and pay periods
-- investing basics (simple interest, Rule of 72, ROI)
-- debt math (credit cards, loans, DTI)
-- travel money (currency conversion, fees, budgeting)
+- investing basics (Rule of 72, ROI, 401k match, compound growth, allocation)
+- debt math (credit cards, loans, DTI, BNPL, credit scores)
 - housing and rent (affordability, leases, mortgage vs rent)
-- taxes and paycheck (brackets, deductions, take-home pay)
-- estimation and mental math shortcuts
+- taxes and paycheck (brackets, deductions, take-home pay, filing status)
+- insurance and healthcare (deductibles, OOP max, HDHP vs PPO, HSA, FSA)
+- car and big purchases (20/4/10, depreciation, TCO, lease vs buy)
+- student loans (IDR, PSLF, refinance, employer benefits)
 
 The product should feel like a short useful workout, not a textbook, calculator utility, or generic brain-training app.
 
@@ -48,18 +48,18 @@ They may feel slow or rusty with:
 - comparing salary offers
 
 ## V1 Modules (10 total)
-1. **Smart Shopping** (smart_shopping) - tipping shortcuts, bill splitting, stacked discounts, BOGO math, coupon vs cashback, discount + tax, membership break-even (8 lessons)
-2. **Budgets & Spending** (money_math) - subscription audits, cost per use, tax + budget, 50/30/20 rule, latte factor, weekly-to-monthly conversion (6 lessons)
-3. **Salary & Income** (salary) - net pay, raises (with after-tax), overtime totals, pay-period comparison, inflation-adjusted raises, hourly-to-salary, total comp, side hustles (8 lessons)
-4. **Investing Basics** (investing) - Rule of 72, ROI, 401k match, Roth vs Traditional, compound growth, DCA, fund fees, emergency fund, rental yield, "am I on track" (10 lessons)
-5. **Debt & Loans** (debt) - credit card interest, minimum payment trap, true loan cost, DTI, extra payments, avalanche vs snowball, APR vs APY, BNPL (8 lessons)
-6. **Housing & Rent** (housing) - rent affordability, rent increase + renewal-vs-move, move-in costs, roommate math, true cost of renting, mortgage (rate-factor method), lease break math (7 lessons)
-7. **Taxes & Paycheck** (taxes) - marginal brackets, paycheck deductions, tax refund (behavioral), self-employment, standard vs itemized, capital gains, W-4 adjustment (7 lessons)
-8. **Insurance & Healthcare** (insurance) - deductible vs premium, copay vs coinsurance, OOP max, HDHP vs PPO, HSA, FSA, life insurance, brand vs generic Rx (8 lessons)
-9. **Car & Big Purchases** (car) - monthly vs total cost, loan term delta, down payment savings, 20/4/10 rule, depreciation, TCO, lease vs buy, trade-in vs private sale (8 lessons)
-10. **Student Loans & Education** (student_loans) - monthly payment (rule of thumb), total cost, refinance vs PSLF, IDR, PSLF, employer benefit, grace period, Parent PLUS (8 lessons)
+1. **Smart Shopping** (smart_shopping) - tipping shortcuts, bill splitting, stacked discounts, BOGO math, coupon vs cashback, discount + tax, membership break-even, retailer manipulation (9 lessons)
+2. **Budgets & Spending** (money_math) - subscription audits, cost per use, tax + budget, 50/30/20 rule, latte factor, weekly-to-monthly conversion, needs vs wants (7 lessons)
+3. **Salary & Income** (salary) - net pay, raises (with after-tax), overtime totals, pay-period comparison, inflation-adjusted raises, hourly-to-salary, total comp, side hustles, exempt vs non-exempt (9 lessons)
+4. **Investing Basics** (investing) - Rule of 72, ROI, 401(k) match, Roth vs Traditional, compound growth, DCA, fund fees, emergency fund, rental yield, "am I on track", asset classes, allocation by age, panic-sell behavior (13 lessons)
+5. **Debt & Loans** (debt) - credit card interest, minimum payment trap, true loan cost, DTI, extra payments, avalanche vs snowball, APR vs APY, BNPL, credit scores, good vs bad debt (10 lessons)
+6. **Housing & Rent** (housing) - rent affordability, rent increase + renewal-vs-move, move-in costs, roommate math, true cost of renting, mortgage (rate-factor method), lease break math, buy vs rent, lease clauses (9 lessons)
+7. **Taxes & Paycheck** (taxes) - marginal brackets, paycheck deductions, tax refund (behavioral), self-employment, standard vs itemized, capital gains, W-4 adjustment, paycheck stub, filing status (9 lessons)
+8. **Insurance & Healthcare** (insurance) - deductible vs premium, copay vs coinsurance, OOP max, HDHP vs PPO, HSA, FSA, life insurance, brand vs generic Rx, policies you need, disability insurance (10 lessons)
+9. **Car & Big Purchases** (car) - monthly vs total cost, loan term delta, down payment savings, 20/4/10 rule, depreciation, TCO, lease vs buy, trade-in vs private sale, dealer tactics, warranties (10 lessons)
+10. **Student Loans & Education** (student_loans) - monthly payment (rule of thumb), total cost, refinance vs PSLF, IDR, PSLF, employer benefit, grace period, Parent PLUS, subsidized vs unsubsidized, federal protections (10 lessons)
 
-**Total: 96 lessons, 479 quiz templates** (78 numerical + 18 concept lessons; ~389 numerical templates + ~90 concept templates)
+**Total: 96 lessons, 479 quiz templates** (78 numerical + 18 concept lessons; 389 numerical templates + 90 concept templates)
 
 ## Core User Loop
 Home / Today
@@ -213,7 +213,7 @@ Currently implemented:
 - SwiftUI app shell with 4-tab navigation
 - Design tokens and theme system
 - Local content model with JSON-based lessons and templates
-- Template-driven quiz engine with 120+ answer formulas
+- Template-driven quiz engine with 300+ answer formulas
 - All 10 modules with 96 lessons (78 numerical + 18 concept)
 - 479 quiz templates (~5 per lesson) with proportional distractor generation
 - Concept template support added (text-MCQ, no formula evaluation) for lessons covering critical financial literacy topics that aren't reducible to mental math

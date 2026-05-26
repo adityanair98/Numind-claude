@@ -65,7 +65,7 @@ Numind/
       FormulaOperationMap.swift  # Formula-to-operation mapping
       MasteredTemplatePool.swift # Shared gateway for game mode template access
       QuestionDifficulty.swift   # Difficulty level definitions
-      QuizEngine.swift           # Template -> QuizQuestion generator (60+ formulas, proportional distractors)
+      QuizEngine.swift           # Template -> QuizQuestion generator (300+ formulas, proportional distractors, concept-template branch)
       QuizQuestion.swift         # Generated question model
       ReviewMistakesEngine.swift # Review-mistakes session builder
       SeededRandomGenerator.swift # Deterministic RNG for reproducible tests
@@ -139,8 +139,8 @@ Numind/
       LaunchScreen.storyboard    # Native launch screen (logo + wordmark, Auto Layout)
     LocalContent/
       modules.json               # 10 module definitions
-      lessons.json               # 47 lessons with template IDs
-      quiz_templates.json        # 237 quiz templates
+      lessons.json               # 96 lessons with template IDs (78 numerical + 18 concept)
+      quiz_templates.json        # 479 quiz templates (389 numerical + 90 concept)
     Assets.xcassets              # App icons, colors, images
       LaunchLogo.imageset        # Background-removed symbol (light + dark variants)
       LaunchWordmark.imageset    # Cropped "Numind" wordmark (white text, both modes)
