@@ -86,6 +86,7 @@
 		7F643EFCD0CC5BF54B2487F6 /* LevelUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64057FC5753D48B372179EF8 /* LevelUpView.swift */; };
 		804758367F1A82CA5137811B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486939289C929BAA50861ECF /* Badge.swift */; };
 		85117D0CFAB65AD05D1F7ADE /* QuizEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */; };
+		7B2A4E1D9C5C8B0FF1A3D5C0 /* MilestoneEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */; };
 		85AF38C1C1849D2390D5933F /* ContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48236569E3C71A34C541C4 /* ContentRepository.swift */; };
 		8620E8E68B231480A58942C0 /* QuestionTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7176E94F703A2718728DED /* QuestionTheme.swift */; };
 		879B9B70846F53D210E0A98E /* BrandHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DE23AED3330436019C72F /* BrandHeader.swift */; };
@@ -224,6 +225,7 @@
 		5F65C188D3794D984C68E73D /* ADHDScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADHDScreenView.swift; sourceTree = "<group>"; };
 		61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizEngineTests.swift; sourceTree = "<group>"; };
 		61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRepositoryTests.swift; sourceTree = "<group>"; };
+		7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneEngineTests.swift; sourceTree = "<group>"; };
 		63D2F05A692A69B987B2A19E /* ReviewMistakesEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMistakesEngine.swift; sourceTree = "<group>"; };
 		63E02F5424B02C5C35EB4D2E /* MotivatorCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivatorCopy.swift; sourceTree = "<group>"; };
 		64057FC5753D48B372179EF8 /* LevelUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpView.swift; sourceTree = "<group>"; };
@@ -748,6 +750,7 @@
 			children = (
 				61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */,
 				61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */,
+				7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */,
 			);
 			path = NumindTests;
 			sourceTree = "<group>";
@@ -859,6 +862,7 @@
 			files = (
 				2FE105C8B1F17551E505F21E /* ContentRepositoryTests.swift in Sources */,
 				85117D0CFAB65AD05D1F7ADE /* QuizEngineTests.swift in Sources */,
+				7B2A4E1D9C5C8B0FF1A3D5C0 /* MilestoneEngineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -57,12 +57,15 @@ final class ProgressStore: ObservableObject {
         // persist() is called inside recomputeAndStoreScore — no double write needed.
 
         // Check for milestone celebrations.
-        let moduleNames = Dictionary(uniqueKeysWithValues: repo.allModules().map { ($0.id, $0.title) })
+        let allModules = repo.allModules()
+        let moduleNames = Dictionary(uniqueKeysWithValues: allModules.map { ($0.id, $0.title) })
+        let moduleLessonCounts = Dictionary(uniqueKeysWithValues: allModules.map { ($0.id, $0.lessonIds.count) })
         pendingMilestone = MilestoneEngine.check(
             before: snapshotBefore,
             after: data,
             shownIds: data.shownMilestoneIds,
-            moduleNames: moduleNames
+            moduleNames: moduleNames,
+            moduleLessonCounts: moduleLessonCounts
         )
     }
 

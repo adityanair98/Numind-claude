@@ -84,13 +84,23 @@ enum Milestone: Identifiable {
 enum MilestoneEngine {
 
     /// Returns the highest-priority unshown milestone, or nil.
+    ///
+    /// `moduleLessonCounts` maps module ID to its total non-review lesson count;
+    /// required for accurate module-completion detection. If a module is missing,
+    /// completion will never fire for it.
     static func check(
         before: ProgressData,
         after: ProgressData,
         shownIds: Set<String>,
-        moduleNames: [String: String] = [:]
+        moduleNames: [String: String] = [:],
+        moduleLessonCounts: [String: Int] = [:]
     ) -> Milestone? {
-        let candidates = allTriggered(before: before, after: after, moduleNames: moduleNames)
+        let candidates = allTriggered(
+            before: before,
+            after: after,
+            moduleNames: moduleNames,
+            moduleLessonCounts: moduleLessonCounts
+        )
         return candidates.first { !shownIds.contains($0.id) }
     }
 
@@ -100,7 +110,8 @@ enum MilestoneEngine {
     private static func allTriggered(
         before: ProgressData,
         after: ProgressData,
-        moduleNames: [String: String]
+        moduleNames: [String: String],
+        moduleLessonCounts: [String: Int]
     ) -> [Milestone] {
         var results: [Milestone] = []
 
@@ -152,13 +163,16 @@ enum MilestoneEngine {
             }
         }
 
-        // Module completion — check all modules
+        // Module completion — fires only when the user completes the FINAL lesson of a module.
+        // Requires moduleLessonCounts to be supplied; without it, completion can never trigger.
         let allModuleIds = Set(after.sessions.map(\.moduleId))
         for moduleId in allModuleIds {
+            guard let totalLessons = moduleLessonCounts[moduleId], totalLessons > 0 else { continue }
             let beforeLessons = Set(before.sessions.filter { $0.moduleId == moduleId && !$0.isReviewSession }.map(\.lessonId))
             let afterLessons = Set(after.sessions.filter { $0.moduleId == moduleId && !$0.isReviewSession }.map(\.lessonId))
-            // Only trigger if the latest session added a new lesson to this module
-            if afterLessons.count > beforeLessons.count {
+            // Fire exactly once: the transition from < totalLessons to == totalLessons.
+            let crossedThreshold = beforeLessons.count < totalLessons && afterLessons.count >= totalLessons
+            if crossedThreshold {
                 let name = moduleNames[moduleId] ?? moduleId
                 results.append(.moduleCompleted(name: name))
             }
