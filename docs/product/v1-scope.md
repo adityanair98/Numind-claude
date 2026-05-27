@@ -27,8 +27,8 @@
 
 ## Content
 - **10 modules**: Smart Shopping, Budgets & Spending, Salary, Investing, Debt, Housing & Rent, Taxes & Paycheck, Insurance & Healthcare, Car & Big Purchases, Student Loans & Education
-- **107 lessons** across all modules. Concept lessons cover financial literacy that isn't reducible to mental math — credit scores, FLSA exemption, IDR landscape, asset allocation, dealer tactics, insurance policy priority, lease clauses, EF-vs-debt priority, open enrollment, three-accounts clarification, etc. Phase 2 audit added 5 topic-gap lessons (house affordability, CC payoff, 401(k) impact, balance transfer, EF-vs-debt). Phase 3 audit added 5 more (RSUs, ESPP, CC statement cycle, open enrollment, Roth-IRA-vs-Roth-401k-vs-Traditional-401k) and rebuilt the tax-brackets lesson with explicit taxable-income concept + real 2025 IRS brackets.
-- **535 quiz templates** (400 numerical + 135 concept; ~5 per lesson)
+- **118 lessons** across all modules. Concept lessons cover financial literacy that isn't reducible to mental math — credit scores, FLSA exemption, IDR landscape, asset allocation, dealer tactics, insurance policy priority, lease clauses, EF-vs-debt priority, open enrollment, three-accounts clarification, EF location, etc. Phase 2 audit added 5 topic-gap lessons. Phase 3 added 5 more (RSUs, ESPP, CC statement cycle, open enrollment, three-accounts) and rebuilt the tax-brackets lesson with explicit taxable-income concept + real 2025 IRS brackets. Phase 4 added 11 search-intent lessons matching high-volume Google queries — W-2 vs 1099 offer, 401(k) vesting, cash-to-close, COL relocation, EF location, first-month true cost, medical bill EOB, CC rewards vs interest, sinking funds, compound reverse goal, bonus after tax.
+- **590 quiz templates** (433 numerical + 157 concept; ~5 per lesson)
 - **27 badges** across 7 categories
 
 ## Quiz System

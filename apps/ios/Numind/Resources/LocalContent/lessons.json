@@ -256,6 +256,22 @@
     "lastVerified": "2026-05-26"
   },
   {
+    "id": "money_math_sinking_funds",
+    "moduleId": "money_math",
+    "title": "Sinking funds — why irregular expenses break your budget",
+    "concept": "The reason most monthly budgets fail isn't poor discipline — it's irregular expenses. Wedding gifts, holiday spending, vacation, car maintenance, pet vet visits, annual insurance premiums, and birthday gifts all hit unpredictably and turn into 'this month was just expensive' months. A **sinking fund** is a dedicated savings bucket you contribute to every month for a KNOWN future irregular expense, so when it hits you have the cash already saved instead of breaking your budget or going into credit-card debt. The math: monthly contribution = expected total ÷ months until needed. Holidays $1,200 by December? Start in January, $100/month. Vacation $3,000 in June? If it's January, that's $500/month for 6 months. Most adults benefit from 4-6 sinking funds running simultaneously: a Holiday Fund (Nov-Dec), a Travel Fund (whenever), a Car Maintenance Fund (ongoing $50-100/mo), a Pet Fund (ongoing if you have pets), a Gift Fund (birthdays + weddings + baby showers), and sometimes an Annual Insurance / Annual Subscription fund for those bills that arrive once a year. The combined monthly outlay typically lands $200-500 — but it replaces the $1,500-3,000 'surprise spending' months that wreck the budget twice a year.",
+    "shortcut": "Monthly sinking fund = expected expense ÷ months until needed. Round up. Run 4-6 funds simultaneously in a single HYSA with sub-accounts (most online HYSAs support 'buckets' or 'goals'). Audit them in January: which fund needs more? Which can be cut? The point isn't perfection — it's converting irregular shocks into a predictable monthly line that fits the 50/30/20 budget.",
+    "example": "Sample sinking-fund setup, started January, audited in January next year:\n\n  Holiday Fund: $1,200 ÷ 11 months → $110/mo (cuts off Nov)\n  Travel Fund: $3,600 ÷ 12 months → $300/mo (replenishes after each trip)\n  Car Maintenance: $1,000 ÷ 12 → $85/mo (oil changes + tires + unexpected)\n  Gift Fund: $600 ÷ 12 → $50/mo (Mother's Day, birthdays, baby showers)\n  Annual Auto Insurance: $1,400 ÷ 12 → $120/mo (paid annually saves ~5% vs monthly)\n\n  Total monthly sinking outlay: $665/mo\n  Sounds like a lot — but it REPLACES $1,200 in December credit card debt + a $3,600 vacation that hit savings + four other 'oh I forgot about X' months.\n\nThe 50/30/20 rule treats sinking funds as part of the 'needs' bucket (predictable known expense) — not the 'wants' bucket (discretionary). Mis-classifying them is one of the most common reasons people's budgets feel structurally broken every couple of months.\n\nCommon failure mode: starting all 5 funds at once with no buffer, going negative on the first big hit. Better: start one fund (Holiday is the easiest 'win'), get to a full year of contributions, then add another. The behavioral momentum matters more than mathematical optimization.",
+    "quizTemplateIds": [
+      "sinking_fund_monthly_d1",
+      "sinking_fund_multi_total_d2",
+      "sinking_fund_holiday_d1",
+      "sinking_fund_short_window_d2",
+      "concept_sinking_fund_vs_cc_d2"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
     "id": "net_pay_check",
     "moduleId": "salary",
     "title": "Gross vs net \u2014 what you actually keep",
@@ -464,6 +480,22 @@
     "lastVerified": "2026-05-26"
   },
   {
+    "id": "salary_bonus_after_tax",
+    "moduleId": "salary",
+    "title": "Bonus after tax — why your $10K bonus isn't $10K",
+    "concept": "Your $10K year-end bonus shows up as ~$6,000-7,500 in your bank account, depending on state. Two things to understand: (1) **Federal withholding** on bonuses uses the IRS supplemental rate of **22%** for cumulative supplemental wages up to $1M, then 37% above (per IRS Pub 15). This is just WITHHOLDING — not your actual tax liability. (2) State income tax + FICA (7.65%) also apply. The combined withholding on a typical bonus lands around 30-40% depending on state. Important nuance: 22% federal supplemental is often LOWER than the bonus recipient's actual marginal tax rate. A worker in the 32% bracket gets only 22% federal withheld on the bonus — but owes 32% at tax filing — so they owe ~10% of the bonus at filing. A worker in the 12% bracket gets 22% withheld but owes only 12% — so they get the difference refunded. The 22% rate is a one-size-fits-all default that creates surprises at filing for both ends of the income range.",
+    "shortcut": "Quick take-home estimate: bonus × (1 − 22% federal supplemental − stateRate − 7.65% FICA). On $10K in TX (0% state): $10K × (1 − 0.22 − 0 − 0.0765) = $7,035. In CA (~9.3% state): $10K × (1 − 0.22 − 0.093 − 0.0765) = $6,105. Quick adjustment for high earners: if your marginal federal bracket is 24/32/35/37%, expect to OWE the difference at filing time (typically $200-2,000 per $10K bonus). Quick adjustment for low earners (12% bracket): you'll get the over-withholding refunded at filing — effectively a forced savings.",
+    "example": "Three workers, same $10,000 year-end bonus:\n\nMaya, TX (0% state tax), 22% federal bracket:\n  Federal supplemental (22%): −$2,200\n  State (0%): $0\n  FICA (7.65%): −$765\n  **Take-home: $7,035**\n  At filing: 22% withholding matches her 22% marginal — no surprise.\n\nDevon, CA (9.3% effective state), 32% federal bracket:\n  Federal supplemental (22%): −$2,200\n  State (9.3%): −$930\n  FICA (7.65%): −$765\n  **Take-home: $6,105**\n  At filing: 22% federal withholding under-withholds for the 32% marginal bracket → owes ~$1,000 more federal at filing time. Set it aside in the HYSA, don't spend the take-home as if it's final.\n\nJordan, NJ (~7% effective state), 12% federal bracket:\n  Federal supplemental (22%): −$2,200\n  State (7%): −$700\n  FICA (7.65%): −$765\n  **Take-home: $6,335**\n  At filing: 22% federal withholding OVER-withholds for the 12% marginal bracket → refunded ~$1,000 federal at filing time. Effectively a forced savings.\n\nKey rule: never spend the full take-home of a bonus on day one. Wait until your tax return runs — if you're in the 24%+ marginal bracket, expect to owe a meaningful chunk back. If you're in the 12% bracket, expect a refund.",
+    "quizTemplateIds": [
+      "bonus_take_home_no_state_d1",
+      "bonus_take_home_high_state_d2",
+      "bonus_owed_at_filing_d2",
+      "bonus_refunded_low_bracket_d2",
+      "concept_bonus_supplemental_vs_marginal_d2"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
     "id": "rule_of_72",
     "moduleId": "investing",
     "title": "The Rule of 72 \u2014 when does it double?",
@@ -572,6 +604,22 @@
       "compound_pct_interest_d2",
       "compound_early_vs_late_d3",
       "compound_backwards_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "investing_compound_reverse_goal",
+    "moduleId": "investing",
+    "title": "Reverse goal — how much per month to hit $1M?",
+    "concept": "Compound interest is usually taught forward: '$500/month at 8% → $X in N years.' The more practical question is **backward**: 'I want $1M by 65. I'm 30. How much per month?' The exact math is the future-value annuity formula solved for PMT: monthly = goal × (r/12) ÷ ((1 + r/12)^(years × 12) − 1), where r is the annual return as a decimal. Mental approximation that works: at 8% nominal return (a defensible long-run S&P 500 assumption per historical data, ~10% before inflation / ~7% after), every $100/month contributed grows to ~**$150K over 30 years** and ~**$330K over 40 years**. Scale linearly from there: $1M over 30 yrs at 8% ≈ $670/month. $1M over 40 yrs ≈ $300/month. $500K over 25 yrs ≈ $530/month. The takeaway: starting 10 years earlier roughly cuts the required monthly contribution in half — time is mathematically much more powerful than amount for long horizons.",
+    "shortcut": "Mental anchor table at 8% annual return: $100/mo for 20 yrs → ~$59K · 25 yrs → ~$95K · 30 yrs → ~$150K · 35 yrs → ~$230K · 40 yrs → ~$330K. Scale linearly: $1M at 30 yrs = $1M ÷ $150K × $100/mo ≈ $667/mo. The exact annuity formula is slightly different, but this scaling lands within 3-5% of the precise answer — close enough for goal-setting. To check yourself: monthly × 12 × years × ~3-4 ≈ final value (rough check; the multiplier rises with time horizon).",
+    "example": "Three retirement scenarios at 8% nominal expected return:\n\nAva, age 25, wants $1M by 65 (40-year horizon):\n  Mental: $1M ÷ $330K × $100 = $303/mo\n  Exact annuity formula: $286/mo\n  Within 5% — pick $300/mo and round up.\n\nMarcus, age 35, same goal $1M by 65 (30-year horizon):\n  Mental: $1M ÷ $150K × $100 = $667/mo\n  Exact: $671/mo\n  Within 1% on this one.\n\nKenji, age 45, $1M by 65 (20-year horizon):\n  Mental: $1M ÷ $59K × $100 = $1,695/mo\n  Exact: $1,698/mo\n  Almost identical.\n\nThe big insight: Ava contributes $303/mo × 40 yrs × 12 = $145K total. Kenji contributes $1,698/mo × 20 yrs × 12 = $408K total. Both end at $1M. Ava puts in **$263K less** because of 20 extra years of compounding. This is why 'start early' is the most universally repeated retirement advice — the math actually justifies the cliché.\n\nQuick gut-check rule of thumb (8% nominal, 30 years): every $1M you want in 30 years costs roughly $670/month. Every $100K costs ~$67/month. Adjust for different time horizons using the anchor table above.",
+    "quizTemplateIds": [
+      "reverse_goal_basic_d1",
+      "reverse_goal_compare_horizons_d2",
+      "reverse_goal_500k_d1",
+      "reverse_goal_2m_d2",
+      "concept_reverse_goal_time_matters_d2"
     ],
     "lastVerified": "2026-05-26"
   },
@@ -861,6 +909,22 @@
       "balance_transfer_net_d2",
       "balance_transfer_breakeven_d2",
       "balance_transfer_full_payoff_plan_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "debt_cc_rewards_vs_interest",
+    "moduleId": "debt",
+    "title": "Credit card rewards vs interest — when 2% cashback is meaningless",
+    "concept": "The marketing copy on every cashback / points card assumes you pay your statement balance in full each month. The math is simple: 2% on $1,000/month spend = $20/month in rewards = $240/year. That's real money — if you carry $0 balance. But the moment you carry a balance, the APR almost always swamps the rewards. A 22% APR on a $1,000 carried balance costs ~$18/month in interest — wiping out the $20 in rewards for $2/month of net 'win.' Carry $3,000 at 22%: interest is $55/month, rewards still $20, net loss is $35/month or $420/year. The marketing implication that 'cashback offsets your spending' is technically true *only* if you pay in full. For anyone carrying a balance, optimizing for cashback is mathematically backwards — the right card is one with the LOWEST APR, not the highest rewards. The break-even balance (the carried balance at which rewards equal interest) = monthly spend × cashback% × 12 ÷ APR. On $1,000/mo spend at 2% rewards and 22% APR: break-even balance = $1,000 × 2% × 12 ÷ 22% ≈ $1,091. Carry more than that and rewards are net-negative.",
+    "shortcut": "Net rewards (monthly) = (monthly spend × cashback%) − (carried balance × APR ÷ 1200). On $1K/mo spend, 2% cashback, $0 balance: +$20/mo win. With $5K carried at 22%: $20 − $92 = −$72/mo net LOSS. Always: only chase rewards if you pay statement balance in full. If you carry a balance, dump the rewards card and get a low-APR card or balance-transfer card (see lesson on balance transfers).",
+    "example": "Three users with the same 2% cashback card on $1,500/month spend:\n\nAlex — pays in full every month:\n  Monthly rewards: $1,500 × 2% = $30\n  Monthly interest: $0\n  Net win: +$30/mo = +$360/year\n  Rewards are real money for Alex.\n\nJordan — carries $2,000 balance at 22% APR:\n  Monthly rewards: $30\n  Monthly interest: $2,000 × 22% ÷ 12 = $36.67\n  Net loss: −$6.67/mo = −$80/year\n  Rewards no longer pay for themselves.\n\nCasey — carries $6,000 balance at 24% APR:\n  Monthly rewards: $30\n  Monthly interest: $6,000 × 24% ÷ 12 = $120\n  Net loss: −$90/mo = −$1,080/year\n  Casey is being misled by the marketing — switching to a 15% APR card (lower rewards or no rewards) saves more than the cashback would ever earn.\n\nBreak-even balance for Alex's card (2% rewards, 22% APR): $1,500 × 2% × 12 ÷ 22% ≈ $1,636. If Alex carries less, rewards win; carry more, interest wins. Simple test: is your carried balance bigger than the break-even? Then your 'rewards card' is costing you money every month.",
+    "quizTemplateIds": [
+      "cc_rewards_basic_d1",
+      "cc_net_rewards_with_balance_d2",
+      "cc_rewards_breakeven_balance_d2",
+      "cc_rewards_high_balance_loss_d2",
+      "concept_cc_rewards_only_if_paid_off_d1"
     ],
     "lastVerified": "2026-05-26"
   },
@@ -1485,6 +1549,22 @@
       "concept_oe_dcfsa_cap_d2",
       "concept_oe_fsa_vs_hsa_d2",
       "concept_oe_supplemental_life_d2"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "insurance_medical_bill_eob",
+    "moduleId": "insurance",
+    "title": "Medical bill vs EOB — the number you actually owe",
+    "concept": "Two documents arrive after any medical service that isn't a $30 copay: a **bill from the provider** and an **Explanation of Benefits (EOB) from your insurer**. They are not the same and they often disagree. The EOB shows what the provider billed, what insurance paid, what was 'adjusted off' via your insurer's negotiated rate, and what you OWE (the patient-responsibility line). The provider's bill should equal the EOB's patient-responsibility line — but research from Consumer Reports / Medical Billing Advocates of America consistently finds errors in 50-80% of medical bills, most going undisputed. Common errors: out-of-network charges that should be in-network (per the No Surprises Act of 2022, surprise out-of-network billing in emergencies and at in-network facilities is illegal), duplicate charges (same procedure billed twice), upcoding (billed a higher-tier code than the service merited), services you didn't receive, prescription drugs charged that the hospital pharmacy actually waived. Cash-pay negotiation: hospitals routinely accept 30-50% off list prices from uninsured / self-pay patients (this is how their 'charity care' and 'financial-hardship' programs operate). For insured-but-disputing scenarios: call the EOB's billing dispute line, not the provider's billing department, and the dispute auto-pauses collections for 30+ days.",
+    "shortcut": "Three-step routine on every medical bill over ~$200: (1) **Compare bill to EOB** — bill amount should match the EOB's patient-responsibility line. If it doesn't, dispute. (2) **Itemize** — request a fully itemized bill (not the summary). Errors hide in the CPT codes. (3) **Negotiate** — uninsured or self-pay? Ask for 30-50% off list. Insured but the EOB shows a billing error? Call the insurer's billing-dispute number; the No Surprises Act (2022) prevents out-of-network charges in emergencies and at in-network facilities. Never pay a medical bill on receipt — there's no benefit to paying on day 1 and the 30-day audit pays for itself many times over.",
+    "example": "Maya gets an ER visit. A month later, two documents:\n\n**Provider bill (Mercy ER):**\n  Total charges: $8,400\n  Insurance paid: $5,200\n  Amount owed: **$3,200**\n  Due in 30 days.\n\n**Insurance EOB (Aetna):**\n  Total billed: $8,400\n  Adjusted off (network rate): $1,800\n  Insurance paid: $5,200\n  **Patient responsibility: $1,400**\n  (Deductible $1,000 already met; coinsurance 20% on remaining = $400)\n\nGap: provider says $3,200, EOB says $1,400. The provider is over-billing by $1,800 — they didn't apply the in-network adjustment.\n\nMaya's action: call Aetna's billing dispute line, reference the EOB. Aetna confirms the network rate. Provider re-bills for $1,400. **Maya saves $1,800 with one phone call.**\n\nUninsured negotiation example:\nHospital list price for the same visit: $8,400. Self-pay (no insurance) patient calls billing office:\n  'I'm self-pay. What's the cash-pay rate?'\n  Hospital offers $4,800 (43% off list).\n  Counter: 'I can pay $3,500 today via Zelle.'\n  Final: $3,500 settled in full.\n\nKey rule: list prices in US healthcare are essentially fiction. The EOB-negotiated rate is the floor; the cash-pay rate sits 30-50% off list. Either path beats paying the bill as printed.",
+    "quizTemplateIds": [
+      "eob_patient_responsibility_d1",
+      "eob_vs_provider_bill_d2",
+      "eob_cash_discount_d2",
+      "concept_eob_what_is_it_d1",
+      "concept_eob_when_to_dispute_d2"
     ],
     "lastVerified": "2026-05-26"
   },

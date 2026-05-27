@@ -183,7 +183,7 @@ Error = `|estimate - correct| / |correct|`. A question with ≥2 stars is consid
 3. Ultimate fallback: easy.
 
 ## Content Stats
-- **10 modules**, **107 lessons**, **535 templates** — post-Phase-3
-- 400 numerical templates + 135 concept templates — post-Phase-3
-- Every lesson references **5–6 templates** (~536 references total; DCA gained a 6th template in Phase 3 Batch 3c so the lesson is now mixed-type; one Smart Shopping template is shared between two related lessons)
-- Templates per module (post-Phase-3): smart_shopping (45), money_math (35), salary (55, +5 RSU), investing (91, +10: ESPP + three-accounts + DCA cash-drag), debt (70, +5 statement cycle), housing (50), taxes (40), insurance (55, +5 open enrollment), car (50), student_loans (50)
+- **10 modules**, **118 lessons**, **590 templates** — post-Phase-4
+- 433 numerical templates + 157 concept templates — post-Phase-4
+- Every lesson references **5–6 templates** (~591 references total; DCA is mixed-type with 6 templates; one Smart Shopping template is shared between two related lessons)
+- Templates per module (post-Phase-4): smart_shopping (45), money_math (40, +5 sinking funds), salary (75, +20 W-2/1099 + 401k vesting + bonus), investing (111, +20: EF location + reverse goal), debt (80, +10 rewards-vs-interest + earlier statement cycle), housing (65, +15 cash-to-close + COL + first-month), taxes (40), insurance (65, +10 open enrollment + EOB), car (50), student_loans (50)

@@ -2124,6 +2124,100 @@ struct QuizEngine {
             return shares * (endPrice - purchasePrice)
         },
 
+        // MARK: - Insurance: Medical bill EOB (Phase 4 Batch 4b)
+        "patientResponsibility": { vars in
+            // EOB patient responsibility = billed − network adjustment − insurance paid
+            guard let billed = vars["billed"], let adj = vars["adjusted"], let paid = vars["insurancePaid"] else { return nil }
+            return billed - adj - paid
+        },
+        "eobBillGap": { vars in
+            // Over-charge = provider bill − EOB patient responsibility
+            guard let bill = vars["providerBill"], let eob = vars["eobOwed"] else { return nil }
+            return bill - eob
+        },
+        "cashDiscountAmount": { vars in
+            // Cash-pay price = list × (1 − discount%)
+            guard let list = vars["listPrice"], let disc = vars["discountPct"] else { return nil }
+            return list * (1 - disc / 100)
+        },
+
+        // MARK: - Debt: CC rewards vs interest (Phase 4 Batch 4b)
+        "ccRewardsBasic": { vars in
+            // Monthly cashback at full payoff = spend × cashback%
+            guard let spend = vars["monthlySpend"], let pct = vars["cashbackPct"] else { return nil }
+            return spend * pct / 100
+        },
+        "ccNetRewards": { vars in
+            // Net = (spend × cashback%) − (balance × APR ÷ 1200)
+            guard let spend = vars["monthlySpend"], let pct = vars["cashbackPct"],
+                  let bal = vars["balance"], let apr = vars["apr"] else { return nil }
+            return spend * pct / 100 - bal * apr / 1200
+        },
+        "ccRewardsBreakevenBalance": { vars in
+            // Break-even balance = monthly spend × cashback% × 12 ÷ APR
+            guard let spend = vars["monthlySpend"], let pct = vars["cashbackPct"],
+                  let apr = vars["apr"], apr > 0 else { return nil }
+            return spend * pct * 12 / apr
+        },
+
+        // MARK: - Budgets: Sinking funds (Phase 4 Batch 4b)
+        "sinkingFundMonthly": { vars in
+            guard let expense = vars["expense"], let months = vars["monthsAway"], months > 0 else { return nil }
+            return expense / months
+        },
+        "sinkingFundsTotal": { vars in
+            // Sum 4 funds (holiday + travel + car + gifts)
+            guard let h = vars["holiday"], let t = vars["travel"],
+                  let c = vars["car"], let g = vars["gifts"] else { return nil }
+            return h + t + c + g
+        },
+        "holidayFundMonthly": { vars in
+            // Months until November = 12 − start month + 1
+            guard let budget = vars["holidayBudget"], let startMonth = vars["startMonth"] else { return nil }
+            let months = 12 - startMonth + 1
+            return budget / months
+        },
+        "weddingShortWindow": { vars in
+            // 5-month short window
+            guard let cost = vars["weddingCost"] else { return nil }
+            return cost / 5
+        },
+
+        // MARK: - Investing: Compound reverse goal (Phase 4 Batch 4b)
+        "reverseGoal30yr": { vars in
+            // Mental anchor: $100/mo × 30yr at 8% ≈ $150K. Scale linearly.
+            // Monthly ≈ goal × 100 / 150000
+            guard let goal = vars["goal"] else { return nil }
+            return goal * 100 / 150000
+        },
+        "reverseGoal1mByYears": { vars in
+            // Exact annuity formula solved for PMT, target $1M at 8% annual.
+            // PMT = FV × (r/12) ÷ ((1 + r/12)^months − 1)
+            guard let years = vars["years"] else { return nil }
+            let r = 0.08 / 12
+            let months = years * 12
+            let denom = pow(1 + r, months) - 1
+            guard denom > 0 else { return nil }
+            return 1000000 * r / denom
+        },
+
+        // MARK: - Salary: Bonus after tax (Phase 4 Batch 4b)
+        "bonusTakeHomeNoState": { vars in
+            // 22% federal supplemental + 7.65% FICA, no state.
+            guard let bonus = vars["bonus"] else { return nil }
+            return bonus * (1 - 0.22 - 0.0765)
+        },
+        "bonusTakeHomeWithState": { vars in
+            // 22% federal supplemental + 7.65% FICA + state.
+            guard let bonus = vars["bonus"], let state = vars["stateRate"] else { return nil }
+            return bonus * (1 - 0.22 - 0.0765 - state / 100)
+        },
+        "bonusOwedAtFiling": { vars in
+            // Extra owed = bonus × (marginal − 22%) when marginal > 22%
+            guard let bonus = vars["bonus"], let marginal = vars["marginalBracket"] else { return nil }
+            return bonus * (marginal - 22) / 100
+        },
+
         // MARK: - Salary: W-2 vs 1099 (Phase 4 Batch 4a)
         "w2EquivalentHourly": { vars in
             // Rough screening rule: 1099 hourly × 0.65 ≈ W-2 take-home equivalent

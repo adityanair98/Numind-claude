@@ -172,7 +172,11 @@ enum QuestionTheme {
              "wrong_multiplier_shortfall_d3", "biweekly_annual_check_d2",
              // V3 concept lessons
              "concept_needs_definition_d1", "concept_needs_gym_d2", "concept_needs_streaming_d2",
-             "concept_needs_over_50_d3", "concept_needs_job_loss_d3":
+             "concept_needs_over_50_d3", "concept_needs_job_loss_d3",
+             // Sinking funds (Phase 4 Batch 4b — new lesson)
+             "sinking_fund_monthly_d1", "sinking_fund_multi_total_d2",
+             "sinking_fund_holiday_d1", "sinking_fund_short_window_d2",
+             "concept_sinking_fund_vs_cc_d2":
             return .budget
 
         // ── Paycheck & Income ────────────────────────────────────────────────────
@@ -216,7 +220,11 @@ enum QuestionTheme {
              // 401(k) vesting (Phase 4 Batch 4a — new lesson)
              "vested_match_graded_d1", "vested_match_cliff_d1",
              "vested_match_forfeit_d2", "vested_match_milestone_d2",
-             "concept_vesting_cliff_vs_graded_d2":
+             "concept_vesting_cliff_vs_graded_d2",
+             // Bonus after tax (Phase 4 Batch 4b — new lesson)
+             "bonus_take_home_no_state_d1", "bonus_take_home_high_state_d2",
+             "bonus_owed_at_filing_d2", "bonus_refunded_low_bracket_d2",
+             "concept_bonus_supplemental_vs_marginal_d2":
             return .paycheck
 
         // ── Investing & Growth ───────────────────────────────────────────────────
@@ -275,7 +283,11 @@ enum QuestionTheme {
              // EF location (Phase 4 Batch 4a — new lesson)
              "concept_ef_loc_starter_d1", "concept_ef_loc_full_d2",
              "concept_ef_loc_fdic_split_d2", "concept_ef_loc_what_not_d2",
-             "concept_ef_loc_hysa_vs_cd_d2":
+             "concept_ef_loc_hysa_vs_cd_d2",
+             // Compound reverse goal (Phase 4 Batch 4b — new lesson)
+             "reverse_goal_basic_d1", "reverse_goal_compare_horizons_d2",
+             "reverse_goal_500k_d1", "reverse_goal_2m_d2",
+             "concept_reverse_goal_time_matters_d2":
             return .investing
 
         // ── Debt & Loans ─────────────────────────────────────────────────────────
@@ -321,7 +333,11 @@ enum QuestionTheme {
              // CC statement cycle (Phase 3 Batch 3b — new lesson)
              "cc_utilization_basic_d1", "cc_utilization_target_d2",
              "cc_after_payoff_d2", "concept_cc_statement_vs_due_d2",
-             "cc_multi_card_utilization_d2":
+             "cc_multi_card_utilization_d2",
+             // CC rewards vs interest (Phase 4 Batch 4b — new lesson)
+             "cc_rewards_basic_d1", "cc_net_rewards_with_balance_d2",
+             "cc_rewards_breakeven_balance_d2", "cc_rewards_high_balance_loss_d2",
+             "concept_cc_rewards_only_if_paid_off_d1":
             return .debt
 
         // ── Housing & Rent ───────────────────────────────────────────────────────
@@ -424,7 +440,11 @@ enum QuestionTheme {
              // Open enrollment (Phase 3 Batch 3b — new lesson)
              "concept_oe_when_d1", "concept_oe_hdhp_eligibility_d2",
              "concept_oe_dcfsa_cap_d2", "concept_oe_fsa_vs_hsa_d2",
-             "concept_oe_supplemental_life_d2":
+             "concept_oe_supplemental_life_d2",
+             // Medical bill EOB (Phase 4 Batch 4b — new lesson)
+             "eob_patient_responsibility_d1", "eob_vs_provider_bill_d2",
+             "eob_cash_discount_d2", "concept_eob_what_is_it_d1",
+             "concept_eob_when_to_dispute_d2":
             return .insurance
 
         // ── Car & Big Purchases ─────────────────────────────────────────────────

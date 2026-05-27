@@ -16114,5 +16114,407 @@
       "Renters insurance (usually only $15-20/month)"
     ],
     "correctConceptChoice": "Utility setup + immediate household basics (mattress, kitchen, cleaning)"
+  },
+  {
+    "id": "eob_patient_responsibility_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "promptTemplate": "Your EOB shows: total billed ${{billed}}, network adjustment ${{adjusted}}, insurance paid ${{insurancePaid}}. What's your patient responsibility according to the EOB?",
+    "variableRules": [
+      {"name": "billed", "options": [3000, 5000, 8000, 12000]},
+      {"name": "adjusted", "options": [800, 1500, 2400, 3500]},
+      {"name": "insurancePaid", "options": [1500, 2800, 4200, 6500]}
+    ],
+    "answerFormula": "patientResponsibility",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Patient responsibility = billed − adjusted − insurance paid = ${{billed}} − ${{adjusted}} − ${{insurancePaid}} = ${{answer}}. This is the number you ACTUALLY owe. If the provider bill is higher than this, dispute it via your insurer's billing line — the provider may not have applied the network adjustment correctly."
+  },
+  {
+    "id": "eob_vs_provider_bill_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "promptTemplate": "Provider bill says you owe ${{providerBill}}. EOB patient-responsibility line shows ${{eobOwed}}. How much is the provider over-charging (the amount you should dispute)?",
+    "variableRules": [
+      {"name": "providerBill", "options": [1800, 2400, 3200, 4500, 6000]},
+      {"name": "eobOwed", "options": [800, 1200, 1600, 2200, 3100]}
+    ],
+    "answerFormula": "eobBillGap",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Over-charge = provider bill − EOB patient responsibility = ${{providerBill}} − ${{eobOwed}} = ${{answer}}. Call the insurer's billing-dispute line (not the provider). Reference the EOB. The No Surprises Act of 2022 prohibits out-of-network billing in emergencies and at in-network facilities — common source of these gaps."
+  },
+  {
+    "id": "eob_cash_discount_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "promptTemplate": "You're uninsured. Hospital list price for a procedure is ${{listPrice}}. You ask for a cash-pay discount and they offer {{discountPct}}% off. What do you pay?",
+    "variableRules": [
+      {"name": "listPrice", "options": [3000, 5000, 8000, 12000, 18000]},
+      {"name": "discountPct", "options": [30, 40, 50]}
+    ],
+    "answerFormula": "cashDiscountAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Cash price = list × (1 − discount%) = ${{listPrice}} × (1 − {{discountPct}}%) = ${{answer}}. US hospital list prices are essentially fiction. Uninsured / self-pay patients commonly negotiate 30-50% off via the hospital's financial-hardship or cash-pay program. Always ask before paying the bill as printed."
+  },
+  {
+    "id": "concept_eob_what_is_it_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What is an Explanation of Benefits (EOB)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "An EOB is a statement FROM YOUR INSURER (not the provider) showing how a claim was processed: what the provider billed, what insurance paid, what was adjusted off via the network rate, and what you owe (the 'patient responsibility' line). It's not a bill — it's the breakdown of how the claim was processed. The actual BILL comes separately from the provider. Compare the two: any gap is worth disputing.",
+    "conceptChoices": [
+      "A statement from your insurer showing how a claim was processed (not a bill)",
+      "A bill from the provider — same thing as the invoice",
+      "A receipt for your copay",
+      "The insurance card you carry"
+    ],
+    "correctConceptChoice": "A statement from your insurer showing how a claim was processed (not a bill)"
+  },
+  {
+    "id": "concept_eob_when_to_dispute_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your provider bill arrives showing $3,200. Your EOB's patient-responsibility line shows $1,400. What should you do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Call your insurer's billing-dispute line (number is on the EOB), not the provider. The insurer will work it out with the provider, who likely didn't apply the network adjustment. Filing a dispute auto-pauses collections for 30+ days while it's resolved. Paying the wrong $3,200 doesn't make the dispute easier — you'd have to claw back the overage later, which is harder. The 50-80% billing-error rate (per Consumer Reports + Medical Billing Advocates of America) is exactly why this routine matters.",
+    "conceptChoices": [
+      "Call the insurer's billing-dispute line — provider likely didn't apply the network adjustment",
+      "Pay the $3,200 — provider knows the right amount",
+      "Pay the EOB's $1,400 amount without notifying anyone",
+      "Wait until collections starts and dispute then"
+    ],
+    "correctConceptChoice": "Call the insurer's billing-dispute line — provider likely didn't apply the network adjustment"
+  },
+  {
+    "id": "cc_rewards_basic_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "Your cashback card gives {{cashbackPct}}% back. You spend ${{monthlySpend}}/month on it. You pay statement balance in full each month (no interest). How much cashback do you earn per month?",
+    "variableRules": [
+      {"name": "monthlySpend", "options": [800, 1200, 1500, 2000, 3000]},
+      {"name": "cashbackPct", "options": [1.5, 2, 3]}
+    ],
+    "answerFormula": "ccRewardsBasic",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Cashback = monthly spend × cashback% = ${{monthlySpend}} × {{cashbackPct}}% = ${{answer}}/month. Multiply by 12 for annual. THIS ONLY APPLIES if you pay statement balance in full. Carry a balance and the APR usually swamps the rewards (see other templates in this lesson)."
+  },
+  {
+    "id": "cc_net_rewards_with_balance_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "Same {{cashbackPct}}% cashback card. ${{monthlySpend}}/month spend. You're now carrying a ${{balance}} balance at {{apr}}% APR. What's your NET monthly result (rewards minus interest)?",
+    "variableRules": [
+      {"name": "monthlySpend", "options": [1000, 1500, 2000]},
+      {"name": "cashbackPct", "options": [2, 3]},
+      {"name": "balance", "options": [2000, 4000, 6000, 8000]},
+      {"name": "apr", "options": [20, 22, 24]}
+    ],
+    "answerFormula": "ccNetRewards",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Net = (spend × cashback%) − (balance × APR ÷ 1200) = (${{monthlySpend}} × {{cashbackPct}}%) − (${{balance}} × {{apr}}% ÷ 12) = ${{answer}}/month. Negative number means the rewards are NET LOSSES. The carried balance's monthly interest typically overwhelms any reasonable cashback rate. Pay off the balance before optimizing for rewards."
+  },
+  {
+    "id": "cc_rewards_breakeven_balance_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "You spend ${{monthlySpend}}/month on a {{cashbackPct}}% card. The card's APR is {{apr}}%. At what carried balance do your rewards exactly equal the monthly interest charge (the break-even balance)?",
+    "variableRules": [
+      {"name": "monthlySpend", "options": [1000, 1500, 2000, 2500]},
+      {"name": "cashbackPct", "options": [1.5, 2, 3]},
+      {"name": "apr", "options": [20, 22, 24]}
+    ],
+    "answerFormula": "ccRewardsBreakevenBalance",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Break-even = monthly spend × cashback% × 12 ÷ APR = ${{monthlySpend}} × {{cashbackPct}}% × 12 ÷ {{apr}}% = ${{answer}}. Above this carried balance, rewards turn net-negative. Below it, rewards still win. For most US cashback cards, the break-even sits well under typical 'carried' balances — meaning anyone with a real revolving balance is losing money on the rewards card."
+  },
+  {
+    "id": "cc_rewards_high_balance_loss_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "You carry a $6,000 balance on your 2% cashback card at 24% APR. You spend $1,500/month and pay it down by only the minimum payment. How much are you losing PER YEAR on the 'rewards' card vs a 15% APR low-rewards card you could have instead?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "inputMode": "multipleChoice",
+    "explanationTemplate": "Interest at 24% on $6K balance: $1,440/year. Interest at 15% on same $6K: $900/year. Annual difference: $540 saved by switching. Rewards on $1,500/mo × 2% × 12 = $360/year. So switching to the lower-APR card SAVES $540 but COSTS $360 in lost rewards — net $180/year better off. The marketing implication that 'rewards offset interest' is mathematically wrong when you carry a balance.",
+    "conceptChoices": [
+      "About $180/year (interest saved by switching to a 15% APR card exceeds the lost rewards)",
+      "Nothing — the rewards offset the interest",
+      "About $540/year (full interest saving, ignoring lost rewards)",
+      "About $360/year (just the lost rewards, ignoring interest saving)"
+    ],
+    "correctConceptChoice": "About $180/year (interest saved by switching to a 15% APR card exceeds the lost rewards)"
+  },
+  {
+    "id": "concept_cc_rewards_only_if_paid_off_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "When does a cashback / points credit card actually pay for itself in real dollars?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Only when you pay the statement balance in full every month. Cashback at 2% sounds great but is mathematically destroyed by a 22% APR the moment you carry any balance. The 'rewards card vs low-APR card' decision is the second most important credit-card decision after 'pay in full every month.' Anyone carrying a balance should switch to the lowest-APR card they qualify for, accept lower rewards (or none), and prioritize debt payoff.",
+    "conceptChoices": [
+      "Only when you pay the statement balance in full every month",
+      "Always — 2% back is 2% back",
+      "Only on holiday months when spend is concentrated",
+      "Only on cards with annual fees"
+    ],
+    "correctConceptChoice": "Only when you pay the statement balance in full every month"
+  },
+  {
+    "id": "sinking_fund_monthly_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "You want to save ${{expense}} for a known irregular expense {{monthsAway}} months from now. How much should the sinking fund contribute each month?",
+    "variableRules": [
+      {"name": "expense", "options": [600, 1200, 1500, 2400, 3000, 3600]},
+      {"name": "monthsAway", "options": [3, 4, 6, 8, 10, 12]}
+    ],
+    "answerFormula": "sinkingFundMonthly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly = expense ÷ months until needed = ${{expense}} ÷ {{monthsAway}} = ${{answer}}/month. Round up for safety. The point: a single monthly line replaces a single big-month shock that breaks the budget. Multiple sinking funds for different expenses run simultaneously — total monthly outlay typically lands $200-500 for 4-6 funds combined."
+  },
+  {
+    "id": "sinking_fund_multi_total_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "You're running four sinking funds: Holiday ${{holiday}}/mo, Travel ${{travel}}/mo, Car Maintenance ${{car}}/mo, Gifts ${{gifts}}/mo. What's your total monthly sinking-fund outlay?",
+    "variableRules": [
+      {"name": "holiday", "options": [50, 75, 100, 110, 125]},
+      {"name": "travel", "options": [150, 200, 250, 300, 350]},
+      {"name": "car", "options": [50, 75, 85, 100]},
+      {"name": "gifts", "options": [30, 40, 50, 75]}
+    ],
+    "answerFormula": "sinkingFundsTotal",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = sum of all funds = ${{holiday}} + ${{travel}} + ${{car}} + ${{gifts}} = ${{answer}}/month. Treat this as part of the 'needs' bucket in the 50/30/20 rule (predictable, just irregular timing) — not 'wants.' Misclassifying sinking funds as discretionary is the #1 reason monthly budgets feel structurally broken every couple of months."
+  },
+  {
+    "id": "sinking_fund_holiday_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "promptTemplate": "Today is {{startMonth}}. You want to have ${{holidayBudget}} for holiday spending (gifts + travel + extras) by the end of November. How much per month do you need to put aside?",
+    "variableRules": [
+      {"name": "holidayBudget", "options": [600, 900, 1200, 1500, 2000]},
+      {"name": "startMonth", "options": [1, 2, 3]}
+    ],
+    "answerFormula": "holidayFundMonthly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Months until November = 12 − start month + 1. Monthly = ${{holidayBudget}} ÷ (12 − {{startMonth}} + 1) = ${{answer}}. Holiday spending is the canonical sinking-fund use case — it's predictable, large, and hits every year. Starting in January gives you 11 months to spread; starting in October leaves only 2 months and forces credit-card use that costs interest."
+  },
+  {
+    "id": "sinking_fund_short_window_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "promptTemplate": "You found out 2 months ago about a wedding 5 months from now. Estimated total cost (gift + travel + outfit): ${{weddingCost}}. You've saved nothing yet. Monthly sinking fund needed for the next 5 months?",
+    "variableRules": [
+      {"name": "weddingCost", "options": [800, 1200, 1500, 2000, 2500]}
+    ],
+    "answerFormula": "weddingShortWindow",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly = ${{weddingCost}} ÷ 5 = ${{answer}}. Short windows hurt — the same cost over 12 months would be less than half the monthly hit. The takeaway: as soon as you know about ANY irregular expense (>2 months out), start the sinking fund immediately. Even partial funding over a long window beats a full-on credit-card hit the week before."
+  },
+  {
+    "id": "concept_sinking_fund_vs_cc_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Why use a sinking fund instead of just charging the irregular expense to a credit card and paying it off over a few months?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A $1,500 holiday expense paid down over 3 months on a 22% APR credit card costs ~$50 in interest. The sinking-fund alternative ($125/mo for 12 months) costs $0 in interest AND earns ~4-5% APY in a HYSA (~$30 of free interest). Net difference: $80 saved + behavior locked in for next year (recurring fund replenishes automatically). Charging the credit card creates a recurring 'oh that hurt' moment that nudges the next irregular expense onto the credit card too — sinking funds break that cycle.",
+    "conceptChoices": [
+      "Avoid the 22%+ APR interest on the credit-card balance",
+      "Credit cards don't allow large purchases",
+      "Sinking funds get a tax deduction",
+      "Credit cards damage your credit even when paid off"
+    ],
+    "correctConceptChoice": "Avoid the 22%+ APR interest on the credit-card balance"
+  },
+  {
+    "id": "reverse_goal_basic_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "Using the mental anchor ($100/mo at 8% × 30 yrs ≈ $150K), roughly how much per month do you need to invest to reach ${{goal}} in 30 years at 8% nominal return?",
+    "variableRules": [
+      {"name": "goal", "options": [300000, 500000, 750000, 1000000, 1500000, 2000000]}
+    ],
+    "answerFormula": "reverseGoal30yr",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly ≈ goal × $100 ÷ $150K = goal × 0.000667. For ${{goal}}: ${{answer}}/month. Mental check: $1M ÷ $150K × $100 = ~$667/mo. The exact annuity-formula answer is within 3-5% of this scaling — close enough for goal-setting. Adjust if your time horizon is different (use the anchor table in the lesson: 20yr → $59K, 25yr → $95K, 35yr → $230K, 40yr → $330K per $100/mo)."
+  },
+  {
+    "id": "reverse_goal_compare_horizons_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Target $1,000,000 by retirement at 8% nominal return. How much per month if you start with {{years}} years to go?",
+    "variableRules": [
+      {"name": "years", "options": [20, 25, 30, 35, 40]}
+    ],
+    "answerFormula": "reverseGoal1mByYears",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "At 8% annual: monthly = $1M × (r/12) ÷ ((1 + r/12)^(years × 12) − 1). For {{years}} years: ${{answer}}/month. Big picture: 40 years = ~$300/mo, 30 years = ~$670/mo, 20 years = ~$1,700/mo. Every 10 years earlier roughly cuts the monthly contribution in half. Time is more powerful than amount for long horizons."
+  },
+  {
+    "id": "reverse_goal_500k_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "Target $500,000 in 25 years at 8% nominal return. Using the anchor ($100/mo × 25 yrs at 8% ≈ $95K), roughly how much per month?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "inputMode": "multipleChoice",
+    "explanationTemplate": "$500K ÷ $95K × $100 ≈ $530/mo. The exact annuity-formula answer is ~$525/mo — within 1% of the mental shortcut. The anchor table works well for any goal-horizon combination: just scale linearly from the appropriate row.",
+    "conceptChoices": [
+      "About $525/month",
+      "About $200/month",
+      "About $1,000/month",
+      "About $1,667/month (just $500K ÷ 25 yrs ÷ 12, ignoring growth)"
+    ],
+    "correctConceptChoice": "About $525/month"
+  },
+  {
+    "id": "reverse_goal_2m_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Target $2,000,000 in 35 years at 8% nominal return. Using the anchor ($100/mo × 35 yrs ≈ $230K), about how much per month?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "inputMode": "multipleChoice",
+    "explanationTemplate": "$2M ÷ $230K × $100 ≈ $870/mo. Exact annuity: ~$870/mo. The anchor scales beautifully for higher targets too. The 35-year horizon makes $2M much more accessible — at 20 years, you'd need ~$3,400/mo, nearly 4× higher.",
+    "conceptChoices": [
+      "About $870/month",
+      "About $400/month",
+      "About $2,500/month",
+      "About $4,800/month"
+    ],
+    "correctConceptChoice": "About $870/month"
+  },
+  {
+    "id": "concept_reverse_goal_time_matters_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "To hit $1M at 8% nominal return, Ava starts at 25 ($300/mo × 40 yrs) and Kenji starts at 45 ($1,700/mo × 20 yrs). Both end at $1M. Who contributes LESS total dollars over the horizon?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Ava: $300/mo × 12 × 40 = $144,000 total contributed. Kenji: $1,700/mo × 12 × 20 = $408,000 total contributed. Ava contributes $264K LESS in absolute dollars to reach the same $1M — because 20 extra years of compounding does the heavy lifting. This is the math behind 'start early' — it's not just a slogan, the early starter's total cash outlay is dramatically lower.",
+    "conceptChoices": [
+      "Ava — $144K total contributions vs Kenji's $408K, despite hitting the same $1M",
+      "Kenji — higher monthly means lower total since the horizon is shorter",
+      "They contribute exactly the same — the math works out evenly",
+      "Impossible to compare without knowing tax bracket"
+    ],
+    "correctConceptChoice": "Ava — $144K total contributions vs Kenji's $408K, despite hitting the same $1M"
+  },
+  {
+    "id": "bonus_take_home_no_state_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "You receive a ${{bonus}} year-end bonus. You're in TX (no state income tax). 22% federal supplemental withholding (per IRS Pub 15) + 7.65% FICA. What's your bonus take-home?",
+    "variableRules": [
+      {"name": "bonus", "options": [3000, 5000, 7500, 10000, 15000, 20000]}
+    ],
+    "answerFormula": "bonusTakeHomeNoState",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Take-home = bonus × (1 − 22% − 7.65%) = bonus × 0.7035 = ${{answer}}. In a no-state-tax state, only federal supplemental + FICA apply. Note: 22% is WITHHOLDING (per IRS Pub 15), not the final tax. If your marginal federal bracket is higher than 22%, expect to owe more at filing."
+  },
+  {
+    "id": "bonus_take_home_high_state_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You receive a ${{bonus}} year-end bonus in {{stateRate}}% state (combined state + local effective rate). 22% federal supplemental + 7.65% FICA + state. What's your take-home?",
+    "variableRules": [
+      {"name": "bonus", "options": [5000, 10000, 15000, 20000, 30000]},
+      {"name": "stateRate", "options": [5, 6.5, 9.3, 12]}
+    ],
+    "answerFormula": "bonusTakeHomeWithState",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Take-home = bonus × (1 − 22% − 7.65% − stateRate%) = ${{answer}}. On $10K bonus in CA (9.3% effective): ~$6,105 take-home. On the same bonus in NYC (combined ~10% NY state + city): ~$6,035. State tax + city tax compound quickly on bonuses."
+  },
+  {
+    "id": "bonus_owed_at_filing_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You're in the {{marginalBracket}}% federal marginal bracket. You get a ${{bonus}} bonus. 22% federal supplemental was withheld. How much MORE federal tax do you owe at filing on this bonus?",
+    "variableRules": [
+      {"name": "bonus", "options": [10000, 15000, 20000, 25000, 30000]},
+      {"name": "marginalBracket", "options": [24, 32, 35, 37]}
+    ],
+    "answerFormula": "bonusOwedAtFiling",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Extra owed = bonus × (marginal − 22%) = ${{bonus}} × ({{marginalBracket}}% − 22%) = ${{answer}}. The 22% supplemental rate is one-size-fits-all (per IRS Pub 15). For workers in 24%+ brackets, the withholding under-collects. Set aside this gap in a HYSA when the bonus hits — don't spend the take-home as if it's final."
+  },
+  {
+    "id": "bonus_refunded_low_bracket_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You're in the 12% federal marginal bracket. You get a $5,000 bonus. 22% federal supplemental was withheld. How much OVER-withholding will be refunded at filing time (just the federal portion)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "inputMode": "multipleChoice",
+    "explanationTemplate": "Over-withholding = bonus × (22% − marginal%) = $5,000 × (22% − 12%) = $500 federal refunded at filing. For lower-bracket earners, the 22% supplemental rate over-collects — this is effectively a forced savings that gets returned with the refund. Note: state withholding may also be over- or under-collected separately.",
+    "conceptChoices": [
+      "$500 (5,000 × 10%)",
+      "$0 — withholding always matches",
+      "$1,100 (the full 22%)",
+      "$600 (5,000 × 12%)"
+    ],
+    "correctConceptChoice": "$500 (5,000 × 10%)"
+  },
+  {
+    "id": "concept_bonus_supplemental_vs_marginal_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "True or false: the 22% federal supplemental withholding rate on bonuses is your actual federal tax rate on that money.",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "FALSE. 22% is the WITHHOLDING rate (per IRS Pub 15) — what your employer holds back when issuing the bonus. Your ACTUAL federal tax is determined at filing by your marginal bracket. If you're in the 32% bracket, the bonus is ultimately taxed at 32% — you'll owe the extra 10% at filing. If you're in the 12% bracket, you'll get the over-withholding refunded. The 22% is a placeholder rate, not the final answer.",
+    "conceptChoices": [
+      "False — 22% is just withholding; actual tax is determined by your marginal bracket at filing",
+      "True — 22% is the flat tax rate for bonuses",
+      "True — but only if you make under $1M in supplemental wages",
+      "False — bonuses aren't subject to federal income tax"
+    ],
+    "correctConceptChoice": "False — 22% is just withholding; actual tax is determined by your marginal bracket at filing"
   }
 ]

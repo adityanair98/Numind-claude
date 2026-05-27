@@ -34,7 +34,8 @@
       "money_math_50_30_20",
       "money_math_latte_factor",
       "money_math_weekly_monthly",
-      "concept_money_needs_vs_wants"
+      "concept_money_needs_vs_wants",
+      "money_math_sinking_funds"
     ]
   },
   {
@@ -58,7 +59,8 @@
       "salary_401k_paycheck_impact",
       "salary_rsu_basics",
       "salary_w2_vs_1099_offer",
-      "salary_401k_vesting"
+      "salary_401k_vesting",
+      "salary_bonus_after_tax"
     ]
   },
   {
@@ -77,6 +79,7 @@
       "investing_roth_decision",
       "concept_investing_three_accounts",
       "investing_compound_growth",
+      "investing_compound_reverse_goal",
       "investing_dca",
       "investing_apy_savings",
       "investing_espp_discount",
@@ -112,7 +115,8 @@
       "concept_ef_vs_debt_priority",
       "debt_cc_payoff_time",
       "debt_balance_transfer",
-      "debt_cc_statement_cycle"
+      "debt_cc_statement_cycle",
+      "debt_cc_rewards_vs_interest"
     ]
   },
   {
@@ -177,7 +181,8 @@
       "insurance_brand_vs_generic",
       "concept_insurance_policy_priority",
       "concept_insurance_disability",
-      "concept_insurance_open_enrollment"
+      "concept_insurance_open_enrollment",
+      "insurance_medical_bill_eob"
     ]
   },
   {

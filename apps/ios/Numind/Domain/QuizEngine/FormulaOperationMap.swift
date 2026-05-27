@@ -2213,6 +2213,95 @@ enum FormulaOperationMap {
                     .subtract(b: purchase, from: endPrice),
                     .multiply(a: shares, by: endPrice - purchase)]
 
+        // MARK: - Insurance: Medical bill EOB (Phase 4 Batch 4b)
+        case "patientResponsibility":
+            guard let billed = variables["billed"], let adj = variables["adjusted"], let paid = variables["insurancePaid"] else { return [] }
+            return [.subtract(b: adj, from: billed),
+                    .subtract(b: paid, from: billed - adj)]
+
+        case "eobBillGap":
+            guard let bill = variables["providerBill"], let eob = variables["eobOwed"] else { return [] }
+            return [.subtract(b: eob, from: bill)]
+
+        case "cashDiscountAmount":
+            guard let list = variables["listPrice"], let disc = variables["discountPct"] else { return [] }
+            return [.percentOf(pct: disc, amount: list),
+                    .subtract(b: list * disc / 100, from: list)]
+
+        // MARK: - Debt: CC rewards vs interest (Phase 4 Batch 4b)
+        case "ccRewardsBasic":
+            guard let spend = variables["monthlySpend"], let pct = variables["cashbackPct"] else { return [] }
+            return [.percentOf(pct: pct, amount: spend)]
+
+        case "ccNetRewards":
+            guard let spend = variables["monthlySpend"], let pct = variables["cashbackPct"],
+                  let bal = variables["balance"], let apr = variables["apr"] else { return [] }
+            let rewards = spend * pct / 100
+            let interest = bal * apr / 1200
+            return [.percentOf(pct: pct, amount: spend),
+                    .divide(a: apr, by: 12),
+                    .percentOf(pct: apr / 12, amount: bal),
+                    .subtract(b: interest, from: rewards)]
+
+        case "ccRewardsBreakevenBalance":
+            guard let spend = variables["monthlySpend"], let pct = variables["cashbackPct"],
+                  let apr = variables["apr"], apr > 0 else { return [] }
+            return [.percentOf(pct: pct, amount: spend),
+                    .multiply(a: spend * pct / 100, by: 12),
+                    .divide(a: spend * pct / 100 * 12, by: apr / 100)]
+
+        // MARK: - Budgets: Sinking funds (Phase 4 Batch 4b)
+        case "sinkingFundMonthly":
+            guard let expense = variables["expense"], let months = variables["monthsAway"], months > 0 else { return [] }
+            return [.divide(a: expense, by: months)]
+
+        case "sinkingFundsTotal":
+            guard let h = variables["holiday"], let t = variables["travel"],
+                  let c = variables["car"], let g = variables["gifts"] else { return [] }
+            return [.add(a: h, b: t),
+                    .add(a: h + t, b: c),
+                    .add(a: h + t + c, b: g)]
+
+        case "holidayFundMonthly":
+            guard let budget = variables["holidayBudget"], let startMonth = variables["startMonth"] else { return [] }
+            let months = 12 - startMonth + 1
+            return [.subtract(b: startMonth, from: 13),
+                    .divide(a: budget, by: months)]
+
+        case "weddingShortWindow":
+            guard let cost = variables["weddingCost"] else { return [] }
+            return [.divide(a: cost, by: 5)]
+
+        // MARK: - Investing: Compound reverse goal (Phase 4 Batch 4b)
+        case "reverseGoal30yr":
+            guard let goal = variables["goal"] else { return [] }
+            return [.divide(a: goal, by: 1500)]
+
+        case "reverseGoal1mByYears":
+            // Annuity formula is not really mental math; mark as 3-op chain
+            // (multiply, percentOf, divide) so it scores hard.
+            guard let years = variables["years"] else { return [] }
+            return [.multiply(a: years, by: 12),
+                    .percentOf(pct: 8, amount: 1000000),
+                    .divide(a: 1000000, by: years * 12)]
+
+        // MARK: - Salary: Bonus after tax (Phase 4 Batch 4b)
+        case "bonusTakeHomeNoState":
+            guard let bonus = variables["bonus"] else { return [] }
+            return [.percentOf(pct: 29.65, amount: bonus),
+                    .subtract(b: bonus * 0.2965, from: bonus)]
+
+        case "bonusTakeHomeWithState":
+            guard let bonus = variables["bonus"], let state = variables["stateRate"] else { return [] }
+            let totalRate = 22 + 7.65 + state
+            return [.percentOf(pct: totalRate, amount: bonus),
+                    .subtract(b: bonus * totalRate / 100, from: bonus)]
+
+        case "bonusOwedAtFiling":
+            guard let bonus = variables["bonus"], let marginal = variables["marginalBracket"] else { return [] }
+            return [.subtract(b: 22, from: marginal),
+                    .percentOf(pct: marginal - 22, amount: bonus)]
+
         // MARK: - Salary: W-2 vs 1099 (Phase 4 Batch 4a)
         case "w2EquivalentHourly":
             guard let h = variables["hourly1099"] else { return [] }
