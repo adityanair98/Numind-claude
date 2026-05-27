@@ -12,7 +12,8 @@
       "tip_10_pct_d1",
       "tip_15_pct_d1",
       "tip_total_15_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "tip_18_percent",
@@ -27,7 +28,8 @@
       "tip_per_hundred_d1",
       "tip_total_25_d2",
       "tip_post_tax_scenario_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "tip_split_bill",
@@ -42,7 +44,8 @@
       "tip_group_per_person_d2",
       "tip_group_per_person_d3",
       "tip_bar_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "discount_bogo",
@@ -57,7 +60,8 @@
       "bogo_scenario_d2",
       "unit_price_grocery_d2",
       "discount_compare_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "discount_stacked",
@@ -72,7 +76,8 @@
       "stacked_discount_final",
       "stacked_scenario_d3",
       "discount_budget_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "discount_coupon_vs_cashback",
@@ -87,7 +92,8 @@
       "coupon_plus_cashback_d2",
       "coupon_vs_cashback_compare_d3",
       "coupon_cashback_final_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "discount_price_plus_tax",
@@ -102,7 +108,8 @@
       "disc_tax_nonround_d2",
       "disc_tax_stacked_d3",
       "disc_tax_compare_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "discount_membership_worth",
@@ -117,7 +124,8 @@
       "membership_net_saving_d2",
       "membership_compare_d3",
       "membership_decision_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_shopping_manipulation",
@@ -132,7 +140,8 @@
       "concept_charm_pricing_d2",
       "concept_inflated_msrp_d3",
       "concept_bogo_inflation_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "subscription_math",
@@ -147,7 +156,8 @@
       "sub_audit_annual_d2",
       "subscription_compare_d2",
       "sub_audit_cut_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "price_per_use",
@@ -162,7 +172,8 @@
       "cost_per_use_gym_d2",
       "mm_cpu_daily_d2",
       "cost_per_use_scenario"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "sales_tax_quick",
@@ -177,7 +188,8 @@
       "price_with_tax",
       "pre_tax_max_d2",
       "budget_asymmetry_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "money_math_50_30_20",
@@ -192,7 +204,8 @@
       "all_three_buckets_d2",
       "over_budget_d3",
       "target_savings_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "money_math_latte_factor",
@@ -207,7 +220,8 @@
       "daily_habit_savings_d2",
       "habit_compare_d2",
       "multi_habit_annual_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "money_math_weekly_monthly",
@@ -222,7 +236,8 @@
       "monthly_to_weekly_d2",
       "wrong_multiplier_shortfall_d3",
       "biweekly_annual_check_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_money_needs_vs_wants",
@@ -237,7 +252,8 @@
       "concept_needs_streaming_d2",
       "concept_needs_over_50_d3",
       "concept_needs_job_loss_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "net_pay_check",
@@ -268,7 +284,8 @@
       "raise_dollar_d1",
       "raise_new_salary_d2",
       "raise_after_tax_monthly_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "overtime_calc",
@@ -299,7 +316,8 @@
       "biweekly_annual_d1",
       "weekly_annual_d1",
       "job_offer_compare_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "inflation_adjusted_raise",
@@ -314,7 +332,8 @@
       "inflation_raise_scenario_d2",
       "inflation_raise_compare_d2",
       "inflation_raise_negative_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "salary_hourly_2000",
@@ -329,7 +348,8 @@
       "hourly_nonround_d2",
       "offer_compare_d3",
       "annual_nonround_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "salary_total_comp",
@@ -344,7 +364,8 @@
       "total_comp_hourly_d3",
       "missing_benefit_d2",
       "benefits_pct_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "salary_side_hustle",
@@ -359,7 +380,8 @@
       "worth_it_compare_d3",
       "hourly_compare_d3",
       "side_hustle_annual_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_salary_exempt_status",
@@ -374,15 +396,16 @@
       "concept_exempt_threshold_d2",
       "concept_exempt_misclass_d2",
       "concept_exempt_tradeoff_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "salary_401k_paycheck_impact",
     "moduleId": "salary",
     "title": "What does a 401(k) contribution actually cost you?",
-    "concept": "When you contribute to a traditional (pre-tax) 401(k), the full amount goes into your retirement account but your take-home pay drops by LESS than the full amount — because the contribution also reduces your taxable income. Net paycheck cost = contribution × (1 − your marginal income tax rate). At a 22% bracket, every $100 contributed costs you only $78 in take-home; the IRS effectively pays the other $22 via the tax break (per IRS Pub 525). This is why the headline '6% of salary into 401(k)' feels less painful in practice than the percentage suggests. (Note: FICA still applies to pre-tax 401(k) contributions — see lesson 7.8.)",
-    "shortcut": "Pre-tax 401(k) net paycheck cost = contribution × (1 − marginal rate). At 22% bracket: $300 contribution costs $234 take-home. At 32% bracket: $300 contribution costs $204 take-home. Higher bracket → contribution feels even cheaper. Roth 401(k) is different: full amount comes out of take-home.",
-    "example": "$60,000 salary, 22% federal bracket, 6% contribution rate:\nMonthly contribution: $60,000 × 6% ÷ 12 = $300\nIncome tax saved: $300 × 22% = $66\nReal take-home cost: $300 − $66 = $234/month\n\n$60,000 retirement contribution becomes $46,800 in 'real' take-home cost — and the $300/month becomes a 401(k) balance you keep.",
+    "concept": "When you contribute to a traditional (pre-tax) 401(k), the full amount goes into your retirement account but your take-home pay drops by LESS than the full amount \u2014 because the contribution also reduces your taxable income. Net paycheck cost = contribution \u00d7 (1 \u2212 your marginal income tax rate). At a 22% bracket, every $100 contributed costs you only $78 in take-home; the IRS effectively pays the other $22 via the tax break (per IRS Pub 525). This is why the headline '6% of salary into 401(k)' feels less painful in practice than the percentage suggests. (Note: FICA still applies to pre-tax 401(k) contributions \u2014 see lesson 7.8.)",
+    "shortcut": "Pre-tax 401(k) net paycheck cost = contribution \u00d7 (1 \u2212 marginal rate). At 22% bracket: $300 contribution costs $234 take-home. At 32% bracket: $300 contribution costs $204 take-home. Higher bracket \u2192 contribution feels even cheaper. Roth 401(k) is different: full amount comes out of take-home.",
+    "example": "$60,000 salary, 22% federal bracket, 6% contribution rate:\nMonthly contribution: $60,000 \u00d7 6% \u00f7 12 = $300\nIncome tax saved: $300 \u00d7 22% = $66\nReal take-home cost: $300 \u2212 $66 = $234/month\n\n$60,000 retirement contribution becomes $46,800 in 'real' take-home cost \u2014 and the $300/month becomes a 401(k) balance you keep.",
     "quizTemplateIds": [
       "k401_tax_saved_d1",
       "k401_net_cost_d1",
@@ -405,7 +428,8 @@
       "rule72_scenario_d2",
       "total_with_interest_d2",
       "investing_total_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "roi_basic",
@@ -436,7 +460,8 @@
       "match_scenario_d2",
       "match_percent_d2",
       "match_annual_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "investing_roth_vs_traditional",
@@ -483,7 +508,8 @@
       "compound_pct_interest_d2",
       "compound_early_vs_late_d3",
       "compound_backwards_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "investing_dca",
@@ -504,10 +530,10 @@
   {
     "id": "investing_apy_savings",
     "moduleId": "investing",
-    "title": "APY — making your savings work",
-    "concept": "APY (Annual Percentage Yield) is the savings-side counterpart to APR — it's the simple rate WITH compounding included. Where APR is what you pay on debt, APY is what you earn on savings. The math: APY = (1 + r/n)^n − 1, where r is the nominal rate and n is the compounding periods per year. In practice, the difference between APR and APY at typical rates is small (4% APR with monthly compounding ≈ 4.07% APY). What matters more is the rate gap between accounts: a big-bank savings account at 0.01% APY vs a high-yield savings account (HYSA) at 4-5% APY differs by ~500× on the same balance. Federal law (Truth in Savings Act / Reg DD, per FDIC) requires banks to disclose APY on savings products, which makes APY the right comparison number across savings accounts, CDs, and money market funds.",
-    "shortcut": "Annual interest earned = balance × APY. Monthly interest ≈ balance × APY ÷ 12. Doubling time = 72 ÷ APY (Rule of 72 reuse). For typical rates, APR and APY differ by < 0.1 percentage points — but the gap between a 0.01% big-bank savings account and a 4.5% HYSA is enormous ($1 vs $450 per year on $10k).",
-    "example": "$10,000 in three different accounts (1 year):\n\nBig-bank savings (0.01% APY): $1 earned\nMoney market fund (4.5% APY): $450 earned\nHYSA (4.5% APY): $450 earned\n5-yr CD (4.7% APY): $470 earned (locked up)\n\nThe difference between '0.01%' and '4.5%' is 450× — far bigger than any small APR-vs-APY compounding adjustment. The first action for anyone with idle cash above their checking buffer: move it to an HYSA.",
+    "title": "APY \u2014 making your savings work",
+    "concept": "APY (Annual Percentage Yield) is the savings-side counterpart to APR \u2014 it's the simple rate WITH compounding included. Where APR is what you pay on debt, APY is what you earn on savings. The math: APY = (1 + r/n)^n \u2212 1, where r is the nominal rate and n is the compounding periods per year. In practice, the difference between APR and APY at typical rates is small (4% APR with monthly compounding \u2248 4.07% APY). What matters more is the rate gap between accounts: a big-bank savings account at 0.01% APY vs a high-yield savings account (HYSA) at 4-5% APY differs by ~500\u00d7 on the same balance. Federal law (Truth in Savings Act / Reg DD, per FDIC) requires banks to disclose APY on savings products, which makes APY the right comparison number across savings accounts, CDs, and money market funds.",
+    "shortcut": "Annual interest earned = balance \u00d7 APY. Monthly interest \u2248 balance \u00d7 APY \u00f7 12. Doubling time = 72 \u00f7 APY (Rule of 72 reuse). For typical rates, APR and APY differ by < 0.1 percentage points \u2014 but the gap between a 0.01% big-bank savings account and a 4.5% HYSA is enormous ($1 vs $450 per year on $10k).",
+    "example": "$10,000 in three different accounts (1 year):\n\nBig-bank savings (0.01% APY): $1 earned\nMoney market fund (4.5% APY): $450 earned\nHYSA (4.5% APY): $450 earned\n5-yr CD (4.7% APY): $470 earned (locked up)\n\nThe difference between '0.01%' and '4.5%' is 450\u00d7 \u2014 far bigger than any small APR-vs-APY compounding adjustment. The first action for anyone with idle cash above their checking buffer: move it to an HYSA.",
     "quizTemplateIds": [
       "apy_definition_d1",
       "apy_annual_interest_d1",
@@ -530,7 +556,8 @@
       "fund_fee_compare_d1",
       "fund_fee_decade_d3",
       "fund_fee_30yr_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "investing_emergency_fund",
@@ -545,7 +572,8 @@
       "ef_runway_d2",
       "ef_runway_after_cut_d3",
       "ef_months_to_target_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "investing_rental_yield",
@@ -576,7 +604,8 @@
       "on_track_gap_d2",
       "on_track_close_gap_d3",
       "on_track_extra_save_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_investing_what_are_stocks",
@@ -671,7 +700,8 @@
       "loan_repayment_d1",
       "loan_interest_tax_d3",
       "save_vs_borrow_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "debt_to_income",
@@ -686,7 +716,8 @@
       "dti_add_payments",
       "dti_housing_only",
       "new_dti_with_payment_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "extra_payment_power",
@@ -708,9 +739,9 @@
     "id": "debt_cc_payoff_time",
     "moduleId": "debt",
     "title": "How long until you're debt-free?",
-    "concept": "Most r/personalfinance posters asking 'when will I be out of debt?' don't realize how long fixed-monthly-payment payoff actually takes at credit-card APRs. The math is exponential because each month's interest is computed on the remaining balance. A $5,000 balance at 22% APR with $150/month payments takes about 51 months (4¼ years); bump that payment to $200/month and you finish in 31 months. The shortcut: net principal reduction per month = payment − (balance × APR ÷ 1200). Once you see how little of a minimum payment touches principal, the case for paying above-minimum becomes obvious.",
-    "shortcut": "Net principal reduction = monthly payment − (balance × APR ÷ 1200). If that number is small (e.g. $25 on a $5k balance), payoff takes years. Rule of thumb: every extra $50/month on a $5k balance roughly cuts a year off the payoff. Step one is always understanding what fraction of your payment is actually shrinking what you owe.",
-    "example": "$5,000 balance at 22% APR:\nMonthly interest charge = $5,000 × 22% ÷ 12 ≈ $92\n\nPayment $150/mo:\n  Principal reduced this month: $150 − $92 = $58\n  Payoff time: ~51 months (~4¼ years)\n\nPayment $200/mo:\n  Principal reduced: $200 − $92 = $108\n  Payoff time: ~31 months (~2½ years)\n\nThe extra $50/month nearly halves the payoff window — because every dollar of extra principal also reduces every future month's interest charge.",
+    "concept": "Most r/personalfinance posters asking 'when will I be out of debt?' don't realize how long fixed-monthly-payment payoff actually takes at credit-card APRs. The math is exponential because each month's interest is computed on the remaining balance. A $5,000 balance at 22% APR with $150/month payments takes about 51 months (4\u00bc years); bump that payment to $200/month and you finish in 31 months. The shortcut: net principal reduction per month = payment \u2212 (balance \u00d7 APR \u00f7 1200). Once you see how little of a minimum payment touches principal, the case for paying above-minimum becomes obvious.",
+    "shortcut": "Net principal reduction = monthly payment \u2212 (balance \u00d7 APR \u00f7 1200). If that number is small (e.g. $25 on a $5k balance), payoff takes years. Rule of thumb: every extra $50/month on a $5k balance roughly cuts a year off the payoff. Step one is always understanding what fraction of your payment is actually shrinking what you owe.",
+    "example": "$5,000 balance at 22% APR:\nMonthly interest charge = $5,000 \u00d7 22% \u00f7 12 \u2248 $92\n\nPayment $150/mo:\n  Principal reduced this month: $150 \u2212 $92 = $58\n  Payoff time: ~51 months (~4\u00bc years)\n\nPayment $200/mo:\n  Principal reduced: $200 \u2212 $92 = $108\n  Payoff time: ~31 months (~2\u00bd years)\n\nThe extra $50/month nearly halves the payoff window \u2014 because every dollar of extra principal also reduces every future month's interest charge.",
     "quizTemplateIds": [
       "cc_payoff_principal_slice_d1",
       "cc_payoff_months_d1",
@@ -723,10 +754,10 @@
   {
     "id": "debt_balance_transfer",
     "moduleId": "debt",
-    "title": "Balance transfer — is the 0% APR worth the fee?",
-    "concept": "A balance transfer moves your credit card balance to a card offering 0% APR for an introductory window (typically 12, 15, 18, or 21 months — per major issuers' published terms). The catch: the new card charges a one-time fee, typically 3-5% of the transferred balance. The math: it's worth it if (balance × old APR × promo months ÷ 12) > (balance × fee%). In dollar form: interest you would have paid during the promo period > transfer fee. The key trap: this only works if you ACTUALLY pay off the balance during the promo window — otherwise you're back to high APR on the new card after the intro period ends.",
-    "shortcut": "Quick test: is your old APR × (promo months ÷ 12) > the fee %? At 22% APR with a 15-month promo: 22% × 1.25 = 27.5% of interest avoided vs 3-5% fee — strong yes. At lower APRs or shorter promos: do the math. Always plan to pay off before the promo ends — set the monthly payment = balance ÷ promo months minimum.",
-    "example": "$8,000 balance at 22% APR · 18-month 0% promo · 3% transfer fee:\n\nFee = $8,000 × 3% = $240\nInterest avoided (18 months at 22%):\n  $8,000 × 22% × 18/12 = $2,640\n\nNet benefit: $2,640 − $240 = +$2,400\n\nMonthly payment needed to clear before promo ends:\n$8,000 ÷ 18 = ~$445/month\nIf you can't sustain that, the transfer might still help, but the math gets less favorable when the leftover balance hits the new card's regular APR.",
+    "title": "Balance transfer \u2014 is the 0% APR worth the fee?",
+    "concept": "A balance transfer moves your credit card balance to a card offering 0% APR for an introductory window (typically 12, 15, 18, or 21 months \u2014 per major issuers' published terms). The catch: the new card charges a one-time fee, typically 3-5% of the transferred balance. The math: it's worth it if (balance \u00d7 old APR \u00d7 promo months \u00f7 12) > (balance \u00d7 fee%). In dollar form: interest you would have paid during the promo period > transfer fee. The key trap: this only works if you ACTUALLY pay off the balance during the promo window \u2014 otherwise you're back to high APR on the new card after the intro period ends.",
+    "shortcut": "Quick test: is your old APR \u00d7 (promo months \u00f7 12) > the fee %? At 22% APR with a 15-month promo: 22% \u00d7 1.25 = 27.5% of interest avoided vs 3-5% fee \u2014 strong yes. At lower APRs or shorter promos: do the math. Always plan to pay off before the promo ends \u2014 set the monthly payment = balance \u00f7 promo months minimum.",
+    "example": "$8,000 balance at 22% APR \u00b7 18-month 0% promo \u00b7 3% transfer fee:\n\nFee = $8,000 \u00d7 3% = $240\nInterest avoided (18 months at 22%):\n  $8,000 \u00d7 22% \u00d7 18/12 = $2,640\n\nNet benefit: $2,640 \u2212 $240 = +$2,400\n\nMonthly payment needed to clear before promo ends:\n$8,000 \u00f7 18 = ~$445/month\nIf you can't sustain that, the transfer might still help, but the math gets less favorable when the leftover balance hits the new card's regular APR.",
     "quizTemplateIds": [
       "balance_transfer_fee_d1",
       "balance_transfer_interest_saved_d1",
@@ -749,7 +780,8 @@
       "snowball_difference_d3",
       "debt_compare_rates_d2",
       "psychology_premium_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "debt_apr_vs_apy",
@@ -796,7 +828,8 @@
       "concept_close_old_card_d2",
       "concept_hard_inquiry_d3",
       "concept_no_debt_myth_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_debt_good_vs_bad",
@@ -817,10 +850,10 @@
   {
     "id": "concept_ef_vs_debt_priority",
     "moduleId": "debt",
-    "title": "Emergency fund vs debt payoff — what to do first",
-    "concept": "One of the most common r/personalfinance questions: should your next $500 go toward an emergency fund or paying off debt? The widely-followed 'Order of Operations' (popularized by the r/personalfinance wiki and Dave Ramsey's baby steps): (1) build a $1,000 starter emergency fund first — enough to survive a small crisis without taking on new high-interest debt; (2) get any 401(k) employer match (instant ~50-100% return on contribution); (3) pay off high-interest debt (>~8% APR — typically credit cards, personal loans, payday loans); (4) build a fuller 3-6 month emergency fund of essentials; (5) max retirement and other long-term investing. The logic: a tiny EF stops the debt bleed before it restarts, the match is free money, and high-interest debt is a guaranteed loss bigger than any plausible investment gain.",
-    "shortcut": "Order: $1k starter EF → 401k match → high-interest debt → full 3-6mo EF → max retirement. The cutoff between 'debt before EF' and 'EF before debt' is roughly 8% APR (long-run stock returns). Below that, the math favors building savings; above, it favors paying off. But behavior trumps math — if a tiny EF stops you from running up new debt every emergency, build it even before pure math would suggest.",
-    "example": "Three users with the same $500 extra cash:\n\n(A) No EF, $4k credit card debt at 24% APR\n→ Build $1k starter EF first, then attack the 24% debt. 24% guaranteed return beats any investment.\n\n(B) $1k EF, no debt, employer offers 50% 401k match\n→ Capture the match — it's a 50% instant return.\n\n(C) $5k EF, no high-interest debt, $200k mortgage at 3.5%\n→ Invest the $500. 3.5% mortgage is below long-run stock returns; don't rush to pay it off.",
+    "title": "Emergency fund vs debt payoff \u2014 what to do first",
+    "concept": "One of the most common r/personalfinance questions: should your next $500 go toward an emergency fund or paying off debt? The widely-followed 'Order of Operations' (popularized by the r/personalfinance wiki and Dave Ramsey's baby steps): (1) build a $1,000 starter emergency fund first \u2014 enough to survive a small crisis without taking on new high-interest debt; (2) get any 401(k) employer match (instant ~50-100% return on contribution); (3) pay off high-interest debt (>~8% APR \u2014 typically credit cards, personal loans, payday loans); (4) build a fuller 3-6 month emergency fund of essentials; (5) max retirement and other long-term investing. The logic: a tiny EF stops the debt bleed before it restarts, the match is free money, and high-interest debt is a guaranteed loss bigger than any plausible investment gain.",
+    "shortcut": "Order: $1k starter EF \u2192 401k match \u2192 high-interest debt \u2192 full 3-6mo EF \u2192 max retirement. The cutoff between 'debt before EF' and 'EF before debt' is roughly 8% APR (long-run stock returns). Below that, the math favors building savings; above, it favors paying off. But behavior trumps math \u2014 if a tiny EF stops you from running up new debt every emergency, build it even before pure math would suggest.",
+    "example": "Three users with the same $500 extra cash:\n\n(A) No EF, $4k credit card debt at 24% APR\n\u2192 Build $1k starter EF first, then attack the 24% debt. 24% guaranteed return beats any investment.\n\n(B) $1k EF, no debt, employer offers 50% 401k match\n\u2192 Capture the match \u2014 it's a 50% instant return.\n\n(C) $5k EF, no high-interest debt, $200k mortgage at 3.5%\n\u2192 Invest the $500. 3.5% mortgage is below long-run stock returns; don't rush to pay it off.",
     "quizTemplateIds": [
       "concept_ef_priority_starter_d1",
       "concept_ef_priority_match_d1",
@@ -843,7 +876,8 @@
       "rent_afford_reverse_d2",
       "rent_afford_annual_d3",
       "rent_min_income_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "housing_affordability_full",
@@ -874,7 +908,8 @@
       "rent_increase_annual_d2",
       "rent_above_avg_d2",
       "rent_renew_vs_move_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "housing_move_in_cost",
@@ -889,7 +924,8 @@
       "move_in_with_broker_d2",
       "move_in_scenario_d2",
       "move_in_compare_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "housing_roommate_math",
@@ -920,7 +956,8 @@
       "true_cost_compare_d2",
       "true_cost_pct_d2",
       "true_cost_vs_28_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "housing_mortgage_vs_rent",
@@ -935,7 +972,8 @@
       "mortgage_rate_compare_d2",
       "mortgage_pi_taxes_d3",
       "mortgage_vs_rent_decision_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "housing_lease_break",
@@ -950,7 +988,8 @@
       "lease_break_breakeven_d2",
       "lease_stay_savings_d3",
       "lease_break_decision_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_housing_buy_vs_rent_framework",
@@ -981,7 +1020,8 @@
       "concept_lease_deposit_d2",
       "concept_lease_illegal_clause_d3",
       "concept_lease_wear_tear_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "taxes_brackets",
@@ -996,7 +1036,8 @@
       "bracket_scenario_d2",
       "bracket_compare_d2",
       "bracket_effective_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "taxes_deductions",
@@ -1027,7 +1068,8 @@
       "refund_monthly_loan_d2",
       "refund_invested_d2",
       "refund_annual_loss_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "taxes_self_employment",
@@ -1042,7 +1084,8 @@
       "se_tax_scenario_d2",
       "se_tax_compare_d2",
       "se_quarterly_combined_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "taxes_standard_vs_itemized",
@@ -1073,7 +1116,8 @@
       "capgains_saving_d2",
       "capgains_timing_d3",
       "capgains_compare_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "taxes_w4_adjust",
@@ -1088,7 +1132,8 @@
       "w4_invested_d2",
       "w4_annual_growth_d2",
       "w4_lifetime_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_taxes_paycheck_stub",
@@ -1119,7 +1164,8 @@
       "ins_deduct_compare_d2",
       "ins_premium_scenario_d2",
       "ins_exposure_range_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "insurance_copay_coinsurance",
@@ -1134,7 +1180,8 @@
       "ins_coinsurance_big_d2",
       "ins_er_visit_d3",
       "ins_copay_vs_coins_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "insurance_oop_max",
@@ -1165,7 +1212,8 @@
       "ins_hdhp_vs_ppo_d2",
       "ins_plan_scenario_d2",
       "ins_visits_breakeven_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "insurance_hsa_advantage",
@@ -1212,7 +1260,8 @@
       "life_quote_compare_d2",
       "life_per_100k_d2",
       "life_lifetime_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "insurance_brand_vs_generic",
@@ -1227,7 +1276,8 @@
       "rx_goodrx_d3",
       "rx_monthly_diff_d1",
       "rx_lifetime_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_insurance_policy_priority",
@@ -1242,7 +1292,8 @@
       "concept_insurance_overinsured_d2",
       "concept_insurance_disability_priority_d3",
       "concept_insurance_warranty_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_insurance_disability",
@@ -1273,7 +1324,8 @@
       "car_monthly_scenario_d2",
       "car_total_compare_d2",
       "car_term_impact_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "car_loan_term",
@@ -1288,7 +1340,8 @@
       "car_term_scenario_d2",
       "car_payment_compare_d2",
       "car_term_extra_cost_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "car_down_payment",
@@ -1303,7 +1356,8 @@
       "car_down_scenario_d2",
       "car_down_compare_d2",
       "car_down_savings_total_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "car_20_4_10_rule",
@@ -1318,7 +1372,8 @@
       "car_10pct_rule_d2",
       "car_rule_scenario_d2",
       "car_afford_check_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "car_depreciation",
@@ -1333,7 +1388,8 @@
       "car_year2_value_d2",
       "car_depreciation_scenario_d2",
       "car_total_cost_3yr_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "car_total_cost_ownership",
@@ -1348,7 +1404,8 @@
       "car_tco_keep_vs_buy_d3",
       "car_tco_vs_income_d2",
       "car_tco_annual_d2"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "car_lease_vs_buy",
@@ -1363,7 +1420,8 @@
       "lease_vs_buy_3yr_d3",
       "lease_monthly_d1",
       "lease_vs_buy_lifetime_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "car_trade_in_vs_private",
@@ -1378,7 +1436,8 @@
       "trade_in_tax_benefit_d2",
       "trade_in_adjusted_d3",
       "trade_in_decision_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_car_negotiation",
@@ -1393,7 +1452,8 @@
       "concept_dealer_fi_office_d2",
       "concept_dealer_finance_markup_d3",
       "concept_dealer_gap_insurance_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "concept_car_warranty",
@@ -1424,7 +1484,8 @@
       "sl_rule_apply_d2",
       "sl_per10k_compare_d2",
       "sl_monthly_range_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "student_loan_total_cost",
@@ -1439,7 +1500,8 @@
       "sl_total_scenario_d2",
       "sl_cost_compare_d2",
       "sl_interest_pct_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "student_loan_refinance",
@@ -1454,7 +1516,8 @@
       "sl_refi_scenario_d2",
       "sl_refi_compare_d2",
       "sl_refi_vs_pslf_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "student_loan_idr",
@@ -1485,7 +1548,8 @@
       "sl_pslf_scenario_d2",
       "sl_pslf_compare_d2",
       "sl_pslf_decision_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "student_loan_employer_benefit",
@@ -1516,7 +1580,8 @@
       "sl_grace_vs_interest_only_d3",
       "sl_grace_capitalization_d2",
       "sl_grace_lifetime_d3"
-    ]
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "student_loan_parent_plus",
