@@ -24,6 +24,8 @@ export interface CalculatorInfo {
   slug: string;
   description: string;
   icon: CalculatorIconName;
+  /** ISO date (yyyy-mm-dd) of the last editorial review per content-audit-cadence.md */
+  lastReviewed: string;
 }
 
 export const calculatorRegistry: CalculatorInfo[] = [
@@ -33,6 +35,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Estimate your take-home pay after federal, state, and FICA taxes.",
     icon: "wallet",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Salary Converter",
@@ -40,6 +43,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Convert between hourly, weekly, biweekly, monthly, and annual pay.",
     icon: "arrow-left-right",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Rent Affordability",
@@ -47,6 +51,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Find out how much rent you can afford based on your income.",
     icon: "home",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Investment Calculator",
@@ -54,6 +59,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "See how your money grows with compound interest over time.",
     icon: "trending-up",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Discount Calculator",
@@ -61,6 +67,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Calculate savings and final price for any percent-off discount.",
     icon: "tag",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Loan Calculator",
@@ -68,6 +75,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Estimate total interest and repayment timeline for any loan.",
     icon: "landmark",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Insurance Calculator",
@@ -75,6 +83,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Compare health plan costs — premiums, deductibles, and out-of-pocket totals.",
     icon: "shield",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Car Calculator",
@@ -82,6 +91,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Calculate true car cost with the 20/4/10 rule, down payment, and depreciation.",
     icon: "car",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Student Loan Calculator",
@@ -89,6 +99,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Compare repayment plans, refinancing savings, and PSLF forgiveness amounts.",
     icon: "graduation-cap",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "BNPL Calculator",
@@ -96,6 +107,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "See the real cost of Buy Now Pay Later — late fees, surcharge %, and stacked plan debt.",
     icon: "credit-card",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Membership Break-even",
@@ -103,6 +115,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Calculate when Costco, DashPass, Uber One, and other memberships actually pay for themselves.",
     icon: "badge-percent",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Lease vs Buy",
@@ -110,6 +123,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Compare the true 3-year cost of leasing vs buying a car, including residual value.",
     icon: "key",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "FSA Calculator",
@@ -117,6 +131,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Find your FSA break-even election — how much to elect without losing money to use-it-or-lose-it.",
     icon: "heart-pulse",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Life Insurance Calculator",
@@ -124,6 +139,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Estimate how much term life insurance you need with the 10× rule and the DIME method.",
     icon: "shield-check",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "House Affordability",
@@ -131,6 +147,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Max purchase price from income, mortgage rate, down payment, taxes, and insurance — using the 28% rule.",
     icon: "house",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Credit Card Payoff Calculator",
@@ -138,6 +155,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "How many months until you're debt-free at a fixed monthly payment — plus total interest paid along the way.",
     icon: "calendar-clock",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "401(k) Impact Calculator",
@@ -145,6 +163,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "What a pre-tax 401(k) contribution actually costs your paycheck after the tax break, plus the employer match it captures.",
     icon: "piggy-bank",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "HYSA Calculator",
@@ -152,6 +171,7 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Annual interest from a high-yield savings account vs the 0.01% your big bank pays — and Rule-of-72 doubling time.",
     icon: "banknote",
+    lastReviewed: "2026-05-26",
   },
   {
     name: "Balance Transfer Calculator",
@@ -159,5 +179,6 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Is the 0% APR promo worth the 3-5% transfer fee? Net benefit, breakeven APR, and the payoff plan.",
     icon: "repeat",
+    lastReviewed: "2026-05-26",
   },
 ];

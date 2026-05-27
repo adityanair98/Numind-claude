@@ -5,13 +5,28 @@ import { MentalMathCard } from "@/components/calculator/MentalMathCard";
 import { FAQSection, type FAQ } from "@/components/calculator/FAQSection";
 import { AppCTA } from "@/components/calculator/AppCTA";
 import { RelatedTools } from "@/components/calculator/RelatedTools";
+import { CalculatorAttribution } from "@/components/calculator/CalculatorAttribution";
 import { StructuredData } from "@/components/seo/StructuredData";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { CalculatorAppSchema } from "@/components/seo/CalculatorAppSchema";
 import { MentalMathHowToSchema } from "@/components/seo/MentalMathHowToSchema";
 import { ScrollReveal } from "@/components/landing/ScrollReveal";
+import { calculatorRegistry } from "@/lib/content/calculators";
 
 const SITE_BASE_URL = "https://numind.app";
+const DEFAULT_REVIEW_DATE = "2026-05-26";
+
+/**
+ * Resolves the last-reviewed date for a given calculator slug from the
+ * registry. Programmatic sub-pages (e.g. "paycheck-calculator/california")
+ * fall through to the parent calc's date; unknown slugs use the site-wide
+ * default (today's audit date).
+ */
+function resolveLastReviewed(slug: string): string {
+  const parent = slug.split("/")[0];
+  const entry = calculatorRegistry.find((c) => c.slug === parent);
+  return entry?.lastReviewed ?? DEFAULT_REVIEW_DATE;
+}
 
 export interface ShortcutContent {
   title: string;
@@ -123,6 +138,9 @@ export function CalculatorShell({
             <RelatedTools slugs={relatedSlugs} />
           </ScrollReveal>
         )}
+
+        {/* Attribution / E-E-A-T footer: last-reviewed date + links to methodology & editorial standards */}
+        <CalculatorAttribution lastReviewed={resolveLastReviewed(slug)} />
       </div>
     </>
   );

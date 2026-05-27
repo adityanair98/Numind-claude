@@ -9,7 +9,10 @@ const toolLinks = [
   { label: "Loan Calculator", href: "/tools/loan-calculator" },
 ];
 
-const legalLinks = [
+const companyLinks = [
+  { label: "About Numind", href: "/about-numind" },
+  { label: "Calculator Methodology", href: "/methodology" },
+  { label: "Editorial Standards", href: "/editorial-standards" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
 ];
@@ -25,7 +28,7 @@ export function Footer() {
               <span className="text-brand-teal">N</span>umind
             </Link>
             <p className="mt-2 text-sm text-brand-muted leading-relaxed">
-              Practical number sense. Get faster at everyday money math in 5 minutes a day.
+              Financial education through mental math. Become financially fluent in 5 minutes a day.
             </p>
           </div>
 
@@ -47,7 +50,7 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-semibold text-brand-navy">Company</h3>
             <ul className="mt-3 space-y-2">
-              {legalLinks.map((link) => (
+              {companyLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-brand-muted hover:text-brand-navy transition-colors">
                     {link.label}
