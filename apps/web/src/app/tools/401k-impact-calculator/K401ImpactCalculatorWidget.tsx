@@ -14,10 +14,19 @@ function money(n: number): string {
   });
 }
 
-export function K401ImpactCalculatorWidget() {
+interface K401ImpactCalculatorWidgetProps {
+  /** Pre-fill marginal-rate default (used by state pages to add state-tax bump on top of fed 22%) */
+  defaultMarginalRate?: string;
+}
+
+export function K401ImpactCalculatorWidget({
+  defaultMarginalRate,
+}: K401ImpactCalculatorWidgetProps = {}) {
   const [monthlyGross, setMonthlyGross] = useState("5000");
   const [contributionPct, setContributionPct] = useState("6");
-  const [marginalRate, setMarginalRate] = useState("22");
+  const [marginalRate, setMarginalRate] = useState(
+    defaultMarginalRate ?? "22"
+  );
   const [matchRate, setMatchRate] = useState("50");
   const [matchCap, setMatchCap] = useState("6");
 

@@ -24,8 +24,15 @@ function moneyDetailed(n: number): string {
   });
 }
 
-export function HysaCalculatorWidget() {
-  const [balance, setBalance] = useState("10000");
+interface HysaCalculatorWidgetProps {
+  /** Pre-fill the starting balance (used by /[balance] programmatic pages) */
+  defaultBalance?: string;
+}
+
+export function HysaCalculatorWidget({
+  defaultBalance,
+}: HysaCalculatorWidgetProps = {}) {
+  const [balance, setBalance] = useState(defaultBalance ?? "10000");
   const [apy, setApy] = useState("4.5");
   const [bigBankApy, setBigBankApy] = useState("0.01");
 

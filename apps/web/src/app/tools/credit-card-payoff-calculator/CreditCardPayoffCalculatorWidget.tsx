@@ -23,10 +23,22 @@ function monthsLabel(m: number): string {
   return `${years} yr ${remMonths} mo`;
 }
 
-export function CreditCardPayoffCalculatorWidget() {
-  const [balance, setBalance] = useState("5000");
+interface CreditCardPayoffCalculatorWidgetProps {
+  /** Pre-fill starting balance (used by /[balance] programmatic pages) */
+  defaultBalance?: string;
+  /** Pre-fill the monthly-payment input (so the page shows a reasonable example for that balance) */
+  defaultMonthlyPayment?: string;
+}
+
+export function CreditCardPayoffCalculatorWidget({
+  defaultBalance,
+  defaultMonthlyPayment,
+}: CreditCardPayoffCalculatorWidgetProps = {}) {
+  const [balance, setBalance] = useState(defaultBalance ?? "5000");
   const [apr, setApr] = useState("22");
-  const [monthlyPayment, setMonthlyPayment] = useState("200");
+  const [monthlyPayment, setMonthlyPayment] = useState(
+    defaultMonthlyPayment ?? "200"
+  );
 
   const result = useMemo(
     () =>

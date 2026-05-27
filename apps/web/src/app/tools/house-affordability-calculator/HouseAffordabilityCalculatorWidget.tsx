@@ -14,11 +14,20 @@ function fmt(n: number): string {
   });
 }
 
-export function HouseAffordabilityCalculatorWidget() {
+interface HouseAffordabilityCalculatorWidgetProps {
+  /** Pre-fill property-tax-aware default for "Taxes + Insurance (annual)" (used by state pages) */
+  defaultTaxInsAnnualPct?: string;
+}
+
+export function HouseAffordabilityCalculatorWidget({
+  defaultTaxInsAnnualPct,
+}: HouseAffordabilityCalculatorWidgetProps = {}) {
   const [monthlyGross, setMonthlyGross] = useState("7000");
   const [ratePercent, setRatePercent] = useState("6.5");
   const [downPercent, setDownPercent] = useState("10");
-  const [taxInsAnnualPct, setTaxInsAnnualPct] = useState("1.5");
+  const [taxInsAnnualPct, setTaxInsAnnualPct] = useState(
+    defaultTaxInsAnnualPct ?? "1.5"
+  );
 
   const result = useMemo(
     () =>
