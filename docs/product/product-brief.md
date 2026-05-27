@@ -33,7 +33,7 @@ Financial education across 10 topic areas, every lesson grounded in real US mone
 - **Car & Big Purchases** - monthly vs total cost, loan term delta, down payment savings, 20/4/10 rule, depreciation, TCO, lease vs buy, trade-in vs private sale
 - **Student Loans & Education** - monthly payment (rule of thumb), total cost, refinance vs PSLF, IDR, PSLF, employer benefit, grace period, Parent PLUS
 
-**Total: 10 modules, 96 lessons (77 numerical + 19 concept), 479 quiz templates (384 numerical + 95 concept)**
+**Total: 10 modules, 102 lessons, 509 quiz templates (391 numerical + 118 concept)** (post-Phase-2 audit: +5 new topic-gap lessons, +1 Roth split, +1 APY-on-savings split, −1 Filing Status merge into Paycheck Stub, plus several concept reframes — see `docs/ops/numind-score-baseline-2026-05.md` and the Phase 2 commits for detail).
 
 ## Core Loop
 Home -> pick a lesson from the zigzag learning path -> read short lesson (concept + shortcut + example) -> quiz (5 questions first time, 8 on subsequent attempts) -> instant feedback per question -> session summary with XP, mastery star, personal best, badges -> progress update (streak, levels)

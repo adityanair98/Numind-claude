@@ -141,8 +141,8 @@ Numind/
       LaunchScreen.storyboard    # Native launch screen (logo + wordmark, Auto Layout)
     LocalContent/
       modules.json               # 10 module definitions
-      lessons.json               # 96 lessons with template IDs (77 numerical + 19 concept)
-      quiz_templates.json        # 479 quiz templates (384 numerical + 95 concept)
+      lessons.json               # 102 lessons with template IDs (post-Phase-2 audit; lastVerified stamped on every entry)
+      quiz_templates.json        # 509 quiz templates (391 numerical + 118 concept)
     Assets.xcassets              # App icons, colors, images
       LaunchLogo.imageset        # Background-removed symbol (light + dark variants)
       LaunchWordmark.imageset    # Cropped "Numind" wordmark (white text, both modes)

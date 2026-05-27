@@ -27,8 +27,8 @@
 
 ## Content
 - **10 modules**: Smart Shopping, Budgets & Spending, Salary, Investing, Debt, Housing & Rent, Taxes & Paycheck, Insurance & Healthcare, Car & Big Purchases, Student Loans & Education
-- **96 lessons** across all modules (77 numerical + 19 concept lessons; concept lessons cover financial literacy that isn't reducible to mental math — credit scores, FLSA exemption, IDR landscape, asset allocation, dealer tactics, insurance policy priority, lease clauses, etc.)
-- **479 quiz templates** (~5 per lesson; ~90 are concept templates with text MCQ choices instead of computed numerical answers)
+- **102 lessons** across all modules. Concept lessons cover financial literacy that isn't reducible to mental math — credit scores, FLSA exemption, IDR landscape, asset allocation, dealer tactics, insurance policy priority, lease clauses, EF-vs-debt priority, etc. Phase 2 audit added 5 topic-gap lessons (house affordability, CC payoff, 401(k) impact, balance transfer, EF-vs-debt), split Roth and APR/APY into 4 lessons total, merged Filing Status into Paycheck Stub, and reframed several lessons from numerical to concept.
+- **509 quiz templates** (391 numerical + 118 concept; ~5 per lesson)
 - **27 badges** across 7 categories
 
 ## Quiz System
@@ -94,7 +94,7 @@ A streak is the number of consecutive calendar days on which the user completed 
 ## Website (Built)
 Marketing site at `apps/web/` for SEO acquisition → App Store downloads.
 
-- **14 calculator tools**: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan, BNPL, Membership Break-even, Lease vs Buy, FSA, Life Insurance
+- **19 calculator tools**: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan, BNPL, Membership Break-even, Lease vs Buy, FSA, Life Insurance, House Affordability, Credit Card Payoff, 401(k) Impact, HYSA, Balance Transfer (Phase 2 added the last 5)
 - **51 state paycheck pages**: programmatic SEO (`/tools/paycheck-calculator/[state]`)
 - **40 salary amount pages**: programmatic SEO (`/tools/salary-calculator/[slug]`)
 - **Landing page**: 3D hero, animated counters, scroll-reveal sections, module showcase, app CTA

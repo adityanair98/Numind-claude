@@ -69,7 +69,7 @@ They may feel slow or rusty when:
 9. **Car & Big Purchases** (car) - monthly vs total cost, loan term delta, down payment savings, 20/4/10 rule, depreciation, TCO, lease vs buy, trade-in vs private sale, dealer tactics, warranties (10 lessons)
 10. **Student Loans & Education** (student_loans) - monthly payment (rule of thumb), total cost, refinance vs PSLF, IDR, PSLF, employer benefit, grace period, Parent PLUS, subsidized vs unsubsidized, federal protections (10 lessons)
 
-**Total: 96 lessons, 479 quiz templates** (77 numerical + 19 concept lessons; 384 numerical templates + 95 concept templates). Phase 1 audit fix flipped IDR (10.4) from numerical to concept, shifting Student Loans to 7 numerical + 3 concept.
+**Total: 102 lessons, 509 quiz templates** (391 numerical + 118 concept templates). Phase 2 audit fixes added 5 new topic-gap lessons (house affordability, CC payoff, 401(k) impact, balance transfer, EF-vs-debt priority), split Roth and APR/APY into 4 lessons total, merged Filing Status into Paycheck Stub, and reframed several lessons from numerical to concept. Every lesson now carries a `lastVerified` field per the content-audit-cadence ops doc.
 
 ## Core User Loop
 Home / Today
@@ -209,7 +209,7 @@ The website (`apps/web/`) is not the product. It supports acquisition through SE
 
 **Built and deployed:**
 - Landing page with 3D hero, animated counters, module showcase, and app CTA
-- 14 calculator tools: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan, BNPL, Membership Break-even, Lease vs Buy, FSA, Life Insurance
+- 19 calculator tools: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan, BNPL, Membership Break-even, Lease vs Buy, FSA, Life Insurance, House Affordability, Credit Card Payoff, 401(k) Impact, HYSA, Balance Transfer (Phase 2 added the last 5)
 - 51 state-specific paycheck pages (programmatic SEO)
 - 40 salary amount pages (programmatic SEO, e.g. "$25/hr is $52,000/year")
 - Tools directory with staggered card grid
@@ -224,8 +224,8 @@ Currently implemented:
 - Design tokens and theme system
 - Local content model with JSON-based lessons and templates
 - Template-driven quiz engine with 300+ answer formulas
-- All 10 modules with 96 lessons (77 numerical + 19 concept)
-- 479 quiz templates (~5 per lesson) with proportional distractor generation
+- All 10 modules with 102 lessons (post-Phase-2 audit)
+- 509 quiz templates (~5 per lesson) with proportional distractor generation
 - Concept template support added (text-MCQ, no formula evaluation) for lessons covering critical financial literacy topics that aren't reducible to mental math
 - Completion-based progression (mastery = gold star, not gate)
 - Checkpoint review quizzes

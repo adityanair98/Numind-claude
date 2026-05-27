@@ -1,6 +1,6 @@
 # Web Architecture
 
-> **Last updated:** May 2026 (14 calculators including BNPL/Membership/Lease vs Buy/FSA/Life Insurance, programmatic SEO, animations, inline shortcut teaser).
+> **Last updated:** May 2026 (Phase 2 audit shipped: 19 calculators total, full SEO schema stack, 3 E-E-A-T authority pages, 121 new programmatic SEO pages — see Page Count below).
 
 ## Purpose
 The website exists solely for acquisition: drive App Store downloads through SEO-optimized calculator tools. The iOS app is a **financial education product**; the website is the top-of-funnel that converts search intent into installs. People search "paycheck calculator" or "how much is $25 an hour" → land on our tool → get the answer + see the mental-math shortcut Numind teaches → download the app to actually learn the underlying skill. The calculator answers the immediate question; the app teaches the financial literacy behind it.
@@ -14,15 +14,20 @@ The website exists solely for acquisition: drive App Store downloads through SEO
 - **No runtime dependencies** beyond Next.js + Tailwind + Lucide
 
 ## Page Count
-109 statically generated pages:
+243 statically generated pages (post-Phase-2):
 - 1 landing page (`/`)
 - 1 tools directory (`/tools`)
-- 14 calculator pages (`/tools/{slug}`)
+- 19 calculator pages (`/tools/{slug}`) — Phase 2 added house-affordability, credit-card-payoff, 401(k)-impact, hysa, balance-transfer
 - 51 state paycheck pages (`/tools/paycheck-calculator/{state}`)
 - 40 salary amount pages (`/tools/salary-calculator/{slug}`)
+- 51 state house-affordability pages (`/tools/house-affordability-calculator/{state}`) — Phase 2 Batch 2h
+- 51 state 401(k)-impact pages (`/tools/401k-impact-calculator/{state}`) — Phase 2 Batch 2h
+- 9 CC payoff balance pages (`/tools/credit-card-payoff-calculator/{balance}`) — Phase 2 Batch 2h
+- 10 HYSA balance pages (`/tools/hysa-calculator/{balance}`) — Phase 2 Batch 2h
+- 3 E-E-A-T authority pages (`/about-numind`, `/methodology`, `/editorial-standards`) — Phase 2 Batch 2g
 - 2 legal pages (`/privacy`, `/terms`)
 
-Plus `robots.txt` and `sitemap.xml` from `robots.ts` and `sitemap.ts`.
+Plus `robots.txt` and `sitemap.xml` from `robots.ts` and `sitemap.ts`. Every calculator page emits 5 JSON-LD blobs (FAQPage + BreadcrumbList + WebApplication + HowTo + Organization) and pulls its last-reviewed date from `calculatorRegistry`.
 
 ## Project Structure
 

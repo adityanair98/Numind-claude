@@ -183,9 +183,7 @@ Error = `|estimate - correct| / |correct|`. A question with ≥2 stars is consid
 3. Ultimate fallback: easy.
 
 ## Content Stats
-- **10 modules**, **96 lessons**, **479 templates**
-- 77 numerical lessons (use formula-based templates) + 19 concept lessons (use text-MCQ templates) — post-Phase-1
-- 384 numerical templates + 95 concept templates — post-Phase-1
-- Every lesson references exactly **5 templates** (480 references; one template is shared between two related Smart Shopping lessons)
-- Templates per module: smart_shopping (44), money_math (35), salary (45), investing (65), debt (50), housing (45), taxes (45), insurance (50), car (50), student_loans (50)
-- Difficulty distribution across all templates: d1 = 156, d2 = 174, d3 = 149
+- **10 modules**, **102 lessons**, **509 templates** — post-Phase-2
+- 391 numerical templates + 118 concept templates — post-Phase-2
+- Every lesson references exactly **5 templates** (510 references; one template is shared between two related Smart Shopping lessons)
+- Templates per module: smart_shopping (45), money_math (35), salary (50), investing (75), debt (65), housing (50), taxes (40), insurance (50), car (50), student_loans (50)
