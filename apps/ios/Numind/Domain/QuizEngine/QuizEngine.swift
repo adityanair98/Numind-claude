@@ -1246,6 +1246,79 @@ struct QuizEngine {
             return w * 50
         },
 
+        // MARK: - Debt: Balance transfer math (Phase 2 Batch 2c)
+        // Fee charged by the new card to accept the transfer (typically 3-5% of balance).
+        "balanceTransferFee": { vars in
+            guard let balance = vars["balance"],
+                  let feePct = vars["feePct"] else { return nil }
+            return balance * feePct / 100
+        },
+        // Interest you would have paid on the OLD card during the 0% promo window.
+        "interestSavedDuringPromo": { vars in
+            guard let balance = vars["balance"],
+                  let oldApr = vars["oldApr"],
+                  let promoMonths = vars["promoMonths"] else { return nil }
+            return balance * oldApr / 100 * promoMonths / 12
+        },
+        // Net benefit of the transfer = interest saved during promo − transfer fee.
+        // Negative = the fee outweighs the savings.
+        "balanceTransferNetWin": { vars in
+            guard let balance = vars["balance"],
+                  let oldApr = vars["oldApr"],
+                  let promoMonths = vars["promoMonths"],
+                  let feePct = vars["feePct"] else { return nil }
+            let interestSaved = balance * oldApr / 100 * promoMonths / 12
+            let fee = balance * feePct / 100
+            return interestSaved - fee
+        },
+        // Monthly payment required to fully pay off (balance + transfer fee) before promo ends.
+        "balanceTransferRequiredMonthly": { vars in
+            guard let balance = vars["balance"],
+                  let promoMonths = vars["promoMonths"], promoMonths > 0,
+                  let feePct = vars["feePct"] else { return nil }
+            return balance * (1 + feePct / 100) / promoMonths
+        },
+
+        // MARK: - Debt: CC payoff time (Phase 2 Batch 2c)
+        // Months to pay off a balance at fixed monthly payment given APR.
+        // Exact: months = ln(p / (p − b·r)) / ln(1+r) where r = APR/1200.
+        // For mental-math template use, we compute exact months and round.
+        "payoffMonths": { vars in
+            guard let balance = vars["balance"],
+                  let apr = vars["apr"],
+                  let payment = vars["monthlyPayment"] else { return nil }
+            let r = apr / 1200
+            let monthlyInterest = balance * r
+            // If payment doesn't even cover monthly interest, payoff is impossible — return a big number
+            guard payment > monthlyInterest else { return 9999 }
+            // months = ln(payment / (payment − balance*r)) / ln(1 + r)
+            let months = log(payment / (payment - balance * r)) / log(1 + r)
+            return months.rounded()
+        },
+        // Net principal reduction per month after interest is taken out
+        "principalAfterInterest": { vars in
+            guard let balance = vars["balance"],
+                  let apr = vars["apr"],
+                  let payment = vars["monthlyPayment"] else { return nil }
+            let monthlyInterest = balance * apr / 1200
+            return payment - monthlyInterest
+        },
+
+        // MARK: - Salary: 401(k) paycheck impact (Phase 2 Batch 2c)
+        // A pre-tax 401(k) contribution reduces taxable income but not FICA wages,
+        // so the actual take-home reduction is contribution × (1 − marginal income tax rate).
+        // Example: $300 contribution at 22% bracket → $234 net paycheck cost ($300 − $66 tax saved).
+        "pretaxNetCost": { vars in
+            guard let contribution = vars["contribution"],
+                  let rate = vars["marginalRate"] else { return nil }
+            return contribution * (1 - rate / 100)
+        },
+        "pretaxTaxSaved": { vars in
+            guard let contribution = vars["contribution"],
+                  let rate = vars["marginalRate"] else { return nil }
+            return contribution * rate / 100
+        },
+
         // MARK: - Investing reworks
         "roiPercentDiff": { vars in
             guard let costA = vars["costA"], let gainA = vars["gainA"], costA > 0,
@@ -1504,6 +1577,36 @@ struct QuizEngine {
             guard let rent = vars["monthlyRent"], let loan = vars["loanAmount"],
                   let f = vars["factor"], let ti = vars["taxAndInsurance"] else { return nil }
             return abs(rent - (loan * f + ti))
+        },
+
+        // MARK: - Housing: Affordability (Phase 2 Batch 2c)
+        // The 28% rule applied to GROSS monthly income gives the max PITI you can afford.
+        "maxPitiFromGross": { vars in
+            guard let monthlyGross = vars["monthlyGross"] else { return nil }
+            return monthlyGross * 0.28
+        },
+        // Loan amount you can support given monthly P&I and a rate factor (e.g. 0.006 at 6%/30yr).
+        "loanFromPAndI": { vars in
+            guard let pAndI = vars["pAndI"], let f = vars["factor"], f > 0 else { return nil }
+            return pAndI / f
+        },
+        // Monthly PMI = loan × annual PMI% / 12. PMI typically 0.3-1.5% annual on conventional loans <20% down.
+        "monthlyPMI": { vars in
+            guard let loan = vars["loanAmount"], let pmiPct = vars["pmiPct"] else { return nil }
+            return loan * pmiPct / 1200
+        },
+        // Reverse: minimum gross monthly income needed to afford a given home, using 28% rule.
+        // Assumes provided rateFactor + tax/ins as % of price.
+        "minIncomeForPrice": { vars in
+            guard let price = vars["purchasePrice"],
+                  let downPct = vars["downPct"],
+                  let f = vars["factor"] else { return nil }
+            let loan = price * (1 - downPct / 100)
+            let pAndI = loan * f
+            // Assume ~1.5% annual tax + ins (per price). Could parameterize later.
+            let monthlyTaxIns = price * 0.015 / 12
+            let piti = pAndI + monthlyTaxIns
+            return piti / 0.28
         },
 
         // MARK: - Housing: Roommate

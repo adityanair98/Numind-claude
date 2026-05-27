@@ -200,7 +200,11 @@ enum QuestionTheme {
              "hourly_compare_d3", "side_hustle_annual_d2",
              // V3 concept lessons
              "concept_exempt_def_d1", "concept_nonexempt_def_d1", "concept_exempt_threshold_d2",
-             "concept_exempt_misclass_d2", "concept_exempt_tradeoff_d3":
+             "concept_exempt_misclass_d2", "concept_exempt_tradeoff_d3",
+             // 401(k) paycheck impact (Phase 2 Batch 2c — new lesson)
+             "k401_tax_saved_d1", "k401_net_cost_d1",
+             "k401_net_cost_high_bracket_d2", "k401_compare_rates_d2",
+             "k401_with_match_scenario_d3":
             return .paycheck
 
         // ── Investing & Growth ───────────────────────────────────────────────────
@@ -277,12 +281,28 @@ enum QuestionTheme {
              "concept_fico_largest_d1", "concept_utilization_max_d2", "concept_close_old_card_d2",
              "concept_hard_inquiry_d3", "concept_no_debt_myth_d3",
              "concept_good_debt_d1", "concept_bad_debt_d1", "concept_interest_threshold_d2",
-             "concept_mortgage_short_d3", "concept_payoff_vs_invest_d3":
+             "concept_mortgage_short_d3", "concept_payoff_vs_invest_d3",
+             // EF vs Debt priority (Phase 2 Batch 2c — new concept lesson)
+             "concept_ef_priority_starter_d1", "concept_ef_priority_match_d1",
+             "concept_ef_priority_cc_d2", "concept_ef_priority_low_rate_d2",
+             "concept_ef_priority_scenario_d3",
+             // CC payoff time (Phase 2 Batch 2c — new numerical lesson)
+             "cc_payoff_principal_slice_d1", "cc_payoff_months_d1",
+             "cc_payoff_extra_payment_d2", "cc_payoff_compare_payments_d2",
+             "cc_payoff_realistic_scenario_d3",
+             // Balance transfer (Phase 2 Batch 2c — new numerical lesson)
+             "balance_transfer_fee_d1", "balance_transfer_interest_saved_d1",
+             "balance_transfer_net_d2", "balance_transfer_breakeven_d2",
+             "balance_transfer_full_payoff_plan_d3":
             return .debt
 
         // ── Housing & Rent ───────────────────────────────────────────────────────
         case "rent_afford_basic_d1", "rent_afford_scenario_d1",
              "rent_afford_reverse_d2", "rent_afford_annual_d3", "rent_min_income_d3",
+             // House affordability (Phase 2 Batch 2c — new lesson)
+             "house_max_piti_d1", "house_loan_from_pi_d1",
+             "house_pmi_cost_d2", "house_income_needed_d2",
+             "house_full_affordability_d3",
              "rent_increase_basic_d1", "rent_increase_new_d1",
              "rent_increase_annual_d2", "rent_above_avg_d2", "rent_renew_vs_move_d3",
              "move_in_basic_d1", "move_in_no_broker_d1",

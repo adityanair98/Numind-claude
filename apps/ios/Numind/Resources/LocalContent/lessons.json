@@ -377,6 +377,22 @@
     ]
   },
   {
+    "id": "salary_401k_paycheck_impact",
+    "moduleId": "salary",
+    "title": "What does a 401(k) contribution actually cost you?",
+    "concept": "When you contribute to a traditional (pre-tax) 401(k), the full amount goes into your retirement account but your take-home pay drops by LESS than the full amount — because the contribution also reduces your taxable income. Net paycheck cost = contribution × (1 − your marginal income tax rate). At a 22% bracket, every $100 contributed costs you only $78 in take-home; the IRS effectively pays the other $22 via the tax break (per IRS Pub 525). This is why the headline '6% of salary into 401(k)' feels less painful in practice than the percentage suggests. (Note: FICA still applies to pre-tax 401(k) contributions — see lesson 7.8.)",
+    "shortcut": "Pre-tax 401(k) net paycheck cost = contribution × (1 − marginal rate). At 22% bracket: $300 contribution costs $234 take-home. At 32% bracket: $300 contribution costs $204 take-home. Higher bracket → contribution feels even cheaper. Roth 401(k) is different: full amount comes out of take-home.",
+    "example": "$60,000 salary, 22% federal bracket, 6% contribution rate:\nMonthly contribution: $60,000 × 6% ÷ 12 = $300\nIncome tax saved: $300 × 22% = $66\nReal take-home cost: $300 − $66 = $234/month\n\n$60,000 retirement contribution becomes $46,800 in 'real' take-home cost — and the $300/month becomes a 401(k) balance you keep.",
+    "quizTemplateIds": [
+      "k401_tax_saved_d1",
+      "k401_net_cost_d1",
+      "k401_net_cost_high_bracket_d2",
+      "k401_compare_rates_d2",
+      "k401_with_match_scenario_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
     "id": "rule_of_72",
     "moduleId": "investing",
     "title": "The Rule of 72 \u2014 when does it double?",
@@ -689,6 +705,38 @@
     "lastVerified": "2026-05-26"
   },
   {
+    "id": "debt_cc_payoff_time",
+    "moduleId": "debt",
+    "title": "How long until you're debt-free?",
+    "concept": "Most r/personalfinance posters asking 'when will I be out of debt?' don't realize how long fixed-monthly-payment payoff actually takes at credit-card APRs. The math is exponential because each month's interest is computed on the remaining balance. A $5,000 balance at 22% APR with $150/month payments takes about 51 months (4¼ years); bump that payment to $200/month and you finish in 31 months. The shortcut: net principal reduction per month = payment − (balance × APR ÷ 1200). Once you see how little of a minimum payment touches principal, the case for paying above-minimum becomes obvious.",
+    "shortcut": "Net principal reduction = monthly payment − (balance × APR ÷ 1200). If that number is small (e.g. $25 on a $5k balance), payoff takes years. Rule of thumb: every extra $50/month on a $5k balance roughly cuts a year off the payoff. Step one is always understanding what fraction of your payment is actually shrinking what you owe.",
+    "example": "$5,000 balance at 22% APR:\nMonthly interest charge = $5,000 × 22% ÷ 12 ≈ $92\n\nPayment $150/mo:\n  Principal reduced this month: $150 − $92 = $58\n  Payoff time: ~51 months (~4¼ years)\n\nPayment $200/mo:\n  Principal reduced: $200 − $92 = $108\n  Payoff time: ~31 months (~2½ years)\n\nThe extra $50/month nearly halves the payoff window — because every dollar of extra principal also reduces every future month's interest charge.",
+    "quizTemplateIds": [
+      "cc_payoff_principal_slice_d1",
+      "cc_payoff_months_d1",
+      "cc_payoff_extra_payment_d2",
+      "cc_payoff_compare_payments_d2",
+      "cc_payoff_realistic_scenario_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "debt_balance_transfer",
+    "moduleId": "debt",
+    "title": "Balance transfer — is the 0% APR worth the fee?",
+    "concept": "A balance transfer moves your credit card balance to a card offering 0% APR for an introductory window (typically 12, 15, 18, or 21 months — per major issuers' published terms). The catch: the new card charges a one-time fee, typically 3-5% of the transferred balance. The math: it's worth it if (balance × old APR × promo months ÷ 12) > (balance × fee%). In dollar form: interest you would have paid during the promo period > transfer fee. The key trap: this only works if you ACTUALLY pay off the balance during the promo window — otherwise you're back to high APR on the new card after the intro period ends.",
+    "shortcut": "Quick test: is your old APR × (promo months ÷ 12) > the fee %? At 22% APR with a 15-month promo: 22% × 1.25 = 27.5% of interest avoided vs 3-5% fee — strong yes. At lower APRs or shorter promos: do the math. Always plan to pay off before the promo ends — set the monthly payment = balance ÷ promo months minimum.",
+    "example": "$8,000 balance at 22% APR · 18-month 0% promo · 3% transfer fee:\n\nFee = $8,000 × 3% = $240\nInterest avoided (18 months at 22%):\n  $8,000 × 22% × 18/12 = $2,640\n\nNet benefit: $2,640 − $240 = +$2,400\n\nMonthly payment needed to clear before promo ends:\n$8,000 ÷ 18 = ~$445/month\nIf you can't sustain that, the transfer might still help, but the math gets less favorable when the leftover balance hits the new card's regular APR.",
+    "quizTemplateIds": [
+      "balance_transfer_fee_d1",
+      "balance_transfer_interest_saved_d1",
+      "balance_transfer_net_d2",
+      "balance_transfer_breakeven_d2",
+      "balance_transfer_full_payoff_plan_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
     "id": "debt_avalanche_snowball",
     "moduleId": "debt",
     "title": "Pay off debt faster: avalanche vs snowball",
@@ -767,6 +815,22 @@
     "lastVerified": "2026-05-26"
   },
   {
+    "id": "concept_ef_vs_debt_priority",
+    "moduleId": "debt",
+    "title": "Emergency fund vs debt payoff — what to do first",
+    "concept": "One of the most common r/personalfinance questions: should your next $500 go toward an emergency fund or paying off debt? The widely-followed 'Order of Operations' (popularized by the r/personalfinance wiki and Dave Ramsey's baby steps): (1) build a $1,000 starter emergency fund first — enough to survive a small crisis without taking on new high-interest debt; (2) get any 401(k) employer match (instant ~50-100% return on contribution); (3) pay off high-interest debt (>~8% APR — typically credit cards, personal loans, payday loans); (4) build a fuller 3-6 month emergency fund of essentials; (5) max retirement and other long-term investing. The logic: a tiny EF stops the debt bleed before it restarts, the match is free money, and high-interest debt is a guaranteed loss bigger than any plausible investment gain.",
+    "shortcut": "Order: $1k starter EF → 401k match → high-interest debt → full 3-6mo EF → max retirement. The cutoff between 'debt before EF' and 'EF before debt' is roughly 8% APR (long-run stock returns). Below that, the math favors building savings; above, it favors paying off. But behavior trumps math — if a tiny EF stops you from running up new debt every emergency, build it even before pure math would suggest.",
+    "example": "Three users with the same $500 extra cash:\n\n(A) No EF, $4k credit card debt at 24% APR\n→ Build $1k starter EF first, then attack the 24% debt. 24% guaranteed return beats any investment.\n\n(B) $1k EF, no debt, employer offers 50% 401k match\n→ Capture the match — it's a 50% instant return.\n\n(C) $5k EF, no high-interest debt, $200k mortgage at 3.5%\n→ Invest the $500. 3.5% mortgage is below long-run stock returns; don't rush to pay it off.",
+    "quizTemplateIds": [
+      "concept_ef_priority_starter_d1",
+      "concept_ef_priority_match_d1",
+      "concept_ef_priority_cc_d2",
+      "concept_ef_priority_low_rate_d2",
+      "concept_ef_priority_scenario_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
     "id": "housing_rent_affordability",
     "moduleId": "housing",
     "title": "Rent affordability (28% rule)",
@@ -780,6 +844,22 @@
       "rent_afford_annual_d3",
       "rent_min_income_d3"
     ]
+  },
+  {
+    "id": "housing_affordability_full",
+    "moduleId": "housing",
+    "title": "How much house can I afford?",
+    "concept": "'How much house can I afford?' is the single highest-volume personal-finance search query (~1M+/month on 'mortgage calculator' alone, per industry SEO tools). The honest answer involves 6+ variables: gross income, mortgage rate, down payment, property taxes, homeowner's insurance, and PMI (if down < 20%). The standard 28/36 rule (per Fannie Mae underwriting): max housing PITI \u2264 28% of GROSS monthly income; total debt service \u2264 36%. Once you know your max PITI, you back into the loan amount using the mortgage rate factor (~0.006 per $1 of loan at 6%/30yr), and add the down payment to get the max purchase price.",
+    "shortcut": "Three steps: (1) Max PITI = gross monthly \u00d7 0.28. (2) After subtracting est. tax + insurance (rough rule: ~1.5%/yr of price \u00f7 12), what's left is your max P&I. (3) Max loan = P&I \u00f7 rate factor (0.006 at 6%, 0.0054 at 5%, 0.0067 at 7%). Add down payment to get max purchase price. PMI adds ~0.5%/yr to the loan if down < 20% \u2014 bake that into your tax/insurance estimate.",
+    "example": "$7,000/mo gross income, 6.5% rate (factor ~0.00632), 10% down:\nMax PITI = $7,000 \u00d7 28% = $1,960\nEst. tax+ins on a $300k home: 1.5% \u00d7 $300k \u00f7 12 = $375/mo (assume $300k as starting estimate)\nMax P&I = $1,960 \u2212 $375 = $1,585\nMax loan \u2248 $1,585 \u00f7 0.00632 \u2248 $251,000\nMax purchase price = $251k loan + $28k (10% down) \u2248 $279k\n(Below 20% down, add ~0.5% PMI: ~$105/mo, reducing the loan headroom slightly.)",
+    "quizTemplateIds": [
+      "house_max_piti_d1",
+      "house_loan_from_pi_d1",
+      "house_pmi_cost_d2",
+      "house_income_needed_d2",
+      "house_full_affordability_d3"
+    ],
+    "lastVerified": "2026-05-26"
   },
   {
     "id": "housing_rent_increase",

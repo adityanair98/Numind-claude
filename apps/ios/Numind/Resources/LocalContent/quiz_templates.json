@@ -8892,6 +8892,349 @@
     "explanationTemplate": "Monthly interest = balance \u00d7 APR \u00f7 1200. Principal portion = total payment \u2212 interest = ${{answer}}."
   },
   {
+    "id": "cc_payoff_principal_slice_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "${{balance}} balance at {{apr}}% APR. You pay ${{monthlyPayment}}/month. After interest, how much of that payment actually reduces principal?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          3000,
+          5000,
+          7000,
+          10000
+        ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          18,
+          20,
+          22,
+          24
+        ]
+      },
+      {
+        "name": "monthlyPayment",
+        "options": [
+          150,
+          200,
+          250,
+          300
+        ]
+      }
+    ],
+    "answerFormula": "principalAfterInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Principal slice = monthly payment \u2212 (balance \u00d7 APR \u00f7 1200). The smaller this number, the longer your payoff. If it's small, your payment is mostly servicing interest, not shrinking what you owe."
+  },
+  {
+    "id": "cc_payoff_months_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "${{balance}} balance at {{apr}}% APR. You pay ${{monthlyPayment}}/month. About how many months until it's paid off?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          3000,
+          5000,
+          7000
+        ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          18,
+          20,
+          22
+        ]
+      },
+      {
+        "name": "monthlyPayment",
+        "options": [
+          150,
+          200,
+          250,
+          300
+        ]
+      }
+    ],
+    "answerFormula": "payoffMonths",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Months \u2248 ln(payment / (payment \u2212 balance \u00d7 APR \u00f7 1200)) / ln(1 + APR \u00f7 1200). The exact formula is logarithmic \u2014 the higher the interest fraction of your payment, the longer the timeline."
+  },
+  {
+    "id": "cc_payoff_extra_payment_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "${{balance}} balance at {{apr}}% APR. Bumping your payment from $150 to ${{monthlyPayment}}/month, what's your new payoff time in months?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          5000,
+          7000,
+          10000
+        ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          20,
+          22,
+          24
+        ]
+      },
+      {
+        "name": "monthlyPayment",
+        "options": [
+          200,
+          250,
+          300,
+          400
+        ]
+      }
+    ],
+    "answerFormula": "payoffMonths",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Even a modest payment bump dramatically shrinks payoff time because (1) more principal goes to the balance, and (2) lower balance means less interest each subsequent month \u2014 the effect compounds."
+  },
+  {
+    "id": "cc_payoff_compare_payments_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your $5,000 balance at 22% APR will take ~51 months to pay off at $150/month. Bump to $200/month \u2014 roughly how long?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$200/month payoff: ~31 months. The extra $50/month nearly halves the payoff window from ~4\u00bc years to ~2\u00bd years \u2014 because each $50 of extra principal also reduces every future month's interest charge.",
+    "conceptChoices": [
+      "About 40 months (small improvement)",
+      "About 31 months \u2014 nearly half the original timeline",
+      "About 51 months still \u2014 the extra is too small to matter",
+      "Less than 12 months \u2014 extra payment is hugely powerful"
+    ],
+    "correctConceptChoice": "About 31 months \u2014 nearly half the original timeline"
+  },
+  {
+    "id": "cc_payoff_realistic_scenario_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "Realistic scenario: ${{balance}} credit card balance at {{apr}}% APR. You pay ${{monthlyPayment}}/month. After interest, how much principal do you actually pay down this month?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          4000,
+          6000,
+          8000,
+          10000,
+          12000
+        ]
+      },
+      {
+        "name": "apr",
+        "options": [
+          22,
+          24,
+          26,
+          28
+        ]
+      },
+      {
+        "name": "monthlyPayment",
+        "options": [
+          120,
+          150,
+          180,
+          200
+        ]
+      }
+    ],
+    "answerFormula": "principalAfterInterest",
+    "answerFormat": "currency",
+    "distractorStrategy": "commonMistake",
+    "explanationTemplate": "Principal reduction this month = payment \u2212 (balance \u00d7 APR \u00f7 1200). At high balances + high APRs, even a $150-180 payment may only reduce principal by $20-50 \u2014 which is why minimum-payment-only borrowers stay in debt for years (often decades)."
+  },
+  {
+    "id": "balance_transfer_fee_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "You transfer a ${{balance}} balance to a new card charging {{feePct}}% transfer fee. How much is the fee?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          3000,
+          5000,
+          7500,
+          10000,
+          15000
+        ]
+      },
+      {
+        "name": "feePct",
+        "options": [
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "answerFormula": "balanceTransferFee",
+    "answerFormat": "currency",
+    "inputMode": "freeEntry",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Fee = balance \u00d7 fee%. ${{balance}} \u00d7 {{feePct}}% = ${{answer}}. Typical balance-transfer fees are 3-5% (per major card issuers); the lower end is more common on premium cards."
+  },
+  {
+    "id": "balance_transfer_interest_saved_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "${{balance}} balance at {{oldApr}}% APR. If you avoid interest for the next {{promoMonths}} months (via a 0% balance-transfer promo), how much interest do you save?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          3000,
+          5000,
+          8000,
+          10000
+        ]
+      },
+      {
+        "name": "oldApr",
+        "options": [
+          18,
+          22,
+          24,
+          26
+        ]
+      },
+      {
+        "name": "promoMonths",
+        "options": [
+          12,
+          15,
+          18,
+          21
+        ]
+      }
+    ],
+    "answerFormula": "interestSavedDuringPromo",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Interest avoided = balance \u00d7 old APR \u00d7 promo months \u00f7 12. ${{balance}} \u00d7 {{oldApr}}% \u00d7 {{promoMonths}}/12 = ${{answer}}. This is the upside of the transfer \u2014 to be compared against the transfer fee."
+  },
+  {
+    "id": "balance_transfer_net_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "${{balance}} balance at {{oldApr}}% APR. Transfer to a 0% card with a {{feePct}}% fee and a {{promoMonths}}-month promo. Net benefit (interest saved minus fee)?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          5000,
+          8000,
+          10000,
+          15000
+        ]
+      },
+      {
+        "name": "oldApr",
+        "options": [
+          20,
+          22,
+          24
+        ]
+      },
+      {
+        "name": "promoMonths",
+        "options": [
+          15,
+          18,
+          21
+        ]
+      },
+      {
+        "name": "feePct",
+        "options": [
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "answerFormula": "balanceTransferNetWin",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Net = interest avoided \u2212 fee = (balance \u00d7 oldApr \u00d7 promoMonths \u00f7 1200) \u2212 (balance \u00d7 feePct \u00f7 100) = ${{answer}}. Positive means the transfer saves money; the bigger the spread between APR and fee, the better."
+  },
+  {
+    "id": "balance_transfer_breakeven_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A balance transfer offers an 18-month 0% promo with a 3% fee. Your old card APR is 18%. What's the minimum APR at which the transfer becomes worth it?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Breakeven: fee% = old APR \u00d7 promo months \u00f7 12 \u2192 3% = APR \u00d7 18/12 \u2192 APR = 2%. ANY APR above 2% beats the 3% fee over an 18-month window. In practice, if you're paying credit-card-level APR (18%+), an 18-month 3%-fee transfer is a strong win. Shorter promos and higher fees tighten the math.",
+    "conceptChoices": [
+      "Anything above 2% APR \u2014 at 18 months of 0%, the math beats a 3% fee very easily",
+      "At least 10% APR \u2014 fees usually win at lower rates",
+      "At least 22% APR \u2014 only worth it on credit-card rates",
+      "Always worth it regardless of APR"
+    ],
+    "correctConceptChoice": "Anything above 2% APR \u2014 at 18 months of 0%, the math beats a 3% fee very easily"
+  },
+  {
+    "id": "balance_transfer_full_payoff_plan_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "promptTemplate": "You transfer ${{balance}} to a 0% card with a {{promoMonths}}-month promo and a {{feePct}}% fee. To pay it off entirely before the promo ends, what monthly payment do you need?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [
+          5000,
+          8000,
+          10000,
+          12000
+        ]
+      },
+      {
+        "name": "promoMonths",
+        "options": [
+          12,
+          15,
+          18,
+          21
+        ]
+      },
+      {
+        "name": "feePct",
+        "options": [
+          3,
+          5
+        ]
+      }
+    ],
+    "answerFormula": "balanceTransferRequiredMonthly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Monthly payment = (balance \u00d7 (1 + fee%)) \u00f7 promo months. You're paying down the transferred balance + the upfront fee over the 0% window. If you can't sustain this payment, the leftover balance hits the new card's regular APR after the promo ends \u2014 eroding the savings."
+  },
+  {
     "id": "debt_priority_d1",
     "moduleId": "debt",
     "difficulty": 1,
@@ -9483,6 +9826,147 @@
     "answerFormat": "currency",
     "distractorStrategy": "commonMistake",
     "explanationTemplate": "Min income = rent \u00f7 0.28. ${{monthlyRent}} \u00f7 0.28 = ${{answer}}/month."
+  },
+  {
+    "id": "house_max_piti_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "Your monthly GROSS income is ${{monthlyGross}}. Using the 28% rule, what's the maximum PITI (principal + interest + tax + insurance) you can afford?",
+    "variableRules": [
+      {
+        "name": "monthlyGross",
+        "options": [
+          4000,
+          5000,
+          6000,
+          7000,
+          8000,
+          10000,
+          12000
+        ]
+      }
+    ],
+    "answerFormula": "maxPitiFromGross",
+    "answerFormat": "currency",
+    "inputMode": "freeEntry",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Max PITI = gross monthly \u00d7 28% (per Fannie Mae 28/36 rule). ${{monthlyGross}} \u00d7 28% = ${{answer}}/month \u2014 your ceiling for total housing cost including taxes and insurance."
+  },
+  {
+    "id": "house_loan_from_pi_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "Your monthly P&I budget is ${{pAndI}}. At a 6% mortgage rate (factor 0.006 per $1 of loan), how much loan can you support?",
+    "variableRules": [
+      {
+        "name": "pAndI",
+        "options": [
+          1200,
+          1500,
+          1800,
+          2100,
+          2400,
+          3000
+        ]
+      },
+      {
+        "name": "factor",
+        "options": [
+          0.006
+        ]
+      }
+    ],
+    "answerFormula": "loanFromPAndI",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Loan amount = P&I \u00f7 rate factor. ${{pAndI}} \u00f7 0.006 = ${{answer}}. The rate factor changes with rate: 0.0054 at 5%, 0.006 at 6%, 0.0067 at 7% \u2014 each percentage point higher costs you ~10-15% in supported loan amount."
+  },
+  {
+    "id": "house_pmi_cost_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "You're putting less than 20% down, so PMI kicks in. Loan amount ${{loanAmount}}, PMI rate {{pmiPct}}% annual. What's the monthly PMI cost?",
+    "variableRules": [
+      {
+        "name": "loanAmount",
+        "options": [
+          200000,
+          250000,
+          300000,
+          400000,
+          500000
+        ]
+      },
+      {
+        "name": "pmiPct",
+        "options": [
+          0.3,
+          0.5,
+          0.75,
+          1
+        ]
+      }
+    ],
+    "answerFormula": "monthlyPMI",
+    "answerFormat": "currency",
+    "distractorStrategy": "offByDecimal",
+    "explanationTemplate": "Monthly PMI = loan \u00d7 PMI% \u00f7 1200. ${{loanAmount}} \u00d7 {{pmiPct}}% \u00f7 12 = ${{answer}}/month. PMI typically lasts until you reach 20% equity (then auto-drops on conventional loans per Homeowners Protection Act)."
+  },
+  {
+    "id": "house_income_needed_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "You want to buy a ${{purchasePrice}} home with {{downPct}}% down at a 6% rate (factor 0.006). Assuming ~1.5%/yr tax + insurance, what minimum GROSS monthly income do you need (28% rule)?",
+    "variableRules": [
+      {
+        "name": "purchasePrice",
+        "options": [
+          250000,
+          350000,
+          450000,
+          550000,
+          650000
+        ]
+      },
+      {
+        "name": "downPct",
+        "options": [
+          10,
+          15,
+          20,
+          25
+        ]
+      },
+      {
+        "name": "factor",
+        "options": [
+          0.006
+        ]
+      }
+    ],
+    "answerFormula": "minIncomeForPrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Loan = price \u00d7 (1 \u2212 down%). P&I = loan \u00d7 rate factor. PITI \u2248 P&I + (price \u00d7 1.5% \u00f7 12). Min income = PITI \u00f7 0.28. The full chain gives ${{answer}}/month gross income needed."
+  },
+  {
+    "id": "house_full_affordability_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Gross monthly income $7,000. At a 6.5% rate (factor ~0.00632), 10% down, ~$300/mo expected tax+insurance, ignoring PMI for simplicity \u2014 roughly what's your max purchase price?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Max PITI = $7,000 \u00d7 28% = $1,960. P&I after tax+ins = $1,960 \u2212 $300 = $1,660. Max loan = $1,660 \u00f7 0.00632 \u2248 $263k. With 10% down: max price = $263k \u00f7 0.9 \u2248 $292k. (PMI on the 90% loan would shave another ~$100/mo off the loan headroom \u2014 most buyers under 20% down end up about 5-10% below this number.)",
+    "conceptChoices": [
+      "About $450k \u2014 affordable on $7k/mo gross",
+      "About $290k \u2014 using the 28% rule, tax+ins haircut, and rate factor",
+      "About $200k \u2014 being conservative",
+      "About $370k \u2014 using 32% instead of 28%"
+    ],
+    "correctConceptChoice": "About $290k \u2014 using the 28% rule, tax+ins haircut, and rate factor"
   },
   {
     "id": "rent_above_avg_d2",
@@ -13115,6 +13599,152 @@
     "correctConceptChoice": "Non-exempt \u2014 approximately $100,100/year with the 10 hours/week of overtime"
   },
   {
+    "id": "k401_tax_saved_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "You contribute ${{contribution}} to your traditional 401(k) this month. Your marginal tax rate is {{marginalRate}}%. How much do you save in income tax?",
+    "variableRules": [
+      {
+        "name": "contribution",
+        "options": [
+          200,
+          300,
+          400,
+          500,
+          600,
+          800,
+          1000
+        ]
+      },
+      {
+        "name": "marginalRate",
+        "options": [
+          12,
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "pretaxTaxSaved",
+    "answerFormat": "currency",
+    "inputMode": "freeEntry",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tax saved = contribution \u00d7 marginal rate. ${{contribution}} \u00d7 {{marginalRate}}% = ${{answer}}. This is what the IRS effectively 'pays' toward your contribution via the tax break."
+  },
+  {
+    "id": "k401_net_cost_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "Your ${{contribution}}/month traditional 401(k) contribution at a {{marginalRate}}% marginal tax rate costs you how much in actual take-home pay?",
+    "variableRules": [
+      {
+        "name": "contribution",
+        "options": [
+          200,
+          300,
+          400,
+          500,
+          600,
+          800
+        ]
+      },
+      {
+        "name": "marginalRate",
+        "options": [
+          12,
+          22,
+          24
+        ]
+      }
+    ],
+    "answerFormula": "pretaxNetCost",
+    "answerFormat": "currency",
+    "inputMode": "freeEntry",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Net cost = contribution \u00d7 (1 \u2212 rate). ${{contribution}} \u00d7 (1 \u2212 {{marginalRate}}%) = ${{answer}}. The other ${{contribution}} \u2212 ${{answer}} is the income tax you didn't pay."
+  },
+  {
+    "id": "k401_net_cost_high_bracket_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "High earner in the {{marginalRate}}% federal + state bracket contributes ${{contribution}}/month to a traditional 401(k). What's the real take-home cost?",
+    "variableRules": [
+      {
+        "name": "contribution",
+        "options": [
+          500,
+          750,
+          1000,
+          1500,
+          1800
+        ]
+      },
+      {
+        "name": "marginalRate",
+        "options": [
+          32,
+          35,
+          37
+        ]
+      }
+    ],
+    "answerFormula": "pretaxNetCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "At higher brackets, the tax break is bigger. ${{contribution}} \u00d7 (1 \u2212 {{marginalRate}}%) = ${{answer}} take-home cost. The high earner gets a much larger 'discount' on their retirement contribution than a low-bracket worker."
+  },
+  {
+    "id": "k401_compare_rates_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You contribute ${{contribution}}/month to a traditional 401(k). At a {{marginalRate}}% bracket, how much tax do you save in a full year?",
+    "variableRules": [
+      {
+        "name": "contribution",
+        "options": [
+          300,
+          400,
+          500,
+          600,
+          800
+        ]
+      },
+      {
+        "name": "marginalRate",
+        "options": [
+          12,
+          22,
+          24,
+          32
+        ]
+      }
+    ],
+    "answerFormula": "pretaxTaxSaved",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Annual tax saved: contribution \u00d7 marginal rate (per month, then your math). The full-year version uses 12\u00d7 monthly. This template tests the per-month version: ${{contribution}} \u00d7 {{marginalRate}}% = ${{answer}}/month tax saving."
+  },
+  {
+    "id": "k401_with_match_scenario_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "promptTemplate": "Salary $80k, contributing 6% pre-tax ($400/month) at 22% bracket. Employer matches 50% up to 6%. What's your real take-home cost per month for the full contribution + match?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "inputMode": "multipleChoice",
+    "explanationTemplate": "Your $400 contribution costs $400 \u00d7 (1 \u2212 22%) = $312 take-home. The employer match of $200 is FREE \u2014 they pay it; you pay nothing. Total into retirement: $600/mo. Real take-home cost: $312/mo. You're effectively buying $600 of retirement savings for $312 \u2014 a 92% instant 'return' before any market growth.",
+    "conceptChoices": [
+      "$400 \u2014 the full contribution amount",
+      "$312 \u2014 contribution net of tax savings; the employer match is free money",
+      "$600 \u2014 contribution plus match",
+      "$200 \u2014 only the match"
+    ],
+    "correctConceptChoice": "$312 \u2014 contribution net of tax savings; the employer match is free money"
+  },
+  {
     "id": "concept_stock_def_d1",
     "moduleId": "investing",
     "difficulty": 1,
@@ -13588,6 +14218,101 @@
       "Save it as cash for an emergency"
     ],
     "correctConceptChoice": "Pay off the credit card \u2014 22% guaranteed return beats 8% expected return"
+  },
+  {
+    "id": "concept_ef_priority_starter_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You have $0 saved, $4,000 in credit card debt at 24% APR, and an unexpected $500 to allocate. In the standard 'Order of Operations,' what should you do first?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Build a $1,000 starter emergency fund first (per r/personalfinance's Order of Operations and Dave Ramsey's Baby Step 1). Without it, the next small emergency (car repair, medical co-pay) goes right onto the same credit card, growing the principal and erasing any payoff progress. The starter EF protects your debt-payoff plan from getting reset by life. THEN attack the 24% debt aggressively.",
+    "conceptChoices": [
+      "Throw all $500 at the credit card \u2014 interest savings beat any cash hoarding",
+      "Build a $1,000 starter emergency fund first, then attack the 24% debt \u2014 the EF stops a small emergency from running up more debt",
+      "Invest in index funds \u2014 long-run returns beat 24% APR",
+      "Split exactly 50/50 between EF and debt"
+    ],
+    "correctConceptChoice": "Build a $1,000 starter emergency fund first, then attack the 24% debt \u2014 the EF stops a small emergency from running up more debt"
+  },
+  {
+    "id": "concept_ef_priority_match_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You have $1k emergency fund, $3k in credit card debt at 20% APR, and your employer offers a 100% 401(k) match up to 5% of your salary. What's the priority order for your next dollars?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "401(k) match comes before high-interest debt in the Order of Operations because a 100% match is an instant doubling \u2014 no investment return can beat that. Capture the match first; everything beyond the match goes to the 20% APR debt next. You're not 'investing instead of paying off debt' \u2014 you're collecting the free money your employer is offering, then immediately attacking the debt with everything else.",
+    "conceptChoices": [
+      "Credit card payoff first, then 401(k) match \u2014 debt always before investing",
+      "401(k) match first (instant 100% return), THEN the 20% credit card \u2014 match is free money you only get by contributing",
+      "Skip the match until you're debt-free",
+      "Half to each"
+    ],
+    "correctConceptChoice": "401(k) match first (instant 100% return), THEN the 20% credit card \u2014 match is free money you only get by contributing"
+  },
+  {
+    "id": "concept_ef_priority_cc_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You have $1k EF, no employer 401(k) match, and $2,500 in credit card debt at 22% APR. Should you build your EF to 3-6 months of essentials before paying off the card?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "No \u2014 pay off the high-interest debt first. 22% APR is a guaranteed loss bigger than any plausible investment return. The $1k starter EF you already have is enough to bridge most small emergencies; building a full EF while paying 22% interest on the card means losing ~$45/month every month you delay. Per the Order of Operations: $1k starter \u2192 debt above ~8% \u2192 THEN full EF.",
+    "conceptChoices": [
+      "Yes \u2014 emergency fund is always priority #1",
+      "No \u2014 pay off the 22% debt first. A guaranteed 22% 'return' beats any reason to expand the EF beyond the $1k starter.",
+      "Yes \u2014 but only build to 1 month, not 3-6",
+      "No \u2014 invest in stocks instead of doing either"
+    ],
+    "correctConceptChoice": "No \u2014 pay off the 22% debt first. A guaranteed 22% 'return' beats any reason to expand the EF beyond the $1k starter."
+  },
+  {
+    "id": "concept_ef_priority_low_rate_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You have a $5k emergency fund and your only debt is a 3.5% mortgage. You have $500/month extra cash flow. What does the Order of Operations suggest?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Below the ~8% threshold (long-run stock market returns), the math favors investing over extra debt payoff. A 3.5% mortgage is well below that \u2014 invest the $500 in retirement accounts (capture any remaining match, then max IRA/401(k)/HSA). The 'pay off the mortgage' impulse is psychological, not mathematical. Same money invested at 7-10% beats accelerated mortgage payoff in expected value.",
+    "conceptChoices": [
+      "Throw it all at the mortgage \u2014 debt-free is always best",
+      "Invest it \u2014 at 3.5% mortgage vs ~10% expected stock returns, the math favors investing. Mortgage payoff is psychological, not mathematical, below 8%.",
+      "Build the EF larger first",
+      "Save it as cash"
+    ],
+    "correctConceptChoice": "Invest it \u2014 at 3.5% mortgage vs ~10% expected stock returns, the math favors investing. Mortgage payoff is psychological, not mathematical, below 8%."
+  },
+  {
+    "id": "concept_ef_priority_scenario_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Mid-career professional: $0 EF, $8k credit card debt at 24% APR, $200k mortgage at 6.5%, employer matches 50% up to 6% (currently contributing 0%). $2,000/month free cash flow. What's the standard Order of Operations sequence?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "(1) Build $1k starter EF (one month of $2k cash flow). (2) Start 6% 401(k) contribution to capture the full 50% match (instant 50% return on those dollars). (3) Attack the 24% APR credit card with the remaining cash flow until paid off (this is the biggest guaranteed return left). (4) Build full 3-6 month EF of essentials. (5) Address the 6.5% mortgage only after maxing retirement accounts \u2014 at 6.5% it's borderline but still below long-run stock returns, so investing usually wins. The mortgage is the LAST priority despite feeling psychologically urgent.",
+    "conceptChoices": [
+      "(1) Pay off credit card (2) full EF (3) match (4) mortgage extra (5) invest",
+      "(1) $1k starter EF (2) 401(k) match (3) credit card payoff (4) full EF (5) max retirement, mortgage extra is last",
+      "(1) Mortgage payoff (2) credit card (3) EF (4) match (5) investing",
+      "(1) Max 401(k) (2) credit card (3) EF (4) mortgage (5) starter EF"
+    ],
+    "correctConceptChoice": "(1) $1k starter EF (2) 401(k) match (3) credit card payoff (4) full EF (5) max retirement, mortgage extra is last"
   },
   {
     "id": "concept_buy_rent_short_d1",

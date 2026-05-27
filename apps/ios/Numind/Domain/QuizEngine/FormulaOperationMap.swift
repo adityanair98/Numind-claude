@@ -1318,6 +1318,71 @@ enum FormulaOperationMap {
             guard let w = variables["weeklyEarnings"] else { return [] }
             return [.multiply(a: w, by: 50)]
 
+        // MARK: - Debt: Balance transfer math (Phase 2 Batch 2c)
+        case "balanceTransferFee":
+            guard let balance = variables["balance"],
+                  let feePct = variables["feePct"] else { return [] }
+            return [.percentOf(pct: feePct, amount: balance)]
+
+        case "interestSavedDuringPromo":
+            guard let balance = variables["balance"],
+                  let oldApr = variables["oldApr"],
+                  let promoMonths = variables["promoMonths"] else { return [] }
+            let yearlyInterest = balance * oldApr / 100
+            return [.percentOf(pct: oldApr, amount: balance),
+                    .divide(a: yearlyInterest, by: 12),
+                    .multiply(a: yearlyInterest / 12, by: promoMonths)]
+
+        case "balanceTransferNetWin":
+            guard let balance = variables["balance"],
+                  let oldApr = variables["oldApr"],
+                  let promoMonths = variables["promoMonths"],
+                  let feePct = variables["feePct"] else { return [] }
+            let interestSaved = balance * oldApr / 100 * promoMonths / 12
+            let fee = balance * feePct / 100
+            return [.percentOf(pct: oldApr, amount: balance),
+                    .multiply(a: balance * oldApr / 100 / 12, by: promoMonths),
+                    .percentOf(pct: feePct, amount: balance),
+                    .subtract(b: fee, from: interestSaved)]
+
+        case "balanceTransferRequiredMonthly":
+            guard let balance = variables["balance"],
+                  let promoMonths = variables["promoMonths"], promoMonths > 0,
+                  let feePct = variables["feePct"] else { return [] }
+            let withFee = balance * (1 + feePct / 100)
+            return [.percentOf(pct: feePct, amount: balance),
+                    .divide(a: withFee, by: promoMonths)]
+
+        // MARK: - Debt: CC payoff time (Phase 2 Batch 2c)
+        case "payoffMonths":
+            guard let balance = variables["balance"],
+                  let apr = variables["apr"],
+                  let _ = variables["monthlyPayment"] else { return [] }
+            // Surface the mental-math approximation chain: monthly interest, principal slice, months ≈ balance / principal slice
+            return [.percentOf(pct: apr / 12, amount: balance),
+                    .divide(a: balance, by: 1)]
+
+        case "principalAfterInterest":
+            guard let balance = variables["balance"],
+                  let apr = variables["apr"],
+                  let payment = variables["monthlyPayment"] else { return [] }
+            let monthlyInterest = balance * apr / 1200
+            return [.percentOf(pct: apr / 12, amount: balance),
+                    .subtract(b: monthlyInterest, from: payment)]
+
+        // MARK: - Salary: 401(k) paycheck impact (Phase 2 Batch 2c)
+        case "pretaxNetCost":
+            guard let contribution = variables["contribution"],
+                  let rate = variables["marginalRate"] else { return [] }
+            let taxSaved = contribution * rate / 100
+            return [.percentOf(pct: rate, amount: contribution),
+                    .subtract(b: taxSaved, from: contribution)]
+
+        case "pretaxTaxSaved":
+            guard let contribution = variables["contribution"],
+                  let rate = variables["marginalRate"] else { return [] }
+            return [.percentOf(pct: rate, amount: contribution)]
+
         // MARK: - Investing reworks
         case "roiPercentDiff":
             guard let costA = variables["costA"], let gainA = variables["gainA"], costA > 0,
@@ -1592,6 +1657,34 @@ enum FormulaOperationMap {
             let mort = loan * f + ti
             return [.multiply(a: loan, by: f), .add(a: loan * f, b: ti),
                     .subtract(b: min(rent, mort), from: max(rent, mort))]
+
+        // MARK: - Housing: Affordability (Phase 2 Batch 2c)
+        case "maxPitiFromGross":
+            guard let monthlyGross = variables["monthlyGross"] else { return [] }
+            return [.percentOf(pct: 28, amount: monthlyGross)]
+
+        case "loanFromPAndI":
+            guard let pAndI = variables["pAndI"], let f = variables["factor"], f > 0 else { return [] }
+            return [.divide(a: pAndI, by: f)]
+
+        case "monthlyPMI":
+            guard let loan = variables["loanAmount"], let pmiPct = variables["pmiPct"] else { return [] }
+            let annual = loan * pmiPct / 100
+            return [.percentOf(pct: pmiPct, amount: loan),
+                    .divide(a: annual, by: 12)]
+
+        case "minIncomeForPrice":
+            guard let price = variables["purchasePrice"],
+                  let downPct = variables["downPct"],
+                  let f = variables["factor"] else { return [] }
+            let loan = price * (1 - downPct / 100)
+            let pAndI = loan * f
+            let monthlyTaxIns = price * 0.015 / 12
+            let piti = pAndI + monthlyTaxIns
+            return [.subtract(b: price * downPct / 100, from: price),
+                    .multiply(a: loan, by: f),
+                    .add(a: pAndI, b: monthlyTaxIns),
+                    .divide(a: piti, by: 0.28)]
 
         // MARK: - Roommate
         case "halfOfRent":
