@@ -2213,6 +2213,108 @@ enum FormulaOperationMap {
                     .subtract(b: purchase, from: endPrice),
                     .multiply(a: shares, by: endPrice - purchase)]
 
+        // MARK: - Salary: W-2 vs 1099 (Phase 4 Batch 4a)
+        case "w2EquivalentHourly":
+            guard let h = variables["hourly1099"] else { return [] }
+            return [.multiply(a: h, by: 0.65)]
+
+        case "breakeven1099Hourly":
+            guard let w2 = variables["currentW2Hourly"] else { return [] }
+            return [.divide(a: w2, by: 0.65)]
+
+        case "seTaxAnnual":
+            guard let annual = variables["annual1099"] else { return [] }
+            return [.percentOf(pct: 14.13, amount: annual)]
+
+        case "offerCompTotalGap":
+            guard let w2 = variables["w2Hourly"], let c = variables["c1099Hourly"] else { return [] }
+            let w2Total = w2 * 2080 + 12000
+            let cTotal = c * 2080
+            return [.multiply(a: w2, by: 2080),
+                    .add(a: w2 * 2080, b: 12000),
+                    .multiply(a: c, by: 2080),
+                    .subtract(b: cTotal, from: w2Total)]
+
+        // MARK: - Salary: 401(k) vesting (Phase 4 Batch 4a)
+        case "vestedMatchGraded":
+            guard let total = variables["totalMatch"], let years = variables["yearsServed"] else { return [] }
+            let pct = min(years / 4, 1.0)
+            return [.divide(a: years, by: 4),
+                    .percentOf(pct: pct * 100, amount: total)]
+
+        case "vestedMatchForfeited":
+            guard let total = variables["totalMatch"], let vy = variables["vestYears"], let ys = variables["yearsServed"], vy > 0 else { return [] }
+            let vestedPct = min(ys / vy, 1.0)
+            return [.divide(a: ys, by: vy),
+                    .subtract(b: vestedPct, from: 1),
+                    .percentOf(pct: (1 - vestedPct) * 100, amount: total)]
+
+        case "vestedMatchMilestoneGain":
+            guard let total = variables["totalMatch"] else { return [] }
+            return [.percentOf(pct: 25, amount: total)]
+
+        // MARK: - Housing: Cash to close (Phase 4 Batch 4a)
+        case "cashToCloseQuick":
+            guard let price = variables["purchasePrice"], let downPct = variables["downPct"] else { return [] }
+            return [.percentOf(pct: downPct + 5, amount: price)]
+
+        case "loanOriginationFee":
+            guard let price = variables["purchasePrice"] else { return [] }
+            return [.percentOf(pct: 90, amount: price),
+                    .percentOf(pct: 1, amount: price * 0.9)]
+
+        case "cashToCloseFull":
+            guard let price = variables["purchasePrice"], let downPct = variables["downPct"], let moving = variables["movingCash"] else { return [] }
+            let closing = price * (downPct / 100 + 0.05)
+            return [.percentOf(pct: downPct + 5, amount: price),
+                    .add(a: closing, b: moving)]
+
+        // MARK: - Housing: COL move (Phase 4 Batch 4a)
+        case "colSimpleRealChange":
+            guard let raise = variables["nominalRaise"], let rentDelta = variables["rentDelta"] else { return [] }
+            return [.multiply(a: rentDelta, by: 12),
+                    .subtract(b: rentDelta * 12, from: raise)]
+
+        case "monthsToEatRaise":
+            guard let raise = variables["nominalRaise"], let rentDelta = variables["rentDelta"], rentDelta > 0 else { return [] }
+            return [.divide(a: raise, by: rentDelta)]
+
+        case "stateTaxDelta":
+            guard let salary = variables["newSalary"], let rate = variables["newStateRate"] else { return [] }
+            return [.percentOf(pct: rate, amount: salary)]
+
+        case "colBreakevenSalary":
+            guard let current = variables["currentSalary"] else { return [] }
+            return [.add(a: current, b: 18000),
+                    .divide(a: current + 18000, by: 0.907)]
+
+        case "colFullRealChange":
+            guard let newSalary = variables["newSalary"], let rate = variables["newCityStateRate"], let newRent = variables["newRent"] else { return [] }
+            let salaryDelta = newSalary - 95000
+            let rentAnnual = (newRent - 1800) * 12
+            let taxDelta = newSalary * rate / 100
+            return [.subtract(b: 95000, from: newSalary),
+                    .subtract(b: 1800, from: newRent),
+                    .multiply(a: newRent - 1800, by: 12),
+                    .percentOf(pct: rate, amount: newSalary),
+                    .subtract(b: rentAnnual, from: salaryDelta),
+                    .subtract(b: taxDelta, from: salaryDelta - rentAnnual)]
+
+        // MARK: - Housing: First-month true cost (Phase 4 Batch 4a)
+        case "firstMonthPadding":
+            guard let bedrooms = variables["bedrooms"] else { return [] }
+            return [.multiply(a: 1000, by: bedrooms),
+                    .add(a: 3000, b: bedrooms * 1000)]
+
+        case "firstMonthFullSum":
+            guard let rent = variables["rentComponent"] else { return [] }
+            return [.add(a: rent, b: 2200)]
+
+        case "firstMonthWithBroker":
+            guard let rent = variables["monthlyRent"], let pad = variables["padding"] else { return [] }
+            return [.multiply(a: rent, by: 4),
+                    .add(a: rent * 4, b: pad)]
+
         // MARK: - Investing: DCA cash drag (Phase 3 Batch 3c)
         case "dcaCashDrag":
             guard let total = variables["totalAmount"], let ret = variables["annualReturn"] else { return [] }

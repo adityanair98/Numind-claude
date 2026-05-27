@@ -2124,6 +2124,117 @@ struct QuizEngine {
             return shares * (endPrice - purchasePrice)
         },
 
+        // MARK: - Salary: W-2 vs 1099 (Phase 4 Batch 4a)
+        "w2EquivalentHourly": { vars in
+            // Rough screening rule: 1099 hourly × 0.65 ≈ W-2 take-home equivalent
+            // after SE tax (~14.13%) + missing benefits (~15-20%) + missing PTO (~5-8%).
+            guard let h = vars["hourly1099"] else { return nil }
+            return h * 0.65
+        },
+        "breakeven1099Hourly": { vars in
+            // Inverse: how high does a 1099 rate need to be to match a W-2 rate?
+            guard let w2 = vars["currentW2Hourly"] else { return nil }
+            return w2 / 0.65
+        },
+        "seTaxAnnual": { vars in
+            // SE tax (effective): 15.3% applied to 92.35% of earnings, per IRS Schedule SE
+            // → ~14.13% effective rate.
+            guard let annual = vars["annual1099"] else { return nil }
+            return annual * 0.1413
+        },
+        "offerCompTotalGap": { vars in
+            // Compare W-2 total comp (hourly × 2080 + $12K benefits) vs 1099 gross.
+            // Positive: W-2 (Offer A) wins.
+            guard let w2 = vars["w2Hourly"], let c = vars["c1099Hourly"] else { return nil }
+            return (w2 * 2080 + 12000) - (c * 2080)
+        },
+
+        // MARK: - Salary: 401(k) vesting (Phase 4 Batch 4a)
+        "vestedMatchGraded": { vars in
+            // Graded vesting: vested = total × min(years/vestYears, 1.0)
+            // Hardcoded 4-year graded for the d1 template (vestYears = 4).
+            guard let total = vars["totalMatch"], let years = vars["yearsServed"] else { return nil }
+            return total * min(years / 4, 1.0)
+        },
+        "vestedMatchForfeited": { vars in
+            // Forfeited = total × (1 − vested%) on a graded schedule.
+            guard let total = vars["totalMatch"], let vy = vars["vestYears"], let ys = vars["yearsServed"], vy > 0 else { return nil }
+            let vestedPct = min(ys / vy, 1.0)
+            return total * (1 - vestedPct)
+        },
+        "vestedMatchMilestoneGain": { vars in
+            // Additional match captured by waiting to next 25% milestone.
+            // On 4-year graded: each milestone is 25% of total match.
+            guard let total = vars["totalMatch"] else { return nil }
+            return total * 0.25
+        },
+
+        // MARK: - Housing: Cash to close (Phase 4 Batch 4a)
+        "cashToCloseQuick": { vars in
+            // Quick screen: cash to close ≈ down payment + 5% of purchase price.
+            // Covers closing costs (2-3%), prepaid escrow (~1-2%), reserves.
+            guard let price = vars["purchasePrice"], let downPct = vars["downPct"] else { return nil }
+            return price * (downPct / 100 + 0.05)
+        },
+        "loanOriginationFee": { vars in
+            // Typical 1% of loan amount on a 10%-down loan.
+            guard let price = vars["purchasePrice"] else { return nil }
+            return price * 0.9 * 0.01
+        },
+        "cashToCloseFull": { vars in
+            // Full cash to close incl. moving: price × (down% + 5%) + moving.
+            guard let price = vars["purchasePrice"], let downPct = vars["downPct"], let moving = vars["movingCash"] else { return nil }
+            return price * (downPct / 100 + 0.05) + moving
+        },
+
+        // MARK: - Housing: Cost-of-living move (Phase 4 Batch 4a)
+        "colSimpleRealChange": { vars in
+            // Simple real change = raise − (rent delta × 12). Ignores state tax delta.
+            guard let raise = vars["nominalRaise"], let rentDelta = vars["rentDelta"] else { return nil }
+            return raise - rentDelta * 12
+        },
+        "monthsToEatRaise": { vars in
+            // How many months of higher rent fully consume the raise?
+            guard let raise = vars["nominalRaise"], let rentDelta = vars["rentDelta"], rentDelta > 0 else { return nil }
+            return raise / rentDelta
+        },
+        "stateTaxDelta": { vars in
+            // Additional state tax from moving from 0% to N%.
+            guard let salary = vars["newSalary"], let rate = vars["newStateRate"] else { return nil }
+            return salary * rate / 100
+        },
+        "colBreakevenSalary": { vars in
+            // Solve: new × (1 − r) = current + rent delta × 12
+            // Using fixed $18K rent delta ($3K − $1.5K × 12) and 9.3% NY combined.
+            guard let current = vars["currentSalary"] else { return nil }
+            return (current + 18000) / 0.907
+        },
+        "colFullRealChange": { vars in
+            // Full real change vs Austin baseline ($95K, 0% state, $1,800 rent).
+            guard let newSalary = vars["newSalary"], let rate = vars["newCityStateRate"], let newRent = vars["newRent"] else { return nil }
+            let salaryDelta = newSalary - 95000
+            let rentAnnualDelta = (newRent - 1800) * 12
+            let taxDelta = newSalary * rate / 100
+            return salaryDelta - rentAnnualDelta - taxDelta
+        },
+
+        // MARK: - Housing: First-month true cost (Phase 4 Batch 4a)
+        "firstMonthPadding": { vars in
+            // Quick rule: $3,000 base + $1,000 per bedroom.
+            guard let bedrooms = vars["bedrooms"] else { return nil }
+            return 3000 + bedrooms * 1000
+        },
+        "firstMonthFullSum": { vars in
+            // Rent-component + utility setup + movers + setup + restock.
+            guard let rent = vars["rentComponent"] else { return nil }
+            return rent + 400 + 700 + 800 + 300
+        },
+        "firstMonthWithBroker": { vars in
+            // Broker-fee city: 4 × monthly rent + padding.
+            guard let rent = vars["monthlyRent"], let pad = vars["padding"] else { return nil }
+            return rent * 4 + pad
+        },
+
         // MARK: - Investing: DCA cash drag (Phase 3 Batch 3c)
         "dcaCashDrag": { vars in
             // Cash drag = expected return foregone on un-invested dollars during a

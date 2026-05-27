@@ -432,6 +432,38 @@
     "lastVerified": "2026-05-26"
   },
   {
+    "id": "salary_w2_vs_1099_offer",
+    "moduleId": "salary",
+    "title": "W-2 vs 1099 offer — is $50/hr 1099 better than $40/hr W-2?",
+    "concept": "Two offers, same headline number, different real value. A 1099 contractor role pays a gross hourly rate but you lose: (1) employer FICA half (~7.65%, per IRS — you pay it as self-employment tax instead), (2) employer-sponsored health insurance (~$400-700/month value), (3) employer 401(k) match (typically 3-6% of salary), (4) paid time off (~10-20 days/year = ~5-8% of salary), (5) employer-paid disability + life insurance, (6) the IRS Schedule SE deduction that smooths it (you deduct the employer-equivalent half before computing SE tax — effective SE rate ~14.13%, not 15.3%). After accounting for all of that, a 1099 rate needs to be roughly **30-40% higher** than the equivalent W-2 hourly to break even on take-home. Quick screening rule for adults considering a 1099 offer: 1099 hourly × 0.65 ≈ what the equivalent W-2 hourly take-home would feel like, after stripping out the missing employer contributions.",
+    "shortcut": "1099-to-W-2 quick screen: 1099 hourly × 0.65 ≈ W-2-equivalent take-home rate. So $50/hr 1099 ≈ $32.50/hr W-2 once you net out missing benefits + employer FICA half + missing PTO. To break even with a $40/hr W-2 job, the 1099 offer needs to be roughly $40 ÷ 0.65 ≈ $61.50/hr. Big multipliers come from health insurance and PTO — if the 1099 includes healthcare via a spouse or marketplace ACA subsidy, the gap shrinks.",
+    "example": "Two offers, side by side:\n\nOffer A: W-2, $40/hr × 2,080 hours = $83,200 gross\n  Plus benefits: employer health $6K + 401(k) match $2,500 + 15 PTO days (~$4,800 paid time off) + employer FICA half $6,365 paid on your behalf\n  Total compensation: ~$103K\n\nOffer B: 1099, $50/hr × 2,080 hours = $104,000 gross\n  Minus SE tax (effective 14.13% per IRS Schedule SE): ~$14,695\n  Minus health insurance (self-purchased ACA Silver, single 30-yo): ~$5,400/yr after subsidies\n  Minus no 401(k) match: $0 (you can open a Solo 401(k) but employer match is gone)\n  Minus no PTO: ~$4,000 of unbillable time\n  Net realized: ~$79,900\n\nOffer A ($40/hr W-2) effectively pays MORE than Offer B ($50/hr 1099). The 1099 rate would need to be roughly $61.50/hr to match.\n\nQuick screen: $50 × 0.65 = $32.50 W-2-equivalent. Way under $40 → A wins. Same math applied to a $75/hr 1099: $75 × 0.65 = $48.75 W-2-equivalent → A is the closer call.",
+    "quizTemplateIds": [
+      "w2_equivalent_quick_d1",
+      "w2_equivalent_breakeven_d2",
+      "se_tax_on_1099_d2",
+      "offer_compare_total_comp_d2",
+      "concept_1099_missing_benefits_d2"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "salary_401k_vesting",
+    "moduleId": "salary",
+    "title": "401(k) vesting — the match you don't actually own yet",
+    "concept": "Your contributions to a 401(k) are yours immediately (per IRC § 411(a)(11) — employee-deferred amounts are 100% vested at all times). The employer MATCH is the part with strings attached. Common vesting schedules (per IRC § 411(a)(2) and most plan documents): (1) **Cliff vesting** — 0% until you hit a tenure threshold (1-3 years typical), then 100% all at once. Leave before the cliff and you forfeit the entire match. (2) **Graded vesting** — vest in installments (commonly 20% per year of service, fully vested after 5 years; or 25% per year, fully vested after 4). (3) **Immediate vesting** — the match is yours the day it lands (rare for the match; common for safe-harbor plans). Vesting tracks years of service from your hire date — not from when you started contributing. If you leave 11 months into a 1-year cliff plan, you keep $0 of the employer match (you keep all your own contributions). If you leave at 30 months into a 4-year graded plan vesting 25%/yr, you're typically vested at 50% (the prior year's 25% × 2 full years credited).",
+    "shortcut": "Vested match = total match × (years served ÷ vesting years), capped at 100%. Cliff plans are binary: 0% before the cliff, 100% after. Graded plans scale linearly with year-count. To compute what walking away costs: total accumulated match × (1 − vested %). Always check your plan's vesting schedule before changing jobs — leaving 2 months before a cliff can cost $10K+ in forfeited match. Don't worry about your own contributions — those are 100% yours from day one.",
+    "example": "Jamie, $80K salary, 6% employer match capped, $4,800/year in match over 3 years = $14,400 accumulated match.\n\nScenario A — 1-year cliff plan, leaves at 10 months:\n  Vested: 0% of $4,800 = $0\n  Forfeited match: $4,800 (less than full match because year-1 contributions are smaller, but they walk with $0 of it)\n  Jamie's contributions: still 100% theirs\n\nScenario B — 4-year graded plan (25%/yr), leaves at 30 months (2.5 years of service):\n  Years credited: 2 (most plans credit full years only)\n  Vested: 50% of $14,400 = $7,200\n  Forfeited: $7,200 (a real cost of moving before the next vesting milestone)\n  Pro tip: if Jamie can hold 6 more months, vesting bumps to 75% = $10,800 — staying through the milestone saves ~$3,600.\n\nScenario C — Immediate vesting (safe-harbor plan):\n  Vested: 100% of $14,400 = $14,400\n  Forfeited: $0 — Jamie keeps everything.\n\nRule of thumb when leaving a job: check your vesting schedule before accepting the new offer. A small delay can capture thousands of dollars of match that would otherwise stay with the old employer.",
+    "quizTemplateIds": [
+      "vested_match_graded_d1",
+      "vested_match_cliff_d1",
+      "vested_match_forfeit_d2",
+      "vested_match_milestone_d2",
+      "concept_vesting_cliff_vs_graded_d2"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
     "id": "rule_of_72",
     "moduleId": "investing",
     "title": "The Rule of 72 \u2014 when does it double?",
@@ -621,6 +653,22 @@
       "ef_runway_d2",
       "ef_runway_after_cut_d3",
       "ef_months_to_target_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "concept_investing_ef_location",
+    "moduleId": "investing",
+    "title": "Where should your emergency fund actually sit?",
+    "concept": "Knowing you need 3-6 months of essentials is only half the answer. The other half: where does it live? The wrong place either loses you ~$1,000+/year in foregone interest (sitting in a 0.01% APY big-bank savings account) OR locks you out of accessing it when you need it (a 5-year CD with early-withdrawal penalty). The right place depends on the size of your fund. **Decision tree by balance:** (1) **Under $1,000 starter EF** → leave it in checking as a buffer (per the r/personalfinance Order of Operations). Liquidity beats yield at this scale. (2) **$1K to ~$30K full EF** → high-yield savings account (HYSA) at 4-5% APY, FDIC-insured. Vanguard / Ally / Marcus / Discover / SoFi / Wealthfront all in this range. (3) **Above ~$30K** → split across multiple FDIC-insured banks ($250K limit per depositor per bank, per FDIC) OR use a fintech with a sweep network OR use short-term US Treasury bills (similar yield, state-tax-free, backed by US government, ~4-5% in 2025). (4) **Bonus tier** → for a portion you're confident you won't touch in 6+ months, a no-penalty CD or short-duration T-bill can pick up 25-50 basis points more — but never your full EF.",
+    "shortcut": "Three-rule decision: (1) **Liquidity first** — your full EF should be accessible within 1-2 business days, no penalties, no market-loss risk. (2) **Yield second** — once liquidity is guaranteed, optimize for APY. The gap between 0.01% (big-bank savings) and 4.5% (HYSA) on $20K is $900/year of essentially free money. (3) **Insurance third** — if your balance approaches $250K at one bank, split across banks or move excess to short-term US Treasury bills (FDIC limit is $250K per depositor per bank; T-bills have the full faith and credit of the US Treasury, no banking-system risk). Skip: long-term CDs, brokerage account uninvested cash, money-market mutual funds inside a 401(k), and 'high-yield' checking accounts that gate the rate behind direct-deposit / debit-card requirements.",
+    "example": "Three realistic EF scenarios:\n\nMaya, age 26, just started saving:\n  EF size: $800 (building toward $1K starter)\n  Right home: checking account, $800 buffer\n  Wrong move: any kind of HYSA hassle for $800 isn't worth it yet.\n\nTaylor, age 32, established EF:\n  EF size: $18,000 (6 months of $3K essentials)\n  Right home: HYSA at 4.5% APY → $810/year in interest, fully liquid\n  Wrong moves: leaving it in 0.01% big-bank savings ($1.80/yr); locking $10K of it in a 1-year CD with early-withdrawal penalty; putting it in an index fund (could be down 30% the day you need it).\n  The right move earns ~$800/yr in passive interest with no liquidity sacrifice.\n\nJordan, age 45, family of four, larger EF:\n  EF size: $60,000 (9 months at $6,700 essentials)\n  Right home: $50K in primary HYSA + $10K in a secondary FDIC bank (or a fintech sweep network). At the FDIC limit ($250K) consider 4-week T-bills via TreasuryDirect — same yield, state-tax-free, no FDIC-limit ceiling.\n  Wrong moves: $60K at one bank below the FDIC limit is fine but inflexible if rates diverge between banks. Some Fintech 'high yield' accounts have hidden requirements (direct deposit / transaction count) that drop yield to near-zero if you don't comply.\n\nWhat NOT to use as EF: 401(k) (taxes + penalty + lockup), brokerage taxable accounts holding equities (market loss risk), CDs longer than 6 months (early-withdrawal penalty), real estate equity, crypto.",
+    "quizTemplateIds": [
+      "concept_ef_loc_starter_d1",
+      "concept_ef_loc_full_d2",
+      "concept_ef_loc_fdic_split_d2",
+      "concept_ef_loc_what_not_d2",
+      "concept_ef_loc_hysa_vs_cd_d2"
     ],
     "lastVerified": "2026-05-26"
   },
@@ -957,6 +1005,54 @@
       "house_pmi_cost_d2",
       "house_income_needed_d2",
       "house_full_affordability_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "housing_cash_to_close",
+    "moduleId": "housing",
+    "title": "Cash to close — the number that surprises first-time buyers",
+    "concept": "The purchase price of a home is NOT the cash you need at the closing table. A first-time buyer typically needs the down payment PLUS another **2-5% of the purchase price in closing costs** (per CFPB Consumer Closing Costs research) — loan origination, title insurance, appraisal, inspection, recording fees, prepaid escrow for property tax + insurance, prepaid interest from closing date to month-end, and (if down < 20%) the first PMI premium. Lender requirements typically include 2-3 months of mortgage reserves on top of all this. Then add the moves-related cash that doesn't show on the settlement statement: moving truck ($300-3,000), utility setup deposits ($200-500), and immediate household setup costs that the new home requires. The honest mental shortcut: **cash to close ≈ down payment + 5% of purchase price + ~$2-3K for moving**. On a $400K home with 10% down, that's $40K down + ~$20K closing/escrow + ~$3K moving = roughly **$63K in cash needed before keys**, not the $40K most buyers budget.",
+    "shortcut": "Cash to close ≈ down payment + 5% of purchase price (covers closing costs, escrow, reserves) + ~$2-3K moving/setup. For a quick screening rule: if you're putting 10% down, plan to have 15% of the purchase price in liquid cash before signing the offer. If you're putting 20% down, plan for 25%. Anything less and you're either rolling closing costs into the loan (extra interest) or scrambling for cash at the last minute (deals fall through this way).",
+    "example": "Realistic cash-to-close on a $400,000 home, 10% down, 6.5% rate, first-time buyer:\n\nDown payment (10%):              $40,000\nLoan origination + lender fees:   $4,000  (1% of $360K loan)\nTitle insurance + escrow + recording: $3,500\nAppraisal + inspection:           $1,000\nPrepaid property tax + insurance (escrow): $4,500  (2 months of est. $375 tax+ins × 6 months)\nPrepaid interest (closing date to end of month): $1,200\nFirst PMI premium (10% down):     $150\nLender-required cash reserves (2 months PITI verified): doesn't leave account, but must be visible\n────────────────\nCash at closing table:           $54,350\n\nPlus moving / setup:\n  Moving truck or movers:        $1,500\n  Utility deposits:              $400\n  Immediate household setup (appliances, basic furniture, light fixtures): $3,500\n────────────────\nTotal cash before move-in:       ~$59,750\n\nQuick mental shortcut applied: $40K + 5% × $400K + $3K moving = $40K + $20K + $3K = $63K. Within $4K of the line-item answer.\n\nThe $20K gap between 'down payment = $40K' (what most buyers anchor on) and 'cash to close = $60K' is the single largest first-time-buyer surprise. Save for the whole number, not the down payment alone.",
+    "quizTemplateIds": [
+      "cash_to_close_quick_d1",
+      "cash_to_close_breakdown_d2",
+      "cash_to_close_20pct_down_d2",
+      "cash_to_close_total_with_moving_d2",
+      "concept_cash_to_close_components_d2"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "housing_col_relocation",
+    "moduleId": "housing",
+    "title": "Cost-of-living move — is your $15K raise still a raise?",
+    "concept": "A job offer with a higher salary in a higher-cost city often nets out to less real income than your current job. Three components of a real-income comparison: (1) **Salary delta** — the headline raise. (2) **Housing delta** — typical year-over-year rent gap between cities is the largest single line. SF / NYC / Boston / LA / Seattle / DC rent $2,500-3,500 for a 1BR vs $1,200-1,800 in Austin / Denver / Raleigh / Phoenix (per Apartment List + Zumper city rent reports). On a 12-month basis, a $1,000/mo rent jump erases $12,000 of a $15,000 raise before any tax change. (3) **Tax delta** — state income tax varies from 0% (TX / FL / WA / NV) to 6-13% (CA / NY / NJ / HI). A $90K salary moving from Austin (0% state) to NYC (~6% state + 3% city) loses ~$8,100/year in additional income tax. Real-income mental shortcut: **real change = annual salary delta − annual rent delta − annual tax delta**. Anything else (commute cost, sales tax, COL on groceries) matters at the margins but housing + state tax are 80% of the gap.",
+    "shortcut": "Real raise = nominal raise − (rent delta × 12) − (state tax % delta × new salary). If the new city raises rent $600/mo, that's $7,200 of your raise gone before taxes. If you're also moving from no-state-tax (TX/FL) to high-state-tax (CA/NY), subtract another 5-10% of the new salary. Net positive moves are common; net negative moves (a 'raise' that's a real pay cut) are also common — running the 3-number subtraction takes 20 seconds and saves bad decisions.",
+    "example": "Two real moves with the 3-number subtraction:\n\nCase A — Austin → SF, $25K raise:\n  Current Austin: $95K salary, 0% state tax, $1,800/mo rent\n  Offer SF: $120K salary, 9.3% effective CA tax, $3,500/mo rent\n\n  Salary delta: +$25,000\n  Rent delta: ($3,500 − $1,800) × 12 = −$20,400\n  Tax delta: (9.3% − 0%) × $120K = −$11,160\n  Real change: +$25K − $20.4K − $11.2K = **−$6,600/year** (the 'raise' is actually a $6K REAL pay cut)\n\nCase B — Austin → Raleigh, $15K raise:\n  Current Austin: $95K, 0% state tax, $1,800 rent\n  Offer Raleigh: $110K, ~5% NC state tax, $1,500 rent\n\n  Salary delta: +$15,000\n  Rent delta: ($1,500 − $1,800) × 12 = +$3,600 (rent goes DOWN)\n  Tax delta: (5% − 0%) × $110K = −$5,500\n  Real change: +$15K + $3.6K − $5.5K = **+$13,100/year** (real raise, almost the full headline)\n\nSame nominal $15-25K 'raise,' wildly different real outcomes. Always run the 3 subtractions before accepting the offer.",
+    "quizTemplateIds": [
+      "col_real_change_d1",
+      "col_rent_eats_raise_d2",
+      "col_tax_delta_d2",
+      "col_breakeven_salary_d2",
+      "col_full_scenario_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "housing_first_month_true_cost",
+    "moduleId": "housing",
+    "title": "First-month true cost — what it really takes to move in",
+    "concept": "Existing lesson 6.4 (move-in cost) covers the rent-component cash: first + last + security deposit + broker. Reality is bigger. A complete first-month-in-a-new-place includes: (1) the rent-component cash (typically 3-4× monthly rent before keys). (2) **Utility setup** — electricity / gas deposits ($100-300 if no credit history, sometimes refundable), internet activation ($100-200 with installation), water/sewer setup. (3) **Furniture and setup** — even with most of your stuff coming with you, expect $500-3,000 in unavoidable additions (mattress if no fit, curtains, kitchen basics, shower curtain, garbage cans, cleaning supplies). (4) **Moving** — $300-700 (truck rental only, you do the labor) up to $2,000-4,000 (movers, including packing). (5) **Grocery restock** — $200-500 to refill from empty pantry/fridge/spices. (6) **Renters insurance** — $10-20/month, typically paid annually $120-240 upfront. The first-month total typically lands 5-7× monthly rent — much higher than the 3-4× rent-only move-in calc suggests.",
+    "shortcut": "First-month true cost ≈ rent move-in cash + ~$3-4K of utilities/furniture/moving/restock for a typical 1BR move. For budget planning: pad the rent-only move-in number by **$3,000 base + 1,000 per bedroom**. So a 1BR is move-in cost + $4,000; a 2BR shared is move-in cost + $5,000. Half of these add-ons (utility deposits, renters insurance) are refundable or pre-paid for future months — but the cash still has to clear up front.",
+    "example": "Sam moves from a furnished sublet into a $1,800/mo 1BR apartment in a no-broker city.\n\nRent-component cash (first + last + security):\n  First month: $1,800\n  Last month: $1,800\n  Security deposit: $1,800\n  Subtotal: $5,400\n\nAdd-ons most people forget:\n  Electricity activation deposit (no rental history): $150\n  Internet installation + first month: $250\n  Renters insurance (annual): $180\n  Movers (small 1BR, local): $700\n  Mattress (sublet had one, new place doesn't): $600\n  Kitchen basics + cleaning + shower curtain + light bulbs: $400\n  Grocery restock (empty pantry, spices, oils, condiments): $300\n  Subtotal: $2,580\n\nFirst-month TRUE cost: $5,400 + $2,580 = **$7,980**\n\nVs the headline 'move-in cost' from lesson 6.4 of $5,400 — the gap is $2,580 or about 48%. The quick add-on shortcut ($3,000 base + $1,000/bedroom = $4,000 padding) lands $1,400 high here, but errs on the safe side, which is the right direction for cash-flow planning.\n\nWhat to skip: avoid signing up for non-essential 'apartment setup' services and bundled internet/cable packages on day one — wait two weeks to see what you actually need.",
+    "quizTemplateIds": [
+      "first_month_total_basic_d1",
+      "first_month_padding_rule_d1",
+      "first_month_breakdown_d2",
+      "first_month_no_broker_d2",
+      "concept_first_month_overlooked_d2"
     ],
     "lastVerified": "2026-05-26"
   },

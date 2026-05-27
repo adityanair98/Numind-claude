@@ -15635,5 +15635,484 @@
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
     "explanationTemplate": "Cash drag ≈ total × annual return ÷ 2 = ${{totalAmount}} × {{annualReturn}}% ÷ 2 = ${{answer}}. Why ÷ 2? When you DCA evenly over 12 months, the dollars going in last month earn ~1 month of return; the first-month dollars earn ~12 months. On average, contributions earn ~half a year of return — vs lump-sum where every dollar earns the full year. The difference is the math premium of lump-sum. Behavioral DCA premium (guaranteed deployment) usually outweighs this in practice."
+  },
+  {
+    "id": "w2_equivalent_quick_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "Quick screen: an offer is ${{hourly1099}}/hr as a 1099 contractor. Using the rough rule that 1099 hourly × 0.65 ≈ W-2 take-home equivalent (after SE tax + missing benefits + missing PTO), what W-2 hourly does this approximately match?",
+    "variableRules": [
+      {"name": "hourly1099", "options": [40, 50, 60, 75, 90, 100]}
+    ],
+    "answerFormula": "w2EquivalentHourly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "1099 × 0.65 = ${{hourly1099}} × 0.65 = ${{answer}}. The 35% haircut covers: employer FICA half (~7.65%), missing employer-sponsored health insurance (~7-10% of base), missing 401(k) match (~3-6%), missing PTO (~5-8%), and self-funded disability/life. Quick screen — if your 1099 offer's W-2-equivalent is below your current W-2 pay, it's not actually a raise."
+  },
+  {
+    "id": "w2_equivalent_breakeven_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You currently earn ${{currentW2Hourly}}/hr W-2 with full benefits. What 1099 hourly rate would you need to roughly break even on take-home? Use the 1099 × 0.65 ≈ W-2 take-home rule.",
+    "variableRules": [
+      {"name": "currentW2Hourly", "options": [30, 35, 40, 45, 50, 60]}
+    ],
+    "answerFormula": "breakeven1099Hourly",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Solve W-2 = 1099 × 0.65 for 1099: 1099 needed = W-2 ÷ 0.65 = ${{currentW2Hourly}} ÷ 0.65 ≈ ${{answer}}/hr. Anything less than this 1099 rate is a real pay cut. If you have access to spouse's health insurance or qualify for ACA Marketplace subsidies, the multiplier shrinks (closer to 0.75-0.80)."
+  },
+  {
+    "id": "se_tax_on_1099_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "On ${{annual1099}} of 1099 income, what's your effective self-employment tax? Use the IRS Schedule SE effective rate of ~14.13% (15.3% applied to 92.35% of earnings, per IRS).",
+    "variableRules": [
+      {"name": "annual1099", "options": [60000, 80000, 100000, 120000, 150000]}
+    ],
+    "answerFormula": "seTaxAnnual",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "SE tax = annual × 14.13% = ${{annual1099}} × 14.13% ≈ ${{answer}}. This is on top of federal income tax + state tax. A W-2 employee's employer pays half of FICA (7.65%) on their behalf; a 1099 contractor pays both halves. The 92.35% factor (per IRS Schedule SE) deducts the employer-equivalent half before computing SE tax — bringing the effective rate down from 15.3% to 14.13%."
+  },
+  {
+    "id": "offer_compare_total_comp_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Offer A: ${{w2Hourly}}/hr W-2 (2,080 hours) plus benefits worth ~$12,000/year (health + 401k match + PTO). Offer B: ${{c1099Hourly}}/hr 1099, no benefits. What's the total-comp gap (Offer A total comp minus Offer B gross)?",
+    "variableRules": [
+      {"name": "w2Hourly", "options": [40, 45, 50]},
+      {"name": "c1099Hourly", "options": [50, 55, 60, 65]}
+    ],
+    "answerFormula": "offerCompTotalGap",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Offer A total comp = ${{w2Hourly}} × 2,080 + $12,000 benefits. Offer B gross = ${{c1099Hourly}} × 2,080. Gap (A − B) = ${{answer}}. Negative means B's headline rate beats A's total comp; positive means A wins despite the lower headline. Always compute both ways — many 'higher rate' 1099 offers lose on total comp."
+  },
+  {
+    "id": "concept_1099_missing_benefits_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which of these is NOT a benefit you'd lose by switching from W-2 to 1099?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Your contributions to YOUR own retirement account aren't 'lost' — you'd just switch from a Traditional/Roth 401(k) to a Solo 401(k) or SEP-IRA. What you DO lose: the employer FICA half (~7.65%, becomes self-employment tax instead), the employer 401(k) match (free 3-6% of salary), employer-sponsored health insurance (~$6-8K/yr value), and paid time off (~5-8% of salary in unbilled days). All of those have to be self-funded from your gross 1099 rate.",
+    "conceptChoices": [
+      "Your own retirement contributions — you can still open a Solo 401(k) or SEP-IRA",
+      "The employer 401(k) match",
+      "Employer-paid half of FICA (~7.65%)",
+      "Paid time off"
+    ],
+    "correctConceptChoice": "Your own retirement contributions — you can still open a Solo 401(k) or SEP-IRA"
+  },
+  {
+    "id": "vested_match_graded_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "Your employer's 401(k) match has a 4-year graded vesting schedule (25% per year). You've accumulated ${{totalMatch}} in employer match and you've worked there for {{yearsServed}} full years. How much of the match is vested?",
+    "variableRules": [
+      {"name": "totalMatch", "options": [4000, 6000, 8000, 10000, 12000, 16000]},
+      {"name": "yearsServed", "options": [1, 2, 3, 4]}
+    ],
+    "answerFormula": "vestedMatchGraded",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Vested = total × min(years ÷ 4, 1.0) = ${{totalMatch}} × ({{yearsServed}}/4) = ${{answer}}. Graded vesting per IRC § 411(a)(2)(B). Each completed year of service vests an additional 25% on a standard 4-year schedule. Your own contributions are always 100% vested from day one."
+  },
+  {
+    "id": "vested_match_cliff_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your employer uses a 3-year cliff vesting schedule on the 401(k) match. You leave after 2 years and 10 months with $8,000 of accumulated employer match. How much do you vest?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$0. Cliff vesting is binary (per IRC § 411(a)(2)(A)) — 0% before the cliff date, 100% after. You forfeit the entire $8,000 by leaving 2 months before the 3-year cliff. Staying another 2 months unlocks the full $8K — a clear case where checking your vesting schedule before changing jobs matters.",
+    "conceptChoices": [
+      "$0 — cliff vesting is binary; you forfeit the entire match",
+      "$5,333 — pro-rated to 2 yr 10 mo of 3 yrs",
+      "$8,000 — the match is always yours",
+      "$2,667 — only year 3 forfeits"
+    ],
+    "correctConceptChoice": "$0 — cliff vesting is binary; you forfeit the entire match"
+  },
+  {
+    "id": "vested_match_forfeit_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You have ${{totalMatch}} accumulated employer match on a {{vestYears}}-year graded vesting schedule. You leave after {{yearsServed}} full years. How much match is FORFEITED (left behind with the employer)?",
+    "variableRules": [
+      {"name": "totalMatch", "options": [8000, 12000, 16000, 20000]},
+      {"name": "vestYears", "options": [4, 5]},
+      {"name": "yearsServed", "options": [1, 2, 3]}
+    ],
+    "answerFormula": "vestedMatchForfeited",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Vested % = years ÷ vestYears. Forfeited = total × (1 − vested%) = ${{totalMatch}} × (1 − {{yearsServed}}/{{vestYears}}) = ${{answer}}. The forfeited amount is real cash that goes back to the plan (or stays with the employer per the plan document). Always check whether staying another 6-12 months captures another vesting tier before accepting a new offer."
+  },
+  {
+    "id": "vested_match_milestone_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "On a 4-year graded vesting schedule (25%/yr), you've accumulated ${{totalMatch}} in employer match and you're at 2 years 8 months of service. If you stay another {{extraMonths}} months to hit the next 25% milestone, how much ADDITIONAL match do you capture (vs leaving today)?",
+    "variableRules": [
+      {"name": "totalMatch", "options": [8000, 12000, 16000, 20000]},
+      {"name": "extraMonths", "options": [4, 6, 8]}
+    ],
+    "answerFormula": "vestedMatchMilestoneGain",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Currently vested at 2 full years → 50%. Hitting the next 25% milestone bumps you to 75% = additional 25% × ${{totalMatch}} = ${{answer}}. This is real cash that's captured by waiting through the milestone — the question for a new-job decision is whether the new offer's signing bonus / salary delta exceeds this captured amount. Often it doesn't."
+  },
+  {
+    "id": "concept_vesting_cliff_vs_graded_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You have two job offers with the same total comp. Offer A vests its 401(k) match on a 3-year CLIFF schedule. Offer B vests on a 4-year GRADED schedule (25% per year). You're not sure you'll stay 3+ years. Which vesting schedule is friendlier to your match if you leave early?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Graded vesting wins on the downside. With graded, leaving at 18 months captures ~25-37.5% of the match (depending on month counting); with a 3-year cliff, leaving at 18 months captures 0%. Cliff schedules are better for the employer (retention through the cliff date); graded is friendlier to employees who might leave early. If you're confident you'll stay 5+ years, the difference disappears — both fully vest.",
+    "conceptChoices": [
+      "Offer B's graded schedule — at least some vesting accumulates each year",
+      "Offer A's cliff schedule — bigger lump sum at vest",
+      "They're identical from the employee perspective",
+      "Cliff is better because it doesn't require partial calculations"
+    ],
+    "correctConceptChoice": "Offer B's graded schedule — at least some vesting accumulates each year"
+  },
+  {
+    "id": "concept_ef_loc_starter_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're building your first emergency fund, currently $400 saved, working toward a $1,000 starter EF (per the r/personalfinance Order of Operations). Where should this money live right now?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "At sub-$1,000 balances, liquidity matters more than yield. Your checking account or a basic savings sub-account at the same bank is fine. Opening a separate HYSA for $400 is friction without real reward (~$14/yr at 4.5% APY vs ~$1.50 at 0.01% — both negligible). Once you cross $1K, move to a HYSA.",
+    "conceptChoices": [
+      "Checking account or basic savings — liquidity beats yield at this size",
+      "Open a HYSA immediately, even for $400",
+      "Buy short-term T-bills",
+      "Index fund — start growing it now"
+    ],
+    "correctConceptChoice": "Checking account or basic savings — liquidity beats yield at this size"
+  },
+  {
+    "id": "concept_ef_loc_full_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your full emergency fund is $20,000 (6 months of essentials). It's currently in a big-bank checking account paying 0.01% APY. What's the right home for it?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A high-yield savings account (HYSA) at 4-5% APY (FDIC-insured, per FDIC, up to $250K). Moving $20K from 0.01% to 4.5% earns you ~$900/year in passive interest — same liquidity, same FDIC protection. Don't lock it in a CD (early-withdrawal penalty defeats the purpose), don't put it in an index fund (could be down when you need it).",
+    "conceptChoices": [
+      "HYSA at 4-5% APY — same liquidity, ~$900/yr more interest",
+      "Keep it in checking — easier access",
+      "12-month CD at 5%+ APY",
+      "Index fund — beat inflation"
+    ],
+    "correctConceptChoice": "HYSA at 4-5% APY — same liquidity, ~$900/yr more interest"
+  },
+  {
+    "id": "concept_ef_loc_fdic_split_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your emergency fund has grown to $320,000 (you've kept saving past the 6-month target during high-income years). FDIC insures $250,000 per depositor per bank. What's the right move?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Split across at least 2 FDIC-insured banks (e.g. $250K at one, $70K at another), OR move a portion into short-term US Treasury bills via TreasuryDirect — T-bills carry the full faith and credit of the US Treasury (no banking-system risk, no FDIC limit), pay similar yield, and are state-tax-free. Both approaches keep your full balance protected. Many fintech HYSAs use a 'sweep network' to spread deposits across multiple partner banks invisibly — that also works.",
+    "conceptChoices": [
+      "Split across 2+ FDIC-insured banks OR move excess to short-term T-bills",
+      "Leave it all at one bank — $250K limit is only a guideline",
+      "Move it to a brokerage account",
+      "Open a CD — higher yield than HYSA"
+    ],
+    "correctConceptChoice": "Split across 2+ FDIC-insured banks OR move excess to short-term T-bills"
+  },
+  {
+    "id": "concept_ef_loc_what_not_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which of these is the WRONG place to keep your emergency fund?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Your 401(k) is the wrong place. Accessing it early triggers ordinary income tax + a 10% early-withdrawal penalty (per IRS, with limited exceptions for hardship). On a $10K withdrawal at a 24% bracket, you'd net only ~$6,600 — a 34% haircut on emergency cash you'll urgently need. The other options preserve liquidity and value: HYSA (liquid, insured), checking (liquid, no yield), even a brokerage settlement account (liquid in 1-2 days, money-market fund yield). An EF must be both liquid AND value-preserving when emergencies hit.",
+    "conceptChoices": [
+      "Your 401(k) — early withdrawal triggers tax + 10% penalty",
+      "A high-yield savings account",
+      "Checking account",
+      "Brokerage settlement / money-market account"
+    ],
+    "correctConceptChoice": "Your 401(k) — early withdrawal triggers tax + 10% penalty"
+  },
+  {
+    "id": "concept_ef_loc_hysa_vs_cd_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A 12-month CD offers 5.0% APY. Your HYSA offers 4.5% APY. Should you move your full emergency fund into the CD for the extra 0.5%?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "No — early-withdrawal penalty on a CD typically costs 3-6 months of interest, which on a 1-year CD wipes out most of the gain you'd capture if you actually do need the money mid-year. The whole point of an EF is being available when emergencies happen. Compromise option: keep your full EF in HYSA, and put any 'beyond-EF' savings (the buffer you don't actually need for 6 months) in a no-penalty CD or short T-bill ladder. The 0.5% APY difference on a $20K EF is $100/year — not worth the liquidity risk.",
+    "conceptChoices": [
+      "No — early-withdrawal penalty defeats the purpose of an emergency fund",
+      "Yes — 0.5% extra is meaningful on $20K+",
+      "Yes — most CDs let you withdraw without penalty",
+      "Yes — but only if you split the EF half HYSA, half CD"
+    ],
+    "correctConceptChoice": "No — early-withdrawal penalty defeats the purpose of an emergency fund"
+  },
+  {
+    "id": "cash_to_close_quick_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "You're buying a ${{purchasePrice}} home with {{downPct}}% down. Using the quick rule that cash-to-close ≈ down payment + 5% of purchase price (covers closing costs, escrow, reserves), approximately how much cash do you need at the closing table?",
+    "variableRules": [
+      {"name": "purchasePrice", "options": [250000, 300000, 400000, 500000, 600000]},
+      {"name": "downPct", "options": [5, 10, 15, 20]}
+    ],
+    "answerFormula": "cashToCloseQuick",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Cash to close ≈ price × (down% + 5%) = ${{purchasePrice}} × ({{downPct}}% + 5%) = ${{answer}}. The 5% covers loan origination (~1%), title + escrow (~1%), prepaid property tax + insurance (~2%), and inspection / appraisal / recording. CFPB Consumer Closing Costs research puts the typical range at 2-5% of purchase price. Plus $2-3K for moving and setup — not on the settlement statement but you still need the cash."
+  },
+  {
+    "id": "cash_to_close_breakdown_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "On a ${{purchasePrice}} home with 10% down, what's the LOAN ORIGINATION fee at the typical 1% of loan amount?",
+    "variableRules": [
+      {"name": "purchasePrice", "options": [300000, 400000, 500000, 600000]}
+    ],
+    "answerFormula": "loanOriginationFee",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Loan amount = price × 90% = ${{purchasePrice}} × 0.9. Origination fee = loan × 1% = ${{answer}}. This is one of the largest closing-cost line items. Some lenders advertise 'no origination fee' but typically bake it into a slightly higher rate; compare APRs, not just rates."
+  },
+  {
+    "id": "cash_to_close_20pct_down_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "You're buying a $400,000 home with 20% down (avoiding PMI). Using the quick rule: cash needed at closing ≈ down + 5% of price + $3K moving. What's your total cash requirement before move-in?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "inputMode": "multipleChoice",
+    "explanationTemplate": "Down: $80K. Closing-cost padding (5% of $400K): $20K. Moving / setup: $3K. Total: $103K. The 20% down saves PMI (~$150/month on $320K loan) but the upfront cash hurdle is meaningful — many buyers underestimate by $20-30K because they anchor only on the down payment.",
+    "conceptChoices": [
+      "$103,000 ($80K down + $20K closing + $3K moving)",
+      "$80,000 (the down payment)",
+      "$95,000 ($80K + $15K closing only)",
+      "$120,000 ($80K + $40K closing — closing costs are 10%)"
+    ],
+    "correctConceptChoice": "$103,000 ($80K down + $20K closing + $3K moving)"
+  },
+  {
+    "id": "cash_to_close_total_with_moving_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "A ${{purchasePrice}} home with {{downPct}}% down. Estimate the total cash needed BEFORE move-in (closing + moving / setup combined): down + 5% closing + ${{movingCash}} moving / setup.",
+    "variableRules": [
+      {"name": "purchasePrice", "options": [300000, 400000, 500000]},
+      {"name": "downPct", "options": [10, 15, 20]},
+      {"name": "movingCash", "options": [2500, 3000, 4000]}
+    ],
+    "answerFormula": "cashToCloseFull",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total = price × (down% + 5%) + moving = ${{purchasePrice}} × ({{downPct}}% + 5%) + ${{movingCash}} = ${{answer}}. The moving / setup line catches even buyers who budgeted closing costs — utility deposits, immediate furniture, light fixtures, appliances, cleaning, and grocery restock add up faster than expected."
+  },
+  {
+    "id": "concept_cash_to_close_components_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which of these is NOT a typical closing-cost component on a US home purchase?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Property tax for the FULL upcoming year is not paid at closing — you prepay 2-6 months of property tax + insurance into an escrow account (per typical lender requirements). Full-year property tax is paid by the escrow account in installments as bills come due. The other line items ARE typical closing costs (per CFPB Consumer Closing Costs research): origination, title insurance, appraisal/inspection, and recording.",
+    "conceptChoices": [
+      "Full-year property tax bill — only 2-6 months go into prepaid escrow",
+      "Loan origination fee (typically ~1% of loan amount)",
+      "Title insurance + recording fees",
+      "Appraisal + inspection"
+    ],
+    "correctConceptChoice": "Full-year property tax bill — only 2-6 months go into prepaid escrow"
+  },
+  {
+    "id": "col_real_change_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "A new job offers a ${{nominalRaise}} raise. The move increases your rent by ${{rentDelta}}/month. Ignoring state-tax change, what's the REAL annual income change?",
+    "variableRules": [
+      {"name": "nominalRaise", "options": [10000, 15000, 20000, 25000, 30000]},
+      {"name": "rentDelta", "options": [300, 500, 700, 1000, 1500]}
+    ],
+    "answerFormula": "colSimpleRealChange",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Real change = raise − (rent delta × 12) = ${{nominalRaise}} − ${{rentDelta}} × 12 = ${{answer}}. Positive means the raise still nets a real income increase; negative means rent eats more than the raise (the move is actually a pay cut despite the higher salary). Add state-tax delta and commute / sales-tax changes for the full picture, but housing usually dominates."
+  },
+  {
+    "id": "col_rent_eats_raise_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Your new offer has a ${{nominalRaise}} raise. Your new city's rent is ${{rentDelta}}/month higher than your current. How many months of higher rent does it take to eat the raise entirely?",
+    "variableRules": [
+      {"name": "nominalRaise", "options": [12000, 15000, 18000, 24000]},
+      {"name": "rentDelta", "options": [500, 700, 1000, 1500]}
+    ],
+    "answerFormula": "monthsToEatRaise",
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Months = raise ÷ rent delta = ${{nominalRaise}} ÷ ${{rentDelta}} = {{answer}} months. If this number is under 12, the rent jump eats the entire raise inside the first year. Even at 12-18 months, the after-tax math typically turns the move into a net pay cut once you add state-tax and commute deltas."
+  },
+  {
+    "id": "col_tax_delta_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Moving from a state with 0% income tax to one with {{newStateRate}}% effective. New salary is ${{newSalary}}. What's the annual increase in state income tax owed?",
+    "variableRules": [
+      {"name": "newSalary", "options": [80000, 100000, 120000, 150000]},
+      {"name": "newStateRate", "options": [5, 6.5, 9.3]}
+    ],
+    "answerFormula": "stateTaxDelta",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "State tax delta = salary × rate = ${{newSalary}} × {{newStateRate}}% = ${{answer}}. Moving from TX/FL/WA/NV (no income tax) to CA (~9.3% effective) on a $120K salary costs ~$11K/yr in additional state tax. Combined with rent + cost-of-living, no-tax-state to high-tax-state moves frequently cost more than they pay."
+  },
+  {
+    "id": "col_breakeven_salary_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Current job: ${{currentSalary}} in a no-state-tax state, $1,500/mo rent. Considering a move to NY (9.3% effective combined NY state + NYC city tax on top of federal), where rent will be $3,000/mo. What salary do you need in NY to roughly break even on real income?",
+    "variableRules": [
+      {"name": "currentSalary", "options": [85000, 100000, 120000]}
+    ],
+    "answerFormula": "colBreakevenSalary",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Breakeven new salary ≈ current salary + (rent delta × 12) + (tax rate × new salary). Solving: newSalary × (1 − 9.3%) ≈ currentSalary + rent delta × 12, so newSalary ≈ (current + $18K) ÷ 0.907 ≈ ${{answer}}. The high-tax + high-rent combination means NY moves need roughly $30-50K of nominal raise just to stand still on real income."
+  },
+  {
+    "id": "col_full_scenario_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "scenarioTemplate": "You currently earn $95,000 in Austin (0% state tax, $1,800/mo rent). You have a new offer for ${{newSalary}} in {{newCity}}.",
+    "promptTemplate": "{{newCity}}: {{newCityStateRate}}% effective combined state+local tax, ${{newRent}}/mo rent. What's the REAL annual income change?",
+    "variableRules": [
+      {"name": "newSalary", "options": [110000, 120000, 130000, 140000]},
+      {"name": "newCity", "options": [1]},
+      {"name": "newCityStateRate", "options": [5, 6.5, 9.3]},
+      {"name": "newRent", "options": [2500, 3000, 3500]}
+    ],
+    "answerFormula": "colFullRealChange",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Real change = (newSalary − currentSalary) − (rent delta × 12) − (newSalary × state tax %). On ${{newSalary}} new salary, {{newCityStateRate}}% state tax, and ${{newRent}} rent vs $1,800 Austin: real change ≈ ${{answer}}. Negative means the move is a real pay cut despite the higher salary. Three-line subtraction is the fastest way to see it."
+  },
+  {
+    "id": "first_month_total_basic_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "Move-in cash on a $1,800/mo apartment (first + last + security): $5,400. Add the typical extras: ~$3,000 for a 1BR move (utilities setup + furniture + moving + restock). What's the total first-month TRUE cost?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "inputMode": "multipleChoice",
+    "explanationTemplate": "$5,400 + $3,000 = $8,400. The rule-of-thumb $3,000 add-on covers utility setup deposits, immediate furniture/setup, moving, and grocery restock. A 1BR typically needs $3K of padding; larger places need more. The headline 'move-in cost' of $5,400 understates the real cash needed by ~55%.",
+    "conceptChoices": [
+      "$8,400 ($5,400 rent-component + $3,000 add-ons)",
+      "$5,400 (rent-component move-in only)",
+      "$6,500 (small extras only)",
+      "$10,000+ (always more than expected)"
+    ],
+    "correctConceptChoice": "$8,400 ($5,400 rent-component + $3,000 add-ons)"
+  },
+  {
+    "id": "first_month_padding_rule_d1",
+    "moduleId": "housing",
+    "difficulty": 1,
+    "promptTemplate": "Quick rule: first-month padding ≈ $3,000 base + $1,000 per bedroom. For a {{bedrooms}}-bedroom apartment, what padding should you add to the rent-component move-in cost?",
+    "variableRules": [
+      {"name": "bedrooms", "options": [1, 2, 3, 4]}
+    ],
+    "answerFormula": "firstMonthPadding",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Padding = $3,000 base + $1,000 × {{bedrooms}} bedrooms = ${{answer}}. Larger places need more furniture, more rooms to set up, more grocery restock, and bigger movers. The rule is conservative — actual cost varies by how much you bring with you. Half of the padding (utility deposits, renters insurance prepaid annually) is refundable or pre-funded for future months, but the cash still has to clear upfront."
+  },
+  {
+    "id": "first_month_breakdown_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Moving into a ${{monthlyRent}}/mo apartment, no broker fee, 1BR. Rent-component (first + last + security): ${{rentComponent}}. Adding utility setup ($400), movers ($700), mattress + setup ($800), and grocery restock ($300). What's the total first-month TRUE cost?",
+    "variableRules": [
+      {"name": "monthlyRent", "options": [1500, 1800, 2200, 2800]},
+      {"name": "rentComponent", "options": [4500, 5400, 6600, 8400]}
+    ],
+    "answerFormula": "firstMonthFullSum",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{rentComponent}} + $400 + $700 + $800 + $300 = ${{answer}}. The $2,200 of add-ons is conservative for a 1BR no-broker move; if you need furniture beyond a mattress, expect $1,500-3,000 in furniture alone. The rent-only move-in figure understates by 35-55% in most realistic moves."
+  },
+  {
+    "id": "first_month_no_broker_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "promptTemplate": "Moving into a ${{monthlyRent}}/mo apartment in a broker-fee city (NYC, Boston, parts of SF). Broker fee = 1 month's rent. Rent-component cash = first + last + security + broker = 4 × rent. Add ${{padding}} for utilities + furniture + moving + restock. Total first-month TRUE cost?",
+    "variableRules": [
+      {"name": "monthlyRent", "options": [2400, 2800, 3200, 3600]},
+      {"name": "padding", "options": [3000, 4000, 5000]}
+    ],
+    "answerFormula": "firstMonthWithBroker",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Rent-component (4 × ${{monthlyRent}}) + padding = ${{answer}}. Broker-fee cities have the highest first-month cash hurdle — a $3,000 NYC studio can easily require $15,000+ in cash before keys. As of 2024-25, NYC has banned tenant-paid broker fees on landlord-listed apartments (per NYC FARE Act), shifting the cost to landlords; check local rules before assuming you owe it."
+  },
+  {
+    "id": "concept_first_month_overlooked_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which of these is most often UNDERESTIMATED by first-time movers when budgeting for a first apartment?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Utility setup and immediate household basics (mattress, kitchen, lighting, cleaning, garbage cans, shower curtain, etc.) typically run $1,500-3,000 for a first solo apartment — and they all need to clear in week one. New renters anchor on the rent-component move-in cash (first + last + security) and forget that an empty apartment is genuinely empty. The rent component is visible; the setup cost isn't.",
+    "conceptChoices": [
+      "Utility setup + immediate household basics (mattress, kitchen, cleaning)",
+      "The security deposit (usually clearly communicated by the landlord)",
+      "First month's rent (the headline number)",
+      "Renters insurance (usually only $15-20/month)"
+    ],
+    "correctConceptChoice": "Utility setup + immediate household basics (mattress, kitchen, cleaning)"
   }
 ]

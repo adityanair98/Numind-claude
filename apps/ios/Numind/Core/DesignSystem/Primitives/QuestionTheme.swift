@@ -208,7 +208,15 @@ enum QuestionTheme {
              // RSUs (Phase 3 Batch 3b — new lesson)
              "rsu_gross_value_d1", "rsu_net_after_tax_d2",
              "rsu_underwithholding_d2", "rsu_4yr_vest_d2",
-             "concept_rsu_when_taxed_d2":
+             "concept_rsu_when_taxed_d2",
+             // W-2 vs 1099 offer (Phase 4 Batch 4a — new lesson)
+             "w2_equivalent_quick_d1", "w2_equivalent_breakeven_d2",
+             "se_tax_on_1099_d2", "offer_compare_total_comp_d2",
+             "concept_1099_missing_benefits_d2",
+             // 401(k) vesting (Phase 4 Batch 4a — new lesson)
+             "vested_match_graded_d1", "vested_match_cliff_d1",
+             "vested_match_forfeit_d2", "vested_match_milestone_d2",
+             "concept_vesting_cliff_vs_graded_d2":
             return .paycheck
 
         // ── Investing & Growth ───────────────────────────────────────────────────
@@ -263,7 +271,11 @@ enum QuestionTheme {
              // Three retirement accounts (Phase 3 Batch 3b — new lesson)
              "concept_three_accounts_caps_d1", "concept_three_accounts_match_d2",
              "concept_three_accounts_phaseout_d2", "concept_three_accounts_total_max_d2",
-             "concept_three_accounts_rmd_d2":
+             "concept_three_accounts_rmd_d2",
+             // EF location (Phase 4 Batch 4a — new lesson)
+             "concept_ef_loc_starter_d1", "concept_ef_loc_full_d2",
+             "concept_ef_loc_fdic_split_d2", "concept_ef_loc_what_not_d2",
+             "concept_ef_loc_hysa_vs_cd_d2":
             return .investing
 
         // ── Debt & Loans ─────────────────────────────────────────────────────────
@@ -339,7 +351,18 @@ enum QuestionTheme {
              "concept_buy_rent_short_d1", "concept_buy_rent_long_d2", "concept_buy_rent_200x_d2",
              "concept_buy_rent_opportunity_d3", "concept_buy_rent_mobility_d3",
              "concept_lease_termination_d1", "concept_lease_auto_renewal_d2", "concept_lease_deposit_d2",
-             "concept_lease_illegal_clause_d3", "concept_lease_wear_tear_d3":
+             "concept_lease_illegal_clause_d3", "concept_lease_wear_tear_d3",
+             // Cash to close (Phase 4 Batch 4a — new lesson)
+             "cash_to_close_quick_d1", "cash_to_close_breakdown_d2",
+             "cash_to_close_20pct_down_d2", "cash_to_close_total_with_moving_d2",
+             "concept_cash_to_close_components_d2",
+             // COL relocation (Phase 4 Batch 4a — new lesson)
+             "col_real_change_d1", "col_rent_eats_raise_d2", "col_tax_delta_d2",
+             "col_breakeven_salary_d2", "col_full_scenario_d3",
+             // First-month true cost (Phase 4 Batch 4a — new lesson)
+             "first_month_total_basic_d1", "first_month_padding_rule_d1",
+             "first_month_breakdown_d2", "first_month_no_broker_d2",
+             "concept_first_month_overlooked_d2":
             return .housing
 
         // ── Taxes & Paycheck ────────────────────────────────────────────────────

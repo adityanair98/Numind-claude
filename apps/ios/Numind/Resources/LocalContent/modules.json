@@ -56,7 +56,9 @@
       "salary_side_hustle",
       "concept_salary_exempt_status",
       "salary_401k_paycheck_impact",
-      "salary_rsu_basics"
+      "salary_rsu_basics",
+      "salary_w2_vs_1099_offer",
+      "salary_401k_vesting"
     ]
   },
   {
@@ -80,6 +82,7 @@
       "investing_espp_discount",
       "investing_fund_fees",
       "investing_emergency_fund",
+      "concept_investing_ef_location",
       "investing_rental_yield",
       "investing_on_track",
       "concept_investing_what_are_stocks",
@@ -123,8 +126,11 @@
     "lessonIds": [
       "housing_rent_affordability",
       "housing_affordability_full",
+      "housing_cash_to_close",
+      "housing_col_relocation",
       "housing_rent_increase",
       "housing_move_in_cost",
+      "housing_first_month_true_cost",
       "housing_roommate_math",
       "housing_true_cost",
       "housing_mortgage_vs_rent",
