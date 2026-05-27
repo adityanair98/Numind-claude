@@ -12,7 +12,12 @@ export type CalculatorIconName =
   | "badge-percent"
   | "key"
   | "heart-pulse"
-  | "shield-check";
+  | "shield-check"
+  | "house"
+  | "calendar-clock"
+  | "piggy-bank"
+  | "banknote"
+  | "repeat";
 
 export interface CalculatorInfo {
   name: string;
@@ -119,5 +124,40 @@ export const calculatorRegistry: CalculatorInfo[] = [
     description:
       "Estimate how much term life insurance you need with the 10× rule and the DIME method.",
     icon: "shield-check",
+  },
+  {
+    name: "House Affordability",
+    slug: "house-affordability-calculator",
+    description:
+      "Max purchase price from income, mortgage rate, down payment, taxes, and insurance — using the 28% rule.",
+    icon: "house",
+  },
+  {
+    name: "Credit Card Payoff Calculator",
+    slug: "credit-card-payoff-calculator",
+    description:
+      "How many months until you're debt-free at a fixed monthly payment — plus total interest paid along the way.",
+    icon: "calendar-clock",
+  },
+  {
+    name: "401(k) Impact Calculator",
+    slug: "401k-impact-calculator",
+    description:
+      "What a pre-tax 401(k) contribution actually costs your paycheck after the tax break, plus the employer match it captures.",
+    icon: "piggy-bank",
+  },
+  {
+    name: "HYSA Calculator",
+    slug: "hysa-calculator",
+    description:
+      "Annual interest from a high-yield savings account vs the 0.01% your big bank pays — and Rule-of-72 doubling time.",
+    icon: "banknote",
+  },
+  {
+    name: "Balance Transfer Calculator",
+    slug: "balance-transfer-calculator",
+    description:
+      "Is the 0% APR promo worth the 3-5% transfer fee? Net benefit, breakeven APR, and the payoff plan.",
+    icon: "repeat",
   },
 ];

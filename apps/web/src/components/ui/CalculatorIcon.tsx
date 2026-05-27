@@ -13,6 +13,11 @@ import {
   Key,
   HeartPulse,
   ShieldCheck,
+  House,
+  CalendarClock,
+  PiggyBank,
+  Banknote,
+  Repeat,
   type LucideProps,
 } from "lucide-react";
 import type { CalculatorIconName } from "@/lib/content/calculators";
@@ -32,6 +37,11 @@ const iconMap: Record<CalculatorIconName, React.FC<LucideProps>> = {
   key: Key,
   "heart-pulse": HeartPulse,
   "shield-check": ShieldCheck,
+  house: House,
+  "calendar-clock": CalendarClock,
+  "piggy-bank": PiggyBank,
+  banknote: Banknote,
+  repeat: Repeat,
 };
 
 interface CalculatorIconProps {

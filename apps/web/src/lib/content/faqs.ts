@@ -346,3 +346,143 @@ export const lifeInsuranceFAQs: FAQ[] = [
       "When your dependents would be financially OK if you died. Typically when your kids are grown and self-sufficient, your mortgage is paid off, and your retirement savings can support your spouse independently. For most people that's around age 60-70.",
   },
 ];
+
+export const houseAffordabilityFAQs: FAQ[] = [
+  {
+    question: "What is the 28% rule for affording a home?",
+    answer:
+      "Per Fannie Mae's standard underwriting guidelines, your max monthly PITI (principal + interest + property taxes + homeowner's insurance) should not exceed 28% of your gross monthly income. There's also a 36% rule covering all debt payments combined (the 28/36 rule). Lenders use these as starting points; some are more conservative, some are more flexible.",
+  },
+  {
+    question: "What's a mortgage rate factor and how do I use it?",
+    answer:
+      "A rate factor is the monthly principal-and-interest cost per $1 of loan amount, derived from the 30-year amortization formula. At 5% it's about 0.0054. At 6% it's about 0.006. At 7% it's about 0.0067. Multiply your loan amount by the factor to estimate your monthly P&I in seconds — no spreadsheet needed.",
+  },
+  {
+    question: "Should I include property taxes and insurance in 'how much house can I afford'?",
+    answer:
+      "Yes. Together they typically run 1-2% of the purchase price annually (varies by state — Texas, New Jersey, Illinois have high property taxes; California has Prop 13 limits). On a $300k home that's roughly $300-500/month on top of the P&I — which can be the difference between a manageable payment and a stretched budget.",
+  },
+  {
+    question: "What if I'm putting less than 20% down?",
+    answer:
+      "You'll typically pay private mortgage insurance (PMI), usually 0.3-1.5% of the loan amount annually on conventional loans, until you reach 20% equity (per the Homeowners Protection Act, PMI must auto-cancel on conventional loans at 78% LTV). On a $250k loan, that's roughly $60-300/month — bake it into your affordability calculation.",
+  },
+  {
+    question: "Why does the same purchase price get less affordable at 7% than at 4%?",
+    answer:
+      "Because the monthly P&I scales with the rate factor, not the price. At 4% rates, a $400k loan costs about $1,910/month P&I. At 7%, the same loan is about $2,660/month — a 39% increase for the same purchase price. That's why the rent-vs-buy 'rent × 200' rule from the low-rate era doesn't work at today's rates.",
+  },
+];
+
+export const ccPayoffFAQs: FAQ[] = [
+  {
+    question: "How long will it take to pay off my credit card?",
+    answer:
+      "At a fixed monthly payment, months to payoff ≈ ln(payment / (payment − balance × APR/1200)) / ln(1 + APR/1200). For a $5,000 balance at 22% APR with $200/month payments, that's about 34 months (under 3 years). At $150/month it's about 52 months (4⅓ years).",
+  },
+  {
+    question: "Why does paying a little more shave so much time off?",
+    answer:
+      "Because every extra dollar of principal also kills every future month's interest on that dollar. The net principal slice (payment − monthly interest) determines payoff speed, and small payment increases nearly double that slice on a high-APR balance. On a $5k balance at 22% APR, going from $150 to $200/month cuts about 18 months (1.5 years) off the payoff.",
+  },
+  {
+    question: "What's the minimum I have to pay each month?",
+    answer:
+      "Most US issuers calculate the minimum as roughly 1% of the principal balance plus this month's interest, floored at $25-$35. Paying the minimum on a $5,000 balance at 22% APR will keep you in debt for 15+ years and roughly double the original balance in interest paid. Always pay above the minimum.",
+  },
+  {
+    question: "Should I pay off the highest-rate card first or the smallest balance?",
+    answer:
+      "Mathematically, paying the highest APR first (the 'avalanche' method) saves the most money. Behaviorally, paying the smallest balance first (the 'snowball' method) gives faster psychological wins that help people stick to the plan. Pick the one you'll actually execute — both work if you commit.",
+  },
+  {
+    question: "Is a balance transfer worth it?",
+    answer:
+      "Usually yes if you're paying credit-card APR (18%+) and the transfer fee (3-5%) is less than what you'd pay in interest during the 0% promo period. Use Numind's Balance Transfer Calculator to see the breakeven for your specific situation. Just make sure you actually pay off the balance before the promo ends.",
+  },
+];
+
+export const k401ImpactFAQs: FAQ[] = [
+  {
+    question: "What does a 6% 401(k) contribution actually cost me each month?",
+    answer:
+      "It depends on your tax bracket. A pre-tax (traditional) 401(k) contribution reduces taxable income, so net cost = contribution × (1 − marginal tax rate). At a 22% federal+state bracket, a $300/month contribution only reduces take-home by about $234 — the IRS effectively pays the other $66 via the tax deduction. At a 32% bracket, the same $300 contribution costs you only $204 in take-home.",
+  },
+  {
+    question: "Why doesn't FICA get reduced by a 401(k) contribution?",
+    answer:
+      "Traditional 401(k) contributions reduce federal income tax but not FICA wages (Social Security + Medicare, 7.65% combined). The IRS treats 401(k) money as deferred wages — you still pay payroll taxes on the contribution today, you just defer the income tax. HSA contributions via Section 125 payroll deduction are the rare exception that reduces both income tax AND FICA.",
+  },
+  {
+    question: "Should I contribute Roth 401(k) or Traditional 401(k)?",
+    answer:
+      "Traditional 401(k) gives you the tax break now (cheaper take-home cost); Roth 401(k) gives you tax-free growth and tax-free withdrawals later but costs your full take-home today. Young earners in lower brackets often favor Roth; mid-career earners in peak brackets often favor Traditional. The 'I don't know which' default is to split: Traditional 401(k) + Roth IRA.",
+  },
+  {
+    question: "How much should I contribute to capture the employer match?",
+    answer:
+      "Contribute at least up to the match cap, whatever it is. A 100% match on the first 5% of salary is an instant 100% return — better than any investment you can find. A 50% match on the first 6% is a 50% return. Skipping the match is leaving free money on the table; it's almost always the first dollars to allocate after a starter emergency fund.",
+  },
+  {
+    question: "What's the 401(k) contribution limit?",
+    answer:
+      "Per IRS Notice, the 2025 elective deferral limit for 401(k)/403(b)/457 plans is $23,500 (up from $23,000 in 2024). If you're 50+, you can contribute an additional $7,500 catch-up. Employer contributions don't count toward your personal limit; the combined personal + employer limit is $70,000 for 2025.",
+  },
+];
+
+export const hysaFAQs: FAQ[] = [
+  {
+    question: "What is APY and how is it different from APR?",
+    answer:
+      "APY (Annual Percentage Yield) is the actual annual return on your savings WITH compounding factored in. APR (Annual Percentage Rate) is the simple annual rate without compounding. By federal law (Truth in Savings Act / Reg DD), banks must quote APY on savings products — making it the right comparison number between accounts.",
+  },
+  {
+    question: "Why is my big-bank savings account only paying 0.01% APY?",
+    answer:
+      "Major brick-and-mortar banks (Chase, BofA, Wells Fargo, Citi) keep their default savings rates near zero because they don't need to compete for deposits — their checking-account customers usually don't move money for marginal returns. Online-only banks and money-market funds need to compete on rate, so they pay close to the federal funds rate. Per Bankrate's HYSA tracking, top rates were consistently 4-5% APY through 2024-25.",
+  },
+  {
+    question: "Is a high-yield savings account safe?",
+    answer:
+      "Yes, if it's FDIC-insured (or NCUA-insured for credit unions). Up to $250,000 per depositor, per institution, per ownership category. The protection is identical to a brick-and-mortar bank — what differs is the APY, not the safety. Always confirm FDIC membership before opening an account.",
+  },
+  {
+    question: "How long does it take for cash to double in a HYSA?",
+    answer:
+      "Use the Rule of 72: years to double ≈ 72 ÷ APY. At 4.5% APY, that's about 16 years. At 5%, about 14.4 years. Note that HYSA rates aren't fixed — they track the federal funds rate, which is set by the Fed and can change. Lock in a longer-term CD if you want a guaranteed rate.",
+  },
+  {
+    question: "Should I keep my emergency fund in a HYSA?",
+    answer:
+      "Yes — that's the textbook use case. Emergency funds need to be liquid (you can access them in days, not months) and stable (not subject to market drops). HYSAs check both boxes while paying 4-5% APY, vs roughly zero in a regular savings account. The math: a $20,000 emergency fund in a 4.5% HYSA earns ~$900/year — money you don't have to chase down to be safe.",
+  },
+];
+
+export const balanceTransferFAQs: FAQ[] = [
+  {
+    question: "When is a balance transfer worth the fee?",
+    answer:
+      "When the interest you'd pay on the old card during the promo period exceeds the transfer fee. Formula: (balance × old APR × promo months / 12) > (balance × fee%). Simplified breakeven: (old APR × promo months / 12) > fee%. At 22% APR with an 18-month promo and 3% fee, that's a $2,640 vs $240 comparison on $8,000 — a strong yes.",
+  },
+  {
+    question: "What's a typical balance-transfer fee?",
+    answer:
+      "Per major US issuers (Citi, Chase, Discover, Bank of America), balance-transfer fees typically range from 3% to 5% of the transferred amount. Cards with longer 0% promo periods (21 months) usually charge 5%; shorter promos (12-15 months) often charge 3%. Some premium cards occasionally offer no-fee transfers as a promotion, but those are rare.",
+  },
+  {
+    question: "Will a balance transfer hurt my credit?",
+    answer:
+      "Short term: small hit (5-10 points) from the hard inquiry when you apply for the new card. Medium term: opening a new credit line lowers your average account age slightly. Long term: clearing high-utilization balances on the old card can significantly help your score (utilization is 30% of FICO). On balance, paying off the debt matters far more than the score effects.",
+  },
+  {
+    question: "What happens if I don't pay off the balance before the 0% promo ends?",
+    answer:
+      "Leftover balance gets the new card's regular APR (often 17-22%) applied going forward. The 0% rate doesn't auto-renew. To avoid this, divide (balance + fee) by the promo months and pay at least that much each month. On $8,000 with a 3% fee over 18 months: ~$458/month to clear before the promo ends.",
+  },
+  {
+    question: "Can I do multiple balance transfers?",
+    answer:
+      "Yes, but it's a sign of a deeper debt problem. Most lenders will keep approving transfers as long as your credit holds up, but each one charges a fee and lowers your credit score a bit. If you're considering a third transfer, the better move is usually a personal loan with a fixed rate and term — or talking to a non-profit credit counselor (NFCC member agencies offer free counseling).",
+  },
+];

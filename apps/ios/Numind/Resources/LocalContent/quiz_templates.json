@@ -9009,19 +9009,19 @@
     "moduleId": "debt",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "Your $5,000 balance at 22% APR will take ~51 months to pay off at $150/month. Bump to $200/month \u2014 roughly how long?",
+    "promptTemplate": "Your $5,000 balance at 22% APR will take ~52 months to pay off at $150/month. Bump to $200/month \u2014 roughly how long?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "$200/month payoff: ~31 months. The extra $50/month nearly halves the payoff window from ~4\u00bc years to ~2\u00bd years \u2014 because each $50 of extra principal also reduces every future month's interest charge.",
+    "explanationTemplate": "$200/month payoff: ~34 months. The extra $50/month cuts about 18 months (1.5 years) off the payoff \u2014 because each $50 of extra principal also reduces every future month's interest charge.",
     "conceptChoices": [
-      "About 40 months (small improvement)",
-      "About 31 months \u2014 nearly half the original timeline",
+      "About 45 months (modest improvement)",
+      "About 34 months \u2014 roughly 18 months shorter than at $150/mo",
       "About 51 months still \u2014 the extra is too small to matter",
       "Less than 12 months \u2014 extra payment is hugely powerful"
     ],
-    "correctConceptChoice": "About 31 months \u2014 nearly half the original timeline"
+    "correctConceptChoice": "About 34 months \u2014 roughly 18 months shorter than at $150/mo"
   },
   {
     "id": "cc_payoff_realistic_scenario_d3",

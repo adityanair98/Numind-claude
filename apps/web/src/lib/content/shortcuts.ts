@@ -167,3 +167,68 @@ export const lifeInsuranceShortcut: ShortcutContent = {
   example:
     "$70,000 salary: baseline = $700,000. Mortgage $280k, savings $50k: adjusted = $700k + $280k - $50k = $930,000 coverage. Term life cost: roughly $40-$60/month for a healthy 35-year-old.",
 };
+
+export const houseAffordabilityShortcut: ShortcutContent = {
+  title: "The 28% Rule, Step by Step",
+  teaser: "Max PITI = monthly gross × 0.28. Loan = PITI ÷ rate factor (0.006 at 6%).",
+  steps: [
+    "Max PITI (principal + interest + tax + insurance) = monthly gross × 0.28 (Fannie Mae's standard).",
+    "Subtract est. monthly tax + insurance (~1.5%/yr of price ÷ 12). What's left is your max P&I.",
+    "Max loan = P&I ÷ rate factor: 0.0054 at 5%, 0.006 at 6%, 0.0067 at 7%.",
+    "Max purchase price = max loan ÷ (1 - down %). Add PMI (~0.5%/yr) if down < 20%.",
+  ],
+  example:
+    "$7,000/mo gross at 6.5% rate, 10% down: max PITI = $1,960. After ~$300 tax+ins, max P&I = $1,660. Max loan ≈ $263k. Max purchase price ≈ $292k.",
+};
+
+export const ccPayoffShortcut: ShortcutContent = {
+  title: "The Principal-Slice Rule",
+  teaser: "Net principal per month = payment − (balance × APR ÷ 1200). Smaller slice = longer payoff.",
+  steps: [
+    "Monthly interest charge = balance × APR ÷ 1200.",
+    "Net principal reduction = monthly payment − interest charge.",
+    "Months to payoff ≈ ln(payment / (payment − balance × r)) / ln(1 + r), where r = APR / 1200.",
+    "Rule of thumb: every extra $50/month roughly cuts a year off a $5,000 balance at 22% APR.",
+  ],
+  example:
+    "$5,000 at 22% APR with $150/mo: monthly interest $92, principal slice $58, payoff ~51 months. Bump to $200/mo → principal slice $108 → payoff ~31 months (nearly half).",
+};
+
+export const k401ImpactShortcut: ShortcutContent = {
+  title: "The Pre-Tax Discount",
+  teaser: "Net paycheck cost = contribution × (1 − marginal tax rate). The IRS pays the rest.",
+  steps: [
+    "Pre-tax 401(k) contributions reduce taxable income but not FICA wages.",
+    "Net paycheck reduction = contribution × (1 − marginal income tax rate). At 22%: $300 contribution costs $234 take-home.",
+    "Employer match is FREE money on top — capture at least up to the match cap before doing anything else with extra cash.",
+    "Roth 401(k) is different: full contribution comes out of take-home (no upfront tax break).",
+  ],
+  example:
+    "$5,000/mo gross, 6% contribution = $300/mo. At 22% bracket, tax saved = $66. Net cost = $234. With a 50%/6% employer match, free $150 also goes in. $600 total into the account for $234 out-of-pocket.",
+};
+
+export const hysaShortcut: ShortcutContent = {
+  title: "The 450x Multiplier",
+  teaser: "5% HYSA on $10k = $500/year. 0.01% big-bank = $1/year. Same balance, 500x the interest.",
+  steps: [
+    "Annual interest = balance × APY ÷ 100.",
+    "Rule of 72: at X% APY, your money doubles in 72/X years.",
+    "The gap between best-in-class HYSA (~4-5% APY in 2025-26) and a major bank's 0.01% APY is the biggest free-money lever in personal finance.",
+    "FDIC-insured to $250k per depositor, per bank — same protection as a brick-and-mortar savings account.",
+  ],
+  example:
+    "$10,000 idle in a Bank of America savings (0.01% APY) earns $1/year. Same $10,000 in a Marcus or Ally HYSA at 4.5% APY earns $450/year. Per Bankrate's HYSA tracking, top rates have stayed above 4% throughout 2024-25.",
+};
+
+export const balanceTransferShortcut: ShortcutContent = {
+  title: "The Fee-vs-Interest Test",
+  teaser: "Worth it if (old APR × promo months / 12) > transfer fee %.",
+  steps: [
+    "Transfer fee = balance × fee % (typically 3-5%).",
+    "Interest avoided = balance × old APR × promo months / 12.",
+    "Net benefit = interest avoided − fee. Positive = worth doing.",
+    "Required monthly payment to clear (balance + fee) before promo ends: (balance + fee) / promo months. If you can't sustain this, leftover balance hits the new card's regular APR.",
+  ],
+  example:
+    "$8,000 at 22% APR, 18-month 0% promo, 3% fee: fee = $240, interest avoided ≈ $2,640, net benefit ≈ $2,400. Required monthly: ~$458 to fully clear before promo ends.",
+};
