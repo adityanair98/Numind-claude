@@ -2857,21 +2857,153 @@
     "id": "bracket_basic_d1",
     "moduleId": "taxes",
     "difficulty": 1,
-    "promptTemplate": "Income: ${{taxableIncome}}. First ${{bracket1Limit}} taxed at {{rate1}}%, the rest at {{rate2}}%. Total tax?",
+    "promptTemplate": "Sarah's TAXABLE income is ${{taxableIncome}} (single, 2025). Federal brackets: 10% up to $11,925, then 12% up to $48,475, then 22% up to $103,350. How much federal income tax does she owe?",
     "variableRules": [
       {
         "name": "taxableIncome",
         "options": [
-          50000,
+          20000,
+          25000,
+          30000,
+          35000,
+          40000
+        ]
+      },
+      {
+        "name": "bracket1Limit",
+        "options": [
+          11925
+        ]
+      },
+      {
+        "name": "bracket2Limit",
+        "options": [
+          48475
+        ]
+      },
+      {
+        "name": "rate1",
+        "options": [
+          10
+        ]
+      },
+      {
+        "name": "rate2",
+        "options": [
+          12
+        ]
+      },
+      {
+        "name": "rate3",
+        "options": [
+          22
+        ]
+      }
+    ],
+    "answerFormula": "marginalTax3Tier",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "First $11,925 \u00d7 10% = $1,192.50. Next slice (${{taxableIncome}} \u2212 $11,925) \u00d7 12%. Total = ${{answer}}. Income is within the 10/12 brackets \u2014 22% rate doesn't apply yet."
+  },
+  {
+    "id": "bracket_two_tier_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "promptTemplate": "TAXABLE income ${{taxableIncome}} (single, 2025). Real federal brackets: 10% / 12% / 22% at thresholds $11,925, $48,475, $103,350. Federal tax?",
+    "variableRules": [
+      {
+        "name": "taxableIncome",
+        "options": [
+          15000,
+          22000,
+          28000,
+          33000,
+          38000,
+          42000
+        ]
+      },
+      {
+        "name": "bracket1Limit",
+        "options": [
+          11925
+        ]
+      },
+      {
+        "name": "bracket2Limit",
+        "options": [
+          48475
+        ]
+      },
+      {
+        "name": "rate1",
+        "options": [
+          10
+        ]
+      },
+      {
+        "name": "rate2",
+        "options": [
+          12
+        ]
+      },
+      {
+        "name": "rate3",
+        "options": [
+          22
+        ]
+      }
+    ],
+    "answerFormula": "marginalTax3Tier",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$11,925 \u00d7 10% + (${{taxableIncome}} \u2212 $11,925) \u00d7 12% = ${{answer}}. (Per IRS Rev Proc 2024-40 brackets, 2025 single filer.)"
+  },
+  {
+    "id": "concept_bracket_taxable_vs_gross_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Sarah is a single filer earning $65,000 in gross wages in 2025. She takes the standard deduction (no itemizing). Federal tax brackets apply to which figure?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Federal brackets apply to TAXABLE income, not gross. Taxable income = gross \u2212 standard deduction. 2025 single standard deduction is $15,750 (per IRS Rev Proc 2024-40). $65,000 \u2212 $15,750 = $49,250. Applying brackets to gross would overstate the tax by hundreds of dollars.",
+    "conceptChoices": [
+      "$49,250 (gross minus standard deduction)",
+      "$65,000 (gross income)",
+      "$50,000 (gross minus a round $15,000 estimate)",
+      "$55,000 (gross minus FICA at 7.65%)"
+    ],
+    "correctConceptChoice": "$49,250 (gross minus standard deduction)"
+  },
+  {
+    "id": "bracket_22_24_crossing_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "promptTemplate": "TAXABLE income ${{taxableIncome}} (single, 2025), crossing into the 22% bracket. Brackets: 10% / 12% / 22% at $11,925, $48,475, $103,350. Federal income tax?",
+    "variableRules": [
+      {
+        "name": "taxableIncome",
+        "options": [
+          55000,
           60000,
+          65000,
           70000,
+          75000,
           80000
         ]
       },
       {
         "name": "bracket1Limit",
         "options": [
-          40000
+          11925
+        ]
+      },
+      {
+        "name": "bracket2Limit",
+        "options": [
+          48475
         ]
       },
       {
@@ -2882,122 +3014,48 @@
       },
       {
         "name": "rate2",
+        "options": [
+          12
+        ]
+      },
+      {
+        "name": "rate3",
         "options": [
           22
         ]
       }
     ],
-    "answerFormula": "marginalTax",
+    "answerFormula": "marginalTax3Tier",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "First ${{bracket1Limit}} at {{rate1}}% + remainder at {{rate2}}% = ${{answer}}. Marginal \u2014 not flat."
+    "explanationTemplate": "Three slices: $11,925 \u00d7 10% = $1,192.50, plus $36,550 \u00d7 12% = $4,386, plus (${{taxableIncome}} \u2212 $48,475) \u00d7 22%. Total = ${{answer}}. Only the top slice is taxed at 22%."
   },
   {
-    "id": "bracket_two_tier_d1",
+    "id": "bracket_effective_d3",
     "moduleId": "taxes",
-    "difficulty": 1,
-    "promptTemplate": "Taxable income: ${{taxableIncome}}. Tax brackets: {{rate1}}% up to ${{bracket1Limit}}, then {{rate2}}%. How much tax?",
+    "difficulty": 3,
+    "scenarioTemplate": "You're estimating your federal income tax owed for 2025.",
+    "promptTemplate": "TAXABLE income ${{taxableIncome}} (single, 2025), crossing all three lower brackets. Brackets: 10% to $11,925, 12% to $48,475, 22% to $103,350. Total federal income tax?",
     "variableRules": [
       {
         "name": "taxableIncome",
         "options": [
-          45000,
-          55000,
-          65000,
-          75000
+          85000,
+          92000,
+          98000,
+          102000
         ]
       },
       {
         "name": "bracket1Limit",
         "options": [
-          30000,
-          40000
+          11925
         ]
       },
       {
-        "name": "rate1",
+        "name": "bracket2Limit",
         "options": [
-          10,
-          12
-        ]
-      },
-      {
-        "name": "rate2",
-        "options": [
-          22,
-          24
-        ]
-      }
-    ],
-    "answerFormula": "marginalTax",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{bracket1Limit}} \u00d7 {{rate1}}% + (${{taxableIncome}} \u2212 ${{bracket1Limit}}) \u00d7 {{rate2}}% = ${{answer}}."
-  },
-  {
-    "id": "bracket_scenario_d2",
-    "moduleId": "taxes",
-    "difficulty": 2,
-    "scenarioTemplate": "You earned ${{taxableIncome}} this year.",
-    "promptTemplate": "Tax brackets: {{rate1}}% on the first ${{bracket1Limit}}, {{rate2}}% above. Calculate your total tax.",
-    "variableRules": [
-      {
-        "name": "taxableIncome",
-        "options": [
-          55000,
-          65000,
-          75000,
-          85000
-        ]
-      },
-      {
-        "name": "bracket1Limit",
-        "options": [
-          40000,
-          50000
-        ]
-      },
-      {
-        "name": "rate1",
-        "options": [
-          10,
-          12
-        ]
-      },
-      {
-        "name": "rate2",
-        "options": [
-          22,
-          24
-        ]
-      }
-    ],
-    "answerFormula": "marginalTax",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "(${{bracket1Limit}} \u00d7 {{rate1}}%) + (${{taxableIncome}} \u2212 ${{bracket1Limit}}) \u00d7 {{rate2}}% = ${{answer}}."
-  },
-  {
-    "id": "bracket_compare_d2",
-    "moduleId": "taxes",
-    "difficulty": 2,
-    "promptTemplate": "Income: ${{taxableIncome}}. Brackets: {{rate1}}% up to ${{bracket1Limit}}, {{rate2}}% beyond. Tax owed?",
-    "variableRules": [
-      {
-        "name": "taxableIncome",
-        "options": [
-          48000,
-          58000,
-          68000,
-          78000,
-          90000
-        ]
-      },
-      {
-        "name": "bracket1Limit",
-        "options": [
-          35000,
-          45000
+          48475
         ]
       },
       {
@@ -3009,60 +3067,20 @@
       {
         "name": "rate2",
         "options": [
-          22,
-          24
-        ]
-      }
-    ],
-    "answerFormula": "marginalTax",
-    "answerFormat": "currency",
-    "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Marginal tax = ${{answer}}. Only income above the bracket limit is taxed at the higher rate."
-  },
-  {
-    "id": "bracket_effective_d3",
-    "moduleId": "taxes",
-    "difficulty": 3,
-    "promptTemplate": "Taxable income: ${{taxableIncome}}. First ${{bracket1Limit}} is taxed at {{rate1}}%, the rest at {{rate2}}%. What's the total tax?",
-    "variableRules": [
-      {
-        "name": "taxableIncome",
-        "options": [
-          52000,
-          62000,
-          72000,
-          82000,
-          95000
-        ]
-      },
-      {
-        "name": "bracket1Limit",
-        "options": [
-          38000,
-          42000,
-          48000
-        ]
-      },
-      {
-        "name": "rate1",
-        "options": [
-          10,
           12
         ]
       },
       {
-        "name": "rate2",
+        "name": "rate3",
         "options": [
-          22,
-          24
+          22
         ]
       }
     ],
-    "answerFormula": "marginalTax",
+    "answerFormula": "marginalTax3Tier",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Tax = (${{bracket1Limit}} \u00d7 {{rate1}}%) + (${{taxableIncome}} \u2212 ${{bracket1Limit}}) \u00d7 {{rate2}}% = ${{answer}}.",
-    "scenarioTemplate": "You're estimating how much you'll owe at tax time."
+    "explanationTemplate": "Stack the slices: $1,192.50 (10% on $11,925) + $4,386 (12% on $36,550) + (${{taxableIncome}} \u2212 $48,475) \u00d7 22%. Total = ${{answer}}. Effective rate is well below the 22% headline."
   },
   {
     "id": "deduction_basic_d1",

@@ -7,6 +7,8 @@ This directory holds ops and process documentation for Numind — anything that'
 | Doc | What it covers |
 |---|---|
 | [content-audit-cadence.md](content-audit-cadence.md) | Annual/quarterly cadence for keeping regulated lesson content (tax brackets, federal loan rates, FLSA thresholds, etc.) fresh. Source registry + pre-merge checklist. |
+| [regulatory-constants.md](regulatory-constants.md) | Per-number registry: every year-bound dollar threshold, rate, and cap referenced in the curriculum, with current value, lesson IDs that reference it, source URL, and next-refresh date. Pair with content-audit-cadence.md. |
+| [numind-score-baseline-2026-05.md](numind-score-baseline-2026-05.md) | Numind Score concept-vs-numerical spread snapshot. No recalibration needed; baseline retained as a tripwire. |
 
 ## Conventions
 

@@ -541,6 +541,34 @@ enum FormulaOperationMap {
                     .percentOf(pct: rate2, amount: excess),
                     .add(a: tax1, b: excess * rate2 / 100)]
 
+        case "marginalTax3Tier":
+            // Mirrors the 3-tier real-bracket formula in QuizEngine. Mental-math
+            // chain reflects only the tiers the income actually crosses, so
+            // questions wholly within tier 1 score easy; questions spanning all
+            // three tiers score hard.
+            guard let income = variables["taxableIncome"],
+                  let b1 = variables["bracket1Limit"],
+                  let b2 = variables["bracket2Limit"],
+                  let r1 = variables["rate1"],
+                  let r2 = variables["rate2"],
+                  let r3 = variables["rate3"] else { return [] }
+            if income <= b1 {
+                return [.percentOf(pct: r1, amount: income)]
+            }
+            if income <= b2 {
+                let tier1Tax = b1 * r1 / 100
+                return [.percentOf(pct: r1, amount: b1),
+                        .percentOf(pct: r2, amount: income - b1),
+                        .add(a: tier1Tax, b: (income - b1) * r2 / 100)]
+            }
+            let tier1Tax = b1 * r1 / 100
+            let tier2Tax = (b2 - b1) * r2 / 100
+            return [.percentOf(pct: r1, amount: b1),
+                    .percentOf(pct: r2, amount: b2 - b1),
+                    .percentOf(pct: r3, amount: income - b2),
+                    .add(a: tier1Tax, b: tier2Tax),
+                    .add(a: tier1Tax + tier2Tax, b: (income - b2) * r3 / 100)]
+
         case "paycheckNet":
             guard let gross = variables["grossPay"],
                   let ficaRate = variables["ficaRate"],

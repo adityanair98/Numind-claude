@@ -328,7 +328,7 @@ enum QuestionTheme {
 
         // ── Taxes & Paycheck ────────────────────────────────────────────────────
         case "bracket_basic_d1", "bracket_two_tier_d1",
-             "bracket_scenario_d2", "bracket_compare_d2", "bracket_effective_d3",
+             "concept_bracket_taxable_vs_gross_d2", "bracket_22_24_crossing_d2", "bracket_effective_d3",
              "deduction_basic_d1", "deduction_net_d1",
              "deduction_fica_d2", "deduction_scenario_d2", "deduction_compare_d3",
              "refund_basic_d1", "refund_owe_d1",

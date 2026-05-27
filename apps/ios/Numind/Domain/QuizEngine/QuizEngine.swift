@@ -593,6 +593,26 @@ struct QuizEngine {
             }
             return bracket1 * rate1 / 100 + (income - bracket1) * rate2 / 100
         },
+        "marginalTax3Tier": { vars in
+            // Real-bracket 3-tier system used by the rebuilt taxes_brackets lesson.
+            // Tier 1: first `bracket1Limit` at `rate1`
+            // Tier 2: bracket1Limit .. bracket2Limit at `rate2`
+            // Tier 3: above bracket2Limit at `rate3`
+            // Match this to real 2025 single-filer brackets: $11,925 @ 10%, $48,475 @ 12%, $103,350 @ 22%, etc.
+            guard let income = vars["taxableIncome"],
+                  let b1 = vars["bracket1Limit"],
+                  let b2 = vars["bracket2Limit"],
+                  let r1 = vars["rate1"],
+                  let r2 = vars["rate2"],
+                  let r3 = vars["rate3"] else { return nil }
+            if income <= b1 {
+                return income * r1 / 100
+            }
+            if income <= b2 {
+                return b1 * r1 / 100 + (income - b1) * r2 / 100
+            }
+            return b1 * r1 / 100 + (b2 - b1) * r2 / 100 + (income - b2) * r3 / 100
+        },
         "paycheckNet": { vars in
             guard let gross = vars["grossPay"],
                   let ficaRate = vars["ficaRate"],

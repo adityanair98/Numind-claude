@@ -49,6 +49,8 @@ First Monday of each quarter:
 
 Per-topic canonical authority. Every regulated claim in the curriculum cites one of these. Update the year and URL each time you verify.
 
+> **See also**: [`regulatory-constants.md`](./regulatory-constants.md) for the per-number registry — every year-bound dollar threshold / rate / cap currently referenced in the curriculum, with current value, lesson IDs that reference it, and the next-refresh date.
+
 | Topic | Authority | Canonical URL | Updates |
 |---|---|---|---|
 | Federal income tax brackets | IRS Rev Proc (annual) | https://www.irs.gov/forms-pubs/about-revenue-procedures | Annually each Oct/Nov for next year |
