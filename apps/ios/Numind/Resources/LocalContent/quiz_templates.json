@@ -15186,5 +15186,440 @@
       "Refi wins \u2014 federal protections aren't worth anything"
     ],
     "correctConceptChoice": "PSLF wins \u2014 potential $40k forgiveness vastly exceeds $5k interest savings even when discounted for uncertainty"
+  },
+  {
+    "id": "rsu_gross_value_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "promptTemplate": "Your RSU grant vests {{sharesVested}} shares this quarter. Current share price is ${{sharePrice}}. What gross income is added to your W-2 from this vest?",
+    "variableRules": [
+      {"name": "sharesVested", "options": [50, 100, 150, 200, 250, 500]},
+      {"name": "sharePrice", "options": [20, 30, 50, 75, 100]}
+    ],
+    "answerFormula": "rsuGrossValue",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Gross income added = {{sharesVested}} shares \u00d7 ${{sharePrice}} = ${{answer}}. RSUs are taxed as ordinary income at vest (per IRS Pub 525) at THAT day's share price \u2014 not at the original grant price."
+  },
+  {
+    "id": "rsu_net_after_tax_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You vest {{sharesVested}} shares at ${{sharePrice}}. Your combined marginal tax rate (federal + state + FICA Medicare) is {{marginalRate}}%. Net cash equivalent after tax?",
+    "variableRules": [
+      {"name": "sharesVested", "options": [100, 200, 250, 500]},
+      {"name": "sharePrice", "options": [40, 50, 75, 100]},
+      {"name": "marginalRate", "options": [29, 33, 37]}
+    ],
+    "answerFormula": "rsuNetValue",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Gross = {{sharesVested}} \u00d7 ${{sharePrice}}. Net = gross \u00d7 (1 \u2212 {{marginalRate}}%) = ${{answer}}. The IRS treats the vest as ordinary W-2 income (per IRS Pub 525) \u2014 same rate as your salary."
+  },
+  {
+    "id": "rsu_underwithholding_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "Your employer withholds RSU taxes at the IRS supplemental rate of 22%. You're actually in the {{marginalRate}}% combined marginal bracket. On an RSU vest worth ${{vestValue}}, how much extra tax will you owe at filing?",
+    "variableRules": [
+      {"name": "vestValue", "options": [10000, 15000, 20000, 25000, 30000]},
+      {"name": "marginalRate", "options": [32, 35, 37]}
+    ],
+    "answerFormula": "rsuUnderwithholding",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Extra owed = vest \u00d7 (your rate \u2212 22%) = ${{vestValue}} \u00d7 ({{marginalRate}}% \u2212 22%) = ${{answer}}. The IRS supplemental withholding rate of 22% (per IRS Pub 15) is too low for high earners. Set aside the gap or you'll owe at filing."
+  },
+  {
+    "id": "rsu_4yr_vest_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "promptTemplate": "You receive an RSU grant of {{totalShares}} shares with a standard 4-year vest (25% per year, after a 1-year cliff). The stock is currently ${{sharePrice}}. What's the value of YEAR-1 vest at today's price?",
+    "variableRules": [
+      {"name": "totalShares", "options": [400, 800, 1000, 1200, 1600, 2000]},
+      {"name": "sharePrice", "options": [30, 50, 75, 100]}
+    ],
+    "answerFormula": "rsuYearOneVestValue",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Year-1 vest = 25% of {{totalShares}} = (total \u00f7 4) shares \u00d7 ${{sharePrice}} = ${{answer}}. Standard tech-industry vest schedule: 1-year cliff, then 25% per year (or quarterly equivalents). Each tranche is taxed at THAT date's share price."
+  },
+  {
+    "id": "concept_rsu_when_taxed_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "When are RSUs taxed?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "RSUs are taxed AT VEST as ordinary income on the share price that day (per IRS Pub 525). When you later SELL, only the gain (or loss) above the vest-date price is a capital event. People often confuse this with stock options (ISOs / NSOs), which have different rules. Selling RSUs immediately at vest locks in the value at zero capital-gains exposure.",
+    "conceptChoices": [
+      "At vest, as ordinary income at the current share price",
+      "At grant, when the RSU agreement is signed",
+      "At sale only, as a capital gain",
+      "Half at vest, half at sale"
+    ],
+    "correctConceptChoice": "At vest, as ordinary income at the current share price"
+  },
+  {
+    "id": "espp_basic_gain_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "promptTemplate": "You contribute ${{contribution}} to your ESPP over a 6-month offering period at a {{discount}}% discount (qualified plan under IRC \u00a7 423). If you sell immediately at the same price you bought, how much do you net (gross gain, ignoring tax)?",
+    "variableRules": [
+      {"name": "contribution", "options": [2000, 3000, 5000, 7500, 10000]},
+      {"name": "discount", "options": [10, 15]}
+    ],
+    "answerFormula": "esppGain",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Gain = contribution \u00d7 discount / (100 \u2212 discount). At {{discount}}% discount on ${{contribution}}: gain = ${{answer}}. The math: you pay 85\u00a2 for every $1 of stock, then sell at $1, so the 15\u00a2 on each 85\u00a2 = ~17.6% return."
+  },
+  {
+    "id": "espp_annualized_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Your ESPP has a 6-month offering period with a 15% discount. If you quick-flip on purchase day, what's the approximate ANNUALIZED return on the contribution cycling through (ignoring tax)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "inputMode": "multipleChoice",
+    "explanationTemplate": "Per-period gain = 15 \u00f7 85 = ~17.6%. Annualized: 2 cycles per year \u00d7 17.6% \u2248 35-38% effective annual return (compounding makes it slightly higher). This is why ESPP quick-flips are considered near-guaranteed money. The math is identical whether the stock goes up, down, or sideways during the period \u2014 the discount alone delivers the return.",
+    "conceptChoices": [
+      "~35-38%",
+      "~15%",
+      "~17.6%",
+      "~7-8%"
+    ],
+    "correctConceptChoice": "~35-38%"
+  },
+  {
+    "id": "espp_lookback_value_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "Your ESPP has a {{discount}}% discount with lookback. Stock was ${{startPrice}} at the start of the offering period and ${{endPrice}} at the end. You contributed ${{contribution}}. Purchase price uses LOWER of the two minus {{discount}}%. What's your gross gain if you sell immediately at the end-of-period price?",
+    "variableRules": [
+      {"name": "contribution", "options": [3000, 5000, 7500, 10000]},
+      {"name": "startPrice", "options": [40, 50, 60]},
+      {"name": "endPrice", "options": [50, 70, 80, 100]},
+      {"name": "discount", "options": [15]}
+    ],
+    "answerFormula": "esppLookbackGain",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Purchase price = min(start, end) \u00d7 85%. Shares = contribution \u00f7 purchase price. Sell at end price \u2192 gross gain = shares \u00d7 (end price \u2212 purchase price) = ${{answer}}. When the stock rises during the period, the lookback turns a great deal into a spectacular one \u2014 the discount stacks on top of the run-up."
+  },
+  {
+    "id": "espp_vs_market_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're choosing between contributing $5,000 to a 15%-discount ESPP (quick-flip) vs investing $5,000 in an S&P 500 index fund. Same 6-month window. The ESPP delivers ~17.6% guaranteed; the S&P expected return is ~10%/year (~5% over 6 months). Which is better PURELY on expected return?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "ESPP guaranteed ~17.6% beats S&P expected ~5% by a factor of ~3.5\u00d7, and the ESPP return is contractual (it's the discount math), not market-dependent. Standard advice for anyone with ESPP access: max it AND quick-flip, then invest the proceeds in the index fund. You capture both returns.",
+    "conceptChoices": [
+      "ESPP, by a wide margin (17.6% guaranteed vs ~5% expected)",
+      "Index fund \u2014 diversified, less concentration risk",
+      "They're equivalent \u2014 both around 17%",
+      "Index fund \u2014 long-term tax treatment is better"
+    ],
+    "correctConceptChoice": "ESPP, by a wide margin (17.6% guaranteed vs ~5% expected)"
+  },
+  {
+    "id": "concept_espp_qualifying_disposition_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your ESPP is a qualified plan (IRC \u00a7 423). For a 'qualifying disposition' that gets favorable long-term capital gains treatment on the discount portion, how long must you hold the shares?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Qualifying disposition under IRC \u00a7 423: at least 2 years from GRANT (start of offering period) AND 1 year from PURCHASE. If you sell before either window: 'disqualifying disposition' \u2014 the discount portion is ordinary income, not capital gains. For 6-month offering periods, both windows usually clear at 'hold for ~18 months from purchase.' Worth doing only if you'd hold the stock anyway \u2014 locking in the 17.6% via quick-flip + diversifying often beats waiting for the tax break.",
+    "conceptChoices": [
+      "2 years from grant + 1 year from purchase",
+      "1 year from purchase only",
+      "6 months from purchase",
+      "5 years from grant"
+    ],
+    "correctConceptChoice": "2 years from grant + 1 year from purchase"
+  },
+  {
+    "id": "cc_utilization_basic_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "promptTemplate": "Your credit card has a ${{creditLimit}} limit. Your balance at statement close is ${{balanceAtStatement}}. What utilization % gets reported to the credit bureaus?",
+    "variableRules": [
+      {"name": "balanceAtStatement", "options": [500, 1000, 1500, 2000, 3000, 4000]},
+      {"name": "creditLimit", "options": [5000, 8000, 10000, 15000, 20000]}
+    ],
+    "answerFormula": "cardUtilization",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Utilization = balance \u00f7 limit \u00d7 100 = {{answer}}%. Credit bureaus see the balance as of STATEMENT CLOSE date, not the due date. Goal: keep this under 30% per card, ideally under 10% for the strongest score impact (payment history + utilization are 65% of FICO; per FICO score factor weights)."
+  },
+  {
+    "id": "cc_utilization_target_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "Your credit card has a ${{creditLimit}} limit. To keep reported utilization at or under {{targetPct}}%, what's the maximum balance you can have at statement close?",
+    "variableRules": [
+      {"name": "creditLimit", "options": [5000, 8000, 10000, 15000, 20000, 25000]},
+      {"name": "targetPct", "options": [10, 20, 30]}
+    ],
+    "answerFormula": "utilizationMaxBalance",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Max balance at statement close = limit \u00d7 target% = ${{creditLimit}} \u00d7 {{targetPct}}% = ${{answer}}. Pay anything above this BEFORE the statement closes (not just before the due date) \u2014 that's the trick most people miss. The grace period (per CARD Act / Reg Z) only protects you from interest, not utilization reporting."
+  },
+  {
+    "id": "cc_after_payoff_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your card has a $5,000 limit. You charge $4,500 on Sep 14. Statement closes Sep 15. You pay the $4,500 in full on Oct 10 (the due date). What utilization gets reported to the bureaus for that cycle?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "90%. Credit bureaus see the balance as of the STATEMENT CLOSE (Sep 15), not as of payment (Oct 10). Paying by the due date saves you from interest, but the high-utilization snapshot already got reported. To prevent: pay BEFORE the statement closes, even partially \u2014 push the closing balance below 30% of the limit.",
+    "conceptChoices": [
+      "90% (balance at statement close was $4,500)",
+      "0% (paid in full before due date)",
+      "10% ($500 reported because rest was paid)",
+      "45% (halfway since paid mid-cycle)"
+    ],
+    "correctConceptChoice": "90% (balance at statement close was $4,500)"
+  },
+  {
+    "id": "concept_cc_statement_vs_due_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which date determines the credit utilization that gets reported to the three credit bureaus?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "STATEMENT CLOSE date \u2014 that's when the issuer snapshots your balance and reports it to Experian, Equifax, and TransUnion. The DUE DATE (typically 21-25 days later, per CARD Act / Reg Z grace period) only matters for whether you pay interest. To optimize utilization for FICO: pay BEFORE the statement closes.",
+    "conceptChoices": [
+      "Statement close date \u2014 the day the balance is snapshotted and reported",
+      "Payment due date \u2014 the deadline to avoid interest",
+      "The first of each month, regardless of cycle",
+      "The day you make a purchase"
+    ],
+    "correctConceptChoice": "Statement close date \u2014 the day the balance is snapshotted and reported"
+  },
+  {
+    "id": "cc_multi_card_utilization_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "promptTemplate": "You have two credit cards: Card A with a ${{limitA}} limit and ${{balanceA}} at statement close. Card B with a ${{limitB}} limit and ${{balanceB}} at statement close. What's your AGGREGATE utilization across both cards?",
+    "variableRules": [
+      {"name": "balanceA", "options": [500, 1000, 1500, 2000, 3000]},
+      {"name": "limitA", "options": [5000, 10000]},
+      {"name": "balanceB", "options": [300, 800, 1200, 1500, 2000]},
+      {"name": "limitB", "options": [3000, 5000, 8000]}
+    ],
+    "answerFormula": "multiCardUtilization",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Aggregate = total balance \u00f7 total limit \u00d7 100 = (${{balanceA}} + ${{balanceB}}) \u00f7 (${{limitA}} + ${{limitB}}) \u00d7 100 = {{answer}}%. FICO weighs BOTH per-card AND aggregate utilization. A high per-card utilization (even with low aggregate) still hurts your score. Keep both metrics under 30%."
+  },
+  {
+    "id": "concept_oe_when_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "When does most employer-sponsored open enrollment happen for a typical US worker?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Most employer open enrollment runs late October through mid-November for a plan year starting January 1. (ACA Marketplace open enrollment is similar: Nov 1 through Jan 15, per Healthcare.gov.) Outside the window, you can only change benefits with a qualifying life event (marriage, baby, divorce, job loss).",
+    "conceptChoices": [
+      "Late October through mid-November, for benefits starting January 1",
+      "Any time during the year",
+      "January, after the new year starts",
+      "Aligned with your employment anniversary"
+    ],
+    "correctConceptChoice": "Late October through mid-November, for benefits starting January 1"
+  },
+  {
+    "id": "concept_oe_hdhp_eligibility_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "To make HSA contributions during open enrollment, what's required?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "HSA eligibility requires enrollment in an HSA-qualified HDHP (per IRS Rev Proc 2024-25, 2025 minimum deductibles: $1,650 self / $3,300 family). You CANNOT contribute to an HSA if you're enrolled in a non-HDHP plan, in Medicare, or claimed as a dependent on someone else's tax return. The HDHP / HSA combination is the only way to get the HSA's triple tax advantage.",
+    "conceptChoices": [
+      "Enrolled in an HSA-qualified HDHP plan",
+      "Any health plan offered by your employer",
+      "Enrollment in a Marketplace plan only",
+      "FSA enrollment first, then HSA"
+    ],
+    "correctConceptChoice": "Enrolled in an HSA-qualified HDHP plan"
+  },
+  {
+    "id": "concept_oe_dcfsa_cap_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What's the 2025 contribution cap for a Dependent Care FSA (DCFSA), per family?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$5,000 per household per year (per IRS \u2014 not inflation-indexed, hasn't changed in decades). Used for childcare, after-school care, summer day camp for kids under 13 (or care for a disabled spouse/dependent). At a 22-32% bracket, the DCFSA saves $1,100-1,600/yr in taxes \u2014 often the single highest-ROI open-enrollment election for parents.",
+    "conceptChoices": [
+      "$5,000",
+      "$3,300 (same as Health FSA)",
+      "$10,000",
+      "$2,500"
+    ],
+    "correctConceptChoice": "$5,000"
+  },
+  {
+    "id": "concept_oe_fsa_vs_hsa_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which account is 'use-it-or-lose-it' by default \u2014 meaning unspent funds at year-end are typically forfeited?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "FSAs are use-it-or-lose-it (per IRS). Employers can offer one of two relief mechanisms: a 2.5-month grace period to spend prior-year funds, OR a limited rollover (~$660 for 2025, per IRS Rev Proc 2024-40). HSAs have no use-it-or-lose-it rule \u2014 funds roll over indefinitely and can be invested. This is the single biggest difference between the two.",
+    "conceptChoices": [
+      "FSA \u2014 unspent funds are typically forfeited at year-end",
+      "HSA \u2014 must spend annually",
+      "Both \u2014 they're effectively the same",
+      "Neither \u2014 both roll over indefinitely"
+    ],
+    "correctConceptChoice": "FSA \u2014 unspent funds are typically forfeited at year-end"
+  },
+  {
+    "id": "concept_oe_supplemental_life_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your employer offers free group life insurance equal to 1\u00d7 salary, plus the option to buy supplemental coverage (2-5\u00d7 salary) at pre-tax rates. When does supplemental coverage usually make sense?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Supplemental life via employer makes sense when you have dependents (kids / spouse who relies on your income) AND the supplemental rate is below what individual term-life would cost. For most healthy 30-somethings, individual 20-30 year term-life is cheaper than employer supplemental, but for older workers or those with health issues, employer group coverage often beats individual underwriting. If you have no dependents, skip it.",
+    "conceptChoices": [
+      "When you have dependents (kids/spouse) and the rate beats individual term-life",
+      "Always \u2014 it's free pre-tax money",
+      "Only after retirement age",
+      "Only if you have less than $50K in savings"
+    ],
+    "correctConceptChoice": "When you have dependents (kids/spouse) and the rate beats individual term-life"
+  },
+  {
+    "id": "concept_three_accounts_caps_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "In 2025, what's the maximum employee elective deferral to a Roth 401(k)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$23,500 for 2025 (per IRS Notice 2024-80). This cap is SHARED with the Traditional 401(k) at the same employer \u2014 you can't max both for $47,000 total. Workers 50+ get an additional $7,500 catch-up. The IRA limit ($7,000) is separate and additive.",
+    "conceptChoices": [
+      "$23,500 \u2014 shared with Traditional 401(k) at the same employer",
+      "$7,000 \u2014 same as the IRA cap",
+      "$30,500 \u2014 combined with the IRA",
+      "$66,000 \u2014 including employer match"
+    ],
+    "correctConceptChoice": "$23,500 \u2014 shared with Traditional 401(k) at the same employer"
+  },
+  {
+    "id": "concept_three_accounts_match_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You contribute 100% to your Roth 401(k). Your employer offers a 50% match up to 6% of salary. Which bucket does the match land in?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Employer matches ALWAYS go into the Traditional (pre-tax) 401(k) bucket, regardless of where your own elective contributions go. SECURE 2.0 allows plans to OFFER a Roth match option starting 2024, but the default + most plans still send the match pre-tax. This means your match grows tax-deferred and is taxed at withdrawal (like a Traditional 401(k)) \u2014 even if your own contributions are Roth.",
+    "conceptChoices": [
+      "Traditional 401(k) (pre-tax) \u2014 taxed at withdrawal",
+      "Roth 401(k) \u2014 matches your election",
+      "A separate 'match' account with its own rules",
+      "Roth IRA \u2014 added to your individual account"
+    ],
+    "correctConceptChoice": "Traditional 401(k) (pre-tax) \u2014 taxed at withdrawal"
+  },
+  {
+    "id": "concept_three_accounts_phaseout_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which of these accounts has an INCOME PHASEOUT that prevents high earners from contributing directly?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Roth IRA only. 2025 phaseout (per IRS Rev Proc 2024-40): $150K\u2013$165K for single, $236K\u2013$246K for MFJ \u2014 direct contributions phase out and stop at the upper bound. Roth 401(k) has NO income phaseout, so high earners excluded from Roth IRA can still get Roth tax treatment via their employer plan. Traditional 401(k) and Traditional IRA also have no income cap on contributions (Traditional IRA has a separate phaseout on deductibility, not on contribution).",
+    "conceptChoices": [
+      "Roth IRA only \u2014 $150K single / $236K MFJ start in 2025",
+      "Roth 401(k) and Roth IRA \u2014 both have phaseouts",
+      "Traditional 401(k) \u2014 limits contributions above $200K",
+      "All three Roth-flavored accounts have phaseouts"
+    ],
+    "correctConceptChoice": "Roth IRA only \u2014 $150K single / $236K MFJ start in 2025"
+  },
+  {
+    "id": "concept_three_accounts_total_max_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're under 50, earning $90K single in 2025. What's your MAXIMUM combined annual contribution capacity across a 401(k) (any mix Roth + Traditional) and an IRA (any mix Roth + Traditional)?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$30,500. That's $23,500 elective deferral cap (401k, any Roth/Trad mix) + $7,000 IRA cap (any Roth/Trad mix). The caps are independent \u2014 separate buckets, not combined. At 50+, add $7,500 401(k) catch-up + $1,000 IRA catch-up \u2192 $39,000 max. Employer match is on top of these limits but counts toward the $70,000 (2025) overall \u00a7415 cap (per IRS).",
+    "conceptChoices": [
+      "$30,500 ($23,500 401(k) + $7,000 IRA, independent caps)",
+      "$23,500 \u2014 IRA and 401(k) share the cap",
+      "$7,000 \u2014 IRA only since income is below phaseout",
+      "$66,000 \u2014 including employer match"
+    ],
+    "correctConceptChoice": "$30,500 ($23,500 401(k) + $7,000 IRA, independent caps)"
+  },
+  {
+    "id": "concept_three_accounts_rmd_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which of these accounts has NO required minimum distributions (RMDs) during the original owner's lifetime?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Roth IRA. RMD rules (per IRS / SECURE 2.0): Traditional 401(k) and Traditional IRA have RMDs starting at age 73 (rising to 75 in 2033). Roth 401(k) HAD RMDs at age 73 historically, but SECURE 2.0 eliminated them starting in 2024 \u2014 bringing it in line with Roth IRA. So only Roth accounts (both IRA and 401(k)) are now RMD-free during the owner's lifetime. The pre-2024 rule was a common 'Roth IRA but not Roth 401(k)' distinction \u2014 that's now obsolete.",
+    "conceptChoices": [
+      "Roth IRA (and Roth 401(k) post-SECURE 2.0)",
+      "Traditional IRA only",
+      "Traditional 401(k) only",
+      "All retirement accounts have RMDs at age 73"
+    ],
+    "correctConceptChoice": "Roth IRA (and Roth 401(k) post-SECURE 2.0)"
   }
 ]

@@ -416,6 +416,22 @@
     "lastVerified": "2026-05-26"
   },
   {
+    "id": "salary_rsu_basics",
+    "moduleId": "salary",
+    "title": "RSUs — what's your stock comp actually worth?",
+    "concept": "RSUs (Restricted Stock Units) are stock-based compensation. The math most people get wrong: at vest, the shares hit your account AND are taxed as ordinary income at your marginal rate — your employer typically withholds shares to cover the tax at the IRS supplemental withholding rate of 22% (per IRS Pub 15). That rate is too LOW if you're in the 32-37% bracket (above ~$197K single 2025 taxable income, per IRS Rev Proc 2024-40), which means you owe more at tax time than you might expect. Standard tech-industry vest is 4 years with a 1-year cliff: 25% of the grant vests on your first anniversary, then quarterly or monthly until year 4. Each vest is a taxable event AT THAT YEAR'S share price — not at the grant price.",
+    "shortcut": "Two-step mental on a vest: (1) Gross income added that year = vested shares × current price. (2) Net cash equivalent = vested shares × price × (1 − your marginal rate). For most tech workers in a combined ~32-35% bracket (federal 24% + state 5-13% + FICA Medicare 1.45%): every $10K of RSU vest nets ~$6.5-7K. The 22% IRS supplemental withholding can leave you owing 10-15% more at tax time — set aside the gap.",
+    "example": "Alex receives a 4-year RSU grant of 1,000 shares (25% / year), at a grant-date share price of $40.\n\nYear 1 vest (250 shares):\n  Stock price now: $50 (up 25%)\n  Gross income added: 250 × $50 = $12,500\n  Marginal rate (24% fed + 5% state ≈ 29% total): tax owed = $3,625\n  Net cash equivalent: $12,500 − $3,625 = $8,875\n\nYear 2 vest (250 shares):\n  Stock price now: $60\n  Gross: 250 × $60 = $15,000 added to W-2\n  Each vest is taxed at THAT year's price, not the grant price.\n\nUnderwithholding trap:\n  Employer withheld 22% of $12,500 = $2,750\n  Actual tax owed at marginal rate: $3,625\n  Gap owed at tax time: $875",
+    "quizTemplateIds": [
+      "rsu_gross_value_d1",
+      "rsu_net_after_tax_d2",
+      "rsu_underwithholding_d2",
+      "rsu_4yr_vest_d2",
+      "concept_rsu_when_taxed_d2"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
     "id": "rule_of_72",
     "moduleId": "investing",
     "title": "The Rule of 72 \u2014 when does it double?",
@@ -496,6 +512,22 @@
     "lastVerified": "2026-05-26"
   },
   {
+    "id": "concept_investing_three_accounts",
+    "moduleId": "investing",
+    "title": "Roth IRA vs Roth 401(k) vs Traditional 401(k) — same word, different account",
+    "concept": "Three retirement accounts whose overlapping names confuse most adults. (1) **Roth IRA** — INDIVIDUAL account you open at a brokerage. 2025 cap is $7,000/yr ($8,000 if 50+) per IRS Rev Proc 2024-40, COMBINED with any Traditional IRA contributions. Income phaseout above $150K single / $236K MFJ (2025) for direct contribution. Tax-free withdrawals after 59½ + 5-year rule. NO required minimum distributions (RMDs) during the owner's lifetime. (2) **Roth 401(k)** — EMPLOYER-SPONSORED plan, post-tax contributions. 2025 elective deferral cap is $23,500/yr (shared with the Traditional 401(k) bucket at the same employer). NO income phaseout — high earners excluded from Roth IRA can still use Roth 401(k). Employer match ALWAYS goes to the Traditional (pre-tax) 401(k) bucket regardless of where your elective contributions go. RMDs were eliminated in 2024 by SECURE 2.0. (3) **Traditional 401(k)** — same plan, pre-tax contributions, taxed on withdrawal, RMDs at age 73 (per SECURE 2.0). The naming trap: 'Roth' and 'Traditional' describe TAX TREATMENT; 'IRA' and '401(k)' describe ACCOUNT TYPE. They're independent: you can have a Traditional 401(k) at work AND a Roth IRA on the side, with separate caps.",
+    "shortcut": "Two axes, four account labels. **Tax treatment**: Roth (after-tax in, tax-free out) vs Traditional (pre-tax in, taxed out). **Account type**: IRA (individual, $7,000/yr 2025 cap) vs 401(k) (employer-sponsored, $23,500/yr 2025 cap). Caps are PER account type, not combined across the two: a maxed-out worker contributes up to $30,500/yr total ($23,500 401(k) + $7,000 IRA), regardless of how that splits between Roth and Traditional within each bucket. Employer matches always land in the pre-tax 401(k) bucket — capture them first before any Roth/Traditional optimization.",
+    "example": "Maya is 32, earning $95K single. Her benefits offer both a Roth 401(k) and a Traditional 401(k). She's also opening an IRA on her own.\n\nMaya's max 2025 contribution capacity:\n  401(k) elective deferral: $23,500 (any mix of Roth + Traditional)\n  IRA: $7,000 (any mix of Roth + Traditional)\n  Total max: $30,500\n\nMaya's setup (her own elections):\n  Roth 401(k): $14,000/yr\n  Traditional 401(k): $9,500/yr\n  Total elective deferral: $23,500 ✓\n  Roth IRA at Fidelity: $7,000 (below the $150K single phaseout)\n\nEmployer adds:\n  50% match up to 6% of $95K = $2,850/yr → goes into the TRADITIONAL 401(k) bucket regardless of where Maya's elective contributions go.\n\nMaya's actual total annual retirement contributions: $30,500 (her) + $2,850 (employer) = $33,350.\n\nCommon confusion the lesson prevents:\n  'I can contribute $7K to my Roth IRA AND $7K to my Roth 401(k), right?' → Wrong. The IRA cap is its own thing, but the 401(k) cap ($23,500) is shared across Roth + Traditional within the same employer plan.\n  'My Roth 401(k) match grows tax-free, right?' → No. The match goes pre-tax (Traditional) and is taxed at withdrawal — even if your own contributions are Roth.",
+    "quizTemplateIds": [
+      "concept_three_accounts_caps_d1",
+      "concept_three_accounts_match_d2",
+      "concept_three_accounts_phaseout_d2",
+      "concept_three_accounts_total_max_d2",
+      "concept_three_accounts_rmd_d2"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
     "id": "investing_compound_growth",
     "moduleId": "investing",
     "title": "Compound growth over time",
@@ -540,6 +572,22 @@
       "apy_bank_gap_d2",
       "apy_doubling_time_d2",
       "apy_compounding_effect_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "investing_espp_discount",
+    "moduleId": "investing",
+    "title": "ESPP — is your company stock purchase plan free money?",
+    "concept": "An ESPP (Employee Stock Purchase Plan) under IRC § 423 lets you buy company stock at a discount, typically 15% off (max allowed by code) with a 'lookback' provision that uses the LOWER of the start-of-period or end-of-period share price. Qualified plans cap purchases at $25,000 of fair-market-value stock per calendar year (per IRC § 423). The math that makes ESPP a near-guaranteed win: on a 15% discount, immediate sale locks in 15 / (100 − 15) = 17.6% gain on every dollar contributed. Over a typical 6-month offering period, that's roughly a 38% annualized return on the cash that cycled through. The trap most people miss: holding too much company stock concentrates your risk (your salary AND your savings are tied to one employer's stock price). The standard advice — 'always max ESPP if you can spare the contribution AND will sell immediately' — assumes you'll diversify the proceeds, not accumulate them.",
+    "shortcut": "Immediate-sale guaranteed gain = contribution × discount / (100 − discount). At 15% discount: every $1 in produces ~$0.176 of immediate gain. Annualized for a 6-month period: ~38% APY on the cycling cash. The mental rule: max contribution if you can spare 5-15% of pay AND will quick-flip the shares on purchase day. Federal cap: $25K of FMV/yr (per IRC § 423). Note: short-term capital gains tax applies on the discount portion if you sell within 1 year of purchase (or 2 years from grant).",
+    "example": "Mia contributes $5,000 to her ESPP over a 6-month offering period. 15% discount, lookback feature.\n\nScenario A (flat price, $50 → $50):\n  Purchase price = $50 × 85% = $42.50\n  Shares bought: $5,000 ÷ $42.50 = 117.6 shares\n  Immediate sale at $50: 117.6 × $50 = $5,882\n  Gain: $882 (17.6% on the contribution)\n  Annualized (6 months): ~38%\n\nScenario B (lookback bonanza, $50 → $80):\n  Lookback uses lower price ($50), so purchase still at $42.50\n  Shares: 117.6\n  Immediate sale at $80: 117.6 × $80 = $9,408\n  Gain: $4,408 (88% — combined discount + run-up)\n  The lookback turns a great deal into a spectacular one when the stock runs.\n\nFederal cap reminder: $25K of FMV stock purchases per year (per IRC § 423). Many plans cap participation at 10-15% of salary which keeps most workers under that anyway.",
+    "quizTemplateIds": [
+      "espp_basic_gain_d1",
+      "espp_annualized_d2",
+      "espp_lookback_value_d2",
+      "espp_vs_market_d2",
+      "concept_espp_qualifying_disposition_d2"
     ],
     "lastVerified": "2026-05-26"
   },
@@ -764,6 +812,22 @@
       "balance_transfer_net_d2",
       "balance_transfer_breakeven_d2",
       "balance_transfer_full_payoff_plan_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "debt_cc_statement_cycle",
+    "moduleId": "debt",
+    "title": "Statement close vs due date — why timing your payment matters",
+    "concept": "Every credit card has three dates that matter: (1) **Statement close date** — the day your balance is snapshotted and reported to the three credit bureaus (Experian, Equifax, TransUnion). (2) **Payment due date** — typically 21-25 days after statement close (the federal-law-minimum grace period, per CARD Act of 2009 / Reg Z). (3) **The gap between them** — your grace period, which protects you from interest on new purchases but does NOT change what utilization gets reported. The mistake nearly everyone makes: paying just before the due date doesn't help your reported utilization. Credit bureaus see your balance as of the STATEMENT CLOSE, not as of payment. So if you charge $4,500 on a $5,000-limit card and pay it off on the due date, your card issuer still reports 90% utilization for that month — even though you paid in full. To minimize reported utilization, pay BEFORE the statement closes, not just before the due date.",
+    "shortcut": "Two payment rules. (1) Avoid interest: pay statement balance in full BY the due date — that's what the grace period exists for. (2) Optimize utilization for credit-score purposes: pay BEFORE the statement closes so the bureau sees a low balance. To find your statement close date: log into your card's online portal — it's on the statement page (sometimes called 'cycle close' or 'billing period end'). Utilization % = balance at statement close ÷ credit limit × 100. Goal: under 30% per card, ideally under 10%.",
+    "example": "Jordan has a $5,000-limit credit card. Statement closes the 15th of each month. Payment due the 10th of the following month (~25-day grace).\n\nScenario A (most people):\n  Sep 14: charge $4,500 (vacation, work expense, whatever)\n  Sep 15: statement closes at $4,500 balance\n  → Card issuer reports 90% utilization to bureaus\n  Oct 10: Jordan pays the $4,500 in full ✓ (no interest)\n  → But the credit score already took a hit from the 90% utilization report\n\nScenario B (the optimization):\n  Sep 14: charge $4,500\n  Sep 14 (same day): pay $4,000 of the charge\n  Sep 15: statement closes at $500 balance\n  → Card issuer reports 10% utilization\n  Oct 10: Jordan pays the remaining $500 ✓\n  → No interest AND a clean utilization report\n\nSame total spending, same total paid, same total interest ($0). But B's credit score stays healthy while A's takes a temporary 20-40 point dip from the high utilization report.\n\nA reminder: the grace period (per CARD Act / Reg Z) only protects new purchases. If you carry a prior-month balance, interest accrues from the transaction date.",
+    "quizTemplateIds": [
+      "cc_utilization_basic_d1",
+      "cc_utilization_target_d2",
+      "cc_after_payoff_d2",
+      "concept_cc_statement_vs_due_d2",
+      "cc_multi_card_utilization_d2"
     ],
     "lastVerified": "2026-05-26"
   },
@@ -1308,6 +1372,22 @@
       "concept_disability_cap_d2",
       "concept_disability_elim_period_d3",
       "concept_disability_supplemental_d3"
+    ],
+    "lastVerified": "2026-05-26"
+  },
+  {
+    "id": "concept_insurance_open_enrollment",
+    "moduleId": "insurance",
+    "title": "Open enrollment — the 10-minute checklist",
+    "concept": "Open enrollment is the ~2-week window each fall (typically Oct-Nov for a plan year starting Jan 1) when you pick all your employer benefits for the next 12 months. Miss it and you're locked in until next year unless you have a qualifying life event (marriage, baby, divorce, job loss). The mistake most people make: re-electing the same things from last year on autopilot. The 10-minute checklist that beats most people's outcomes: (1) **Medical plan** — HDHP vs PPO based on EXPECTED use this year (low: HDHP wins on premium; high: PPO wins on OOP). (2) **HSA or FSA** — HSA only if HDHP enrolled, $4,300 self / $8,550 family 2025 cap (per IRS Rev Proc 2024-25); FSA $3,300/yr 2025 cap (per IRS), use-it-or-lose-it. (3) **Dependent Care FSA** — $5,000/yr cap (per IRS, not inflation-indexed), pre-tax for daycare / aftercare. (4) **Commuter benefits** — $315/mo each for transit + parking (2025, per IRS), pre-tax. (5) **Life insurance** — most employers give 1× salary free; supplemental usually 2-5× pre-tax. (6) **Disability** — confirm short-term and long-term coverage; check 'own-occupation' vs 'any-occupation' definitions. (7) **401(k) contribution rate** — open enrollment is also a good moment to bump.",
+    "shortcut": "Four-stage rule: **estimate your medical year** (low / medium / high use) → **pick HDHP or PPO** accordingly → **fund the right account** (HSA with HDHP, or FSA with PPO) → **review supplemental** (DCFSA if you have kids, commuter if you commute, supplemental life only if you actually have dependents). Skip: most accident / hospital-indemnity / cancer-only / legal / identity-theft add-ons sold during open enrollment — they're usually negative expected value. Confirm: your 401(k) rate is at LEAST the employer match cap.",
+    "example": "Decision flow for a typical 30-something:\n\nSingle, healthy, no kids, low medical use:\n  Medical: HDHP (lowest premium, low OOP risk)\n  HSA: max out ($4,300 self, 2025) — triple tax advantage\n  FSA: skip (HDHPs and Health FSAs don't combine; limited-purpose FSA allowed)\n  DCFSA: skip (no dependents)\n  Commuter: yes if commuting\n  Supplemental life: skip (no dependents)\n  Supplemental disability: maybe (cheap pre-tax via employer)\n  Estimated annual tax saving: ~$1,200-1,800 from HSA alone at 22-24% bracket\n\nMarried with infant in daycare:\n  Medical: PPO (kids = high medical-use risk)\n  HSA: not available (PPO usually not HSA-eligible)\n  FSA: $3,300 (2025) for predictable medical / dental / vision\n  DCFSA: $5,000 (2025) for daycare — typically the highest-ROI election\n  Commuter: yes\n  Supplemental life: 2-5× salary (dependent income replacement)\n  Estimated annual tax saving: ~$1,500-2,200 (FSA + DCFSA + commuter combined)\n\nThe 10-minute pass beats 90% of 'I just re-elected last year's plan' outcomes — most people leave $500-1,500/yr of tax savings on the table by skipping the DCFSA or commuter election.",
+    "quizTemplateIds": [
+      "concept_oe_when_d1",
+      "concept_oe_hdhp_eligibility_d2",
+      "concept_oe_dcfsa_cap_d2",
+      "concept_oe_fsa_vs_hsa_d2",
+      "concept_oe_supplemental_life_d2"
     ],
     "lastVerified": "2026-05-26"
   },

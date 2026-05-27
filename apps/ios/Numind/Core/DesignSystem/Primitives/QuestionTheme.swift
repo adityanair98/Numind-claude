@@ -204,7 +204,11 @@ enum QuestionTheme {
              // 401(k) paycheck impact (Phase 2 Batch 2c — new lesson)
              "k401_tax_saved_d1", "k401_net_cost_d1",
              "k401_net_cost_high_bracket_d2", "k401_compare_rates_d2",
-             "k401_with_match_scenario_d3":
+             "k401_with_match_scenario_d3",
+             // RSUs (Phase 3 Batch 3b — new lesson)
+             "rsu_gross_value_d1", "rsu_net_after_tax_d2",
+             "rsu_underwithholding_d2", "rsu_4yr_vest_d2",
+             "concept_rsu_when_taxed_d2":
             return .paycheck
 
         // ── Investing & Growth ───────────────────────────────────────────────────
@@ -251,7 +255,15 @@ enum QuestionTheme {
              // Roth decision (Phase 2 Batch 2b: split out of Roth basics)
              "concept_roth_young_default_d1", "concept_roth_traditional_peak_d1",
              "concept_roth_phaseout_d2", "concept_roth_backdoor_d2",
-             "concept_roth_unsure_split_d3":
+             "concept_roth_unsure_split_d3",
+             // ESPP (Phase 3 Batch 3b — new lesson)
+             "espp_basic_gain_d1", "espp_annualized_d2",
+             "espp_lookback_value_d2", "espp_vs_market_d2",
+             "concept_espp_qualifying_disposition_d2",
+             // Three retirement accounts (Phase 3 Batch 3b — new lesson)
+             "concept_three_accounts_caps_d1", "concept_three_accounts_match_d2",
+             "concept_three_accounts_phaseout_d2", "concept_three_accounts_total_max_d2",
+             "concept_three_accounts_rmd_d2":
             return .investing
 
         // ── Debt & Loans ─────────────────────────────────────────────────────────
@@ -293,7 +305,11 @@ enum QuestionTheme {
              // Balance transfer (Phase 2 Batch 2c — new numerical lesson)
              "balance_transfer_fee_d1", "balance_transfer_interest_saved_d1",
              "balance_transfer_net_d2", "balance_transfer_breakeven_d2",
-             "balance_transfer_full_payoff_plan_d3":
+             "balance_transfer_full_payoff_plan_d3",
+             // CC statement cycle (Phase 3 Batch 3b — new lesson)
+             "cc_utilization_basic_d1", "cc_utilization_target_d2",
+             "cc_after_payoff_d2", "concept_cc_statement_vs_due_d2",
+             "cc_multi_card_utilization_d2":
             return .debt
 
         // ── Housing & Rent ───────────────────────────────────────────────────────
@@ -381,7 +397,11 @@ enum QuestionTheme {
              "concept_insurance_overinsured_d2", "concept_insurance_disability_priority_d3",
              "concept_insurance_warranty_d3",
              "concept_disability_prob_d1", "concept_disability_own_occ_d2", "concept_disability_cap_d2",
-             "concept_disability_elim_period_d3", "concept_disability_supplemental_d3":
+             "concept_disability_elim_period_d3", "concept_disability_supplemental_d3",
+             // Open enrollment (Phase 3 Batch 3b — new lesson)
+             "concept_oe_when_d1", "concept_oe_hdhp_eligibility_d2",
+             "concept_oe_dcfsa_cap_d2", "concept_oe_fsa_vs_hsa_d2",
+             "concept_oe_supplemental_life_d2":
             return .insurance
 
         // ── Car & Big Purchases ─────────────────────────────────────────────────

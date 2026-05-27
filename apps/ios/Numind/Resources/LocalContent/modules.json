@@ -55,7 +55,8 @@
       "salary_total_comp",
       "salary_side_hustle",
       "concept_salary_exempt_status",
-      "salary_401k_paycheck_impact"
+      "salary_401k_paycheck_impact",
+      "salary_rsu_basics"
     ]
   },
   {
@@ -72,9 +73,11 @@
       "investing_401k_match",
       "investing_roth_vs_traditional",
       "investing_roth_decision",
+      "concept_investing_three_accounts",
       "investing_compound_growth",
       "investing_dca",
       "investing_apy_savings",
+      "investing_espp_discount",
       "investing_fund_fees",
       "investing_emergency_fund",
       "investing_rental_yield",
@@ -105,7 +108,8 @@
       "concept_debt_good_vs_bad",
       "concept_ef_vs_debt_priority",
       "debt_cc_payoff_time",
-      "debt_balance_transfer"
+      "debt_balance_transfer",
+      "debt_cc_statement_cycle"
     ]
   },
   {
@@ -166,7 +170,8 @@
       "insurance_life_coverage",
       "insurance_brand_vs_generic",
       "concept_insurance_policy_priority",
-      "concept_insurance_disability"
+      "concept_insurance_disability",
+      "concept_insurance_open_enrollment"
     ]
   },
   {

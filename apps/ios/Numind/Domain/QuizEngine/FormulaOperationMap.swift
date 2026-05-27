@@ -2169,6 +2169,67 @@ enum FormulaOperationMap {
             return [.subtract(b: pr, from: 8.94), .percentOf(pct: 8.94 - pr, amount: b),
                     .divide(a: b * (8.94 - pr) / 100, by: 12)]
 
+        // MARK: - Salary: RSUs (Phase 3 Batch 3b)
+        case "rsuGrossValue":
+            guard let shares = variables["sharesVested"], let price = variables["sharePrice"] else { return [] }
+            return [.multiply(a: shares, by: price)]
+
+        case "rsuNetValue":
+            guard let shares = variables["sharesVested"],
+                  let price = variables["sharePrice"],
+                  let rate = variables["marginalRate"] else { return [] }
+            let gross = shares * price
+            return [.multiply(a: shares, by: price),
+                    .percentOf(pct: rate, amount: gross),
+                    .subtract(b: gross * rate / 100, from: gross)]
+
+        case "rsuUnderwithholding":
+            guard let value = variables["vestValue"], let rate = variables["marginalRate"] else { return [] }
+            return [.subtract(b: 22, from: rate),
+                    .percentOf(pct: rate - 22, amount: value)]
+
+        case "rsuYearOneVestValue":
+            guard let total = variables["totalShares"], let price = variables["sharePrice"] else { return [] }
+            return [.divide(a: total, by: 4),
+                    .multiply(a: total / 4, by: price)]
+
+        // MARK: - Investing: ESPP (Phase 3 Batch 3b)
+        case "esppGain":
+            guard let contribution = variables["contribution"], let discount = variables["discount"], discount < 100 else { return [] }
+            return [.subtract(b: discount, from: 100),
+                    .divide(a: contribution * discount, by: 100 - discount)]
+
+        case "esppLookbackGain":
+            guard let contribution = variables["contribution"],
+                  let startPrice = variables["startPrice"],
+                  let endPrice = variables["endPrice"],
+                  let discount = variables["discount"] else { return [] }
+            let lookback = min(startPrice, endPrice)
+            let purchase = lookback * (1 - discount / 100)
+            guard purchase > 0 else { return [] }
+            let shares = contribution / purchase
+            return [.percentOf(pct: discount, amount: lookback),
+                    .divide(a: contribution, by: purchase),
+                    .subtract(b: purchase, from: endPrice),
+                    .multiply(a: shares, by: endPrice - purchase)]
+
+        // MARK: - Debt: Credit-card utilization (Phase 3 Batch 3b)
+        case "cardUtilization":
+            guard let balance = variables["balanceAtStatement"], let limit = variables["creditLimit"], limit > 0 else { return [] }
+            return [.divide(a: balance, by: limit)]
+
+        case "utilizationMaxBalance":
+            guard let limit = variables["creditLimit"], let target = variables["targetPct"] else { return [] }
+            return [.percentOf(pct: target, amount: limit)]
+
+        case "multiCardUtilization":
+            guard let bA = variables["balanceA"], let lA = variables["limitA"],
+                  let bB = variables["balanceB"], let lB = variables["limitB"],
+                  (lA + lB) > 0 else { return [] }
+            return [.add(a: bA, b: bB),
+                    .add(a: lA, b: lB),
+                    .divide(a: bA + bB, by: lA + lB)]
+
         default:
             return []
         }

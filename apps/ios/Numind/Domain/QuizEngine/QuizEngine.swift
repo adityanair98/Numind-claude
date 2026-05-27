@@ -2077,6 +2077,71 @@ struct QuizEngine {
             // 8.94% = Parent PLUS fixed rate, 2025-26 academic year.
             return b * (8.94 - pr) / 100 / 12
         },
+
+        // MARK: - Salary: RSUs (Phase 3 Batch 3b)
+        "rsuGrossValue": { vars in
+            guard let shares = vars["sharesVested"], let price = vars["sharePrice"] else { return nil }
+            return shares * price
+        },
+        "rsuNetValue": { vars in
+            // Net cash equivalent after combined marginal tax.
+            guard let shares = vars["sharesVested"],
+                  let price = vars["sharePrice"],
+                  let rate = vars["marginalRate"] else { return nil }
+            return shares * price * (1 - rate / 100)
+        },
+        "rsuUnderwithholding": { vars in
+            // Gap between IRS supplemental withholding (22%, per IRS Pub 15) and
+            // the worker's actual combined marginal rate.
+            guard let value = vars["vestValue"], let rate = vars["marginalRate"] else { return nil }
+            return value * (rate - 22) / 100
+        },
+        "rsuYearOneVestValue": { vars in
+            // Standard 4-year vest with a 1-year cliff: 25% of total grant in year 1.
+            guard let total = vars["totalShares"], let price = vars["sharePrice"] else { return nil }
+            return (total / 4) * price
+        },
+
+        // MARK: - Investing: ESPP (Phase 3 Batch 3b)
+        "esppGain": { vars in
+            // Immediate-sale gain on a qualified ESPP (IRC § 423) quick-flip.
+            // contribution × discount / (100 − discount)
+            // At 15% discount: gain = contribution × 15/85 ≈ contribution × 0.1765
+            guard let contribution = vars["contribution"], let discount = vars["discount"], discount < 100 else { return nil }
+            return contribution * discount / (100 - discount)
+        },
+        "esppLookbackGain": { vars in
+            // Lookback ESPP: purchase price = lower of (start, end) × (1 − discount/100).
+            // Sell immediately at end price for gross gain.
+            guard let contribution = vars["contribution"],
+                  let startPrice = vars["startPrice"],
+                  let endPrice = vars["endPrice"],
+                  let discount = vars["discount"] else { return nil }
+            let lookbackPrice = min(startPrice, endPrice)
+            let purchasePrice = lookbackPrice * (1 - discount / 100)
+            guard purchasePrice > 0 else { return nil }
+            let shares = contribution / purchasePrice
+            return shares * (endPrice - purchasePrice)
+        },
+
+        // MARK: - Debt: Credit-card utilization (Phase 3 Batch 3b)
+        "cardUtilization": { vars in
+            // Standard FICO utilization: balance at statement close ÷ credit limit.
+            guard let balance = vars["balanceAtStatement"], let limit = vars["creditLimit"], limit > 0 else { return nil }
+            return balance / limit * 100
+        },
+        "utilizationMaxBalance": { vars in
+            // Inverse: given a target utilization, what's the max statement balance?
+            guard let limit = vars["creditLimit"], let target = vars["targetPct"] else { return nil }
+            return limit * target / 100
+        },
+        "multiCardUtilization": { vars in
+            // Aggregate utilization across two cards (sums numerator and denominator).
+            guard let bA = vars["balanceA"], let lA = vars["limitA"],
+                  let bB = vars["balanceB"], let lB = vars["limitB"],
+                  (lA + lB) > 0 else { return nil }
+            return (bA + bB) / (lA + lB) * 100
+        },
     ]
 
     /// Distinguishes the two failure modes when looking up and running a formula
