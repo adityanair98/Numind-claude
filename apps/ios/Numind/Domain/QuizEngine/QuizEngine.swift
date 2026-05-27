@@ -295,8 +295,12 @@ struct QuizEngine {
             return principal * (1 + rate / 100 * years)
         },
         "rule72": { vars in
-            guard let rate = vars["interestRate"], rate > 0 else { return nil }
-            return 72 / rate
+            // Accept any of the common rate-input names so the same formula can
+            // serve "interestRate" (investment-return lessons) and "apy"
+            // (HYSA / savings doubling-time lessons).
+            let rate = vars["interestRate"] ?? vars["apy"] ?? vars["apr"] ?? vars["rate"]
+            guard let r = rate, r > 0 else { return nil }
+            return 72 / r
         },
         "roiPercent": { vars in
             guard let cost = vars["cost"], cost > 0,
@@ -1516,9 +1520,11 @@ struct QuizEngine {
             return abs(apyX - apyY)
         },
         "annualInterestViaApy": { vars in
-            guard let bal = vars["balance"], let apr = vars["apr"] else { return nil }
-            let apy = pow(1 + apr / 100 / 12, 12) - 1
-            return bal * apy
+            // Templates pass APY directly (it's the rate the user sees on a HYSA tile).
+            // Annual interest = balance × APY% — same one-step "percent of" the
+            // user learns in the lesson shortcut.
+            guard let bal = vars["balance"], let apy = vars["apy"] else { return nil }
+            return bal * apy / 100
         },
 
         // MARK: - Debt: BNPL

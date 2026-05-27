@@ -291,7 +291,10 @@ enum FormulaOperationMap {
                     .add(a: principal, b: totalInterest)]
 
         case "rule72":
-            guard let rate = variables["interestRate"], rate > 0 else { return [] }
+            // Mirror the formula's permissive rate-input handling so the
+            // difficulty op-chain stays accurate for both investing and HYSA uses.
+            let raw = variables["interestRate"] ?? variables["apy"] ?? variables["apr"] ?? variables["rate"]
+            guard let rate = raw, rate > 0 else { return [] }
             return [.divide(a: 72, by: rate)]
 
         case "roiPercent":
@@ -1598,8 +1601,10 @@ enum FormulaOperationMap {
             return [.divide(a: aprX, by: 12), .subtract(b: min(aprX, apyY), from: max(aprX, apyY))]
 
         case "annualInterestViaApy":
-            guard let bal = variables["balance"], let apr = variables["apr"] else { return [] }
-            return [.divide(a: apr, by: 12), .percentOf(pct: apr, amount: bal)]
+            // Templates pass APY directly; mental math is a single "percent of"
+            // step (e.g. 4.5% of $10,000), not a per-period compounding chain.
+            guard let bal = variables["balance"], let apy = variables["apy"] else { return [] }
+            return [.percentOf(pct: apy, amount: bal)]
 
         // MARK: - BNPL
         case "bnplTotal":
