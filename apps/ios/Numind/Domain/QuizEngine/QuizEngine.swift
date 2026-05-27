@@ -64,8 +64,14 @@ struct QuizEngine {
         guard let formula = template.answerFormula else {
             fatalError("QuizEngine: template \(template.id) has neither answerFormula nor conceptChoices")
         }
-        guard let correctRaw = compute(formula: formula, variables: variables) else {
-            fatalError("QuizEngine: unknown formula '\(formula)'")
+        let correctRaw: Double
+        switch compute(formula: formula, variables: variables) {
+        case .ok(let value):
+            correctRaw = value
+        case .formulaNotRegistered:
+            fatalError("QuizEngine: unknown formula '\(formula)' — not in registry. Template '\(template.id)' references a formula key that doesn't exist. Check for a typo in the template JSON.")
+        case .formulaReturnedNil:
+            fatalError("QuizEngine: formula '\(formula)' returned nil for variables \(variables.keys.sorted()) — likely a missing or mismatched variable name. Template '\(template.id)' did not supply a variable the formula requires (or named it differently). Check the formula's `guard let` clauses against the template's variableRules.")
         }
         let correctValue = correctRaw.rounded2dp
 
@@ -2053,8 +2059,20 @@ struct QuizEngine {
         },
     ]
 
-    private static func compute(formula: String, variables: [String: Double]) -> Double? {
-        formulas[formula]?(variables)
+    /// Distinguishes the two failure modes when looking up and running a formula
+    /// from the registry. A missing key is a developer error (typo in JSON);
+    /// a nil return from a registered formula is a data error (template variable
+    /// names don't match what the formula expects).
+    enum FormulaResult: Equatable {
+        case ok(Double)
+        case formulaNotRegistered
+        case formulaReturnedNil
+    }
+
+    static func compute(formula: String, variables: [String: Double]) -> FormulaResult {
+        guard let fn = formulas[formula] else { return .formulaNotRegistered }
+        guard let value = fn(variables) else { return .formulaReturnedNil }
+        return .ok(value)
     }
 
     // MARK: - Distractor generation

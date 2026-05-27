@@ -204,4 +204,33 @@ final class QuizEngineTests: XCTestCase {
         let q2 = QuizEngine.generate(from: template, seed: 42)
         XCTAssertEqual(q1.choices.map(\.text), q2.choices.map(\.text))
     }
+
+    // MARK: - Formula dispatch error distinction
+
+    func test_compute_unknownFormula_returnsFormulaNotRegistered() {
+        let result = QuizEngine.compute(
+            formula: "thisFormulaDoesNotExist",
+            variables: ["billAmount": 50, "tipPercent": 18]
+        )
+        XCTAssertEqual(result, .formulaNotRegistered)
+    }
+
+    func test_compute_registeredFormulaWithMissingVariable_returnsFormulaReturnedNil() {
+        // tipAmount requires both billAmount and tipPercent. Passing only one
+        // forces the formula's `guard let` to fail and return nil — the data
+        // error case (variable-name mismatch in a real template).
+        let result = QuizEngine.compute(
+            formula: "tipAmount",
+            variables: ["billAmount": 50]
+        )
+        XCTAssertEqual(result, .formulaReturnedNil)
+    }
+
+    func test_compute_registeredFormulaWithAllVariables_returnsOk() {
+        let result = QuizEngine.compute(
+            formula: "tipAmount",
+            variables: ["billAmount": 50, "tipPercent": 18]
+        )
+        XCTAssertEqual(result, .ok(9))
+    }
 }
