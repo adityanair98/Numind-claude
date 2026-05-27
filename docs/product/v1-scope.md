@@ -27,8 +27,8 @@
 
 ## Content
 - **10 modules**: Smart Shopping, Budgets & Spending, Salary, Investing, Debt, Housing & Rent, Taxes & Paycheck, Insurance & Healthcare, Car & Big Purchases, Student Loans & Education
-- **102 lessons** across all modules. Concept lessons cover financial literacy that isn't reducible to mental math — credit scores, FLSA exemption, IDR landscape, asset allocation, dealer tactics, insurance policy priority, lease clauses, EF-vs-debt priority, etc. Phase 2 audit added 5 topic-gap lessons (house affordability, CC payoff, 401(k) impact, balance transfer, EF-vs-debt), split Roth and APR/APY into 4 lessons total, merged Filing Status into Paycheck Stub, and reframed several lessons from numerical to concept.
-- **509 quiz templates** (391 numerical + 118 concept; ~5 per lesson)
+- **107 lessons** across all modules. Concept lessons cover financial literacy that isn't reducible to mental math — credit scores, FLSA exemption, IDR landscape, asset allocation, dealer tactics, insurance policy priority, lease clauses, EF-vs-debt priority, open enrollment, three-accounts clarification, etc. Phase 2 audit added 5 topic-gap lessons (house affordability, CC payoff, 401(k) impact, balance transfer, EF-vs-debt). Phase 3 audit added 5 more (RSUs, ESPP, CC statement cycle, open enrollment, Roth-IRA-vs-Roth-401k-vs-Traditional-401k) and rebuilt the tax-brackets lesson with explicit taxable-income concept + real 2025 IRS brackets.
+- **535 quiz templates** (400 numerical + 135 concept; ~5 per lesson)
 - **27 badges** across 7 categories
 
 ## Quiz System
@@ -94,7 +94,7 @@ A streak is the number of consecutive calendar days on which the user completed 
 ## Website (Built)
 Marketing site at `apps/web/` for SEO acquisition → App Store downloads.
 
-- **19 calculator tools**: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan, BNPL, Membership Break-even, Lease vs Buy, FSA, Life Insurance, House Affordability, Credit Card Payoff, 401(k) Impact, HYSA, Balance Transfer (Phase 2 added the last 5)
+- **19 calculator tools**: Paycheck, Salary Converter, Rent Affordability, Investment, Discount, Loan, Insurance, Car, Student Loan, BNPL, Membership Break-even, Lease vs Buy, FSA, Life Insurance, House Affordability, Credit Card Payoff, 401(k) Impact, HYSA, Balance Transfer (Phase 2 added the last 5; Phase 3 added the iOS RSU/ESPP/statement-cycle/open-enrollment/three-accounts lessons but did not add new web calculators)
 - **51 state paycheck pages**: programmatic SEO (`/tools/paycheck-calculator/[state]`)
 - **40 salary amount pages**: programmatic SEO (`/tools/salary-calculator/[slug]`)
 - **Landing page**: 3D hero, animated counters, scroll-reveal sections, module showcase, app CTA

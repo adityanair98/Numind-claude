@@ -36,22 +36,32 @@ reading the lesson can tell at a glance whether the number is still current.
 
 | Constant | 2025 value | Source | Lessons referencing | Next refresh |
 |---|---|---|---|---|
-| IRA contribution limit | $7,000 (under 50) / $8,000 (50+) | IRS Rev Proc 2024-25 | `investing_roth_vs_traditional`, `investing_roth_decision` | Nov 2025 for 2026 |
-| 401(k) elective deferral | $23,500 | IRS | (referenced indirectly in `investing_401k_match`, `salary_401k_paycheck_impact`) | Nov 2025 for 2026 |
-| Roth IRA phaseout (single) | $150K start, $165K full phaseout | IRS Rev Proc 2024-40 | `investing_roth_vs_traditional`, `investing_roth_decision` | Nov 2025 for 2026 |
-| Roth IRA phaseout (MFJ) | $236K start, $246K full phaseout | IRS Rev Proc 2024-40 | `investing_roth_vs_traditional`, `investing_roth_decision` | Nov 2025 for 2026 |
-| RMD start age | 73 (per SECURE 2.0) | IRC § 401(a)(9) | `investing_roth_decision` | Legislation-bound; SECURE 2.0 raises to 75 starting 2033 |
+| IRA contribution limit | $7,000 (under 50) / $8,000 (50+) | IRS Rev Proc 2024-25 | `investing_roth_vs_traditional`, `investing_roth_decision`, `concept_investing_three_accounts` | Nov 2025 for 2026 |
+| 401(k) elective deferral | $23,500 | IRS Notice 2024-80 | `investing_401k_match` (indirect), `salary_401k_paycheck_impact` (indirect), `concept_investing_three_accounts` | Nov 2025 for 2026 |
+| 401(k) catch-up (50+) | $7,500 | IRS Notice 2024-80 | `concept_investing_three_accounts` | Nov 2025 for 2026 |
+| Overall §415 contribution cap (employee + employer) | $70,000 | IRS Notice 2024-80 | `concept_investing_three_accounts` | Nov 2025 for 2026 |
+| Roth IRA phaseout (single) | $150K start, $165K full phaseout | IRS Rev Proc 2024-40 | `investing_roth_vs_traditional`, `investing_roth_decision`, `concept_investing_three_accounts` | Nov 2025 for 2026 |
+| Roth IRA phaseout (MFJ) | $236K start, $246K full phaseout | IRS Rev Proc 2024-40 | `investing_roth_vs_traditional`, `investing_roth_decision`, `concept_investing_three_accounts` | Nov 2025 for 2026 |
+| RMD start age (Traditional) | 73 (per SECURE 2.0) | IRC § 401(a)(9) | `investing_roth_decision`, `concept_investing_three_accounts` | Legislation-bound; SECURE 2.0 raises to 75 starting 2033 |
+| Roth 401(k) RMD removal | Eliminated in 2024 (per SECURE 2.0) | IRC § 401(a)(9)(H) | `concept_investing_three_accounts` | Legislative |
+| IRS supplemental withholding rate | 22% (≤$1M cumulative supplemental wages); 37% above | IRS Pub 15 | `salary_rsu_basics` | Annually via IRS Pub 15 |
+| ESPP §423 annual purchase cap | $25,000 of fair-market-value stock | IRC § 423(b)(8) | `investing_espp_discount` | NOT inflation-indexed; legislative only |
+| Maximum ESPP discount | 15% | IRC § 423(b)(6) | `investing_espp_discount` | NOT indexed; legislative only |
+| ESPP qualifying disposition windows | 2 years from grant + 1 year from purchase | IRC § 423(a) | `investing_espp_discount` | NOT indexed; legislative only |
+| CARD Act grace period minimum | 21 days between statement close and due date | CARD Act of 2009 / Reg Z (12 CFR § 1026.5) | `debt_cc_statement_cycle` | NOT indexed; rule is statutory |
 
-### HSA / FSA (annual, every May/Oct announcements respectively)
+### HSA / FSA / DCFSA / commuter (annual, various announcement dates)
 
 | Constant | 2025 value | Source | Lessons referencing | Next refresh |
 |---|---|---|---|---|
-| HSA limit — self-only | $4,300 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage` | May 2025 for 2026 |
-| HSA limit — family | $8,550 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage` | May 2025 for 2026 |
-| HDHP min deductible (HSA eligibility) — self | $1,650 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage` | May 2025 for 2026 |
+| HSA limit — self-only | $4,300 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage`, `concept_insurance_open_enrollment` | May 2025 for 2026 |
+| HSA limit — family | $8,550 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage`, `concept_insurance_open_enrollment` | May 2025 for 2026 |
+| HDHP min deductible (HSA eligibility) — self | $1,650 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage`, `concept_insurance_open_enrollment` | May 2025 for 2026 |
 | HDHP min deductible — family | $3,300 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage` | May 2025 for 2026 |
-| Health FSA cap | $3,300 | IRS Rev Proc 2024-40 | `insurance_fsa_use_it` | Oct 2025 for 2026 |
-| Health FSA carryover max | $660 | IRS Rev Proc 2024-40 | `insurance_fsa_use_it` | Oct 2025 for 2026 |
+| Health FSA cap | $3,300 | IRS Rev Proc 2024-40 | `insurance_fsa_use_it`, `concept_insurance_open_enrollment` | Oct 2025 for 2026 |
+| Health FSA carryover max | $660 | IRS Rev Proc 2024-40 | `insurance_fsa_use_it`, `concept_insurance_open_enrollment` | Oct 2025 for 2026 |
+| Dependent Care FSA cap (per household) | $5,000 | IRS § 129(a)(2)(A) | `concept_insurance_open_enrollment` | NOT inflation-indexed; legislative only — has been $5,000 for decades |
+| Commuter (transit + parking) cap | $315/mo each (2025) | IRS § 132(f)(2) | `concept_insurance_open_enrollment` | Annually each Oct/Nov |
 
 ### Student loans (annual, every June for rates; per-tier-of-degree fixed)
 

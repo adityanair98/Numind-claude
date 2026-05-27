@@ -69,7 +69,7 @@ They may feel slow or rusty when:
 9. **Car & Big Purchases** (car) - monthly vs total cost, loan term delta, down payment savings, 20/4/10 rule, depreciation, TCO, lease vs buy, trade-in vs private sale, dealer tactics, warranties (10 lessons)
 10. **Student Loans & Education** (student_loans) - monthly payment (rule of thumb), total cost, refinance vs PSLF, IDR, PSLF, employer benefit, grace period, Parent PLUS, subsidized vs unsubsidized, federal protections (10 lessons)
 
-**Total: 102 lessons, 509 quiz templates** (391 numerical + 118 concept templates). Phase 2 audit fixes added 5 new topic-gap lessons (house affordability, CC payoff, 401(k) impact, balance transfer, EF-vs-debt priority), split Roth and APR/APY into 4 lessons total, merged Filing Status into Paycheck Stub, and reframed several lessons from numerical to concept. Every lesson now carries a `lastVerified` field per the content-audit-cadence ops doc.
+**Total: 107 lessons, 535 quiz templates** (400 numerical + 135 concept templates). Phase 2 audit added 5 topic-gap lessons (house affordability, CC payoff, 401(k) impact, balance transfer, EF-vs-debt priority). Phase 3 audit added 5 more high-demand lessons (RSUs, ESPP, CC statement cycle, open enrollment, three-accounts clarification), rebuilt taxes_brackets with explicit taxable-income concept + real 2025 IRS brackets, and shipped the per-number `regulatory-constants.md` registry. Roth and APR/APY splits + Filing Status merge from Phase 2 retained. Every lesson now carries a `lastVerified` field per `docs/ops/content-audit-cadence.md`.
 
 ## Core User Loop
 Home / Today
@@ -224,8 +224,8 @@ Currently implemented:
 - Design tokens and theme system
 - Local content model with JSON-based lessons and templates
 - Template-driven quiz engine with 300+ answer formulas
-- All 10 modules with 102 lessons (post-Phase-2 audit)
-- 509 quiz templates (~5 per lesson) with proportional distractor generation
+- All 10 modules with 107 lessons (post-Phase-3 audit)
+- 535 quiz templates (~5 per lesson) with proportional distractor generation
 - Concept template support added (text-MCQ, no formula evaluation) for lessons covering critical financial literacy topics that aren't reducible to mental math
 - Completion-based progression (mastery = gold star, not gate)
 - Checkpoint review quizzes

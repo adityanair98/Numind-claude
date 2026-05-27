@@ -224,10 +224,10 @@ enum QuestionTheme {
              // Phase 3 reworks
              "roi_compare_d3", "roth_growth_value_d3",
              "compound_pct_interest_d2", "compound_early_vs_late_d3", "compound_backwards_d3",
-             // DCA — reframed to concept lesson in Phase 2 (5 new IDs replace the 5 numerical originals)
+             // DCA — Phase 2: concept reframe; Phase 3 Batch 3c: added numerical cash-drag template back in
              "concept_dca_definition_d1", "concept_dca_lump_sum_research_d1",
              "concept_dca_behavioral_d2", "concept_dca_when_use_d2",
-             "concept_dca_vs_timing_d3",
+             "concept_dca_vs_timing_d3", "dca_cash_drag_d2",
              // Fund fees
              "fund_fee_annual_d1", "fund_fee_diff_d2", "fund_fee_compare_d1",
              "fund_fee_decade_d3", "fund_fee_30yr_d3",

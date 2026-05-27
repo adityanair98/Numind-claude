@@ -2124,6 +2124,15 @@ struct QuizEngine {
             return shares * (endPrice - purchasePrice)
         },
 
+        // MARK: - Investing: DCA cash drag (Phase 3 Batch 3c)
+        "dcaCashDrag": { vars in
+            // Cash drag = expected return foregone on un-invested dollars during a
+            // 12-month even-DCA. Average dollar sits in cash for ~6 months, so the
+            // approximation is total × annualReturn ÷ 2.
+            guard let total = vars["totalAmount"], let ret = vars["annualReturn"] else { return nil }
+            return total * ret / 100 / 2
+        },
+
         // MARK: - Debt: Credit-card utilization (Phase 3 Batch 3b)
         "cardUtilization": { vars in
             // Standard FICO utilization: balance at statement close ÷ credit limit.

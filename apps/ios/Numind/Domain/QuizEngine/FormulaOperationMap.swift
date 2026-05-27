@@ -2213,6 +2213,12 @@ enum FormulaOperationMap {
                     .subtract(b: purchase, from: endPrice),
                     .multiply(a: shares, by: endPrice - purchase)]
 
+        // MARK: - Investing: DCA cash drag (Phase 3 Batch 3c)
+        case "dcaCashDrag":
+            guard let total = variables["totalAmount"], let ret = variables["annualReturn"] else { return [] }
+            return [.percentOf(pct: ret, amount: total),
+                    .divide(a: total * ret / 100, by: 2)]
+
         // MARK: - Debt: Credit-card utilization (Phase 3 Batch 3b)
         case "cardUtilization":
             guard let balance = variables["balanceAtStatement"], let limit = variables["creditLimit"], limit > 0 else { return [] }

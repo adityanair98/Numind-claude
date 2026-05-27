@@ -15621,5 +15621,19 @@
       "All retirement accounts have RMDs at age 73"
     ],
     "correctConceptChoice": "Roth IRA (and Roth 401(k) post-SECURE 2.0)"
+  },
+  {
+    "id": "dca_cash_drag_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "promptTemplate": "You have ${{totalAmount}} to invest. Instead of lump-summing, you DCA evenly over 12 months. Expected market return during that year is {{annualReturn}}%. Approximate cash drag — the foregone return on the dollars still sitting in cash on average?",
+    "variableRules": [
+      {"name": "totalAmount", "options": [6000, 12000, 24000, 36000, 60000]},
+      {"name": "annualReturn", "options": [6, 8, 10]}
+    ],
+    "answerFormula": "dcaCashDrag",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Cash drag ≈ total × annual return ÷ 2 = ${{totalAmount}} × {{annualReturn}}% ÷ 2 = ${{answer}}. Why ÷ 2? When you DCA evenly over 12 months, the dollars going in last month earn ~1 month of return; the first-month dollars earn ~12 months. On average, contributions earn ~half a year of return — vs lump-sum where every dollar earns the full year. The difference is the math premium of lump-sum. Behavioral DCA premium (guaranteed deployment) usually outweighs this in practice."
   }
 ]
