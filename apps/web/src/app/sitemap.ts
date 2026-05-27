@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { calculatorRegistry } from "@/lib/content/calculators";
+import { packRegistry } from "@/lib/content/packs";
 import { states } from "@/data/states";
 import { salaryAmounts } from "@/data/salary-amounts";
 import { ccBalances } from "@/data/cc-balances";
@@ -23,6 +24,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/paths`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
     },
     {
       url: `${BASE_URL}/about-numind`,
@@ -112,6 +119,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // Life-event pack landing pages (8 pages)
+  const packPages: MetadataRoute.Sitemap = packRegistry.map((pack) => ({
+    url: `${BASE_URL}/paths/${pack.id}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
   return [
     ...staticPages,
     ...calculatorPages,
@@ -121,5 +136,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...k401StatePages,
     ...ccBalancePages,
     ...hysaBalancePages,
+    ...packPages,
   ];
 }

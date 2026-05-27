@@ -12,4 +12,13 @@ protocol ContentRepository {
     func lesson(forTemplateId: String) -> Lesson?
     /// Returns the module that owns the lesson containing `templateId`, or nil.
     func module(forTemplateId: String) -> Module?
+
+    // MARK: - Packs (life-event sequences)
+    /// All packs in display order (matches packs.json file order).
+    func allPacks() -> [Pack]
+    /// Look up a pack by id (e.g. "first_paycheck").
+    func pack(id: String) -> Pack?
+    /// All packs that include the given lesson — useful for showing
+    /// "this lesson appears in N paths" cross-links.
+    func packs(containingLesson lessonId: String) -> [Pack]
 }

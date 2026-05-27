@@ -10,6 +10,7 @@ const toolLinks = [
 ];
 
 const companyLinks = [
+  { label: "Life-Event Paths", href: "/paths" },
   { label: "About Numind", href: "/about-numind" },
   { label: "Calculator Methodology", href: "/methodology" },
   { label: "Editorial Standards", href: "/editorial-standards" },

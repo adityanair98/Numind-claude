@@ -58,6 +58,8 @@
 		565047704AF7EC130CABC068 /* ConfidenceRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCBB1AF45DB0883E8D454A /* ConfidenceRatingView.swift */; };
 		584B85F183CFFBFC201170D0 /* DifficultyScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102958D4E3AFA3CE9EE37FD4 /* DifficultyScorer.swift */; };
 		5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A7139387185959BC6413FC /* Lesson.swift */; };
+		C3D5E1A8F291B36ABC5D7E10 /* Pack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D5E1A8F291B36ABC5D7E11 /* Pack.swift */; };
+		D4E6F2B9F3A2C47BCD6E8F11 /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = D4E6F2B9F3A2C47BCD6E8F12 /* packs.json */; };
 		58972D81669005D6C506FD13 /* DailyChallengeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC02588669C25EEC373E8D3C /* DailyChallengeEngine.swift */; };
 		58F088554AE41474740F7800 /* LearnViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8490760BAE7C9FD71F012 /* LearnViewModel.swift */; };
 		5B32F6F3A8A042CE6865345A /* NotificationPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CF7E92BF5491B03E6F8ADB /* NotificationPermissionView.swift */; };
@@ -277,6 +279,8 @@
 		B714AAF0E9CC3ECAC390BFE5 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		B76C2BD234EFBD50AC49D59D /* ConfettiBurst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiBurst.swift; sourceTree = "<group>"; };
 		B9A7139387185959BC6413FC /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
+		C3D5E1A8F291B36ABC5D7E11 /* Pack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pack.swift; sourceTree = "<group>"; };
+		D4E6F2B9F3A2C47BCD6E8F12 /* packs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = packs.json; sourceTree = "<group>"; };
 		BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindApp.swift; sourceTree = "<group>"; };
 		BB83070B8213CDD48CB52530 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BCA2B7233D30593180DE8E3F /* BlitzSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlitzSummaryView.swift; sourceTree = "<group>"; };
@@ -484,6 +488,7 @@
 				287275A57DE30AA3C1234BFB /* lessons.json */,
 				53291327E813B6AFAAFF8834 /* modules.json */,
 				1BD9B2F3BDAC926EC7E3C7CC /* quiz_templates.json */,
+				D4E6F2B9F3A2C47BCD6E8F12 /* packs.json */,
 			);
 			path = LocalContent;
 			sourceTree = "<group>";
@@ -723,6 +728,7 @@
 				6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */,
 				A5EB9C1AB0D5B44747792E8B /* Module.swift */,
 				DD97E63367A0CE1E7DE1EF52 /* ModuleColor.swift */,
+				C3D5E1A8F291B36ABC5D7E11 /* Pack.swift */,
 				912929E50EF5E5526AB94217 /* QuizTemplate.swift */,
 			);
 			path = Models;
@@ -853,6 +859,7 @@
 				F804B6DA0B9EBB0816692FD9 /* lessons.json in Resources */,
 				6104FF691FB7D2DCB8BD4FE5 /* modules.json in Resources */,
 				F019F76F7180D1815BFCAD16 /* quiz_templates.json in Resources */,
+				D4E6F2B9F3A2C47BCD6E8F11 /* packs.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,6 +933,7 @@
 				11B7027F6BE80FD314557ABD /* LearnView.swift in Sources */,
 				58F088554AE41474740F7800 /* LearnViewModel.swift in Sources */,
 				5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */,
+				C3D5E1A8F291B36ABC5D7E10 /* Pack.swift in Sources */,
 				B6095DD0E0F33C3D93010706 /* LessonRecommendationEngine.swift in Sources */,
 				04969645E6CE3F25880D2488 /* LessonView.swift in Sources */,
 				AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */,

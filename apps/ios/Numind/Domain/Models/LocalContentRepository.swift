@@ -4,11 +4,13 @@ final class LocalContentRepository: ContentRepository {
     private let modules: [Module]
     private let lessons: [Lesson]
     private let templates: [QuizTemplate]
+    private let packs: [Pack]
 
     init(bundle: Bundle = .main) {
         modules   = bundle.decodeJSON([Module].self,       from: "modules")
         lessons   = bundle.decodeJSON([Lesson].self,       from: "lessons")
         templates = bundle.decodeJSON([QuizTemplate].self, from: "quiz_templates")
+        packs     = bundle.decodeJSON([Pack].self,         from: "packs")
     }
 
     func allModules() -> [Module] { modules }
@@ -45,6 +47,18 @@ final class LocalContentRepository: ContentRepository {
     func module(forTemplateId templateId: String) -> Module? {
         guard let lesson = lesson(forTemplateId: templateId) else { return nil }
         return module(id: lesson.moduleId)
+    }
+
+    // MARK: - Packs
+
+    func allPacks() -> [Pack] { packs }
+
+    func pack(id: String) -> Pack? {
+        packs.first { $0.id == id }
+    }
+
+    func packs(containingLesson lessonId: String) -> [Pack] {
+        packs.filter { $0.lessonIds.contains(lessonId) }
     }
 }
 
