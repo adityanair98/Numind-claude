@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function MembershipCalculatorPage() {
   return (
     <CalculatorShell
+      slug="membership-calculator"
       name="Membership Break-even Calculator"
       tagline="Find your break-even uses — when DashPass, Costco, Uber One actually start saving you money"
       calculator={<MembershipCalculatorWidget />}

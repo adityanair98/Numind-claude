@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function HouseAffordabilityCalculatorPage() {
   return (
     <CalculatorShell
+      slug="house-affordability-calculator"
       name="House Affordability Calculator"
       tagline="Max purchase price from income, mortgage rate, down payment, taxes, and insurance"
       calculator={<HouseAffordabilityCalculatorWidget />}

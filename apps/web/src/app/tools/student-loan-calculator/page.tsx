@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function StudentLoanCalculatorPage() {
   return (
     <CalculatorShell
+      slug="student-loan-calculator"
       name="Student Loan Calculator"
       tagline="Compare repayment plans and see how much you can save with refinancing or PSLF"
       calculator={<StudentLoanCalculatorWidget />}

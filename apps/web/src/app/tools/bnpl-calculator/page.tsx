@@ -15,12 +15,13 @@ export const metadata: Metadata = buildMetadata({
 export default function BNPLCalculatorPage() {
   return (
     <CalculatorShell
+      slug="bnpl-calculator"
       name="BNPL Calculator"
       tagline="The hidden cost of 'just 4 easy payments' — late fees, surcharges, and stacked-plan debt"
       calculator={<BNPLCalculatorWidget />}
       shortcut={bnplShortcut}
       faqs={bnplFAQs}
-      relatedSlugs={["loan-calculator", "discount-calculator", "membership-calculator"]}
+      relatedSlugs={["credit-card-payoff-calculator", "loan-calculator", "discount-calculator"]}
     />
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, DM_Sans } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { OrgSchema } from "@/components/seo/OrgSchema";
 import "./globals.css";
 
 const inter = Inter({
@@ -45,8 +46,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${dmSans.variable}`}>
+    <html lang="en-US" className={`${inter.variable} ${dmSans.variable}`}>
       <body className="min-h-screen flex flex-col antialiased">
+        {/* Site-wide Organization schema (every page) */}
+        <OrgSchema />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

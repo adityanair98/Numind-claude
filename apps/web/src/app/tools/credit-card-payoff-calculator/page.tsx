@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function CreditCardPayoffCalculatorPage() {
   return (
     <CalculatorShell
+      slug="credit-card-payoff-calculator"
       name="Credit Card Payoff Calculator"
       tagline="How many months until the balance is gone — and how much you pay in interest along the way"
       calculator={<CreditCardPayoffCalculatorWidget />}

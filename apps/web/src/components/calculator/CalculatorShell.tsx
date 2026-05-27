@@ -6,7 +6,12 @@ import { FAQSection, type FAQ } from "@/components/calculator/FAQSection";
 import { AppCTA } from "@/components/calculator/AppCTA";
 import { RelatedTools } from "@/components/calculator/RelatedTools";
 import { StructuredData } from "@/components/seo/StructuredData";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { CalculatorAppSchema } from "@/components/seo/CalculatorAppSchema";
+import { MentalMathHowToSchema } from "@/components/seo/MentalMathHowToSchema";
 import { ScrollReveal } from "@/components/landing/ScrollReveal";
+
+const SITE_BASE_URL = "https://numind.app";
 
 export interface ShortcutContent {
   title: string;
@@ -21,6 +26,8 @@ interface CalculatorShellProps {
   name: string;
   /** One-line value prop under the title */
   tagline: string;
+  /** Calculator slug used in the URL (e.g. "bnpl-calculator"). Used for canonical URL in JSON-LD. */
+  slug: string;
   /** The interactive calculator widget */
   calculator: ReactNode;
   /** Mental math shortcut content */
@@ -36,12 +43,14 @@ interface CalculatorShellProps {
 export function CalculatorShell({
   name,
   tagline,
+  slug,
   calculator,
   shortcut,
   faqs,
   relatedSlugs = [],
   children,
 }: CalculatorShellProps) {
+  const pageUrl = `${SITE_BASE_URL}/tools/${slug}`;
   return (
     <>
       {/* Schema.org FAQPage */}
@@ -59,6 +68,21 @@ export function CalculatorShell({
           })),
         }}
       />
+
+      {/* Schema.org BreadcrumbList — Home > Tools > {Calculator} */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: SITE_BASE_URL },
+          { name: "Tools", url: `${SITE_BASE_URL}/tools` },
+          { name, url: pageUrl },
+        ]}
+      />
+
+      {/* Schema.org WebApplication — calculator-as-app rich card */}
+      <CalculatorAppSchema name={name} description={tagline} url={pageUrl} />
+
+      {/* Schema.org HowTo — mental-math shortcut as a procedure */}
+      <MentalMathHowToSchema name={name} shortcut={shortcut} url={pageUrl} />
 
       {/* Compact header — calculator-first, above the fold */}
       <div className="mx-auto max-w-3xl px-screen pt-8 pb-section">

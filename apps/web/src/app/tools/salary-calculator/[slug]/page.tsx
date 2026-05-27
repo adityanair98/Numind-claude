@@ -106,6 +106,7 @@ export default async function SalaryAmountPage({ params }: Props) {
 
   return (
     <CalculatorShell
+      slug={`salary-calculator/${data.slug}`}
       name={`${data.label} — Salary Breakdown`}
       tagline={answerText}
       calculator={<SalaryCalculatorWidget />}

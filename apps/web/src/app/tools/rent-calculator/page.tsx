@@ -15,12 +15,13 @@ export const metadata: Metadata = buildMetadata({
 export default function RentCalculatorPage() {
   return (
     <CalculatorShell
+      slug="rent-calculator"
       name="Rent Affordability Calculator"
       tagline="Find out how much rent you can comfortably afford on your income"
       calculator={<RentCalculatorWidget />}
       shortcut={rentShortcut}
       faqs={rentFAQs}
-      relatedSlugs={["salary-calculator", "paycheck-calculator", "loan-calculator"]}
+      relatedSlugs={["house-affordability-calculator", "salary-calculator", "paycheck-calculator"]}
     />
   );
 }

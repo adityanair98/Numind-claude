@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function LeaseVsBuyCalculatorPage() {
   return (
     <CalculatorShell
+      slug="lease-vs-buy-calculator"
       name="Lease vs Buy Calculator"
       tagline="See which actually costs more — leasing or buying — over the same period"
       calculator={<LeaseVsBuyCalculatorWidget />}

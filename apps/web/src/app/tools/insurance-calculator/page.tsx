@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function InsuranceCalculatorPage() {
   return (
     <CalculatorShell
+      slug="insurance-calculator"
       name="Insurance Calculator"
       tagline="Compare health plans by their true annual cost — not just the monthly premium"
       calculator={<InsuranceCalculatorWidget />}

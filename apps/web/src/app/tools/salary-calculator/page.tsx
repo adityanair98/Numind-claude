@@ -15,12 +15,13 @@ export const metadata: Metadata = buildMetadata({
 export default function SalaryCalculatorPage() {
   return (
     <CalculatorShell
+      slug="salary-calculator"
       name="Salary Converter"
       tagline="Convert between hourly, weekly, biweekly, monthly, and annual pay instantly"
       calculator={<SalaryCalculatorWidget />}
       shortcut={salaryShortcut}
       faqs={salaryFAQs}
-      relatedSlugs={["paycheck-calculator", "rent-calculator"]}
+      relatedSlugs={["paycheck-calculator", "401k-impact-calculator", "rent-calculator"]}
     />
   );
 }

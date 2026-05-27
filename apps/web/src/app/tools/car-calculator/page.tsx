@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function CarCalculatorPage() {
   return (
     <CalculatorShell
+      slug="car-calculator"
       name="Car Affordability Calculator"
       tagline="See the true cost of buying a car — and whether you can afford it"
       calculator={<CarCalculatorWidget />}

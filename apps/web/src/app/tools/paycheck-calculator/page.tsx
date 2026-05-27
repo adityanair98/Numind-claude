@@ -15,12 +15,13 @@ export const metadata: Metadata = buildMetadata({
 export default function PaycheckCalculatorPage() {
   return (
     <CalculatorShell
+      slug="paycheck-calculator"
       name="Paycheck Calculator"
       tagline="See your take-home pay after federal, state, and FICA taxes"
       calculator={<PaycheckCalculatorWidget />}
       shortcut={paycheckShortcut}
       faqs={paycheckFAQs}
-      relatedSlugs={["salary-calculator", "rent-calculator", "loan-calculator"]}
+      relatedSlugs={["salary-calculator", "401k-impact-calculator", "house-affordability-calculator"]}
     />
   );
 }

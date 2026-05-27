@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function BalanceTransferCalculatorPage() {
   return (
     <CalculatorShell
+      slug="balance-transfer-calculator"
       name="Balance Transfer Calculator"
       tagline="Is the 0% APR worth the transfer fee? Net benefit, breakeven, and a payoff plan in one shot"
       calculator={<BalanceTransferCalculatorWidget />}

@@ -83,6 +83,7 @@ export default async function StatePaycheckPage({ params }: Props) {
 
   return (
     <CalculatorShell
+      slug={`paycheck-calculator/${stateData.slug}`}
       name={`${stateData.name} Paycheck Calculator`}
       tagline={`Calculate your ${stateData.abbreviation} take-home pay after federal, state, and FICA taxes`}
       calculator={<PaycheckCalculatorWidget defaultState={stateData.slug} />}

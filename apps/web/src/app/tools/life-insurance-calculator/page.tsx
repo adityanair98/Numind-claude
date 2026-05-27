@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function LifeInsuranceCalculatorPage() {
   return (
     <CalculatorShell
+      slug="life-insurance-calculator"
       name="Life Insurance Calculator"
       tagline="Estimate your term life coverage need with the 10× rule and DIME method"
       calculator={<LifeInsuranceCalculatorWidget />}

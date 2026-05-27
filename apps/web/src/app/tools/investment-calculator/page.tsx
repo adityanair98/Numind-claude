@@ -15,12 +15,13 @@ export const metadata: Metadata = buildMetadata({
 export default function InvestmentCalculatorPage() {
   return (
     <CalculatorShell
+      slug="investment-calculator"
       name="Investment Calculator"
       tagline="See how compound interest grows your money over time"
       calculator={<InvestmentCalculatorWidget />}
       shortcut={investmentShortcut}
       faqs={investmentFAQs}
-      relatedSlugs={["salary-calculator", "loan-calculator"]}
+      relatedSlugs={["hysa-calculator", "401k-impact-calculator", "salary-calculator"]}
     />
   );
 }

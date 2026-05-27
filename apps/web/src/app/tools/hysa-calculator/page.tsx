@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function HysaCalculatorPage() {
   return (
     <CalculatorShell
+      slug="hysa-calculator"
       name="HYSA Calculator"
       tagline="Annual interest from a high-yield savings account vs the 0.01% your big bank pays"
       calculator={<HysaCalculatorWidget />}

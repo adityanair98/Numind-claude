@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function DiscountCalculatorPage() {
   return (
     <CalculatorShell
+      slug="discount-calculator"
       name="Discount Calculator"
       tagline="Find out how much you save and what you actually pay"
       calculator={<DiscountCalculatorWidget />}

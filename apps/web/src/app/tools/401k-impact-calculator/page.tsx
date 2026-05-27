@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function K401ImpactCalculatorPage() {
   return (
     <CalculatorShell
+      slug="401k-impact-calculator"
       name="401(k) Impact Calculator"
       tagline="What a 6% 401(k) contribution actually costs you in take-home pay — after the tax break"
       calculator={<K401ImpactCalculatorWidget />}

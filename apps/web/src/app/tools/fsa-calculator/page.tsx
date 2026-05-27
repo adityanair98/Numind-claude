@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export default function FSACalculatorPage() {
   return (
     <CalculatorShell
+      slug="fsa-calculator"
       name="FSA Calculator"
       tagline="Calculate your safe FSA election — tax savings, break-even spend, and net result"
       calculator={<FSACalculatorWidget />}
