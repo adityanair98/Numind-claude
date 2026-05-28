@@ -23,10 +23,10 @@ struct RootTabView: View {
             .tag(NumindTab.learn)
 
             NavigationStack {
-                PracticeView()
+                ToolsView()
             }
-            .tabItem { Label("Practice", systemImage: "dumbbell.fill") }
-            .tag(NumindTab.practice)
+            .tabItem { Label("Tools", systemImage: "wrench.and.screwdriver.fill") }
+            .tag(NumindTab.tools)
 
             NavigationStack {
                 ProgressTabView()
@@ -126,7 +126,7 @@ struct RootTabView: View {
 }
 
 enum NumindTab: Hashable {
-    case home, learn, practice, progress
+    case home, learn, tools, progress
 }
 
 #Preview {
