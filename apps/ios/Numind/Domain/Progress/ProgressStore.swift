@@ -478,6 +478,16 @@ final class ProgressStore: ObservableObject {
         data.scoreHistory.last?.axisScores[axis.rawValue] ?? 0
     }
 
+    /// Axis score from the nearest snapshot at or before `daysAgo` days ago.
+    /// Returns nil if no snapshot exists that far back.
+    func numindScore(forAxis axis: SkillAxis, daysAgo: Int) -> Int? {
+        let cutoff = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
+        return data.scoreHistory
+            .filter { $0.date <= cutoff }
+            .max { $0.date < $1.date }
+            .flatMap { $0.axisScores[axis.rawValue] }
+    }
+
     /// Axis evidence level (Untested / Early Read / Developing / Reliable),
     /// recomputed lazily from current sessions (cheap; bounded by axis count).
     func numindEvidence(forAxis axis: SkillAxis) -> EvidenceLevel {

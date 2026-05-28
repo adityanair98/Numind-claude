@@ -142,33 +142,59 @@ struct LearnView: View {
         let isActive = activeWorldSection?.id == section.id
         let accent = section.module.color.tintColor
 
+        // 5-bead progress display (per the original 5e spec). Use the
+        // mastered/total ratio to compute filled beads, so a module with
+        // 12 lessons fits the same 5-pip rail as one with 7. Rounds in
+        // the user's favor: any progress shows 1 bead minimum.
+        let beadsTotal = 5
+        let beadsFilled: Int = {
+            guard total > 0 else { return 0 }
+            if mastered == 0 { return 0 }
+            if mastered == total { return beadsTotal }
+            let raw = Double(mastered) / Double(total) * Double(beadsTotal)
+            return max(1, min(beadsTotal - 1, Int(raw.rounded())))
+        }()
+
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) {
                 expandedWorldId = section.id
             }
         }) {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 8) {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(alignment: .center, spacing: 8) {
                     IconTile(
                         systemName: section.module.icon,
                         tintColor: accent,
                         size: 32
                     )
+                    Spacer(minLength: 4)
                     if isConquered {
                         Image(systemName: "crown.fill")
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(.system(size: 13, weight: .semibold))
                             .foregroundStyle(Theme.Colors.insightYellow)
+                    } else {
+                        Text("\(mastered)/\(total)")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
                     }
-                    Spacer()
-                    Text("\(mastered)/\(total)")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundStyle(Theme.Colors.mutedText)
                 }
                 Text(section.module.shortName)
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .lineLimit(1)
-                BeadRail(progress: mastered, total: max(total, 1), variant: .chunky)
+                    .minimumScaleFactor(0.8)
+                // Custom narrow pip rail — `BeadRail.chunky` uses 28pt-wide
+                // capsules that would overflow a half-screen grid column.
+                // 5 pips × ~16pt + 4 × 4pt gaps ≈ 96pt fits comfortably.
+                HStack(spacing: 4) {
+                    ForEach(0..<beadsTotal, id: \.self) { i in
+                        Capsule()
+                            .fill(i < beadsFilled ? accent : Theme.Colors.mutedTint)
+                            .frame(height: 5)
+                    }
+                }
             }
             .padding(12)
             .frame(maxWidth: .infinity, alignment: .leading)

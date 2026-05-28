@@ -1,34 +1,40 @@
 import SwiftUI
 
-/// Post-session insight screen shown after completing the daily challenge.
+/// Post-session insight screen shown after completing the Daily Workout
+/// (formerly Daily Challenge).
 ///
-/// Displays the user's current Numind Score, a radar chart of per-module
-/// performance (or bar chart if fewer than 3 modules have data), session
-/// stats, and a recommended lesson for the weakest module.
+/// Displays the user's current Numind Score, a 7-axis radar chart (or
+/// bar chart if fewer than 3 axes have evidence), session stats, and a
+/// recommended lesson for the weakest measured axis.
+///
+/// Phase 5d wired in the 7-axis competency model — see
+/// `apps/ios/Numind/Domain/Progress/NumindScoreEngine.swift`.
 struct DailyInsightView: View {
 
     // MARK: - Input
 
-    struct ModuleScore: Identifiable {
-        var id: String { module.id }
-        let module: Module
-        let score: Int          // 0–100 current
-        let previousScore: Int? // 0–100 seven days ago, nil if no history
+    /// One row in the axis chart: current score + evidence + optional prior.
+    struct AxisScore: Identifiable {
+        var id: String { axis.rawValue }
+        let axis: SkillAxis
+        let score: Int                // 0–100 current
+        let evidence: EvidenceLevel   // determines visibility on the chart
+        let previousScore: Int?       // 0–100 seven days ago, nil if no history
     }
 
     let overallScore: Int
     let scoreDelta: Int
-    let moduleScores: [ModuleScore]
+    let axisScores: [AxisScore]
 
-    /// Module IDs that appeared in this session's question set.
-    /// The weakness card is scoped to these modules only.
-    let sessionModuleIds: Set<String>
+    /// SkillAxis values that appeared in this session's question set.
+    /// The weakness card is scoped to these axes only.
+    let sessionAxes: Set<SkillAxis>
 
     let sessionCorrect: Int
     let sessionTotal: Int
     let sessionTimeString: String
 
-    /// Weakest module's first recommended lesson, if any.
+    /// Weakest axis's first recommended lesson, if any.
     let recommendedLesson: Lesson?
 
     let onContinue: () -> Void
@@ -40,15 +46,23 @@ struct DailyInsightView: View {
 
     // MARK: - Derived
 
-    /// Weakest module from the session's question set — not overall.
-    /// Only shows when ≥2 session modules exist to compare.
-    private var weakestModule: ModuleScore? {
-        let sessionScores = moduleScores.filter { sessionModuleIds.contains($0.id) && $0.score > 0 }
-        guard sessionScores.count > 1 else { return nil }
-        return sessionScores.min { $0.score < $1.score }
+    /// Visible axes — only ones with at least Early Read evidence get a
+    /// non-zero radar value; Untested axes still render as dim spokes
+    /// (handled by mapping value to 0). For the weakness/recommendation
+    /// logic, we filter to measured axes only.
+    private var measuredAxes: [AxisScore] {
+        axisScores.filter { $0.evidence != .untested && $0.score > 0 }
     }
 
-    private var useRadar: Bool { moduleScores.count >= 3 }
+    /// Weakest axis from the session's axis set — not overall.
+    /// Only shows when ≥2 session axes have measurable scores to compare.
+    private var weakestAxis: AxisScore? {
+        let touched = measuredAxes.filter { sessionAxes.contains($0.axis) }
+        guard touched.count > 1 else { return nil }
+        return touched.min { $0.score < $1.score }
+    }
+
+    private var useRadar: Bool { axisScores.count >= 3 }
 
     // MARK: - Body
 
@@ -59,7 +73,7 @@ struct DailyInsightView: View {
                     header
                     scoreSection
                     chartSection
-                    if let weak = weakestModule { weaknessCard(weak) }
+                    if let weak = weakestAxis { weaknessCard(weak) }
                     statsSection
                     Spacer(minLength: 120)
                 }
@@ -126,7 +140,7 @@ struct DailyInsightView: View {
 
     private var chartSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Performance by module")
+            sectionLabel("Performance by skill")
 
             if useRadar {
                 radarView
@@ -141,14 +155,20 @@ struct DailyInsightView: View {
     }
 
     private var radarView: some View {
-        let current = moduleScores.map {
-            RadarChartView.Axis(label: $0.module.shortName,
-                                value: Double($0.score) / 100.0)
+        // Untested axes render as 0 (dim spoke), preserving the 7-axis shape.
+        let current = axisScores.map { row in
+            RadarChartView.Axis(
+                label: row.axis.shortName,
+                value: row.evidence == .untested ? 0 : Double(row.score) / 100.0
+            )
         }
-        let previous: [RadarChartView.Axis]? = moduleScores.allSatisfy({ $0.previousScore != nil })
-            ? moduleScores.map {
-                RadarChartView.Axis(label: $0.module.shortName,
-                                    value: Double($0.previousScore!) / 100.0)
+        let previous: [RadarChartView.Axis]? =
+            axisScores.allSatisfy({ $0.previousScore != nil })
+            ? axisScores.map { row in
+                RadarChartView.Axis(
+                    label: row.axis.shortName,
+                    value: Double(row.previousScore ?? 0) / 100.0
+                )
             }
             : nil
 
@@ -158,31 +178,58 @@ struct DailyInsightView: View {
 
     private var barsView: some View {
         ModuleBarsView(
-            bars: moduleScores.map { ms in
-                let color = ms.module.color.tintColor
-                return ModuleBarsView.Bar(
-                    icon: ms.module.icon,
-                    label: ms.module.shortName,
-                    score: ms.score,
-                    color: color,
-                    previousScore: ms.previousScore
+            bars: axisScores.map { row in
+                ModuleBarsView.Bar(
+                    icon: skillIcon(row.axis),
+                    label: row.axis.shortName,
+                    score: row.score,
+                    color: skillColor(row.axis),
+                    previousScore: row.previousScore
                 )
             }
         )
     }
 
+    /// Per-axis SF Symbol — matched to the dominant module color theme for
+    /// the axis (Debt = coral exclamation, Investing = green chart, etc.).
+    private func skillIcon(_ axis: SkillAxis) -> String {
+        switch axis {
+        case .everydayMoneyMath:    return "function"
+        case .cashFlowAndBudgeting: return "list.bullet.rectangle"
+        case .incomeAndPaycheck:    return "creditcard.fill"
+        case .debtAndCredit:        return "exclamationmark.triangle.fill"
+        case .bigPurchases:         return "house.fill"
+        case .protectionAndBenefits: return "heart.text.square.fill"
+        case .investingAndFuture:   return "chart.line.uptrend.xyaxis"
+        }
+    }
+
+    private func skillColor(_ axis: SkillAxis) -> Color {
+        switch axis {
+        case .everydayMoneyMath:    return Theme.Colors.warmOrange
+        case .cashFlowAndBudgeting: return Theme.Colors.primaryBlue
+        case .incomeAndPaycheck:    return Theme.Colors.mindTeal
+        case .debtAndCredit:        return Theme.Colors.debtCoral
+        case .bigPurchases:         return Theme.Colors.housingRose
+        case .protectionAndBenefits: return Theme.Colors.insurancePurple
+        case .investingAndFuture:   return Theme.Colors.growthGreen
+        }
+    }
+
     // MARK: - Weakness callout
 
-    private func weaknessCard(_ weak: ModuleScore) -> some View {
+    private func weaknessCard(_ weak: AxisScore) -> some View {
         HStack(spacing: 14) {
-            Text(weak.module.mascot)
-                .font(.system(size: 30))
+            Image(systemName: skillIcon(weak.axis))
+                .font(.system(size: 26, weight: .semibold))
+                .foregroundStyle(skillColor(weak.axis))
+                .frame(width: 36, height: 36)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("\(weak.module.title) needs work")
+                Text("\(weak.axis.displayName) needs work")
                     .font(.system(size: 14, weight: .bold))
                     .foregroundStyle(Theme.Colors.deepNavy)
-                Text("Your weakest area right now. A quick lesson can fix it.")
+                Text("Your weakest skill right now. A quick lesson can fix it.")
                     .font(.system(size: 12))
                     .foregroundStyle(Theme.Colors.mutedText)
                     .fixedSize(horizontal: false, vertical: true)
@@ -290,22 +337,23 @@ struct DailyInsightView: View {
 // MARK: - Preview
 
 #Preview {
-    let modules = LocalContentRepository().allModules()
-    let scores = modules.prefix(6).map { m in
-        DailyInsightView.ModuleScore(
-            module: m,
+    let axes = SkillAxis.allCases.map { axis in
+        DailyInsightView.AxisScore(
+            axis: axis,
             score: Int.random(in: 30...90),
+            evidence: .developing,
             previousScore: Int.random(in: 20...80)
         )
     }
+    let modules = LocalContentRepository().allModules()
     let lesson = LocalContentRepository()
         .lessons(for: modules.first!.id).first
 
     DailyInsightView(
         overallScore: 68,
         scoreDelta: 7,
-        moduleScores: Array(scores),
-        sessionModuleIds: Set(modules.prefix(4).map(\.id)),
+        axisScores: axes,
+        sessionAxes: Set(SkillAxis.allCases.prefix(4)),
         sessionCorrect: 7,
         sessionTotal: 10,
         sessionTimeString: "02:34",

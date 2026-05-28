@@ -330,41 +330,34 @@ struct HomeView: View {
     }
 
     private var scoreChartCard: some View {
-        let mods = repo.allModules()
-
+        let results = progressStore.numindAxisResults
         return NumindCard {
             VStack(alignment: .leading, spacing: 14) {
-                Text("PERFORMANCE BY MODULE")
+                Text("PERFORMANCE BY SKILL")
                     .font(.system(size: 10, weight: .bold))
                     .foregroundStyle(Theme.Colors.mutedText)
                     .kerning(0.6)
 
-                if mods.count >= 3 {
-                    let current = mods.map {
-                        RadarChartView.Axis(label: $0.shortName,
-                                            value: Double(progressStore.numindScore(for: $0.id)) / 100.0)
-                    }
-                    let previous: [RadarChartView.Axis]? = mods.allSatisfy({
-                        progressStore.numindScoreHistory(for: $0.id, daysAgo: 7) != nil
-                    })
-                    ? mods.map {
-                        RadarChartView.Axis(label: $0.shortName,
-                                            value: Double(progressStore.numindScoreHistory(for: $0.id, daysAgo: 7) ?? 0) / 100.0)
-                    }
-                    : nil
-                    RadarChartView(axes: current, previousAxes: previous, size: 220)
-                        .frame(maxWidth: .infinity)
-                } else {
-                    ModuleBarsView(bars: mods.map { m in
-                        ModuleBarsView.Bar(
-                            icon: m.icon,
-                            label: m.shortName,
-                            score: progressStore.numindScore(for: m.id),
-                            color: m.color.tintColor,
-                            previousScore: progressStore.numindScoreHistory(for: m.id, daysAgo: 7)
-                        )
-                    })
+                // 7-axis radar. Untested axes render at 0 (dim spoke);
+                // measured axes scale to their score / 100.
+                let current = results.map { r in
+                    RadarChartView.Axis(
+                        label: r.axis.shortName,
+                        value: r.evidence == .untested ? 0 : Double(r.score) / 100.0
+                    )
                 }
+                let previous: [RadarChartView.Axis]? = results.allSatisfy({
+                    progressStore.numindScore(forAxis: $0.axis, daysAgo: 7) != nil
+                })
+                ? results.map { r in
+                    RadarChartView.Axis(
+                        label: r.axis.shortName,
+                        value: Double(progressStore.numindScore(forAxis: r.axis, daysAgo: 7) ?? 0) / 100.0
+                    )
+                }
+                : nil
+                RadarChartView(axes: current, previousAxes: previous, size: 220)
+                    .frame(maxWidth: .infinity)
 
                 if progressStore.numindScore == 0 {
                     Text("Complete your first lesson to see your Numind Score.")
@@ -377,37 +370,83 @@ struct HomeView: View {
         }
     }
 
+    /// Per-axis score breakdown — rendered below the radar in the score
+    /// detail sheet. Each row shows the axis name, score, and evidence
+    /// label (Untested / Early Read / Developing / Reliable).
     private var moduleBreakdownCard: some View {
-        let mods = repo.allModules()
-
+        let results = progressStore.numindAxisResults
         return NumindCard {
             VStack(alignment: .leading, spacing: 12) {
-                Text("MODULE SCORES")
+                Text("SKILL SCORES")
                     .font(.system(size: 10, weight: .bold))
                     .foregroundStyle(Theme.Colors.mutedText)
                     .kerning(0.6)
 
-                ForEach(Array(mods.enumerated()), id: \.element.id) { i, m in
-                    let score = progressStore.numindScore(for: m.id)
-
+                ForEach(Array(results.enumerated()), id: \.element.axis) { i, r in
                     HStack(spacing: 12) {
-                        IconTile(systemName: m.icon,
-                                 tintColor: m.color.tintColor, size: 32)
-                        Text(m.title)
+                        Image(systemName: skillIcon(r.axis))
                             .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.deepNavy)
+                            .foregroundStyle(skillColor(r.axis))
+                            .frame(width: 32, height: 32)
+                            .background(skillColor(r.axis).opacity(0.12))
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(r.axis.displayName)
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.deepNavy)
+                            Text(r.evidence.label)
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundStyle(evidenceColor(r.evidence))
+                        }
                         Spacer()
-                        Text("\(score)")
+                        Text("\(r.score)")
                             .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .foregroundStyle(score > 0 ? m.color.tintColor : Theme.Colors.mutedText)
+                            .foregroundStyle(r.evidence == .untested
+                                ? Theme.Colors.mutedText
+                                : skillColor(r.axis))
                     }
                     .padding(.vertical, 4)
 
-                    if i < mods.count - 1 {
+                    if i < results.count - 1 {
                         Divider().background(Theme.Colors.hairline)
                     }
                 }
             }
+        }
+    }
+
+    /// SF Symbol per skill axis (mirrors DailyInsightView.skillIcon for
+    /// visual consistency across both surfaces).
+    private func skillIcon(_ axis: SkillAxis) -> String {
+        switch axis {
+        case .everydayMoneyMath:    return "function"
+        case .cashFlowAndBudgeting: return "list.bullet.rectangle"
+        case .incomeAndPaycheck:    return "creditcard.fill"
+        case .debtAndCredit:        return "exclamationmark.triangle.fill"
+        case .bigPurchases:         return "house.fill"
+        case .protectionAndBenefits: return "heart.text.square.fill"
+        case .investingAndFuture:   return "chart.line.uptrend.xyaxis"
+        }
+    }
+
+    private func skillColor(_ axis: SkillAxis) -> Color {
+        switch axis {
+        case .everydayMoneyMath:    return Theme.Colors.warmOrange
+        case .cashFlowAndBudgeting: return Theme.Colors.primaryBlue
+        case .incomeAndPaycheck:    return Theme.Colors.mindTeal
+        case .debtAndCredit:        return Theme.Colors.debtCoral
+        case .bigPurchases:         return Theme.Colors.housingRose
+        case .protectionAndBenefits: return Theme.Colors.insurancePurple
+        case .investingAndFuture:   return Theme.Colors.growthGreen
+        }
+    }
+
+    private func evidenceColor(_ level: EvidenceLevel) -> Color {
+        switch level {
+        case .untested:   return Theme.Colors.mutedText.opacity(0.55)
+        case .earlyRead:  return Theme.Colors.warmOrange
+        case .developing: return Theme.Colors.primaryBlue
+        case .reliable:   return Theme.Colors.growthGreen
         }
     }
 
@@ -427,30 +466,38 @@ struct HomeView: View {
 
     // MARK: - Insight helpers
 
-    /// Builds the DailyInsightView using current store scores and the captured session VM.
+    /// Builds the DailyInsightView using current store axis scores and the
+    /// captured session VM.
     @ViewBuilder
     private func insightView(for vm: QuizSessionViewModel) -> some View {
-        let modules = repo.allModules()
-        let moduleScores = modules.map { m in
-            DailyInsightView.ModuleScore(
-                module: m,
-                score: progressStore.numindScore(for: m.id),
-                previousScore: progressStore.numindScoreHistory(for: m.id, daysAgo: 7)
+        // Live per-axis snapshot (current scores + evidence) for the chart.
+        let results = progressStore.numindAxisResults
+        let axisScores = results.map { r in
+            DailyInsightView.AxisScore(
+                axis: r.axis,
+                score: r.score,
+                evidence: r.evidence,
+                // Previous-week per-axis score comes straight from the
+                // snapshot history. Nil collapses gracefully in the radar.
+                previousScore: progressStore.numindScore(forAxis: r.axis, daysAgo: 7)
             )
         }
-        // Derive which modules appeared in this session's questions.
-        let sessionModuleIds: Set<String> = Set(
-            vm.questionResults.compactMap { repo.module(forTemplateId: $0.templateId)?.id }
+        // Derive which axes appeared in this session's questions, via the
+        // template -> lesson -> primarySkill chain.
+        let sessionAxes: Set<SkillAxis> = Set(
+            vm.questionResults.compactMap { qr in
+                repo.lesson(forTemplateId: qr.templateId)?.primarySkill
+            }
         )
         DailyInsightView(
             overallScore: progressStore.numindScore,
             scoreDelta: progressStore.numindScoreDelta,
-            moduleScores: moduleScores,
-            sessionModuleIds: sessionModuleIds,
+            axisScores: axisScores,
+            sessionAxes: sessionAxes,
             sessionCorrect: vm.correctCount,
             sessionTotal: vm.total,
             sessionTimeString: vm.elapsedTimeString,
-            recommendedLesson: resolveInsightLesson(sessionModuleIds: sessionModuleIds),
+            recommendedLesson: resolveInsightLesson(sessionAxes: sessionAxes),
             onContinue: { showInsight = false },
             onLearnWeakness: { lesson in
                 showInsight = false
@@ -462,21 +509,21 @@ struct HomeView: View {
         )
     }
 
-    /// Finds the first unlearned lesson in the weakest module *from the session's question set*.
-    /// This ensures the recommendation is relevant to what the user just practiced.
-    private func resolveInsightLesson(sessionModuleIds: Set<String>) -> Lesson? {
-        let modules = repo.allModules()
-        guard !modules.isEmpty else { return nil }
-        // Filter to modules that were actually in this session
-        let sessionModules = modules.filter { sessionModuleIds.contains($0.id) }
-        guard sessionModules.count > 1 else { return nil }
-        let weakest = sessionModules.min {
-            progressStore.numindScore(for: $0.id) < progressStore.numindScore(for: $1.id)
+    /// Finds the first unlearned lesson whose primarySkill matches the
+    /// weakest measured axis *from the session's question set*. Falls back
+    /// gracefully so the user always has a relevant next step.
+    private func resolveInsightLesson(sessionAxes: Set<SkillAxis>) -> Lesson? {
+        guard sessionAxes.count > 1 else { return nil }
+        let results = progressStore.numindAxisResults
+            .filter { sessionAxes.contains($0.axis) && $0.evidence != .untested }
+        guard let weakest = results.min(by: { $0.score < $1.score }) else { return nil }
+        // Find a lesson in the curriculum whose primary skill matches the
+        // weakest axis and that the user hasn't completed yet.
+        let allLessons = repo.allModules().flatMap { repo.lessons(for: $0.id) }
+        return allLessons.first {
+            $0.primarySkill == weakest.axis && !progressStore.hasCompletedLesson($0.id)
         }
-        guard let module = weakest else { return nil }
-        return repo.lessons(for: module.id)
-            .first { !progressStore.hasCompletedLesson($0.id) }
-            ?? repo.lessons(for: module.id).first
+        ?? allLessons.first { $0.primarySkill == weakest.axis }
     }
 
     private func startDailyChallenge() {
