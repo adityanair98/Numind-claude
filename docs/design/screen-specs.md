@@ -99,14 +99,25 @@ Takes over from the storyboard with an identical layout, then fades out.
 **File:** `Features/Learn/LearnView.swift` + `LearnViewModel.swift`
 **Tab:** Learn (active). **Header style:** large title, "Learn".
 
-**Layout:**
+**Layout (Phase 5):**
 
-The Learn tab presents a **quest-journey path** — lesson and review nodes are laid out vertically as circular quest nodes connected by curved S-curve paths. Nodes are grouped by module with world banner headers.
+The Learn tab has two top-level sub-tabs (segmented picker at the top): **Worlds** and **Paths**.
 
-1. **World banners** — full-width card with colored tint background: filled accent circle (module icon) + module title (headline) + "N/N completed" counter + 32pt progress ring. Appears at the top of each module section.
+**Worlds sub-tab** — a Brilliant-style fullscreen page-swipe carousel of 10 world hero pages (one per module), implemented with `TabView(selection:).tabViewStyle(.page)`. Each hero page renders:
+1. **World eyebrow:** "WORLD N" in the module accent color.
+2. **Title + subtitle:** module title in display font, module subtitle in caption.
+3. **Themed illustration:** 240×240 ZStack composed from the existing `Module` fields — no bespoke artwork. Layers (back to front): outer tinted circle (module color, 0.14 fill / 0.28 border); the module's `glyph` ("%", "$", "÷", …) as a 180pt low-opacity background watermark; the module's SF Symbol at 88pt as the hero figure; the module's emoji `mascot` floating top-right at 44pt with a soft drop shadow.
+4. **Continue card** pinned near the bottom: dynamic eyebrow label (PICK UP HERE / RESUME / UP NEXT / REVISIT / JUMP AHEAD based on the next node's state) + lesson title + done/total counter + a large module-color CTA ("Continue world" / "Start world"). Conquered worlds get a gold "WORLD CONQUERED" callout instead.
+5. **Page indicator dots** at the bottom (`indexViewStyle(.page(backgroundDisplayMode: .always))`) show position 1-of-10 and which worlds have been visited.
+
+Tapping Continue from a hero page opens the world's **quest map** as a fullscreen view that replaces the carousel within the Learn tab (the header + segmented control hide so the map gets full vertical real estate). A floating down-chevron at top-left returns to the carousel. The quest map itself is the existing zigzag rendering:
+
+1. **World banner** at the top — full-width card with colored tint background: filled accent circle (module icon) + module title (headline) + "N/N completed" counter + 32pt progress ring.
 2. **Quest nodes** — 64pt circles positioned along the path. Nodes alternate left and right using `.offset(x:)` with `pathOffset: 56pt` from center.
-   - **Node button:** full-color fill for current/mastered nodes; white fill with accent border for available; muted fill with lock icon for locked. Optional `PulsingRing` animation behind `current` nodes.
-   - **Node label:** lesson title (110pt width, 2-line max, centered) + state subtitle below the node.
+   - **Node button:** full-color fill for current/mastered nodes; white fill with accent border for available; dimmed (0.55 opacity, 0.92 scale) with the lesson number/icon for `notYetSuggested` — Phase 5e soft locks made these tappable instead of hard-gated. Optional `PulsingRing` animation behind `current` nodes.
+   - **Node label:** lesson title (110pt width, 2-line max, centered) + state subtitle below the node ("JUMP AHEAD" for soft-locked lessons).
+
+**Paths sub-tab** — a vertical scroll of pack cards (one per Life-Event Pack). Each card shows the pack title, tagline, status badge (FOCUS / ACTIVE x/y / COMPLETE ✓ / NEW), lesson count, and estimated time. Tapping opens the pack's detail sheet.
    - **Curved connectors:** SwiftUI `Path` with bezier curves (S-curve between consecutive nodes), not straight lines or arrows.
 
 **5 Node States:**

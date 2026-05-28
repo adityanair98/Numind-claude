@@ -95,9 +95,10 @@ Numind/
       ModeCard.swift             # Game mode card (gradient, orbs, 5 convenience constructors)
       StreakStripCard.swift       # Streak calendar strip card
     Learn/
-      LearnView.swift            # Quest-journey learning path (main Learn tab)
+      LearnView.swift            # Worlds carousel (TabView .page) + opened-world quest map + Paths sub-tab
       LearnViewModel.swift       # Path node generation, completion-based progression, review insertion
       LearnHeader.swift          # Learn tab header
+      WorldHeroPage.swift        # Single hero page in the Worlds carousel (themed illustration, Continue card)
       Lesson/
         LessonView.swift         # Lesson flow: content -> quiz -> summary
         LessonViewModel.swift    # Lesson state and presentation

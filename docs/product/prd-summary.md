@@ -81,7 +81,10 @@ Home / Today
 -> progress update (streak, badges, level-up)
 
 ## Learning Path
-The Learn tab presents lessons as a **zigzag path** (Duolingo-style), alternating nodes left and right. Lessons are grouped by module with banner headers. Every 3 lessons within a module, a **checkpoint review** node appears that tests across all 3 preceding lessons.
+The Learn tab has two top-level sub-tabs (segmented picker): **Worlds** and **Paths**.
+
+- **Worlds** (default) presents the 10 modules as a Brilliant-style fullscreen page-swipe carousel. Each world fills the screen as a themed hero: module-color gradient background, "WORLD N" eyebrow, module title, themed illustration (composed from the module's SF Symbol + emoji mascot + math-glyph watermark — no bespoke artwork needed), and a Continue card with the user's next undone lesson. Page dots at the bottom indicate position; horizontal swipe switches worlds. Tapping Continue opens the world's quest map — a zigzag of lesson and review nodes with curved connectors — as a fullscreen view with a floating down-chevron to return to the carousel. Inside the quest map, lessons are grouped chronologically and a **checkpoint review** node appears every 3 lessons that tests across all 3 preceding lessons. With Phase 5 soft locks, every lesson is tappable (dimmed if not-yet-suggested); review nodes remain gated on their covered lessons.
+- **Paths** presents the 10 Life-Event Packs (curated lesson sequences across modules) — see `apps/web/src/lib/content/packs.ts` for the canonical list. Tapping a pack opens its detail sheet with the ordered lesson list + an anchor lesson + a "Make this my focus" CTA.
 
 ### Progression & Mastery
 - **Completion-based progression:** any attempt at a lesson unlocks the next node (no score gate)

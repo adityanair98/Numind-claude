@@ -125,40 +125,44 @@ struct LearnView: View {
     }
 
     /// Renders the existing worldBanner + sectionNodes + worldConqueredBanner
-    /// for a single section as a full-screen view with a floating down-chevron
-    /// in the top-left to return to the carousel. Mirrors the Brilliant
-    /// world-detail pattern.
+    /// for a single section as a full-screen view with a back-chevron row at
+    /// the top to return to the carousel. Mirrors the Brilliant world-detail
+    /// pattern.
     private func openedWorldView(
         section: LearnViewModel.PathSection,
         sectionIndex: Int
     ) -> some View {
-        ZStack(alignment: .topLeading) {
+        VStack(spacing: 0) {
+            // Back-chevron row — sits ABOVE the scrolling content so it
+            // never overlaps the world banner's "WORLD N" eyebrow.
+            HStack {
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        openedWorldId = nil
+                    }
+                }) {
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .frame(width: 40, height: 40)
+                        .background(Theme.Colors.cardBackground)
+                        .clipShape(Circle())
+                        .shadow(color: .black.opacity(0.08), radius: 6, y: 2)
+                }
+                .accessibilityLabel("Back to worlds")
+                Spacer()
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+
             ScrollView {
                 LazyVStack(spacing: 0) {
                     worldBanner(section, sectionIndex: sectionIndex)
-                        .padding(.top, 8)
                     sectionNodes(section)
                     worldConqueredBanner(section)
                 }
                 .padding(.bottom, 40)
             }
-            // Floating back chevron — pinned top-left.
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.25)) {
-                    openedWorldId = nil
-                }
-            }) {
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                    .frame(width: 40, height: 40)
-                    .background(Theme.Colors.cardBackground)
-                    .clipShape(Circle())
-                    .shadow(color: .black.opacity(0.08), radius: 6, y: 2)
-            }
-            .padding(.leading, 16)
-            .padding(.top, 12)
-            .accessibilityLabel("Back to worlds")
         }
     }
 
