@@ -21,6 +21,7 @@ struct SessionSummaryView: View {
     /// Results from the most recent review session (nil = no review done yet).
     /// Replaces the original wrong answers once the first review completes.
     @State private var reviewResults: [QuizSessionViewModel.QuizResult]? = nil
+    @State private var showCalc = false
 
     private var accent: Color { viewModel.moduleColor.tintColor }
     private var accentTint: Color { viewModel.moduleColor.tintBackground }
@@ -82,6 +83,20 @@ struct SessionSummaryView: View {
                 }
             }
         }
+        .sheet(isPresented: $showCalc) {
+            if let slug = viewModel.lessonRelatedCalculatorSlug {
+                NavigationStack {
+                    CalculatorRegistry.view(for: slug)
+                        .toolbar {
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Done") { showCalc = false }
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Theme.Colors.primaryBlue)
+                            }
+                        }
+                }
+            }
+        }
     }
 
     // MARK: - Scroll content
@@ -96,6 +111,7 @@ struct SessionSummaryView: View {
                 masteryBanner
                 if !newBadgeIds.isEmpty { newBadgesSection }
                 recapSection
+                calcLinkSection
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.top, 20)
@@ -285,6 +301,31 @@ struct SessionSummaryView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
+        }
+    }
+
+    // MARK: - Calculator cross-link (Phase 7a)
+
+    @ViewBuilder
+    private var calcLinkSection: some View {
+        if let slug = viewModel.lessonRelatedCalculatorSlug,
+           let name = CalculatorRegistry.name(for: slug) {
+            Button { showCalc = true } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "wrench.and.screwdriver")
+                        .font(.system(size: 13, weight: .semibold))
+                    Text("Try this in \(name)")
+                        .font(.system(size: 14, weight: .semibold))
+                    Image(systemName: "arrow.right")
+                        .font(.system(size: 12, weight: .bold))
+                }
+                .foregroundStyle(accent)
+                .frame(maxWidth: .infinity)
+                .frame(height: 46)
+                .background(accentTint)
+                .clipShape(Capsule())
+            }
+            .buttonStyle(.plain)
         }
     }
 
