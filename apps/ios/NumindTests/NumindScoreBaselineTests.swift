@@ -205,7 +205,7 @@ final class NumindScoreBaselineTests: XCTestCase {
         // uniform full-curriculum coverage.
         for r in results {
             XCTAssertNotEqual(
-                r.evidence, .untested,
+                r.evidence, .notStarted,
                 "Axis \(r.axis.displayName) is Untested despite uniform synthetic coverage."
             )
         }
@@ -226,6 +226,129 @@ final class NumindScoreBaselineTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(
             composite, 50,
             "Composite \(composite) too low under uniform 80% accuracy — expect ≥ 50."
+        )
+    }
+
+    // MARK: - Phase 6a — recency decay
+
+    /// Proves the recency-weighted score reflects current behavior, not
+    /// lifetime accumulation. Inject 100 OLD correct attempts on a single
+    /// template + 5 RECENT wrong attempts. The axis score should drop
+    /// materially (>10 pts) vs the same-axis baseline with 100 old correct
+    /// attempts alone.
+    func test_recencyDecay_recentBehaviorDominates() throws {
+        let repo = LocalContentRepository(bundle: .main)
+        let cal = Calendar.current
+        let now = Date()
+
+        // Pick the first lesson with a primarySkill — that's the axis we'll
+        // hammer. Use the lesson's first template.
+        guard let lesson = repo.allModules()
+            .flatMap({ repo.lessons(for: $0.id) })
+            .first(where: { $0.primarySkill != nil && !$0.quizTemplateIds.isEmpty }),
+              let axis = lesson.primarySkill,
+              let template = repo.template(id: lesson.quizTemplateIds[0])
+        else {
+            XCTFail("Need at least one lesson with a primarySkill and a template")
+            return
+        }
+
+        // Helper to build a session N days ago with N correct/wrong results.
+        func session(daysAgo: Int, correctCount: Int, totalCount: Int) -> SessionRecord {
+            let date = cal.date(byAdding: .day, value: -daysAgo, to: now) ?? now
+            let results: [QuestionResult] = (0..<totalCount).map { i in
+                QuestionResult(
+                    templateId: template.id,
+                    isCorrect: i < correctCount,
+                    timeSpentSeconds: 8.0,
+                    difficulty: .medium
+                )
+            }
+            return SessionRecord(
+                id: UUID(),
+                lessonId: lesson.id,
+                moduleId: lesson.moduleId,
+                date: date,
+                correctCount: correctCount,
+                totalCount: totalCount,
+                questionResults: results,
+                bonusXP: 0
+            )
+        }
+
+        // Baseline: 100 correct attempts ~90 days ago.
+        let oldCorrect = session(daysAgo: 90, correctCount: 100, totalCount: 100)
+        let baselineResults = NumindScoreEngine.axisResults(
+            sessions: [oldCorrect],
+            repository: repo
+        )
+        let baselineScore = baselineResults.first(where: { $0.axis == axis })?.score ?? 0
+
+        // With recent wrong: same 100 old correct + 5 recent wrong (today).
+        let recentWrong = session(daysAgo: 0, correctCount: 0, totalCount: 5)
+        let withRecentResults = NumindScoreEngine.axisResults(
+            sessions: [oldCorrect, recentWrong],
+            repository: repo
+        )
+        let withRecentScore = withRecentResults.first(where: { $0.axis == axis })?.score ?? 0
+
+        print("\n=== Recency decay test ===")
+        print("Axis: \(axis.displayName)")
+        print("Baseline (100 correct, 90 days ago): \(baselineScore)")
+        print("With recent wrong (+5 wrong today):   \(withRecentScore)")
+        print("Drop: \(baselineScore - withRecentScore) pts\n")
+
+        // Recent behavior dominates: the 5 wrong today should drop the
+        // axis score by more than 10 points despite the user having
+        // historically nailed 100 in a row.
+        XCTAssertGreaterThan(
+            baselineScore - withRecentScore, 10,
+            "Recent wrong attempts should drop the axis score by >10 pts; got \(baselineScore - withRecentScore)"
+        )
+    }
+
+    /// Proves the exploration bonus rewards breadth (not punishes it).
+    /// One synthetic axis at 70 → composite low. Same data spread across
+    /// all 7 axes at 70 each → composite materially higher.
+    func test_explorationBonus_replacesImbalancePenalty() throws {
+        let repo = LocalContentRepository(bundle: .main)
+
+        // Build a "single axis covered" scenario: simulate sessions only
+        // for lessons whose primarySkill is Debt & Credit.
+        let debtLessons = repo.allModules()
+            .flatMap { repo.lessons(for: $0.id) }
+            .filter { $0.primarySkill == .debtAndCredit }
+        var singleAxisSessions: [SessionRecord] = []
+        for lesson in debtLessons {
+            guard let module = repo.allModules().first(where: { $0.id == lesson.moduleId }) else { continue }
+            singleAxisSessions.append(contentsOf:
+                simulateSessions(for: lesson, in: module, repo: repo))
+        }
+        let singleAxisComposite = NumindScoreEngine.composite(
+            NumindScoreEngine.axisResults(sessions: singleAxisSessions, repository: repo)
+        )
+
+        // "All axes covered" — simulate across the whole curriculum.
+        var allAxesSessions: [SessionRecord] = []
+        for module in repo.allModules() {
+            for lesson in repo.lessons(for: module.id) {
+                allAxesSessions.append(contentsOf:
+                    simulateSessions(for: lesson, in: module, repo: repo))
+            }
+        }
+        let allAxesComposite = NumindScoreEngine.composite(
+            NumindScoreEngine.axisResults(sessions: allAxesSessions, repository: repo)
+        )
+
+        print("\n=== Exploration bonus test ===")
+        print("Single-axis (Debt only) composite:  \(singleAxisComposite)")
+        print("All-axes composite:                 \(allAxesComposite)")
+        print("Bonus delta: \(allAxesComposite - singleAxisComposite) pts\n")
+
+        // Breadth should be rewarded by at least 10pts vs. depth-only.
+        XCTAssertGreaterThan(
+            allAxesComposite - singleAxisComposite, 10,
+            "Exploration bonus should reward breadth by >10 pts; got \(allAxesComposite - singleAxisComposite)"
         )
     }
 

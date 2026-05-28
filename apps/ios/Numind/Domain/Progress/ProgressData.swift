@@ -105,13 +105,23 @@ struct ProgressData: Codable {
     /// the union of session days.
     var dailyWorkoutDates: Set<Date> = []
 
+    /// Dates the user took a "rest day" (start-of-day normalized). Counted
+    /// as active in the streak without burning a freeze. Phase 6a — rest
+    /// day mechanic, max 1 per trailing 14 days. UI gates the available
+    /// state via `ProgressStore.canTakeRestDay(on:)`.
+    var restDaysUsed: Set<Date> = []
+
+    /// Skill axes the user pinned in Profile. When non-empty, the composite
+    /// reweights so pinned axes drive ~60% of the score (the rest 40%).
+    /// Phase 6a — supports the "score should reward what the user came to
+    /// do" finding. Empty = standard `compositeWeight` weighting.
+    var pinnedAxes: Set<SkillAxis> = []
+
     // MARK: - Streak
 
-    /// Active days = (Daily Workout days OR session days) ∪ frozen dates.
-    /// Phase 5f: when `dailyWorkoutDates` is populated, the streak only
-    /// counts Daily Workout days. The session-day fallback is retained
-    /// for the bootstrap path before any Daily Workout completes so the
-    /// streak from existing sessions doesn't appear to "reset".
+    /// Active days = (Daily Workout days OR session days) ∪ frozen dates
+    /// ∪ rest days. Phase 5f anchors on Daily Workout; Phase 6a adds rest
+    /// days as a third counter (they don't burn freezes).
     private var activeDays: Set<Date> {
         let calendar = Calendar.current
         let anchorDays: Set<Date>
@@ -120,7 +130,7 @@ struct ProgressData: Codable {
         } else {
             anchorDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
         }
-        return anchorDays.union(frozenDates)
+        return anchorDays.union(frozenDates).union(restDaysUsed)
     }
 
     func computeStreak() -> Int {
@@ -227,14 +237,58 @@ struct ProgressData: Codable {
         sessions.contains { $0.lessonId == lessonId }
     }
 
-    /// Returns true if the user has ever scored ≥ 75% on this lesson.
-    /// 75% = the mastery threshold (6/8 correct).
+    /// Returns true if the user has ever mastered this lesson per the
+    /// Phase 6a rule: either (a) two sessions ≥ 75% on non-consecutive
+    /// calendar days, OR (b) a single session ≥ 85%.
+    ///
+    /// Note: this does NOT account for mastery decay. Use
+    /// `hasMasteredLessonNow(_:)` on `ProgressStore` for the "is this
+    /// currently mastered" check the UI should use.
     func hasMasteredLesson(_ lessonId: String) -> Bool {
-        sessions.contains {
-            $0.lessonId == lessonId
-                && $0.totalCount > 0
-                && Double($0.correctCount) / Double($0.totalCount) >= 0.75
+        let cal = Calendar.current
+        let relevant = sessions.filter { $0.lessonId == lessonId && $0.totalCount > 0 }
+
+        // Path (b): one 85%+ session.
+        if relevant.contains(where: {
+            Double($0.correctCount) / Double($0.totalCount) >= 0.85
+        }) {
+            return true
         }
+
+        // Path (a): two 75%+ sessions on non-consecutive days.
+        let qualifyingDays: [Date] = relevant
+            .filter { Double($0.correctCount) / Double($0.totalCount) >= 0.75 }
+            .map { cal.startOfDay(for: $0.date) }
+        let distinctDays = Set(qualifyingDays).sorted()
+        guard distinctDays.count >= 2 else { return false }
+        // Non-consecutive = at least one calendar day between them.
+        for i in 0..<distinctDays.count {
+            for j in (i + 1)..<distinctDays.count {
+                let gap = cal.dateComponents([.day], from: distinctDays[i], to: distinctDays[j]).day ?? 0
+                if gap >= 2 { return true }
+            }
+        }
+        return false
+    }
+
+    /// Internal "Fluent" tier — ≥ 90% retained across a 7-day gap. Not
+    /// yet surfaced in the UI; reserved for badges + future
+    /// recommendation prioritization.
+    func isFluentInLesson(_ lessonId: String) -> Bool {
+        let cal = Calendar.current
+        let relevant = sessions
+            .filter { $0.lessonId == lessonId && $0.totalCount > 0 }
+            .filter { Double($0.correctCount) / Double($0.totalCount) >= 0.90 }
+            .map { cal.startOfDay(for: $0.date) }
+            .sorted()
+        guard relevant.count >= 2 else { return false }
+        for i in 0..<relevant.count {
+            for j in (i + 1)..<relevant.count {
+                let gap = cal.dateComponents([.day], from: relevant[i], to: relevant[j]).day ?? 0
+                if gap >= 7 { return true }
+            }
+        }
+        return false
     }
 
     // MARK: - Skill mastery (1–5 levels based on session count per module)

@@ -343,7 +343,7 @@ struct HomeView: View {
                 let current = results.map { r in
                     RadarChartView.Axis(
                         label: r.axis.shortName,
-                        value: r.evidence == .untested ? 0 : Double(r.score) / 100.0
+                        value: r.evidence == .notStarted ? 0 : Double(r.score) / 100.0
                     )
                 }
                 let previous: [RadarChartView.Axis]? = results.allSatisfy({
@@ -401,7 +401,7 @@ struct HomeView: View {
                         Spacer()
                         Text("\(r.score)")
                             .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .foregroundStyle(r.evidence == .untested
+                            .foregroundStyle(r.evidence == .notStarted
                                 ? Theme.Colors.mutedText
                                 : skillColor(r.axis))
                     }
@@ -443,8 +443,8 @@ struct HomeView: View {
 
     private func evidenceColor(_ level: EvidenceLevel) -> Color {
         switch level {
-        case .untested:   return Theme.Colors.mutedText.opacity(0.55)
-        case .earlyRead:  return Theme.Colors.warmOrange
+        case .notStarted: return Theme.Colors.mutedText.opacity(0.55)
+        case .warmingUp:  return Theme.Colors.warmOrange
         case .developing: return Theme.Colors.primaryBlue
         case .reliable:   return Theme.Colors.growthGreen
         }
@@ -515,7 +515,7 @@ struct HomeView: View {
     private func resolveInsightLesson(sessionAxes: Set<SkillAxis>) -> Lesson? {
         guard sessionAxes.count > 1 else { return nil }
         let results = progressStore.numindAxisResults
-            .filter { sessionAxes.contains($0.axis) && $0.evidence != .untested }
+            .filter { sessionAxes.contains($0.axis) && $0.evidence != .notStarted }
         guard let weakest = results.min(by: { $0.score < $1.score }) else { return nil }
         // Find a lesson in the curriculum whose primary skill matches the
         // weakest axis and that the user hasn't completed yet.
@@ -534,7 +534,7 @@ struct HomeView: View {
         )
         dailyVM = QuizSessionViewModel(
             questions: questions,
-            title: "Daily Challenge",
+            title: "Daily Workout",
             shortcut: "Draw on all the skills you've built \u{2014} tips, discounts, salary math, and more.",
             moduleColor: .blue
         )

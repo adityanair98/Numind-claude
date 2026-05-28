@@ -55,11 +55,18 @@ final class ProgressStore: ObservableObject {
         // Snapshot the streak so we can detect loss on next launch.
         data.lastKnownStreak = current
 
-        // Award streak freezes for every 7-day milestone.
-        let milestoneCount = current / 7
+        // Award streak freezes. Phase 6a — gentler ramp:
+        //   • First freeze at day 3 (was 7) — adults need safety before commitment
+        //   • Subsequent freezes every 7 days
+        //   • Cap raised to 5 (was 3)
+        let milestoneCount: Int = {
+            if current < 3 { return 0 }
+            // Day 3 → 1 milestone; day 10 → 2; day 17 → 3; etc.
+            return 1 + max(0, (current - 3) / 7)
+        }()
         if milestoneCount > data.freezeMilestonesAwarded {
             let newFreezes = milestoneCount - data.freezeMilestonesAwarded
-            data.availableFreezes = min(3, data.availableFreezes + newFreezes)
+            data.availableFreezes = min(5, data.availableFreezes + newFreezes)
             data.freezeMilestonesAwarded = milestoneCount
         }
 
@@ -246,8 +253,49 @@ final class ProgressStore: ObservableObject {
         return true
     }
 
-    /// Number of streak freezes currently banked (max 3).
+    /// Number of streak freezes currently banked (max 5 after Phase 6a).
     var availableFreezes: Int { data.availableFreezes }
+
+    // MARK: - Rest days (Phase 6a)
+
+    /// True if the user is eligible to take a rest day right now —
+    /// at most one rest day every 14 days. UI surfaces a "take a rest"
+    /// pill on the Daily Workout card when this is true AND the streak
+    /// is ≥3 days.
+    func canTakeRestDay(on date: Date = Date()) -> Bool {
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: date)
+        let window = cal.date(byAdding: .day, value: -14, to: today) ?? today
+        return !data.restDaysUsed.contains(where: { $0 >= window })
+    }
+
+    /// Use today as a rest day. Inserts today into `restDaysUsed`, which
+    /// counts as an active day in `computeStreak()` without burning a
+    /// freeze. No-op if the user has already taken a rest day in the
+    /// trailing 14 days.
+    func takeRestDay() {
+        guard canTakeRestDay() else { return }
+        let today = Calendar.current.startOfDay(for: Date())
+        data.restDaysUsed.insert(today)
+        let current = data.computeStreak()
+        if current > data.bestStreak { data.bestStreak = current }
+        data.lastKnownStreak = current
+        persist()
+    }
+
+    // MARK: - Pinned axes (Phase 6a)
+
+    /// Axes the user has pinned in Profile. Used by `recomputeAndStoreScore`
+    /// to reweight the composite.
+    var pinnedAxes: Set<SkillAxis> { data.pinnedAxes }
+
+    /// Set the user's pinned axes (max 3). Recomputes the score so the
+    /// header reflects the new weighting immediately.
+    func setPinnedAxes(_ axes: Set<SkillAxis>) {
+        data.pinnedAxes = Set(axes.prefix(3))
+        let repo = LocalContentRepository()
+        recomputeAndStoreScore(moduleIds: repo.allModules().map(\.id))
+    }
 
     // MARK: - Milestones
 
@@ -357,8 +405,33 @@ final class ProgressStore: ObservableObject {
         data.hasCompletedLesson(lessonId)
     }
 
+    /// "Was this lesson ever mastered" — does NOT consider mastery decay.
+    /// Most UI surfaces want `hasMasteredLessonNow` instead.
     func hasMasteredLesson(_ lessonId: String) -> Bool {
         data.hasMasteredLesson(lessonId)
+    }
+
+    /// "Is this lesson *currently* mastered" — applies the Phase 6a mastery
+    /// decay rule. A lesson reverts to "attempted" if the user's recent
+    /// 3 attempts on its templates average <60%. Use this for the gold
+    /// checkmark, world-conquered crown, pack progress, and the
+    /// continue-card resume target.
+    func hasMasteredLessonNow(_ lessonId: String) -> Bool {
+        guard data.hasMasteredLesson(lessonId) else { return false }
+        // Mastery decay check: pull the lesson's template IDs, then the
+        // user's last 3 attempts on any of them. Average < 60% revokes.
+        let repo = LocalContentRepository()
+        guard let lesson = repo.lesson(id: lessonId) else { return true }
+        let templateIds = Set(lesson.quizTemplateIds)
+        let recentAttempts: [QuestionResult] = data.sessions
+            .sorted(by: { $0.date > $1.date })
+            .flatMap { $0.questionResults.filter { templateIds.contains($0.templateId) } }
+            .prefix(3)
+            .map { $0 }
+        guard recentAttempts.count >= 3 else { return true }
+        let correctCount = recentAttempts.filter(\.isCorrect).count
+        let avg = Double(correctCount) / Double(recentAttempts.count)
+        return avg >= 0.60
     }
 
     func skillLevel(moduleId: String) -> Int {
@@ -415,16 +488,11 @@ final class ProgressStore: ObservableObject {
     /// Convenience: clear the focus pack.
     func clearFocusPack() { setFocusPack(nil) }
 
-    /// Mastered-lesson IDs across all sessions. Derived; not stored.
+    /// Mastered-lesson IDs across all sessions, with Phase 6a decay
+    /// applied. A lesson appears iff `hasMasteredLessonNow` returns true.
     var masteredLessonIds: Set<String> {
-        // A lesson is mastered iff any prior session for it scored >= 75%.
-        var ids: Set<String> = []
-        for session in data.sessions {
-            guard session.totalCount > 0 else { continue }
-            let acc = Double(session.correctCount) / Double(session.totalCount)
-            if acc >= 0.75 { ids.insert(session.lessonId) }
-        }
-        return ids
+        let candidateIds = Set(data.sessions.map { $0.lessonId })
+        return candidateIds.filter { hasMasteredLessonNow($0) }
     }
 
     /// Mastered/total for a specific pack id.
@@ -495,7 +563,7 @@ final class ProgressStore: ObservableObject {
             sessions: sessionsWithDrillAttribution(),
             repository: LocalContentRepository()
         )
-        return results.first { $0.axis == axis }?.evidence ?? .untested
+        return results.first { $0.axis == axis }?.evidence ?? .notStarted
     }
 
     /// Per-axis results across the whole user history. Used by Progress UI.
@@ -508,8 +576,32 @@ final class ProgressStore: ObservableObject {
 
     /// Dynamic subtitle string ("Solid money sense. Strongest: Debt. Focus
     /// next: Investing.") for the header below the score ring.
+    ///
+    /// Phase 6a — alternates between "Focus next: weakest" and "Biggest
+    /// gain this week" so the subtitle never leads with weakness on
+    /// successive renders. Parity is derived deterministically from
+    /// `scoreHistory.count` (no extra state needed); falls back gracefully
+    /// to "Focus next" when no positive week-over-week improvement exists.
     var numindSubtitle: String {
-        NumindScoreEngine.subtitle(numindAxisResults, composite: numindScore)
+        let results = numindAxisResults
+        let variant: NumindScoreEngine.SubtitleVariant =
+            (data.scoreHistory.count % 2 == 0) ? .strongestAndWeakest : .strongestAndBiggestGain
+
+        // Build the prior-axis snapshot from the nearest score entry at
+        // least 7 days old. Empty dict if no history that far back.
+        var prior: [SkillAxis: Int] = [:]
+        for axis in SkillAxis.allCases {
+            if let s = numindScore(forAxis: axis, daysAgo: 7) {
+                prior[axis] = s
+            }
+        }
+
+        return NumindScoreEngine.subtitle(
+            results,
+            composite: numindScore,
+            variant: variant,
+            priorAxisScores: prior
+        )
     }
 
     /// Pack recommended next, based on the user's weakest measured axis.
@@ -525,7 +617,7 @@ final class ProgressStore: ObservableObject {
         guard !unfinished.isEmpty else { return nil }
 
         // Find weakest measured axis (Early Read+)
-        let results = numindAxisResults.filter { $0.evidence != .untested }
+        let results = numindAxisResults.filter { $0.evidence != .notStarted }
         if let weakest = results.min(by: { $0.score < $1.score }) {
             if let match = unfinished.first(where: { $0.primarySkillAxis == weakest.axis }) {
                 return match
@@ -562,7 +654,7 @@ final class ProgressStore: ObservableObject {
         for r in results {
             axisScores[r.axis.rawValue] = r.score
         }
-        let overall = NumindScoreEngine.composite(results)
+        let overall = NumindScoreEngine.composite(results, pinnedAxes: data.pinnedAxes)
 
         let entry = ScoreEntry(date: Date(), overallScore: overall, axisScores: axisScores)
         data.scoreHistory.append(entry)

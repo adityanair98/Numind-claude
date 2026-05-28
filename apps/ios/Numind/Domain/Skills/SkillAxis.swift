@@ -150,29 +150,33 @@ enum QuestionMultiplier {
 /// Evidence labels per axis — communicates score confidence to the user.
 /// Thresholds are by distinct-question-count on that axis (any source: pack,
 /// lesson quiz, Daily Workout, drill mode).
+///
+/// Phase 6a rename: clinical/deficit-coded language ("Untested", "Early Read")
+/// became growth-coded ("Not started", "Warming up") to remove a known
+/// drop-out trigger (the audit's growth-mindset finding).
 enum EvidenceLevel: String, Codable, Equatable {
-    case untested   // 0-4 questions — score hidden, axis dimmed on radar
-    case earlyRead  // 5-14 questions — score shown with "Early Read" label
-    case developing // 15-29 questions across ≥2 days
-    case reliable   // 30+ questions, ≥3 distinct days, ≥2 scenario questions
+    case notStarted = "untested"      // 0-4 questions — axis hidden from radar
+    case warmingUp  = "earlyRead"     // 5-14 questions — score visible with "Warming up" label
+    case developing = "developing"    // 15-29 questions across ≥2 days
+    case reliable   = "reliable"      // 30+ questions, ≥3 distinct days, ≥2 scenario questions
 
     /// User-facing label (no abbreviation; rendered as small text under the axis score).
     var label: String {
         switch self {
-        case .untested:   return "Untested"
-        case .earlyRead:  return "Early Read"
+        case .notStarted: return "Not started"
+        case .warmingUp:  return "Warming up"
         case .developing: return "Developing"
         case .reliable:   return "Reliable"
         }
     }
 
     /// Coverage weight — used in the composite formula's coverage factor.
-    /// Untested = 0 (axis not measured). Early Read = half (signal but not strong).
+    /// Not started = 0 (axis not measured). Warming up = half (signal but not strong).
     /// Developing + Reliable = full (axis counts as covered).
     var coverageWeight: Double {
         switch self {
-        case .untested:   return 0.0
-        case .earlyRead:  return 0.5
+        case .notStarted: return 0.0
+        case .warmingUp:  return 0.5
         case .developing: return 1.0
         case .reliable:   return 1.0
         }

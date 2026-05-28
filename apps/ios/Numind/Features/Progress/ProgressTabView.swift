@@ -225,7 +225,7 @@ struct ProgressTabView: View {
                 let current = axisResults.map { r in
                     RadarChartView.Axis(
                         label: r.axis.shortName,
-                        value: r.evidence == .untested ? 0 : Double(r.score) / 100.0
+                        value: r.evidence == .notStarted ? 0 : Double(r.score) / 100.0
                     )
                 }
                 RadarChartView(axes: current, previousAxes: nil, size: 220)
@@ -238,7 +238,7 @@ struct ProgressTabView: View {
                         HStack {
                             Text(r.axis.shortName)
                                 .font(Theme.Typography.small)
-                                .foregroundStyle(Theme.Colors.deepNavy.opacity(r.evidence == .untested ? 0.45 : 1.0))
+                                .foregroundStyle(Theme.Colors.deepNavy.opacity(r.evidence == .notStarted ? 0.45 : 1.0))
                             Spacer()
                             Text(r.evidence.label)
                                 .font(Theme.Typography.small)
@@ -1036,8 +1036,8 @@ struct ProgressTabView: View {
 
     private func evidenceColor(_ level: EvidenceLevel) -> Color {
         switch level {
-        case .untested:   return Theme.Colors.mutedText.opacity(0.55)
-        case .earlyRead:  return Theme.Colors.warmOrange
+        case .notStarted: return Theme.Colors.mutedText.opacity(0.55)
+        case .warmingUp:  return Theme.Colors.warmOrange
         case .developing: return Theme.Colors.primaryBlue
         case .reliable:   return Theme.Colors.growthGreen
         }

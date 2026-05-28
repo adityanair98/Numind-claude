@@ -57,13 +57,25 @@ struct DailyChallengeEngine {
             return ids
         }()
 
-        // ── Slot 1-3: pack-priority templates ─────────────────────────────
-        // When a focus pack is set, pick templates from the pack's next 3
+        // Pool needed up-front for both the SRS-overdue check and the
+        // remaining-slot selection.
+        let pool = repository.allTemplates()
+        guard !pool.isEmpty else { return [] }
+
+        // Phase 6a — when the user has a meaningful SRS backlog, pivot to
+        // a review-only workout. Otherwise the pack-priority slots would
+        // crowd out retention practice.
+        let overdueIds = SpacedRepetitionEngine.overdueTemplateIds(in: sessions, pool: pool)
+        let reviewOnlyMode = overdueIds.count >= 5
+
+        // ── Slot 1-2: pack-priority templates ─────────────────────────────
+        // Phase 6a — capped at 2 (was 3). When a focus pack is set AND the
+        // user isn't behind on SRS, pick templates from the pack's next 2
         // undone lessons (in pack order). Each lesson contributes 1 template.
         var packTemplates: [QuizTemplate] = []
-        if let pack = focusPack {
+        if let pack = focusPack, !reviewOnlyMode {
             let packLessonIds = pack.lessonIds.filter { !masteredIds.contains($0) }
-            let packSlots = min(3, packLessonIds.count, count)
+            let packSlots = min(2, packLessonIds.count, count)
             for lessonId in packLessonIds.prefix(packSlots) {
                 let templatesForLesson = repository.templates(for: lessonId)
                 if let pick = templatesForLesson.randomElement(using: &rng) {
@@ -71,10 +83,6 @@ struct DailyChallengeEngine {
                 }
             }
         }
-
-        // ── Remaining slots: standard SRS pool, excluding pack-picked ─────
-        let pool = repository.allTemplates()
-        guard !pool.isEmpty else { return [] }
 
         let pickedPackIds = Set(packTemplates.map(\.id))
         var remaining = pool.filter { !pickedPackIds.contains($0.id) }

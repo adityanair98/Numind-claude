@@ -37,16 +37,13 @@ enum BadgeCatalog {
         Badge(id: "accuracy_80",       name: "Sharp Eye",         description: "Reach 80% overall accuracy (20+ questions)",         icon: "target",                   tier: .silver),
         Badge(id: "accuracy_90",       name: "Laser Focus",       description: "Reach 90% overall accuracy (20+ questions)",         icon: "scope",                    tier: .gold),
 
-        // MARK: Volume
+        // MARK: Volume (Phase 6a — retired questions_500, xp_500, xp_1000 as redundant)
         Badge(id: "questions_100",     name: "The Century",       description: "Answer 100 questions total",                         icon: "checkmark.circle.fill",    tier: .bronze),
-        Badge(id: "questions_500",     name: "Grinder",           description: "Answer 500 questions total",                         icon: "dumbbell.fill",            tier: .silver),
         Badge(id: "sessions_10",       name: "Dedicated",         description: "Complete 10 sessions",                               icon: "calendar.badge.checkmark", tier: .bronze),
         Badge(id: "sessions_25",       name: "Regular",           description: "Complete 25 sessions",                               icon: "calendar.badge.checkmark", tier: .silver),
 
         // MARK: XP
         Badge(id: "xp_100",            name: "XP Rising",         description: "Earn 100 total XP",                                  icon: "arrow.up.circle.fill",     tier: .bronze),
-        Badge(id: "xp_500",            name: "High Scorer",       description: "Earn 500 total XP",                                  icon: "trophy.fill",              tier: .silver),
-        Badge(id: "xp_1000",           name: "XP Machine",        description: "Earn 1,000 total XP",                               icon: "trophy.fill",              tier: .gold),
 
         // MARK: Speed
         Badge(id: "speed_5_sessions",  name: "Speed Freak",       description: "Earn speed bonuses in 5 different sessions",         icon: "bolt.fill",                tier: .silver),
@@ -58,6 +55,12 @@ enum BadgeCatalog {
 
         // MARK: Perfection
         Badge(id: "triple_perfect",    name: "Hat Trick",         description: "Score 100% in 3 different sessions",                 icon: "crown.fill",               tier: .gold),
+
+        // MARK: Retention (Phase 6a)
+        Badge(id: "remembered_5",      name: "It Stuck",          description: "Recall 5 questions correctly after a 2-week gap",    icon: "brain.head.profile",       tier: .gold),
+
+        // MARK: Real-world (Phase 6a)
+        Badge(id: "real_world",        name: "Real-World Ready",  description: "Nail 80%+ on 10+ real-decision scenario questions",  icon: "house.fill",               tier: .gold),
     ]
 
     static func badge(for id: String) -> Badge? {

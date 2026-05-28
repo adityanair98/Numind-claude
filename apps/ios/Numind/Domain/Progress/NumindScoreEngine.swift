@@ -69,8 +69,18 @@ enum NumindScoreEngine {
         let chronological = sessions.sorted { $0.date < $1.date }
 
         let cal = Calendar.current
+        let now = Date()
 
         for session in chronological {
+            // Phase 6a — recency decay. Older attempts contribute less to
+            // both earnedPoints AND maxPoints, so the per-axis score tracks
+            // *current* competency rather than lifetime accumulation.
+            // 0.95^days means ~50% weight at 14 days, ~20% at 30 days,
+            // ~5% at 60 days. A user nailing today after historically
+            // bombing sees their score rise; the reverse drops it.
+            let daysAgo = max(0.0, now.timeIntervalSince(session.date) / 86400)
+            let recencyWeight = pow(0.95, daysAgo)
+
             for qr in session.questionResults {
                 guard let lesson = repository.lesson(forTemplateId: qr.templateId)
                 else { continue }
@@ -104,9 +114,9 @@ enum NumindScoreEngine {
                     seconds: qr.timeSpentSeconds
                 )
 
-                // Aggregate points
+                // Aggregate points (recency-weighted — see comment above the loop).
                 let isCorrect = qr.isCorrect ? 1.0 : 0.0
-                let combined = diffMult * reviewMult * speedMult
+                let combined = diffMult * reviewMult * speedMult * recencyWeight
                 let earnedAttempt = isCorrect * combined
                 let maxAttempt = combined  // Max if perfectly correct
 
@@ -170,43 +180,80 @@ enum NumindScoreEngine {
     }
 
     /// Composite Numind Score across all 7 axes, with coverage cap and
-    /// imbalance penalty applied. Returns 0..maxScore.
-    static func composite(_ results: [AxisResult]) -> Int {
-        // Weighted radar avg (use compositeWeight per axis, normalized).
-        let weighted = results.reduce(0.0) { $0 + Double($1.score) * $1.axis.compositeWeight }
-        // weights sum to 1.0, so this is already a weighted mean
+    /// exploration bonus applied. Returns 0..maxScore.
+    ///
+    /// Phase 6a change: dropped the stddev-based imbalance penalty (which
+    /// punished users who specialized in their problem area — the opposite
+    /// of the product promise). Replaced with a positive-only exploration
+    /// bonus that rewards breadth without penalizing depth. Optionally
+    /// reweights by `pinnedAxes` so users can foreground the axes they
+    /// care about.
+    ///
+    /// - Parameter pinnedAxes: When non-empty, pinned axes contribute 60%
+    ///   of the weighted average vs 40% for the other axes. Default empty
+    ///   = standard `compositeWeight`-only weighting.
+    static func composite(
+        _ results: [AxisResult],
+        pinnedAxes: Set<SkillAxis> = []
+    ) -> Int {
+        // Weighted radar avg — per-axis `compositeWeight`, optionally
+        // reweighted around the user's pinned axes.
+        let weighted: Double
+        if pinnedAxes.isEmpty {
+            // weights sum to 1.0; this is the standard weighted mean.
+            weighted = results.reduce(0.0) { $0 + Double($1.score) * $1.axis.compositeWeight }
+        } else {
+            let pinned = results.filter { pinnedAxes.contains($0.axis) }
+            let other  = results.filter { !pinnedAxes.contains($0.axis) }
+            let pinnedAvg = pinned.isEmpty ? 0
+                : pinned.reduce(0.0) { $0 + Double($1.score) } / Double(pinned.count)
+            let otherAvg  = other.isEmpty ? 0
+                : other.reduce(0.0) { $0 + Double($1.score) } / Double(other.count)
+            weighted = pinnedAvg * 0.6 + otherAvg * 0.4
+        }
 
         // Coverage factor: how many axes have meaningful evidence.
         let coverage = results.reduce(0.0) { $0 + $1.evidence.coverageWeight }
         let coverageFactor = min(1.0, coverage / 7.0 + 0.4)
         // +0.4 floor so a single tested axis doesn't crater the score by 7x.
 
-        // Imbalance penalty: stddev across SCORED axes, scaled by 0.4.
-        let scored = results.filter { $0.evidence != .untested }
-        let imbalance: Double
-        if scored.count >= 2 {
-            let mean = scored.reduce(0.0) { $0 + Double($1.score) } / Double(scored.count)
-            let variance = scored.reduce(0.0) { $0 + pow(Double($1.score) - mean, 2) } / Double(scored.count)
-            let sd = sqrt(variance)
-            imbalance = sd * 0.4
-        } else {
-            imbalance = 0
-        }
+        // Exploration bonus: +5 per measured axis beyond the first, capped
+        // at +20. Positive-only — rewards breadth without punishing depth.
+        let coveredCount = results.filter { $0.evidence != .notStarted }.count
+        let explorationBonus = min(20.0, 5.0 * Double(max(0, coveredCount - 1)))
 
-        let raw = max(0, weighted * coverageFactor - imbalance)
+        let raw = max(0, weighted * coverageFactor + explorationBonus)
 
-        // Coverage cap (count axes with at least Early Read evidence).
-        let coveredCount = results.filter { $0.evidence != .untested }.count
+        // Coverage cap (count axes with at least Warming up evidence).
         let capIndex = max(0, min(coverageCaps.count - 1, coveredCount))
         let cap = coverageCaps[capIndex]
 
         return Int(min(Double(cap), raw).rounded())
     }
 
-    /// A short, dynamic subtitle ("Solid money sense.") + top-2 / bottom-2
-    /// axis callout. Used as Home / Progress header copy.
-    static func subtitle(_ results: [AxisResult], composite: Int) -> String {
-        // Score band band copy
+    /// Variant of the subtitle to render. `ProgressStore` alternates between
+    /// these so the same flavor doesn't show twice in a row (Phase 6a — the
+    /// audit's "leading with weakness is demotivating" finding).
+    enum SubtitleVariant: String, Codable {
+        case strongestAndWeakest    // "Strongest: X. Focus next: Y."
+        case strongestAndBiggestGain // "Strongest: X. Biggest gain this week: Y."
+    }
+
+    /// A short, dynamic subtitle ("Solid money sense.") + axis callout.
+    /// Used as Home / Progress header copy.
+    ///
+    /// - Parameter results: Current per-axis snapshot.
+    /// - Parameter composite: Today's composite score.
+    /// - Parameter variant: Which flavor of axis callout to render.
+    /// - Parameter priorAxisScores: Per-axis scores N days ago (typically 7).
+    ///   Required for `strongestAndBiggestGain` variant; when missing or no
+    ///   positive deltas exist, falls back to `strongestAndWeakest`.
+    static func subtitle(
+        _ results: [AxisResult],
+        composite: Int,
+        variant: SubtitleVariant = .strongestAndWeakest,
+        priorAxisScores: [SkillAxis: Int] = [:]
+    ) -> String {
         let bandCopy: String
         switch composite {
         case 90...:  bandCopy = "Numind master."
@@ -217,18 +264,39 @@ enum NumindScoreEngine {
         default:     bandCopy = "Just getting started."
         }
 
-        let scored = results.filter { $0.evidence != .untested }
+        let scored = results.filter { $0.evidence != .notStarted }
         guard !scored.isEmpty else { return bandCopy }
 
-        let strongest = scored.max(by: { $0.score < $1.score })?.axis.displayName
-        let weakest = scored.min(by: { $0.score < $1.score })?.axis.displayName
+        let strongestAxis = scored.max(by: { $0.score < $1.score })?.axis
+        guard let strongest = strongestAxis else { return bandCopy }
+        let strongestName = strongest.displayName
 
-        if let s = strongest, let w = weakest, s != w {
-            return "\(bandCopy) Strongest: \(s). Focus next: \(w)."
-        } else if let s = strongest {
-            return "\(bandCopy) Strongest: \(s)."
+        switch variant {
+        case .strongestAndBiggestGain:
+            // Find the axis with the biggest positive delta vs the prior snapshot.
+            var biggestGainAxis: SkillAxis?
+            var biggestGainDelta = 0
+            for r in scored {
+                let prior = priorAxisScores[r.axis] ?? 0
+                let delta = r.score - prior
+                if delta > biggestGainDelta {
+                    biggestGainDelta = delta
+                    biggestGainAxis = r.axis
+                }
+            }
+            if let g = biggestGainAxis, g != strongest, biggestGainDelta > 0 {
+                return "\(bandCopy) Strongest: \(strongestName). Biggest gain this week: \(g.displayName)."
+            }
+            // No improvement — fall through to strongest+weakest.
+            fallthrough
+
+        case .strongestAndWeakest:
+            let weakest = scored.min(by: { $0.score < $1.score })?.axis
+            if let w = weakest, w != strongest {
+                return "\(bandCopy) Strongest: \(strongestName). Focus next: \(w.displayName)."
+            }
+            return "\(bandCopy) Strongest: \(strongestName)."
         }
-        return bandCopy
     }
 
     // MARK: - Legacy per-module API (compat shim)
@@ -242,7 +310,7 @@ enum NumindScoreEngine {
         let primaryAxes = Set(lessons.compactMap { $0.primarySkill })
         guard !primaryAxes.isEmpty else { return 0 }
         let results = axisResults(sessions: sessions, repository: repo)
-        let relevant = results.filter { primaryAxes.contains($0.axis) && $0.evidence != .untested }
+        let relevant = results.filter { primaryAxes.contains($0.axis) && $0.evidence != .notStarted }
         guard !relevant.isEmpty else { return 0 }
         let avg = relevant.reduce(0) { $0 + $1.score } / relevant.count
         return avg
@@ -340,9 +408,9 @@ enum NumindScoreEngine {
         case 15... where distinctDays >= 2:
             return .developing
         case 5...:
-            return .earlyRead
+            return .warmingUp
         default:
-            return .untested
+            return .notStarted
         }
     }
 }

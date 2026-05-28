@@ -49,21 +49,78 @@ enum BadgeEvaluator {
         if totalQs >= 20 && accuracy >= 0.80 { ids.insert("accuracy_80") }
         if totalQs >= 20 && accuracy >= 0.90 { ids.insert("accuracy_90") }
 
-        // MARK: Volume
+        // MARK: Volume (Phase 6a — retired questions_500, xp_500, xp_1000
+        // as redundant cumulative-grind badges)
         if totalQs >= 100    { ids.insert("questions_100") }
-        if totalQs >= 500    { ids.insert("questions_500") }
         if sessionCount >= 10 { ids.insert("sessions_10") }
         if sessionCount >= 25 { ids.insert("sessions_25") }
 
         // MARK: XP
-        if xp >= 100  { ids.insert("xp_100") }
-        if xp >= 500  { ids.insert("xp_500") }
-        if xp >= 1000 { ids.insert("xp_1000") }
+        if xp >= 100 { ids.insert("xp_100") }
 
         // MARK: Breadth
         if uniqueLessons >= 5 { ids.insert("lessons_5") }
         if uniqueModules >= 3 { ids.insert("multi_module") }
 
+        // MARK: Retention (Phase 6a — rewards the actual product promise:
+        // do you remember this when the gap re-tests you?)
+        if rememberedTemplateCount(in: sessions) >= 5 { ids.insert("remembered_5") }
+
+        // MARK: Real-world (Phase 6a — rewards accuracy on scenario-eligible
+        // questions, the closest proxy for "would handle this in real life")
+        if scenarioAccuracy(in: sessions).qualifies { ids.insert("real_world") }
+
         return ids
+    }
+
+    /// Count of distinct templates where the user got the question right
+    /// after a ≥14-day gap since the prior attempt. The user demonstrably
+    /// remembered the math, not just memorized it in the moment.
+    private static func rememberedTemplateCount(in sessions: [SessionRecord]) -> Int {
+        // Group attempts by template, in chronological order.
+        var perTemplate: [String: [(date: Date, isCorrect: Bool)]] = [:]
+        for session in sessions.sorted(by: { $0.date < $1.date }) {
+            for qr in session.questionResults {
+                perTemplate[qr.templateId, default: []].append(
+                    (date: session.date, isCorrect: qr.isCorrect)
+                )
+            }
+        }
+        var count = 0
+        for (_, attempts) in perTemplate where attempts.count >= 2 {
+            // Look for ANY adjacent pair separated by ≥14 days where the
+            // later attempt is correct.
+            var earned = false
+            for i in 1..<attempts.count {
+                let gap = attempts[i].date.timeIntervalSince(attempts[i - 1].date) / 86_400
+                if gap >= 14 && attempts[i].isCorrect {
+                    earned = true
+                    break
+                }
+            }
+            if earned { count += 1 }
+        }
+        return count
+    }
+
+    /// Accuracy across scenario-eligible question results, plus the count.
+    /// "Real-world" badge requires ≥10 attempts at ≥80% accuracy.
+    private static func scenarioAccuracy(
+        in sessions: [SessionRecord]
+    ) -> (qualifies: Bool, count: Int, accuracy: Double) {
+        let repo = LocalContentRepository()
+        var total = 0
+        var correct = 0
+        for session in sessions {
+            for qr in session.questionResults {
+                guard let lesson = repo.lesson(forTemplateId: qr.templateId),
+                      lesson.isScenarioEligible else { continue }
+                total += 1
+                if qr.isCorrect { correct += 1 }
+            }
+        }
+        guard total > 0 else { return (false, 0, 0) }
+        let acc = Double(correct) / Double(total)
+        return (qualifies: total >= 10 && acc >= 0.80, count: total, accuracy: acc)
     }
 }

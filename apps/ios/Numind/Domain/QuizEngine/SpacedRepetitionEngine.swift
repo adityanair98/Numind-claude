@@ -63,8 +63,26 @@ enum SpacedRepetitionEngine {
         let accuracy = Double(recentCorrect) / Double(recent.count)
         let fastMastery = recent.filter { $0.isCorrect && $0.seconds < 8 }.count
 
-        let interval = reviewInterval(accuracy: accuracy, fastMastery: fastMastery)
+        // Phase 6a — once a template has 3+ consecutive correct attempts at the
+        // top of the ladder, it gets graduated to the long-term tier (30/60 day
+        // intervals) so the user isn't drilled on what they've clearly retained.
+        let consecutiveCorrect = attempts.reversed().prefix { $0.isCorrect }.count
+        let longTermTier = consecutiveCorrect >= 3 && accuracy >= 1.0
+            ? longTermInterval(consecutiveCorrect: consecutiveCorrect, totalAttempts: attempts.count)
+            : nil
+
+        let interval = longTermTier ?? reviewInterval(accuracy: accuracy, fastMastery: fastMastery)
         return daysSinceLast - interval          // positive = overdue
+    }
+
+    /// IDs of templates that are currently overdue (priorityScore > 0).
+    /// Used by `DailyChallengeEngine` to gate pack-priority slots — when
+    /// the user has a backlog of overdue items, the Daily Workout pivots
+    /// to a review-only composition that day (Phase 6a).
+    static func overdueTemplateIds(in sessions: [SessionRecord], pool: [QuizTemplate]) -> [String] {
+        pool
+            .filter { priorityScore(templateId: $0.id, in: sessions) > 0 }
+            .map(\.id)
     }
 
     // MARK: - Due-count badge helper
@@ -91,6 +109,18 @@ enum SpacedRepetitionEngine {
         case 0.8...:                     return 2    // mostly right: 2 days
         case 0.6...:                     return 1    // more right than wrong: daily
         default:                         return 0.5  // struggling: twice a day
+        }
+    }
+
+    /// Phase 6a — long-term review ladder. Once a template has 3+
+    /// consecutive correct attempts at the standard ladder's top tier,
+    /// the user has demonstrably retained it. Graduate to 14/30/60-day
+    /// intervals so we're not drilling them on what they already know.
+    private static func longTermInterval(consecutiveCorrect: Int, totalAttempts: Int) -> Double {
+        switch consecutiveCorrect {
+        case 3...4:  return 14
+        case 5...7:  return 30
+        default:     return 60
         }
     }
 }

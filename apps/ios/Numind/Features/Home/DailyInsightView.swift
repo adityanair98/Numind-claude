@@ -51,7 +51,7 @@ struct DailyInsightView: View {
     /// (handled by mapping value to 0). For the weakness/recommendation
     /// logic, we filter to measured axes only.
     private var measuredAxes: [AxisScore] {
-        axisScores.filter { $0.evidence != .untested && $0.score > 0 }
+        axisScores.filter { $0.evidence != .notStarted && $0.score > 0 }
     }
 
     /// Weakest axis from the session's axis set — not overall.
@@ -159,7 +159,7 @@ struct DailyInsightView: View {
         let current = axisScores.map { row in
             RadarChartView.Axis(
                 label: row.axis.shortName,
-                value: row.evidence == .untested ? 0 : Double(row.score) / 100.0
+                value: row.evidence == .notStarted ? 0 : Double(row.score) / 100.0
             )
         }
         let previous: [RadarChartView.Axis]? =
