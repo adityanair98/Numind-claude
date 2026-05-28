@@ -23,7 +23,7 @@ struct ToolsView: View {
                     row(icon: "tag.fill", tint: Theme.Colors.warmOrange,
                         name: "Discount & sales tax",
                         desc: "What you'll actually pay after a sale") {
-                        ComingSoonCalculator(title: "Discount & sales tax")
+                        DiscountTaxCalculator()
                     }
                 }
 

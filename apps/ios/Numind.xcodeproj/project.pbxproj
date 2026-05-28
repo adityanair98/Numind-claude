@@ -67,6 +67,7 @@
 		E5A4B2C3D4E5F60718293A4F /* WorldCompletionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B5C3D4E5F60718293A4B60 /* WorldCompletionSheet.swift */; };
 		E6A5B2C3D4E5F60718293A50 /* Celebration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6C3D4E5F60718293A4B61 /* Celebration.swift */; };
 		E7A6B2C3D4E5F60718293A51 /* WorldHeroPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B7C3D4E5F60718293A4B62 /* WorldHeroPage.swift */; };
+		DE4F3CBC595B0DCE2C7E513B /* DiscountTaxCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11890A592C3DB3CD43BA829F /* DiscountTaxCalculator.swift */; };
 		A8A50EAF0A4986A7871FEA76 /* CalculatorShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94203C96D4C31474E31C5E5 /* CalculatorShell.swift */; };
 		C5E72CD8F6A3BAA0BC4E4AA0 /* ToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC25576DE3CFB7978C8055 /* ToolsView.swift */; };
 		0F545B9518A76971941437D5 /* TipSplitCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B621B5875552058567FF33 /* TipSplitCalculator.swift */; };
@@ -299,6 +300,7 @@
 		F6B5C3D4E5F60718293A4B60 /* WorldCompletionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldCompletionSheet.swift; sourceTree = "<group>"; };
 		F7B6C3D4E5F60718293A4B61 /* Celebration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Celebration.swift; sourceTree = "<group>"; };
 		F8B7C3D4E5F60718293A4B62 /* WorldHeroPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldHeroPage.swift; sourceTree = "<group>"; };
+		11890A592C3DB3CD43BA829F /* DiscountTaxCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/DiscountTaxCalculator.swift"; sourceTree = "<group>"; };
 		C94203C96D4C31474E31C5E5 /* CalculatorShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/CalculatorShell.swift"; sourceTree = "<group>"; };
 		8FEC25576DE3CFB7978C8055 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/ToolsView.swift"; sourceTree = "<group>"; };
 		65B621B5875552058567FF33 /* TipSplitCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/TipSplitCalculator.swift"; sourceTree = "<group>"; };
@@ -745,6 +747,7 @@
 				E25112B5A1394145F294F64F /* LearnView.swift */,
 				30A8490760BAE7C9FD71F012 /* LearnViewModel.swift */,
 				F8B7C3D4E5F60718293A4B62 /* WorldHeroPage.swift */,
+				11890A592C3DB3CD43BA829F /* DiscountTaxCalculator.swift */,
 				C94203C96D4C31474E31C5E5 /* CalculatorShell.swift */,
 				8FEC25576DE3CFB7978C8055 /* ToolsView.swift */,
 				65B621B5875552058567FF33 /* TipSplitCalculator.swift */,
@@ -991,6 +994,7 @@
 				E5A4B2C3D4E5F60718293A4F /* WorldCompletionSheet.swift in Sources */,
 				E6A5B2C3D4E5F60718293A50 /* Celebration.swift in Sources */,
 				E7A6B2C3D4E5F60718293A51 /* WorldHeroPage.swift in Sources */,
+				DE4F3CBC595B0DCE2C7E513B /* DiscountTaxCalculator.swift in Sources */,
 				A8A50EAF0A4986A7871FEA76 /* CalculatorShell.swift in Sources */,
 				C5E72CD8F6A3BAA0BC4E4AA0 /* ToolsView.swift in Sources */,
 				0F545B9518A76971941437D5 /* TipSplitCalculator.swift in Sources */,
