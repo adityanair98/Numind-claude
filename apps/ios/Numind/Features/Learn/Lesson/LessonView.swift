@@ -14,6 +14,7 @@ struct LessonView: View {
     @State private var sessionNumindScore: Int = 0
     @State private var sessionScoreDelta: Int = 0
     @State private var pendingLevelUp: LevelUpInfo? = nil
+    @State private var showCalc = false
 
     var body: some View {
         NavigationStack {
@@ -124,6 +125,20 @@ struct LessonView: View {
                     Image(systemName: "xmark")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundStyle(Theme.Colors.deepNavy)
+                }
+            }
+        }
+        .sheet(isPresented: $showCalc) {
+            if let slug = viewModel.lesson.relatedCalculatorSlug {
+                NavigationStack {
+                    CalculatorRegistry.view(for: slug)
+                        .toolbar {
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Done") { showCalc = false }
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Theme.Colors.primaryBlue)
+                            }
+                        }
                 }
             }
         }
@@ -341,10 +356,33 @@ struct LessonView: View {
             .frame(height: 24)
             .allowsHitTesting(false)
 
-            PillButton("Start quiz") { startQuiz() }
-                .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                .padding(.bottom, 28)
-                .background(Theme.Colors.softBackground)
+            VStack(spacing: 10) {
+                // "Try this with your numbers" — opens the matching calculator (Phase 7a)
+                if let slug = viewModel.lesson.relatedCalculatorSlug,
+                   let name = CalculatorRegistry.name(for: slug) {
+                    Button { showCalc = true } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "wrench.and.screwdriver")
+                                .font(.system(size: 13, weight: .semibold))
+                            Text("Try this in \(name)")
+                                .font(.system(size: 14, weight: .semibold))
+                            Image(systemName: "arrow.right")
+                                .font(.system(size: 12, weight: .bold))
+                        }
+                        .foregroundStyle(accent)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 44)
+                        .background(accent.opacity(0.12))
+                        .clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                }
+
+                PillButton("Start quiz") { startQuiz() }
+            }
+            .padding(.horizontal, Theme.Spacing.screenHorizontal)
+            .padding(.bottom, 28)
+            .background(Theme.Colors.softBackground)
         }
     }
 

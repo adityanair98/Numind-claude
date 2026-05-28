@@ -133,3 +133,35 @@ struct ComingSoonCalculator: View {
         }
     }
 }
+
+
+// MARK: - Calculator registry (Phase 7a)
+
+/// Maps a lesson's `relatedCalculatorSlug` to its display name + view, so
+/// lessons can surface a "Try this in […]" pill and present the calculator.
+enum CalculatorRegistry {
+    static func name(for slug: String) -> String? {
+        switch slug {
+        case "tip_split":          return "Tip & bill split"
+        case "discount_tax":       return "Discount & sales tax"
+        case "paycheck":           return "Paycheck"
+        case "cc_payoff":          return "Credit card payoff"
+        case "rent_affordability": return "Rent affordability"
+        case "hysa_growth":        return "Savings growth"
+        default:                   return nil
+        }
+    }
+
+    @ViewBuilder
+    static func view(for slug: String) -> some View {
+        switch slug {
+        case "tip_split":          TipSplitCalculator()
+        case "discount_tax":       DiscountTaxCalculator()
+        case "paycheck":           PaycheckCalculator()
+        case "cc_payoff":          CCPayoffCalculator()
+        case "rent_affordability": RentAffordabilityCalculator()
+        case "hysa_growth":        HYSAGrowthCalculator()
+        default:                   EmptyView()
+        }
+    }
+}
