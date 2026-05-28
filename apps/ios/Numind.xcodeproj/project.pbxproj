@@ -67,6 +67,8 @@
 		E5A4B2C3D4E5F60718293A4F /* WorldCompletionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B5C3D4E5F60718293A4B60 /* WorldCompletionSheet.swift */; };
 		E6A5B2C3D4E5F60718293A50 /* Celebration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6C3D4E5F60718293A4B61 /* Celebration.swift */; };
 		E7A6B2C3D4E5F60718293A51 /* WorldHeroPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B7C3D4E5F60718293A4B62 /* WorldHeroPage.swift */; };
+		65AF3E742FBC682998C2A46A /* SalaryConverterCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C5E65700927849D77FBF88 /* SalaryConverterCalculator.swift */; };
+		97B2AEDB5A18025768A5D710 /* LoanCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D46D7FCCF199FCC4E224A4 /* LoanCalculator.swift */; };
 		F665A3F9B7A338F5928400B0 /* CCPayoffCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0B3C2CC1A4C7E34620792C /* CCPayoffCalculator.swift */; };
 		29E58D9CF61EB8DC9C3A9757 /* RentAffordabilityCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4717538A58F1CDE2CD4F9E0 /* RentAffordabilityCalculator.swift */; };
 		0B544FD4F12E94339D72FDD4 /* HYSAGrowthCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F461D082E4D349005FAA181 /* HYSAGrowthCalculator.swift */; };
@@ -304,6 +306,8 @@
 		F6B5C3D4E5F60718293A4B60 /* WorldCompletionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldCompletionSheet.swift; sourceTree = "<group>"; };
 		F7B6C3D4E5F60718293A4B61 /* Celebration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Celebration.swift; sourceTree = "<group>"; };
 		F8B7C3D4E5F60718293A4B62 /* WorldHeroPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldHeroPage.swift; sourceTree = "<group>"; };
+		C3C5E65700927849D77FBF88 /* SalaryConverterCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/SalaryConverterCalculator.swift"; sourceTree = "<group>"; };
+		15D46D7FCCF199FCC4E224A4 /* LoanCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/LoanCalculator.swift"; sourceTree = "<group>"; };
 		3F0B3C2CC1A4C7E34620792C /* CCPayoffCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/CCPayoffCalculator.swift"; sourceTree = "<group>"; };
 		F4717538A58F1CDE2CD4F9E0 /* RentAffordabilityCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/RentAffordabilityCalculator.swift"; sourceTree = "<group>"; };
 		1F461D082E4D349005FAA181 /* HYSAGrowthCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/HYSAGrowthCalculator.swift"; sourceTree = "<group>"; };
@@ -755,6 +759,8 @@
 				E25112B5A1394145F294F64F /* LearnView.swift */,
 				30A8490760BAE7C9FD71F012 /* LearnViewModel.swift */,
 				F8B7C3D4E5F60718293A4B62 /* WorldHeroPage.swift */,
+				C3C5E65700927849D77FBF88 /* SalaryConverterCalculator.swift */,
+				15D46D7FCCF199FCC4E224A4 /* LoanCalculator.swift */,
 				3F0B3C2CC1A4C7E34620792C /* CCPayoffCalculator.swift */,
 				F4717538A58F1CDE2CD4F9E0 /* RentAffordabilityCalculator.swift */,
 				1F461D082E4D349005FAA181 /* HYSAGrowthCalculator.swift */,
@@ -1006,6 +1012,8 @@
 				E5A4B2C3D4E5F60718293A4F /* WorldCompletionSheet.swift in Sources */,
 				E6A5B2C3D4E5F60718293A50 /* Celebration.swift in Sources */,
 				E7A6B2C3D4E5F60718293A51 /* WorldHeroPage.swift in Sources */,
+				65AF3E742FBC682998C2A46A /* SalaryConverterCalculator.swift in Sources */,
+				97B2AEDB5A18025768A5D710 /* LoanCalculator.swift in Sources */,
 				F665A3F9B7A338F5928400B0 /* CCPayoffCalculator.swift in Sources */,
 				29E58D9CF61EB8DC9C3A9757 /* RentAffordabilityCalculator.swift in Sources */,
 				0B544FD4F12E94339D72FDD4 /* HYSAGrowthCalculator.swift in Sources */,

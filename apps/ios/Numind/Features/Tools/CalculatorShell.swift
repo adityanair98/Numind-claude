@@ -148,6 +148,8 @@ enum CalculatorRegistry {
         case "cc_payoff":          return "Credit card payoff"
         case "rent_affordability": return "Rent affordability"
         case "hysa_growth":        return "Savings growth"
+        case "salary_converter":   return "Salary converter"
+        case "loan":               return "Loan calculator"
         default:                   return nil
         }
     }
@@ -161,6 +163,8 @@ enum CalculatorRegistry {
         case "cc_payoff":          CCPayoffCalculator()
         case "rent_affordability": RentAffordabilityCalculator()
         case "hysa_growth":        HYSAGrowthCalculator()
+        case "salary_converter":   SalaryConverterCalculator()
+        case "loan":               LoanCalculator()
         default:                   EmptyView()
         }
     }

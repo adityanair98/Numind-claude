@@ -48,6 +48,16 @@ struct ToolsView: View {
                         desc: "What a high-yield account earns over time") {
                         HYSAGrowthCalculator()
                     }
+                    row(icon: "dollarsign.arrow.circlepath", tint: Theme.Colors.mindTeal,
+                        name: "Salary converter",
+                        desc: "Annual ↔ hourly ↔ monthly") {
+                        SalaryConverterCalculator()
+                    }
+                    row(icon: "doc.plaintext.fill", tint: Theme.Colors.primaryBlue,
+                        name: "Loan calculator",
+                        desc: "Monthly payment + total interest") {
+                        LoanCalculator()
+                    }
                 }
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
