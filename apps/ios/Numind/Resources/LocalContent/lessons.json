@@ -461,7 +461,8 @@
     "secondarySkills": [],
     "isCore": true,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this to compare two jobs that pay on different schedules."
+    "realWorldHint": "Use this to compare two jobs that pay on different schedules.",
+    "relatedCalculatorSlug": "salary_converter"
   },
   {
     "id": "inflation_adjusted_raise",
@@ -505,7 +506,8 @@
     "secondarySkills": [],
     "isCore": true,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this to instantly translate any hourly rate into a yearly salary."
+    "realWorldHint": "Use this to instantly translate any hourly rate into a yearly salary.",
+    "relatedCalculatorSlug": "salary_converter"
   },
   {
     "id": "salary_total_comp",
@@ -593,7 +595,8 @@
     ],
     "isCore": true,
     "isScenarioEligible": false,
-    "realWorldHint": "Run this before you set your 401(k) contribution rate."
+    "realWorldHint": "Run this before you set your 401(k) contribution rate.",
+    "relatedCalculatorSlug": "401k_impact"
   },
   {
     "id": "salary_rsu_basics",
@@ -662,7 +665,8 @@
     ],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Check this before you quit a job and possibly walk away from unvested match."
+    "realWorldHint": "Check this before you quit a job and possibly walk away from unvested match.",
+    "relatedCalculatorSlug": "401k_impact"
   },
   {
     "id": "salary_bonus_after_tax",
@@ -752,7 +756,8 @@
     ],
     "isCore": true,
     "isScenarioEligible": true,
-    "realWorldHint": "Run this on day one of a new job so you never leave free match on the table."
+    "realWorldHint": "Run this on day one of a new job so you never leave free match on the table.",
+    "relatedCalculatorSlug": "401k_impact"
   },
   {
     "id": "investing_roth_vs_traditional",
@@ -1179,7 +1184,8 @@
     ],
     "isCore": true,
     "isScenarioEligible": true,
-    "realWorldHint": "Run this before you sign any loan to see what it really costs."
+    "realWorldHint": "Run this before you sign any loan to see what it really costs.",
+    "relatedCalculatorSlug": "loan"
   },
   {
     "id": "debt_to_income",
@@ -1497,7 +1503,8 @@
     ],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this before you talk to a lender or tour your first home."
+    "realWorldHint": "Use this before you talk to a lender or tour your first home.",
+    "relatedCalculatorSlug": "mortgage"
   },
   {
     "id": "housing_cash_to_close",
@@ -1681,7 +1688,8 @@
     ],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this to estimate a real mortgage payment before you shop."
+    "realWorldHint": "Use this to estimate a real mortgage payment before you shop.",
+    "relatedCalculatorSlug": "mortgage"
   },
   {
     "id": "housing_lease_break",
@@ -1727,7 +1735,8 @@
     ],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this when everyone insists renting is 'throwing money away.'"
+    "realWorldHint": "Use this when everyone insists renting is 'throwing money away.'",
+    "relatedCalculatorSlug": "mortgage"
   },
   {
     "id": "concept_housing_lease_clauses",
@@ -2212,7 +2221,8 @@
     ],
     "isCore": true,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this at the dealership when they steer you toward the monthly payment."
+    "realWorldHint": "Use this at the dealership when they steer you toward the monthly payment.",
+    "relatedCalculatorSlug": "lease_vs_buy"
   },
   {
     "id": "car_loan_term",
@@ -2235,7 +2245,8 @@
     ],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this before you stretch a car loan to shrink the payment."
+    "realWorldHint": "Use this before you stretch a car loan to shrink the payment.",
+    "relatedCalculatorSlug": "loan"
   },
   {
     "id": "car_down_payment",
@@ -2325,7 +2336,8 @@
     ],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this to see what a car really costs beyond the payment."
+    "realWorldHint": "Use this to see what a car really costs beyond the payment.",
+    "relatedCalculatorSlug": "lease_vs_buy"
   },
   {
     "id": "car_lease_vs_buy",
@@ -2348,7 +2360,8 @@
     ],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this when you're deciding whether to lease or buy."
+    "realWorldHint": "Use this when you're deciding whether to lease or buy.",
+    "relatedCalculatorSlug": "lease_vs_buy"
   },
   {
     "id": "car_trade_in_vs_private",
@@ -2436,7 +2449,8 @@
     ],
     "isCore": true,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this to estimate your monthly payment before repayment starts."
+    "realWorldHint": "Use this to estimate your monthly payment before repayment starts.",
+    "relatedCalculatorSlug": "student_loan"
   },
   {
     "id": "student_loan_total_cost",
@@ -2459,7 +2473,8 @@
     ],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this to see what your loans really cost over their full life."
+    "realWorldHint": "Use this to see what your loans really cost over their full life.",
+    "relatedCalculatorSlug": "student_loan"
   },
   {
     "id": "student_loan_refinance",
@@ -2480,7 +2495,8 @@
     "secondarySkills": [],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Run this before refinancing to weigh savings against lost protections."
+    "realWorldHint": "Run this before refinancing to weigh savings against lost protections.",
+    "relatedCalculatorSlug": "student_loan"
   },
   {
     "id": "student_loan_idr",
@@ -2503,7 +2519,8 @@
     ],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this if your federal loan payment feels unaffordable on your income."
+    "realWorldHint": "Use this if your federal loan payment feels unaffordable on your income.",
+    "relatedCalculatorSlug": "student_loan"
   },
   {
     "id": "student_loan_pslf",
@@ -2589,7 +2606,8 @@
     "secondarySkills": [],
     "isCore": false,
     "isScenarioEligible": false,
-    "realWorldHint": "Use this when financing a kid's education and weighing federal vs private."
+    "realWorldHint": "Use this when financing a kid's education and weighing federal vs private.",
+    "relatedCalculatorSlug": "student_loan"
   },
   {
     "id": "concept_sl_subsidized_vs_unsubsidized",
