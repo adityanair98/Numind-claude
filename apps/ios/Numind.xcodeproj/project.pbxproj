@@ -59,6 +59,7 @@
 		584B85F183CFFBFC201170D0 /* DifficultyScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102958D4E3AFA3CE9EE37FD4 /* DifficultyScorer.swift */; };
 		5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A7139387185959BC6413FC /* Lesson.swift */; };
 		C3D5E1A8F291B36ABC5D7E10 /* Pack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D5E1A8F291B36ABC5D7E11 /* Pack.swift */; };
+		B0E7C9D14A3F2E5D6C7B8A91 /* SkillAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F8DAE25B403F6E7D8C9BA2 /* SkillAxis.swift */; };
 		D4E6F2B9F3A2C47BCD6E8F11 /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = D4E6F2B9F3A2C47BCD6E8F12 /* packs.json */; };
 		58972D81669005D6C506FD13 /* DailyChallengeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC02588669C25EEC373E8D3C /* DailyChallengeEngine.swift */; };
 		58F088554AE41474740F7800 /* LearnViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8490760BAE7C9FD71F012 /* LearnViewModel.swift */; };
@@ -280,6 +281,7 @@
 		B76C2BD234EFBD50AC49D59D /* ConfettiBurst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiBurst.swift; sourceTree = "<group>"; };
 		B9A7139387185959BC6413FC /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		C3D5E1A8F291B36ABC5D7E11 /* Pack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pack.swift; sourceTree = "<group>"; };
+		C1F8DAE25B403F6E7D8C9BA2 /* SkillAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillAxis.swift; sourceTree = "<group>"; };
 		D4E6F2B9F3A2C47BCD6E8F12 /* packs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = packs.json; sourceTree = "<group>"; };
 		BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindApp.swift; sourceTree = "<group>"; };
 		BB83070B8213CDD48CB52530 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -370,6 +372,14 @@
 				F375C1FCBCF06A3121E9C12C /* BadgeEvaluator.swift */,
 			);
 			path = Badges;
+			sourceTree = "<group>";
+		};
+		D2092FB36C514A7F8E9DACB3 /* Skills */ = {
+			isa = PBXGroup;
+			children = (
+				C1F8DAE25B403F6E7D8C9BA2 /* SkillAxis.swift */,
+			);
+			path = Skills;
 			sourceTree = "<group>";
 		};
 		28D7E95382CF37B810301490 /* Quiz */ = {
@@ -532,6 +542,7 @@
 				08D346ECF16B42C2ECF4935E /* Onboarding */,
 				E228F425BBCF1E829CE2C6BA /* Progress */,
 				44C6A312F7BA2F613EB4022F /* QuizEngine */,
+				D2092FB36C514A7F8E9DACB3 /* Skills */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -934,6 +945,7 @@
 				58F088554AE41474740F7800 /* LearnViewModel.swift in Sources */,
 				5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */,
 				C3D5E1A8F291B36ABC5D7E10 /* Pack.swift in Sources */,
+				B0E7C9D14A3F2E5D6C7B8A91 /* SkillAxis.swift in Sources */,
 				B6095DD0E0F33C3D93010706 /* LessonRecommendationEngine.swift in Sources */,
 				04969645E6CE3F25880D2488 /* LessonView.swift in Sources */,
 				AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */,

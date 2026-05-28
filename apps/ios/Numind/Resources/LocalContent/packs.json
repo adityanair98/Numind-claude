@@ -16,7 +16,12 @@
     ],
     "anchorLessonId": "net_pay_check",
     "estimatedMinutes": 18,
-    "lastVerified": "2026-05-26"
+    "lastVerified": "2026-05-26",
+    "primarySkillAxis": "income_and_paycheck",
+    "secondarySkillAxes": [
+      "cash_flow_and_budgeting",
+      "investing_and_future"
+    ]
   },
   {
     "id": "first_apartment",
@@ -34,7 +39,11 @@
     ],
     "anchorLessonId": "housing_first_month_true_cost",
     "estimatedMinutes": 16,
-    "lastVerified": "2026-05-26"
+    "lastVerified": "2026-05-26",
+    "primarySkillAxis": "big_purchases",
+    "secondarySkillAxes": [
+      "cash_flow_and_budgeting"
+    ]
   },
   {
     "id": "credit_card_cleanup",
@@ -54,7 +63,11 @@
     ],
     "anchorLessonId": "debt_cc_payoff_time",
     "estimatedMinutes": 22,
-    "lastVerified": "2026-05-26"
+    "lastVerified": "2026-05-26",
+    "primarySkillAxis": "debt_and_credit",
+    "secondarySkillAxes": [
+      "everyday_money_math"
+    ]
   },
   {
     "id": "open_enrollment",
@@ -73,7 +86,12 @@
     ],
     "anchorLessonId": "concept_insurance_open_enrollment",
     "estimatedMinutes": 20,
-    "lastVerified": "2026-05-26"
+    "lastVerified": "2026-05-26",
+    "primarySkillAxis": "protection_and_benefits",
+    "secondarySkillAxes": [
+      "cash_flow_and_budgeting",
+      "income_and_paycheck"
+    ]
   },
   {
     "id": "buying_a_home",
@@ -89,7 +107,12 @@
     ],
     "anchorLessonId": "housing_affordability_full",
     "estimatedMinutes": 14,
-    "lastVerified": "2026-05-26"
+    "lastVerified": "2026-05-26",
+    "primarySkillAxis": "big_purchases",
+    "secondarySkillAxes": [
+      "debt_and_credit",
+      "cash_flow_and_budgeting"
+    ]
   },
   {
     "id": "student_loan_repayment",
@@ -109,7 +132,12 @@
     ],
     "anchorLessonId": "concept_sl_refi_protections_lost",
     "estimatedMinutes": 22,
-    "lastVerified": "2026-05-26"
+    "lastVerified": "2026-05-26",
+    "primarySkillAxis": "debt_and_credit",
+    "secondarySkillAxes": [
+      "income_and_paycheck",
+      "big_purchases"
+    ]
   },
   {
     "id": "investing_starter",
@@ -129,7 +157,11 @@
     ],
     "anchorLessonId": "investing_401k_match",
     "estimatedMinutes": 24,
-    "lastVerified": "2026-05-26"
+    "lastVerified": "2026-05-26",
+    "primarySkillAxis": "investing_and_future",
+    "secondarySkillAxes": [
+      "income_and_paycheck"
+    ]
   },
   {
     "id": "car_buying",
@@ -148,6 +180,56 @@
     ],
     "anchorLessonId": "concept_car_negotiation",
     "estimatedMinutes": 20,
-    "lastVerified": "2026-05-26"
+    "lastVerified": "2026-05-26",
+    "primarySkillAxis": "big_purchases",
+    "secondarySkillAxes": [
+      "debt_and_credit"
+    ]
+  },
+  {
+    "id": "everyday_spending",
+    "title": "Everyday Spending",
+    "tagline": "Master the mental math behind daily money decisions",
+    "hook": "Tips, discounts, sales tax, subscriptions — the math you do constantly without thinking about it. This pack makes those decisions faster.",
+    "description": "Seven short lessons covering the calculations that come up every day: the 10% tip move, why 20% + 10% off isn't 30%, how to factor sales tax into your discount math, and when a membership like Costco / DashPass / Uber One pays for itself. Most of these you'll use within 24 hours of learning them. Anchor lesson: the membership-worth calc, the most generative skill in the pack.",
+    "lessonIds": [
+      "tip_10_percent_trick",
+      "tip_18_percent",
+      "discount_stacked",
+      "discount_price_plus_tax",
+      "sales_tax_quick",
+      "subscription_math",
+      "discount_membership_worth"
+    ],
+    "anchorLessonId": "discount_membership_worth",
+    "estimatedMinutes": 16,
+    "lastVerified": "2026-05-26",
+    "primarySkillAxis": "everyday_money_math",
+    "secondarySkillAxes": [
+      "cash_flow_and_budgeting"
+    ]
+  },
+  {
+    "id": "taxes_without_panic",
+    "title": "Taxes Without Panic",
+    "tagline": "Understand your tax situation in 15 minutes",
+    "hook": "April doesn't have to be scary. The math behind your tax bill is simpler than it looks once you know what to ignore.",
+    "description": "Seven lessons that demystify the US individual income tax: how to read your paycheck stub, what 'taxable income' actually means versus gross income, how marginal brackets work in layers (no — being 'in the 22% bracket' doesn't mean all your income is taxed at 22%), when to itemize, what your refund really tells you, and the W-4 tweak that gets you more money each paycheck. Anchor: the marginal-bracket lesson, which threads through everything else.",
+    "lessonIds": [
+      "concept_taxes_paycheck_stub",
+      "taxes_brackets",
+      "taxes_deductions",
+      "taxes_standard_vs_itemized",
+      "taxes_refund",
+      "taxes_w4_adjust",
+      "taxes_capital_gains"
+    ],
+    "anchorLessonId": "taxes_brackets",
+    "estimatedMinutes": 19,
+    "lastVerified": "2026-05-26",
+    "primarySkillAxis": "income_and_paycheck",
+    "secondarySkillAxes": [
+      "cash_flow_and_budgeting"
+    ]
   }
 ]

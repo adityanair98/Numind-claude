@@ -32,4 +32,63 @@ struct Pack: Codable, Identifiable, Equatable {
     /// ISO date (yyyy-mm-dd) the pack's lesson selection + framing was last
     /// re-validated. Bumped any time the pack composition changes.
     let lastVerified: String
+
+    // MARK: - Skill axis mapping (Phase 5a)
+    /// The primary competency axis this pack improves most. Used by the
+    /// "Recommended next pack" engine to match a user's weakest measured axis.
+    /// - Note: Optional in Codable for backwards compat while we roll out
+    ///   the mapping; production data must have all packs mapped.
+    let primarySkillAxis: SkillAxis?
+
+    /// Up to 2 additional axes the pack meaningfully touches (e.g. First
+    /// Paycheck primary = Income & Paycheck, secondary = Cash Flow + Investing).
+    /// - Defaults to empty if missing from JSON.
+    let secondarySkillAxes: [SkillAxis]
+
+    enum CodingKeys: String, CodingKey {
+        case id, title, tagline, hook, description, lessonIds, anchorLessonId
+        case estimatedMinutes, lastVerified
+        case primarySkillAxis, secondarySkillAxes
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        self.id               = try c.decode(String.self, forKey: .id)
+        self.title            = try c.decode(String.self, forKey: .title)
+        self.tagline          = try c.decode(String.self, forKey: .tagline)
+        self.hook             = try c.decode(String.self, forKey: .hook)
+        self.description      = try c.decode(String.self, forKey: .description)
+        self.lessonIds        = try c.decode([String].self, forKey: .lessonIds)
+        self.anchorLessonId   = try c.decode(String.self, forKey: .anchorLessonId)
+        self.estimatedMinutes = try c.decode(Int.self, forKey: .estimatedMinutes)
+        self.lastVerified     = try c.decode(String.self, forKey: .lastVerified)
+        self.primarySkillAxis   = try c.decodeIfPresent(SkillAxis.self, forKey: .primarySkillAxis)
+        self.secondarySkillAxes = try c.decodeIfPresent([SkillAxis].self, forKey: .secondarySkillAxes) ?? []
+    }
+
+    init(
+        id: String,
+        title: String,
+        tagline: String,
+        hook: String,
+        description: String,
+        lessonIds: [String],
+        anchorLessonId: String,
+        estimatedMinutes: Int,
+        lastVerified: String,
+        primarySkillAxis: SkillAxis? = nil,
+        secondarySkillAxes: [SkillAxis] = []
+    ) {
+        self.id = id
+        self.title = title
+        self.tagline = tagline
+        self.hook = hook
+        self.description = description
+        self.lessonIds = lessonIds
+        self.anchorLessonId = anchorLessonId
+        self.estimatedMinutes = estimatedMinutes
+        self.lastVerified = lastVerified
+        self.primarySkillAxis = primarySkillAxis
+        self.secondarySkillAxes = secondarySkillAxes
+    }
 }

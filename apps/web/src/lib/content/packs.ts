@@ -13,6 +13,17 @@
  * acquisition, not curriculum delivery).
  */
 
+/** The 7 competency axes that drive the Numind Score radar.
+ *  Mirrors `apps/ios/Numind/Domain/Skills/SkillAxis.swift`. */
+export type SkillAxisId =
+  | "everyday_money_math"
+  | "cash_flow_and_budgeting"
+  | "income_and_paycheck"
+  | "debt_and_credit"
+  | "big_purchases"
+  | "protection_and_benefits"
+  | "investing_and_future";
+
 export interface PackInfo {
   id: string;
   /** Display title — used on the pack card + landing-page hero */
@@ -34,6 +45,10 @@ export interface PackInfo {
   estimatedMinutes: number;
   /** ISO date of last review */
   lastReviewed: string;
+  /** The primary competency axis this pack improves most. Drives "Recommended next pack". */
+  primarySkillAxis: SkillAxisId;
+  /** Up to 2 secondary axes this pack meaningfully touches. */
+  secondarySkillAxes: SkillAxisId[];
 }
 
 /**
@@ -95,6 +110,19 @@ export const lessonTitles: Record<string, string> = {
   investing_compound_growth: "Compound growth over time",
   investing_emergency_fund: "How much emergency fund do you actually need?",
   concept_investing_ef_location: "Where should your emergency fund actually sit?",
+  // Everyday Spending
+  tip_10_percent_trick: "The 10% tip trick",
+  tip_18_percent: "Tipping 18% in your head",
+  discount_stacked: "Why 20% + 10% off isn't 30%",
+  discount_price_plus_tax: "Sticker price + sales tax — the real total",
+  sales_tax_quick: "Sales tax — the 5-second estimate",
+  subscription_math: "What that subscription really costs per year",
+  discount_membership_worth: "Is the membership worth it? (Costco, DashPass, Uber One)",
+  // Taxes
+  taxes_deductions: "Deductions — how they actually lower your bill",
+  taxes_standard_vs_itemized: "Standard vs itemized — which one?",
+  taxes_refund: "Your refund isn't a bonus — it's a loan you gave the IRS",
+  taxes_capital_gains: "Capital gains — short-term vs long-term",
   // Car
   car_monthly_vs_total: "Monthly payment vs total cost",
   car_loan_term: "The hidden cost of '24 more months'",
@@ -125,6 +153,8 @@ export const packRegistry: PackInfo[] = [
     anchorLessonId: "net_pay_check",
     estimatedMinutes: 18,
     lastReviewed: "2026-05-26",
+    primarySkillAxis: "income_and_paycheck",
+    secondarySkillAxes: ["cash_flow_and_budgeting", "investing_and_future"],
   },
   {
     id: "first_apartment",
@@ -144,6 +174,8 @@ export const packRegistry: PackInfo[] = [
     anchorLessonId: "housing_first_month_true_cost",
     estimatedMinutes: 16,
     lastReviewed: "2026-05-26",
+    primarySkillAxis: "big_purchases",
+    secondarySkillAxes: ["cash_flow_and_budgeting"],
   },
   {
     id: "credit_card_cleanup",
@@ -165,6 +197,8 @@ export const packRegistry: PackInfo[] = [
     anchorLessonId: "debt_cc_payoff_time",
     estimatedMinutes: 22,
     lastReviewed: "2026-05-26",
+    primarySkillAxis: "debt_and_credit",
+    secondarySkillAxes: ["everyday_money_math"],
   },
   {
     id: "open_enrollment",
@@ -185,6 +219,8 @@ export const packRegistry: PackInfo[] = [
     anchorLessonId: "concept_insurance_open_enrollment",
     estimatedMinutes: 20,
     lastReviewed: "2026-05-26",
+    primarySkillAxis: "protection_and_benefits",
+    secondarySkillAxes: ["cash_flow_and_budgeting", "income_and_paycheck"],
   },
   {
     id: "buying_a_home",
@@ -202,6 +238,8 @@ export const packRegistry: PackInfo[] = [
     anchorLessonId: "housing_affordability_full",
     estimatedMinutes: 14,
     lastReviewed: "2026-05-26",
+    primarySkillAxis: "big_purchases",
+    secondarySkillAxes: ["debt_and_credit", "cash_flow_and_budgeting"],
   },
   {
     id: "student_loan_repayment",
@@ -223,6 +261,8 @@ export const packRegistry: PackInfo[] = [
     anchorLessonId: "concept_sl_refi_protections_lost",
     estimatedMinutes: 22,
     lastReviewed: "2026-05-26",
+    primarySkillAxis: "debt_and_credit",
+    secondarySkillAxes: ["income_and_paycheck", "big_purchases"],
   },
   {
     id: "investing_starter",
@@ -244,6 +284,8 @@ export const packRegistry: PackInfo[] = [
     anchorLessonId: "investing_401k_match",
     estimatedMinutes: 24,
     lastReviewed: "2026-05-26",
+    primarySkillAxis: "investing_and_future",
+    secondarySkillAxes: ["income_and_paycheck"],
   },
   {
     id: "car_buying",
@@ -264,6 +306,52 @@ export const packRegistry: PackInfo[] = [
     anchorLessonId: "concept_car_negotiation",
     estimatedMinutes: 20,
     lastReviewed: "2026-05-26",
+    primarySkillAxis: "big_purchases",
+    secondarySkillAxes: ["debt_and_credit"],
+  },
+  {
+    id: "everyday_spending",
+    title: "Everyday Spending",
+    tagline: "Master the mental math behind daily money decisions",
+    hook: "Tips, discounts, sales tax, subscriptions — the math you do constantly without thinking about it. This pack makes those decisions faster.",
+    description:
+      "Seven short lessons covering the calculations that come up every day: the 10% tip move, why 20% + 10% off isn't 30%, how to factor sales tax into your discount math, and when a membership like Costco / DashPass / Uber One pays for itself. Most of these you'll use within 24 hours of learning them. Anchor lesson: the membership-worth calc, the most generative skill in the pack.",
+    lessonIds: [
+      "tip_10_percent_trick",
+      "tip_18_percent",
+      "discount_stacked",
+      "discount_price_plus_tax",
+      "sales_tax_quick",
+      "subscription_math",
+      "discount_membership_worth",
+    ],
+    anchorLessonId: "discount_membership_worth",
+    estimatedMinutes: 16,
+    lastReviewed: "2026-05-26",
+    primarySkillAxis: "everyday_money_math",
+    secondarySkillAxes: ["cash_flow_and_budgeting"],
+  },
+  {
+    id: "taxes_without_panic",
+    title: "Taxes Without Panic",
+    tagline: "Understand your tax situation in 15 minutes",
+    hook: "April doesn't have to be scary. The math behind your tax bill is simpler than it looks once you know what to ignore.",
+    description:
+      "Seven lessons that demystify the US individual income tax: how to read your paycheck stub, what 'taxable income' actually means versus gross income, how marginal brackets work in layers (no — being 'in the 22% bracket' doesn't mean all your income is taxed at 22%), when to itemize, what your refund really tells you, and the W-4 tweak that gets you more money each paycheck. Anchor: the marginal-bracket lesson, which threads through everything else.",
+    lessonIds: [
+      "concept_taxes_paycheck_stub",
+      "taxes_brackets",
+      "taxes_deductions",
+      "taxes_standard_vs_itemized",
+      "taxes_refund",
+      "taxes_w4_adjust",
+      "taxes_capital_gains",
+    ],
+    anchorLessonId: "taxes_brackets",
+    estimatedMinutes: 19,
+    lastReviewed: "2026-05-26",
+    primarySkillAxis: "income_and_paycheck",
+    secondarySkillAxes: ["cash_flow_and_budgeting"],
   },
 ];
 
