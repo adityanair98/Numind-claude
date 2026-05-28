@@ -54,10 +54,13 @@ Numind/
       ContentRepository.swift    # Protocol for content access
       LocalContentRepository.swift  # JSON-backed implementation
     Progress/
-      NumindScoreEngine.swift    # Composite Numind Score (accuracy 60, difficulty 25, speed 15)
-      ProgressData.swift         # Codable progress state with computed helpers + best scores + streak freezes
-      ProgressStore.swift        # ObservableObject wrapping ProgressData (UserDefaults) + autoApplyFreeze()
+      Celebration.swift          # Pack/world completion celebrations queued post-session
+      NumindScoreEngine.swift    # 7-axis Numind Score (per-question multipliers, weighting profiles, evidence levels, coverage-cap composite)
+      ProgressData.swift         # Codable progress state with computed helpers + best scores + streak freezes + dailyWorkoutDates + focusPackId
+      ProgressStore.swift        # ObservableObject wrapping ProgressData (UserDefaults v2) + autoApplyFreeze() + pendingCelebrations queue
       SessionRecord.swift        # Per-session result record
+    Skills/
+      SkillAxis.swift            # 7 SkillAxis cases + WeightingProfile + QuestionMultiplier + EvidenceLevel
     QuizEngine/
       AdaptiveDifficultyEngine.swift  # Adaptive difficulty selection
       BlitzEngine.swift          # Blitz mode question queue generator

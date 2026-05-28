@@ -157,6 +157,78 @@ final class NumindScoreBaselineTests: XCTestCase {
         return .mixed
     }
 
+    // MARK: - Phase 5g: 7-axis baseline
+
+    /// Phase 5g re-snapshot: drives synthetic sessions across all lessons and
+    /// checks that the 7-axis engine produces a reasonable distribution under
+    /// uniform 80% accuracy. The expected outcome is that every axis lands
+    /// in a similar band (≤ 25 pt spread) and that no axis falls below
+    /// "Developing" evidence given the per-lesson session volume.
+    func test_axisBaseline_underUniformBehavior() throws {
+        let repo = LocalContentRepository(bundle: .main)
+        let modules = repo.allModules()
+
+        // Build synthetic sessions for every lesson, then aggregate.
+        var allSessions: [SessionRecord] = []
+        for module in modules {
+            for lesson in repo.lessons(for: module.id) {
+                allSessions.append(contentsOf:
+                    simulateSessions(for: lesson, in: module, repo: repo))
+            }
+        }
+
+        let results = NumindScoreEngine.axisResults(
+            sessions: allSessions,
+            repository: repo
+        )
+
+        // Dump table for archival in docs/ops/numind-score-baseline-2026-XX.md.
+        func padR(_ s: String, _ w: Int) -> String {
+            s.count >= w ? s : s + String(repeating: " ", count: w - s.count)
+        }
+        func padL(_ s: String, _ w: Int) -> String {
+            s.count >= w ? s : String(repeating: " ", count: w - s.count) + s
+        }
+        print("\n=== Numind Score Baseline — 7 Axes (Phase 5g) ===")
+        print("\(padR("axis", 26)) | \(padL("q", 5)) | \(padL("days", 5)) | \(padL("scen", 5)) | \(padL("score", 5)) | evidence")
+        print(String(repeating: "-", count: 75))
+        for r in results {
+            print("\(padR(r.axis.displayName, 26)) | \(padL(String(r.questionCount), 5)) | \(padL(String(r.distinctDays), 5)) | \(padL(String(r.scenarioCount), 5)) | \(padL(String(r.score), 5)) | \(r.evidence.label)")
+        }
+        print(String(repeating: "-", count: 75))
+        let composite = NumindScoreEngine.composite(results)
+        print("Composite: \(composite)")
+        print("Subtitle: \(NumindScoreEngine.subtitle(results, composite: composite))")
+        print("")
+
+        // Assertion 1: every axis has at least Early Read evidence under
+        // uniform full-curriculum coverage.
+        for r in results {
+            XCTAssertNotEqual(
+                r.evidence, .untested,
+                "Axis \(r.axis.displayName) is Untested despite uniform synthetic coverage."
+            )
+        }
+
+        // Assertion 2: per-axis spread ≤ 25 points under uniform 80%
+        // accuracy. Larger spreads indicate weighting-profile bugs.
+        let scores = results.map { Double($0.score) }
+        if let maxS = scores.max(), let minS = scores.min() {
+            let spread = maxS - minS
+            XCTAssertLessThanOrEqual(
+                spread, 25,
+                "Per-axis spread \(spread) exceeds 25-pt tolerance under uniform behavior."
+            )
+        }
+
+        // Assertion 3: composite landing in a defensible band for uniform
+        // 80% accuracy — expect at least 50 (band: "On your way" or above).
+        XCTAssertGreaterThanOrEqual(
+            composite, 50,
+            "Composite \(composite) too low under uniform 80% accuracy — expect ≥ 50."
+        )
+    }
+
     // MARK: - Session simulation
 
     /// Builds `sessionsPerLesson` deterministic SessionRecords for the lesson.
