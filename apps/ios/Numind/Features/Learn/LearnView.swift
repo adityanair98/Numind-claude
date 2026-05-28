@@ -461,11 +461,16 @@ struct LearnView: View {
             questNodeLabel(node, accent: accent)
         }
         .offset(x: xOffset)
-        .opacity(node.state == .locked ? 0.5 : 1.0)
+        // Phase 5e soft locks: not-yet-suggested lessons render dimmed but
+        // remain tappable; only reviews stay gated (handled in presentLesson).
+        .opacity(node.state == .notYetSuggested ? 0.55 : 1.0)
+        .scaleEffect(node.state == .notYetSuggested ? 0.92 : 1.0)
         .padding(.vertical, 4)
         .contentShape(Rectangle().inset(by: -20))
         .onTapGesture {
-            guard node.state != .locked else { return }
+            // Review nodes remain gated: a review of unfinished lessons isn't
+            // meaningful, so we keep the hard gate. Lessons are always tappable.
+            if node.isReview && node.state == .notYetSuggested { return }
             presentLesson(for: node)
         }
     }
@@ -501,7 +506,7 @@ struct LearnView: View {
                     Circle().strokeBorder(nodeBorder(node, accent: accent), lineWidth: 3.5)
                 )
                 .shadow(
-                    color: node.state == .locked ? .clear : fill.opacity(0.35),
+                    color: node.state == .notYetSuggested ? .clear : fill.opacity(0.35),
                     radius: 8, y: 4
                 )
 
@@ -514,8 +519,9 @@ struct LearnView: View {
                 QuestSparkles(accent: accent)
             }
 
-            // Review crown badge (non-locked, non-mastered)
-            if node.isReview && node.state != .locked && node.state != .mastered {
+            // Review crown badge (still gated for review nodes — only shown
+            // when the review is actually available)
+            if node.isReview && node.state != .notYetSuggested && node.state != .mastered {
                 QuestCrownBadge()
             }
         }
@@ -530,7 +536,7 @@ struct LearnView: View {
         VStack(spacing: 3) {
             Text(node.displayTitle)
                 .font(.system(size: 13, weight: .semibold, design: .rounded))
-                .foregroundStyle(node.state == .locked ? Theme.Colors.mutedText : Theme.Colors.deepNavy)
+                .foregroundStyle(node.state == .notYetSuggested ? Theme.Colors.mutedText : Theme.Colors.deepNavy)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
@@ -587,10 +593,19 @@ struct LearnView: View {
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundStyle(accent)
             }
-        case .locked:
-            Image(systemName: "lock.fill")
-                .font(.system(size: 20, weight: .semibold))
-                .foregroundStyle(Theme.Colors.mutedText)
+        case .notYetSuggested:
+            // Soft lock: show the lesson number/icon dimmed (the parent View
+            // applies opacity/scale) rather than a lock icon. The user can
+            // still tap to jump ahead.
+            if node.isReview {
+                Image(systemName: "books.vertical.fill")
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.mutedText)
+            } else {
+                Text("\(node.lessonIndexInModule + 1)")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundStyle(Theme.Colors.mutedText)
+            }
         }
     }
 
@@ -604,7 +619,7 @@ struct LearnView: View {
         case .current:   return node.isReview ? Theme.Colors.insightYellow : accent
         case .attempted: return Color.orange
         case .available: return Theme.Colors.cardBackground
-        case .locked:    return Theme.Colors.mutedTint
+        case .notYetSuggested: return Theme.Colors.mutedTint
         }
     }
 
@@ -614,7 +629,7 @@ struct LearnView: View {
         case .current:   return node.isReview ? Theme.Colors.insightYellow : accent
         case .attempted: return Color.orange
         case .available: return node.isReview ? Theme.Colors.insightYellow.opacity(0.5) : accent.opacity(0.4)
-        case .locked:    return Theme.Colors.hairline
+        case .notYetSuggested: return Theme.Colors.hairline
         }
     }
 
@@ -624,7 +639,7 @@ struct LearnView: View {
         case .attempted: return "Retry for \u{2B50}"
         case .current:   return ""
         case .available: return "Available"
-        case .locked:    return "Locked"
+        case .notYetSuggested: return node.isReview ? "Locked" : "Jump ahead"
         }
     }
 
@@ -633,7 +648,7 @@ struct LearnView: View {
         case .mastered:           return accent
         case .attempted:          return Color.orange
         case .current:            return accent
-        case .available, .locked: return Theme.Colors.mutedText
+        case .available, .notYetSuggested: return Theme.Colors.mutedText
         }
     }
 

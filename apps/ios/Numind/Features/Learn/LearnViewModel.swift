@@ -14,12 +14,15 @@ final class LearnViewModel: ObservableObject {
             case review(lessonIds: [String])
         }
 
-        /// - mastered:  quiz passed at ≥ 75% — gold star (aspirational)
-        /// - attempted: quiz attempted but < 75% — completed, unlocks next
-        /// - current:   first unlocked-unattempted node — pulsing ring
-        /// - available: unlocked but not the recommended next
-        /// - locked:    previous lesson/review not yet attempted
-        enum NodeState { case mastered, attempted, current, available, locked }
+        /// - mastered:        quiz passed at ≥ 75% — gold star (aspirational)
+        /// - attempted:       quiz attempted but < 75% — completed, unlocks next
+        /// - current:         first unsuggested-unattempted node — pulsing ring
+        /// - available:       prior nodes done but not the current suggestion
+        /// - notYetSuggested: prior lesson/review not yet attempted. With
+        ///                    Phase 5e soft locks, the node is still tappable
+        ///                    for lesson nodes (just dimmed). Review nodes
+        ///                    remain gated until their covered lessons are done.
+        enum NodeState { case mastered, attempted, current, available, notYetSuggested }
 
         let id: String
         let kind: NodeKind
@@ -112,7 +115,7 @@ final class LearnViewModel: ObservableObject {
                 } else if unlocked {
                     lessonState = .available
                 } else {
-                    lessonState = .locked
+                    lessonState = .notYetSuggested
                 }
 
                 nodes.append(PathNode(
@@ -152,7 +155,7 @@ final class LearnViewModel: ObservableObject {
                     } else if allCovered {
                         reviewState = .available
                     } else {
-                        reviewState = .locked
+                        reviewState = .notYetSuggested
                     }
 
                     nodes.append(PathNode(

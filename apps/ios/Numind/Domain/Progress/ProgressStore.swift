@@ -15,6 +15,10 @@ final class ProgressStore: ObservableObject {
     @Published private(set) var newlyEarnedBadgeIds: Set<String> = []
     /// Milestone triggered by the most-recent recordSession call. Nil if none.
     @Published private(set) var pendingMilestone: Milestone?
+    /// FIFO queue of celebrations to show post-session. Multiple can stack
+    /// (e.g. a lesson that simultaneously completes a focus pack AND a world
+    /// queues both, with the pack first per the spec). UI pops one at a time.
+    @Published private(set) var pendingCelebrations: [Celebration] = []
 
     init() {
         // v2 read path.
@@ -40,6 +44,9 @@ final class ProgressStore: ObservableObject {
     func recordSession(_ record: SessionRecord) {
         let snapshotBefore = data
         let previouslyEarned = data.earnedBadgeIds
+        // Snapshot pre-session mastery to detect first-time completions
+        // (pack / world) AFTER the session is recorded.
+        let masteredBefore = masteredLessonIds
         data.sessions.append(record)
         let current = data.computeStreak()
         if current > data.bestStreak {
@@ -77,6 +84,62 @@ final class ProgressStore: ObservableObject {
             moduleNames: moduleNames,
             moduleLessonCounts: moduleLessonCounts
         )
+
+        // Detect newly-completed packs and worlds for the celebration queue.
+        // Pack celebration fires first when both a pack and a world complete
+        // in the same session (per the spec).
+        let masteredAfter = masteredLessonIds
+        let newlyMastered = masteredAfter.subtracting(masteredBefore)
+        if !newlyMastered.isEmpty {
+            enqueueCompletionCelebrations(
+                newlyMastered: newlyMastered,
+                masteredAfter: masteredAfter,
+                masteredBefore: masteredBefore
+            )
+        }
+    }
+
+    private func enqueueCompletionCelebrations(
+        newlyMastered: Set<String>,
+        masteredAfter: Set<String>,
+        masteredBefore: Set<String>
+    ) {
+        let repo = LocalContentRepository()
+        var newCelebrations: [Celebration] = []
+
+        // Pack completion: any pack whose lesson set is fully covered by
+        // masteredAfter, but wasn't before.
+        for pack in repo.allPacks() {
+            let lessons = Set(pack.lessonIds)
+            let doneAfter = lessons.intersection(masteredAfter).count
+            let doneBefore = lessons.intersection(masteredBefore).count
+            if doneAfter == lessons.count && doneBefore < lessons.count {
+                newCelebrations.append(.packCompleted(pack))
+            }
+        }
+
+        // World completion: any module whose non-review lessons are all
+        // mastered now, but weren't before. We check only lesson-mastery
+        // (reviews are separate gates).
+        for module in repo.allModules() {
+            let lessons = Set(module.lessonIds)
+            let doneAfter = lessons.intersection(masteredAfter).count
+            let doneBefore = lessons.intersection(masteredBefore).count
+            if doneAfter == lessons.count && doneBefore < lessons.count {
+                newCelebrations.append(.worldCompleted(module))
+            }
+        }
+
+        // Append all newly-detected celebrations to the queue (FIFO).
+        // Pack-completed entries come first by construction (we iterate packs
+        // before modules), matching the spec's sequential ordering rule.
+        pendingCelebrations.append(contentsOf: newCelebrations)
+    }
+
+    /// Removes and returns the next celebration to show, or nil if empty.
+    func popCelebration() -> Celebration? {
+        guard !pendingCelebrations.isEmpty else { return nil }
+        return pendingCelebrations.removeFirst()
     }
 
     func reset() {

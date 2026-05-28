@@ -137,6 +137,20 @@ struct HomeView: View {
             PackDetailView(pack: pack)
                 .environmentObject(progressStore)
         }
+        // Celebration queue — pops the next pending celebration after any
+        // session that completes a pack or world. Sequential by FIFO.
+        .sheet(item: Binding(
+            get: { progressStore.pendingCelebrations.first },
+            set: { _ in _ = progressStore.popCelebration() }
+        )) { celebration in
+            switch celebration {
+            case .packCompleted(let pack):
+                PackCompletionSheet(pack: pack)
+                    .environmentObject(progressStore)
+            case .worldCompleted(let module):
+                WorldCompletionSheet(module: module)
+            }
+        }
         .onAppear {
             viewModel.refresh(using: progressStore)
             lastDailyCorrectCount = progressStore.todayDailyChallengeCorrectCount
