@@ -9,7 +9,9 @@ The differentiator from other financial-literacy products: we teach the *math be
 Friendly, clean, modern, useful, lightly playful, financially credible.
 
 ## Logo
-Primary logo is the brain-abacus app badge.
+Primary logo is the Numind app badge, built on the beads-on-rails motif — beads
+advancing along a rail (steady progress + mental calculation), without leaning on
+a literal abacus or math iconography.
 Wordmark is Numind with rounded friendly typography and teal dot accent.
 
 ## Colors
@@ -24,9 +26,16 @@ Wordmark is Numind with rounded friendly typography and teal dot accent.
 ## Motifs
 - beads
 - rails
-- brain-abacus (the brand mark: financial wisdom + mental calculation, fused)
+- beads-on-rails (the brand mark: steady progress + mental calculation — distinctive, not math-coded)
 - progress paths
 - yellow insight bead
+
+## Mascot + glyph usage
+Each module has a finance-coded mascot emoji + accent glyph (e.g. 🛒/%, 💰/$, 🏠/$).
+Reserve the mascot+glyph pairing for **celebration moments only** (pack/world
+completion, milestone sheets). On everyday surfaces (Worlds hero, Progress rows,
+recent activity) prefer the module SF Symbol in the module accent color — the
+mascot reads as childish when overused.
 
 ## Avoid
 - school worksheet UI

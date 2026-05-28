@@ -25,8 +25,8 @@
     "subtitle": "Daily expenses, budgets, and spending smarts",
     "icon": "dollarsign.circle.fill",
     "color": "yellow",
-    "mascot": "\ud83e\uddee",
-    "glyph": "\u00d7",
+    "mascot": "\ud83d\udcb0",
+    "glyph": "$",
     "lessonIds": [
       "subscription_math",
       "price_per_use",
