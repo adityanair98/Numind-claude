@@ -31,7 +31,7 @@ struct ToolsView: View {
                     row(icon: "creditcard.fill", tint: Theme.Colors.mindTeal,
                         name: "Paycheck",
                         desc: "Estimate your real take-home pay") {
-                        ComingSoonCalculator(title: "Paycheck")
+                        PaycheckCalculator()
                     }
                     row(icon: "creditcard.trianglebadge.exclamationmark", tint: Theme.Colors.debtCoral,
                         name: "Credit card payoff",
