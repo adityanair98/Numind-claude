@@ -395,6 +395,93 @@ export default function MethodologyPage() {
             </li>
           </ul>
         </section>
+
+        <section>
+          <h2 className="font-display text-xl font-bold text-brand-navy mb-3">
+            Curated learning paths
+          </h2>
+          <p>
+            Calculators answer a single question. The Numind iOS app
+            organizes the deeper financial-literacy curriculum into 10{" "}
+            <Link href="/paths" className="text-brand-blue hover:underline">
+              Life-Event Paths
+            </Link>{" "}
+            — short, ordered lesson sequences that map to a single
+            real-world decision moment. Each path is 4–8 lessons (~14–24
+            minutes total) and is grounded in the same primary-authority
+            sources documented above; lesson titles and lesson order are
+            published on each path&apos;s landing page.
+          </p>
+          <ul className="list-disc pl-6 space-y-1.5 mt-3">
+            <li>
+              <Link href="/paths/first_paycheck" className="text-brand-blue hover:underline">
+                First Paycheck
+              </Link>{" "}
+              — gross vs net, FICA, marginal brackets, the W-4 adjustment
+            </li>
+            <li>
+              <Link href="/paths/first_apartment" className="text-brand-blue hover:underline">
+                First Apartment
+              </Link>{" "}
+              — 28% rule, true cost of renting, first-month cash, lease
+              clauses
+            </li>
+            <li>
+              <Link href="/paths/credit_card_cleanup" className="text-brand-blue hover:underline">
+                Credit Card Cleanup
+              </Link>{" "}
+              — interest math, minimum-payment trap, balance transfer,
+              avalanche vs snowball
+            </li>
+            <li>
+              <Link href="/paths/open_enrollment" className="text-brand-blue hover:underline">
+                Open Enrollment
+              </Link>{" "}
+              — HDHP vs PPO, HSA vs FSA, copay/coinsurance, OOP max
+            </li>
+            <li>
+              <Link href="/paths/buying_a_home" className="text-brand-blue hover:underline">
+                Buying a Home
+              </Link>{" "}
+              — Fannie Mae 28% rule, mortgage math, cash-to-close, buy vs
+              rent
+            </li>
+            <li>
+              <Link href="/paths/student_loan_repayment" className="text-brand-blue hover:underline">
+                Student Loan Repayment
+              </Link>{" "}
+              — federal vs private, IDR, PSLF, refinance protection
+              tradeoff
+            </li>
+            <li>
+              <Link href="/paths/investing_starter" className="text-brand-blue hover:underline">
+                Investing Starter Pack
+              </Link>{" "}
+              — 401(k) match, Roth vs Traditional, compound growth,
+              emergency fund
+            </li>
+            <li>
+              <Link href="/paths/car_buying" className="text-brand-blue hover:underline">
+                Car Buying
+              </Link>{" "}
+              — monthly-vs-total trap, 20/4/10, lease vs buy, dealer
+              tactics
+            </li>
+            <li>
+              <Link href="/paths/everyday_spending" className="text-brand-blue hover:underline">
+                Everyday Spending
+              </Link>{" "}
+              — tips, stacked discounts, sales tax, subscription math,
+              membership worth
+            </li>
+            <li>
+              <Link href="/paths/taxes_without_panic" className="text-brand-blue hover:underline">
+                Taxes Without Panic
+              </Link>{" "}
+              — paycheck stub, brackets, deductions, refund framing, W-4
+            </li>
+          </ul>
+        </section>
       </div>
     </div>
   );

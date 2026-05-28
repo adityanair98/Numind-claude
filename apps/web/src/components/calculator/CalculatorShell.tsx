@@ -6,6 +6,7 @@ import { FAQSection, type FAQ } from "@/components/calculator/FAQSection";
 import { AppCTA } from "@/components/calculator/AppCTA";
 import { RelatedTools } from "@/components/calculator/RelatedTools";
 import { CalculatorAttribution } from "@/components/calculator/CalculatorAttribution";
+import { CalculatorPathCrossLink } from "@/components/calculator/CalculatorPathCrossLink";
 import { StructuredData } from "@/components/seo/StructuredData";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { CalculatorAppSchema } from "@/components/seo/CalculatorAppSchema";
@@ -125,6 +126,13 @@ export function CalculatorShell({
         {/* FAQ — scroll reveal */}
         <ScrollReveal>
           <FAQSection faqs={faqs} className="mb-section" />
+        </ScrollReveal>
+
+        {/* Pack cross-link — present only for calcs with a strongest-match
+            path. Sits between FAQs and the app CTA so the user has a
+            guided next step (curated path) before the generic download. */}
+        <ScrollReveal>
+          <CalculatorPathCrossLink calculatorSlug={slug} className="mb-section" />
         </ScrollReveal>
 
         {/* App CTA — scroll reveal with scale */}

@@ -37,7 +37,7 @@ export default function AboutPage() {
           What we build
         </h2>
         <p>
-          The iOS app is the product. It contains 102 lessons across 10
+          The iOS app is the product. It contains 118 lessons across 10
           modules — Smart Shopping, Budgets, Salary, Investing, Debt,
           Housing, Taxes, Insurance, Car &amp; Big Purchases, and Student
           Loans. Each lesson is a financial literacy unit delivered as a{" "}
@@ -47,6 +47,19 @@ export default function AboutPage() {
           math move that makes the concept usable in real time), and a{" "}
           <strong className="text-brand-navy">quiz</strong> (parametric
           practice with fresh numbers every retry).
+        </p>
+        <p>
+          On top of the module-based curriculum, we publish 10{" "}
+          <Link href="/paths" className="text-brand-blue hover:underline">
+            Life-Event Paths
+          </Link>{" "}
+          — curated lesson sequences that map to canonical real-world
+          decision moments (First Paycheck, First Apartment, Credit Card
+          Cleanup, Open Enrollment, Buying a Home, Student Loan Repayment,
+          Investing Starter, Car Buying, Everyday Spending, Taxes Without
+          Panic). When something is happening in your life, you can pick the
+          path that matches and finish it in under 25 minutes — instead of
+          hunting through the module library.
         </p>
         <p>
           About one in five lessons covers material where the right teaching
