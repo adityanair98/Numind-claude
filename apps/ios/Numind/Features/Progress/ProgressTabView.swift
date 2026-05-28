@@ -1,4 +1,5 @@
 import SwiftUI
+import Charts
 
 struct ProgressTabView: View {
     @EnvironmentObject private var store: ProgressStore
@@ -127,6 +128,9 @@ struct ProgressTabView: View {
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 22)
 
+                // "You can now handle:" — plain-language mastered decisions
+                canNowHandleSection
+
                 sectionLabel("Weekly goal")
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 10)
@@ -134,10 +138,10 @@ struct ProgressTabView: View {
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 22)
 
-                sectionLabel("Weekly XP")
+                sectionLabel("Numind Score over time")
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 10)
-                weeklyXPCard
+                scoreOverTimeCard
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 22)
 
@@ -155,7 +159,7 @@ struct ProgressTabView: View {
                 }
 
                 HStack(alignment: .firstTextBaseline) {
-                    sectionLabel("Skill mastery")
+                    sectionLabel("Skill breakdown")
                     Spacer()
                     NavigationLink(destination: SkillDetailView()) {
                         Text("See all")
@@ -165,7 +169,7 @@ struct ProgressTabView: View {
                 }
                 .padding(.horizontal, Theme.Spacing.screenHorizontal)
                 .padding(.bottom, 10)
-                skillMasteryCard
+                skillBreakdownCard
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 22)
 
@@ -260,6 +264,192 @@ struct ProgressTabView: View {
     }
 
     // ═══════════════════════════════════════════════════════════════
+    // MARK: - Numind Score over time (Phase 6c)
+    // ═══════════════════════════════════════════════════════════════
+
+    private var scoreOverTimeCard: some View {
+        let points = Array(store.data.scoreHistory.suffix(30))
+        let delta = store.numindScoreDelta
+        return VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text("\(store.numindScore)")
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                if delta != 0 {
+                    let up = delta > 0
+                    HStack(spacing: 3) {
+                        Image(systemName: up ? "arrow.up.right" : "arrow.down.right")
+                            .font(.system(size: 11, weight: .bold))
+                        Text("\(up ? "+" : "")\(delta) this week")
+                            .font(Theme.Typography.small).fontWeight(.bold)
+                    }
+                    .foregroundStyle(up ? Theme.Colors.growthGreen : Theme.Colors.warmOrange)
+                } else {
+                    Text("out of 100")
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+                Spacer()
+            }
+
+            if points.count >= 2 {
+                Chart {
+                    ForEach(Array(points.enumerated()), id: \.offset) { _, entry in
+                        LineMark(
+                            x: .value("Date", entry.date),
+                            y: .value("Score", entry.overallScore)
+                        )
+                        .interpolationMethod(.catmullRom)
+                        .foregroundStyle(Theme.Colors.primaryBlue)
+                        AreaMark(
+                            x: .value("Date", entry.date),
+                            y: .value("Score", entry.overallScore)
+                        )
+                        .interpolationMethod(.catmullRom)
+                        .foregroundStyle(LinearGradient(
+                            colors: [Theme.Colors.primaryBlue.opacity(0.22),
+                                     Theme.Colors.primaryBlue.opacity(0.02)],
+                            startPoint: .top, endPoint: .bottom))
+                    }
+                }
+                .chartYScale(domain: 0...100)
+                .chartXAxis(.hidden)
+                .chartYAxis {
+                    AxisMarks(position: .leading, values: [0, 50, 100]) { value in
+                        AxisGridLine().foregroundStyle(Theme.Colors.hairline)
+                        AxisValueLabel {
+                            if let v = value.as(Int.self) {
+                                Text("\(v)")
+                                    .font(.system(size: 9))
+                                    .foregroundStyle(Theme.Colors.mutedText)
+                            }
+                        }
+                    }
+                }
+                .frame(height: 120)
+            } else {
+                Text("Complete a few more sessions to see your score trend.")
+                    .font(Theme.Typography.caption)
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.vertical, 28)
+            }
+        }
+        .padding(16)
+        .background(Theme.Colors.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(0.06), radius: 7, y: 3)
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - You can now handle (Phase 6c)
+    // ═══════════════════════════════════════════════════════════════
+
+    /// Up to 5 plain-language money decisions the user has mastered, pulled
+    /// from mastered lessons' realWorldHints (module order keeps it stable).
+    private var masteredHandleHints: [String] {
+        let mastered = store.masteredLessonIds
+        var seen = Set<String>()
+        var hints: [String] = []
+        for module in modules {
+            for lesson in repo.lessons(for: module.id) where mastered.contains(lesson.id) {
+                if let h = lesson.realWorldHint, !seen.contains(h) {
+                    seen.insert(h); hints.append(h)
+                }
+            }
+        }
+        return Array(hints.prefix(5))
+    }
+
+    @ViewBuilder
+    private var canNowHandleSection: some View {
+        let hints = masteredHandleHints
+        if !hints.isEmpty {
+            NumindCard {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundStyle(Theme.Colors.growthGreen)
+                        Text("YOU CAN NOW HANDLE")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .kerning(0.6)
+                    }
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(Array(hints.enumerated()), id: \.offset) { _, hint in
+                            HStack(alignment: .top, spacing: 10) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundStyle(Theme.Colors.growthGreen)
+                                    .padding(.top, 1)
+                                Text(hint)
+                                    .font(Theme.Typography.caption)
+                                    .foregroundStyle(Theme.Colors.deepNavy.opacity(0.85))
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, Theme.Spacing.screenHorizontal)
+            .padding(.bottom, 22)
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Skill breakdown (per-axis, Phase 6c)
+    // ═══════════════════════════════════════════════════════════════
+
+    /// Per-axis score list mirroring the radar above — axis icon, name,
+    /// evidence label, and numeric score. Replaces the old per-module rows.
+    private var skillBreakdownCard: some View {
+        let results = store.numindAxisResults
+        return VStack(spacing: 0) {
+            ForEach(Array(results.enumerated()), id: \.element.axis) { i, r in
+                HStack(spacing: 12) {
+                    Image(systemName: skillIcon(r.axis))
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(skillColor(r.axis))
+                        .frame(width: 32, height: 32)
+                        .background(skillColor(r.axis).opacity(0.12))
+                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(r.axis.displayName)
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text(r.evidence.label)
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundStyle(evidenceColor(r.evidence))
+                    }
+                    Spacer()
+                    Text("\(r.score)")
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundStyle(r.evidence == .notStarted
+                            ? Theme.Colors.mutedText
+                            : skillColor(r.axis))
+                }
+                .padding(.vertical, 12)
+                .padding(.horizontal, 16)
+                if i < results.count - 1 {
+                    Divider().padding(.leading, 16 + 32 + 12)
+                }
+            }
+        }
+        .background(Theme.Colors.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(0.06), radius: 7, y: 3)
+    }
+
+    // ═══════════════════════════════════════════════════════════════
     // MARK: - Your Improvement
     // ═══════════════════════════════════════════════════════════════
 
@@ -277,7 +467,7 @@ struct ProgressTabView: View {
                         Image(systemName: "arrow.up.right")
                             .font(.system(size: 12, weight: .bold))
                             .foregroundStyle(Theme.Colors.growthGreen)
-                        Text("YOUR IMPROVEMENT")
+                        Text("THIS WEEK")
                             .font(.system(size: 10, weight: .bold))
                             .foregroundStyle(Theme.Colors.mutedText)
                             .kerning(0.6)
@@ -986,8 +1176,9 @@ struct ProgressTabView: View {
                             RoundedRectangle(cornerRadius: 11, style: .continuous)
                                 .strokeBorder(accent.opacity(0.2), lineWidth: 1)
                         )
-                    Text(module?.mascot ?? "\u{1F4DA}")
-                        .font(.system(size: 19))
+                    Image(systemName: module?.icon ?? "book.fill")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(accent)
                 }
                 .frame(width: 36, height: 36)
 
@@ -1033,6 +1224,31 @@ struct ProgressTabView: View {
     }
 
     // MARK: - Helpers
+
+    /// SF Symbol per skill axis (mirrors HomeView's score-detail sheet).
+    private func skillIcon(_ axis: SkillAxis) -> String {
+        switch axis {
+        case .everydayMoneyMath:     return "cart.fill"
+        case .cashFlowAndBudgeting:  return "list.bullet.rectangle"
+        case .incomeAndPaycheck:     return "creditcard.fill"
+        case .debtAndCredit:         return "exclamationmark.triangle.fill"
+        case .bigPurchases:          return "house.fill"
+        case .protectionAndBenefits: return "heart.text.square.fill"
+        case .investingAndFuture:    return "chart.line.uptrend.xyaxis"
+        }
+    }
+
+    private func skillColor(_ axis: SkillAxis) -> Color {
+        switch axis {
+        case .everydayMoneyMath:     return Theme.Colors.warmOrange
+        case .cashFlowAndBudgeting:  return Theme.Colors.primaryBlue
+        case .incomeAndPaycheck:     return Theme.Colors.mindTeal
+        case .debtAndCredit:         return Theme.Colors.debtCoral
+        case .bigPurchases:          return Theme.Colors.housingRose
+        case .protectionAndBenefits: return Theme.Colors.insurancePurple
+        case .investingAndFuture:    return Theme.Colors.growthGreen
+        }
+    }
 
     private func evidenceColor(_ level: EvidenceLevel) -> Color {
         switch level {
