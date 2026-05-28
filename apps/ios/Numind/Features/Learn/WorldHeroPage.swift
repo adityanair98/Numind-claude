@@ -90,8 +90,9 @@ struct WorldHeroPage: View {
                 .padding(.bottom, 8)
 
             // Themed illustration — composed from Module fields rather than
-            // bespoke artwork. Layered: tinted circle, watermark glyph,
-            // large SF Symbol, mascot emoji floating overlay.
+            // bespoke artwork: a tinted accent circle + the module's SF Symbol.
+            // (Phase 6c: dropped the math-coded glyph watermark + mascot
+            // overlay; mascot/glyph are reserved for celebration sheets now.)
             illustration
                 .frame(width: 240, height: 240)
                 .padding(.top, 4)
@@ -108,22 +109,10 @@ struct WorldHeroPage: View {
                         .strokeBorder(accent.opacity(0.28), lineWidth: 2)
                 )
 
-            // Glyph watermark in the background
-            Text(module.glyph)
-                .font(.system(size: 180, weight: .heavy, design: .rounded))
-                .foregroundStyle(accent.opacity(0.10))
-                .offset(x: 6, y: -10)
-
-            // Main SF Symbol
+            // Module SF Symbol
             Image(systemName: module.icon)
-                .font(.system(size: 88, weight: .semibold))
+                .font(.system(size: 92, weight: .semibold))
                 .foregroundStyle(accent)
-
-            // Mascot floating top-right
-            Text(module.mascot)
-                .font(.system(size: 44))
-                .offset(x: 78, y: -78)
-                .shadow(color: .black.opacity(0.12), radius: 6, y: 3)
         }
     }
 
@@ -196,23 +185,45 @@ struct WorldHeroPage: View {
     }
 
     private var conqueredCard: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "crown.fill")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(Theme.Colors.insightYellow)
-            VStack(alignment: .leading, spacing: 2) {
-                Text("WORLD CONQUERED")
-                    .font(.system(size: 11, weight: .bold))
+        VStack(spacing: 12) {
+            HStack(spacing: 12) {
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.insightYellow)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("WORLD CONQUERED")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(Theme.Colors.insightText)
+                        .kerning(0.6)
+                    Text("Every lesson at 75%+")
+                        .font(Theme.Typography.headline)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                }
+                Spacer()
+                Text("\(masteredCount)/\(totalLessons)")
+                    .font(.system(size: 14, weight: .bold))
                     .foregroundStyle(Theme.Colors.insightText)
-                    .kerning(0.6)
-                Text("Every lesson at 75%+")
-                    .font(Theme.Typography.headline)
-                    .foregroundStyle(Theme.Colors.deepNavy)
             }
-            Spacer()
-            Text("\(masteredCount)/\(totalLessons)")
-                .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(Theme.Colors.insightText)
+
+            // "Review this world" — opens the quest map to revisit any lesson.
+            // 7a upgrades this to fire an 8Q quiz scoped to mastered lessons
+            // (shared machinery with the "Practice this world" quest-map pill).
+            if let node = continueNode {
+                Button(action: { onContinue(node) }) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "arrow.counterclockwise")
+                            .font(.system(size: 13, weight: .bold))
+                        Text("Review this world")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                    }
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 44)
+                    .background(Theme.Colors.cardBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }
+                .buttonStyle(.plain)
+            }
         }
         .padding(16)
         .background(Theme.Colors.insightYellowTint)

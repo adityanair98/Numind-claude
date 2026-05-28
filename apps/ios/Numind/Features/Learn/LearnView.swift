@@ -619,10 +619,10 @@ struct LearnView: View {
             // Icon
             nodeIcon(node, accent: accent)
 
-            // Mastered badge + sparkles
+            // Mastered badge (sparkles dropped in 6c — reserve celebration
+            // flourishes for completion sheets, not the everyday quest map)
             if node.state == .mastered {
                 QuestMasteredBadge()
-                QuestSparkles(accent: accent)
             }
 
             // Review crown badge (still gated for review nodes — only shown
@@ -847,34 +847,12 @@ private struct QuestCrownBadge: View {
     }
 }
 
-/// Small sparkle particles scattered near mastered nodes.
-private struct QuestSparkles: View {
-    let accent: Color
-
-    var body: some View {
-        Group {
-            Image(systemName: "sparkle")
-                .font(.system(size: 10, weight: .bold))
-                .foregroundStyle(Theme.Colors.insightYellow.opacity(0.7))
-                .offset(x: -32, y: -14)
-            Image(systemName: "sparkle")
-                .font(.system(size: 8, weight: .bold))
-                .foregroundStyle(accent.opacity(0.45))
-                .offset(x: 32, y: 16)
-            Image(systemName: "sparkle")
-                .font(.system(size: 7, weight: .bold))
-                .foregroundStyle(Theme.Colors.insightYellow.opacity(0.5))
-                .offset(x: -28, y: 22)
-        }
-    }
-}
-
-/// Bouncing badge shown below the current node.
+/// Static accent-filled badge shown below the current node.
+/// (6c: dropped the bouncing animation — steadier, less game-y.)
 private struct QuestStartBadge: View {
     let accent: Color
     let label: String
     let textColor: Color
-    @State private var bouncing = false
 
     var body: some View {
         Text(label)
@@ -885,12 +863,6 @@ private struct QuestStartBadge: View {
             .background(accent)
             .clipShape(Capsule())
             .shadow(color: accent.opacity(0.4), radius: 6, y: 3)
-            .offset(y: bouncing ? -3 : 0)
-            .animation(
-                .easeInOut(duration: 0.9).repeatForever(autoreverses: true),
-                value: bouncing
-            )
-            .onAppear { bouncing = true }
     }
 }
 
