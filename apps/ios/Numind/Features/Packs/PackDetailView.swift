@@ -26,6 +26,7 @@ struct PackDetailView: View {
                     if let anchor = anchorLesson {
                         anchorSection(anchor: anchor)
                     }
+                    outcomesSection
                     lessonListSection
                     ctaSection
                 }
@@ -153,6 +154,51 @@ struct PackDetailView: View {
                     }
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .padding(.vertical, 10)
+                }
+            }
+        }
+    }
+
+    // MARK: - Outcomes (Phase 6c)
+
+    /// Up to 4 distinct money-moment hints from the pack's lessons — answers
+    /// "what real situations does this path prepare me for?"
+    private var outcomeHints: [String] {
+        var seen = Set<String>()
+        var hints: [String] = []
+        for id in pack.lessonIds {
+            guard let h = repo.lesson(id: id)?.realWorldHint, !seen.contains(h) else { continue }
+            seen.insert(h)
+            hints.append(h)
+            if hints.count == 4 { break }
+        }
+        return hints
+    }
+
+    @ViewBuilder
+    private var outcomesSection: some View {
+        let hints = outcomeHints
+        if !hints.isEmpty {
+            NumindCard {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Real-life moments this path prepares you for")
+                        .font(Theme.Typography.headline)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(Array(hints.enumerated()), id: \.offset) { _, hint in
+                            HStack(alignment: .top, spacing: 10) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 15, weight: .semibold))
+                                    .foregroundStyle(Theme.Colors.mindTeal)
+                                    .padding(.top, 1)
+                                Text(hint)
+                                    .font(Theme.Typography.caption)
+                                    .foregroundStyle(Theme.Colors.deepNavy.opacity(0.85))
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                        }
+                    }
                 }
             }
         }
