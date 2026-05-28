@@ -141,6 +141,19 @@ struct ProgressTabView: View {
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 22)
 
+                // Paths in progress — shows packs the user has touched but
+                // not yet finished, with a thin progress bar each. Hidden
+                // entirely when there's nothing in progress.
+                let inProgressPacks = store.inProgressPacks
+                if !inProgressPacks.isEmpty {
+                    sectionLabel("Paths in progress")
+                        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                        .padding(.bottom, 10)
+                    pathsInProgressCard(packs: inProgressPacks)
+                        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                        .padding(.bottom, 22)
+                }
+
                 HStack(alignment: .firstTextBaseline) {
                     sectionLabel("Skill mastery")
                     Spacer()
@@ -687,6 +700,59 @@ struct ProgressTabView: View {
                 .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.06), radius: 7, y: 3)
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Paths in progress
+    // ═══════════════════════════════════════════════════════════════
+
+    /// Shows each in-progress pack as a row with title + tagline +
+    /// `done / total · ▓▓▓░░` progress bar. Read-only; tapping a row is
+    /// out of scope here (use Home or the Learn → Paths tab).
+    private func pathsInProgressCard(packs: [Pack]) -> some View {
+        VStack(spacing: 0) {
+            ForEach(Array(packs.enumerated()), id: \.element.id) { i, pack in
+                pathProgressRow(pack: pack, isLast: i == packs.count - 1)
+            }
+        }
+        .background(Theme.Colors.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(0.06), radius: 7, y: 3)
+    }
+
+    private func pathProgressRow(pack: Pack, isLast: Bool) -> some View {
+        let progress = store.packProgress(packId: pack.id)
+        let isFocus = store.focusPackId == pack.id
+        return VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .firstTextBaseline) {
+                Text(pack.title)
+                    .font(Theme.Typography.body)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                Spacer()
+                if isFocus {
+                    Text("FOCUS")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Theme.Colors.deepNavy)
+                        .clipShape(Capsule())
+                }
+                Text("\(progress.done) of \(progress.total)")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.mutedText)
+            }
+            BeadRail(progress: progress.done, total: progress.total, variant: .chunky)
+            if !isLast {
+                Divider()
+                    .background(Theme.Colors.hairline)
+            }
+        }
+        .padding(Theme.Spacing.cardPadding)
     }
 
     // ═══════════════════════════════════════════════════════════════

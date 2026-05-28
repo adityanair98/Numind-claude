@@ -60,6 +60,20 @@ final class LocalContentRepository: ContentRepository {
     func packs(containingLesson lessonId: String) -> [Pack] {
         packs.filter { $0.lessonIds.contains(lessonId) }
     }
+
+    func inProgressPacks(masteredLessonIds: Set<String>) -> [Pack] {
+        packs.filter { pack in
+            let lessons = Set(pack.lessonIds)
+            let mastered = lessons.intersection(masteredLessonIds)
+            // Touched at least once, but not yet fully completed.
+            return !mastered.isEmpty && mastered.count < lessons.count
+        }
+    }
+
+    func packProgress(_ pack: Pack, masteredLessonIds: Set<String>) -> (done: Int, total: Int) {
+        let done = pack.lessonIds.filter { masteredLessonIds.contains($0) }.count
+        return (done, pack.lessonIds.count)
+    }
 }
 
 // MARK: - Bundle helper

@@ -21,4 +21,14 @@ protocol ContentRepository {
     /// All packs that include the given lesson — useful for showing
     /// "this lesson appears in N paths" cross-links.
     func packs(containingLesson lessonId: String) -> [Pack]
+
+    /// Returns packs the user has touched but not yet finished. A pack is
+    /// "in progress" iff (a) at least one of its lessons is mastered, AND
+    /// (b) at least one of its lessons is not mastered. Order follows the
+    /// registry (canonical display order, not engagement-recency).
+    func inProgressPacks(masteredLessonIds: Set<String>) -> [Pack]
+
+    /// Mastered/total count for a pack given a set of mastered lesson ids.
+    /// `done` is the number of `pack.lessonIds` present in `masteredLessonIds`.
+    func packProgress(_ pack: Pack, masteredLessonIds: Set<String>) -> (done: Int, total: Int)
 }

@@ -53,6 +53,13 @@ struct ProgressData: Codable {
     /// IDs of milestones already shown to the user. Prevents repeats.
     var shownMilestoneIds: Set<String> = []
 
+    /// The single currently-focused Life-Event Pack. Drives the Home
+    /// "Continue your path" card + the pack-aware Daily Workout slot
+    /// selection. Nil means the user is free-form (no path focus). Users
+    /// can only have one focus at a time, but any number of packs can
+    /// be "in progress" (derived from session history, not stored).
+    var focusPackId: String?
+
     // MARK: - Streak
 
     /// Active days = session days ∪ frozen dates. Used by streak + helpers.

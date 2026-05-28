@@ -6,6 +6,11 @@ struct LearnView: View {
 
     // MARK: - Presentation state
 
+    /// Top-level segmented tab inside the Learn tab. Worlds = module-by-module
+    /// quest map (existing UX). Paths = curated Life-Event Packs grid.
+    private enum LearnTab: Hashable { case worlds, paths }
+    @State private var selectedTab: LearnTab = .worlds
+
     private struct LessonCard: Identifiable {
         let id: String
         let vm: LessonViewModel
@@ -19,6 +24,8 @@ struct LearnView: View {
     }
     @State private var selectedReview: ReviewCard? = nil
 
+    @State private var presentedPack: Pack? = nil
+
     // MARK: - Layout constants
 
     private let nodeSize:        CGFloat = 70
@@ -30,10 +37,19 @@ struct LearnView: View {
         ScrollView {
             LazyVStack(spacing: 0) {
                 learnHeader
-                ForEach(Array(viewModel.sections.enumerated()), id: \.element.id) { idx, section in
-                    worldBanner(section, sectionIndex: idx)
-                    sectionNodes(section)
-                    worldConqueredBanner(section)
+                tabSegmentedControl
+                    .padding(.horizontal, 20)
+                    .padding(.top, 8)
+                    .padding(.bottom, 16)
+                switch selectedTab {
+                case .worlds:
+                    ForEach(Array(viewModel.sections.enumerated()), id: \.element.id) { idx, section in
+                        worldBanner(section, sectionIndex: idx)
+                        sectionNodes(section)
+                        worldConqueredBanner(section)
+                    }
+                case .paths:
+                    pathsList
                 }
             }
             .padding(.top, 8)
@@ -57,6 +73,88 @@ struct LearnView: View {
             )
             .environmentObject(progressStore)
         }
+        .sheet(item: $presentedPack) { pack in
+            PackDetailView(pack: pack)
+                .environmentObject(progressStore)
+        }
+    }
+
+    // MARK: - Tab segmented control
+
+    private var tabSegmentedControl: some View {
+        Picker("View", selection: $selectedTab) {
+            Text("Worlds").tag(LearnTab.worlds)
+            Text("Paths").tag(LearnTab.paths)
+        }
+        .pickerStyle(.segmented)
+    }
+
+    // MARK: - Paths list
+
+    private var pathsList: some View {
+        let repo = LocalContentRepository()
+        let packs = repo.allPacks()
+        return VStack(spacing: 12) {
+            ForEach(packs) { pack in
+                pathCard(pack: pack)
+            }
+        }
+        .padding(.horizontal, 20)
+    }
+
+    @ViewBuilder
+    private func pathCard(pack: Pack) -> some View {
+        let progress = progressStore.packProgress(packId: pack.id)
+        let isFocus = progressStore.focusPackId == pack.id
+        let isComplete = progress.done == progress.total && progress.total > 0
+        let isActive = progress.done > 0 && !isComplete
+
+        Button(action: { presentedPack = pack }) {
+            NumindCard(background: isFocus ? Theme.Colors.mindTealTint : Theme.Colors.cardBackground) {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(alignment: .top, spacing: 8) {
+                        Text(pack.title)
+                            .font(Theme.Typography.headline)
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                        if isFocus {
+                            Text("FOCUS")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 3)
+                                .background(Theme.Colors.deepNavy)
+                                .clipShape(Capsule())
+                        } else if isComplete {
+                            Text("✓")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundStyle(Theme.Colors.growthGreen)
+                        } else if isActive {
+                            Text("\(progress.done)/\(progress.total)")
+                                .font(.system(size: 11, weight: .bold))
+                                .foregroundStyle(Theme.Colors.mindTeal)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 3)
+                                .background(Theme.Colors.mindTealTint)
+                                .clipShape(Capsule())
+                        }
+                    }
+                    Text(pack.tagline)
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                        .multilineTextAlignment(.leading)
+                    HStack(spacing: 10) {
+                        Text("\(pack.lessonIds.count) lessons")
+                        Text("·")
+                        Text("~\(pack.estimatedMinutes) min")
+                    }
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                }
+            }
+        }
+        .buttonStyle(.plain)
     }
 
     // ═══════════════════════════════════════════════════════════════

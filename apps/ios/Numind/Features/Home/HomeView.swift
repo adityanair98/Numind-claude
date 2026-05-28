@@ -16,6 +16,8 @@ struct HomeView: View {
     @State private var insightSessionVM: QuizSessionViewModel? = nil   // retained while sheet shows
     @State private var lastDailyCorrectCount: Int = 0
     @State private var showScoreDetail = false
+    @State private var showPackPicker = false
+    @State private var presentedPack: Pack?
     @AppStorage("numind.userName") private var userName = "You"
 
     private let repo = LocalContentRepository()
@@ -32,6 +34,7 @@ struct HomeView: View {
                 dailyChallengeSection
                 streakSection
                 workoutSection
+                packSection
                 modesSection
                 if let card = viewModel.continueCard {
                     continueSection(card)
@@ -123,6 +126,16 @@ struct HomeView: View {
         // Score detail sheet
         .sheet(isPresented: $showScoreDetail) {
             scoreDetailSheet
+        }
+        // Pack picker sheet
+        .sheet(isPresented: $showPackPicker) {
+            PackPickerSheet()
+                .environmentObject(progressStore)
+        }
+        // Single pack detail (tapped from Home cards or carousel)
+        .sheet(item: $presentedPack) { pack in
+            PackDetailView(pack: pack)
+                .environmentObject(progressStore)
         }
         .onAppear {
             viewModel.refresh(using: progressStore)
@@ -480,6 +493,142 @@ struct HomeView: View {
             completions: progressStore.weeklyCompletions,
             availableFreezes: progressStore.availableFreezes
         )
+    }
+
+    // MARK: - Pack section (Life-Event Paths)
+
+    /// Aggregate of the pack-related UI: focus pack callout, "Pick a path"
+    /// CTA when no focus is set, and an "Also in progress" carousel below.
+    /// Renders nothing if neither the focus nor any in-progress packs exist
+    /// AND the user has never engaged a pack — to avoid clutter in the
+    /// blank-slate state we still surface the entry-point CTA via the
+    /// existing browse-paths affordance in Learn.
+    @ViewBuilder
+    private var packSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            if let focus = progressStore.focusPack {
+                focusPackCard(pack: focus)
+            } else {
+                pickPathCard
+            }
+            // "Also in progress" — packs the user has touched but isn't
+            // focusing on right now. Excludes the focus pack from the row
+            // so it's not double-shown.
+            let others = progressStore.inProgressPacks
+                .filter { $0.id != progressStore.focusPackId }
+            if !others.isEmpty {
+                alsoInProgressRow(packs: others)
+            }
+        }
+    }
+
+    private func focusPackCard(pack: Pack) -> some View {
+        let progress = progressStore.packProgress(packId: pack.id)
+        return Button(action: { presentedPack = pack }) {
+            NumindCard(background: Theme.Colors.mindTealTint) {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(spacing: 6) {
+                        Text("📍 PATH")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                            .kerning(0.6)
+                        Spacer()
+                        Text("\(progress.done) OF \(progress.total)")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(Theme.Colors.deepNavy.opacity(0.65))
+                            .kerning(0.5)
+                    }
+                    Text(pack.title)
+                        .font(Theme.Typography.headline)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .multilineTextAlignment(.leading)
+                    Text(pack.tagline)
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.deepNavy.opacity(0.8))
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2)
+                    HStack {
+                        BeadRail(progress: progress.done, total: progress.total, variant: .chunky)
+                        Spacer()
+                        Button(action: { showPackPicker = true }) {
+                            Text("Switch path")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.mindTeal)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var pickPathCard: some View {
+        Button(action: { showPackPicker = true }) {
+            NumindCard {
+                HStack(alignment: .top, spacing: 12) {
+                    Image(systemName: "map.fill")
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.mindTeal)
+                        .frame(width: 44, height: 44)
+                        .background(Theme.Colors.mindTealTint)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Pick a path")
+                            .font(Theme.Typography.headline)
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text("Got a money moment coming up? Pick a curated path that gets you ready in ~20 min.")
+                            .font(Theme.Typography.caption)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+            }
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func alsoInProgressRow(packs: [Pack]) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            sectionLabel("Also in progress")
+            HorizontalCardScroll(items: packs, cardWidth: 220) { pack in
+                otherPackCard(pack: pack)
+            }
+        }
+    }
+
+    private func otherPackCard(pack: Pack) -> some View {
+        let progress = progressStore.packProgress(packId: pack.id)
+        return Button(action: { presentedPack = pack }) {
+            NumindCard {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(pack.title)
+                        .font(Theme.Typography.headline)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2)
+                    Text(pack.tagline)
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2)
+                    Spacer(minLength: 0)
+                    HStack {
+                        BeadRail(progress: progress.done, total: progress.total, variant: .chunky)
+                        Spacer()
+                        Text("\(progress.done)/\(progress.total)")
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Workout section

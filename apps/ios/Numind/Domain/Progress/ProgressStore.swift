@@ -305,6 +305,51 @@ final class ProgressStore: ObservableObject {
             .reduce(0) { $0 + $1.correctCount }
     }
 
+    // MARK: - Focus Pack
+
+    /// The user's current focus pack id, or nil if free-form.
+    var focusPackId: String? { data.focusPackId }
+
+    /// Resolve the current focus pack object (nil if unset or stale).
+    var focusPack: Pack? {
+        guard let id = data.focusPackId else { return nil }
+        return LocalContentRepository().pack(id: id)
+    }
+
+    /// Set or replace the user's focus pack. Pass `nil` to clear.
+    func setFocusPack(_ packId: String?) {
+        data.focusPackId = packId
+        persist()
+    }
+
+    /// Convenience: clear the focus pack.
+    func clearFocusPack() { setFocusPack(nil) }
+
+    /// Mastered-lesson IDs across all sessions. Derived; not stored.
+    var masteredLessonIds: Set<String> {
+        // A lesson is mastered iff any prior session for it scored >= 75%.
+        var ids: Set<String> = []
+        for session in data.sessions {
+            guard session.totalCount > 0 else { continue }
+            let acc = Double(session.correctCount) / Double(session.totalCount)
+            if acc >= 0.75 { ids.insert(session.lessonId) }
+        }
+        return ids
+    }
+
+    /// Mastered/total for a specific pack id.
+    func packProgress(packId: String) -> (done: Int, total: Int) {
+        guard let pack = LocalContentRepository().pack(id: packId) else {
+            return (0, 0)
+        }
+        return LocalContentRepository().packProgress(pack, masteredLessonIds: masteredLessonIds)
+    }
+
+    /// All packs the user has touched but not yet completed.
+    var inProgressPacks: [Pack] {
+        LocalContentRepository().inProgressPacks(masteredLessonIds: masteredLessonIds)
+    }
+
     // MARK: - Numind Score
 
     /// Current overall Numind Score (0–100). 0 if no score has been computed yet.

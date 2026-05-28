@@ -60,6 +60,10 @@
 		5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A7139387185959BC6413FC /* Lesson.swift */; };
 		C3D5E1A8F291B36ABC5D7E10 /* Pack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D5E1A8F291B36ABC5D7E11 /* Pack.swift */; };
 		B0E7C9D14A3F2E5D6C7B8A91 /* SkillAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F8DAE25B403F6E7D8C9BA2 /* SkillAxis.swift */; };
+		E1A0B2C3D4E5F60718293A4B /* HorizontalCardScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1C3D4E5F60718293A4B5C /* HorizontalCardScroll.swift */; };
+		E2A1B2C3D4E5F60718293A4C /* PackDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2C3D4E5F60718293A4B5D /* PackDetailView.swift */; };
+		E3A2B2C3D4E5F60718293A4D /* PackPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B3C3D4E5F60718293A4B5E /* PackPickerSheet.swift */; };
+		E4A3B2C3D4E5F60718293A4E /* PackCompletionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B4C3D4E5F60718293A4B5F /* PackCompletionSheet.swift */; };
 		D4E6F2B9F3A2C47BCD6E8F11 /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = D4E6F2B9F3A2C47BCD6E8F12 /* packs.json */; };
 		58972D81669005D6C506FD13 /* DailyChallengeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC02588669C25EEC373E8D3C /* DailyChallengeEngine.swift */; };
 		58F088554AE41474740F7800 /* LearnViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8490760BAE7C9FD71F012 /* LearnViewModel.swift */; };
@@ -282,6 +286,10 @@
 		B9A7139387185959BC6413FC /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		C3D5E1A8F291B36ABC5D7E11 /* Pack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pack.swift; sourceTree = "<group>"; };
 		C1F8DAE25B403F6E7D8C9BA2 /* SkillAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillAxis.swift; sourceTree = "<group>"; };
+		F2B1C3D4E5F60718293A4B5C /* HorizontalCardScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCardScroll.swift; sourceTree = "<group>"; };
+		F3B2C3D4E5F60718293A4B5D /* PackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackDetailView.swift; sourceTree = "<group>"; };
+		F4B3C3D4E5F60718293A4B5E /* PackPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackPickerSheet.swift; sourceTree = "<group>"; };
+		F5B4C3D4E5F60718293A4B5F /* PackCompletionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackCompletionSheet.swift; sourceTree = "<group>"; };
 		D4E6F2B9F3A2C47BCD6E8F12 /* packs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = packs.json; sourceTree = "<group>"; };
 		BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindApp.swift; sourceTree = "<group>"; };
 		BB83070B8213CDD48CB52530 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -336,11 +344,22 @@
 				E0457C022D78F068CD761262 /* Learn */,
 				8C4CFCFF612FFC108584D74F /* Onboarding */,
 				DB0F2CADAD49ACDE9ABEE141 /* Practice */,
+				A6E1F2D3C4B5A6978899AABB /* Packs */,
 				51E822FB9EA278DD2423EB9C /* Profile */,
 				F15BC27AC957E34B812A182D /* Progress */,
 				28D7E95382CF37B810301490 /* Quiz */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		A6E1F2D3C4B5A6978899AABB /* Packs */ = {
+			isa = PBXGroup;
+			children = (
+				F3B2C3D4E5F60718293A4B5D /* PackDetailView.swift */,
+				F4B3C3D4E5F60718293A4B5E /* PackPickerSheet.swift */,
+				F5B4C3D4E5F60718293A4B5F /* PackCompletionSheet.swift */,
+			);
+			path = Packs;
 			sourceTree = "<group>";
 		};
 		08D346ECF16B42C2ECF4935E /* Onboarding */ = {
@@ -514,6 +533,7 @@
 				BF29714841AD0FB6EC413113 /* DotProgress.swift */,
 				CB058F132F4BB55694A8FDFA /* EstimationSlider.swift */,
 				3EDCC28ABB4A8D0013C4AC7A /* HeroCard.swift */,
+				F2B1C3D4E5F60718293A4B5C /* HorizontalCardScroll.swift */,
 				F76E087252FEBD5528A5BC82 /* IconTile.swift */,
 				F03D63735F35453DE6F6546D /* ModuleBarsView.swift */,
 				09E47647944F778EBA32D80A /* NumindCard.swift */,
@@ -946,6 +966,10 @@
 				5855CEB204A6DA5B4CCD7048 /* Lesson.swift in Sources */,
 				C3D5E1A8F291B36ABC5D7E10 /* Pack.swift in Sources */,
 				B0E7C9D14A3F2E5D6C7B8A91 /* SkillAxis.swift in Sources */,
+				E1A0B2C3D4E5F60718293A4B /* HorizontalCardScroll.swift in Sources */,
+				E2A1B2C3D4E5F60718293A4C /* PackDetailView.swift in Sources */,
+				E3A2B2C3D4E5F60718293A4D /* PackPickerSheet.swift in Sources */,
+				E4A3B2C3D4E5F60718293A4E /* PackCompletionSheet.swift in Sources */,
 				B6095DD0E0F33C3D93010706 /* LessonRecommendationEngine.swift in Sources */,
 				04969645E6CE3F25880D2488 /* LessonView.swift in Sources */,
 				AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */,
