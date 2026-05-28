@@ -35,7 +35,8 @@
       "money_math_latte_factor",
       "money_math_weekly_monthly",
       "concept_money_needs_vs_wants",
-      "money_math_sinking_funds"
+      "money_math_sinking_funds",
+      "investing_emergency_fund"
     ]
   },
   {
@@ -73,6 +74,7 @@
     "glyph": "$",
     "lessonIds": [
       "rule_of_72",
+      "concept_investing_what_are_stocks",
       "roi_basic",
       "investing_401k_match",
       "investing_roth_vs_traditional",
@@ -84,11 +86,9 @@
       "investing_apy_savings",
       "investing_espp_discount",
       "investing_fund_fees",
-      "investing_emergency_fund",
       "concept_investing_ef_location",
       "investing_rental_yield",
       "investing_on_track",
-      "concept_investing_what_are_stocks",
       "concept_investing_asset_allocation",
       "concept_investing_behavioral_traps"
     ]

@@ -598,7 +598,7 @@ struct QuizEngine {
             // Tier 1: first `bracket1Limit` at `rate1`
             // Tier 2: bracket1Limit .. bracket2Limit at `rate2`
             // Tier 3: above bracket2Limit at `rate3`
-            // Match this to real 2025 single-filer brackets: $11,925 @ 10%, $48,475 @ 12%, $103,350 @ 22%, etc.
+            // Match this to real 2026 single-filer brackets: $12,400 @ 10%, $50,400 @ 12%, $105,700 @ 22%, etc.
             guard let income = vars["taxableIncome"],
                   let b1 = vars["bracket1Limit"],
                   let b2 = vars["bracket2Limit"],
@@ -1749,7 +1749,7 @@ struct QuizEngine {
             guard let m = vars["mortgageInt"], let s = vars["stateTax"], let c = vars["charity"],
                   let r = vars["taxRate"] else { return nil }
             let itemized = m + s + c
-            let excess = max(0, itemized - 15750)
+            let excess = max(0, itemized - 16100)
             return excess * r / 100
         },
         "itemizedLifetime": { vars in
@@ -2068,14 +2068,14 @@ struct QuizEngine {
         },
         "plusVsPrivateTotalWithOrigination": { vars in
             guard let b = vars["loanBalance"], let pr = vars["privateRate"] else { return nil }
-            // 8.94% = Parent PLUS fixed rate, 2025-26 academic year (loans disbursed
-            // July 1, 2025 – June 30, 2026). 4.228% = origination fee, stable.
-            return b * (8.94 - pr) / 100 * 10 + b * 4.228 / 100
+            // 9.07% = Parent PLUS fixed rate, 2026-27 academic year (loans disbursed
+            // July 1, 2026 – June 30, 2027). 4.228% = origination fee, stable.
+            return b * (9.07 - pr) / 100 * 10 + b * 4.228 / 100
         },
         "plusVsPrivateMonthlyInterest": { vars in
             guard let b = vars["loanBalance"], let pr = vars["privateRate"] else { return nil }
-            // 8.94% = Parent PLUS fixed rate, 2025-26 academic year.
-            return b * (8.94 - pr) / 100 / 12
+            // 9.07% = Parent PLUS fixed rate, 2026-27 academic year.
+            return b * (9.07 - pr) / 100 / 12
         },
 
         // MARK: - Salary: RSUs (Phase 3 Batch 3b)
@@ -2220,15 +2220,16 @@ struct QuizEngine {
 
         // MARK: - Salary: W-2 vs 1099 (Phase 4 Batch 4a)
         "w2EquivalentHourly": { vars in
-            // Rough screening rule: 1099 hourly × 0.65 ≈ W-2 take-home equivalent
-            // after SE tax (~14.13%) + missing benefits (~15-20%) + missing PTO (~5-8%).
+            // Rough screening rule: 1099 hourly × 0.70 ≈ W-2 take-home equivalent
+            // after SE tax (~14.13%) + missing benefits (~15-20%) + missing PTO (~5-8%),
+            // partially offset by the 20% QBI deduction (made permanent by OBBBA 2025).
             guard let h = vars["hourly1099"] else { return nil }
-            return h * 0.65
+            return h * 0.70
         },
         "breakeven1099Hourly": { vars in
             // Inverse: how high does a 1099 rate need to be to match a W-2 rate?
             guard let w2 = vars["currentW2Hourly"] else { return nil }
-            return w2 / 0.65
+            return w2 / 0.70
         },
         "seTaxAnnual": { vars in
             // SE tax (effective): 15.3% applied to 92.35% of earnings, per IRS Schedule SE

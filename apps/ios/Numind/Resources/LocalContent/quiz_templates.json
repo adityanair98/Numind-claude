@@ -2857,7 +2857,7 @@
     "id": "bracket_basic_d1",
     "moduleId": "taxes",
     "difficulty": 1,
-    "promptTemplate": "Sarah's TAXABLE income is ${{taxableIncome}} (single, 2025). Federal brackets: 10% up to $11,925, then 12% up to $48,475, then 22% up to $103,350. How much federal income tax does she owe?",
+    "promptTemplate": "Sarah's TAXABLE income is ${{taxableIncome}} (single, 2026). Federal brackets: 10% up to $12,400, then 12% up to $50,400, then 22% up to $105,700. How much federal income tax does she owe?",
     "variableRules": [
       {
         "name": "taxableIncome",
@@ -2872,13 +2872,13 @@
       {
         "name": "bracket1Limit",
         "options": [
-          11925
+          12400
         ]
       },
       {
         "name": "bracket2Limit",
         "options": [
-          48475
+          50400
         ]
       },
       {
@@ -2903,13 +2903,13 @@
     "answerFormula": "marginalTax3Tier",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "First $11,925 \u00d7 10% = $1,192.50. Next slice (${{taxableIncome}} \u2212 $11,925) \u00d7 12%. Total = ${{answer}}. Income is within the 10/12 brackets \u2014 22% rate doesn't apply yet."
+    "explanationTemplate": "First $12,400 \u00d7 10% = $1,240.00. Next slice (${{taxableIncome}} \u2212 $12,400) \u00d7 12%. Total = ${{answer}}. Income is within the 10/12 brackets \u2014 22% rate doesn't apply yet."
   },
   {
     "id": "bracket_two_tier_d1",
     "moduleId": "taxes",
     "difficulty": 1,
-    "promptTemplate": "TAXABLE income ${{taxableIncome}} (single, 2025). Real federal brackets: 10% / 12% / 22% at thresholds $11,925, $48,475, $103,350. Federal tax?",
+    "promptTemplate": "TAXABLE income ${{taxableIncome}} (single, 2026). Real federal brackets: 10% / 12% / 22% at thresholds $12,400, $50,400, $105,700. Federal tax?",
     "variableRules": [
       {
         "name": "taxableIncome",
@@ -2925,13 +2925,13 @@
       {
         "name": "bracket1Limit",
         "options": [
-          11925
+          12400
         ]
       },
       {
         "name": "bracket2Limit",
         "options": [
-          48475
+          50400
         ]
       },
       {
@@ -2956,32 +2956,32 @@
     "answerFormula": "marginalTax3Tier",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "$11,925 \u00d7 10% + (${{taxableIncome}} \u2212 $11,925) \u00d7 12% = ${{answer}}. (Per IRS Rev Proc 2024-40 brackets, 2025 single filer.)"
+    "explanationTemplate": "$12,400 \u00d7 10% + (${{taxableIncome}} \u2212 $12,400) \u00d7 12% = ${{answer}}. (Per IRS Rev Proc 2025-32 brackets, 2026 single filer.)"
   },
   {
     "id": "concept_bracket_taxable_vs_gross_d2",
     "moduleId": "taxes",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "Sarah is a single filer earning $65,000 in gross wages in 2025. She takes the standard deduction (no itemizing). Federal tax brackets apply to which figure?",
+    "promptTemplate": "Sarah is a single filer earning $65,000 in gross wages in 2026. She takes the standard deduction (no itemizing). Federal tax brackets apply to which figure?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Federal brackets apply to TAXABLE income, not gross. Taxable income = gross \u2212 standard deduction. 2025 single standard deduction is $15,750 (per IRS Rev Proc 2024-40). $65,000 \u2212 $15,750 = $49,250. Applying brackets to gross would overstate the tax by hundreds of dollars.",
+    "explanationTemplate": "Federal brackets apply to TAXABLE income, not gross. Taxable income = gross \u2212 standard deduction. 2026 single standard deduction is $16,100 (per IRS Rev Proc 2025-32). $65,000 \u2212 $16,100 = $48,900. Applying brackets to gross would overstate the tax by hundreds of dollars.",
     "conceptChoices": [
-      "$49,250 (gross minus standard deduction)",
+      "$48,900 (gross minus standard deduction)",
       "$65,000 (gross income)",
-      "$50,000 (gross minus a round $15,000 estimate)",
+      "$48,000 (gross minus a round $17,000 estimate)",
       "$55,000 (gross minus FICA at 7.65%)"
     ],
-    "correctConceptChoice": "$49,250 (gross minus standard deduction)"
+    "correctConceptChoice": "$48,900 (gross minus standard deduction)"
   },
   {
     "id": "bracket_22_24_crossing_d2",
     "moduleId": "taxes",
     "difficulty": 2,
-    "promptTemplate": "TAXABLE income ${{taxableIncome}} (single, 2025), crossing into the 22% bracket. Brackets: 10% / 12% / 22% at $11,925, $48,475, $103,350. Federal income tax?",
+    "promptTemplate": "TAXABLE income ${{taxableIncome}} (single, 2026), crossing into the 22% bracket. Brackets: 10% / 12% / 22% at $12,400, $50,400, $105,700. Federal income tax?",
     "variableRules": [
       {
         "name": "taxableIncome",
@@ -2997,13 +2997,13 @@
       {
         "name": "bracket1Limit",
         "options": [
-          11925
+          12400
         ]
       },
       {
         "name": "bracket2Limit",
         "options": [
-          48475
+          50400
         ]
       },
       {
@@ -3028,14 +3028,14 @@
     "answerFormula": "marginalTax3Tier",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Three slices: $11,925 \u00d7 10% = $1,192.50, plus $36,550 \u00d7 12% = $4,386, plus (${{taxableIncome}} \u2212 $48,475) \u00d7 22%. Total = ${{answer}}. Only the top slice is taxed at 22%."
+    "explanationTemplate": "Three slices: $12,400 \u00d7 10% = $1,240, plus $38,000 \u00d7 12% = $4,560, plus (${{taxableIncome}} \u2212 $50,400) \u00d7 22%. Total = ${{answer}}. Only the top slice is taxed at 22%."
   },
   {
     "id": "bracket_effective_d3",
     "moduleId": "taxes",
     "difficulty": 3,
-    "scenarioTemplate": "You're estimating your federal income tax owed for 2025.",
-    "promptTemplate": "TAXABLE income ${{taxableIncome}} (single, 2025), crossing all three lower brackets. Brackets: 10% to $11,925, 12% to $48,475, 22% to $103,350. Total federal income tax?",
+    "scenarioTemplate": "You're estimating your federal income tax owed for 2026.",
+    "promptTemplate": "TAXABLE income ${{taxableIncome}} (single, 2026), crossing all three lower brackets. Brackets: 10% to $12,400, 12% to $50,400, 22% to $105,700. Total federal income tax?",
     "variableRules": [
       {
         "name": "taxableIncome",
@@ -3049,13 +3049,13 @@
       {
         "name": "bracket1Limit",
         "options": [
-          11925
+          12400
         ]
       },
       {
         "name": "bracket2Limit",
         "options": [
-          48475
+          50400
         ]
       },
       {
@@ -3080,7 +3080,7 @@
     "answerFormula": "marginalTax3Tier",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Stack the slices: $1,192.50 (10% on $11,925) + $4,386 (12% on $36,550) + (${{taxableIncome}} \u2212 $48,475) \u00d7 22%. Total = ${{answer}}. Effective rate is well below the 22% headline."
+    "explanationTemplate": "Stack the slices: $1,240 (10% on $12,400) + $4,560 (12% on $38,000) + (${{taxableIncome}} \u2212 $50,400) \u00d7 22%. Total = ${{answer}}. Effective rate is well below the 22% headline."
   },
   {
     "id": "deduction_basic_d1",
@@ -5786,19 +5786,19 @@
     "moduleId": "student_loans",
     "difficulty": 3,
     "inputMode": "multipleChoice",
-    "promptTemplate": "Which statement is most accurate about IDR plans as of 2025-26?",
+    "promptTemplate": "Which statement is most accurate about income-driven repayment as of 2026?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Plans differ on formula (10%-20% of discretionary income), family-size treatment, eligible loan types, and forgiveness window. The SAVE plan was partially vacated by federal courts in 2024-25, and Department of Education guidance has shifted multiple times since. Always check the current Federal Student Aid plan terms before relying on a payment estimate.",
+    "explanationTemplate": "Plans differ on formula (10%-20% of discretionary income), family-size treatment, eligible loan types, and forgiveness window. The SAVE plan was permanently closed after the 2024-25 court rulings, and OBBBA created the new Repayment Assistance Plan (RAP) for borrowers whose first loans are disbursed on/after July 1, 2026 — older borrowers are migrating into IBR. Always check the current Federal Student Aid plan terms before relying on a payment estimate.",
     "conceptChoices": [
       "All IDR plans use the same formula (10% of discretionary income above 150% poverty)",
-      "Plans differ by formula, family-size treatment, and eligible loans \u2014 and current rules are in active flux after 2024-25 SAVE litigation",
+      "Plans differ by formula, family-size treatment, and eligible loans \u2014 and rules are in active flux: SAVE is closed and OBBBA's new RAP applies to borrowers from July 2026 on",
       "There is only one IDR plan; the others have been eliminated",
       "All federal student loans automatically enroll in IDR at disbursement"
     ],
-    "correctConceptChoice": "Plans differ by formula, family-size treatment, and eligible loans \u2014 and current rules are in active flux after 2024-25 SAVE litigation"
+    "correctConceptChoice": "Plans differ by formula, family-size treatment, and eligible loans \u2014 and rules are in active flux: SAVE is closed and OBBBA's new RAP applies to borrowers from July 2026 on"
   },
   {
     "id": "sl_pslf_total_d1",
@@ -7835,19 +7835,19 @@
     "moduleId": "investing",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "A single filer earning $170,000 (2025) wants to contribute to a Roth IRA. What's the situation?",
+    "promptTemplate": "A single filer earning $170,000 (2026) wants to contribute to a Roth IRA. What's the situation?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "For 2025 (per IRS), single Roth IRA contributions phase out between $150k and $165k MAGI; above $165k, direct Roth IRA contributions are not allowed. But a 'backdoor Roth' (contribute non-deductible Traditional \u2192 convert to Roth) is still legal and widely used by high earners.",
+    "explanationTemplate": "For 2026 (per IRS Notice 2025-67), single Roth IRA contributions phase out between $153k and $168k MAGI; above $168k, direct Roth IRA contributions are not allowed. But a 'backdoor Roth' (contribute non-deductible Traditional \u2192 convert to Roth) is still legal and widely used by high earners.",
     "conceptChoices": [
       "They can contribute directly to a Roth IRA \u2014 no income limits",
-      "Direct Roth IRA contributions are phased out above $165k MAGI for singles \u2014 but a 'backdoor Roth' (Traditional \u2192 conversion) is still legal",
+      "Direct Roth IRA contributions are phased out above $168k MAGI for singles \u2014 but a 'backdoor Roth' (Traditional \u2192 conversion) is still legal",
       "They must wait until retirement to contribute",
       "Roth IRAs have been eliminated for high earners"
     ],
-    "correctConceptChoice": "Direct Roth IRA contributions are phased out above $165k MAGI for singles \u2014 but a 'backdoor Roth' (Traditional \u2192 conversion) is still legal"
+    "correctConceptChoice": "Direct Roth IRA contributions are phased out above $168k MAGI for singles \u2014 but a 'backdoor Roth' (Traditional \u2192 conversion) is still legal"
   },
   {
     "id": "concept_roth_backdoor_d2",
@@ -8438,7 +8438,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "The 1% rule is a quick screening test: monthly rent should be at least 1% of the purchase price for a property to have any chance of cash-flowing after all real expenses. A $300k property needs $3,000/month rent to pass. Most properties in HCOL US metros fail this test in 2025 \u2014 they're appreciation plays, not cash flow.",
+    "explanationTemplate": "The 1% rule is a quick screening test: monthly rent should be at least 1% of the purchase price for a property to have any chance of cash-flowing after all real expenses. A $300k property needs $3,000/month rent to pass. Most properties in HCOL US metros fail this test in 2026 \u2014 they're appreciation plays, not cash flow.",
     "conceptChoices": [
       "Monthly rent should be at least 1% of the purchase price as a quick cash-flow screen",
       "1% of the property value should be set aside annually for repairs",
@@ -9609,7 +9609,7 @@
     "answerFormula": "annualInterestViaApy",
     "answerFormat": "currency",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Annual interest = balance \u00d7 APY. ${{balance}} \u00d7 {{apy}}% = ${{answer}}/year. In 2025, top HYSAs pay 4-5% APY (per HYSA tracking sites like Bankrate and DepositAccounts) \u2014 orders of magnitude better than the 0.01% you'd get at a major brick-and-mortar bank."
+    "explanationTemplate": "Annual interest = balance \u00d7 APY. ${{balance}} \u00d7 {{apy}}% = ${{answer}}/year. In 2026, top HYSAs pay around 4-4.5% APY (per HYSA tracking sites like Bankrate and DepositAccounts) \u2014 orders of magnitude better than the 0.01% you'd get at a major brick-and-mortar bank."
   },
   {
     "id": "apy_bank_gap_d2",
@@ -10917,9 +10917,9 @@
       {
         "name": "standardAmount",
         "options": [
-          15750,
-          23625,
-          31500
+          16100,
+          24150,
+          32200
         ]
       }
     ],
@@ -10963,7 +10963,7 @@
     "id": "itemized_decision_d3",
     "moduleId": "taxes",
     "difficulty": 3,
-    "promptTemplate": "Mortgage interest ${{mortgageInt}} + state tax ${{stateTax}} + charity ${{charity}}. Standard deduction is $15,750. At {{taxRate}}% bracket, how much extra do you save by itemizing?",
+    "promptTemplate": "Mortgage interest ${{mortgageInt}} + state tax ${{stateTax}} + charity ${{charity}}. Standard deduction is $16,100. At {{taxRate}}% bracket, how much extra do you save by itemizing?",
     "variableRules": [
       {
         "name": "mortgageInt",
@@ -11003,7 +11003,7 @@
     "answerFormula": "itemizedDecisionSaving",
     "answerFormat": "currency",
     "distractorStrategy": "commonMistake",
-    "explanationTemplate": "Itemized total \u2212 $15,750 = excess. Excess \u00d7 tax rate = ${{answer}}. If negative, take standard."
+    "explanationTemplate": "Itemized total \u2212 $16,100 = excess. Excess \u00d7 tax rate = ${{answer}}. If negative, take standard."
   },
   {
     "id": "itemized_strategy_d3",
@@ -13200,7 +13200,7 @@
       {
         "name": "plusRate",
         "options": [
-          8.94
+          9.07
         ]
       },
       {
@@ -13236,7 +13236,7 @@
       {
         "name": "plusRate",
         "options": [
-          8.94
+          9.07
         ]
       },
       {
@@ -13279,7 +13279,7 @@
     "id": "plus_total_cost_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "${{loanBalance}} Parent PLUS at 8.94% + 4.228% origination. Private alternative: {{privateRate}}% no fee. Approximate total 10-yr difference (interest gap \u00d7 10 + origination)?",
+    "promptTemplate": "${{loanBalance}} Parent PLUS at 9.07% + 4.228% origination. Private alternative: {{privateRate}}% no fee. Approximate total 10-yr difference (interest gap \u00d7 10 + origination)?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -13301,13 +13301,13 @@
     "answerFormula": "plusVsPrivateTotalWithOrigination",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "(balance \u00d7 (8.94 \u2212 private) \u00d7 10 + balance \u00d7 4.228) \u00f7 100 = ${{answer}} private advantage."
+    "explanationTemplate": "(balance \u00d7 (9.07 \u2212 private) \u00d7 10 + balance \u00d7 4.228) \u00f7 100 = ${{answer}} private advantage."
   },
   {
     "id": "plus_decision_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "${{loanBalance}} loan. PLUS annual interest at 8.94% vs private at {{privateRate}}%. Annual interest savings = balance \u00d7 rate difference. How much more per month does PLUS cost you in interest?",
+    "promptTemplate": "${{loanBalance}} loan. PLUS annual interest at 9.07% vs private at {{privateRate}}%. Annual interest savings = balance \u00d7 rate difference. How much more per month does PLUS cost you in interest?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -13329,7 +13329,7 @@
     "answerFormula": "plusVsPrivateMonthlyInterest",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Annual diff \u00f7 12. Balance \u00d7 (8.94 \u2212 private) \u00f7 100 \u00f7 12 = ${{answer}}/month more on PLUS."
+    "explanationTemplate": "Annual diff \u00f7 12. Balance \u00d7 (9.07 \u2212 private) \u00f7 100 \u00f7 12 = ${{answer}}/month more on PLUS."
   },
   {
     "id": "concept_anchoring_d1",
@@ -14532,7 +14532,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "FICA = Federal Insurance Contributions Act. It funds Social Security (6.2% on wages up to $176,100 in 2025) and Medicare (1.45% on all wages, with 0.9% extra on wages over $200k). Employers match this dollar-for-dollar, so the true tax is 15.3% \u2014 self-employed people pay both halves.",
+    "explanationTemplate": "FICA = Federal Insurance Contributions Act. It funds Social Security (6.2% on wages up to $184,500 in 2026) and Medicare (1.45% on all wages, with 0.9% extra on wages over $200k). Employers match this dollar-for-dollar, so the true tax is 15.3% \u2014 self-employed people pay both halves.",
     "conceptChoices": [
       "Federal income tax",
       "Social Security + Medicare (7.65% combined: 6.2% SS + 1.45% Medicare)",
@@ -14608,7 +14608,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Single parents almost always qualify for Head of Household (HoH) \u2014 bigger standard deduction ($23,625 vs $15,750 in 2025), wider brackets, more generous credits. Many single parents file Single by mistake and overpay. The HoH qualification: unmarried + pay > 50% of household costs + qualifying dependent (usually a child).",
+    "explanationTemplate": "Single parents almost always qualify for Head of Household (HoH) \u2014 bigger standard deduction ($24,150 vs $16,100 in 2026), wider brackets, more generous credits. Many single parents file Single by mistake and overpay. The HoH qualification: unmarried + pay > 50% of household costs + qualifying dependent (usually a child).",
     "conceptChoices": [
       "Single (the default for unmarried filers)",
       "Head of Household (significantly larger standard deduction)",
@@ -15461,7 +15461,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "HSA eligibility requires enrollment in an HSA-qualified HDHP (per IRS Rev Proc 2024-25, 2025 minimum deductibles: $1,650 self / $3,300 family). You CANNOT contribute to an HSA if you're enrolled in a non-HDHP plan, in Medicare, or claimed as a dependent on someone else's tax return. The HDHP / HSA combination is the only way to get the HSA's triple tax advantage.",
+    "explanationTemplate": "HSA eligibility requires enrollment in an HSA-qualified HDHP (per IRS Rev Proc 2025-19, 2026 minimum deductibles: $1,700 self / $3,400 family). You CANNOT contribute to an HSA if you're enrolled in a non-HDHP plan, in Medicare, or claimed as a dependent on someone else's tax return. The HDHP / HSA combination is the only way to get the HSA's triple tax advantage.",
     "conceptChoices": [
       "Enrolled in an HSA-qualified HDHP plan",
       "Any health plan offered by your employer",
@@ -15475,19 +15475,19 @@
     "moduleId": "insurance",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "What's the 2025 contribution cap for a Dependent Care FSA (DCFSA), per family?",
+    "promptTemplate": "What's the 2026 contribution cap for a Dependent Care FSA (DCFSA), per family?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "$5,000 per household per year (per IRS \u2014 not inflation-indexed, hasn't changed in decades). Used for childcare, after-school care, summer day camp for kids under 13 (or care for a disabled spouse/dependent). At a 22-32% bracket, the DCFSA saves $1,100-1,600/yr in taxes \u2014 often the single highest-ROI open-enrollment election for parents.",
+    "explanationTemplate": "$7,500 per household per year ($3,750 if married filing separately) \u2014 raised from $5,000 by OBBBA 2025, the first increase since 1986. Used for childcare, after-school care, summer day camp for kids under 13 (or care for a disabled spouse/dependent). At a 22-32% bracket, the DCFSA saves $1,650-2,400/yr in taxes \u2014 often the single highest-ROI open-enrollment election for parents.",
     "conceptChoices": [
-      "$5,000",
-      "$3,300 (same as Health FSA)",
+      "$7,500",
+      "$3,400 (same as Health FSA)",
       "$10,000",
-      "$2,500"
+      "$5,000 (the old pre-2026 cap)"
     ],
-    "correctConceptChoice": "$5,000"
+    "correctConceptChoice": "$7,500"
   },
   {
     "id": "concept_oe_fsa_vs_hsa_d2",
@@ -15499,7 +15499,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "FSAs are use-it-or-lose-it (per IRS). Employers can offer one of two relief mechanisms: a 2.5-month grace period to spend prior-year funds, OR a limited rollover (~$660 for 2025, per IRS Rev Proc 2024-40). HSAs have no use-it-or-lose-it rule \u2014 funds roll over indefinitely and can be invested. This is the single biggest difference between the two.",
+    "explanationTemplate": "FSAs are use-it-or-lose-it (per IRS). Employers can offer one of two relief mechanisms: a 2.5-month grace period to spend prior-year funds, OR a limited rollover (~$680 for 2026, per IRS Rev Proc 2025-32). HSAs have no use-it-or-lose-it rule \u2014 funds roll over indefinitely and can be invested. This is the single biggest difference between the two.",
     "conceptChoices": [
       "FSA \u2014 unspent funds are typically forfeited at year-end",
       "HSA \u2014 must spend annually",
@@ -15532,19 +15532,19 @@
     "moduleId": "investing",
     "difficulty": 1,
     "inputMode": "multipleChoice",
-    "promptTemplate": "In 2025, what's the maximum employee elective deferral to a Roth 401(k)?",
+    "promptTemplate": "In 2026, what's the maximum employee elective deferral to a Roth 401(k)?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "$23,500 for 2025 (per IRS Notice 2024-80). This cap is SHARED with the Traditional 401(k) at the same employer \u2014 you can't max both for $47,000 total. Workers 50+ get an additional $7,500 catch-up. The IRA limit ($7,000) is separate and additive.",
+    "explanationTemplate": "$24,500 for 2026 (per IRS Notice 2025-67). This cap is SHARED with the Traditional 401(k) at the same employer \u2014 you can't max both for $49,000 total. Workers 50+ get an additional $8,000 catch-up (ages 60-63 get an $11,250 super catch-up instead, per SECURE 2.0). The IRA limit ($7,500) is separate and additive.",
     "conceptChoices": [
-      "$23,500 \u2014 shared with Traditional 401(k) at the same employer",
-      "$7,000 \u2014 same as the IRA cap",
-      "$30,500 \u2014 combined with the IRA",
-      "$66,000 \u2014 including employer match"
+      "$24,500 \u2014 shared with Traditional 401(k) at the same employer",
+      "$7,500 \u2014 same as the IRA cap",
+      "$32,000 \u2014 combined with the IRA",
+      "$72,000 \u2014 including employer match"
     ],
-    "correctConceptChoice": "$23,500 \u2014 shared with Traditional 401(k) at the same employer"
+    "correctConceptChoice": "$24,500 \u2014 shared with Traditional 401(k) at the same employer"
   },
   {
     "id": "concept_three_accounts_match_d2",
@@ -15575,33 +15575,33 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Roth IRA only. 2025 phaseout (per IRS Rev Proc 2024-40): $150K\u2013$165K for single, $236K\u2013$246K for MFJ \u2014 direct contributions phase out and stop at the upper bound. Roth 401(k) has NO income phaseout, so high earners excluded from Roth IRA can still get Roth tax treatment via their employer plan. Traditional 401(k) and Traditional IRA also have no income cap on contributions (Traditional IRA has a separate phaseout on deductibility, not on contribution).",
+    "explanationTemplate": "Roth IRA only. 2026 phaseout (per IRS Notice 2025-67): $153K\u2013$168K for single, $242K\u2013$252K for MFJ \u2014 direct contributions phase out and stop at the upper bound. Roth 401(k) has NO income phaseout, so high earners excluded from Roth IRA can still get Roth tax treatment via their employer plan. Traditional 401(k) and Traditional IRA also have no income cap on contributions (Traditional IRA has a separate phaseout on deductibility, not on contribution).",
     "conceptChoices": [
-      "Roth IRA only \u2014 $150K single / $236K MFJ start in 2025",
+      "Roth IRA only \u2014 $153K single / $242K MFJ start in 2026",
       "Roth 401(k) and Roth IRA \u2014 both have phaseouts",
       "Traditional 401(k) \u2014 limits contributions above $200K",
       "All three Roth-flavored accounts have phaseouts"
     ],
-    "correctConceptChoice": "Roth IRA only \u2014 $150K single / $236K MFJ start in 2025"
+    "correctConceptChoice": "Roth IRA only \u2014 $153K single / $242K MFJ start in 2026"
   },
   {
     "id": "concept_three_accounts_total_max_d2",
     "moduleId": "investing",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "You're under 50, earning $90K single in 2025. What's your MAXIMUM combined annual contribution capacity across a 401(k) (any mix Roth + Traditional) and an IRA (any mix Roth + Traditional)?",
+    "promptTemplate": "You're under 50, earning $90K single in 2026. What's your MAXIMUM combined annual contribution capacity across a 401(k) (any mix Roth + Traditional) and an IRA (any mix Roth + Traditional)?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "$30,500. That's $23,500 elective deferral cap (401k, any Roth/Trad mix) + $7,000 IRA cap (any Roth/Trad mix). The caps are independent \u2014 separate buckets, not combined. At 50+, add $7,500 401(k) catch-up + $1,000 IRA catch-up \u2192 $39,000 max. Employer match is on top of these limits but counts toward the $70,000 (2025) overall \u00a7415 cap (per IRS).",
+    "explanationTemplate": "$32,000. That's $24,500 elective deferral cap (401k, any Roth/Trad mix) + $7,500 IRA cap (any Roth/Trad mix). The caps are independent \u2014 separate buckets, not combined. At 50+, add $8,000 401(k) catch-up + $1,100 IRA catch-up \u2192 $41,100 max. Employer match is on top of these limits but counts toward the $72,000 (2026) overall \u00a7415 cap (per IRS).",
     "conceptChoices": [
-      "$30,500 ($23,500 401(k) + $7,000 IRA, independent caps)",
-      "$23,500 \u2014 IRA and 401(k) share the cap",
-      "$7,000 \u2014 IRA only since income is below phaseout",
-      "$66,000 \u2014 including employer match"
+      "$32,000 ($24,500 401(k) + $7,500 IRA, independent caps)",
+      "$24,500 \u2014 IRA and 401(k) share the cap",
+      "$7,500 \u2014 IRA only since income is below phaseout",
+      "$72,000 \u2014 including employer match"
     ],
-    "correctConceptChoice": "$30,500 ($23,500 401(k) + $7,000 IRA, independent caps)"
+    "correctConceptChoice": "$32,000 ($24,500 401(k) + $7,500 IRA, independent caps)"
   },
   {
     "id": "concept_three_accounts_rmd_d2",
@@ -15640,27 +15640,27 @@
     "id": "w2_equivalent_quick_d1",
     "moduleId": "salary",
     "difficulty": 1,
-    "promptTemplate": "Quick screen: an offer is ${{hourly1099}}/hr as a 1099 contractor. Using the rough rule that 1099 hourly × 0.65 ≈ W-2 take-home equivalent (after SE tax + missing benefits + missing PTO), what W-2 hourly does this approximately match?",
+    "promptTemplate": "Quick screen: an offer is ${{hourly1099}}/hr as a 1099 contractor. Using the rough rule that 1099 hourly × 0.70 ≈ W-2 take-home equivalent (after SE tax + missing benefits + missing PTO, net of the QBI deduction), what W-2 hourly does this approximately match?",
     "variableRules": [
       {"name": "hourly1099", "options": [40, 50, 60, 75, 90, 100]}
     ],
     "answerFormula": "w2EquivalentHourly",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "1099 × 0.65 = ${{hourly1099}} × 0.65 = ${{answer}}. The 35% haircut covers: employer FICA half (~7.65%), missing employer-sponsored health insurance (~7-10% of base), missing 401(k) match (~3-6%), missing PTO (~5-8%), and self-funded disability/life. Quick screen — if your 1099 offer's W-2-equivalent is below your current W-2 pay, it's not actually a raise."
+    "explanationTemplate": "1099 × 0.70 = ${{hourly1099}} × 0.70 = ${{answer}}. The ~30% haircut covers employer FICA half (~7.65%), missing employer-sponsored health insurance (~7-10% of base), missing 401(k) match (~3-6%), missing PTO (~5-8%), and self-funded disability/life — partially offset by the 20% QBI deduction (permanent post-OBBBA). Quick screen — if your 1099 offer's W-2-equivalent is below your current W-2 pay, it's not actually a raise."
   },
   {
     "id": "w2_equivalent_breakeven_d2",
     "moduleId": "salary",
     "difficulty": 2,
-    "promptTemplate": "You currently earn ${{currentW2Hourly}}/hr W-2 with full benefits. What 1099 hourly rate would you need to roughly break even on take-home? Use the 1099 × 0.65 ≈ W-2 take-home rule.",
+    "promptTemplate": "You currently earn ${{currentW2Hourly}}/hr W-2 with full benefits. What 1099 hourly rate would you need to roughly break even on take-home? Use the 1099 × 0.70 ≈ W-2 take-home rule.",
     "variableRules": [
       {"name": "currentW2Hourly", "options": [30, 35, 40, 45, 50, 60]}
     ],
     "answerFormula": "breakeven1099Hourly",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Solve W-2 = 1099 × 0.65 for 1099: 1099 needed = W-2 ÷ 0.65 = ${{currentW2Hourly}} ÷ 0.65 ≈ ${{answer}}/hr. Anything less than this 1099 rate is a real pay cut. If you have access to spouse's health insurance or qualify for ACA Marketplace subsidies, the multiplier shrinks (closer to 0.75-0.80)."
+    "explanationTemplate": "Solve W-2 = 1099 × 0.70 for 1099: 1099 needed = W-2 ÷ 0.70 = ${{currentW2Hourly}} ÷ 0.70 ≈ ${{answer}}/hr. Anything less than this 1099 rate is a real pay cut. If you have access to spouse's health insurance or qualify for ACA Marketplace subsidies, the multiplier shrinks (closer to 0.78-0.85)."
   },
   {
     "id": "se_tax_on_1099_d2",
