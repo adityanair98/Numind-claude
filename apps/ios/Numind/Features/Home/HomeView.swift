@@ -712,7 +712,7 @@ struct HomeView: View {
             chipView("NEW", icon: "sparkle", color: Theme.Colors.mindTeal)
         case .inProgress:
             chipView("IN PROGRESS", icon: "arrow.right.circle", color: Theme.Colors.primaryBlue)
-        case .weakModule:
+        case .weakModule, .weakAxis:
             chipView("NEEDS WORK", icon: "exclamationmark.triangle", color: Theme.Colors.warmOrange)
         }
     }

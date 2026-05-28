@@ -2,7 +2,8 @@ import Foundation
 
 @MainActor
 final class ProgressStore: ObservableObject {
-    private static let defaultsKey      = "numind.progress.v1"
+    private static let defaultsKey       = "numind.progress.v2"
+    private static let legacyDefaultsKey = "numind.progress.v1"
     private static let dailyChallengeKey = "numind.dailyChallenge.lastCompleted"
     private static let dateFormatter: DateFormatter = {
         let f = DateFormatter(); f.dateFormat = "yyyy-MM-dd"; return f
@@ -16,8 +17,17 @@ final class ProgressStore: ObservableObject {
     @Published private(set) var pendingMilestone: Milestone?
 
     init() {
+        // v2 read path.
         if let raw = UserDefaults.standard.data(forKey: Self.defaultsKey),
            let decoded = try? JSONDecoder().decode(ProgressData.self, from: raw) {
+            data = decoded
+        } else if let legacyRaw = UserDefaults.standard.data(forKey: Self.legacyDefaultsKey),
+                  var decoded = try? JSONDecoder().decode(ProgressData.self, from: legacyRaw) {
+            // v1 → v2 migration: sessions/badges/freezes survive; scoreHistory
+            // is dropped so it recomputes on next session under the new
+            // axis-based engine. We don't yet have real users, so this is a
+            // dev-data safety net (not a user-facing migration).
+            decoded.scoreHistory = []
             data = decoded
         } else {
             data = ProgressData()
@@ -356,18 +366,85 @@ final class ProgressStore: ObservableObject {
     var numindScore: Int { data.scoreHistory.last?.overallScore ?? 0 }
 
     /// Latest score for a specific module (0–100). 0 if never computed.
+    /// Compatibility shim: in the 7-axis world we average the lessons'
+    /// primary-axis scores from the most recent snapshot.
     func numindScore(for moduleId: String) -> Int {
-        data.scoreHistory.last?.moduleScores[moduleId] ?? 0
+        guard let entry = data.scoreHistory.last else { return 0 }
+        // Map module → primary axes of its lessons.
+        let lessons = LocalContentRepository().lessons(for: moduleId)
+        let primaryAxes = Set(lessons.compactMap { $0.primarySkill?.rawValue })
+        let scores = primaryAxes.compactMap { entry.axisScores[$0] }
+        guard !scores.isEmpty else { return 0 }
+        return scores.reduce(0, +) / scores.count
     }
 
     /// Module score from the nearest snapshot at or before `daysAgo` days ago.
     /// Returns nil if no snapshot exists that far back.
     func numindScoreHistory(for moduleId: String, daysAgo: Int) -> Int? {
         let cutoff = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
-        return data.scoreHistory
-            .filter { $0.date <= cutoff }
-            .max { $0.date < $1.date }
-            .flatMap { $0.moduleScores[moduleId] }
+        guard let entry = data.scoreHistory
+            .filter({ $0.date <= cutoff })
+            .max(by: { $0.date < $1.date })
+        else { return nil }
+        let lessons = LocalContentRepository().lessons(for: moduleId)
+        let primaryAxes = Set(lessons.compactMap { $0.primarySkill?.rawValue })
+        let scores = primaryAxes.compactMap { entry.axisScores[$0] }
+        guard !scores.isEmpty else { return nil }
+        return scores.reduce(0, +) / scores.count
+    }
+
+    /// Latest score for a specific skill axis (0–100). 0 if never computed.
+    func numindScore(forAxis axis: SkillAxis) -> Int {
+        data.scoreHistory.last?.axisScores[axis.rawValue] ?? 0
+    }
+
+    /// Axis evidence level (Untested / Early Read / Developing / Reliable),
+    /// recomputed lazily from current sessions (cheap; bounded by axis count).
+    func numindEvidence(forAxis axis: SkillAxis) -> EvidenceLevel {
+        let results = NumindScoreEngine.axisResults(
+            sessions: sessionsWithDrillAttribution(),
+            repository: LocalContentRepository()
+        )
+        return results.first { $0.axis == axis }?.evidence ?? .untested
+    }
+
+    /// Per-axis results across the whole user history. Used by Progress UI.
+    var numindAxisResults: [NumindScoreEngine.AxisResult] {
+        NumindScoreEngine.axisResults(
+            sessions: sessionsWithDrillAttribution(),
+            repository: LocalContentRepository()
+        )
+    }
+
+    /// Dynamic subtitle string ("Solid money sense. Strongest: Debt. Focus
+    /// next: Investing.") for the header below the score ring.
+    var numindSubtitle: String {
+        NumindScoreEngine.subtitle(numindAxisResults, composite: numindScore)
+    }
+
+    /// Pack recommended next, based on the user's weakest measured axis.
+    /// Falls back to the first not-yet-completed pack if no clear weak axis.
+    var numindRecommendedNextPack: Pack? {
+        let mastered = masteredLessonIds
+        let repo = LocalContentRepository()
+        let unfinished = repo.allPacks().filter { p in
+            // Skip already-completed packs
+            let done = p.lessonIds.filter { mastered.contains($0) }.count
+            return done < p.lessonIds.count
+        }
+        guard !unfinished.isEmpty else { return nil }
+
+        // Find weakest measured axis (Early Read+)
+        let results = numindAxisResults.filter { $0.evidence != .untested }
+        if let weakest = results.min(by: { $0.score < $1.score }) {
+            if let match = unfinished.first(where: { $0.primarySkillAxis == weakest.axis }) {
+                return match
+            }
+            if let match = unfinished.first(where: { $0.secondarySkillAxes.contains(weakest.axis) }) {
+                return match
+            }
+        }
+        return unfinished.first
     }
 
     /// How much the overall score changed versus 7 days ago.
@@ -386,15 +463,18 @@ final class ProgressStore: ObservableObject {
     ///
     /// - Parameter moduleIds: All known module IDs (from `ContentRepository.allModules()`).
     func recomputeAndStoreScore(moduleIds: [String]) {
+        // Module IDs are accepted for legacy callers but ignored — the engine
+        // now scores along the 7 SkillAxis cases regardless of module count.
         let scoringSessions = sessionsWithDrillAttribution()
-        var moduleScores: [String: Int] = [:]
-        for id in moduleIds {
-            moduleScores[id] = NumindScoreEngine.score(for: id, sessions: scoringSessions)
+        let repo = LocalContentRepository()
+        let results = NumindScoreEngine.axisResults(sessions: scoringSessions, repository: repo)
+        var axisScores: [String: Int] = [:]
+        for r in results {
+            axisScores[r.axis.rawValue] = r.score
         }
-        let overall = moduleIds.isEmpty ? 0
-            : moduleScores.values.reduce(0, +) / moduleIds.count
+        let overall = NumindScoreEngine.composite(results)
 
-        let entry = ScoreEntry(date: Date(), overallScore: overall, moduleScores: moduleScores)
+        let entry = ScoreEntry(date: Date(), overallScore: overall, axisScores: axisScores)
         data.scoreHistory.append(entry)
 
         // Prune entries older than 90 days to prevent unbounded growth.

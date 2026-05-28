@@ -205,9 +205,10 @@ struct ProgressTabView: View {
                             .font(.system(size: 10, weight: .bold))
                             .foregroundStyle(Theme.Colors.mutedText)
                             .kerning(0.6)
-                        Text("Your overall number sense")
+                        Text(store.numindScore > 0 ? store.numindSubtitle : "Your overall number sense")
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Colors.mutedText)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     Spacer()
                     NumindScoreRing(score: store.numindScore,
@@ -217,34 +218,35 @@ struct ProgressTabView: View {
 
                 Divider().background(Theme.Colors.hairline)
 
-                // Radar or bars depending on module count
-                let mods = modules
-                if mods.count >= 3 {
-                    let current = mods.map {
-                        RadarChartView.Axis(label: $0.shortName,
-                                            value: Double(store.numindScore(for: $0.id)) / 100.0)
-                    }
-                    let previous: [RadarChartView.Axis]? = mods.allSatisfy({
-                        store.numindScoreHistory(for: $0.id, daysAgo: 7) != nil
-                    })
-                    ? mods.map {
-                        RadarChartView.Axis(label: $0.shortName,
-                                            value: Double(store.numindScoreHistory(for: $0.id, daysAgo: 7) ?? 0) / 100.0)
-                    }
-                    : nil
-                    RadarChartView(axes: current, previousAxes: previous, size: 220)
-                        .frame(maxWidth: .infinity)
-                } else {
-                    ModuleBarsView(bars: mods.map { m in
-                        ModuleBarsView.Bar(
-                            icon: m.icon,
-                            label: m.shortName,
-                            score: store.numindScore(for: m.id),
-                            color: m.color.tintColor,
-                            previousScore: store.numindScoreHistory(for: m.id, daysAgo: 7)
-                        )
-                    })
+                // 7-axis radar (Phase 5d). Replaces the per-module radar.
+                // Untested axes render as 0 — RadarChartView already handles
+                // the dimmed-spoke visual via the value being 0.
+                let axisResults = store.numindAxisResults
+                let current = axisResults.map { r in
+                    RadarChartView.Axis(
+                        label: r.axis.shortName,
+                        value: r.evidence == .untested ? 0 : Double(r.score) / 100.0
+                    )
                 }
+                RadarChartView(axes: current, previousAxes: nil, size: 220)
+                    .frame(maxWidth: .infinity)
+
+                // Per-axis evidence labels — small text under the chart so
+                // users see which axes are "Reliable" vs "Early Read" etc.
+                VStack(alignment: .leading, spacing: 4) {
+                    ForEach(axisResults, id: \.axis) { r in
+                        HStack {
+                            Text(r.axis.shortName)
+                                .font(Theme.Typography.small)
+                                .foregroundStyle(Theme.Colors.deepNavy.opacity(r.evidence == .untested ? 0.45 : 1.0))
+                            Spacer()
+                            Text(r.evidence.label)
+                                .font(Theme.Typography.small)
+                                .foregroundStyle(evidenceColor(r.evidence))
+                        }
+                    }
+                }
+                .padding(.top, 4)
 
                 if store.numindScore == 0 {
                     Text("Complete your first lesson to see your Numind Score.")
@@ -1031,6 +1033,15 @@ struct ProgressTabView: View {
     }
 
     // MARK: - Helpers
+
+    private func evidenceColor(_ level: EvidenceLevel) -> Color {
+        switch level {
+        case .untested:   return Theme.Colors.mutedText.opacity(0.55)
+        case .earlyRead:  return Theme.Colors.warmOrange
+        case .developing: return Theme.Colors.primaryBlue
+        case .reliable:   return Theme.Colors.growthGreen
+        }
+    }
 
     private func sectionLabel(_ text: String) -> some View {
         Text(text.uppercased())

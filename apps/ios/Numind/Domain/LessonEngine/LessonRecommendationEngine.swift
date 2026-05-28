@@ -15,7 +15,11 @@ struct LessonRecommendation: Identifiable {
         /// The user has never touched this module.
         case neverAttempted
         /// Recent session data shows this module is weak (low Numind Score).
+        /// Used for module-based weak detection (legacy).
         case weakModule(moduleName: String)
+        /// Recent session data shows a specific skill axis is weak. Phase 5d+
+        /// drives recommendations from competency axes rather than modules.
+        case weakAxis(axisName: String)
         /// Continuing a partially started module.
         case inProgress(moduleName: String)
     }

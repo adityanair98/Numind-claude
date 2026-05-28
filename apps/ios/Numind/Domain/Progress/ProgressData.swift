@@ -4,8 +4,47 @@ import Foundation
 struct ScoreEntry: Codable {
     let date: Date
     let overallScore: Int
-    /// Per-module scores at this point in time. Keyed by module ID.
-    let moduleScores: [String: Int]
+    /// Per-axis scores at this point in time. Keyed by `SkillAxis.rawValue`.
+    /// (Was per-module before Phase 5; the v2 persistence key bump corresponds
+    /// to this schema change.)
+    let axisScores: [String: Int]
+
+    init(date: Date, overallScore: Int, axisScores: [String: Int]) {
+        self.date = date
+        self.overallScore = overallScore
+        self.axisScores = axisScores
+    }
+
+    // Custom decode tolerates the legacy `moduleScores` key during the v1→v2
+    // migration window. v1 score history is dropped on first launch under v2,
+    // but the codable shape needs to survive the decode pass.
+    private enum CodingKeys: String, CodingKey {
+        case date
+        case overallScore
+        case axisScores
+        case moduleScores
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        self.date = try c.decode(Date.self, forKey: .date)
+        self.overallScore = try c.decode(Int.self, forKey: .overallScore)
+        if let new = try c.decodeIfPresent([String: Int].self, forKey: .axisScores) {
+            self.axisScores = new
+        } else if let legacy = try c.decodeIfPresent([String: Int].self, forKey: .moduleScores) {
+            // Legacy v1 entry — keep it readable so prior history doesn't crash.
+            self.axisScores = legacy
+        } else {
+            self.axisScores = [:]
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(date, forKey: .date)
+        try c.encode(overallScore, forKey: .overallScore)
+        try c.encode(axisScores, forKey: .axisScores)
+    }
 }
 
 // Pure Codable value — all computation lives here so it's testable without the store.
