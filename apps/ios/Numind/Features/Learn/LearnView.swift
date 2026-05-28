@@ -26,6 +26,11 @@ struct LearnView: View {
 
     @State private var presentedPack: Pack? = nil
 
+    /// Currently-expanded world in the Worlds tab. Nil means "auto-pick" —
+    /// defaults to the world containing the current node, then to the first
+    /// world. Set by tapping a chip in `worldsGrid`.
+    @State private var expandedWorldId: String? = nil
+
     // MARK: - Layout constants
 
     private let nodeSize:        CGFloat = 70
@@ -43,8 +48,12 @@ struct LearnView: View {
                     .padding(.bottom, 16)
                 switch selectedTab {
                 case .worlds:
-                    ForEach(Array(viewModel.sections.enumerated()), id: \.element.id) { idx, section in
-                        worldBanner(section, sectionIndex: idx)
+                    worldsGrid
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 20)
+                    if let section = activeWorldSection,
+                       let sectionIndex = viewModel.sections.firstIndex(where: { $0.id == section.id }) {
+                        worldBanner(section, sectionIndex: sectionIndex)
                         sectionNodes(section)
                         worldConqueredBanner(section)
                     }
@@ -87,6 +96,95 @@ struct LearnView: View {
             Text("Paths").tag(LearnTab.paths)
         }
         .pickerStyle(.segmented)
+    }
+
+    // MARK: - Worlds grid (5×2 chip layout)
+
+    /// The world section currently expanded below the grid. Resolution order:
+    /// 1. Explicit user selection via `expandedWorldId`
+    /// 2. The world containing the "current" lesson node (Recommendation Engine signal)
+    /// 3. The first world (Smart Shopping for the canonical curriculum)
+    private var activeWorldSection: LearnViewModel.PathSection? {
+        if let id = expandedWorldId,
+           let match = viewModel.sections.first(where: { $0.id == id }) {
+            return match
+        }
+        if let sectionWithCurrent = viewModel.sections.first(where: { section in
+            section.nodes.contains(where: { $0.state == .current })
+        }) {
+            return sectionWithCurrent
+        }
+        return viewModel.sections.first
+    }
+
+    /// 2-column grid of world chips, one per module. Each chip shows the
+    /// module icon, short name, mastered/total counter, and a BeadRail
+    /// for at-a-glance mastery progress. Conquered worlds get a gold border
+    /// + trophy overlay.
+    private var worldsGrid: some View {
+        let columns = [
+            GridItem(.flexible(), spacing: 12),
+            GridItem(.flexible(), spacing: 12),
+        ]
+        return LazyVGrid(columns: columns, spacing: 12) {
+            ForEach(viewModel.sections) { section in
+                worldChip(section: section)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func worldChip(section: LearnViewModel.PathSection) -> some View {
+        let lessonNodes = section.nodes.filter { !$0.isReview }
+        let total = lessonNodes.count
+        let mastered = lessonNodes.filter { $0.state == .mastered }.count
+        let isConquered = total > 0 && mastered == total
+        let isActive = activeWorldSection?.id == section.id
+        let accent = section.module.color.tintColor
+
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                expandedWorldId = section.id
+            }
+        }) {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 8) {
+                    IconTile(
+                        systemName: section.module.icon,
+                        tintColor: accent,
+                        size: 32
+                    )
+                    if isConquered {
+                        Image(systemName: "crown.fill")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.insightYellow)
+                    }
+                    Spacer()
+                    Text("\(mastered)/\(total)")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+                Text(section.module.shortName)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .lineLimit(1)
+                BeadRail(progress: mastered, total: max(total, 1), variant: .chunky)
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Theme.Colors.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .strokeBorder(
+                        isConquered ? Theme.Colors.insightYellow
+                        : isActive ? accent
+                        : Theme.Colors.hairline,
+                        lineWidth: isConquered || isActive ? 2 : 1
+                    )
+            )
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Paths list
