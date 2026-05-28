@@ -67,6 +67,9 @@
 		E5A4B2C3D4E5F60718293A4F /* WorldCompletionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B5C3D4E5F60718293A4B60 /* WorldCompletionSheet.swift */; };
 		E6A5B2C3D4E5F60718293A50 /* Celebration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6C3D4E5F60718293A4B61 /* Celebration.swift */; };
 		E7A6B2C3D4E5F60718293A51 /* WorldHeroPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B7C3D4E5F60718293A4B62 /* WorldHeroPage.swift */; };
+		F665A3F9B7A338F5928400B0 /* CCPayoffCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0B3C2CC1A4C7E34620792C /* CCPayoffCalculator.swift */; };
+		29E58D9CF61EB8DC9C3A9757 /* RentAffordabilityCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4717538A58F1CDE2CD4F9E0 /* RentAffordabilityCalculator.swift */; };
+		0B544FD4F12E94339D72FDD4 /* HYSAGrowthCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F461D082E4D349005FAA181 /* HYSAGrowthCalculator.swift */; };
 		47BA09D8CFDBAF613071981C /* PaycheckCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05095774AAB6F648558E5BBE /* PaycheckCalculator.swift */; };
 		DE4F3CBC595B0DCE2C7E513B /* DiscountTaxCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11890A592C3DB3CD43BA829F /* DiscountTaxCalculator.swift */; };
 		A8A50EAF0A4986A7871FEA76 /* CalculatorShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94203C96D4C31474E31C5E5 /* CalculatorShell.swift */; };
@@ -301,6 +304,9 @@
 		F6B5C3D4E5F60718293A4B60 /* WorldCompletionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldCompletionSheet.swift; sourceTree = "<group>"; };
 		F7B6C3D4E5F60718293A4B61 /* Celebration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Celebration.swift; sourceTree = "<group>"; };
 		F8B7C3D4E5F60718293A4B62 /* WorldHeroPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldHeroPage.swift; sourceTree = "<group>"; };
+		3F0B3C2CC1A4C7E34620792C /* CCPayoffCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/CCPayoffCalculator.swift"; sourceTree = "<group>"; };
+		F4717538A58F1CDE2CD4F9E0 /* RentAffordabilityCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/RentAffordabilityCalculator.swift"; sourceTree = "<group>"; };
+		1F461D082E4D349005FAA181 /* HYSAGrowthCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/HYSAGrowthCalculator.swift"; sourceTree = "<group>"; };
 		05095774AAB6F648558E5BBE /* PaycheckCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/PaycheckCalculator.swift"; sourceTree = "<group>"; };
 		11890A592C3DB3CD43BA829F /* DiscountTaxCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/Calculators/DiscountTaxCalculator.swift"; sourceTree = "<group>"; };
 		C94203C96D4C31474E31C5E5 /* CalculatorShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Tools/CalculatorShell.swift"; sourceTree = "<group>"; };
@@ -749,6 +755,9 @@
 				E25112B5A1394145F294F64F /* LearnView.swift */,
 				30A8490760BAE7C9FD71F012 /* LearnViewModel.swift */,
 				F8B7C3D4E5F60718293A4B62 /* WorldHeroPage.swift */,
+				3F0B3C2CC1A4C7E34620792C /* CCPayoffCalculator.swift */,
+				F4717538A58F1CDE2CD4F9E0 /* RentAffordabilityCalculator.swift */,
+				1F461D082E4D349005FAA181 /* HYSAGrowthCalculator.swift */,
 				05095774AAB6F648558E5BBE /* PaycheckCalculator.swift */,
 				11890A592C3DB3CD43BA829F /* DiscountTaxCalculator.swift */,
 				C94203C96D4C31474E31C5E5 /* CalculatorShell.swift */,
@@ -997,6 +1006,9 @@
 				E5A4B2C3D4E5F60718293A4F /* WorldCompletionSheet.swift in Sources */,
 				E6A5B2C3D4E5F60718293A50 /* Celebration.swift in Sources */,
 				E7A6B2C3D4E5F60718293A51 /* WorldHeroPage.swift in Sources */,
+				F665A3F9B7A338F5928400B0 /* CCPayoffCalculator.swift in Sources */,
+				29E58D9CF61EB8DC9C3A9757 /* RentAffordabilityCalculator.swift in Sources */,
+				0B544FD4F12E94339D72FDD4 /* HYSAGrowthCalculator.swift in Sources */,
 				47BA09D8CFDBAF613071981C /* PaycheckCalculator.swift in Sources */,
 				DE4F3CBC595B0DCE2C7E513B /* DiscountTaxCalculator.swift in Sources */,
 				A8A50EAF0A4986A7871FEA76 /* CalculatorShell.swift in Sources */,

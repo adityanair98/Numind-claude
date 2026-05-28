@@ -36,17 +36,17 @@ struct ToolsView: View {
                     row(icon: "creditcard.trianglebadge.exclamationmark", tint: Theme.Colors.debtCoral,
                         name: "Credit card payoff",
                         desc: "Months to debt-free + total interest") {
-                        ComingSoonCalculator(title: "Credit card payoff")
+                        CCPayoffCalculator()
                     }
                     row(icon: "house.fill", tint: Theme.Colors.housingRose,
                         name: "Rent affordability",
                         desc: "How much rent your income supports") {
-                        ComingSoonCalculator(title: "Rent affordability")
+                        RentAffordabilityCalculator()
                     }
                     row(icon: "banknote.fill", tint: Theme.Colors.growthGreen,
                         name: "Savings growth",
                         desc: "What a high-yield account earns over time") {
-                        ComingSoonCalculator(title: "Savings growth")
+                        HYSAGrowthCalculator()
                     }
                 }
             }
