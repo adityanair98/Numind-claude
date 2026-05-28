@@ -6,6 +6,7 @@ struct HomeView: View {
     @State private var launchCard: HomeViewModel.LessonCard?
     @State private var dailyVM: QuizSessionViewModel? = nil
     @State private var bonusRoundVM: QuizSessionViewModel? = nil
+    @State private var recallVM: QuizSessionViewModel? = nil
     @State private var showSpeedDrill = false
     @State private var blitzVM: BlitzViewModel? = nil
     @State private var streakVM: StreakViewModel? = nil
@@ -86,6 +87,16 @@ struct HomeView: View {
                         vm: vm, lessonId: "bonus_round"
                     )
                     bonusRoundVM = nil
+                }
+            }
+        }
+        // Recall — "review your weak spots" (moved from Practice in 7a)
+        .fullScreenCover(item: $recallVM) { vm in
+            NavigationStack {
+                QuizSessionView(viewModel: vm) {
+                    recordMixedSession(vm: vm, lessonId: "recall_review")
+                    progressStore.updateRecallBest(score: vm.correctCount)
+                    recallVM = nil
                 }
             }
         }
@@ -546,6 +557,18 @@ struct HomeView: View {
         )
     }
 
+    /// "Review your weak spots" — rebuilds a quiz from the questions the user
+    /// has previously missed (Recall, moved from the retired Practice tab).
+    /// Falls back to a fresh bonus round when there's no history yet.
+    private func launchRecall() {
+        let allResults = progressStore.data.sessions.flatMap { $0.questionResults }
+        if let vm = ReviewMistakesEngine.build(fromStored: allResults, moduleColor: .indigo, repository: repo) {
+            recallVM = vm
+        } else {
+            startBonusRound()
+        }
+    }
+
     // MARK: - Streak
 
     private var streakSection: some View {
@@ -701,11 +724,11 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 12) {
             sectionLabel("Quick access")
             HStack(spacing: 12) {
-                quickChip(icon: "arrow.triangle.2.circlepath",
-                          title: "Practice mix",
-                          subtitle: "Fresh question set",
+                quickChip(icon: "arrow.uturn.backward",
+                          title: "Review weak spots",
+                          subtitle: "Redo what you've missed",
                           tint: Theme.Colors.primaryBlue) {
-                    startBonusRound()
+                    launchRecall()
                 }
                 quickChip(icon: progressStore.focusPack == nil ? "map.fill" : "rectangle.stack.fill",
                           title: progressStore.focusPack == nil ? "Pick a path" : "Browse paths",
