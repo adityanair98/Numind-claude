@@ -39,12 +39,28 @@ struct Lesson: Codable, Identifiable, Equatable {
     /// - Defaults to false if missing from JSON.
     let isScenarioEligible: Bool
 
+    // MARK: - Money-moment surfacing (Phase 6c)
+    /// One plain-language sentence describing the real-life money moment where
+    /// this lesson's skill is used (e.g. "Use this at every restaurant for the
+    /// rest of your life."). Surfaced under the lesson title, in the session
+    /// summary, and aggregated into Progress' "You can now handle:" list.
+    /// - Optional with `decodeIfPresent` for back-compat.
+    let realWorldHint: String?
+
+    /// Slug of the in-app calculator (Tools tab, Phase 7a) most relevant to
+    /// this lesson, used to render a "Try this with your numbers in […]" pill.
+    /// e.g. `tip_split`, `paycheck`, `cc_payoff`. Optional — only ~25 lessons
+    /// map to a calculator.
+    /// - Optional with `decodeIfPresent` for back-compat.
+    let relatedCalculatorSlug: String?
+
     // Custom init for Codable with sensible defaults — keeps unmapped
     // lessons decodable while we roll out the mapping incrementally.
     enum CodingKeys: String, CodingKey {
         case id, moduleId, title, concept, shortcut, example
         case quizTemplateIds, lastVerified
         case primarySkill, secondarySkills, isCore, isScenarioEligible
+        case realWorldHint, relatedCalculatorSlug
     }
 
     init(from decoder: Decoder) throws {
@@ -61,6 +77,8 @@ struct Lesson: Codable, Identifiable, Equatable {
         self.secondarySkills = try c.decodeIfPresent([SkillAxis].self, forKey: .secondarySkills) ?? []
         self.isCore          = try c.decodeIfPresent(Bool.self, forKey: .isCore) ?? false
         self.isScenarioEligible = try c.decodeIfPresent(Bool.self, forKey: .isScenarioEligible) ?? false
+        self.realWorldHint   = try c.decodeIfPresent(String.self, forKey: .realWorldHint)
+        self.relatedCalculatorSlug = try c.decodeIfPresent(String.self, forKey: .relatedCalculatorSlug)
     }
 
     // Memberwise init retained for tests / previews
@@ -76,7 +94,9 @@ struct Lesson: Codable, Identifiable, Equatable {
         primarySkill: SkillAxis? = nil,
         secondarySkills: [SkillAxis] = [],
         isCore: Bool = false,
-        isScenarioEligible: Bool = false
+        isScenarioEligible: Bool = false,
+        realWorldHint: String? = nil,
+        relatedCalculatorSlug: String? = nil
     ) {
         self.id = id
         self.moduleId = moduleId
@@ -90,5 +110,7 @@ struct Lesson: Codable, Identifiable, Equatable {
         self.secondarySkills = secondarySkills
         self.isCore = isCore
         self.isScenarioEligible = isScenarioEligible
+        self.realWorldHint = realWorldHint
+        self.relatedCalculatorSlug = relatedCalculatorSlug
     }
 }

@@ -61,7 +61,7 @@ enum Milestone: Identifiable {
         case .fiveSessions:
             return "You're building real momentum. Keep going!"
         case .tenSessions:
-            return "Double digits! Your number sense is growing fast."
+            return "Double digits! Your money sense is growing fast."
         case .firstWeekStreak:
             return "A full week of daily practice \u{2014} you've earned a streak freeze!"
         case .twoWeekStreak:

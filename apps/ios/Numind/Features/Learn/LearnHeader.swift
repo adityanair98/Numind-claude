@@ -10,7 +10,7 @@ struct LearnHeader: View {
         VStack(alignment: .leading, spacing: 10) {
             topRow
             VStack(alignment: .leading, spacing: 4) {
-                Text("Your quest")
+                Text("Your modules")
                     .font(.system(size: 30, weight: .bold, design: .rounded))
                     .foregroundStyle(Theme.Colors.deepNavy)
                 Text("\(totalMastered) lessons mastered \u{00B7} \(totalLessons - totalMastered) to go")

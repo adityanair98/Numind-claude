@@ -17,7 +17,9 @@
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this at every restaurant, bar, and salon for the rest of your life.",
+    "relatedCalculatorSlug": "tip_split"
   },
   {
     "id": "tip_18_percent",
@@ -37,7 +39,9 @@
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Pull this out the next time the check lands and you're second-guessing the tip.",
+    "relatedCalculatorSlug": "tip_split"
   },
   {
     "id": "tip_split_bill",
@@ -57,7 +61,9 @@
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when the group check arrives and everyone's reaching for their phone.",
+    "relatedCalculatorSlug": "tip_split"
   },
   {
     "id": "discount_bogo",
@@ -77,7 +83,8 @@
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you grab a 'buy one get one' deal you didn't come in for."
   },
   {
     "id": "discount_stacked",
@@ -97,7 +104,9 @@
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this at checkout when a coupon stacks on top of a sale price.",
+    "relatedCalculatorSlug": "discount_tax"
   },
   {
     "id": "discount_coupon_vs_cashback",
@@ -117,7 +126,8 @@
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Pull this up when you're choosing between a coupon code and a cashback offer."
   },
   {
     "id": "discount_price_plus_tax",
@@ -139,7 +149,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this at the register so the final price never surprises you.",
+    "relatedCalculatorSlug": "discount_tax"
   },
   {
     "id": "discount_membership_worth",
@@ -161,7 +173,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before you renew Costco, Prime, or a delivery membership."
   },
   {
     "id": "concept_shopping_manipulation",
@@ -181,7 +194,8 @@
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Keep this in mind every time a store flashes a 'limited time' price."
   },
   {
     "id": "subscription_math",
@@ -203,7 +217,8 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this once a year to see what your subscriptions actually cost you."
   },
   {
     "id": "price_per_use",
@@ -225,7 +240,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before buying the thing you'll 'definitely use all the time.'"
   },
   {
     "id": "sales_tax_quick",
@@ -247,7 +263,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to know your real total before you reach the register.",
+    "relatedCalculatorSlug": "discount_tax"
   },
   {
     "id": "money_math_50_30_20",
@@ -267,7 +285,8 @@
     "primarySkill": "cash_flow_and_budgeting",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you set up a monthly budget or get a raise."
   },
   {
     "id": "money_math_latte_factor",
@@ -289,7 +308,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this when a small daily habit makes you wonder where your money goes."
   },
   {
     "id": "money_math_weekly_monthly",
@@ -311,7 +331,8 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when a weekly expense quietly blows your monthly budget."
   },
   {
     "id": "concept_money_needs_vs_wants",
@@ -331,7 +352,8 @@
     "primarySkill": "cash_flow_and_budgeting",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you're trimming your budget and deciding what's truly essential."
   },
   {
     "id": "money_math_sinking_funds",
@@ -351,7 +373,8 @@
     "primarySkill": "cash_flow_and_budgeting",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Set this up so annual bills — insurance, holidays, car registration — never blindside you."
   },
   {
     "id": "net_pay_check",
@@ -373,7 +396,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when an offer quotes a salary and you want your real take-home.",
+    "relatedCalculatorSlug": "paycheck"
   },
   {
     "id": "raise_impact",
@@ -393,7 +418,8 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this the moment you hear your raise number."
   },
   {
     "id": "overtime_calc",
@@ -413,7 +439,8 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to check your paycheck added up your overtime correctly."
   },
   {
     "id": "pay_period_convert",
@@ -433,7 +460,8 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to compare two jobs that pay on different schedules."
   },
   {
     "id": "inflation_adjusted_raise",
@@ -455,7 +483,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this when your raise arrives to see if you actually came out ahead."
   },
   {
     "id": "salary_hourly_2000",
@@ -475,7 +504,8 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to instantly translate any hourly rate into a yearly salary."
   },
   {
     "id": "salary_total_comp",
@@ -495,7 +525,8 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you're weighing a job offer's full package, not just the salary."
   },
   {
     "id": "salary_side_hustle",
@@ -517,7 +548,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before taking a side gig to see what it really pays per hour."
   },
   {
     "id": "concept_salary_exempt_status",
@@ -537,7 +569,8 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Check this when a job is 'salaried' and you want to know if you're owed overtime."
   },
   {
     "id": "salary_401k_paycheck_impact",
@@ -559,7 +592,8 @@
       "investing_and_future"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before you set your 401(k) contribution rate."
   },
   {
     "id": "salary_rsu_basics",
@@ -581,7 +615,8 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when an offer includes stock and you need its real value."
   },
   {
     "id": "salary_w2_vs_1099_offer",
@@ -603,7 +638,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when a contract gig pays more per hour and you're tempted to take it."
   },
   {
     "id": "salary_401k_vesting",
@@ -625,7 +661,8 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Check this before you quit a job and possibly walk away from unvested match."
   },
   {
     "id": "salary_bonus_after_tax",
@@ -645,7 +682,8 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this when a bonus is coming so the smaller-than-expected deposit doesn't shock you."
   },
   {
     "id": "rule_of_72",
@@ -667,7 +705,8 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to estimate how fast any investment — or debt — doubles."
   },
   {
     "id": "roi_basic",
@@ -689,7 +728,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to compare any two investments on the same footing."
   },
   {
     "id": "investing_401k_match",
@@ -711,7 +751,8 @@
       "income_and_paycheck"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this on day one of a new job so you never leave free match on the table."
   },
   {
     "id": "investing_roth_vs_traditional",
@@ -733,7 +774,8 @@
       "income_and_paycheck"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you open an IRA and have to pick Roth or Traditional."
   },
   {
     "id": "investing_roth_decision",
@@ -755,7 +797,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you're genuinely unsure whether Roth or Traditional fits you."
   },
   {
     "id": "concept_investing_three_accounts",
@@ -777,7 +820,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when your benefits portal asks you to pick between confusingly-named accounts."
   },
   {
     "id": "investing_compound_growth",
@@ -797,7 +841,8 @@
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to see what investing today is worth decades from now."
   },
   {
     "id": "investing_compound_reverse_goal",
@@ -817,7 +862,8 @@
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this when you have a savings target and need a monthly number to hit it."
   },
   {
     "id": "investing_dca",
@@ -838,7 +884,8 @@
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you're deciding whether to invest a little every month."
   },
   {
     "id": "investing_apy_savings",
@@ -860,7 +907,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before you leave cash in a big-bank account paying almost nothing.",
+    "relatedCalculatorSlug": "hysa_growth"
   },
   {
     "id": "investing_espp_discount",
@@ -882,7 +931,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when your company offers a stock purchase plan and you're unsure it's worth it."
   },
   {
     "id": "investing_fund_fees",
@@ -902,7 +952,8 @@
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Check this before picking a fund — a small fee quietly costs you a fortune."
   },
   {
     "id": "investing_emergency_fund",
@@ -924,7 +975,9 @@
       "protection_and_benefits"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this before life throws a job loss or surprise bill at you.",
+    "relatedCalculatorSlug": "hysa_growth"
   },
   {
     "id": "concept_investing_ef_location",
@@ -946,7 +999,9 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to decide where your emergency cash should actually live.",
+    "relatedCalculatorSlug": "hysa_growth"
   },
   {
     "id": "investing_rental_yield",
@@ -968,7 +1023,8 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before you buy a rental expecting it to cash-flow."
   },
   {
     "id": "investing_on_track",
@@ -988,7 +1044,8 @@
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to check whether your retirement savings fit your age."
   },
   {
     "id": "concept_investing_what_are_stocks",
@@ -1008,7 +1065,8 @@
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this the first time you stare at your 401(k)'s fund options and feel lost."
   },
   {
     "id": "concept_investing_asset_allocation",
@@ -1028,7 +1086,8 @@
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to decide how much of your portfolio should be stocks vs bonds."
   },
   {
     "id": "concept_investing_behavioral_traps",
@@ -1048,7 +1107,8 @@
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Remember this the next time the market drops and you want to sell everything."
   },
   {
     "id": "credit_card_interest",
@@ -1070,7 +1130,9 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to sanity-check the interest charge on your card statement.",
+    "relatedCalculatorSlug": "cc_payoff"
   },
   {
     "id": "minimum_payment_trap",
@@ -1092,7 +1154,9 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you're tempted to just pay the minimum on your card.",
+    "relatedCalculatorSlug": "cc_payoff"
   },
   {
     "id": "loan_true_cost",
@@ -1114,7 +1178,8 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you sign any loan to see what it really costs."
   },
   {
     "id": "debt_to_income",
@@ -1136,7 +1201,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before applying for a mortgage or car loan."
   },
   {
     "id": "extra_payment_power",
@@ -1158,7 +1224,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this to see how much faster a little extra each month clears your debt."
   },
   {
     "id": "debt_cc_payoff_time",
@@ -1180,7 +1247,9 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to see exactly when your card balance hits zero.",
+    "relatedCalculatorSlug": "cc_payoff"
   },
   {
     "id": "debt_balance_transfer",
@@ -1202,7 +1271,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before moving a balance to a 0% card with a transfer fee."
   },
   {
     "id": "debt_cc_rewards_vs_interest",
@@ -1224,7 +1294,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Remember this before chasing cashback while carrying a balance."
   },
   {
     "id": "debt_cc_statement_cycle",
@@ -1244,7 +1315,8 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to time your payment so it actually lowers your interest."
   },
   {
     "id": "debt_avalanche_snowball",
@@ -1264,7 +1336,8 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you have multiple debts and need a payoff order."
   },
   {
     "id": "debt_apr_vs_apy",
@@ -1286,7 +1359,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to understand the real rate a lender is quoting you."
   },
   {
     "id": "debt_bnpl_hidden_cost",
@@ -1308,7 +1382,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Remember this the next time 'pay in 4' pops up at checkout."
   },
   {
     "id": "concept_debt_credit_scores",
@@ -1328,7 +1403,8 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this before a big application to understand what moves your score."
   },
   {
     "id": "concept_debt_good_vs_bad",
@@ -1350,7 +1426,8 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you're deciding whether a debt is worth taking on."
   },
   {
     "id": "concept_ef_vs_debt_priority",
@@ -1372,7 +1449,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you have spare cash and can't decide: save it or kill debt?"
   },
   {
     "id": "housing_rent_affordability",
@@ -1394,7 +1472,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before you start apartment hunting or sign a lease.",
+    "relatedCalculatorSlug": "rent_affordability"
   },
   {
     "id": "housing_affordability_full",
@@ -1416,7 +1496,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this before you talk to a lender or tour your first home."
   },
   {
     "id": "housing_cash_to_close",
@@ -1436,7 +1517,8 @@
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before closing day so the cash you need doesn't blindside you."
   },
   {
     "id": "housing_col_relocation",
@@ -1458,7 +1540,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when a job in a new city offers more money."
   },
   {
     "id": "housing_first_month_true_cost",
@@ -1480,7 +1563,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before you move so the upfront cash doesn't catch you off guard.",
+    "relatedCalculatorSlug": "rent_affordability"
   },
   {
     "id": "housing_rent_increase",
@@ -1502,7 +1587,8 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when your renewal letter arrives with a higher number."
   },
   {
     "id": "housing_move_in_cost",
@@ -1524,7 +1610,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you sign so you know the full upfront cost."
   },
   {
     "id": "housing_roommate_math",
@@ -1546,7 +1633,8 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when deciding whether a roommate is worth the trade-offs."
   },
   {
     "id": "housing_true_cost",
@@ -1568,7 +1656,9 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to see what renting really costs you beyond the rent line.",
+    "relatedCalculatorSlug": "rent_affordability"
   },
   {
     "id": "housing_mortgage_vs_rent",
@@ -1590,7 +1680,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to estimate a real mortgage payment before you shop."
   },
   {
     "id": "housing_lease_break",
@@ -1612,7 +1703,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this when you're deciding whether to break your lease early."
   },
   {
     "id": "concept_housing_buy_vs_rent_framework",
@@ -1634,7 +1726,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when everyone insists renting is 'throwing money away.'"
   },
   {
     "id": "concept_housing_lease_clauses",
@@ -1654,7 +1747,8 @@
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Read this before you sign any lease."
   },
   {
     "id": "taxes_brackets",
@@ -1674,7 +1768,9 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to estimate what you actually owe — and stop fearing a higher bracket.",
+    "relatedCalculatorSlug": "paycheck"
   },
   {
     "id": "taxes_deductions",
@@ -1694,7 +1790,8 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to decode why your paycheck is smaller than your salary."
   },
   {
     "id": "taxes_refund",
@@ -1716,7 +1813,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Remember this when a big refund feels like a win."
   },
   {
     "id": "taxes_self_employment",
@@ -1738,7 +1836,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this if you freelance, so quarterly taxes don't wreck you."
   },
   {
     "id": "taxes_standard_vs_itemized",
@@ -1758,7 +1857,8 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this at tax time to pick the deduction that saves you more."
   },
   {
     "id": "taxes_capital_gains",
@@ -1780,7 +1880,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this before you sell an investment you've held close to a year."
   },
   {
     "id": "taxes_w4_adjust",
@@ -1802,7 +1903,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you keep getting big refunds and want that cash sooner.",
+    "relatedCalculatorSlug": "paycheck"
   },
   {
     "id": "concept_taxes_paycheck_stub",
@@ -1822,7 +1925,9 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to actually read your pay stub and pick the right filing status.",
+    "relatedCalculatorSlug": "paycheck"
   },
   {
     "id": "insurance_deductible_vs_premium",
@@ -1842,7 +1947,8 @@
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when picking a health plan during open enrollment."
   },
   {
     "id": "insurance_copay_coinsurance",
@@ -1862,7 +1968,8 @@
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to predict what a doctor visit or procedure will cost you."
   },
   {
     "id": "insurance_oop_max",
@@ -1882,7 +1989,8 @@
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to know the most a bad health year can cost you."
   },
   {
     "id": "insurance_hdhp_vs_ppo",
@@ -1902,7 +2010,8 @@
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when choosing between a high-deductible plan and a PPO."
   },
   {
     "id": "insurance_hsa_advantage",
@@ -1924,7 +2033,8 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you have an HDHP and aren't using the HSA's tax break."
   },
   {
     "id": "insurance_fsa_use_it",
@@ -1946,7 +2056,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before open enrollment so you don't over- or under-fund your FSA."
   },
   {
     "id": "insurance_life_coverage",
@@ -1966,7 +2077,8 @@
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when someone depends on your income and you need coverage."
   },
   {
     "id": "insurance_brand_vs_generic",
@@ -1988,7 +2100,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this at the pharmacy when there's a generic option."
   },
   {
     "id": "concept_insurance_policy_priority",
@@ -2008,7 +2121,8 @@
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to figure out which insurance you actually need — and which to skip."
   },
   {
     "id": "concept_insurance_disability",
@@ -2030,7 +2144,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to protect the paycheck everything else depends on."
   },
   {
     "id": "concept_insurance_open_enrollment",
@@ -2050,7 +2165,8 @@
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this during your ~2-week open enrollment window each fall."
   },
   {
     "id": "insurance_medical_bill_eob",
@@ -2072,7 +2188,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when a medical bill arrives and you're not sure what you really owe."
   },
   {
     "id": "car_monthly_vs_total",
@@ -2094,7 +2211,8 @@
       "debt_and_credit"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this at the dealership when they steer you toward the monthly payment."
   },
   {
     "id": "car_loan_term",
@@ -2116,7 +2234,8 @@
       "debt_and_credit"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this before you stretch a car loan to shrink the payment."
   },
   {
     "id": "car_down_payment",
@@ -2138,7 +2257,8 @@
       "debt_and_credit"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before you decide how much to put down on a car."
   },
   {
     "id": "car_20_4_10_rule",
@@ -2160,7 +2280,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to know how much car you can actually afford."
   },
   {
     "id": "car_depreciation",
@@ -2180,7 +2301,8 @@
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this before buying new to see how fast the value drops."
   },
   {
     "id": "car_total_cost_ownership",
@@ -2202,7 +2324,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to see what a car really costs beyond the payment."
   },
   {
     "id": "car_lease_vs_buy",
@@ -2224,7 +2347,8 @@
       "debt_and_credit"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you're deciding whether to lease or buy."
   },
   {
     "id": "car_trade_in_vs_private",
@@ -2244,7 +2368,8 @@
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before you accept a dealer's trade-in offer."
   },
   {
     "id": "concept_car_negotiation",
@@ -2264,7 +2389,8 @@
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Keep this in mind the moment you walk onto the lot."
   },
   {
     "id": "concept_car_warranty",
@@ -2286,7 +2412,8 @@
       "protection_and_benefits"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when the finance office pitches an extended warranty."
   },
   {
     "id": "student_loan_monthly",
@@ -2308,7 +2435,8 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to estimate your monthly payment before repayment starts."
   },
   {
     "id": "student_loan_total_cost",
@@ -2330,7 +2458,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this to see what your loans really cost over their full life."
   },
   {
     "id": "student_loan_refinance",
@@ -2350,7 +2479,8 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Run this before refinancing to weigh savings against lost protections."
   },
   {
     "id": "student_loan_idr",
@@ -2372,7 +2502,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this if your federal loan payment feels unaffordable on your income."
   },
   {
     "id": "student_loan_pslf",
@@ -2392,7 +2523,8 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this if you work in public service and might qualify for forgiveness."
   },
   {
     "id": "student_loan_employer_benefit",
@@ -2414,7 +2546,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Check this in case your employer quietly offers loan-repayment help."
   },
   {
     "id": "student_loan_grace_period",
@@ -2434,7 +2567,8 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this during your 6-month grace period before interest piles up."
   },
   {
     "id": "student_loan_parent_plus",
@@ -2454,7 +2588,8 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when financing a kid's education and weighing federal vs private."
   },
   {
     "id": "concept_sl_subsidized_vs_unsubsidized",
@@ -2474,7 +2609,8 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Use this when you're accepting financial aid and choosing what to borrow."
   },
   {
     "id": "concept_sl_refi_protections_lost",
@@ -2494,6 +2630,7 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": false,
+    "realWorldHint": "Read this before a refinance salesperson pitches you a lower rate."
   }
 ]

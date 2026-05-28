@@ -205,7 +205,7 @@ struct ProgressTabView: View {
                             .font(.system(size: 10, weight: .bold))
                             .foregroundStyle(Theme.Colors.mutedText)
                             .kerning(0.6)
-                        Text(store.numindScore > 0 ? store.numindSubtitle : "Your overall number sense")
+                        Text(store.numindScore > 0 ? store.numindSubtitle : "Your overall money sense")
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Colors.mutedText)
                             .fixedSize(horizontal: false, vertical: true)

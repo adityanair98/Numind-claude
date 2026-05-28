@@ -112,7 +112,7 @@ struct DailyInsightView: View {
             Text("Today's Insight")
                 .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundStyle(Theme.Colors.deepNavy)
-            Text("Here's how your number sense is looking.")
+            Text("Here's how your money sense is looking.")
                 .font(Theme.Typography.caption)
                 .foregroundStyle(Theme.Colors.mutedText)
                 .multilineTextAlignment(.center)

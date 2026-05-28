@@ -376,11 +376,11 @@ struct QuizSessionView: View {
 
     private func resultHeroCard(isCorrect: Bool) -> some View {
         let speedBonus = viewModel.currentSpeedBonus
-        return NumindCard(background: isCorrect ? Theme.Colors.mindTealTint : Theme.Colors.errorSoftRedTint) {
+        return NumindCard(background: isCorrect ? Theme.Colors.mindTealTint : Theme.Colors.warmOrangeTint) {
             VStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+                        .fill(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
                         .frame(width: 64, height: 64)
                     Image(systemName: isCorrect ? "checkmark" : "xmark")
                         .font(.system(size: 28, weight: .bold))
@@ -388,7 +388,7 @@ struct QuizSessionView: View {
                 }
                 Text(isCorrect ? "Nice — that's right." : "Not quite.")
                     .font(Theme.Typography.title)
-                    .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+                    .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
                 if isCorrect {
                     VStack(spacing: 6) {
                         Text("🎉 +10 XP · streak +1")
@@ -428,7 +428,7 @@ struct QuizSessionView: View {
             .padding(.horizontal, 32)
             .padding(.vertical, 14)
             .frame(maxWidth: .infinity)
-            .background(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+            .background(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
             .clipShape(Capsule())
     }
 

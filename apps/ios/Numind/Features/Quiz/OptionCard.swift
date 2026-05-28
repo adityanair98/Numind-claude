@@ -51,7 +51,7 @@ struct OptionCard: View {
         case .normal:   Theme.Colors.cardBackground
         case .selected: Theme.Colors.primaryBlueTint
         case .correct:  Theme.Colors.mindTealTint
-        case .wrong:    Theme.Colors.errorSoftRedTint
+        case .wrong:    Theme.Colors.warmOrangeTint
         }
     }
 
@@ -60,7 +60,7 @@ struct OptionCard: View {
         case .normal:   Theme.Colors.hairline
         case .selected: Theme.Colors.primaryBlue
         case .correct:  Theme.Colors.mindTeal
-        case .wrong:    Theme.Colors.errorSoftRed
+        case .wrong:    Theme.Colors.warmOrange
         }
     }
 
@@ -69,7 +69,7 @@ struct OptionCard: View {
         case .normal:   Theme.Colors.mutedTint
         case .selected: Theme.Colors.primaryBlue
         case .correct:  Theme.Colors.mindTeal
-        case .wrong:    Theme.Colors.errorSoftRed
+        case .wrong:    Theme.Colors.warmOrange
         }
     }
 

@@ -12,12 +12,13 @@ struct BrandHeader: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            topRow
+            // Bell hidden until notifications ship (Phase 8 Group G); `bellButton`
+            // retained below so wiring it back up is a one-line change.
             greetingRow
         }
     }
 
-    // MARK: - Top row (bell)
+    // MARK: - Top row (bell) — currently unused; see note in `body`.
 
     private var topRow: some View {
         HStack {

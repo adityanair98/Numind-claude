@@ -95,8 +95,8 @@ struct ProfileView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                 statTile(icon: "bolt.fill",   tint: Theme.Colors.primaryBlue,
                          value: "\(progressStore.totalSessions)", label: "Sessions")
-                statTile(icon: "star.fill",   tint: Theme.Colors.insightYellow,
-                         value: "\(progressStore.totalXP)", label: "Total XP")
+                statTile(icon: "checkmark.seal.fill", tint: Theme.Colors.insightYellow,
+                         value: "\(progressStore.masteredLessonIds.count)", label: "Lessons mastered")
                 statTile(icon: "scope",       tint: Theme.Colors.mindTeal,
                          value: progressStore.totalSessions > 0
                              ? "\(Int(progressStore.accuracy * 100))%" : "—",
