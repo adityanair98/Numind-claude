@@ -68,6 +68,16 @@ struct ToolsView: View {
                         desc: "Real monthly cost of a home") {
                         MortgageCalculator()
                     }
+                    row(icon: "car.2.fill", tint: Theme.Colors.mindTeal,
+                        name: "Lease vs buy",
+                        desc: "3-year cost of leasing vs buying") {
+                        LeaseVsBuyCalculator()
+                    }
+                    row(icon: "graduationcap.fill", tint: Theme.Colors.warmOrange,
+                        name: "Student loan payoff",
+                        desc: "Standard vs refinance") {
+                        StudentLoanCalculator()
+                    }
                 }
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)

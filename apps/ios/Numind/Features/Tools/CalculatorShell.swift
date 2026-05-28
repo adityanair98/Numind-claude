@@ -152,6 +152,8 @@ enum CalculatorRegistry {
         case "loan":               return "Loan calculator"
         case "401k_impact":        return "401(k) impact"
         case "mortgage":           return "Mortgage payment"
+        case "lease_vs_buy":       return "Lease vs buy"
+        case "student_loan":       return "Student loan payoff"
         default:                   return nil
         }
     }
@@ -169,6 +171,8 @@ enum CalculatorRegistry {
         case "loan":               LoanCalculator()
         case "401k_impact":        Calc401kImpactCalculator()
         case "mortgage":           MortgageCalculator()
+        case "lease_vs_buy":       LeaseVsBuyCalculator()
+        case "student_loan":       StudentLoanCalculator()
         default:                   EmptyView()
         }
     }
