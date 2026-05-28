@@ -26,10 +26,17 @@ struct LearnView: View {
 
     @State private var presentedPack: Pack? = nil
 
-    /// Currently-expanded world in the Worlds tab. Nil means "auto-pick" —
-    /// defaults to the world containing the current node, then to the first
-    /// world. Set by tapping a chip in `worldsGrid`.
-    @State private var expandedWorldId: String? = nil
+    /// Currently-visible page in the Worlds carousel. 0-indexed across
+    /// `viewModel.sections`. Defaults to the section containing the
+    /// "current" lesson node so a fresh user lands on the right world.
+    @State private var currentWorldIndex: Int = 0
+    @State private var carouselInitialized = false
+
+    /// Set when a world's Continue CTA is tapped. While non-nil the carousel
+    /// is hidden and the quest map for that world fills the tab. A back
+    /// chevron in the header dismisses it back to the carousel. Avoids
+    /// extracting all the quest map helpers out of LearnView.
+    @State private var openedWorldId: String? = nil
 
     // MARK: - Layout constants
 
@@ -39,34 +46,41 @@ struct LearnView: View {
     private let trailWidth:      CGFloat = 9    // connector stroke width
 
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
+        VStack(spacing: 0) {
+            // When a world is "opened" (Continue tapped from the carousel),
+            // hide the header + segmented control to give the quest map
+            // full vertical real estate. A floating back chevron lets the
+            // user return to the carousel.
+            if openedWorldId == nil {
                 learnHeader
                 tabSegmentedControl
                     .padding(.horizontal, 20)
-                    .padding(.top, 8)
-                    .padding(.bottom, 16)
-                switch selectedTab {
-                case .worlds:
-                    worldsGrid
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 20)
-                    if let section = activeWorldSection,
-                       let sectionIndex = viewModel.sections.firstIndex(where: { $0.id == section.id }) {
-                        worldBanner(section, sectionIndex: sectionIndex)
-                        sectionNodes(section)
-                        worldConqueredBanner(section)
-                    }
-                case .paths:
-                    pathsList
-                }
+                    .padding(.top, 4)
+                    .padding(.bottom, 12)
             }
-            .padding(.top, 8)
-            .padding(.bottom, 40)
+
+            switch selectedTab {
+            case .worlds:
+                if let id = openedWorldId,
+                   let section = viewModel.sections.first(where: { $0.id == id }),
+                   let idx = viewModel.sections.firstIndex(where: { $0.id == id }) {
+                    openedWorldView(section: section, sectionIndex: idx)
+                } else {
+                    worldsCarousel
+                }
+            case .paths:
+                pathsScroll
+            }
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
-        .onAppear { viewModel.refresh(using: progressStore) }
+        .onAppear {
+            viewModel.refresh(using: progressStore)
+            if !carouselInitialized {
+                currentWorldIndex = defaultWorldIndex()
+                carouselInitialized = true
+            }
+        }
         .onChange(of: progressStore.totalSessions) {
             viewModel.refresh(using: progressStore)
         }
@@ -88,6 +102,85 @@ struct LearnView: View {
         }
     }
 
+    // MARK: - Worlds carousel (Brilliant-style page swipe)
+
+    private var worldsCarousel: some View {
+        TabView(selection: $currentWorldIndex) {
+            ForEach(Array(viewModel.sections.enumerated()), id: \.element.id) { idx, section in
+                WorldHeroPage(
+                    section: section,
+                    worldNumber: idx + 1,
+                    onContinue: { _ in
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            openedWorldId = section.id
+                        }
+                    }
+                )
+                .tag(idx)
+                .environmentObject(progressStore)
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .always))
+        .indexViewStyle(.page(backgroundDisplayMode: .always))
+    }
+
+    /// Renders the existing worldBanner + sectionNodes + worldConqueredBanner
+    /// for a single section as a full-screen view with a floating down-chevron
+    /// in the top-left to return to the carousel. Mirrors the Brilliant
+    /// world-detail pattern.
+    private func openedWorldView(
+        section: LearnViewModel.PathSection,
+        sectionIndex: Int
+    ) -> some View {
+        ZStack(alignment: .topLeading) {
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    worldBanner(section, sectionIndex: sectionIndex)
+                        .padding(.top, 8)
+                    sectionNodes(section)
+                    worldConqueredBanner(section)
+                }
+                .padding(.bottom, 40)
+            }
+            // Floating back chevron — pinned top-left.
+            Button(action: {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    openedWorldId = nil
+                }
+            }) {
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .frame(width: 40, height: 40)
+                    .background(Theme.Colors.cardBackground)
+                    .clipShape(Circle())
+                    .shadow(color: .black.opacity(0.08), radius: 6, y: 2)
+            }
+            .padding(.leading, 16)
+            .padding(.top, 12)
+            .accessibilityLabel("Back to worlds")
+        }
+    }
+
+    /// Default starting page = section containing the .current node;
+    /// falls back to the first section.
+    private func defaultWorldIndex() -> Int {
+        if let idx = viewModel.sections.firstIndex(where: { section in
+            section.nodes.contains(where: { $0.state == .current })
+        }) { return idx }
+        return 0
+    }
+
+    private var pathsScroll: some View {
+        ScrollView {
+            LazyVStack(spacing: 0) {
+                pathsList
+            }
+            .padding(.top, 8)
+            .padding(.bottom, 40)
+        }
+    }
+
     // MARK: - Tab segmented control
 
     private var tabSegmentedControl: some View {
@@ -96,121 +189,6 @@ struct LearnView: View {
             Text("Paths").tag(LearnTab.paths)
         }
         .pickerStyle(.segmented)
-    }
-
-    // MARK: - Worlds grid (5×2 chip layout)
-
-    /// The world section currently expanded below the grid. Resolution order:
-    /// 1. Explicit user selection via `expandedWorldId`
-    /// 2. The world containing the "current" lesson node (Recommendation Engine signal)
-    /// 3. The first world (Smart Shopping for the canonical curriculum)
-    private var activeWorldSection: LearnViewModel.PathSection? {
-        if let id = expandedWorldId,
-           let match = viewModel.sections.first(where: { $0.id == id }) {
-            return match
-        }
-        if let sectionWithCurrent = viewModel.sections.first(where: { section in
-            section.nodes.contains(where: { $0.state == .current })
-        }) {
-            return sectionWithCurrent
-        }
-        return viewModel.sections.first
-    }
-
-    /// 2-column grid of world chips, one per module. Each chip shows the
-    /// module icon, short name, mastered/total counter, and a BeadRail
-    /// for at-a-glance mastery progress. Conquered worlds get a gold border
-    /// + trophy overlay.
-    private var worldsGrid: some View {
-        let columns = [
-            GridItem(.flexible(), spacing: 12),
-            GridItem(.flexible(), spacing: 12),
-        ]
-        return LazyVGrid(columns: columns, spacing: 12) {
-            ForEach(viewModel.sections) { section in
-                worldChip(section: section)
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func worldChip(section: LearnViewModel.PathSection) -> some View {
-        let lessonNodes = section.nodes.filter { !$0.isReview }
-        let total = lessonNodes.count
-        let mastered = lessonNodes.filter { $0.state == .mastered }.count
-        let isConquered = total > 0 && mastered == total
-        let isActive = activeWorldSection?.id == section.id
-        let accent = section.module.color.tintColor
-
-        // 5-bead progress display (per the original 5e spec). Use the
-        // mastered/total ratio to compute filled beads, so a module with
-        // 12 lessons fits the same 5-pip rail as one with 7. Rounds in
-        // the user's favor: any progress shows 1 bead minimum.
-        let beadsTotal = 5
-        let beadsFilled: Int = {
-            guard total > 0 else { return 0 }
-            if mastered == 0 { return 0 }
-            if mastered == total { return beadsTotal }
-            let raw = Double(mastered) / Double(total) * Double(beadsTotal)
-            return max(1, min(beadsTotal - 1, Int(raw.rounded())))
-        }()
-
-        Button(action: {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                expandedWorldId = section.id
-            }
-        }) {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(alignment: .center, spacing: 8) {
-                    IconTile(
-                        systemName: section.module.icon,
-                        tintColor: accent,
-                        size: 32
-                    )
-                    Spacer(minLength: 4)
-                    if isConquered {
-                        Image(systemName: "crown.fill")
-                            .font(.system(size: 13, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.insightYellow)
-                    } else {
-                        Text("\(mastered)/\(total)")
-                            .font(.system(size: 11, weight: .bold))
-                            .foregroundStyle(Theme.Colors.mutedText)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.8)
-                    }
-                }
-                Text(section.module.shortName)
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                // Custom narrow pip rail — `BeadRail.chunky` uses 28pt-wide
-                // capsules that would overflow a half-screen grid column.
-                // 5 pips × ~16pt + 4 × 4pt gaps ≈ 96pt fits comfortably.
-                HStack(spacing: 4) {
-                    ForEach(0..<beadsTotal, id: \.self) { i in
-                        Capsule()
-                            .fill(i < beadsFilled ? accent : Theme.Colors.mutedTint)
-                            .frame(height: 5)
-                    }
-                }
-            }
-            .padding(12)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Theme.Colors.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .strokeBorder(
-                        isConquered ? Theme.Colors.insightYellow
-                        : isActive ? accent
-                        : Theme.Colors.hairline,
-                        lineWidth: isConquered || isActive ? 2 : 1
-                    )
-            )
-        }
-        .buttonStyle(.plain)
     }
 
     // MARK: - Paths list
