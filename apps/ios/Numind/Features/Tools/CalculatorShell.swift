@@ -150,6 +150,8 @@ enum CalculatorRegistry {
         case "hysa_growth":        return "Savings growth"
         case "salary_converter":   return "Salary converter"
         case "loan":               return "Loan calculator"
+        case "401k_impact":        return "401(k) impact"
+        case "mortgage":           return "Mortgage payment"
         default:                   return nil
         }
     }
@@ -165,6 +167,8 @@ enum CalculatorRegistry {
         case "hysa_growth":        HYSAGrowthCalculator()
         case "salary_converter":   SalaryConverterCalculator()
         case "loan":               LoanCalculator()
+        case "401k_impact":        Calc401kImpactCalculator()
+        case "mortgage":           MortgageCalculator()
         default:                   EmptyView()
         }
     }

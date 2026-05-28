@@ -58,6 +58,16 @@ struct ToolsView: View {
                         desc: "Monthly payment + total interest") {
                         LoanCalculator()
                     }
+                    row(icon: "chart.pie.fill", tint: Theme.Colors.growthGreen,
+                        name: "401(k) impact",
+                        desc: "What a contribution costs your paycheck") {
+                        Calc401kImpactCalculator()
+                    }
+                    row(icon: "building.columns.fill", tint: Theme.Colors.housingRose,
+                        name: "Mortgage payment",
+                        desc: "Real monthly cost of a home") {
+                        MortgageCalculator()
+                    }
                 }
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
