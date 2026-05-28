@@ -13,6 +13,7 @@ struct PackDetailView: View {
     let pack: Pack
 
     @State private var launchLesson: LessonLaunch?
+    @State private var presentedCalc: CalcRef?
 
     /// Resolves lesson lookups + pack-level neighbors (which module each
     /// lesson lives in, for the right `moduleColor` and lesson index).
@@ -27,6 +28,7 @@ struct PackDetailView: View {
                         anchorSection(anchor: anchor)
                     }
                     outcomesSection
+                    toolsForPathSection
                     lessonListSection
                     ctaSection
                 }
@@ -51,6 +53,18 @@ struct PackDetailView: View {
                 totalLessons: launch.totalLessons,
                 moduleColor: launch.module.color
             ))
+        }
+        .sheet(item: $presentedCalc) { ref in
+            NavigationStack {
+                CalculatorRegistry.view(for: ref.id)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") { presentedCalc = nil }
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Theme.Colors.primaryBlue)
+                        }
+                    }
+            }
         }
     }
 
@@ -204,6 +218,53 @@ struct PackDetailView: View {
         }
     }
 
+    // MARK: - Tools for this path (Phase 7b cross-link)
+
+    /// Distinct calculator slugs across the pack's lessons (registry-backed).
+    private var packCalcSlugs: [String] {
+        var seen = Set<String>(); var out: [String] = []
+        for id in pack.lessonIds {
+            if let s = repo.lesson(id: id)?.relatedCalculatorSlug,
+               CalculatorRegistry.name(for: s) != nil, !seen.contains(s) {
+                seen.insert(s); out.append(s)
+            }
+        }
+        return out
+    }
+
+    @ViewBuilder
+    private var toolsForPathSection: some View {
+        let slugs = packCalcSlugs
+        if !slugs.isEmpty {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("TOOLS FOR THIS PATH")
+                    .font(.system(size: 11, weight: .heavy))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .tracking(1.0)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(slugs, id: \.self) { slug in
+                            Button { presentedCalc = CalcRef(id: slug) } label: {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "wrench.and.screwdriver")
+                                        .font(.system(size: 12, weight: .semibold))
+                                    Text(CalculatorRegistry.name(for: slug) ?? "")
+                                        .font(.system(size: 13, weight: .semibold))
+                                }
+                                .foregroundStyle(Theme.Colors.primaryBlue)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 9)
+                                .background(Theme.Colors.primaryBlueTint)
+                                .clipShape(Capsule())
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // MARK: - Lesson list
 
     private var lessonListSection: some View {
@@ -303,6 +364,9 @@ struct PackDetailView: View {
         )
     }
 }
+
+/// Identifiable slug wrapper for presenting a calculator sheet (Phase 7b).
+struct CalcRef: Identifiable { let id: String }
 
 /// Lightweight payload for `.fullScreenCover(item:)` to launch a lesson.
 struct LessonLaunch: Identifiable {
