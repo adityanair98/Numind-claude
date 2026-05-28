@@ -33,15 +33,11 @@ struct HomeView: View {
                 )
                 dailyChallengeSection
                 streakSection
-                workoutSection
-                packSection
-                modesSection
                 if let card = viewModel.continueCard {
                     continueSection(card)
                 }
-                if !viewModel.upNextCards.isEmpty {
-                    upNextSection
-                }
+                packSection
+                quickAccessRow
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.vertical, Theme.Spacing.sectionSpacing)
@@ -696,7 +692,57 @@ struct HomeView: View {
         .buttonStyle(.plain)
     }
 
-    // MARK: - Workout section
+    // MARK: - Quick access (Phase 6c)
+
+    /// Compact entry points below the fold — replaces the retired Game Modes
+    /// carousel. An "Open Tools" chip and a Recall "Review weak spots" chip
+    /// get added here in 7a once the Tools tab + Recall move from Practice.
+    private var quickAccessRow: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Quick access")
+            HStack(spacing: 12) {
+                quickChip(icon: "arrow.triangle.2.circlepath",
+                          title: "Practice mix",
+                          subtitle: "Fresh question set",
+                          tint: Theme.Colors.primaryBlue) {
+                    startBonusRound()
+                }
+                quickChip(icon: progressStore.focusPack == nil ? "map.fill" : "rectangle.stack.fill",
+                          title: progressStore.focusPack == nil ? "Pick a path" : "Browse paths",
+                          subtitle: progressStore.focusPack == nil ? "Get ready for a moment" : "Switch or add",
+                          tint: Theme.Colors.mindTeal) {
+                    showPackPicker = true
+                }
+            }
+        }
+    }
+
+    private func quickChip(icon: String, title: String, subtitle: String,
+                           tint: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            NumindCard {
+                VStack(alignment: .leading, spacing: 8) {
+                    Image(systemName: icon)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(tint)
+                        .frame(width: 38, height: 38)
+                        .background(tint.opacity(0.12))
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    Text(title)
+                        .font(Theme.Typography.body)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text(subtitle)
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: - Workout section (retired from Home in 6c; archived in 7a)
 
     @ViewBuilder
     private var workoutSection: some View {
@@ -920,7 +966,7 @@ struct HomeView: View {
         let progress: Double = lessons.isEmpty ? 0 : Double(completed) / Double(lessons.count)
 
         return VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Continue learning")
+            sectionLabel("Continue your path")
             NumindCard {
                 Button { launchCard = card } label: {
                     VStack(alignment: .leading, spacing: 12) {
