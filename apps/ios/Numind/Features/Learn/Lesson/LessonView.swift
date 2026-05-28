@@ -184,6 +184,20 @@ struct LessonView: View {
                 .font(.system(size: 26, weight: .bold, design: .rounded))
                 .foregroundStyle(Theme.Colors.deepNavy)
 
+            // Money-moment hint — "You'll use this when…" (Phase 6c)
+            if let hint = viewModel.lesson.realWorldHint {
+                HStack(alignment: .top, spacing: 6) {
+                    Image(systemName: "target")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(accent)
+                        .padding(.top, 2)
+                    Text(hint)
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+
             // Quiz count badge
             HStack(spacing: 5) {
                 Image(systemName: "bolt.fill")

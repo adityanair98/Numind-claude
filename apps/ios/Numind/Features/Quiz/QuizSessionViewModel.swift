@@ -30,6 +30,9 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     let lessonTitle: String
     let moduleColor: ModuleColor
     let lessonShortcut: String
+    /// Money-moment sentence for this lesson (Phase 6c). Nil for review/blitz
+    /// sessions that aren't tied to a single lesson.
+    let lessonRealWorldHint: String?
     let questions: [QuizQuestion]
 
     /// Optional per-question time limit (seconds). Nil = standard untimed quiz.
@@ -211,6 +214,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         lessonTitle = lesson.title
         self.moduleColor = moduleColor
         self.lessonShortcut = lesson.shortcut
+        self.lessonRealWorldHint = lesson.realWorldHint
         self.questionTimeLimit = nil
         self.repository = repository
         let ordered = sessions.isEmpty
@@ -301,6 +305,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         lessonTitle = title
         self.moduleColor = moduleColor
         self.lessonShortcut = shortcut
+        self.lessonRealWorldHint = nil
         self.questions = questions
         self.questionTimeLimit = questionTimeLimit
         self.repository = repository

@@ -91,6 +91,7 @@ struct SessionSummaryView: View {
             VStack(spacing: Theme.Spacing.sectionSpacing) {
                 resultHeader
                 statsCard
+                learnedCard
                 if numindScore > 0 { scoreCard }
                 masteryBanner
                 if !newBadgeIds.isEmpty { newBadgesSection }
@@ -135,10 +136,10 @@ struct SessionSummaryView: View {
 
             VStack(spacing: 8) {
                 Text("+\(xpAnimated) XP")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
                     .foregroundStyle(Theme.Colors.insightText)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 5)
                     .background(Theme.Colors.insightYellowTint)
                     .clipShape(Capsule())
                     .contentTransition(.numericText())
@@ -258,18 +259,47 @@ struct SessionSummaryView: View {
         .frame(maxWidth: .infinity)
     }
 
+    // MARK: - Money-moment card (Phase 6c)
+
+    /// "Now put it to work" — surfaces the lesson's realWorldHint so the user
+    /// leaves the session knowing exactly when to use what they just learned.
+    @ViewBuilder
+    private var learnedCard: some View {
+        if let hint = viewModel.lessonRealWorldHint {
+            NumindCard(background: accentTint) {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "target")
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundStyle(accent)
+                        Text("Now put it to work")
+                            .font(Theme.Typography.small)
+                            .fontWeight(.bold)
+                            .foregroundStyle(accent)
+                            .textCase(.uppercase)
+                            .kerning(0.6)
+                    }
+                    Text(hint)
+                        .font(Theme.Typography.body)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+    }
+
     // MARK: - Score card
 
     private var scoreCard: some View {
-        let tier = ScoreTier(score: numindScore)
         return NumindCard {
             HStack(spacing: 14) {
                 NumindScoreRing(score: numindScore, size: 52)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(tier.name)
-                        .font(.system(size: 15, weight: .bold, design: .rounded))
-                        .foregroundStyle(tier.color)
+                    Text(progressStore.numindSubtitle)
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     if scoreDelta != 0 {
                         let isUp = scoreDelta > 0
@@ -279,7 +309,7 @@ struct SessionSummaryView: View {
                             Text("\(isUp ? "+" : "")\(scoreDelta) pts this session")
                                 .font(.system(size: 13, weight: .bold))
                         }
-                        .foregroundStyle(isUp ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+                        .foregroundStyle(isUp ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
                     } else {
                         Text("Score unchanged")
                             .font(.system(size: 13, weight: .medium))
@@ -352,10 +382,10 @@ struct SessionSummaryView: View {
         HStack(spacing: 14) {
             ZStack {
                 RoundedRectangle(cornerRadius: Theme.Radius.pill, style: .continuous)
-                    .fill(result.isCorrect ? accentTint : Theme.Colors.errorSoftRedTint)
+                    .fill(result.isCorrect ? accentTint : Theme.Colors.warmOrangeTint)
                 Image(systemName: result.isCorrect ? "checkmark" : "xmark")
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(result.isCorrect ? accent : Theme.Colors.errorSoftRed)
+                    .foregroundStyle(result.isCorrect ? accent : Theme.Colors.warmOrange)
             }
             .frame(width: 36, height: 36)
 
@@ -367,9 +397,9 @@ struct SessionSummaryView: View {
             if !result.isCorrect {
                 Image(systemName: "arrow.counterclockwise")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(Theme.Colors.errorSoftRed)
+                    .foregroundStyle(Theme.Colors.warmOrange)
                     .padding(6)
-                    .background(Theme.Colors.errorSoftRedTint)
+                    .background(Theme.Colors.warmOrangeTint)
                     .clipShape(Circle())
             }
         }
@@ -457,7 +487,7 @@ struct SessionSummaryView: View {
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity)
             .frame(height: Theme.Spacing.buttonHeight)
-            .background(Theme.Colors.errorSoftRed)
+            .background(Theme.Colors.warmOrange)
             .clipShape(Capsule())
         }
         .buttonStyle(.plain)
