@@ -99,13 +99,28 @@ struct ProgressData: Codable {
     /// be "in progress" (derived from session history, not stored).
     var focusPackId: String?
 
+    /// Dates the user completed their Daily Workout (start-of-day normalized).
+    /// Phase 5f: streak now anchors on Daily Workout, not all session days.
+    /// When this set is non-empty, `computeStreak()` consults it instead of
+    /// the union of session days.
+    var dailyWorkoutDates: Set<Date> = []
+
     // MARK: - Streak
 
-    /// Active days = session days ∪ frozen dates. Used by streak + helpers.
+    /// Active days = (Daily Workout days OR session days) ∪ frozen dates.
+    /// Phase 5f: when `dailyWorkoutDates` is populated, the streak only
+    /// counts Daily Workout days. The session-day fallback is retained
+    /// for the bootstrap path before any Daily Workout completes so the
+    /// streak from existing sessions doesn't appear to "reset".
     private var activeDays: Set<Date> {
         let calendar = Calendar.current
-        let sessionDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
-        return sessionDays.union(frozenDates)
+        let anchorDays: Set<Date>
+        if !dailyWorkoutDates.isEmpty {
+            anchorDays = dailyWorkoutDates
+        } else {
+            anchorDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
+        }
+        return anchorDays.union(frozenDates)
     }
 
     func computeStreak() -> Int {

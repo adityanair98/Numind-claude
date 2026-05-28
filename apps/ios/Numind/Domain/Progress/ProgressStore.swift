@@ -155,10 +155,27 @@ final class ProgressStore: ObservableObject {
         dailyChallengeCompletedDate == Self.dateFormatter.string(from: Date())
     }
 
+    /// Marks today as a completed Daily Workout. Persists the date string
+    /// for the legacy "completed-today" check AND inserts today (start-of-
+    /// day) into `dailyWorkoutDates` so the Phase 5f streak rule sees it.
     func markDailyChallengeCompleted() {
-        let today = Self.dateFormatter.string(from: Date())
+        let now = Date()
+        let today = Self.dateFormatter.string(from: now)
         UserDefaults.standard.set(today, forKey: Self.dailyChallengeKey)
         dailyChallengeCompletedDate = today
+        let startOfDay = Calendar.current.startOfDay(for: now)
+        data.dailyWorkoutDates.insert(startOfDay)
+        // Recompute streak so the rest of the app immediately reflects it.
+        let current = data.computeStreak()
+        if current > data.bestStreak { data.bestStreak = current }
+        data.lastKnownStreak = current
+        persist()
+    }
+
+    /// Convenience: same semantics as `markDailyChallengeCompleted` but
+    /// reads clearer at the new "Daily Workout" call sites.
+    func markDailyWorkoutCompleted() {
+        markDailyChallengeCompleted()
     }
 
     private func persist() {

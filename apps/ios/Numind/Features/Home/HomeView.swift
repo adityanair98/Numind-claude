@@ -480,7 +480,11 @@ struct HomeView: View {
     }
 
     private func startDailyChallenge() {
-        let questions = DailyChallengeEngine.dailyQuestions(from: repo, progressData: progressStore.data)
+        let questions = DailyChallengeEngine.dailyQuestions(
+            from: repo,
+            progressData: progressStore.data,
+            focusPack: progressStore.focusPack
+        )
         dailyVM = QuizSessionViewModel(
             questions: questions,
             title: "Daily Challenge",

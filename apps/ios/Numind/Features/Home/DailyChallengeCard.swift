@@ -72,7 +72,7 @@ struct DailyChallengeCard: View {
                 .fill(Theme.Colors.insightYellow)
                 .frame(width: 6, height: 6)
                 .shadow(color: Theme.Colors.insightYellow, radius: 4)
-            Text("DAILY CHALLENGE")
+            Text("DAILY WORKOUT")
                 .font(.system(size: 11, weight: .bold))
                 .foregroundStyle(Theme.Colors.insightYellow)
                 .kerning(0.6)

@@ -29,39 +29,74 @@ struct DailyChallengeEngine {
 
     // MARK: - Public API
 
-    /// Generates today's personalised daily challenge questions.
+    /// Generates today's personalised Daily Workout questions.
+    ///
+    /// When `focusPack` is set, the first ~3 slots are prioritized toward
+    /// the pack's next undone lessons (a "pack-aware" workout). The remaining
+    /// slots fall through to the standard SRS-driven selection. The result
+    /// is a 6Q workout that advances the user's chosen Life-Event Path while
+    /// still surfacing spaced-repetition reviews.
     static func dailyQuestions(
         from repository: ContentRepository,
-        progressData: ProgressData? = nil
+        progressData: ProgressData? = nil,
+        focusPack: Pack? = nil
     ) -> [QuizQuestion] {
         let sessions = progressData?.sessions ?? []
         let count = questionCount(for: progressData)
 
-        // Pool = all templates. SRS handles ordering — never-seen templates
-        // get ∞ priority and surface first, naturally exposing all modules to
-        // new users before transitioning to reinforcement mode.
+        var rng = SeededRandomGenerator(seed: dailySeed())
+
+        // Mastered lesson IDs from prior sessions (used both for pack lesson
+        // selection AND to skip already-mastered lessons in the pack queue).
+        let masteredIds: Set<String> = {
+            var ids: Set<String> = []
+            for s in sessions where s.totalCount > 0 {
+                let acc = Double(s.correctCount) / Double(s.totalCount)
+                if acc >= 0.75 { ids.insert(s.lessonId) }
+            }
+            return ids
+        }()
+
+        // ── Slot 1-3: pack-priority templates ─────────────────────────────
+        // When a focus pack is set, pick templates from the pack's next 3
+        // undone lessons (in pack order). Each lesson contributes 1 template.
+        var packTemplates: [QuizTemplate] = []
+        if let pack = focusPack {
+            let packLessonIds = pack.lessonIds.filter { !masteredIds.contains($0) }
+            let packSlots = min(3, packLessonIds.count, count)
+            for lessonId in packLessonIds.prefix(packSlots) {
+                let templatesForLesson = repository.templates(for: lessonId)
+                if let pick = templatesForLesson.randomElement(using: &rng) {
+                    packTemplates.append(pick)
+                }
+            }
+        }
+
+        // ── Remaining slots: standard SRS pool, excluding pack-picked ─────
         let pool = repository.allTemplates()
         guard !pool.isEmpty else { return [] }
 
+        let pickedPackIds = Set(packTemplates.map(\.id))
+        var remaining = pool.filter { !pickedPackIds.contains($0.id) }
+
         // Date-seeded shuffle for stable, daily-varying tiebreaking.
-        var rng = SeededRandomGenerator(seed: dailySeed())
-        var shuffled = pool
-        for i in stride(from: shuffled.count - 1, through: 1, by: -1) {
+        for i in stride(from: remaining.count - 1, through: 1, by: -1) {
             let j = Int(rng.next() % UInt64(i + 1))
-            shuffled.swapAt(i, j)
+            remaining.swapAt(i, j)
         }
 
-        // Sort by SRS priority descending. Swift's sort is stable, so ties keep
-        // their shuffled order — giving per-day variety for equal-priority items.
-        let sorted = shuffled.sorted {
+        // Sort by SRS priority descending. Stable sort preserves shuffle order
+        // within equal-priority groups (per-day variety for ties).
+        let sortedRemaining = remaining.sorted {
             SpacedRepetitionEngine.priorityScore(templateId: $0.id, in: sessions) >
             SpacedRepetitionEngine.priorityScore(templateId: $1.id, in: sessions)
         }
 
-        let picked = Array(sorted.prefix(count))
+        let remainingSlots = count - packTemplates.count
+        let pickedRemaining = Array(sortedRemaining.prefix(max(0, remainingSlots)))
 
-        // Deterministic variable values for the day (rng has advanced past the shuffle).
-        return picked.map { QuizEngine.generate(from: $0, seed: rng.next()) }
+        let combined = packTemplates + pickedRemaining
+        return combined.map { QuizEngine.generate(from: $0, seed: rng.next()) }
     }
 
     // MARK: - Bonus Round
