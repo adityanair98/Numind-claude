@@ -14,15 +14,7 @@ final class HomeViewModel: ObservableObject {
         var xpReward: Int { questionCount * 10 }
     }
 
-    @Published private(set) var todayCard: LessonCard?
     @Published private(set) var continueCard: LessonCard?
-    @Published private(set) var upNextCards: [LessonCard] = []
-
-    /// All ordered recommendations — used by the view to show reason chips.
-    @Published private(set) var recommendations: [LessonRecommendation] = []
-
-    /// True when the user has completed at least one lesson — unlocks game modes.
-    @Published private(set) var modesUnlocked: Bool = false
 
     private let repo: ContentRepository
 
@@ -61,26 +53,14 @@ final class HomeViewModel: ObservableObject {
     }
 
     func refresh(using store: ProgressStore) {
-        // Use the recommendation engine to rank incomplete lessons by weakness.
+        // Use the recommendation engine to find a partially-started module to
+        // surface as the "Continue your path" card on Home.
         let recs = LessonRecommendationEngine.recommendations(
             repository: repo,
             sessions: store.data.sessions,
             onboardingSignals: store.data.onboardingSignals,
             limit: 10
         )
-
-        // Convert recommendations to LessonCards preserving urgency order.
-        let cards: [LessonCard] = recs.compactMap { rec in
-            let lessons = repo.lessons(for: rec.module.id)
-            guard let idx = lessons.firstIndex(where: { $0.id == rec.lesson.id }) else { return nil }
-            return LessonCard(
-                id: rec.lesson.id,
-                lesson: rec.lesson,
-                module: rec.module,
-                lessonIndex: idx,
-                totalLessons: lessons.count
-            )
-        }
 
         // "Continue" = a partially-started module (in-progress recommendation).
         let continueRec = recs.first {
@@ -93,10 +73,5 @@ final class HomeViewModel: ObservableObject {
             return LessonCard(id: rec.lesson.id, lesson: rec.lesson, module: rec.module,
                               lessonIndex: idx, totalLessons: lessons.count)
         }
-
-        recommendations = recs
-        todayCard       = cards.first
-        upNextCards     = Array(cards.dropFirst().prefix(2))
-        modesUnlocked   = MasteredTemplatePool.hasUnlockedModes(progressData: store.data)
     }
 }

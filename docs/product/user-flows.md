@@ -6,6 +6,8 @@
 
 All V1 flows are local-only. No auth, no backend, no paywall.
 
+> **Retired in Phase 7a:** the **Practice tab** and the timed **game modes** (Speed Drill, Blitz, Streak, Estimation, Comparison) were removed and replaced by the **Tools tab** (12 in-app calculators). The "Practice Tab," "Speed Drill," "Blitz," "Streak," "Estimation," and "Comparison" flow sections below are retained as history only — they no longer reflect a live surface. **Recall** ("review your weak spots") survives as a Home entry point.
+
 ---
 
 ## Flow 1: First Launch
@@ -200,8 +202,7 @@ During quiz question progression (after feedback, before next question):
 → Minimum 2-question cooldown between motivators
 ```
 
-**Eligible modes:** Lesson Quiz (8q), Daily Challenge (7q), Checkpoint Review (8q), Speed Drill (8q, max 1, no coaching), Estimation (10q).
-**Excluded:** Blitz, Streak, Comparison (auto-advance, no pause point).
+**Eligible modes:** Lesson Quiz (8q), Daily Workout (10q), Checkpoint Review (8q), Recall.
 
 **Inline encouragement (separate):**
 ```
@@ -505,12 +506,8 @@ RootTabView
 │       ├── QuizSessionView (quiz phase)
 │       ├── LevelUpView (.fullScreenCover, optional)
 │       └── SessionSummaryView (summary phase)
-├── Practice (NavigationStack)
-│   ├── → PracticeQuizContainer (.fullScreenCover, quick quiz / speed drill / recall)
-│   │   └── Summary (inline) + ConfettiBurst (if isNewBest)
-│   ├── → StreakView (.fullScreenCover)
-│   ├── → EstimationView (.fullScreenCover)
-│   └── → ComparisonView (.fullScreenCover)
+├── Tools (NavigationStack)
+│   └── → CalculatorShell (NavigationLink push — one of 12 calculators via CalculatorRegistry)
 ├── Progress (NavigationStack)
 │   ├── → SkillDetailView (NavigationLink)
 │   └── → ProfileView (.sheet)

@@ -29,7 +29,6 @@ Numind/
       Primitives/
         BeadRail.swift           # Dot/bar progress indicator
         ConfettiBurst.swift      # Canvas+TimelineView confetti particle burst + NewBestBadge
-        EstimationSlider.swift   # Custom slider with step snapping, callout, haptics
         HeroCard.swift           # Large hero card component (navy/accent variants)
         IconTile.swift           # Tinted icon circles (sm/md/lg)
         ModuleBarsView.swift     # Module progress bars visualization
@@ -63,12 +62,10 @@ Numind/
       SkillAxis.swift            # 7 SkillAxis cases + WeightingProfile + QuestionMultiplier + EvidenceLevel
     QuizEngine/
       AdaptiveDifficultyEngine.swift  # Adaptive difficulty selection
-      BlitzEngine.swift          # Blitz mode question queue generator
       CheckpointQuizEngine.swift # Multi-lesson review quiz builder
       DailyChallengeEngine.swift # Daily challenge question selection
       DifficultyScorer.swift     # Question difficulty scoring
       FormulaOperationMap.swift  # Formula-to-operation mapping
-      MasteredTemplatePool.swift # Shared gateway for game mode template access
       QuestionDifficulty.swift   # Difficulty level definitions
       QuizEngine.swift           # Template -> QuizQuestion generator (300+ formulas, proportional distractors, concept-template branch)
       QuizQuestion.swift         # Generated question model
@@ -92,7 +89,6 @@ Numind/
       BrandHeader.swift          # Numind brand header component
       DailyChallengeCard.swift   # Daily challenge card component
       DailyInsightView.swift     # Daily insight/tip display
-      ModeCard.swift             # Game mode card (gradient, orbs, 5 convenience constructors)
       StreakStripCard.swift       # Streak calendar strip card
     Learn/
       LearnView.swift            # Worlds carousel (TabView .page) + opened-world quest map + Paths sub-tab
@@ -116,22 +112,11 @@ Numind/
       ConfettiView.swift         # Particle animation for correct-answer celebrations
       MotivatorView.swift        # Full-screen mid-session checkpoint (momentum/coaching/progress/near-finish)
       InlineEncouragementView.swift  # Non-blocking overlay on feedback screen
-    Blitz/
-      BlitzView.swift            # Blitz mode: 60s sprint container
-      BlitzViewModel.swift       # Blitz state: countdown, auto-advance, score
-      BlitzSummaryView.swift     # Blitz summary with personal best + confetti
-      SpeedDrillView.swift       # Speed drill presentation
-    Practice/
-      PracticeView.swift         # Practice tab: module strip, hero card, 6 drill cards
-      Streak/
-        StreakView.swift          # Streak mode: consecutive correct answers
-        StreakViewModel.swift     # Streak state: count, game over detection
-      Estimation/
-        EstimationView.swift     # Estimation mode: slider + timer
-        EstimationViewModel.swift # Estimation state: slider, grades, timer + SliderRange
-      Comparison/
-        ComparisonView.swift     # Comparison mode: side-by-side pairs
-        ComparisonViewModel.swift # Comparison state: pairs, timer, score
+    Tools/
+      ToolsView.swift            # Tools tab: grouped calculator list + first-launch welcome sheet
+      CalculatorShell.swift      # Shared calculator scaffold + disclaimers + CalculatorRegistry
+      Calculators/               # 12 calculators (tip+split, discount+tax, paycheck, CC payoff,
+                                 #   rent, HYSA, salary, loan, 401k impact, mortgage, lease-vs-buy, student loan)
     Progress/
       ProgressTabView.swift      # Progress tab: stats, weekly goal, XP chart, badges
       SkillDetailView.swift      # Per-module skill detail
@@ -210,19 +195,14 @@ This mirrors how apps like WhatsApp and Facebook handle appearance-aware launch 
 - Priority: coaching > momentum > progress > near finish (struggling users get help first)
 - Inline encouragement is a separate non-blocking overlay on the feedback screen (fast answer, used hint, streak)
 - Coaching tips reuse the existing `Lesson.shortcut` field via `ContentRepository.lesson(forTemplateId:)`
-- Only available in modes with manual "Continue" pause: lesson quiz, daily challenge, checkpoint, speed drill, estimation
-- Auto-advance modes (blitz, streak, true/false, comparison) have no motivators
+- Only available in modes with a manual "Continue" pause: lesson quiz, Daily Workout, checkpoint review, Recall
 
 ### Presentation
 - Lessons and reviews use `.fullScreenCover` from the Learn tab
 - Level-up uses a nested `.fullScreenCover` from within the lesson/review view
 - Session summary is a phase within the lesson/review view, not a separate screen
 
-### Game Modes
-- 6 game modes (Speed Drill, Blitz, Recall, Streak, Estimation, Comparison). True/False was removed during V1 refinement.
-- Each game mode has its own dedicated ViewModel + View pair (except Speed Drill which reuses `QuizSessionViewModel` with a timer)
-- All mode ViewModels accept `previousBest: Int` at init and expose `isNewBest: Bool`
-- `MasteredTemplatePool` is the shared gateway — all modes pull from mastered templates only
-- `PracticeQuizContainer` wraps standard quiz sessions (Speed Drill, Recall) with score tracking and celebration support
-- Celebration system: `ConfettiBurst` (Canvas particles) + `NewBestBadge` overlay on summary views when `isNewBest`
-- Estimation mode uses `SliderRange.compute()` for adaptive slider bounds with anti-center positioning
+### Tools tab + Recall (Practice + game modes retired in Phase 7a)
+- The Practice tab and the timed game modes (Speed Drill, Blitz, Streak, Estimation, Comparison) were retired in Phase 7a. Their views/view-models and the `BlitzEngine`, `MasteredTemplatePool`, `ModeCard`, and `EstimationSlider` helpers were deleted; per-mode personal-best fields stay in `ProgressData` for snapshot back-compat.
+- The Tools tab replaced Practice in `RootTabView`: 12 calculators on `CalculatorShell`, dispatched via `CalculatorRegistry`, deep-linked from lessons through `Lesson.relatedCalculatorSlug`.
+- Recall ("review your weak spots") survives on Home — built from missed questions via `ReviewMistakesEngine`, with a bonus-round fallback. Celebration system: `ConfettiBurst` (Canvas particles) + `NewBestBadge` overlay when a new Recall best is set.

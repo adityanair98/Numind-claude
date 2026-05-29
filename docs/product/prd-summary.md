@@ -144,10 +144,10 @@ When a module level increases, a full-screen animated celebration appears before
 Progress tab shows a 4-week XP bar chart with "Best week!" indicator.
 
 ### Personal Bests
-Personal bests tracked per game mode: Speed Drill, Blitz, Recall, Streak, Estimation, Comparison. Displayed as decorative orb overlays on Practice tab drill cards. Summary screens show "New personal best!" badge with confetti burst animation when a new best is achieved.
+Personal-best fields remain in `ProgressData` for snapshot back-compat, but the game modes that wrote them (Speed Drill, Blitz, Streak, Estimation, Comparison) and the Practice tab were retired in Phase 7a. Recall ("review your weak spots") survives on Home and still shows a "New personal best!" badge with a confetti burst when its best is beaten.
 
 ### High Score Celebration
-When a user achieves a new personal best in any game mode, the summary screen shows:
+When a user achieves a new Recall personal best, the summary screen shows:
 - ConfettiBurst particle animation (Canvas + TimelineView, 60 particles, 3-second duration)
 - NewBestBadge trophy capsule with spring bounce-in animation
 - Previous best comparison text (when applicable)
@@ -155,12 +155,9 @@ When a user achieves a new personal best in any game mode, the summary screen sh
 ## Session Types
 - **Lesson quiz:** 5 questions (first attempt) or 8 (subsequent) from that lesson's 5 templates
 - **Checkpoint review:** 8 questions round-robined across 3 lessons' templates
-- **Speed Drill:** 8 MCQ questions, 15s per question countdown timer
-- **Blitz:** 60-second sprint, auto-advance on tap, no feedback phase
-- **Recall:** Review mode targeting previously missed questions
-- **Streak:** Consecutive correct answers, one miss ends the game
-- **Estimation:** 10 slider-based proximity questions, 10s timer per question, 3-star grading
-- **Comparison:** 15 side-by-side pairs, 8s per question, tap the larger answer
+- **Daily Workout:** 10 mixed questions, pack-aware composition; the streak anchor
+- **Recall:** Review mode targeting previously missed questions (Home "review your weak spots")
+- *Retired in Phase 7a: the timed game modes — Speed Drill, Blitz, Streak, Estimation, Comparison — along with the Practice tab. The Tools tab (12 calculators) replaced them.*
 
 ## Lessons
 Each lesson is a micro-primer, not long content.
@@ -238,16 +235,14 @@ Currently implemented:
 - Personal bests and weekly leaderboard
 - Session summary with retry flow
 - Level-up ceremony
-- 6 game modes (Speed Drill, Blitz, Recall, Streak, Estimation, Comparison)
-- Practice tab with module spotlight, hero quiz card, and 6 drill cards
-- Home tab with horizontally scrollable mode cards
-- Personal best tracking for all game modes with decorative orb display
-- High score celebration (confetti + badge) across all modes
+- Tools tab with 12 in-app calculators on `CalculatorShell` (replaced the Practice tab in Phase 7a)
+- Recall ("review your weak spots") quick-access entry on Home
+- High score celebration (confetti + badge) on a new Recall personal best
 - Numind Score with reweighted scoring (accuracy 60, difficulty 25, speed 15)
 - Estimation slider with anti-center positioning and proximity grading
 - Adaptive difficulty engine with onboarding diagnostic calibration
 - Dynamic question count (5 first attempt, 8 subsequent, diagnostic-adjusted)
-- previousBest/isNewBest pattern on all game mode ViewModels
+- previousBest/isNewBest celebration pattern on Recall personal bests
 - `lastVerified` date stamp on `Lesson` (optional) so future audits surface stale regulated content systematically
 - Phase 1 audit fixes shipped: Overtime arithmetic, Parent PLUS rate update (9.08% → 8.94% for 2025-26), Overtime exempt/non-exempt caveat, realistic minimum-payment formula replacing the "2% of balance" simplification, OOP max framing carve-outs, IDR reframed as a concept lesson post-SAVE litigation, Standard deduction expanded to include Head of Household
 
