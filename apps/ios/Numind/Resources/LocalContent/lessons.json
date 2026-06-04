@@ -98,7 +98,8 @@
       "stacked_discount_saving_calc",
       "stacked_discount_final",
       "stacked_scenario_d3",
-      "discount_budget_d3"
+      "discount_budget_d3",
+      "sm_decision_stacked_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -126,7 +127,7 @@
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Pull this up when you're choosing between a coupon code and a cashback offer."
   },
   {
@@ -141,7 +142,8 @@
       "disc_tax_amount_d2",
       "disc_tax_nonround_d2",
       "disc_tax_stacked_d3",
-      "disc_tax_compare_d3"
+      "disc_tax_compare_d3",
+      "sm_decision_discount_compare_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -149,7 +151,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this at the register so the final price never surprises you.",
     "relatedCalculatorSlug": "discount_tax"
   },
@@ -165,7 +167,8 @@
       "membership_annual_d1",
       "membership_net_saving_d2",
       "membership_compare_d3",
-      "membership_decision_d3"
+      "membership_decision_d3",
+      "sm_decision_membership_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -173,7 +176,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before you renew Costco, Prime, or a delivery membership."
   },
   {
@@ -279,13 +282,14 @@
       "savings_20_d1",
       "all_three_buckets_d2",
       "over_budget_d3",
-      "target_savings_d3"
+      "target_savings_d3",
+      "mm_decision_budget_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you set up a monthly budget or get a raise."
   },
   {
@@ -367,13 +371,14 @@
       "sinking_fund_multi_total_d2",
       "sinking_fund_holiday_d1",
       "sinking_fund_short_window_d2",
-      "concept_sinking_fund_vs_cc_d2"
+      "concept_sinking_fund_vs_cc_d2",
+      "mm_decision_sinking_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Set this up so annual bills — insurance, holidays, car registration — never blindside you."
   },
   {
@@ -454,13 +459,14 @@
       "weekly_to_annual",
       "biweekly_annual_d1",
       "weekly_annual_d1",
-      "job_offer_compare_d3"
+      "job_offer_compare_d3",
+      "sal_decision_offer_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to compare two jobs that pay on different schedules.",
     "relatedCalculatorSlug": "salary_converter"
   },
@@ -586,7 +592,8 @@
       "k401_net_cost_d1",
       "k401_net_cost_high_bracket_d2",
       "k401_compare_rates_d2",
-      "k401_with_match_scenario_d3"
+      "k401_with_match_scenario_d3",
+      "sal_decision_match_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -594,7 +601,7 @@
       "investing_and_future"
     ],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before you set your 401(k) contribution rate.",
     "relatedCalculatorSlug": "401k_impact"
   },
@@ -633,7 +640,8 @@
       "w2_equivalent_breakeven_d2",
       "se_tax_on_1099_d2",
       "offer_compare_total_comp_d2",
-      "concept_1099_missing_benefits_d2"
+      "concept_1099_missing_benefits_d2",
+      "sal_decision_1099_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -641,7 +649,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when a contract gig pays more per hour and you're tempted to take it."
   },
   {
@@ -972,7 +980,8 @@
       "ef_target_d1",
       "ef_runway_d2",
       "ef_runway_after_cut_d3",
-      "ef_months_to_target_d3"
+      "ef_months_to_target_d3",
+      "mm_decision_ef_target_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -980,7 +989,7 @@
       "protection_and_benefits"
     ],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this before life throws a job loss or surprise bill at you.",
     "relatedCalculatorSlug": "hysa_growth"
   },

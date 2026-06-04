@@ -16763,5 +16763,194 @@
     ],
     "correctConceptChoice": "Build a small ~$1,000 starter emergency fund first, then throw everything at the 23% card — the cushion keeps a surprise from forcing you back onto the card",
     "isApplication": true
+  },
+  {
+    "id": "sm_decision_membership_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A warehouse-store membership costs $65/yr. You estimate you save about $4 per visit versus regular stores, and you shop there about twice a month.",
+    "promptTemplate": "Is the membership worth it, and what's the catch?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A membership pays off when annual savings beat the fee AND it doesn't drive extra spending. Here: 24 visits × $4 = $96 saved vs a $65 fee → net +$31. The trap is the 'I have the membership, might as well buy more' impulse — bulk buys you didn't need can erase the savings. Worth it if your real usage clears the fee and your spending stays disciplined.",
+    "conceptChoices": [
+      "Worth it — about $96/yr in savings (24 visits × $4) beats the $65 fee, as long as it doesn't push you into impulse buys",
+      "Not worth it — any membership fee is just money down the drain",
+      "Worth it — memberships always save more the more you spend",
+      "Not worth it — $4 a visit is too small to ever add up"
+    ],
+    "correctConceptChoice": "Worth it — about $96/yr in savings (24 visits × $4) beats the $65 fee, as long as it doesn't push you into impulse buys",
+    "isApplication": true
+  },
+  {
+    "id": "sm_decision_discount_compare_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A $200 jacket. Store A: 25% off. Store B: a $40-off coupon. Sales tax is 8% at both.",
+    "promptTemplate": "Which store gives you the better price?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Convert the percent to dollars: 25% of $200 = $50 off, which beats the $40 flat coupon. After 8% tax, Store A is $150 × 1.08 = $162 vs Store B's $160 × 1.08 = $172.80 — a $10.80 difference. Tax hits both, so it doesn't change which is cheaper; compare the discounts in dollars.",
+    "conceptChoices": [
+      "Store A — 25% off $200 is $50 off (final $162 after tax), beating the $40 coupon (final $172.80)",
+      "Store B — a flat $40 coupon is a guaranteed discount",
+      "They come out the same once tax is added",
+      "Store B — percentages always sound bigger than they really are"
+    ],
+    "correctConceptChoice": "Store A — 25% off $200 is $50 off (final $162 after tax), beating the $40 coupon (final $172.80)",
+    "isApplication": true
+  },
+  {
+    "id": "sm_decision_stacked_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A $100 coat. The sign says '30% off, then an extra 20% off at checkout.' You're expecting to pay $50 (a 50% discount).",
+    "promptTemplate": "What will you actually pay, and why isn't it $50?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Stacked discounts apply one after another, so they multiply rather than add. $100 × 0.70 = $70, then × 0.80 = $56 — a 44% total cut, not 50%. The second discount comes off the already-reduced price, so '30% then 20%' always falls short of a flat 50%.",
+    "conceptChoices": [
+      "$56 — the discounts multiply ($100 → $70 → $56), a 44% total cut, not the 50% you'd get by adding 30% + 20%",
+      "$50 — 30% + 20% = 50% off",
+      "$56 — but only because of sales tax",
+      "$44 — you subtract both discounts straight from $100"
+    ],
+    "correctConceptChoice": "$56 — the discounts multiply ($100 → $70 → $56), a 44% total cut, not the 50% you'd get by adding 30% + 20%",
+    "isApplication": true
+  },
+  {
+    "id": "mm_decision_budget_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You take home $4,000/mo. Your needs (rent, utilities, groceries, minimum debt payments) run $2,600. Under 50/30/20, needs should be about $2,000.",
+    "promptTemplate": "Is this budget on track, and what does it mean?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "50/30/20 splits take-home into 50% needs / 30% wants / 20% savings. Here needs are $2,600 = 65% of $4,000 — well over the 50% ($2,000) target, leaving only 35% for wants AND savings combined. The usual lever is the biggest fixed cost, housing (a roommate or cheaper place), or raising income. The ratios are a guideline, but 65% on needs is a real warning sign.",
+    "conceptChoices": [
+      "Needs are 65% of take-home ($2,600 vs the $2,000 target) — fixed costs are too high and squeeze your wants and savings. Cut fixed costs or raise income",
+      "It's fine as long as needs stay under 70%",
+      "It's perfect — 50/30/20 is just a rough idea anyway",
+      "It's unfixable — you'll never save on this income"
+    ],
+    "correctConceptChoice": "Needs are 65% of take-home ($2,600 vs the $2,000 target) — fixed costs are too high and squeeze your wants and savings. Cut fixed costs or raise income",
+    "isApplication": true
+  },
+  {
+    "id": "mm_decision_ef_target_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your essential monthly expenses are $3,000. You're a single renter with a stable salaried job, and you have $2,000 saved.",
+    "promptTemplate": "What's a reasonable emergency-fund target, and where do you stand?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A common emergency-fund target is 3-6 months of ESSENTIAL expenses ($9,000-$18,000 here). With a single, stable salaried income, the lower end (~3 months, $9,000) is a reasonable floor; volatile or single-earner-with-dependents situations lean higher. At $2,000 you have under a month — keep building the cushion in a high-yield savings account before putting extra into investments.",
+    "conceptChoices": [
+      "About $9,000 (3 months of essentials) is a reasonable floor for a stable single income; at $2,000 you're well short, so keep building the fund",
+      "$2,000 is plenty — one month of expenses covers any emergency",
+      "You need $36,000 (12 months) before doing anything else",
+      "Skip the fund and invest instead — markets return more than savings"
+    ],
+    "correctConceptChoice": "About $9,000 (3 months of essentials) is a reasonable floor for a stable single income; at $2,000 you're well short, so keep building the fund",
+    "isApplication": true
+  },
+  {
+    "id": "mm_decision_sinking_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "It's January. You know you'll spend about $1,200 on holiday gifts in December and $600 on car registration in March.",
+    "promptTemplate": "What's the smart way to handle these known irregular costs?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Sinking funds turn lumpy, predictable expenses into smooth monthly savings. Divide each cost by the months until it's due: $1,200 ÷ 11 ≈ $109/mo for December gifts, $600 ÷ 2 = $300/mo for March registration. When the bill arrives, the money's already there — no scramble, no credit-card interest. This is how you budget for 'surprises' that aren't actually surprises.",
+    "conceptChoices": [
+      "Start sinking funds now — save ~$109/mo for December gifts ($1,200÷11) and ~$300/mo for March registration ($600÷2) so neither is a shock",
+      "Wait until the bills arrive and put them on a credit card",
+      "Ignore them — they're too far away to plan for",
+      "Save the full $1,800 this month to be safe"
+    ],
+    "correctConceptChoice": "Start sinking funds now — save ~$109/mo for December gifts ($1,200÷11) and ~$300/mo for March registration ($600÷2) so neither is a shock",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_match_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You earn $60,000. Your employer matches 100% of your 401(k) contributions up to 5% of pay. You currently contribute 2%.",
+    "promptTemplate": "What should you do, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "An employer match is free money — here, 100% up to 5% of pay. 5% of $60,000 = $3,000 of match available; at 2% ($1,200) you only capture $1,200, leaving about $1,800/yr unclaimed. Contributing enough to get the full match is the highest-return move in personal finance — an instant 100% return before any market growth. Hit at least the match, even if you can't contribute more.",
+    "conceptChoices": [
+      "Raise your contribution to at least 5% — you're leaving about $1,800/yr of free employer match on the table, and the match is an instant 100% return",
+      "Stay at 2% — any 401(k) contribution is good enough",
+      "Stop contributing — you can't touch the money until retirement",
+      "Go to 5% only if you can also max the full annual limit"
+    ],
+    "correctConceptChoice": "Raise your contribution to at least 5% — you're leaving about $1,800/yr of free employer match on the table, and the match is an instant 100% return",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_1099_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Two offers for the same work: a W-2 job at $45/hr, or a 1099 contract at $50/hr. The 1099 has no benefits — you cover both halves of payroll tax (~7.65% extra) plus your own health insurance.",
+    "promptTemplate": "Is the $50/hr 1099 actually the better deal?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A 1099 contractor pays BOTH halves of Social Security/Medicare (~15.3% total vs ~7.65% for an employee), so about 7.65% comes off the top. You also lose employer health insurance (often $400-600/mo of value), PTO, and any 401(k) match. A common rule of thumb: a 1099 rate should be ~25-30% higher than a W-2 rate to break even. At only 11% more ($50 vs $45), the W-2 is often the better deal once benefits are counted.",
+    "conceptChoices": [
+      "Not necessarily — the extra ~7.65% self-employment tax plus lost health insurance, PTO, and 401(k) match often make the 1099 worth LESS than the $45 W-2; a rule of thumb is it should pay ~25-30% more to break even",
+      "Yes — $50 is more than $45, so always take the 1099",
+      "Yes — being 1099 means you pay less tax overall",
+      "No — 1099 contract work is never worth it"
+    ],
+    "correctConceptChoice": "Not necessarily — the extra ~7.65% self-employment tax plus lost health insurance, PTO, and 401(k) match often make the 1099 worth LESS than the $45 W-2; a rule of thumb is it should pay ~25-30% more to break even",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_offer_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Two job offers for similar work: a $50,000 salary, or $26/hr at 40 hours/week.",
+    "promptTemplate": "Which offer pays more, and what else matters?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Convert to the same basis: a full-time year is about 2,080 hours (40 hrs × 52 weeks). $26 × 2,080 = $54,080, which beats the $50,000 salary by about $4,080. Hourly (non-exempt) roles are also overtime-eligible (1.5× past 40 hrs/week), while salaried (exempt) roles usually aren't. Always convert offers to the same time basis before comparing — and weigh benefits and overtime too.",
+    "conceptChoices": [
+      "$26/hr — that's $54,080/yr (26 × 2,080 hrs), about $4,080 more than the $50,000 salary, and as an hourly worker you may also earn overtime",
+      "The $50,000 salary — salaried jobs always pay more than hourly",
+      "They're identical — $26/hr equals $50,000",
+      "$26/hr — but only if you work more than 40 hours a week"
+    ],
+    "correctConceptChoice": "$26/hr — that's $54,080/yr (26 × 2,080 hrs), about $4,080 more than the $50,000 salary, and as an hourly worker you may also earn overtime",
+    "isApplication": true
   }
 ]
