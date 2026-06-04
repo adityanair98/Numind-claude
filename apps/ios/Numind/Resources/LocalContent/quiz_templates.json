@@ -18191,5 +18191,257 @@
     ],
     "correctConceptChoice": "$950 — 40 hours at $20 ($800) plus 5 overtime hours at $30 (1.5×) = $150. Only hours past 40 get the 1.5× rate",
     "isApplication": true
+  },
+  {
+    "id": "mm_decision_needs_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You lose your job and need to cut spending fast. Your monthly outflows: rent, groceries, phone, electricity, streaming, dining out, a gym, and minimum debt payments.",
+    "promptTemplate": "What's the principle for what to cut first?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "In a cash crunch, protect NEEDS — what keeps you housed, fed, and current (rent, groceries, utilities, minimum debt payments) — and ruthlessly cut WANTS (dining out, streaming, the gym). Needs are non-negotiable; wants are discretionary and the fastest source of savings. The 'fuzzy' cases (phone, some transportation) usually count as needs in a modern job search. Triaging this way stretches your runway and avoids missing essential payments.",
+    "conceptChoices": [
+      "Cut WANTS first — dining out, streaming, the gym — while protecting NEEDS like rent, groceries, utilities, and minimum debt payments",
+      "Cut everything equally across the board",
+      "Cut rent and groceries first — they're the biggest line items",
+      "Don't cut anything; just borrow to cover the gap"
+    ],
+    "correctConceptChoice": "Cut WANTS first — dining out, streaming, the gym — while protecting NEEDS like rent, groceries, utilities, and minimum debt payments",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_rsu_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your company grants you RSUs (restricted stock units). A friend says, 'They're not taxed until you sell them.'",
+    "promptTemplate": "Is that right — when are RSUs taxed?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "RSUs are taxed as ordinary INCOME when they VEST — their value at vesting is added to your W-2 wages, and your employer usually withholds some shares for taxes. Selling later only triggers capital gains or losses on any change in value AFTER vesting (your cost basis is the vest-date price). A common surprise: people forget the vest-date income is taxed even if they hold the shares, then owe more at filing.",
+    "conceptChoices": [
+      "No — RSUs are taxed as ordinary income when they VEST (added to your W-2 then), not when you sell. Selling later only triggers capital gains/losses on the change since vesting",
+      "Yes — RSUs are only taxed when you sell them",
+      "RSUs are never taxed",
+      "RSUs are taxed at a flat 10% rate"
+    ],
+    "correctConceptChoice": "No — RSUs are taxed as ordinary income when they VEST (added to your W-2 then), not when you sell. Selling later only triggers capital gains/losses on the change since vesting",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_match_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Money's a bit tight, but your employer matches your 401(k) contributions up to 4% of pay. You're tempted to contribute $0 this year to keep more cash.",
+    "promptTemplate": "What's the right call?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "An employer match is free money and the highest-return move in personal finance — a 4% match is an instant 100% return on the dollars you contribute, before any market growth. Contributing $0 leaves that entirely on the table. If cash is tight, trim elsewhere first; capturing at least the full match should be the last thing you give up. (You're only matched on what you contribute, so to get the full 4% match you have to contribute ~4%.)",
+    "conceptChoices": [
+      "Contribute at least enough to get the full 4% match — it's free money and an instant 100% return. Skipping it leaves guaranteed dollars on the table; cut elsewhere first",
+      "Contribute $0 — keep the cash, the match isn't worth it",
+      "Only contribute if you can max the entire annual limit",
+      "Contribute 1% — any amount captures the full match"
+    ],
+    "correctConceptChoice": "Contribute at least enough to get the full 4% match — it's free money and an instant 100% return. Skipping it leaves guaranteed dollars on the table; cut elsewhere first",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_trad_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're a high earner now in the 32% bracket and expect to be in a LOWER bracket in retirement (less income, lower tax). You're choosing between a Roth and a Traditional account.",
+    "promptTemplate": "Which generally makes more sense here, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The choice hinges on your tax rate now vs in retirement. Here you'd deduct a Traditional contribution at your high 32% rate today and pay tax on withdrawals later at your expected LOWER retirement rate — a net win. Traditional tends to beat Roth when your current bracket is HIGHER than your expected future one; Roth wins in the reverse case (low bracket now, higher later). When you're genuinely unsure, splitting between the two hedges your bet.",
+    "conceptChoices": [
+      "Traditional — deduct now at 32% and pay tax later at your lower retirement rate. Traditional wins when today's bracket is higher than your expected future one; Roth wins in reverse",
+      "Roth — paying tax now is always the better move",
+      "It never matters which you pick",
+      "Traditional — but only if you're over 50"
+    ],
+    "correctConceptChoice": "Traditional — deduct now at 32% and pay tax later at your lower retirement rate. Traditional wins when today's bracket is higher than your expected future one; Roth wins in reverse",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_efloc_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You've built a $15,000 emergency fund. You're deciding where to keep it: a high-yield savings account, a stock index fund, or a 5-year CD.",
+    "promptTemplate": "Where should it go, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "An emergency fund's whole job is to be SAFE and INSTANTLY available when something goes wrong. A high-yield savings account fits perfectly: FDIC-insured, liquid, and currently paying a competitive rate. Stocks can drop 20-30% exactly when you'd need the cash (a layoff often coincides with a down market); a 5-year CD locks the money up with an early-withdrawal penalty. Chase yield with your long-term investments, not your emergency fund.",
+    "conceptChoices": [
+      "A high-yield savings account — an emergency fund must be safe and instantly accessible. Stocks can drop right when you need the cash; a CD locks it up with a penalty",
+      "A stock index fund — it'll grow the most",
+      "A 5-year CD — lock in the highest rate",
+      "Cash under the mattress — avoid banks entirely"
+    ],
+    "correctConceptChoice": "A high-yield savings account — an emergency fund must be safe and instantly accessible. Stocks can drop right when you need the cash; a CD locks it up with a penalty",
+    "isApplication": true
+  },
+  {
+    "id": "debt_decision_apr_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A loan advertises a 6% interest rate, but the APR is listed as 6.8%. You wonder why they differ.",
+    "promptTemplate": "Why is the APR higher, and which should you compare?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The APR (annual percentage rate) folds in the loan's FEES — origination, points, certain closing costs — on top of the raw interest rate, so it reflects the true yearly cost of borrowing. A 6% rate with fees can be a 6.8% APR. Because lenders must disclose APR the same way, it's the apples-to-apples number for comparing loans. Two loans can show the same rate but different APRs; the lower APR is the cheaper loan.",
+    "conceptChoices": [
+      "The APR is higher because it folds in fees (origination, points) on top of the rate — so it reflects the loan's true annual cost. Compare loans by APR, not the headline rate",
+      "The APR is a typo — they should be identical",
+      "The 6% rate is the real cost; ignore the APR",
+      "APR is always lower than the interest rate"
+    ],
+    "correctConceptChoice": "The APR is higher because it folds in fees (origination, points) on top of the rate — so it reflects the loan's true annual cost. Compare loans by APR, not the headline rate",
+    "isApplication": true
+  },
+  {
+    "id": "debt_decision_grace_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You charge $1,000 on a credit card this month. You're deciding whether to pay the full statement balance by the due date or just the minimum.",
+    "promptTemplate": "When do you actually get charged interest?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Credit-card purchases have a grace period: if you pay the FULL statement balance by the due date, you owe $0 interest — you essentially borrow for free for a few weeks. Carry any balance past the due date and interest kicks in (and you can lose the grace period on new purchases too, sometimes retroactively). Paying the minimum does NOT avoid interest — it's the trigger for it. The winning move is to pay in full every month.",
+    "conceptChoices": [
+      "Pay the full statement balance by the due date and you owe $0 — purchases have a grace period. Carry any balance and interest kicks in, so paying in full each month uses the card for free",
+      "You're charged interest the moment you swipe the card",
+      "Interest only applies after six months",
+      "Paying the minimum avoids all interest"
+    ],
+    "correctConceptChoice": "Pay the full statement balance by the due date and you owe $0 — purchases have a grace period. Carry any balance and interest kicks in, so paying in full each month uses the card for free",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_cashclose_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're buying a $300,000 home with 10% down ($30,000). At closing you're surprised by an extra ~$9,000 due.",
+    "promptTemplate": "What is that extra ~$9,000, and how should you plan?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "That's closing costs — typically ~2-5% of the price ($6,000-$15,000 on a $300k home) covering lender fees, title insurance, appraisal, recording, and prepaids like property tax and homeowners insurance. They come ON TOP of your down payment. So budget cash-to-close = down payment + closing costs; here that's ~$39,000, not $30,000. Buyers who plan only for the down payment get caught short at the table.",
+    "conceptChoices": [
+      "Closing costs — typically ~2-5% of price for lender fees, title, appraisal, and prepaids, ON TOP of your down payment. Budget cash-to-close = down payment + closing costs",
+      "A mistake — the down payment is all you owe at closing",
+      "Your first mortgage payment, collected early",
+      "The agent's commission, which buyers always pay"
+    ],
+    "correctConceptChoice": "Closing costs — typically ~2-5% of price for lender fees, title, appraisal, and prepaids, ON TOP of your down payment. Budget cash-to-close = down payment + closing costs",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_col_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You earn $80,000 and get a job offer of $95,000 (a $15,000 raise) in a city where the cost of living is about 30% higher.",
+    "promptTemplate": "Is the move a real raise, and how do you check?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "To compare across cities, adjust for cost of living. A place 30% more expensive means you'd need about $80,000 × 1.3 = $104,000 just to maintain your current standard of living. A $95,000 offer is below that — so in real terms it's roughly a pay cut, even though the number is bigger. Use a cost-of-living calculator (rent, taxes, groceries) before accepting a relocation; the headline salary alone is misleading.",
+    "conceptChoices": [
+      "Probably not — 30% higher costs mean you'd need ~$104,000 ($80k × 1.3) to break even, so $95,000 is effectively a pay cut. Compare salaries adjusted for cost of living, not the headline",
+      "Yes — $95k is more than $80k, so it's a raise",
+      "Yes — a $15,000 raise always beats staying",
+      "It's exactly break-even"
+    ],
+    "correctConceptChoice": "Probably not — 30% higher costs mean you'd need ~$104,000 ($80k × 1.3) to break even, so $95,000 is effectively a pay cut. Compare salaries adjusted for cost of living, not the headline",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_lease_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your apartment lease has a 'joint and several liability' clause, and you're signing it with two roommates.",
+    "promptTemplate": "What does that clause mean for you?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "'Joint and several liability' means each tenant is individually responsible for the ENTIRE rent — not just their share. If a roommate stops paying or moves out, the landlord can legally pursue YOU for the full amount and can report it against your credit. Know exactly who you're signing with, keep a buffer for a flaky roommate, and ask whether separate (individual) leases are available if you're worried.",
+    "conceptChoices": [
+      "Each tenant is individually responsible for the ENTIRE rent — if a roommate doesn't pay or leaves, the landlord can pursue YOU for the full amount. Know who you sign with",
+      "Each person only ever owes their own one-third share",
+      "It means the landlord splits repair costs three ways",
+      "It's a clause that protects tenants from the landlord"
+    ],
+    "correctConceptChoice": "Each tenant is individually responsible for the ENTIRE rent — if a roommate doesn't pay or leaves, the landlord can pursue YOU for the full amount. Know who you sign with",
+    "isApplication": true
+  },
+  {
+    "id": "tax_decision_pretax_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You want to lower this year's taxable income. You're deciding between contributing to a TRADITIONAL 401(k) or a ROTH 401(k).",
+    "promptTemplate": "Which lowers this year's taxable income, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Traditional 401(k) contributions are PRE-TAX — they come out before income tax is calculated, so they directly reduce your taxable income this year (you pay tax when you withdraw in retirement). Roth 401(k) contributions are AFTER-tax — they don't lower your taxable income now, but they grow and come out tax-free later. So for an immediate tax break this year, the Traditional is the one that helps; for tax-free retirement income, the Roth.",
+    "conceptChoices": [
+      "The Traditional 401(k) — its contributions are pre-tax, so they cut your taxable income now (you pay tax on withdrawals later). Roth contributions are after-tax and grow tax-free instead",
+      "The Roth 401(k) — all 401(k)s reduce taxable income",
+      "Neither affects your taxable income",
+      "Both reduce it by exactly the same amount"
+    ],
+    "correctConceptChoice": "The Traditional 401(k) — its contributions are pre-tax, so they cut your taxable income now (you pay tax on withdrawals later). Roth contributions are after-tax and grow tax-free instead",
+    "isApplication": true
+  },
+  {
+    "id": "ins_decision_qle_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "It's June — well outside open enrollment. You just had a baby and want to add the child to your health plan.",
+    "promptTemplate": "Can you change your benefits now?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Yes — a 'qualifying life event' (QLE) opens a special enrollment window, usually about 30-60 days, to change your benefits outside the normal open-enrollment period. Birth or adoption of a child qualifies, as do marriage, divorce, and loss of other coverage (like a job loss). The catch is the deadline: miss the window and you generally have to wait until the next open enrollment, so act quickly and submit the paperwork.",
+    "conceptChoices": [
+      "Yes — a 'qualifying life event' (birth, marriage, job loss) opens a special enrollment window, usually ~30-60 days, to change benefits mid-year. A new baby qualifies; act before it closes",
+      "No — you must wait until the next open enrollment in the fall",
+      "No — health plans can never change mid-year",
+      "Yes, but only if your employer approves it personally"
+    ],
+    "correctConceptChoice": "Yes — a 'qualifying life event' (birth, marriage, job loss) opens a special enrollment window, usually ~30-60 days, to change benefits mid-year. A new baby qualifies; act before it closes",
+    "isApplication": true
   }
 ]

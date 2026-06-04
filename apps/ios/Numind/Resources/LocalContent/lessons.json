@@ -355,7 +355,8 @@
       "concept_needs_gym_d2",
       "concept_needs_streaming_d2",
       "concept_needs_over_50_d3",
-      "concept_needs_job_loss_d3"
+      "concept_needs_job_loss_d3",
+      "mm_decision_needs_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -627,7 +628,8 @@
       "rsu_net_after_tax_d2",
       "rsu_underwithholding_d2",
       "rsu_4yr_vest_d2",
-      "concept_rsu_when_taxed_d2"
+      "concept_rsu_when_taxed_d2",
+      "sal_decision_rsu_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -767,7 +769,8 @@
       "total_with_match_d1",
       "match_scenario_d2",
       "match_percent_d2",
-      "match_annual_d3"
+      "match_annual_d3",
+      "inv_decision_match_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -791,7 +794,8 @@
       "traditional_tax_saved_d1",
       "roth_scenario_d2",
       "traditional_scenario_d2",
-      "roth_growth_value_d3"
+      "roth_growth_value_d3",
+      "inv_decision_trad_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -890,7 +894,7 @@
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this when you have a savings target and need a monthly number to hit it."
   },
   {
@@ -1024,7 +1028,8 @@
       "concept_ef_loc_full_d2",
       "concept_ef_loc_fdic_split_d2",
       "concept_ef_loc_what_not_d2",
-      "concept_ef_loc_hysa_vs_cd_d2"
+      "concept_ef_loc_hysa_vs_cd_d2",
+      "inv_decision_efloc_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -1032,7 +1037,7 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to decide where your emergency cash should actually live.",
     "relatedCalculatorSlug": "hysa_growth"
   },
@@ -1160,7 +1165,8 @@
       "cc_monthly_interest_scenario",
       "cc_annual_interest",
       "cc_interest_year_d3",
-      "cc_rate_check_d1"
+      "cc_rate_check_d1",
+      "debt_decision_grace_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1397,7 +1403,8 @@
       "apr_monthly_rate_d1",
       "apr_annual_cost_d2",
       "apr_with_fees_d2",
-      "apr_vs_total_cost_d3"
+      "apr_vs_total_cost_d3",
+      "debt_decision_apr_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1563,7 +1570,8 @@
       "cash_to_close_breakdown_d2",
       "cash_to_close_20pct_down_d2",
       "cash_to_close_total_with_moving_d2",
-      "concept_cash_to_close_components_d2"
+      "concept_cash_to_close_components_d2",
+      "hou_decision_cashclose_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1584,7 +1592,8 @@
       "col_rent_eats_raise_d2",
       "col_tax_delta_d2",
       "col_breakeven_salary_d2",
-      "col_full_scenario_d3"
+      "col_full_scenario_d3",
+      "hou_decision_col_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1711,7 +1720,7 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to see what renting really costs you beyond the rent line.",
     "relatedCalculatorSlug": "rent_affordability"
   },
@@ -1801,13 +1810,14 @@
       "concept_lease_auto_renewal_d2",
       "concept_lease_deposit_d2",
       "concept_lease_illegal_clause_d3",
-      "concept_lease_wear_tear_d3"
+      "concept_lease_wear_tear_d3",
+      "hou_decision_lease_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Read this before you sign any lease."
   },
   {
@@ -1845,7 +1855,8 @@
       "deduction_net_d1",
       "deduction_fica_d2",
       "deduction_scenario_d2",
-      "deduction_compare_d3"
+      "deduction_compare_d3",
+      "tax_decision_pretax_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -2235,7 +2246,8 @@
       "concept_oe_hdhp_eligibility_d2",
       "concept_oe_dcfsa_cap_d2",
       "concept_oe_fsa_vs_hsa_d2",
-      "concept_oe_supplemental_life_d2"
+      "concept_oe_supplemental_life_d2",
+      "ins_decision_qle_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -2313,7 +2325,7 @@
       "debt_and_credit"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this before you stretch a car loan to shrink the payment.",
     "relatedCalculatorSlug": "loan"
   },
@@ -2407,7 +2419,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to see what a car really costs beyond the payment.",
     "relatedCalculatorSlug": "lease_vs_buy"
   },
@@ -2454,7 +2466,7 @@
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before you accept a dealer's trade-in offer."
   },
   {
@@ -2475,7 +2487,7 @@
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Keep this in mind the moment you walk onto the lot."
   },
   {
@@ -2547,7 +2559,7 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to see what your loans really cost over their full life.",
     "relatedCalculatorSlug": "student_loan"
   },
@@ -2594,7 +2606,7 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this if your federal loan payment feels unaffordable on your income.",
     "relatedCalculatorSlug": "student_loan"
   },
@@ -2684,7 +2696,7 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when financing a kid's education and weighing federal vs private.",
     "relatedCalculatorSlug": "student_loan"
   },
@@ -2728,7 +2740,7 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Read this before a refinance salesperson pitches you a lower rate."
   }
 ]
