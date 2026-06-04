@@ -1871,7 +1871,8 @@
       "se_tax_amount_d1",
       "se_tax_scenario_d2",
       "se_tax_compare_d2",
-      "se_quarterly_combined_d3"
+      "se_quarterly_combined_d3",
+      "tax_decision_quarterly_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -1894,7 +1895,8 @@
       "itemized_vs_standard_d1",
       "itemized_saving_d2",
       "itemized_decision_d3",
-      "itemized_strategy_d3"
+      "itemized_strategy_d3",
+      "tax_decision_standard_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -1947,7 +1949,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you keep getting big refunds and want that cash sooner.",
     "relatedCalculatorSlug": "paycheck"
   },
@@ -1963,13 +1965,14 @@
       "concept_paycheck_pretax_d1",
       "concept_filing_default_d1",
       "concept_filing_mfs_idr_d2",
-      "concept_filing_status_choice_d3"
+      "concept_filing_status_choice_d3",
+      "tax_decision_w4_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to actually read your pay stub and pick the right filing status.",
     "relatedCalculatorSlug": "paycheck"
   },
@@ -2029,13 +2032,14 @@
       "ins_oop_scenario_d1",
       "ins_oop_calc_d2",
       "ins_oop_compare_d2",
-      "ins_oop_cap_d3"
+      "ins_oop_cap_d3",
+      "ins_decision_oop_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to know the most a bad health year can cost you."
   },
   {
@@ -2080,7 +2084,7 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you have an HDHP and aren't using the HSA's tax break."
   },
   {
@@ -2095,7 +2099,8 @@
       "fsa_net_result_d2",
       "fsa_breakeven_d3",
       "fsa_election_compare_d2",
-      "fsa_max_safe_d3"
+      "fsa_max_safe_d3",
+      "ins_decision_fsa_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -2103,7 +2108,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before open enrollment so you don't over- or under-fund your FSA."
   },
   {
@@ -2118,13 +2123,14 @@
       "life_dime_adjusted_d2",
       "life_quote_compare_d2",
       "life_per_100k_d2",
-      "life_lifetime_d3"
+      "life_lifetime_d3",
+      "ins_decision_life_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when someone depends on your income and you need coverage."
   },
   {
@@ -2299,7 +2305,8 @@
       "car_loan_after_down_d1",
       "car_down_scenario_d2",
       "car_down_compare_d2",
-      "car_down_savings_total_d3"
+      "car_down_savings_total_d3",
+      "car_decision_down_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2307,7 +2314,7 @@
       "debt_and_credit"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before you decide how much to put down on a car."
   },
   {
@@ -2346,13 +2353,14 @@
       "car_depreciation_d1",
       "car_year2_value_d2",
       "car_depreciation_scenario_d2",
-      "car_total_cost_3yr_d3"
+      "car_total_cost_3yr_d3",
+      "car_decision_used_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this before buying new to see how fast the value drops."
   },
   {
@@ -2458,7 +2466,8 @@
       "concept_warranty_extended_math_d2",
       "concept_warranty_self_insure_d2",
       "concept_warranty_when_worth_d3",
-      "concept_warranty_cpo_d3"
+      "concept_warranty_cpo_d3",
+      "car_decision_warranty_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2466,7 +2475,7 @@
       "protection_and_benefits"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when the finance office pitches an extended warranty."
   },
   {
@@ -2577,13 +2586,14 @@
       "sl_pslf_forgiven_d1",
       "sl_pslf_scenario_d2",
       "sl_pslf_compare_d2",
-      "sl_pslf_decision_d3"
+      "sl_pslf_decision_d3",
+      "sl_decision_pslf_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this if you work in public service and might qualify for forgiveness."
   },
   {
@@ -2598,7 +2608,8 @@
       "sl_employer_5yr_d2",
       "sl_employer_with_interest_d3",
       "sl_employer_vs_raise_d2",
-      "sl_employer_lifetime_d3"
+      "sl_employer_lifetime_d3",
+      "sl_decision_employer_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -2606,7 +2617,7 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Check this in case your employer quietly offers loan-repayment help."
   },
   {
@@ -2665,13 +2676,14 @@
       "concept_sl_unsub_def_d1",
       "concept_sl_who_qualifies_d2",
       "concept_sl_balance_growth_d3",
-      "concept_sl_grad_loans_d3"
+      "concept_sl_grad_loans_d3",
+      "sl_decision_subsidized_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you're accepting financial aid and choosing what to borrow."
   },
   {

@@ -17435,5 +17435,257 @@
     ],
     "correctConceptChoice": "About $4,800 — first + last + a one-month deposit ($4,500) plus the $300 fee. Move-in cash is usually 3-4× the monthly rent, not one month",
     "isApplication": true
+  },
+  {
+    "id": "ins_decision_oop_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "It's November. You've already hit your $6,000 out-of-pocket maximum this year (a surgery in March). Your doctor recommends an elective procedure you could do now or wait until January.",
+    "promptTemplate": "When should you schedule it, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Your out-of-pocket maximum is the most you'll pay in a plan year; after you hit it, the plan covers covered care at 100% until the year resets (usually Jan 1). Since you've already hit the $6,000 max, an elective procedure done NOW costs you $0. Wait until January and you start over — new deductible, new coinsurance, potentially thousands out of pocket. If you've blown past your OOP max, it's the cheapest time of year for care you've been putting off.",
+    "conceptChoices": [
+      "Now, before year-end — you've hit your $6,000 OOP max, so the plan pays 100% for the rest of this calendar year. Waiting to January restarts your deductible from zero",
+      "January — start the new year fresh",
+      "It doesn't matter; the cost is the same either way",
+      "Never — elective procedures are never covered"
+    ],
+    "correctConceptChoice": "Now, before year-end — you've hit your $6,000 OOP max, so the plan pays 100% for the rest of this calendar year. Waiting to January restarts your deductible from zero",
+    "isApplication": true
+  },
+  {
+    "id": "ins_decision_fsa_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "It's open enrollment and you're deciding how much to put in a healthcare FSA (use-it-or-lose-it by year-end). You reliably spend about $1,200/yr on prescriptions, copays, and glasses, but rarely more.",
+    "promptTemplate": "How much should you elect, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A healthcare FSA lets you pay medical costs with PRE-TAX dollars — a ~22-30% discount depending on your bracket. The catch is 'use it or lose it': unspent funds are forfeited at year-end (plans may allow a small carryover or grace period, but don't count on it). So elect close to what you'll RELIABLY spend — here ~$1,200 — to capture the tax savings without risking forfeiture. Under-electing slightly beats over-electing.",
+    "conceptChoices": [
+      "Around $1,200 — your reliable annual spend. The pre-tax savings are real (~22-30%), but money you don't spend by year-end is forfeited, so don't over-elect to the max",
+      "The maximum — it's pre-tax, so more is always better",
+      "$0 — FSAs are a scam",
+      "Double your spend, just to be safe"
+    ],
+    "correctConceptChoice": "Around $1,200 — your reliable annual spend. The pre-tax savings are real (~22-30%), but money you don't spend by year-end is forfeited, so don't over-elect to the max",
+    "isApplication": true
+  },
+  {
+    "id": "ins_decision_life_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're 35, earn $70,000, have a spouse and two young kids, and a $200,000 mortgage. You're deciding how much term life insurance to buy.",
+    "promptTemplate": "Roughly how much coverage makes sense?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "With dependents, life insurance should replace what your family loses if you're gone. A common rule of thumb is ~10× income (~$700,000 here), or build it up: income replacement (say 10 years × $70k) + the remaining mortgage ($200k) + future costs like college, minus existing savings. Term life (a fixed period, no investment component) is inexpensive for a healthy 35-year-old, so the bigger risk is buying too little. Skip whole/permanent policies unless you have a specific need.",
+    "conceptChoices": [
+      "Around 10× income (~$700,000) or more — enough to replace your income for years, clear the $200k mortgage, and provide for the kids. Term life is cheap, so don't under-insure with dependents",
+      "Just enough to cover the funeral (~$15,000)",
+      "$200,000 — only the mortgage matters",
+      "None — you don't need life insurance under 40"
+    ],
+    "correctConceptChoice": "Around 10× income (~$700,000) or more — enough to replace your income for years, clear the $200k mortgage, and provide for the kids. Term life is cheap, so don't under-insure with dependents",
+    "isApplication": true
+  },
+  {
+    "id": "car_decision_down_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A $30,000 car. Option A: $0 down, financing the full $30,000. Option B: $6,000 down (20%), financing $24,000. New cars drop about 20% in value the first year.",
+    "promptTemplate": "Why does the down payment matter beyond the monthly payment?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A new car loses ~20% of its value in the first year. With $0 down on a $30,000 car, you'd owe $30,000 on something worth ~$24,000 — 'underwater' by ~$6,000. If the car is totaled or you need to sell, you'd owe the lender more than you'd get (gap insurance exists for exactly this risk). Putting ~20% down ($6,000) keeps your loan balance near the car's value, lowers your interest, and protects you from negative equity.",
+    "conceptChoices": [
+      "Put ~20% down — financing the full $30k leaves you 'underwater' (owing ~$6,000 more than the car's worth after it drops ~20%), which is risky if it's totaled or you sell. 20% down keeps you roughly even",
+      "$0 down is always better — keep your cash",
+      "The down payment only changes your monthly payment, nothing else",
+      "Put down exactly $1,000 regardless of the car's price"
+    ],
+    "correctConceptChoice": "Put ~20% down — financing the full $30k leaves you 'underwater' (owing ~$6,000 more than the car's worth after it drops ~20%), which is risky if it's totaled or you sell. 20% down keeps you roughly even",
+    "isApplication": true
+  },
+  {
+    "id": "car_decision_warranty_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "At signing, the dealer offers a $2,500 extended warranty covering years 4-6. You have a reliable emergency fund and the car has a good reliability record.",
+    "promptTemplate": "Should you buy the extended warranty?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "An extended warranty (service contract) is insurance, and like most optional insurance for affordable-to-replace risks, it's priced so the seller profits on average — most buyers pay more in premium than they collect in repairs. If you have an emergency fund to absorb an occasional repair and the car is reasonably reliable, you're better off 'self-insuring.' Consider one only for a model with a known-expensive failure pattern, and never finance it into the loan at interest.",
+    "conceptChoices": [
+      "Skip it — extended warranties are priced to profit the seller, so most people pay more in premium than they get back. With an emergency fund and a reliable car, self-insure the rare repair",
+      "Always buy it — peace of mind is priceless",
+      "Buy it only if it costs more than $5,000",
+      "Buy it — repairs always exceed the warranty price"
+    ],
+    "correctConceptChoice": "Skip it — extended warranties are priced to profit the seller, so most people pay more in premium than they get back. With an emergency fund and a reliable car, self-insure the rare repair",
+    "isApplication": true
+  },
+  {
+    "id": "car_decision_used_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A new car is $32,000. A 2-3 year-old version of the same model is $22,000. Both will serve you well for years.",
+    "promptTemplate": "Which is usually the better financial buy?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Cars lose value fastest early — often ~20% in year one and ~30-40% over the first three years. A 2-3 year-old car has already taken that hit (the first owner paid it), so the same model costs ~$10,000 less while still having most of its useful life. Buying lightly used is one of the highest-leverage money moves in car buying. A certified pre-owned (CPO) car adds a manufacturer-backed warranty to ease reliability worries.",
+    "conceptChoices": [
+      "The 2-3 year-old car (~$22k) — it's already absorbed the steepest depreciation (~30%+, ~$10k) the first owner paid for. You get most of the car's life for far less",
+      "The new car — used cars are always unreliable",
+      "They're equal once you adjust for age",
+      "The new car — it depreciates more slowly"
+    ],
+    "correctConceptChoice": "The 2-3 year-old car (~$22k) — it's already absorbed the steepest depreciation (~30%+, ~$10k) the first owner paid for. You get most of the car's life for far less",
+    "isApplication": true
+  },
+  {
+    "id": "tax_decision_standard_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're filing as a single person. Your itemizable deductions (state taxes + a little charity) add up to about $9,000 — comfortably below the standard deduction you'd otherwise get.",
+    "promptTemplate": "Which should you take, and when would you itemize?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "You take EITHER the standard deduction OR your itemized deductions — whichever is bigger. The standard deduction is generous (well over $14,000 for a single filer), so the large majority of filers come out ahead taking it. Itemizing only wins when your deductible items — mostly mortgage interest, state/local taxes (capped), and charitable gifts — add up to MORE than the standard. With ~$9,000, the standard deduction is the clear, simpler choice.",
+    "conceptChoices": [
+      "The standard deduction — it's larger than your ~$9,000 of itemized. You'd only itemize if those deductions (usually a mortgage plus high state taxes or large charity) exceeded the standard",
+      "Itemize — it always saves more",
+      "Whichever is smaller, to be safe",
+      "You must itemize if you own anything"
+    ],
+    "correctConceptChoice": "The standard deduction — it's larger than your ~$9,000 of itemized. You'd only itemize if those deductions (usually a mortgage plus high state taxes or large charity) exceeded the standard",
+    "isApplication": true
+  },
+  {
+    "id": "tax_decision_quarterly_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You started freelancing this year and expect about $20,000 in profit. No taxes are withheld. A friend says, 'Just pay it all at tax time in April.'",
+    "promptTemplate": "What should you do about taxes on the freelance income?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "When you're self-employed, nobody withholds taxes for you — and you owe BOTH income tax AND self-employment tax (~15.3% for Social Security/Medicare) on the profit. The IRS expects you to pay as you go via QUARTERLY estimated payments; skipping them can trigger an underpayment penalty and leave you a large April bill. A safe habit: stash ~25-30% of each payment in a separate account and send quarterly estimates. (You owe the tax whether or not a 1099 is issued.)",
+    "conceptChoices": [
+      "Pay quarterly estimated taxes — no one withholds for self-employment income, so set aside ~25-30% of profit as you earn it. Waiting until April risks underpayment penalties plus a surprise bill",
+      "Wait until April and pay it all then — that's fine",
+      "You don't owe tax on freelance income under $25,000",
+      "Only pay if you receive a 1099 form"
+    ],
+    "correctConceptChoice": "Pay quarterly estimated taxes — no one withholds for self-employment income, so set aside ~25-30% of profit as you earn it. Waiting until April risks underpayment penalties plus a surprise bill",
+    "isApplication": true
+  },
+  {
+    "id": "tax_decision_w4_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You owe a big tax bill every April because not enough is withheld, and you also have some side income. You want to fix it.",
+    "promptTemplate": "What's the fix?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Your W-4 tells your employer how much income tax to withhold from each paycheck. If you owe a lot every April, you're under-withholding — fix it by submitting a new W-4 with extra withholding (there's a line for an additional flat amount) or by accounting for your side income. The goal is to land near $0 owed/refunded: enough withheld to avoid a penalty and a surprise bill, but not so much that you hand the IRS a big interest-free loan.",
+    "conceptChoices": [
+      "Update your W-4 to withhold more — add an extra dollar amount or account for the side income — so you avoid a big April bill or penalty. The W-4 is the dial you control",
+      "Nothing — owing a big bill in April is unavoidable",
+      "Quit the side job to simplify your taxes",
+      "File for an extension every year"
+    ],
+    "correctConceptChoice": "Update your W-4 to withhold more — add an extra dollar amount or account for the side income — so you avoid a big April bill or penalty. The W-4 is the dial you control",
+    "isApplication": true
+  },
+  {
+    "id": "sl_decision_pslf_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You work full-time for a 501(c)(3) nonprofit and have $50,000 in federal Direct loans. PSLF forgives the remaining balance tax-free after 120 qualifying monthly payments (about 10 years) on a qualifying income-driven plan.",
+    "promptTemplate": "If you're pursuing PSLF, how should you pay?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Public Service Loan Forgiveness forgives your remaining federal Direct loan balance — tax-free — after 120 qualifying monthly payments (about 10 years) while working full-time for a qualifying public-service or nonprofit employer on a qualifying (usually income-driven) plan. If you're genuinely on this track, paying EXTRA is counterproductive: it shrinks the balance that would have been forgiven. Two cautions: refinancing to a private loan disqualifies you entirely, and certify your employment regularly so your payment count stays accurate.",
+    "conceptChoices": [
+      "Make the required income-driven payments — don't pay extra. On a real PSLF track the balance is forgiven tax-free after 120 qualifying payments, so extra payments just shrink what would've been forgiven",
+      "Pay as much extra as possible to clear it faster",
+      "Refinance to a lower rate to save money",
+      "Stop paying entirely until year 10"
+    ],
+    "correctConceptChoice": "Make the required income-driven payments — don't pay extra. On a real PSLF track the balance is forgiven tax-free after 120 qualifying payments, so extra payments just shrink what would've been forgiven",
+    "isApplication": true
+  },
+  {
+    "id": "sl_decision_employer_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your employer offers to pay $200/mo toward your student loans as a benefit, up to the annual tax-free limit. You haven't enrolled.",
+    "promptTemplate": "Should you use the benefit?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Employer student loan repayment is a benefit some companies offer — they pay a set amount toward your loans. Under a current federal provision, up to $5,250/yr of this help is TAX-FREE to you, making it pure value. At $200/mo that's $2,400/yr knocking down your principal at no cost. Always enroll in free employer money — this, like a 401(k) match, is compensation you've earned. Just confirm the annual cap and any tenure requirements.",
+    "conceptChoices": [
+      "Yes — it's free money ($200/mo = $2,400/yr) toward your balance, currently tax-free up to $5,250/yr. Not enrolling leaves money on the table",
+      "No — employer help always has hidden strings",
+      "No — it counts as taxable income, so it's not worth it",
+      "Only if you also refinance your loans"
+    ],
+    "correctConceptChoice": "Yes — it's free money ($200/mo = $2,400/yr) toward your balance, currently tax-free up to $5,250/yr. Not enrolling leaves money on the table",
+    "isApplication": true
+  },
+  {
+    "id": "sl_decision_subsidized_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You have both subsidized ($10,000) and unsubsidized ($10,000) federal loans, both at the same rate. You have $2,000 extra to put toward one while still in school.",
+    "promptTemplate": "Which loan should the extra $2,000 go to, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The key difference: on SUBSIDIZED federal loans the government pays the interest while you're in school and during grace; on UNSUBSIDIZED loans, interest accrues the whole time and will capitalize (be added to principal) later. With the same rate, your extra dollars do more on the UNSUBSIDIZED loan — they stop interest you're actually being charged from compounding. (Once you're out of school and both accrue, switch to paying the higher-rate loan first.)",
+    "conceptChoices": [
+      "The unsubsidized loan — it accrues interest WHILE you're in school (the subsidized one doesn't, because the government covers its interest then), so paying it down stops that interest from growing and capitalizing",
+      "The subsidized loan — always pay the oldest one first",
+      "Split it evenly — they're the same rate",
+      "Neither — never pay loans while still in school"
+    ],
+    "correctConceptChoice": "The unsubsidized loan — it accrues interest WHILE you're in school (the subsidized one doesn't, because the government covers its interest then), so paying it down stops that interest from growing and capitalizing",
+    "isApplication": true
   }
 ]
