@@ -17939,5 +17939,257 @@
     ],
     "correctConceptChoice": "For one pair it's just full price ($40) — BOGO is only ~50% off if you actually need both. Don't buy two to 'save' on something you wouldn't have bought",
     "isApplication": true
+  },
+  {
+    "id": "sm_decision_manipulation_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A store tags a jacket '$80, now $50!' — but it was never actually sold at $80. The $80 is printed only to make $50 look like a deal.",
+    "promptTemplate": "What tactic is this, and how should you respond?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "This is 'anchoring' with a fake reference price: the $80 exists only to make $50 feel like a bargain by comparison. Your brain latches onto the first number it sees. The defense is to ignore the crossed-out 'was' price entirely and ask a single question — is this item worth $50 to ME? Compare against other stores or what you'd happily pay, not against a number the seller invented.",
+    "conceptChoices": [
+      "It's 'anchoring' with a fake reference price — the $80 exists only to make $50 feel like a bargain. Judge the item on whether $50 is worth it to YOU, ignoring the crossed-out price",
+      "It's a genuine 38% discount — grab it",
+      "The crossed-out price proves the item is high quality",
+      "It means the price will keep dropping, so wait"
+    ],
+    "correctConceptChoice": "It's 'anchoring' with a fake reference price — the $80 exists only to make $50 feel like a bargain. Judge the item on whether $50 is worth it to YOU, ignoring the crossed-out price",
+    "isApplication": true
+  },
+  {
+    "id": "sm_decision_couponcash_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A $100 purchase. Store A gives a 15%-off coupon at checkout. Store B gives 10% cash back, credited later.",
+    "promptTemplate": "Which saves you more, and what's the catch?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Store A's 15% off is $15 saved immediately; Store B's 10% cash back is only $10, and you get it later (time value, plus the risk you forget to redeem). A bigger discount taken NOW beats a smaller one later. Cash-back programs also nudge you to spend more to 'earn' rewards — so the headline rate isn't the whole story. Here the coupon wins on both size and timing.",
+    "conceptChoices": [
+      "Store A — 15% off is $15 saved now; Store B's 10% cash back is only $10 and arrives later. A bigger discount now beats a smaller one later (and cash back tempts extra spending)",
+      "Store B — cash back is always better than a coupon",
+      "They save exactly the same amount",
+      "Store A — but only if you spend over $200"
+    ],
+    "correctConceptChoice": "Store A — 15% off is $15 saved now; Store B's 10% cash back is only $10 and arrives later. A bigger discount now beats a smaller one later (and cash back tempts extra spending)",
+    "isApplication": true
+  },
+  {
+    "id": "ins_decision_hsa_use_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You have an HSA with $5,000 in it and can comfortably cover this year's small medical bills from your checking account.",
+    "promptTemplate": "What's the most powerful long-term move with the HSA?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The HSA is the only triple-tax-advantaged account: contributions are pre-tax, growth is tax-free, and withdrawals for medical costs are tax-free. If you can pay small bills from cash, invest the HSA and let it compound — keep your receipts and you can reimburse yourself anytime. After 65, non-medical withdrawals are penalty-free (just taxed like a traditional IRA), so it doubles as a stealth retirement account. Unlike an FSA, HSA money rolls over and is yours to keep.",
+    "conceptChoices": [
+      "Invest the balance and let it grow tax-free, paying small bills from checking — the HSA's triple tax advantage makes it a stealth retirement fund",
+      "Spend it all now — it's use-it-or-lose-it by year-end",
+      "Keep it in cash; HSAs can't be invested",
+      "Withdraw it for non-medical use now to free up the money"
+    ],
+    "correctConceptChoice": "Invest the balance and let it grow tax-free, paying small bills from checking — the HSA's triple tax advantage makes it a stealth retirement fund",
+    "isApplication": true
+  },
+  {
+    "id": "ins_decision_generic_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your pharmacy offers a generic version of your prescription for $10 versus the brand name for $60 — the same medication.",
+    "promptTemplate": "What's true about the generic?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "By law, an FDA-approved generic must contain the same active ingredient, strength, and dosage form as the brand and meet a bioequivalence standard — it works essentially the same. Only the inactive ingredients (fillers, dyes) can differ, which rarely matters. Choosing the generic when available is one of the easiest, no-downside ways to cut costs; ask your pharmacist if you're ever unsure for a specific drug.",
+    "conceptChoices": [
+      "It has the same active ingredient and meets the FDA's bioequivalence standard — it works the same for far less. Choosing it when available is an easy save with no downside for most people",
+      "The generic is weaker and less effective",
+      "Brand-name drugs are always safer",
+      "They are entirely different medications"
+    ],
+    "correctConceptChoice": "It has the same active ingredient and meets the FDA's bioequivalence standard — it works the same for far less. Choosing it when available is an easy save with no downside for most people",
+    "isApplication": true
+  },
+  {
+    "id": "ins_decision_priority_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Money is tight and you can't insure everything. You're weighing solid health insurance against an extended warranty on your $800 phone.",
+    "promptTemplate": "Which comes first, and what's the principle?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The core insurance principle: insure what you CAN'T afford to lose, and self-insure what you can. A serious illness can mean a $50,000+ bill that would wipe you out — that's what insurance is for. An $800 phone is a loss you can absorb, so the warranty (priced to profit the seller) is a poor use of limited dollars. Prioritize health, disability, and liability coverage; skip small-ticket warranties.",
+    "conceptChoices": [
+      "Health insurance — insure what you can't afford to lose (a huge hospital bill), not what you can (an $800 phone). Skip small-ticket warranties and self-insure those",
+      "The phone warranty — it's cheaper",
+      "Neither — all insurance is a waste of money",
+      "Both equally — every kind of insurance matters the same"
+    ],
+    "correctConceptChoice": "Health insurance — insure what you can't afford to lose (a huge hospital bill), not what you can (an $800 phone). Skip small-ticket warranties and self-insure those",
+    "isApplication": true
+  },
+  {
+    "id": "ins_decision_disability_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're 30 and healthy, with life insurance but no disability insurance. For a working person your age, a period of disability is statistically more likely than dying young.",
+    "promptTemplate": "What's the gap, and why does it matter?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Disability insurance replaces a portion of your income if an illness or injury stops you from working — and for a working-age adult, that's statistically more likely than dying early. Your ability to earn is your single biggest financial asset (decades of future paychecks), yet it's the one most people leave unprotected. Many get some long-term disability coverage through work; check whether it's enough, since the cost of being out of work for months or years is what would actually derail your finances.",
+    "conceptChoices": [
+      "You're missing disability insurance, which replaces income if illness or injury stops you working — more likely than dying young at your age. Your paycheck is your biggest asset; protect it",
+      "There's no gap — life insurance covers disability too",
+      "Disability insurance is unnecessary while you're healthy",
+      "You only need it after age 50"
+    ],
+    "correctConceptChoice": "You're missing disability insurance, which replaces income if illness or injury stops you working — more likely than dying young at your age. Your paycheck is your biggest asset; protect it",
+    "isApplication": true
+  },
+  {
+    "id": "ins_decision_eob_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "After a procedure, the provider sends a bill for $3,000. Then your insurer's EOB (Explanation of Benefits) arrives: negotiated rate $1,200, insurance paid $800, your responsibility $400.",
+    "promptTemplate": "What should you pay?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "An EOB is 'not a bill' — it's the insurer's accounting of what was billed, what the negotiated rate was, what insurance paid, and what YOU owe. Here you owe $400, the patient-responsibility amount after the negotiated discount. Providers often send their full charge ($3,000) before insurance is applied; paying it would overpay by thousands. The rule: wait for the EOB, match it to the provider's bill, and pay the patient-responsibility figure — and dispute it if the two don't line up.",
+    "conceptChoices": [
+      "$400 — the patient-responsibility amount on the EOB, after the negotiated discount. Don't pay the provider's first $3,000 bill; wait for the EOB and pay that",
+      "$3,000 — the provider's bill is what you owe",
+      "$1,200 — the full negotiated rate",
+      "$800 — the amount insurance paid"
+    ],
+    "correctConceptChoice": "$400 — the patient-responsibility amount on the EOB, after the negotiated discount. Don't pay the provider's first $3,000 bill; wait for the EOB and pay that",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_accounts_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're comparing a Roth IRA, a Roth 401(k), and a Traditional IRA. You'd rather NOT be forced to withdraw money in retirement (required minimum distributions, RMDs) if you don't need it.",
+    "promptTemplate": "Which account has no required minimum distributions?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A Roth IRA has no required minimum distributions during your lifetime — the money can keep compounding tax-free for as long as you want, which also makes it a powerful tool to leave to heirs. Traditional IRAs and 401(k)s force withdrawals starting in your early 70s (so the IRS eventually collects tax). SECURE 2.0 removed RMDs from Roth 401(k)s starting 2024, but the Roth IRA has always been RMD-free.",
+    "conceptChoices": [
+      "The Roth IRA — no lifetime RMDs, so it can keep growing tax-free. Traditional IRAs and 401(k)s force withdrawals starting in your early 70s",
+      "The Traditional IRA — it never has RMDs",
+      "All three have identical RMD rules",
+      "None of them ever have RMDs"
+    ],
+    "correctConceptChoice": "The Roth IRA — no lifetime RMDs, so it can keep growing tax-free. Traditional IRAs and 401(k)s force withdrawals starting in your early 70s",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_risk_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Rank these by risk, from lowest to highest: a savings account, a broad stock index fund, and a bond fund.",
+    "promptTemplate": "What's the correct risk order?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "From lowest to highest risk: savings account → bond fund → stock fund. A savings account is FDIC-insured and won't lose nominal value; bonds carry modest risk (interest-rate and credit); stocks swing the most short-term. Risk and expected return move together — stocks' higher long-run returns are the reward for tolerating the bumps. Match the asset to your time horizon: savings for near-term cash, stocks for money you won't touch for many years.",
+    "conceptChoices": [
+      "Savings (lowest) → bonds → stocks (highest). Higher potential return comes with higher short-term risk; over decades, stocks tend to reward that risk",
+      "Stocks → bonds → savings (stocks are safest)",
+      "They're all equally risky",
+      "Bonds → savings → stocks"
+    ],
+    "correctConceptChoice": "Savings (lowest) → bonds → stocks (highest). Higher potential return comes with higher short-term risk; over decades, stocks tend to reward that risk",
+    "isApplication": true
+  },
+  {
+    "id": "debt_decision_goodbad_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You hold three debts: a 24% credit card, a 6% mortgage, and a 4% federal student loan. People often label some debt 'good' and some 'bad.'",
+    "promptTemplate": "Which is the highest-risk debt, and what really matters?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Debt isn't really 'good' or 'bad' — what matters is its COST and RISK. The 24% credit card is the most dangerous: high interest, no asset behind it, and a balance that snowballs. A 6% mortgage is low-rate debt against an appreciating asset; a 4% student loan is low-rate with flexible federal protections. Attack the high-rate, asset-free debt first; low-rate debt tied to an asset is far less urgent and can even coexist with investing.",
+    "conceptChoices": [
+      "The 24% credit card — most expensive and backed by no asset. 'Good vs bad' is really about cost and risk: high-rate, asset-free debt is dangerous; low-rate debt against an asset is far less so",
+      "The mortgage — it's the biggest balance",
+      "All debt is equally bad",
+      "The student loan — education debt is always the worst"
+    ],
+    "correctConceptChoice": "The 24% credit card — most expensive and backed by no asset. 'Good vs bad' is really about cost and risk: high-rate, asset-free debt is dangerous; low-rate debt against an asset is far less so",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_exempt_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're classified as 'exempt' (salaried) and your manager asks you to work 50 hours this week.",
+    "promptTemplate": "Do you get overtime pay?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Under the Fair Labor Standards Act, 'exempt' employees are not entitled to overtime, no matter how many hours they work — their salary covers all of it. 'Non-exempt' employees (usually hourly, and salaried workers below a salary threshold or in non-qualifying roles) must be paid 1.5× for hours over 40 in a week. Knowing your classification matters: an exempt role with routine 50-hour weeks effectively lowers your real hourly pay.",
+    "conceptChoices": [
+      "No — 'exempt' employees aren't owed overtime no matter the hours. 'Non-exempt' (usually hourly) workers get 1.5× over 40/week. Worth knowing before taking a salaried role with long hours",
+      "Yes — everyone gets overtime past 40 hours",
+      "Yes, but only at your regular hourly rate",
+      "Only if you work more than 60 hours"
+    ],
+    "correctConceptChoice": "No — 'exempt' employees aren't owed overtime no matter the hours. 'Non-exempt' (usually hourly) workers get 1.5× over 40/week. Worth knowing before taking a salaried role with long hours",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_overtime_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're non-exempt, earn $20/hr, and work 45 hours this week. Overtime is time-and-a-half for hours past 40.",
+    "promptTemplate": "What's your gross pay for the week?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Overtime applies only to hours past 40 in a week, paid at 1.5× your rate. So: 40 hours × $20 = $800, plus 5 overtime hours × $30 (1.5 × $20) = $150, for $950 gross. A common mistake is applying the overtime rate to ALL hours (that would be $1,350) or forgetting overtime entirely ($900). Only the hours beyond 40 get the 1.5× bump.",
+    "conceptChoices": [
+      "$950 — 40 hours at $20 ($800) plus 5 overtime hours at $30 (1.5×) = $150. Only hours past 40 get the 1.5× rate",
+      "$900 — all 45 hours at $20",
+      "$1,350 — all 45 hours at the overtime rate",
+      "$800 — overtime isn't paid"
+    ],
+    "correctConceptChoice": "$950 — 40 hours at $20 ($800) plus 5 overtime hours at $30 (1.5×) = $150. Only hours past 40 get the 1.5× rate",
+    "isApplication": true
   }
 ]

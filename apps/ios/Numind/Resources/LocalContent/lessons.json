@@ -122,7 +122,8 @@
       "cashback_amount_d1",
       "coupon_plus_cashback_d2",
       "coupon_vs_cashback_compare_d3",
-      "coupon_cashback_final_d3"
+      "coupon_cashback_final_d3",
+      "sm_decision_couponcash_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -192,7 +193,8 @@
       "concept_decoy_pricing_d2",
       "concept_charm_pricing_d2",
       "concept_inflated_msrp_d3",
-      "concept_bogo_inflation_d3"
+      "concept_bogo_inflation_d3",
+      "sm_decision_manipulation_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -338,7 +340,7 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when a weekly expense quietly blows your monthly budget."
   },
   {
@@ -359,7 +361,7 @@
     "primarySkill": "cash_flow_and_budgeting",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you're trimming your budget and deciding what's truly essential."
   },
   {
@@ -441,7 +443,8 @@
       "overtime_d2",
       "overtime_scenario_d2",
       "salary_hourly_annual_d1",
-      "total_weekly_with_ot_d3"
+      "total_weekly_with_ot_d3",
+      "sal_decision_overtime_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -577,13 +580,14 @@
       "concept_nonexempt_def_d1",
       "concept_exempt_threshold_d2",
       "concept_exempt_misclass_d2",
-      "concept_exempt_tradeoff_d3"
+      "concept_exempt_tradeoff_d3",
+      "sal_decision_exempt_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Check this when a job is 'salaried' and you want to know if you're owed overtime."
   },
   {
@@ -631,7 +635,7 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when an offer includes stock and you need its real value."
   },
   {
@@ -834,7 +838,8 @@
       "concept_three_accounts_match_d2",
       "concept_three_accounts_phaseout_d2",
       "concept_three_accounts_total_max_d2",
-      "concept_three_accounts_rmd_d2"
+      "concept_three_accounts_rmd_d2",
+      "inv_decision_accounts_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -842,7 +847,7 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when your benefits portal asks you to pick between confusingly-named accounts."
   },
   {
@@ -1089,13 +1094,14 @@
       "concept_bond_def_d1",
       "concept_index_fund_d2",
       "concept_etf_vs_mutual_d2",
-      "concept_risk_return_rank_d3"
+      "concept_risk_return_rank_d3",
+      "inv_decision_risk_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this the first time you stare at your 401(k)'s fund options and feel lost."
   },
   {
@@ -1460,7 +1466,8 @@
       "concept_bad_debt_d1",
       "concept_interest_threshold_d2",
       "concept_mortgage_short_d3",
-      "concept_payoff_vs_invest_d3"
+      "concept_payoff_vs_invest_d3",
+      "debt_decision_goodbad_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1562,7 +1569,7 @@
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before closing day so the cash you need doesn't blindside you."
   },
   {
@@ -2088,7 +2095,8 @@
       "ins_hsa_annual_d1",
       "ins_hsa_scenario_d2",
       "ins_hsa_compare_d2",
-      "ins_hsa_retirement_d3"
+      "ins_hsa_retirement_d3",
+      "ins_decision_hsa_use_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -2157,7 +2165,8 @@
       "rx_multiple_d2",
       "rx_goodrx_d3",
       "rx_monthly_diff_d1",
-      "rx_lifetime_d2"
+      "rx_lifetime_d2",
+      "ins_decision_generic_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -2165,7 +2174,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this at the pharmacy when there's a generic option."
   },
   {
@@ -2180,13 +2189,14 @@
       "concept_insurance_skip_d1",
       "concept_insurance_overinsured_d2",
       "concept_insurance_disability_priority_d3",
-      "concept_insurance_warranty_d3"
+      "concept_insurance_warranty_d3",
+      "ins_decision_priority_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to figure out which insurance you actually need — and which to skip."
   },
   {
@@ -2201,7 +2211,8 @@
       "concept_disability_own_occ_d2",
       "concept_disability_cap_d2",
       "concept_disability_elim_period_d3",
-      "concept_disability_supplemental_d3"
+      "concept_disability_supplemental_d3",
+      "ins_decision_disability_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -2209,7 +2220,7 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to protect the paycheck everything else depends on."
   },
   {
@@ -2230,7 +2241,7 @@
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this during your ~2-week open enrollment window each fall."
   },
   {
@@ -2245,7 +2256,8 @@
       "eob_vs_provider_bill_d2",
       "eob_cash_discount_d2",
       "concept_eob_what_is_it_d1",
-      "concept_eob_when_to_dispute_d2"
+      "concept_eob_when_to_dispute_d2",
+      "ins_decision_eob_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -2253,7 +2265,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when a medical bill arrives and you're not sure what you really owe."
   },
   {
