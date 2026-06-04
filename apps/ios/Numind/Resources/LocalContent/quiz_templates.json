@@ -15447,6 +15447,69 @@
     "correctConceptChoice": "Late October through mid-November, for benefits starting January 1"
   },
   {
+    "id": "ins_decision_plan_choice_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're healthy, rarely see a doctor, and have $5,000 in emergency savings. Plan A: $260/mo premium, $500 deductible. Plan B: $95/mo premium, $4,500 deductible.",
+    "promptTemplate": "Which plan is the smarter pick, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Premiums are paid no matter what; the deductible is only paid if you have a claim. Plan B's premiums cost about $1,980/yr less ($1,140 vs $3,120) — near-guaranteed savings in a low-usage year. The trade-off is risk: Plan B's worst case is the $4,500 deductible, but your $5,000 emergency fund covers it. The rule: a high-deductible / low-premium plan wins when you (1) use little care AND (2) can comfortably cover the deductible. If either isn't true, lean toward the lower deductible.",
+    "conceptChoices": [
+      "Plan B — you pocket about $1,980/yr in lower premiums, and your $5,000 savings can absorb the higher deductible if something goes wrong",
+      "Plan A — a lower deductible is always the safer financial choice",
+      "Plan B — but only because the deductible never matters when you're healthy",
+      "Plan A — paying more in premiums guarantees a lower total cost"
+    ],
+    "correctConceptChoice": "Plan B — you pocket about $1,980/yr in lower premiums, and your $5,000 savings can absorb the higher deductible if something goes wrong",
+    "isApplication": true
+  },
+  {
+    "id": "ins_decision_innetwork_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You've already met your deductible this year; your plan then pays 80% (you pay 20% coinsurance). You need an MRI. In-network, it's billed at $1,200. An out-of-network imaging center quotes a $700 cash price.",
+    "promptTemplate": "Which option costs you less — and what's the hidden benefit?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "With your deductible already met, in-network you pay 20% of the negotiated $1,200 = $240. The $700 cash price looks lower than the $1,200 sticker, but you'd pay the full $700 — and cash paid to an out-of-network provider usually does NOT count toward your deductible or out-of-pocket max. In-network is cheaper now ($240) AND moves you toward the OOP max, after which the plan pays 100%.",
+    "conceptChoices": [
+      "In-network — you pay 20% of $1,200 = $240, well below the $700 cash price, and it counts toward your out-of-pocket max",
+      "Out-of-network cash — $700 is a lower price than the $1,200 sticker",
+      "They cost about the same once you factor in coinsurance",
+      "Out-of-network — paying cash always avoids insurance hassles and saves money"
+    ],
+    "correctConceptChoice": "In-network — you pay 20% of $1,200 = $240, well below the $700 cash price, and it counts toward your out-of-pocket max",
+    "isApplication": true
+  },
+  {
+    "id": "ins_decision_hdhp_hsa_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're healthy and expect about one doctor visit this year. Your employer offers an HSA-qualified HDHP ($1,700 deductible) at $80/mo and seeds $1,000 into your HSA — or a PPO ($500 deductible) at $230/mo.",
+    "promptTemplate": "For someone who rarely needs care, which plan is usually the better financial deal?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "For low expected usage, compare the near-certain costs: the HDHP's premiums are $1,800/yr cheaper ($960 vs $2,760), and the employer's $1,000 HSA contribution is free money. The HSA adds a triple tax advantage (pre-tax in, tax-free growth, tax-free for medical). The PPO's lower deductible only pays off with heavy usage — which you don't have. HDHP/HSA eligibility requires the IRS-qualified plan (2026 minimum deductible $1,700 self, per IRS Rev Proc 2025-19).",
+    "conceptChoices": [
+      "The HDHP — its premiums cost $1,800/yr less, the employer adds $1,000 to your HSA, and HSA money is triple-tax-advantaged",
+      "The PPO — the lower deductible saves more money for everyone",
+      "The HDHP — but only if you never see a doctor at all",
+      "It's a coin flip; deductibles and premiums always cancel out"
+    ],
+    "correctConceptChoice": "The HDHP — its premiums cost $1,800/yr less, the employer adds $1,000 to your HSA, and HSA money is triple-tax-advantaged",
+    "isApplication": true
+  },
+  {
     "id": "concept_oe_hdhp_eligibility_d2",
     "moduleId": "insurance",
     "difficulty": 2,

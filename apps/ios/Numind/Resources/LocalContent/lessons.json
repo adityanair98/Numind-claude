@@ -1950,13 +1950,14 @@
       "ins_worst_case_d1",
       "ins_deduct_compare_d2",
       "ins_premium_scenario_d2",
-      "ins_exposure_range_d3"
+      "ins_exposure_range_d3",
+      "ins_decision_plan_choice_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when picking a health plan during open enrollment."
   },
   {
@@ -1971,13 +1972,14 @@
       "ins_copay_total_d1",
       "ins_coinsurance_big_d2",
       "ins_er_visit_d3",
-      "ins_copay_vs_coins_d2"
+      "ins_copay_vs_coins_d2",
+      "ins_decision_innetwork_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to predict what a doctor visit or procedure will cost you."
   },
   {
@@ -2013,13 +2015,14 @@
       "ins_ppo_annual_d1",
       "ins_hdhp_vs_ppo_d2",
       "ins_plan_scenario_d2",
-      "ins_visits_breakeven_d3"
+      "ins_visits_breakeven_d3",
+      "ins_decision_hdhp_hsa_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when choosing between a high-deductible plan and a PPO."
   },
   {
