@@ -28,7 +28,12 @@ enum BadgeEvaluator {
         if !perfectSessions.isEmpty { ids.insert("first_perfect") }
         if perfectSessions.count >= 3 { ids.insert("triple_perfect") }
 
-        let speedSessions = sessions.filter { $0.bonusXP > 0 }
+        // A "speed" session = one with ≥1 fast correct answer (<10s), measured
+        // directly from question results so these badges survive the Phase 9
+        // removal of speed-bonus XP (which previously fed `bonusXP`).
+        let speedSessions = sessions.filter { session in
+            session.questionResults.contains { $0.isCorrect && $0.timeSpentSeconds < 10 }
+        }
         if !speedSessions.isEmpty { ids.insert("first_speed_bonus") }
         if speedSessions.count >= 5 { ids.insert("speed_5_sessions") }
 
