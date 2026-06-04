@@ -462,9 +462,13 @@ struct HomeView: View {
                 repo.lesson(forTemplateId: qr.templateId)?.primarySkill
             }
         )
+        let sessionXP = vm.questionResults.reduce(0) { acc, qr in
+            acc + (qr.isCorrect ? MomentumEngine.xp(for: qr.difficulty) : 0)
+        }
         DailyInsightView(
-            overallScore: progressStore.numindScore,
-            scoreDelta: progressStore.numindScoreDelta,
+            level: progressStore.level,
+            levelProgress: progressStore.levelProgress,
+            sessionXP: sessionXP,
             axisScores: axisScores,
             sessionAxes: sessionAxes,
             sessionCorrect: vm.correctCount,

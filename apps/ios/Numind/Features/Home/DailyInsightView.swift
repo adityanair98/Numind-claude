@@ -22,8 +22,10 @@ struct DailyInsightView: View {
         let previousScore: Int?       // 0–100 seven days ago, nil if no history
     }
 
-    let overallScore: Int
-    let scoreDelta: Int
+    let level: Int
+    let levelProgress: Double
+    /// XP earned in this session (difficulty-weighted).
+    let sessionXP: Int
     let axisScores: [AxisScore]
 
     /// SkillAxis values that appeared in this session's question set.
@@ -39,10 +41,6 @@ struct DailyInsightView: View {
 
     let onContinue: () -> Void
     var onLearnWeakness: ((Lesson) -> Void)? = nil
-
-    // MARK: - State
-
-    @State private var scoreAnimated: Int = 0
 
     // MARK: - Derived
 
@@ -98,11 +96,6 @@ struct DailyInsightView: View {
                 )
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
-        .onAppear {
-            withAnimation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3)) {
-                scoreAnimated = overallScore
-            }
-        }
     }
 
     // MARK: - Header
@@ -122,15 +115,13 @@ struct DailyInsightView: View {
     // MARK: - Score ring
 
     private var scoreSection: some View {
-        VStack(spacing: 6) {
-            NumindScoreRing(score: scoreAnimated, delta: scoreDelta, size: 130)
+        VStack(spacing: 8) {
+            LevelRing(level: level, progress: levelProgress, size: 130)
 
-            if scoreDelta != 0 {
-                Text(scoreDelta > 0
-                     ? "Up \(scoreDelta) pts from last week 📈"
-                     : "Down \(abs(scoreDelta)) pts from last week")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(scoreDelta > 0 ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+            if sessionXP > 0 {
+                Text("+\(sessionXP) XP earned today")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(Theme.Colors.mindTeal)
             }
         }
         .frame(maxWidth: .infinity)
@@ -226,10 +217,10 @@ struct DailyInsightView: View {
                 .frame(width: 36, height: 36)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("\(weak.axis.displayName) needs work")
+                Text("Focus next: \(weak.axis.displayName)")
                     .font(.system(size: 14, weight: .bold))
                     .foregroundStyle(Theme.Colors.deepNavy)
-                Text("Your weakest skill right now. A quick lesson can fix it.")
+                Text("Your biggest opportunity right now. A quick lesson sharpens it.")
                     .font(.system(size: 12))
                     .foregroundStyle(Theme.Colors.mutedText)
                     .fixedSize(horizontal: false, vertical: true)
@@ -274,7 +265,7 @@ struct DailyInsightView: View {
                 )
                 statPill(
                     icon: "flame.fill",
-                    value: "\(sessionCorrect * 10) XP",
+                    value: "\(sessionXP) XP",
                     label: "earned",
                     color: Theme.Colors.insightYellow
                 )
@@ -350,8 +341,9 @@ struct DailyInsightView: View {
         .lessons(for: modules.first!.id).first
 
     DailyInsightView(
-        overallScore: 68,
-        scoreDelta: 7,
+        level: 6,
+        levelProgress: 0.4,
+        sessionXP: 95,
         axisScores: axes,
         sessionAxes: Set(SkillAxis.allCases.prefix(4)),
         sessionCorrect: 7,
