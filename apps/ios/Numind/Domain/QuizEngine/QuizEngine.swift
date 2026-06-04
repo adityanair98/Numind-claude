@@ -2451,53 +2451,61 @@ struct QuizEngine {
             }
 
         case .commonMistake:
+            // Resolve a variable by trying known names in order. Templates use
+            // domain-specific names (originalPrice, firstDiscount, annualSalary,
+            // couponPct, balance/apr, …); exact-name lookups must cover them or
+            // these misconception distractors silently fall through to generic
+            // proportional neighbors (the Phase 9 bug this fixes).
+            func v(_ names: [String]) -> Double? {
+                for n in names where variables[n] != nil { return variables[n] }
+                return nil
+            }
+
             // ── Tip-splitting mistakes ──
-            if let bill = variables["billAmount"] {
+            if let bill = v(["billAmount", "bill", "subtotal", "checkAmount"]) {
                 candidates.append(bill.rounded2dp)
-                if let pct = variables["tipPercent"] {
+                if let pct = v(["tipPercent", "tipPct"]) {
                     candidates.append((bill * 0.10).rounded2dp)           // wrong percent (10%)
                     candidates.append((bill * pct / 100 * 2).rounded2dp)  // doubled tip
                     candidates.append((bill * pct / 100).rounded2dp)      // full tip (forgot to split)
                 }
-                if let n = variables["numPeople"] {
+                if let n = v(["numPeople", "people", "splitCount"]) {
                     candidates.append((bill / n).rounded2dp)              // share with no tip
                 }
             }
 
             // ── Percentage-off mistakes ──
             // Confuse "X% off" with "pay X%" (e.g., 20% off $80 → $16 vs $64)
-            if let price = variables["price"], let pct = variables["discountPercent"] {
+            if let price = v(["price", "originalPrice", "stickerPrice", "listPrice"]),
+               let pct = v(["discountPercent", "discountPct", "discount", "couponPct"]) {
                 let discountAmount = price * pct / 100
-                let salePrice = price - discountAmount
                 candidates.append(discountAmount.rounded2dp)              // discount amount vs sale price
-                candidates.append(salePrice.rounded2dp)                   // sale price vs discount amount
+                candidates.append((price - discountAmount).rounded2dp)    // sale price vs discount amount
                 candidates.append((price * (100 - pct) / 100).rounded2dp) // redundant with sale price but safe
             }
 
             // ── Stacked-discount mistake: additive instead of sequential ──
-            if let price = variables["price"],
-               let d1 = variables["discount1"],
-               let d2 = variables["discount2"] {
-                let additive = price * (1 - (d1 + d2) / 100)
-                candidates.append(additive.rounded2dp)
+            if let price = v(["price", "originalPrice", "stickerPrice", "listPrice"]),
+               let d1 = v(["discount1", "firstDiscount", "discountA", "couponPct"]),
+               let d2 = v(["discount2", "secondDiscount", "discountB", "cashbackPct"]) {
+                candidates.append((price * (1 - (d1 + d2) / 100)).rounded2dp)
             }
 
             // ── Tax bracket mistake: flat rate instead of marginal ──
-            if let income = variables["income"],
-               let rate = variables["topRate"] ?? variables["rate2"] ?? variables["taxRate"] {
-                let flatTax = income * rate / 100
-                candidates.append(flatTax.rounded2dp)
+            if let income = v(["income", "taxableIncome", "annualIncome", "annualSalary", "grossIncome"]),
+               let rate = v(["topRate", "rate2", "taxRate", "marginalRate"]) {
+                candidates.append((income * rate / 100).rounded2dp)
             }
 
-            // ── Rent affordability: forget ÷12 or use wrong percentage ──
-            if let salary = variables["monthlySalary"] {
+            // ── Rent affordability: wrong percentage (28% vs 30%/25%) ──
+            if let salary = v(["monthlySalary", "monthlyIncome", "monthlyGross"]) {
                 candidates.append((salary * 0.30).rounded2dp)             // 30% rule confusion
                 candidates.append((salary * 0.25).rounded2dp)             // 25% rule confusion
             }
 
             // ── Interest: simple vs compound confusion / wrong period ──
-            if let principal = variables["principal"] ?? variables["amount"],
-               let rate = variables["rate"] ?? variables["annualRate"] {
+            if let principal = v(["principal", "amount", "balance", "loanAmount"]),
+               let rate = v(["rate", "annualRate", "apr", "interestRate"]) {
                 candidates.append((principal * rate / 100).rounded2dp)     // 1-year interest only
                 candidates.append((principal * rate / 1000).rounded2dp)    // decimal shift on rate
             }

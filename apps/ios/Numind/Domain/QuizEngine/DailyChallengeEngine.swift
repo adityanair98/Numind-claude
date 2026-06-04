@@ -31,11 +31,15 @@ struct DailyChallengeEngine {
 
     /// Generates today's personalised Daily Workout questions.
     ///
-    /// When `focusPack` is set, the first ~3 slots are prioritized toward
-    /// the pack's next undone lessons (a "pack-aware" workout). The remaining
-    /// slots fall through to the standard SRS-driven selection. The result
-    /// is a 6Q workout that advances the user's chosen Life-Event Path while
-    /// still surfacing spaced-repetition reviews.
+    /// Phase 9 composition order:
+    /// 1. **Refresh first** — overdue templates from the user's *mastered*
+    ///    skills (FreshnessEngine), so retention practice leads the workout.
+    /// 2. **Active-pack core** — up to 2 templates from the focus pack's core
+    ///    lessons not yet mastered (skipped on a heavy refresh backlog).
+    /// 3. **SRS fill** — the remaining slots by spaced-repetition priority.
+    ///
+    /// Stable within a day (date-seeded) and naturally shifts exposure →
+    /// review → refresh as history builds.
     static func dailyQuestions(
         from repository: ContentRepository,
         progressData: ProgressData? = nil,
@@ -43,68 +47,60 @@ struct DailyChallengeEngine {
     ) -> [QuizQuestion] {
         let sessions = progressData?.sessions ?? []
         let count = questionCount(for: progressData)
-
         var rng = SeededRandomGenerator(seed: dailySeed())
 
-        // Mastered lesson IDs from prior sessions (used both for pack lesson
-        // selection AND to skip already-mastered lessons in the pack queue).
-        let masteredIds: Set<String> = {
-            var ids: Set<String> = []
-            for s in sessions where s.totalCount > 0 {
-                let acc = Double(s.correctCount) / Double(s.totalCount)
-                if acc >= 0.75 { ids.insert(s.lessonId) }
-            }
-            return ids
-        }()
-
-        // Pool needed up-front for both the SRS-overdue check and the
-        // remaining-slot selection.
         let pool = repository.allTemplates()
         guard !pool.isEmpty else { return [] }
+        let byId = Dictionary(pool.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
 
-        // Phase 6a — when the user has a meaningful SRS backlog, pivot to
-        // a review-only workout. Otherwise the pack-priority slots would
-        // crowd out retention practice.
-        let overdueIds = SpacedRepetitionEngine.overdueTemplateIds(in: sessions, pool: pool)
-        let reviewOnlyMode = overdueIds.count >= 5
+        // Properly-mastered lessons (Phase 9 rule) — for refresh + pack-skip.
+        let masteredLessonIds: Set<String> = {
+            guard let data = progressData else { return [] }
+            return Set(sessions.map(\.lessonId)).filter { data.hasMasteredLesson($0) }
+        }()
 
-        // ── Slot 1-2: pack-priority templates ─────────────────────────────
-        // Phase 6a — capped at 2 (was 3). When a focus pack is set AND the
-        // user isn't behind on SRS, pick templates from the pack's next 2
-        // undone lessons (in pack order). Each lesson contributes 1 template.
-        var packTemplates: [QuizTemplate] = []
+        // Build the ordered, de-duplicated template-id list.
+        var ordered: [String] = []
+        func add(_ id: String) {
+            if byId[id] != nil && !ordered.contains(id) { ordered.append(id) }
+        }
+
+        // 1. Refresh targets (seen + overdue, from mastered skills).
+        let refreshIds = FreshnessEngine.refreshTargets(
+            masteredLessonIds: masteredLessonIds, sessions: sessions, repository: repository
+        )
+        let reviewOnlyMode = refreshIds.count >= 5
+        let refreshCap = reviewOnlyMode ? count : max(1, count / 2)
+        for id in refreshIds.prefix(refreshCap) { add(id) }
+
+        // 2. Active-pack core lessons not yet mastered (≤2), unless behind on refresh.
         if let pack = focusPack, !reviewOnlyMode {
-            let packLessonIds = pack.lessonIds.filter { !masteredIds.contains($0) }
-            let packSlots = min(2, packLessonIds.count, count)
-            for lessonId in packLessonIds.prefix(packSlots) {
-                let templatesForLesson = repository.templates(for: lessonId)
-                if let pick = templatesForLesson.randomElement(using: &rng) {
-                    packTemplates.append(pick)
+            let core = pack.coreLessonIds.isEmpty ? pack.lessonIds : pack.coreLessonIds
+            let undone = core.filter { !masteredLessonIds.contains($0) }
+            var packAdded = 0
+            for lessonId in undone where packAdded < 2 {
+                if let pick = repository.templates(for: lessonId).randomElement(using: &rng),
+                   !ordered.contains(pick.id) {
+                    add(pick.id); packAdded += 1
                 }
             }
         }
 
-        let pickedPackIds = Set(packTemplates.map(\.id))
-        var remaining = pool.filter { !pickedPackIds.contains($0.id) }
-
-        // Date-seeded shuffle for stable, daily-varying tiebreaking.
+        // 3. SRS-sorted fill for the remaining slots.
+        var remaining = pool.filter { !ordered.contains($0.id) }
         for i in stride(from: remaining.count - 1, through: 1, by: -1) {
             let j = Int(rng.next() % UInt64(i + 1))
             remaining.swapAt(i, j)
         }
-
-        // Sort by SRS priority descending. Stable sort preserves shuffle order
-        // within equal-priority groups (per-day variety for ties).
-        let sortedRemaining = remaining.sorted {
+        let sorted = remaining.sorted {
             SpacedRepetitionEngine.priorityScore(templateId: $0.id, in: sessions) >
             SpacedRepetitionEngine.priorityScore(templateId: $1.id, in: sessions)
         }
+        for t in sorted where ordered.count < count { add(t.id) }
 
-        let remainingSlots = count - packTemplates.count
-        let pickedRemaining = Array(sortedRemaining.prefix(max(0, remainingSlots)))
-
-        let combined = packTemplates + pickedRemaining
-        return combined.map { QuizEngine.generate(from: $0, seed: rng.next()) }
+        return Array(ordered.prefix(count))
+            .compactMap { byId[$0] }
+            .map { QuizEngine.generate(from: $0, seed: rng.next()) }
     }
 
     // MARK: - Bonus Round
