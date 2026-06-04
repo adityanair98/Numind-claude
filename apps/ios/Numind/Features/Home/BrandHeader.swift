@@ -5,9 +5,12 @@ import SwiftUI
 struct BrandHeader: View {
     let name: String
     let isDailyChallengeCompleted: Bool
-    /// Current Numind Score (0–100). 0 hides the ring until the user has sessions.
-    var numindScore: Int = 0
-    /// Called when the user taps the score ring.
+    /// Current Level (Phase 9 — an effort signal, not a 0–100 verdict). 0 hides
+    /// the ring until the user has sessions.
+    var level: Int = 0
+    /// 0–1 progress through the current level toward the next.
+    var levelProgress: Double = 0
+    /// Called when the user taps the level ring.
     var onScoreTap: (() -> Void)? = nil
 
     var body: some View {
@@ -72,12 +75,12 @@ struct BrandHeader: View {
                 }
             }
             Spacer()
-            // Small score ring — only shown after first session
-            if numindScore > 0 {
+            // Small level ring — only shown after first session
+            if level > 0 {
                 Button {
                     onScoreTap?()
                 } label: {
-                    NumindScoreRing(score: numindScore, size: 52)
+                    LevelRing(level: level, progress: levelProgress, size: 52)
                         .padding(.bottom, 4)
                 }
                 .buttonStyle(.plain)

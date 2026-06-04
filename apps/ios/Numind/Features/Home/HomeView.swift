@@ -24,7 +24,8 @@ struct HomeView: View {
                 BrandHeader(
                     name: userName,
                     isDailyChallengeCompleted: progressStore.isDailyChallengeCompleted,
-                    numindScore: progressStore.numindScore,
+                    level: progressStore.level,
+                    levelProgress: progressStore.levelProgress,
                     onScoreTap: { showScoreDetail = true }
                 )
                 dailyChallengeSection
