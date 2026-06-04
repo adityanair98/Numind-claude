@@ -27,6 +27,7 @@ struct PackDetailView: View {
                     if let anchor = anchorLesson {
                         anchorSection(anchor: anchor)
                     }
+                    readinessSection
                     outcomesSection
                     toolsForPathSection
                     lessonListSection
@@ -170,6 +171,46 @@ struct PackDetailView: View {
                     .padding(.vertical, 10)
                 }
             }
+        }
+    }
+
+    // MARK: - Readiness (Phase 9)
+
+    /// The honest, decision-scoped competence signal for this path: a state
+    /// badge + contextual copy + (when Almost ready) the single next action.
+    /// Replaces any "you're ready for real life" verdict with an evidence-
+    /// scoped claim ("you've got the essentials down").
+    private var readinessSection: some View {
+        let state = progressStore.readiness(for: pack)
+        return NumindCard {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Text("Your readiness")
+                        .font(Theme.Typography.headline)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Spacer()
+                    ReadinessBadge(state: state)
+                }
+                Text(readinessCopy(for: state))
+                    .font(Theme.Typography.caption)
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    private func readinessCopy(for state: ReadinessEngine.State) -> String {
+        switch state {
+        case .notStarted:
+            return "Start with the core lessons below to build toward Ready."
+        case .learning:
+            return "You're building. Master the core lessons to reach Ready."
+        case .almostReady(_, let nextAction):
+            return "Almost there — \(nextAction)"
+        case .ready:
+            return ReadinessEngine.readyLabel(for: pack)
+        case .sharp:
+            return "\(ReadinessEngine.readyLabel(for: pack)) And it's all fresh — nicely done."
         }
     }
 
