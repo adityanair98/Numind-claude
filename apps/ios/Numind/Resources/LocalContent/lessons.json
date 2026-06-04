@@ -802,7 +802,8 @@
       "concept_roth_traditional_peak_d1",
       "concept_roth_phaseout_d2",
       "concept_roth_backdoor_d2",
-      "concept_roth_unsure_split_d3"
+      "concept_roth_unsure_split_d3",
+      "inv_decision_roth_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -810,7 +811,7 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you're genuinely unsure whether Roth or Traditional fits you."
   },
   {
@@ -848,13 +849,14 @@
       "compound_interest_earned_d1",
       "compound_pct_interest_d2",
       "compound_early_vs_late_d3",
-      "compound_backwards_d3"
+      "compound_backwards_d3",
+      "inv_decision_compound_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to see what investing today is worth decades from now."
   },
   {
@@ -959,13 +961,14 @@
       "fund_fee_diff_d2",
       "fund_fee_compare_d1",
       "fund_fee_decade_d3",
-      "fund_fee_30yr_d3"
+      "fund_fee_30yr_d3",
+      "inv_decision_fees_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Check this before picking a fund — a small fee quietly costs you a fortune."
   },
   {
@@ -1482,7 +1485,8 @@
       "rent_afford_scenario_d1",
       "rent_afford_reverse_d2",
       "rent_afford_annual_d3",
-      "rent_min_income_d3"
+      "rent_min_income_d3",
+      "hou_decision_rent_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1514,7 +1518,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this before you talk to a lender or tour your first home.",
     "relatedCalculatorSlug": "mortgage"
   },
@@ -1691,7 +1695,8 @@
       "mortgage_per_100k_d1",
       "mortgage_rate_compare_d2",
       "mortgage_pi_taxes_d3",
-      "mortgage_vs_rent_decision_d3"
+      "mortgage_vs_rent_decision_d3",
+      "hou_decision_own_cost_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1699,7 +1704,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to estimate a real mortgage payment before you shop.",
     "relatedCalculatorSlug": "mortgage"
   },
@@ -1715,7 +1720,8 @@
       "lease_break_total_d2",
       "lease_break_breakeven_d2",
       "lease_stay_savings_d3",
-      "lease_break_decision_d3"
+      "lease_break_decision_d3",
+      "hou_decision_lease_break_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1723,7 +1729,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this when you're deciding whether to break your lease early."
   },
   {
@@ -1783,7 +1789,8 @@
       "bracket_two_tier_d1",
       "concept_bracket_taxable_vs_gross_d2",
       "bracket_22_24_crossing_d2",
-      "bracket_effective_d3"
+      "bracket_effective_d3",
+      "tax_decision_bracket_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -1826,7 +1833,8 @@
       "refund_owe_d1",
       "refund_monthly_loan_d2",
       "refund_invested_d2",
-      "refund_annual_loss_d3"
+      "refund_annual_loss_d3",
+      "tax_decision_refund_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -1834,7 +1842,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Remember this when a big refund feels like a win."
   },
   {
@@ -1878,7 +1886,7 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this at tax time to pick the deduction that saves you more."
   },
   {
@@ -1893,7 +1901,8 @@
       "capgains_long_d1",
       "capgains_saving_d2",
       "capgains_timing_d3",
-      "capgains_compare_d3"
+      "capgains_compare_d3",
+      "tax_decision_capgains_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -1901,7 +1910,7 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this before you sell an investment you've held close to a year."
   },
   {

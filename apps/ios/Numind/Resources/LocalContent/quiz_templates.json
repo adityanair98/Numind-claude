@@ -16952,5 +16952,194 @@
     ],
     "correctConceptChoice": "$26/hr — that's $54,080/yr (26 × 2,080 hrs), about $4,080 more than the $50,000 salary, and as an hourly worker you may also earn overtime",
     "isApplication": true
+  },
+  {
+    "id": "inv_decision_fees_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Two similar funds. Fund A: 1.0% expense ratio. Fund B: a 0.05% index fund. You invest $10,000/yr for 30 years at about a 7% return before fees.",
+    "promptTemplate": "Which fund should you pick, and how much does the fee really matter?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Fees compound against you. Investing $10,000/yr for 30 years: at ~7% net (Fund B) you'd have roughly $944,000; at ~6% net (Fund A's extra ~1% fee) roughly $791,000 — about $150,000 less, for funds that may perform identically before fees. Higher fees do NOT predict better returns. Minimizing expense ratios is one of the few levers fully in your control.",
+    "conceptChoices": [
+      "Fund B (0.05%) — a ~1% higher fee quietly compounds to roughly $150,000 less over 30 years; low fees are one of the few things you control",
+      "Fund A — a 1% fee is tiny and not worth worrying about",
+      "Whichever one performed better over the last year",
+      "Fund A — higher fees signal better fund management"
+    ],
+    "correctConceptChoice": "Fund B (0.05%) — a ~1% higher fee quietly compounds to roughly $150,000 less over 30 years; low fees are one of the few things you control",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_roth_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're early in your career in a low tax bracket (12%) and expect to earn much more later. You're choosing between a Roth and a Traditional IRA.",
+    "promptTemplate": "Which generally makes more sense, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The Roth-vs-Traditional choice hinges on your tax rate NOW vs in retirement. Roth = pay tax now, withdraw tax-free. Traditional = deduct now, pay tax on withdrawals. In a low bracket today (12%) and expecting more later, a Roth wins: you lock in the cheap 12% rate and never pay tax on the growth. If you expect a LOWER rate in retirement, Traditional's upfront deduction wins. When genuinely unsure, many people split between the two.",
+    "conceptChoices": [
+      "Roth — in a low bracket now and a higher one expected later, paying 12% tax now and withdrawing tax-free beats deducting at 12% and being taxed more later",
+      "Traditional — the upfront deduction is always the better deal",
+      "It never matters; the two are identical",
+      "Roth — but only if you'll retire before age 50"
+    ],
+    "correctConceptChoice": "Roth — in a low bracket now and a higher one expected later, paying 12% tax now and withdrawing tax-free beats deducting at 12% and being taxed more later",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_compound_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Ana invests $5,000/yr from age 25-35 (10 years, $50k total), then stops and never adds more. Ben invests $5,000/yr from age 35-65 (30 years, $150k total). Both earn about 7%.",
+    "promptTemplate": "Who has more at 65, and what's the lesson?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "This is the power of compounding. Ana invests $5,000/yr for just 10 years (ages 25-35, $50k total), then lets it grow untouched. Ben invests $5,000/yr for 30 years (ages 35-65, $150k total). At ~7%, Ana ends with roughly $526,000 vs Ben's ~$472,000 — more, despite investing a third as much, because her money compounded for an extra decade. Starting early matters more than investing more later.",
+    "conceptChoices": [
+      "Ana — despite investing only $50k vs Ben's $150k, her early start gives the money decades more to compound (~$526k vs ~$472k). Time in the market beats amount",
+      "Ben — he invested three times as much, so he must have more",
+      "They end up equal — it all comes out the same",
+      "Ana — but only because she got lucky with returns"
+    ],
+    "correctConceptChoice": "Ana — despite investing only $50k vs Ben's $150k, her early start gives the money decades more to compound (~$526k vs ~$472k). Time in the market beats amount",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_rent_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You earn $4,500/mo gross. An apartment you love rents for $1,600/mo. The 28% rule says housing should be at most about 28% of gross.",
+    "promptTemplate": "Does this fit the guideline, and what should you weigh?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The 28% rule suggests keeping housing at or below 28% of gross — here, $1,260/mo. At $1,600 (about 36%), you're over by ~$340/mo, which squeezes savings, debt payoff, and everything else. It's not a hard no, but it's a signal: a roommate, a cheaper unit, or cutting elsewhere. In high-cost cities many stretch to 30-35%, but the higher you go, the less cushion you have.",
+    "conceptChoices": [
+      "No — $1,600 is about 36% of your gross ($4,500), above the 28% (~$1,260) guideline. It's a stretch; consider a cheaper place, a roommate, or trimming elsewhere",
+      "Yes — $1,600 is easily affordable on a $4,500 income",
+      "Yes — the 28% rule only applies to buying, not renting",
+      "No — you should never spend more than 10% of income on rent"
+    ],
+    "correctConceptChoice": "No — $1,600 is about 36% of your gross ($4,500), above the 28% (~$1,260) guideline. It's a stretch; consider a cheaper place, a roommate, or trimming elsewhere",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_own_cost_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're comparing renting at $1,800/mo to buying with a $1,800/mo mortgage payment (principal + interest). The agent says, 'It's the same price to own as to rent!'",
+    "promptTemplate": "Is owning really the 'same price' as renting here?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A mortgage payment quoted as '$1,800' is usually just principal and interest. Real ownership cost adds property taxes, homeowners insurance, maintenance (budget ~1% of the home's value per year), and possibly HOA or PMI — often another $400-800/mo. So a $1,800 mortgage really costs more like $2,200-2,600/mo to own. Buying can still win long-term through equity, but 'same as rent' comparisons usually leave out the true cost of ownership.",
+    "conceptChoices": [
+      "No — the $1,800 is only principal and interest. Property tax, insurance, and maintenance (~1%/yr) often add $400-800/mo, so owning really costs more like $2,200-2,600/mo",
+      "Yes — $1,800 to rent vs $1,800 to own is identical",
+      "No — owning is always cheaper because you build equity",
+      "Yes — taxes and insurance are already built into the mortgage payment"
+    ],
+    "correctConceptChoice": "No — the $1,800 is only principal and interest. Property tax, insurance, and maintenance (~1%/yr) often add $400-800/mo, so owning really costs more like $2,200-2,600/mo",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_lease_break_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You have 5 months left on a $1,500/mo lease. A new job across town would cut ~90 min/day of commuting, and the apartment near it is $200/mo cheaper. Breaking your current lease costs a 2-month penalty ($3,000).",
+    "promptTemplate": "How should you decide?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A lease-break decision is cost vs total benefit. Cost: the $3,000 penalty (plus any lost deposit). Benefit: cheaper rent ($200/mo), ~90 min/day of your life back, lower commute costs, and the new job's value. Add up the real benefit and weigh it against $3,000 — don't fixate on one factor. (Breaking a lease per its terms doesn't directly hurt your credit; only an unpaid balance sent to collections does.)",
+    "conceptChoices": [
+      "Weigh the $3,000 penalty against the FULL benefit — rent savings, ~90 min/day back, and the job itself — not just one piece. If the total beats $3,000, break it",
+      "Always stay — breaking a lease wrecks your credit score",
+      "Always break it — a shorter commute is worth any price",
+      "Only break it if the penalty is under one month's rent"
+    ],
+    "correctConceptChoice": "Weigh the $3,000 penalty against the FULL benefit — rent savings, ~90 min/day back, and the job itself — not just one piece. If the total beats $3,000, break it",
+    "isApplication": true
+  },
+  {
+    "id": "tax_decision_refund_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You get a $3,600 tax refund every year and feel great about it. That's about $300/mo.",
+    "promptTemplate": "What does this refund really mean, and what could you do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A tax refund isn't a gift — it's your own money coming back because too much was withheld all year. A $3,600 refund is roughly $300/mo you lent the government interest-free. Adjusting your W-4 to withhold less puts that ~$300/mo back in each paycheck, where you can spend, save, or invest it sooner. (Some people like the refund as forced savings — a real behavioral trade-off, but you give up use of the money in the meantime.)",
+    "conceptChoices": [
+      "A $3,600 refund means you over-withheld — an interest-free loan to the IRS of ~$300/mo. Adjust your W-4 to keep that money in each paycheck",
+      "It's a great forced-savings bonus — keep it exactly as is",
+      "It means you underpaid and will owe more next year",
+      "Refunds are free money the government adds to your taxes"
+    ],
+    "correctConceptChoice": "A $3,600 refund means you over-withheld — an interest-free loan to the IRS of ~$300/mo. Adjust your W-4 to keep that money in each paycheck",
+    "isApplication": true
+  },
+  {
+    "id": "tax_decision_bracket_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You earn $48,000 and get a raise to $52,000. A coworker warns: 'Careful — that bump pushes you into the next tax bracket, so you might actually take home less!'",
+    "promptTemplate": "Is the coworker right?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "US federal income tax is MARGINAL: each bracket's rate applies only to the income within that bracket, not your whole income. Going from $48,000 to $52,000 means only the income above the threshold is taxed at the higher rate — the rest is unchanged. So a raise always increases your take-home. (The rare exception is a benefit 'cliff' — losing a subsidy at an income limit — which is about benefits, not tax brackets.)",
+    "conceptChoices": [
+      "No — only the income ABOVE the threshold is taxed at the higher rate, so a raise always raises your take-home; you never lose money by earning more",
+      "Yes — crossing into a new bracket taxes your whole income at the higher rate",
+      "Yes — that's why raises near a bracket line aren't worth taking",
+      "It depends on your state, but usually yes"
+    ],
+    "correctConceptChoice": "No — only the income ABOVE the threshold is taxed at the higher rate, so a raise always raises your take-home; you never lose money by earning more",
+    "isApplication": true
+  },
+  {
+    "id": "tax_decision_capgains_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You bought a stock 11 months ago; it's up $5,000. You're in the 22% bracket. Sell now and the gain is short-term (taxed as ordinary income, 22%); wait one more month and it's long-term (taxed at the 15% long-term rate).",
+    "promptTemplate": "What's the tax-smart move, and the caveat?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Gains on assets held ONE YEAR OR LESS are short-term, taxed as ordinary income (22% here). Held MORE than a year, they're long-term, taxed at preferential rates (0/15/20%; 15% for most middle incomes). On a $5,000 gain that's $1,100 (short-term) vs $750 (long-term) — waiting one more month saves $350 if the price holds. The caveat: don't let the 'tax tail wag the dog' — if you'd sell for investment reasons, a price drop can cost more than the tax saved.",
+    "conceptChoices": [
+      "If you can, hold past the 1-year mark — long-term gains are taxed at 15% vs 22% short-term, saving ~$350 here. Caveat: don't hold a position you'd otherwise sell just for the tax break",
+      "Sell now — capital gains tax is the same no matter how long you hold",
+      "Sell now — short-term gains are taxed less than long-term",
+      "Never sell — any sale is taxed at 50%"
+    ],
+    "correctConceptChoice": "If you can, hold past the 1-year mark — long-term gains are taxed at 15% vs 22% short-term, saving ~$350 here. Caveat: don't hold a position you'd otherwise sell just for the tax break",
+    "isApplication": true
   }
 ]
