@@ -1665,7 +1665,8 @@
       "move_in_no_broker_d1",
       "move_in_with_broker_d2",
       "move_in_scenario_d2",
-      "move_in_compare_d3"
+      "move_in_compare_d3",
+      "hou_decision_movein_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1712,7 +1713,8 @@
       "true_cost_extra_d1",
       "true_cost_compare_d2",
       "true_cost_pct_d2",
-      "true_cost_vs_28_d3"
+      "true_cost_vs_28_d3",
+      "hou_decision_truecost_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -1971,7 +1973,8 @@
       "w4_bump_biweekly_d1",
       "w4_invested_d2",
       "w4_annual_growth_d2",
-      "w4_lifetime_d3"
+      "w4_lifetime_d3",
+      "tax_decision_w4adjust_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -2317,7 +2320,8 @@
       "car_term_difference_d1",
       "car_term_scenario_d2",
       "car_payment_compare_d2",
-      "car_term_extra_cost_d3"
+      "car_term_extra_cost_d3",
+      "car_decision_term_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2411,7 +2415,8 @@
       "car_tco_compare_d2",
       "car_tco_keep_vs_buy_d3",
       "car_tco_vs_income_d2",
-      "car_tco_annual_d2"
+      "car_tco_annual_d2",
+      "car_decision_tco_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2553,7 +2558,8 @@
       "sl_total_interest_d1",
       "sl_total_scenario_d2",
       "sl_cost_compare_d2",
-      "sl_interest_pct_d3"
+      "sl_interest_pct_d3",
+      "sl_decision_totalcost_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -2662,8 +2668,8 @@
     "id": "student_loan_grace_period",
     "moduleId": "student_loans",
     "title": "Your loans are growing while you wait",
-    "concept": "Unsubsidized federal loans accrue interest from disbursement. The 6-month grace period after graduation doesn't pause interest — it lets it pile up and capitalize (added to principal). A $25,000 loan at 6.5% accrues ~$800 in interest during grace alone. Most new grads don't realize this.",
-    "shortcut": "Daily interest = balance × rate ÷ 365. Grace period total = daily × 180 days. Making interest-only payments during grace prevents capitalization and saves money long-term.",
+    "concept": "Unsubsidized federal loans accrue interest from disbursement. The 6-month grace period after graduation doesn't pause interest — it keeps piling up and is added to what you owe. (A 2023 federal rule means this accrued interest is no longer automatically capitalized — folded into principal — when you enter repayment, but you still owe every dollar of it, and it can capitalize later at triggers like leaving an income-driven plan or default.) A $25,000 loan at 6.5% accrues ~$800 during grace alone. Most new grads don't realize this.",
+    "shortcut": "Daily interest = balance × rate ÷ 365. Grace period total = daily × 180 days. Paying that interest during grace keeps it from being added to your balance (and from capitalizing later), saving money long-term.",
     "example": "$25,000 unsubsidized at 6.5%:\nDaily interest: $4.45\nGrace period (180 days): $801\nNew balance at repayment start: $25,801\n\nInterest-only during grace ($135/mo):\nBalance stays $25,000 → save $801 + future interest on it",
     "quizTemplateIds": [
       "sl_daily_interest_d1",
@@ -2709,7 +2715,7 @@
     "title": "Subsidized vs unsubsidized loans",
     "concept": "Subsidized loans are need-based and capped — undergrads with demonstrated financial need on their FAFSA may qualify, up to annual limits ($3,500-$5,500/year per Federal Student Aid). On a subsidized loan, the government pays the interest while you're in school, during the 6-month grace period, and during qualified deferment. Unsubsidized loans are available to all eligible students but accrue interest from disbursement onward. Most graduate loans and Parent PLUS are unsubsidized. The difference compounds: a $25k subsidized loan stays at $25k through graduation; a $25k unsubsidized loan grows to ~$28k over four years at 5.5%.",
     "shortcut": "Borrowing order if you have a mix offered: subsidized first (free money on the interest), unsubsidized second, federal Parent PLUS third (worst rate + origination), private last (no federal protections). Don't decline offered subsidized aid because the amount is small — every dollar that doesn't accrue interest in school is worth more than a dollar of unsubsidized borrowing.",
-    "example": "$25,000 borrowed, 4 years in school + 6 months grace, 5.5% interest:\nSubsidized: balance at repayment start = $25,000\nUnsubsidized: balance at repayment start ≈ $31,000\n\nDifference: $6,000 added to principal you'll then pay 5.5% on for 10 more years — another ~$5,000 in lifetime interest.",
+    "example": "$25,000 borrowed, 4 years in school + 6 months grace, 5.5% interest:\nSubsidized: balance at repayment start = $25,000\nUnsubsidized: balance at repayment start ≈ $31,000\n\nDifference: ~$6,000 in accrued interest you also owe. Pay it during school and grace so it can't capitalize later (for example, if you leave an income-driven plan) — that is what avoids paying ~$5,000 more in lifetime interest on it.",
     "quizTemplateIds": [
       "concept_sl_sub_def_d1",
       "concept_sl_unsub_def_d1",

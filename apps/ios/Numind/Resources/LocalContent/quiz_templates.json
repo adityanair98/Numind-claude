@@ -13067,7 +13067,7 @@
     "answerFormula": "gracePeriodTotal",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{dailyAmount}} \u00d7 180 = ${{answer}} added to your principal at grace end."
+    "explanationTemplate": "${{dailyAmount}} \u00d7 180 = ${{answer}} in interest added to your balance during the grace period."
   },
   {
     "id": "sl_grace_vs_interest_only_d3",
@@ -15021,7 +15021,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Unsubsidized loans accrue interest from the moment they're disbursed. By graduation, your $25k loan may have grown to $28k+ in interest. This unpaid interest then capitalizes (added to principal), so you pay interest on interest going forward. Most graduate loans and Parent PLUS are unsubsidized.",
+    "explanationTemplate": "Unsubsidized loans accrue interest from the moment they're disbursed. By graduation, your $25k loan may have grown to $28k+ in interest. You owe that accrued interest, and if it later capitalizes (folded into principal at a trigger like leaving an income-driven plan or default) you'd pay interest on it too. Most graduate loans and Parent PLUS are unsubsidized.",
     "conceptChoices": [
       "The government waives interest if you stay enrolled",
       "Interest accrues from day one \u2014 you owe interest while in school, during grace, and during deferment",
@@ -15059,14 +15059,14 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "$25k \u00d7 5.5% \u00d7 4.5 years simple interest = $6,188 in accrued interest. At grace period end, this capitalizes (gets added to principal). Your new balance: ~$31,188. You then owe interest on the full $31k going forward \u2014 interest on interest. This is why grace period interest matters.",
+    "explanationTemplate": "$25k \u00d7 5.5% \u00d7 4.5 years simple interest = $6,188 in accrued interest. By repayment start you owe ~$31,188 ($25k principal + $6,188 accrued interest). A 2023 rule means that accrued interest isn't automatically folded into principal at repayment, but you still owe it and it can capitalize later \u2014 interest on interest. This is why grace period interest matters.",
     "conceptChoices": [
       "$25,000 (no change)",
-      "About $31,000 (interest accrued during 4.5 years and capitalized)",
+      "About $31,000 (principal plus interest accrued over 4.5 years)",
       "About $20,000 (interest forgiven during grace)",
       "About $50,000 (compound interest doubles)"
     ],
-    "correctConceptChoice": "About $31,000 (interest accrued during 4.5 years and capitalized)"
+    "correctConceptChoice": "About $31,000 (principal plus interest accrued over 4.5 years)"
   },
   {
     "id": "concept_sl_grad_loans_d3",
@@ -16664,20 +16664,20 @@
     "moduleId": "student_loans",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "scenarioTemplate": "You graduate with $30,000 in UNSUBSIDIZED federal loans at 6%. During your 6-month grace period, interest accrues at about $150/mo. You can pay the ~$900 of grace-period interest now, or let it capitalize (be added to your principal).",
+    "scenarioTemplate": "You graduate with $30,000 in UNSUBSIDIZED federal loans at 6%. During your 6-month grace period, interest accrues at about $150/mo. You can pay the ~$900 of grace-period interest now, or let it build up on what you owe.",
     "promptTemplate": "What's the smarter move?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Unsubsidized loans accrue interest even during school and the grace period. If you don't pay it, that interest CAPITALIZES — it's added to your principal when repayment starts, so you then pay interest on a bigger balance (interest on interest). Paying the ~$900 during grace keeps your principal at $30,000. (Subsidized loans are different: the government covers the interest during school and grace, so this doesn't apply to them.)",
+    "explanationTemplate": "Unsubsidized loans accrue interest even during school and the grace period. If you don't pay it, you still owe that interest, and it can later capitalize (be folded into principal at a trigger like leaving an income-driven plan or default), so you'd then pay interest on a bigger balance. Paying the ~$900 during grace keeps your principal at $30,000. (Subsidized loans are different: the government covers the interest during school and grace, so this doesn't apply to them.)",
     "conceptChoices": [
-      "Pay the ~$900 of interest before it capitalizes — otherwise it's added to your $30,000 principal and you pay interest on it for years",
+      "Pay the ~$900 of interest now — you still owe it, and it can later capitalize into your $30,000 principal and accrue interest for years",
       "Let it capitalize — interest during the grace period is free",
       "Let it capitalize — $900 is too small to matter",
       "Pay it only if your loans are subsidized"
     ],
-    "correctConceptChoice": "Pay the ~$900 of interest before it capitalizes — otherwise it's added to your $30,000 principal and you pay interest on it for years",
+    "correctConceptChoice": "Pay the ~$900 of interest now — you still owe it, and it can later capitalize into your $30,000 principal and accrue interest for years",
     "isApplication": true
   },
   {
@@ -18526,6 +18526,132 @@
       "You can switch back to federal loans anytime"
     ],
     "correctConceptChoice": "The federal safety nets — income-driven repayment (even $0 payments), deferment/forbearance, and forgiveness like PSLF. Private lenders rarely offer these, and refinancing federal → private is permanent",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_movein_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You found a $1,600/month apartment. The lease requires first month, last month, and a security deposit equal to one month's rent. There's no broker fee. You have $3,000 saved.",
+    "promptTemplate": "Can you cover the move-in cost, and what's the real number?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Move-in cost here is first month + last month + security deposit = 3 x $1,600 = $4,800 (this lease has no broker fee). With $3,000 saved you're $1,800 short. The classic mistake is budgeting only the first month's rent; landlords routinely want 3-4x the monthly rent in cash before handing over the keys. Know the full upfront number before you fall for a place.",
+    "conceptChoices": [
+      "No - move-in is first + last + deposit = $4,800, so you're $1,800 short. Budget the full upfront amount before signing, not just the first month",
+      "Yes - the $1,600 first month is all you need to get the keys",
+      "Yes - first month plus the deposit is about $3,200, close enough to your $3,000",
+      "No - but only because of the broker fee"
+    ],
+    "correctConceptChoice": "No - move-in is first + last + deposit = $4,800, so you're $1,800 short. Budget the full upfront amount before signing, not just the first month",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_truecost_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You earn $5,500/month. An apartment rents for $1,500 - under the 28% guideline ($1,540). But with renter's insurance, utilities, parking, and laundry it actually costs about $1,800/month.",
+    "promptTemplate": "Does this apartment really fit your budget?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Apply the 28% rule to your TRUE monthly housing cost, not the headline rent. Rent alone is $1,500 (27% of $5,500, technically 'fits'), but the real cost - rent + renter's insurance + utilities + parking + laundry - is about $1,800, which is roughly 33% of income, over the 28% guideline. Budgeting on the rent line alone is how people end up house-poor. Add every housing-adjacent bill, then check affordability against that number.",
+    "conceptChoices": [
+      "No - apply the 28% rule to the $1,800 true cost, not the $1,500 rent. At $1,800 you're near 33% of income, over the guideline",
+      "Yes - the $1,500 rent is under the 28% cap, so it fits",
+      "Yes - utilities and insurance aren't really housing costs, so ignore them",
+      "No - but only because $1,500 is already too close to the cap"
+    ],
+    "correctConceptChoice": "No - apply the 28% rule to the $1,800 true cost, not the $1,500 rent. At $1,800 you're near 33% of income, over the guideline",
+    "isApplication": true
+  },
+  {
+    "id": "tax_decision_w4adjust_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You got a $2,600 federal refund again this year. You'd rather have that money in each paycheck to invest. You're a regular W-2 employee whose tax situation hasn't changed.",
+    "promptTemplate": "What's the right way to get that cash during the year?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A consistent $2,600 refund means you're over-withholding - lending the IRS your money interest-free all year. The fix is mechanical: file an updated W-4 with your employer that reduces withholding (claim the deductions/dependents you qualify for, or dial back any extra withholding on line 4c). That spreads the ~$2,600 across your checks (about $100 each, biweekly). What you should NOT do is write 'Exempt' - that's only legal if you expect zero tax liability, and otherwise triggers a big bill plus an underpayment penalty. Withholding is something you control, not a fixed IRS output.",
+    "conceptChoices": [
+      "Submit a new W-4 that lowers your withholding (claim the deductions/dependents you qualify for, or reduce extra withholding on line 4c) - about $100 more per biweekly check",
+      "Write 'Exempt' on your W-4 so no federal tax is withheld at all",
+      "Ask your employer for a raise - that's the only way to increase take-home pay",
+      "Nothing mid-year; the refund amount is fixed by the IRS"
+    ],
+    "correctConceptChoice": "Submit a new W-4 that lowers your withholding (claim the deductions/dependents you qualify for, or reduce extra withholding on line 4c) - about $100 more per biweekly check",
+    "isApplication": true
+  },
+  {
+    "id": "car_decision_term_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Same $25,000 car, same APR. The dealer offers 48 months at $550/month or 72 months at $420/month. You can comfortably afford either payment.",
+    "promptTemplate": "Which term is the better financial choice, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total cost = monthly x months. 48 months x $550 = $26,400; 72 months x $420 = $30,240 - the 'cheaper' $420 payment actually costs about $3,840 MORE in interest, and it keeps you owing more than the car is worth for longer. Since you can afford the $550 payment, the 48-month term is the better deal. Always compare total cost, not the headline payment.",
+    "conceptChoices": [
+      "48 months - you pay $26,400 total vs $30,240 over 72 months, saving about $3,840. The lower 72-month payment costs more overall and keeps you in debt longer",
+      "72 months - the $420 payment is lower, so it's the cheaper option",
+      "72 months - a longer term always comes with a lower interest rate",
+      "They cost the same - you pay $25,000 for the car either way"
+    ],
+    "correctConceptChoice": "48 months - you pay $26,400 total vs $30,240 over 72 months, saving about $3,840. The lower 72-month payment costs more overall and keeps you in debt longer",
+    "isApplication": true
+  },
+  {
+    "id": "car_decision_tco_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your paid-off car runs fine but needs about $1,200/year in maintenance (~$100/month). A new car would mean a $450/month payment plus higher insurance - about $600/month in new costs you don't have today.",
+    "promptTemplate": "On cost alone, what's the smarter move?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Compare the real monthly cost of each option. Keeping the car: about $100/month in maintenance. Buying new: a $450 payment PLUS higher insurance PLUS faster depreciation - roughly $600/month in costs you don't currently have. A paid-off car is almost always the cheapest car you'll own; keep it until repairs routinely approach the cost of replacing it (here, ~$600/month). 'It needs a repair' is not the same as 'it's cheaper to replace.'",
+    "conceptChoices": [
+      "Keep the paid-off car - $100/month in upkeep is far cheaper than ~$600/month in new payment-plus-insurance costs. Replace only when repairs routinely approach that $600",
+      "Buy new - once a paid-off car needs any repairs, it's cheaper to replace it",
+      "Buy new - a $450 payment is less than $1,200, so the new car costs less",
+      "Keep it - but only if the repair is under $100"
+    ],
+    "correctConceptChoice": "Keep the paid-off car - $100/month in upkeep is far cheaper than ~$600/month in new payment-plus-insurance costs. Replace only when repairs routinely approach that $600",
+    "isApplication": true
+  },
+  {
+    "id": "sl_decision_totalcost_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your $30,000 federal loan is on the 10-year Standard plan at $318/month. A 25-year Extended plan would cut the payment to about $175/month, which sounds easier on your budget.",
+    "promptTemplate": "What's the real trade-off of switching to the Extended plan?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total cost = payment x number of months. Standard: $318 x 120 = about $38,160. Extended: ~$175 x 300 = about $52,600 - roughly $14,000 MORE in interest, because stretching to 25 years more than doubles the time interest accrues. The rate doesn't change; the term does. A lower monthly payment almost never means a cheaper loan. Extending is fine if you genuinely need the cash-flow relief - just go in knowing it costs more, not less.",
+    "conceptChoices": [
+      "Much more total interest - stretching to 25 years raises total repayment from about $38,000 to about $52,600, roughly $14,000 more, even though each payment is smaller",
+      "None - a lower monthly payment means the loan costs less overall",
+      "The interest rate goes up, which is why the payment looks lower",
+      "You lose your federal loan entirely and it becomes private"
+    ],
+    "correctConceptChoice": "Much more total interest - stretching to 25 years raises total repayment from about $38,000 to about $52,600, roughly $14,000 more, even though each payment is smaller",
     "isApplication": true
   }
 ]
