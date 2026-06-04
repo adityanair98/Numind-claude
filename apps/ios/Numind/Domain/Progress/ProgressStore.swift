@@ -421,6 +421,15 @@ final class ProgressStore: ObservableObject {
     var xpToNextLevel: Int? { MomentumEngine.xpToNextLevel(xp) }
     var levelProgress: Double { MomentumEngine.levelProgress(xp) }
 
+    /// True when the user has the XP for the next level but is held back by the
+    /// depth gate (needs another deep mastery — a lesson mastered with a hard
+    /// question, or a pack reaching Ready). Drives honest "earn a deep mastery"
+    /// copy instead of an "X XP to go" bar that would never move.
+    var isDepthGated: Bool {
+        let deep = masteredRealLessonIds.filter { data.masteredWithHard($0) }.count
+        return MomentumEngine.isDepthGated(xp: xp, deepMasteryCount: deep)
+    }
+
     // MARK: - Readiness + Freshness (Phase 9)
 
     /// Readiness state for a pack (the decision-scoped competence signal).

@@ -15,8 +15,8 @@ enum ImprovementCalculator {
         let accuracyPrior: Double?
         /// Number of unique templates where lifetime accuracy ≥ 80%.
         let skillsMastered: Int
-        /// Numind Score delta over the last 7 days (positive = better).
-        let scoreDelta: Int
+        /// XP earned this week (Phase 9 — replaced the legacy Numind-Score delta).
+        let xpThisWeek: Int
         /// Total sessions this week.
         let sessionsThisWeek: Int
         /// Total sessions 2 weeks ago.
@@ -25,7 +25,7 @@ enum ImprovementCalculator {
 
     // MARK: - Public
 
-    static func compute(from data: ProgressData, scoreDelta: Int) -> Stats {
+    static func compute(from data: ProgressData, xpThisWeek: Int) -> Stats {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
 
@@ -45,7 +45,7 @@ enum ImprovementCalculator {
             accuracyThisWeek: accuracy(thisWeek),
             accuracyPrior: accuracy(priorWeek),
             skillsMastered: countMasteredTemplates(data.sessions),
-            scoreDelta: scoreDelta,
+            xpThisWeek: xpThisWeek,
             sessionsThisWeek: thisWeek.count,
             sessionsPrior: priorWeek.count
         )
