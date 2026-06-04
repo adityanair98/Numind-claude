@@ -1269,7 +1269,8 @@
       "balance_transfer_interest_saved_d1",
       "balance_transfer_net_d2",
       "balance_transfer_breakeven_d2",
-      "balance_transfer_full_payoff_plan_d3"
+      "balance_transfer_full_payoff_plan_d3",
+      "debt_decision_transfer_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1277,7 +1278,7 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before moving a balance to a 0% card with a transfer fee."
   },
   {
@@ -1292,7 +1293,8 @@
       "cc_net_rewards_with_balance_d2",
       "cc_rewards_breakeven_balance_d2",
       "cc_rewards_high_balance_loss_d2",
-      "concept_cc_rewards_only_if_paid_off_d1"
+      "concept_cc_rewards_only_if_paid_off_d1",
+      "debt_decision_rewards_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1300,7 +1302,7 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Remember this before chasing cashback while carrying a balance."
   },
   {
@@ -1447,7 +1449,8 @@
       "concept_ef_priority_match_d1",
       "concept_ef_priority_cc_d2",
       "concept_ef_priority_low_rate_d2",
-      "concept_ef_priority_scenario_d3"
+      "concept_ef_priority_scenario_d3",
+      "debt_decision_ef_priority_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1455,7 +1458,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you have spare cash and can't decide: save it or kill debt?"
   },
   {

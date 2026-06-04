@@ -16700,5 +16700,68 @@
     ],
     "correctConceptChoice": "It's on the high side — $555/mo is about 18% of your take-home, well above the ~10% guideline. Consider borrowing less or planning for a tight budget early on",
     "isApplication": true
+  },
+  {
+    "id": "debt_decision_transfer_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You owe $6,000 on a card at 24% APR. A balance-transfer offer gives you 0% APR for 15 months with a 3% transfer fee, and you can pay about $420/mo.",
+    "promptTemplate": "Is the balance transfer worth it, and what's the catch?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A balance transfer trades a one-time fee for a 0% window. The fee is 3% × $6,000 = $180. At 24% APR, paying $6,000 down over ~15 months costs roughly $900+ in interest, so the transfer saves you several hundred dollars. It only works if you clear the balance before the 0% promo ends — here $420/mo × 15 = $6,300 covers the $6,180 owed. If you don't pay it off in time, the rate jumps back up. Don't add new charges to either card.",
+    "conceptChoices": [
+      "Yes — the $180 fee (3% of $6,000) is far less than the ~$900+ of interest at 24%, and $420/mo clears it within the 0% window. The catch: pay it off before the promo ends",
+      "No — a 3% fee means you're just paying to shuffle debt around",
+      "Yes — and you can take your time since it's 0% interest",
+      "No — balance transfers always damage your credit score too much"
+    ],
+    "correctConceptChoice": "Yes — the $180 fee (3% of $6,000) is far less than the ~$900+ of interest at 24%, and $420/mo clears it within the 0% window. The catch: pay it off before the promo ends",
+    "isApplication": true
+  },
+  {
+    "id": "debt_decision_rewards_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your card gives 2% cash back. You're carrying a $3,000 balance at 22% APR and paying the minimum. You're tempted to put more spending on the card to rack up rewards.",
+    "promptTemplate": "Should you chase the rewards, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Card rewards (typically 1-2%) only come out ahead if you pay the balance in full every month. Carrying $3,000 at 22% costs about $660/yr in interest — you'd have to spend $33,000 to earn that much back at 2%. While you carry a balance, every reward is swamped by interest. The move: stop adding charges, pay down the balance, then use the card for rewards once you can clear it in full each month.",
+    "conceptChoices": [
+      "No — 2% back is meaningless next to 22% interest on your $3,000 balance (~$660/yr). Stop new charges and pay it down; rewards only pay off when you clear the card monthly",
+      "Yes — free cash back is free money, always take it",
+      "Yes — as long as the rewards rate beats your minimum payment",
+      "No — but only because 2% is a low rewards rate"
+    ],
+    "correctConceptChoice": "No — 2% back is meaningless next to 22% interest on your $3,000 balance (~$660/yr). Stop new charges and pay it down; rewards only pay off when you clear the card monthly",
+    "isApplication": true
+  },
+  {
+    "id": "debt_decision_ef_priority_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You have $0 saved and $5,000 in credit card debt at 23% APR. You can put $300/mo toward either a starter emergency fund or the card.",
+    "promptTemplate": "What's the recommended order, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Build a tiny starter emergency fund (around $1,000) first — without it, the next surprise (car repair, medical bill) goes straight back onto the 23% card and undoes your progress. Once you have that cushion, attack the high-interest debt aggressively: paying off 23% debt is a guaranteed 23% 'return' you can't beat by saving. Build the full 3-6 month fund AFTER the high-interest debt is gone. Order: starter fund → high-interest debt → full fund.",
+    "conceptChoices": [
+      "Build a small ~$1,000 starter emergency fund first, then throw everything at the 23% card — the cushion keeps a surprise from forcing you back onto the card",
+      "Put every dollar on the card first; an emergency fund can wait until you're debt-free",
+      "Split it 50/50 between the fund and the card indefinitely",
+      "Build a full 6-month emergency fund before paying anything extra on the card"
+    ],
+    "correctConceptChoice": "Build a small ~$1,000 starter emergency fund first, then throw everything at the 23% card — the cushion keeps a surprise from forcing you back onto the card",
+    "isApplication": true
   }
 ]
