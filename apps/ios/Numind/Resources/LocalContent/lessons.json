@@ -527,13 +527,14 @@
       "total_comp_difference_d2",
       "total_comp_hourly_d3",
       "missing_benefit_d2",
-      "benefits_pct_d2"
+      "benefits_pct_d2",
+      "sal_decision_totalcomp_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you're weighing a job offer's full package, not just the salary."
   },
   {
@@ -548,7 +549,8 @@
       "side_hustle_simple_d1",
       "worth_it_compare_d3",
       "hourly_compare_d3",
-      "side_hustle_annual_d2"
+      "side_hustle_annual_d2",
+      "sal_decision_sidehustle_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -556,7 +558,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before taking a side gig to see what it really pays per hour."
   },
   {
@@ -688,13 +690,14 @@
       "bonus_take_home_high_state_d2",
       "bonus_owed_at_filing_d2",
       "bonus_refunded_low_bracket_d2",
-      "concept_bonus_supplemental_vs_marginal_d2"
+      "concept_bonus_supplemental_vs_marginal_d2",
+      "sal_decision_bonus_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this when a bonus is coming so the smaller-than-expected deposit doesn't shock you."
   },
   {
@@ -893,13 +896,14 @@
       "concept_dca_behavioral_d2",
       "concept_dca_when_use_d2",
       "concept_dca_vs_timing_d3",
-      "dca_cash_drag_d2"
+      "dca_cash_drag_d2",
+      "inv_decision_dca_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you're deciding whether to invest a little every month."
   },
   {
@@ -914,7 +918,8 @@
       "apy_annual_interest_d1",
       "apy_bank_gap_d2",
       "apy_doubling_time_d2",
-      "apy_compounding_effect_d3"
+      "apy_compounding_effect_d3",
+      "inv_decision_hysa_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -922,7 +927,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before you leave cash in a big-bank account paying almost nothing.",
     "relatedCalculatorSlug": "hysa_growth"
   },
@@ -1055,13 +1060,14 @@
       "on_track_target_d1",
       "on_track_gap_d2",
       "on_track_close_gap_d3",
-      "on_track_extra_save_d3"
+      "on_track_extra_save_d3",
+      "inv_decision_ontrack_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to check whether your retirement savings fit your age."
   },
   {
@@ -1212,7 +1218,8 @@
       "dti_ratio_scenario",
       "dti_add_payments",
       "dti_housing_only",
-      "new_dti_with_payment_d3"
+      "new_dti_with_payment_d3",
+      "debt_decision_dti_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1336,7 +1343,7 @@
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to time your payment so it actually lowers your interest."
   },
   {
@@ -1351,13 +1358,14 @@
       "avalanche_monthly_saving_d2",
       "snowball_difference_d3",
       "debt_compare_rates_d2",
-      "psychology_premium_d3"
+      "psychology_premium_d3",
+      "debt_decision_avalanche_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you have multiple debts and need a payoff order."
   },
   {
@@ -1395,7 +1403,8 @@
       "bnpl_late_fee_d2",
       "bnpl_surcharge_pct_d3",
       "bnpl_stacked_d3",
-      "bnpl_annual_d2"
+      "bnpl_annual_d2",
+      "debt_decision_bnpl_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1403,7 +1412,7 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Remember this the next time 'pay in 4' pops up at checkout."
   },
   {
@@ -1579,7 +1588,8 @@
       "first_month_padding_rule_d1",
       "first_month_breakdown_d2",
       "first_month_no_broker_d2",
-      "concept_first_month_overlooked_d2"
+      "concept_first_month_overlooked_d2",
+      "hou_decision_firstmonth_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1587,7 +1597,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before you move so the upfront cash doesn't catch you off guard.",
     "relatedCalculatorSlug": "rent_affordability"
   },
@@ -1603,7 +1613,8 @@
       "rent_increase_new_d1",
       "rent_increase_annual_d2",
       "rent_above_avg_d2",
-      "rent_renew_vs_move_d3"
+      "rent_renew_vs_move_d3",
+      "hou_decision_renew_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -1611,7 +1622,7 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when your renewal letter arrives with a higher number."
   },
   {
@@ -1649,7 +1660,8 @@
       "roommate_utilities_d2",
       "roommate_unequal_d3",
       "roommate_annual_d2",
-      "roommate_compare_d3"
+      "roommate_compare_d3",
+      "hou_decision_roommate_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -1657,7 +1669,7 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when deciding whether a roommate is worth the trade-offs."
   },
   {

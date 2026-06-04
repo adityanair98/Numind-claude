@@ -17183,5 +17183,257 @@
     ],
     "correctConceptChoice": "Renting — buying and selling carries ~6-9%+ in transaction costs that rarely recoup in just 2 years; buying usually wins only with a longer horizon (~5+ years)",
     "isApplication": true
+  },
+  {
+    "id": "debt_decision_dti_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You earn $5,000/mo gross. Your current debt payments (car + student loan + card minimums) total $1,400/mo. You're applying for a mortgage; lenders usually cap total debt-to-income — including the new housing payment — near 43%.",
+    "promptTemplate": "What does your DTI mean for the mortgage?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Debt-to-income (DTI) = monthly debt payments ÷ gross monthly income. Lenders look at TOTAL DTI including the new housing payment, usually capping near 43%. Here, $5,000 × 43% = $2,150; minus your existing $1,400 leaves only ~$750/mo for the mortgage + taxes + insurance. Paying down existing debt (especially the card and car) frees up room to qualify for more.",
+    "conceptChoices": [
+      "Your $1,400 of payments is 28% of income; with the ~43% total cap ($2,150), only ~$750/mo is left for housing. Pay down debt first to qualify for more",
+      "You can afford any mortgage — 28% is well under 43%",
+      "DTI doesn't matter if your credit score is high",
+      "You should aim for a 100% DTI to maximize your loan"
+    ],
+    "correctConceptChoice": "Your $1,400 of payments is 28% of income; with the ~43% total cap ($2,150), only ~$750/mo is left for housing. Pay down debt first to qualify for more",
+    "isApplication": true
+  },
+  {
+    "id": "debt_decision_avalanche_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You have three debts: $2,000 at 24%, $5,000 at 7%, and $800 at 19%. You have $300/mo extra to throw at one. A friend says 'pay the smallest first for momentum.'",
+    "promptTemplate": "Which order saves you the most money?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Two methods: AVALANCHE pays the highest interest rate first (here the 24% card, then 19%, then 7%), minimizing total interest — the cheapest path. SNOWBALL pays the smallest balance first ($800) for quick psychological wins, which can help you stick with it but costs more interest. The math favors avalanche; if motivation has been your problem, snowball's momentum can be worth the small extra cost. Either beats spreading the $300 thin.",
+    "conceptChoices": [
+      "Avalanche — put the extra $300 on the 24% debt first, then 19%, then 7%. That minimizes total interest. Snowball (smallest first) helps motivation but costs more",
+      "Snowball — always pay the smallest balance first to save the most money",
+      "Split the $300 equally across all three debts",
+      "Pay the largest balance ($5,000) first"
+    ],
+    "correctConceptChoice": "Avalanche — put the extra $300 on the 24% debt first, then 19%, then 7%. That minimizes total interest. Snowball (smallest first) helps motivation but costs more",
+    "isApplication": true
+  },
+  {
+    "id": "debt_decision_bnpl_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A $600 item is offered as 'Pay in 4 — $150 every 2 weeks, 0% interest.' You have the $600 in the bank.",
+    "promptTemplate": "Is the 'pay in 4' a good deal, and what's the real risk?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "'Pay in 4' BNPL is usually genuinely 0% interest IF every payment is on time. The traps aren't the math — they're behavioral: it makes a $600 purchase feel like '$150,' nudging you to spend more than you would with cash; missed payments trigger late fees; and stacking several plans gets hard to track. Rule: only use it for something you could pay for in full today, and never to stretch for something you can't.",
+    "conceptChoices": [
+      "If you have the cash and pay on time, 0% 'pay in 4' is fine — but it nudges you to buy more than you would with cash, and a missed payment means fees. Don't use it for things you couldn't afford outright",
+      "Always use it — splitting the payments is free money",
+      "Never use it — BNPL always charges hidden interest",
+      "Only use it for items over $1,000"
+    ],
+    "correctConceptChoice": "If you have the cash and pay on time, 0% 'pay in 4' is fine — but it nudges you to buy more than you would with cash, and a missed payment means fees. Don't use it for things you couldn't afford outright",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_totalcomp_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Offer A: $75,000 salary, no 401(k) match, a basic health plan. Offer B: $70,000 salary, a 6% 401(k) match, $500/mo employer-paid health premium, and 4 weeks PTO.",
+    "promptTemplate": "Which offer is worth more, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Salary is only part of compensation. Offer B trades $5,000 of base for a 6% 401(k) match (~$4,200/yr of free money), an employer-paid health premium (~$6,000/yr), and more PTO. Add those up and B's total value clears A by several thousand dollars a year — before even counting the PTO. Always tally total compensation (match + benefits + PTO + bonus), not the headline salary.",
+    "conceptChoices": [
+      "Offer B — its $5k lower salary is more than offset by the ~$4,200 match, ~$6,000 employer health premium, and extra PTO. Compare total comp, not just salary",
+      "Offer A — the higher salary is what matters most",
+      "They're equal since the base salaries are close",
+      "Offer A — benefits are never worth as much as cash"
+    ],
+    "correctConceptChoice": "Offer B — its $5k lower salary is more than offset by the ~$4,200 match, ~$6,000 employer health premium, and extra PTO. Compare total comp, not just salary",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_sidehustle_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A side gig pays $25/hr. But you drive for it (gas + wear ~$5/hr), and as 1099 income you owe ~15.3% self-employment tax plus income tax (~12%).",
+    "promptTemplate": "What's the side hustle really paying, and how should you judge it?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A side-gig rate is gross, before costs. Subtract vehicle/supply costs (~$5/hr here) and taxes — as 1099 income you owe both halves of self-employment tax (~15.3%) PLUS income tax (~12% here), roughly 27% combined. So $25 → $20 after costs → ~$14.60 after tax. Judge a side hustle on its real net hourly rate against what your time is worth; the sticker rate always overstates it.",
+    "conceptChoices": [
+      "About $15/hr net — after ~$5/hr in vehicle costs and ~27% in self-employment + income tax, the $25 'rate' shrinks a lot. Judge it on the real take-home",
+      "$25/hr — the advertised rate is what you keep",
+      "More than $25/hr once you count the experience",
+      "$25/hr minus just the gas, so about $20"
+    ],
+    "correctConceptChoice": "About $15/hr net — after ~$5/hr in vehicle costs and ~27% in self-employment + income tax, the $25 'rate' shrinks a lot. Judge it on the real take-home",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_bonus_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your $10,000 bonus arrives and only about $6,800 hits your account. A coworker says, 'Bonuses are taxed at a brutal 40% rate — that's why.'",
+    "promptTemplate": "Is the coworker right that bonuses are taxed at a higher rate?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Bonuses feel over-taxed because employers usually WITHHOLD federal income tax on them at a flat 22% supplemental rate (plus ~7.65% FICA and any state tax) — often ~30-35% total. But withholding isn't your final tax. At filing, the bonus is taxed at your normal marginal rate like any income; if too much was withheld, you get it back as a refund. The rate isn't a penalty — it's a prepayment estimate.",
+    "conceptChoices": [
+      "No — a bonus isn't taxed at a special higher rate. The ~32% taken out is just WITHHOLDING (22% federal supplemental + ~7.65% FICA + state); your real tax is your marginal rate at filing, and over-withholding comes back",
+      "Yes — bonuses are taxed at a flat 40% penalty rate",
+      "Yes — that's why you should ask to be paid in salary instead",
+      "No — bonuses aren't taxed at all"
+    ],
+    "correctConceptChoice": "No — a bonus isn't taxed at a special higher rate. The ~32% taken out is just WITHHOLDING (22% federal supplemental + ~7.65% FICA + state); your real tax is your marginal rate at filing, and over-withholding comes back",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_dca_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You just got a $12,000 windfall to invest for retirement (30 years out). You're nervous about putting it all in at once in case the market drops next month.",
+    "promptTemplate": "What's the reasonable approach?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "With a 30-year horizon, the biggest risk isn't a bad month — it's staying in cash and missing decades of growth. Historically, investing a lump sum immediately beats dollar-cost-averaging about two-thirds of the time, because markets rise more often than they fall. But DCA (spreading it over, say, 3-6 months) is a reasonable compromise if a sudden drop would make you panic-sell. Either is far better than waiting for a 'safe' moment that never feels safe.",
+    "conceptChoices": [
+      "Get invested — over 30 years, time IN the market beats timing it. Lump sum usually wins historically; if a drop would rattle you, spread it over a few months. Just don't sit in cash waiting",
+      "Wait in cash until the market 'feels safe'",
+      "Put it all in only after the next crash",
+      "Keep it in cash — 30 years is too risky for stocks"
+    ],
+    "correctConceptChoice": "Get invested — over 30 years, time IN the market beats timing it. Lump sum usually wins historically; if a drop would rattle you, spread it over a few months. Just don't sit in cash waiting",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_ontrack_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're 30, earn $60,000, and have $30,000 saved for retirement. A common benchmark is about 1× your salary saved by age 30.",
+    "promptTemplate": "How are you tracking, and what should you do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A common rule of thumb is ~1× salary saved by 30, ~3× by 40, ~6× by 50. At $30,000 vs a $60,000 salary you're at ~0.5× — behind, but not alarmingly so at 30, when decades of compounding do the heavy lifting. The fix is boosting your savings rate now (start with the full employer match) and letting time work. Benchmarks are rough guides — the direction you're heading matters more than the exact multiple.",
+    "conceptChoices": [
+      "About half the ~1×-by-30 benchmark ($30k vs $60k) — a bit behind, but with 35+ years of compounding, raising your savings rate now (and the full match) closes the gap",
+      "Right on track — $30,000 is plenty at 30",
+      "Hopelessly behind — you'll never catch up",
+      "Ahead of schedule — most people have nothing saved at 30"
+    ],
+    "correctConceptChoice": "About half the ~1×-by-30 benchmark ($30k vs $60k) — a bit behind, but with 35+ years of compounding, raising your savings rate now (and the full match) closes the gap",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_hysa_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You keep $10,000 of savings in a checking account earning 0.01% APY. A high-yield savings account (HYSA) offers about 4% APY, FDIC-insured.",
+    "promptTemplate": "Should you move the money, and what's the catch?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A high-yield savings account is just a savings account that pays a competitive rate (often ~4% lately) instead of near-zero. On $10,000 that's ~$400/yr vs ~$1 in typical checking — same FDIC insurance (up to $250k), same easy access, no lockup. For cash you want safe and liquid (emergency fund, near-term goals), it's free money. The only catch: rates float, and savings still won't beat long-term investing for money you won't need for years.",
+    "conceptChoices": [
+      "Yes — a HYSA at ~4% pays ~$400/yr vs ~$1 in checking, with the same FDIC insurance and easy access. For an emergency fund or short-term savings there's no real downside",
+      "No — high-yield accounts are risky and can lose money",
+      "No — the difference is too small to bother with",
+      "Yes — but only if you lock it up for several years"
+    ],
+    "correctConceptChoice": "Yes — a HYSA at ~4% pays ~$400/yr vs ~$1 in checking, with the same FDIC insurance and easy access. For an emergency fund or short-term savings there's no real downside",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_roommate_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A 1-bedroom solo is $1,600/mo. A 2-bedroom with a roommate is $2,200/mo split two ways ($1,100 each). Utilities are similar per person either way.",
+    "promptTemplate": "What's the financial trade-off?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Splitting a larger place almost always beats renting solo. Here: $1,600 solo vs $1,100 with a roommate = $500/mo saved, or $6,000/yr — enough to fund an emergency fund, kill debt, or boost retirement. The cost is privacy and the hassle of sharing. It's a personal trade-off, but the dollar difference is large enough to take seriously, especially early in your career.",
+    "conceptChoices": [
+      "A roommate saves ~$500/mo ($6,000/yr) — $1,100 vs $1,600. That's a meaningful sum to weigh against the loss of privacy",
+      "Solo is cheaper since you don't split anything",
+      "They cost about the same once you add utilities",
+      "A roommate only saves money if rent is over $3,000"
+    ],
+    "correctConceptChoice": "A roommate saves ~$500/mo ($6,000/yr) — $1,100 vs $1,600. That's a meaningful sum to weigh against the loss of privacy",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_renew_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your rent is going from $1,500 to $1,650 (+10%) at renewal. A comparable place across town is $1,500/mo, but moving costs about $2,500 (deposit, movers, fees) plus your time.",
+    "promptTemplate": "Renew or move — and what should you try first?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Compare the ongoing savings to the one-time cost. Moving to the $1,500 place saves $150/mo vs the $1,650 renewal, but moving costs ~$2,500 — so the break-even is about $2,500 ÷ $150 ≈ 17 months. If you'll stay longer, moving wins; if not, renewing is cheaper once you count moving costs and hassle. Before deciding, negotiate: a landlord often prefers keeping a reliable tenant over a vacancy, so ask them to hold or soften the increase.",
+    "conceptChoices": [
+      "Moving saves $150/mo but costs ~$2,500 upfront, so it only pays off if you'll stay ~17+ months. First, try negotiating the renewal — landlords often prefer a known tenant to a vacancy",
+      "Always move — never accept a rent increase",
+      "Always renew — moving is never worth it",
+      "Move only if the increase is over 25%"
+    ],
+    "correctConceptChoice": "Moving saves $150/mo but costs ~$2,500 upfront, so it only pays off if you'll stay ~17+ months. First, try negotiating the renewal — landlords often prefer a known tenant to a vacancy",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_firstmonth_d2",
+    "moduleId": "housing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Rent is $1,500/mo. To move in you need first month + last month + a security deposit (one month) + a $300 application/admin fee.",
+    "promptTemplate": "How much cash do you actually need to move in?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Move-in cost is far more than one month's rent. Here: first ($1,500) + last ($1,500) + security deposit ($1,500) + $300 fee = $4,800 — over 3× the monthly rent. Many renters budget only for the first month and get caught short. Before signing, ask exactly what's due at move-in (some places skip last-month or reduce the deposit), and have that full amount saved.",
+    "conceptChoices": [
+      "About $4,800 — first + last + a one-month deposit ($4,500) plus the $300 fee. Move-in cash is usually 3-4× the monthly rent, not one month",
+      "$1,500 — just the first month's rent",
+      "$3,000 — first and last month only",
+      "$1,800 — first month plus the fee"
+    ],
+    "correctConceptChoice": "About $4,800 — first + last + a one-month deposit ($4,500) plus the $300 fee. Move-in cash is usually 3-4× the monthly rent, not one month",
+    "isApplication": true
   }
 ]
