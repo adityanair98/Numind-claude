@@ -1163,7 +1163,8 @@
       "cc_minimum_payment_scenario",
       "cc_min_balance_d1",
       "cc_new_balance_d2",
-      "cc_interest_check_d2"
+      "cc_interest_check_d2",
+      "debt_decision_minpay_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1265,7 +1266,7 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to see exactly when your card balance hits zero.",
     "relatedCalculatorSlug": "cc_payoff"
   },
@@ -1744,7 +1745,8 @@
       "concept_buy_rent_long_d2",
       "concept_buy_rent_200x_d2",
       "concept_buy_rent_opportunity_d3",
-      "concept_buy_rent_mobility_d3"
+      "concept_buy_rent_mobility_d3",
+      "hou_decision_buyrent_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1752,7 +1754,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when everyone insists renting is 'throwing money away.'",
     "relatedCalculatorSlug": "mortgage"
   },

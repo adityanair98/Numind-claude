@@ -17141,5 +17141,47 @@
     ],
     "correctConceptChoice": "If you can, hold past the 1-year mark — long-term gains are taxed at 15% vs 22% short-term, saving ~$350 here. Caveat: don't hold a position you'd otherwise sell just for the tax break",
     "isApplication": true
+  },
+  {
+    "id": "debt_decision_minpay_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You owe $4,000 on a card at 24% APR. The minimum payment is about $100/mo (mostly interest). You could instead pay a fixed $250/mo.",
+    "promptTemplate": "What's the smart move, and why is the minimum a trap?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The 'minimum payment trap': minimums are set low (often ~2-3% of the balance), and at 24% APR most of that goes to interest, so the balance barely moves. Paying a FIXED amount above the minimum — here $250/mo — clears the $4,000 in about 19 months. Paying only the declining minimum can stretch the same debt across many years and roughly double its cost. The fix: pick a fixed payment you can sustain and hold it steady.",
+    "conceptChoices": [
+      "Pay a fixed $250/mo — that clears the $4,000 in about 19 months. Paying only the ~$100 minimum keeps you in debt for years because most of it goes to interest, not principal",
+      "Pay the minimum — it's the responsible, on-time choice",
+      "Pay the minimum now and a lump sum 'someday'",
+      "It doesn't matter; the total cost works out the same either way"
+    ],
+    "correctConceptChoice": "Pay a fixed $250/mo — that clears the $4,000 in about 19 months. Paying only the ~$100 minimum keeps you in debt for years because most of it goes to interest, not principal",
+    "isApplication": true
+  },
+  {
+    "id": "hou_decision_buyrent_d3",
+    "moduleId": "housing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You found a house you can afford, but you might relocate for work in about 2 years. Buying and later selling carries roughly 6-9%+ in transaction costs (closing fees to buy, agent commission to sell).",
+    "promptTemplate": "Given a likely move in ~2 years, what generally makes more sense?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The biggest factor in buy-vs-rent is your TIME HORIZON. Buying then selling carries large one-time costs — roughly 2-5% to buy plus ~6% agent commission to sell, often 8-11% round-trip — and it usually takes several years of equity and appreciation just to break even on them. With a likely move in ~2 years, renting typically wins; buying tends to pay off only when you'll stay ~5+ years. 'Throwing money away on rent' ignores the interest, taxes, and maintenance you also can't recover as an owner.",
+    "conceptChoices": [
+      "Renting — buying and selling carries ~6-9%+ in transaction costs that rarely recoup in just 2 years; buying usually wins only with a longer horizon (~5+ years)",
+      "Buying — it's always better to own than to 'throw money away' on rent",
+      "Buying — you'll build meaningful equity even in 2 years",
+      "It doesn't matter; buy vs rent is purely personal preference"
+    ],
+    "correctConceptChoice": "Renting — buying and selling carries ~6-9%+ in transaction costs that rarely recoup in just 2 years; buying usually wins only with a longer horizon (~5+ years)",
+    "isApplication": true
   }
 ]
