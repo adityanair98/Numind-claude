@@ -2215,7 +2215,8 @@
       "car_interest_paid_d1",
       "car_monthly_scenario_d2",
       "car_total_compare_d2",
-      "car_term_impact_d3"
+      "car_term_impact_d3",
+      "car_decision_term_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2223,7 +2224,7 @@
       "debt_and_credit"
     ],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this at the dealership when they steer you toward the monthly payment.",
     "relatedCalculatorSlug": "lease_vs_buy"
   },
@@ -2286,7 +2287,8 @@
       "car_20pct_down_d1",
       "car_10pct_rule_d2",
       "car_rule_scenario_d2",
-      "car_afford_check_d3"
+      "car_afford_check_d3",
+      "car_decision_afford_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2294,7 +2296,7 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to know how much car you can actually afford."
   },
   {
@@ -2354,7 +2356,8 @@
       "buy_net_cost_d2",
       "lease_vs_buy_3yr_d3",
       "lease_monthly_d1",
-      "lease_vs_buy_lifetime_d3"
+      "lease_vs_buy_lifetime_d3",
+      "car_decision_lease_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2362,7 +2365,7 @@
       "debt_and_credit"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you're deciding whether to lease or buy.",
     "relatedCalculatorSlug": "lease_vs_buy"
   },
@@ -2443,7 +2446,8 @@
       "sl_monthly_estimate_d1",
       "sl_rule_apply_d2",
       "sl_per10k_compare_d2",
-      "sl_monthly_range_d3"
+      "sl_monthly_range_d3",
+      "sl_decision_borrow_load_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -2451,7 +2455,7 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to estimate your monthly payment before repayment starts.",
     "relatedCalculatorSlug": "student_loan"
   },
@@ -2491,13 +2495,14 @@
       "sl_refi_annual_d1",
       "sl_refi_scenario_d2",
       "sl_refi_compare_d2",
-      "sl_refi_vs_pslf_d3"
+      "sl_refi_vs_pslf_d3",
+      "sl_decision_refi_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before refinancing to weigh savings against lost protections.",
     "relatedCalculatorSlug": "student_loan"
   },
@@ -2581,13 +2586,14 @@
       "sl_grace_total_d1",
       "sl_grace_vs_interest_only_d3",
       "sl_grace_capitalization_d2",
-      "sl_grace_lifetime_d3"
+      "sl_grace_lifetime_d3",
+      "sl_decision_grace_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this during your 6-month grace period before interest piles up."
   },
   {

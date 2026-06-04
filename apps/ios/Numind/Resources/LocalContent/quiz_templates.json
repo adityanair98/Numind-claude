@@ -16574,5 +16574,131 @@
       "False — bonuses aren't subject to federal income tax"
     ],
     "correctConceptChoice": "False — 22% is just withholding; actual tax is determined by your marginal bracket at filing"
+  },
+  {
+    "id": "car_decision_afford_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You earn $60,000/yr ($5,000/mo gross). A $30,000 car is offered with $2,000 down, a 7-year loan at about $430/mo; insurance + gas run about $250/mo.",
+    "promptTemplate": "Does this fit the 20/4/10 guideline, and what should you do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The 20/4/10 rule: put 20% down ($6,000, not $2,000), finance no more than 4 years (not 7), and keep ALL car costs under 10% of gross income ($500/mo; you're at ~$680 with the payment plus insurance and gas). This deal misses all three, signaling real risk of being stretched and underwater. The fix is a cheaper car, a bigger down payment, or a shorter term — not a longer loan.",
+    "conceptChoices": [
+      "No — it misses on all three: too little down, too long a term, and ~$680/mo of car costs against a $500 budget. Look at a cheaper car or save a bigger down payment",
+      "Yes — $430/mo is well under $500, so it's affordable",
+      "No, but only because the down payment is low; the term and the budget are fine",
+      "Yes — 7-year car loans are normal now, so the rule no longer applies"
+    ],
+    "correctConceptChoice": "No — it misses on all three: too little down, too long a term, and ~$680/mo of car costs against a $500 budget. Look at a cheaper car or save a bigger down payment",
+    "isApplication": true
+  },
+  {
+    "id": "car_decision_term_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Same $25,000 car, two financing offers. Option A: 48 months at $575/mo. Option B: 72 months at $410/mo — the salesperson says it's '$165 a month cheaper.'",
+    "promptTemplate": "Which is the better deal, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Total cost = monthly payment × number of months. Option A: $575 × 48 = $27,600. Option B: $410 × 72 = $29,520. The longer term's lower payment actually costs about $1,920 MORE in total and keeps you owing more than the car is worth (underwater) for far longer. Always compare total cost, not the monthly payment — a smaller payment from a longer loan is usually more expensive.",
+    "conceptChoices": [
+      "The 48-month loan — the 72-month's lower payment actually costs about $1,920 more in total ($29,520 vs $27,600) and keeps you underwater longer",
+      "The 72-month loan — a lower monthly payment is always the cheaper choice",
+      "They cost the same; you're just spreading the payments differently",
+      "The 72-month loan — paying for longer builds more credit history"
+    ],
+    "correctConceptChoice": "The 48-month loan — the 72-month's lower payment actually costs about $1,920 more in total ($29,520 vs $27,600) and keeps you underwater longer",
+    "isApplication": true
+  },
+  {
+    "id": "car_decision_lease_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You typically keep a car 8+ years. Lease: $350/mo, and you re-lease again every 3 years. Buy: $480/mo for 5 years, then $0 for years 6-8 once it's paid off.",
+    "promptTemplate": "For someone who keeps cars 8+ years, which is usually cheaper?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Over 8 years: buying costs $480 × 60 = $28,800, then $0 for the last 36 months — and you own the car. Leasing costs $350 × 96 = $33,600 with nothing to show for it. Leasing's lower monthly payment is tempting, but you never stop paying and never build an asset. Leasing tends to win only if you want a new car every 2-3 years and value low payments over ownership.",
+    "conceptChoices": [
+      "Buying — you pay $480/mo for 5 years then nothing for years 6-8 and own the car; leasing means paying $350/mo forever and never owning",
+      "Leasing — the lower $350/mo payment makes it cheaper every month",
+      "Leasing — you always get a newer car, so it's automatically the better value",
+      "They cost about the same over 8 years"
+    ],
+    "correctConceptChoice": "Buying — you pay $480/mo for 5 years then nothing for years 6-8 and own the car; leasing means paying $350/mo forever and never owning",
+    "isApplication": true
+  },
+  {
+    "id": "sl_decision_refi_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You have $40,000 in federal student loans at 6.5%. A private lender offers to refinance to 5.0%, saving about $30/mo. You work at a nonprofit and may pursue public-service loan forgiveness (PSLF).",
+    "promptTemplate": "Should you take the refinance, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Refinancing federal loans into a private loan is a one-way door: you permanently give up PSLF, income-driven repayment, and federal forbearance/deferment. If you might pursue public-service forgiveness, that could mean your whole balance forgiven — worth far more than the ~$30/mo a small rate cut saves. Refinancing mainly makes sense for high-rate PRIVATE loans, or federal loans you're certain you'll repay in full and won't need the safety nets for.",
+    "conceptChoices": [
+      "No — refinancing federal loans into a private loan is permanent and forfeits PSLF and income-driven repayment, which are worth far more than $30/mo on a forgiveness track",
+      "Yes — a lower interest rate always saves money, so refinance",
+      "Yes — the $30/mo savings compounds to a large amount over 10 years",
+      "No — but only because a 1.5-point rate drop isn't big enough"
+    ],
+    "correctConceptChoice": "No — refinancing federal loans into a private loan is permanent and forfeits PSLF and income-driven repayment, which are worth far more than $30/mo on a forgiveness track",
+    "isApplication": true
+  },
+  {
+    "id": "sl_decision_grace_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You graduate with $30,000 in UNSUBSIDIZED federal loans at 6%. During your 6-month grace period, interest accrues at about $150/mo. You can pay the ~$900 of grace-period interest now, or let it capitalize (be added to your principal).",
+    "promptTemplate": "What's the smarter move?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Unsubsidized loans accrue interest even during school and the grace period. If you don't pay it, that interest CAPITALIZES — it's added to your principal when repayment starts, so you then pay interest on a bigger balance (interest on interest). Paying the ~$900 during grace keeps your principal at $30,000. (Subsidized loans are different: the government covers the interest during school and grace, so this doesn't apply to them.)",
+    "conceptChoices": [
+      "Pay the ~$900 of interest before it capitalizes — otherwise it's added to your $30,000 principal and you pay interest on it for years",
+      "Let it capitalize — interest during the grace period is free",
+      "Let it capitalize — $900 is too small to matter",
+      "Pay it only if your loans are subsidized"
+    ],
+    "correctConceptChoice": "Pay the ~$900 of interest before it capitalizes — otherwise it's added to your $30,000 principal and you pay interest on it for years",
+    "isApplication": true
+  },
+  {
+    "id": "sl_decision_borrow_load_d2",
+    "moduleId": "student_loans",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You'll graduate owing about $50,000 in federal loans (~6% over 10 years ≈ $555/mo). Your field's typical starting salary is about $45,000/yr (~$3,000/mo take-home).",
+    "promptTemplate": "Is this a manageable debt load, and what does it imply?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A common guideline: keep total student-loan payments under ~10% of gross income, and try to keep total borrowing at or below your expected first-year salary. Here, $50,000 of debt ≈ your $45,000 salary (borderline), and $555/mo is roughly 18% of your take-home — about double the comfortable level. It doesn't mean don't go, but it's a signal to borrow less where you can and plan for a lean first year or two.",
+    "conceptChoices": [
+      "It's on the high side — $555/mo is about 18% of your take-home, well above the ~10% guideline. Consider borrowing less or planning for a tight budget early on",
+      "It's fine — $555/mo is affordable on any salary",
+      "It's hopeless — you'll never be able to repay $50,000",
+      "It's fine because federal loans are always affordable no matter the balance"
+    ],
+    "correctConceptChoice": "It's on the high side — $555/mo is about 18% of your take-home, well above the ~10% guideline. Consider borrowing less or planning for a tight budget early on",
+    "isApplication": true
   }
 ]
