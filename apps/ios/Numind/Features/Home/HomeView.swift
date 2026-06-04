@@ -133,30 +133,26 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Score detail sheet
+    // MARK: - Level & Readiness detail sheet
 
     private var scoreDetailSheet: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Tier hero banner + large ring
-                    tierHeroBanner
+                    levelHero
                         .padding(.top, 4)
 
-                    // 4-node progression ladder
-                    tierProgressionStrip
+                    // Coverage diagnostic (mastered / total per axis)
+                    coverageCard
 
-                    // Radar / bar chart
-                    scoreChartCard
-
-                    // Per-module breakdown
-                    moduleBreakdownCard
+                    // The honest competence surface: per-pack Readiness
+                    readinessBoardCard
                 }
                 .padding(.horizontal, Theme.Spacing.screenHorizontal)
                 .padding(.vertical, 12)
             }
             .background(Theme.Colors.softBackground.ignoresSafeArea())
-            .navigationTitle("Numind Score")
+            .navigationTitle("Level & Readiness")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -168,57 +164,48 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Tier hero banner
+    // MARK: - Level hero
 
-    private var tierHeroBanner: some View {
-        let tier = ScoreTier(score: progressStore.numindScore)
-        let ptsToNext = tier.pointsToNext(from: progressStore.numindScore)
-
-        return NumindCard {
+    private var levelHero: some View {
+        NumindCard {
             HStack(spacing: 20) {
-                // Large ring
-                NumindScoreRing(score: progressStore.numindScore,
-                                delta: progressStore.numindScoreDelta,
-                                size: 110)
+                LevelRing(level: progressStore.level,
+                          progress: progressStore.levelProgress,
+                          size: 110)
 
                 VStack(alignment: .leading, spacing: 8) {
-                    // Tier badge
-                    HStack(spacing: 6) {
-                        Image(systemName: tier.icon)
-                            .font(.system(size: 13, weight: .bold))
-                        Text(tier.name.uppercased())
-                            .font(.system(size: 12, weight: .bold))
-                            .kerning(0.5)
-                    }
-                    .foregroundStyle(tier.color)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(tier.color.opacity(0.12))
-                    .clipShape(Capsule())
+                    Text("LEVEL \(progressStore.level)")
+                        .font(.system(size: 12, weight: .heavy))
+                        .foregroundStyle(Theme.Colors.mutedText)
+                        .kerning(0.5)
+                    Text("\(progressStore.xp) XP")
+                        .font(.system(size: 28, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.deepNavy)
 
-                    // Delta line
-                    if progressStore.numindScoreDelta != 0 {
-                        let up = progressStore.numindScoreDelta > 0
-                        HStack(spacing: 4) {
-                            Image(systemName: up ? "arrow.up.right" : "arrow.down.right")
-                                .font(.system(size: 11, weight: .bold))
-                            Text(up
-                                 ? "+\(progressStore.numindScoreDelta) pts this week"
-                                 : "\(progressStore.numindScoreDelta) pts this week")
-                                .font(.system(size: 12, weight: .semibold))
-                        }
-                        .foregroundStyle(up ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
-                    }
-
-                    // Next tier callout
-                    if let pts = ptsToNext, let next = tier.next {
-                        Text("\(pts) pts to \(next.name)")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundStyle(Theme.Colors.mutedText)
+                    // Next-level hint — honest when depth-gated.
+                    if progressStore.isDepthGated {
+                        Label("Master a lesson's hard questions to reach Level \(progressStore.level + 1)",
+                              systemImage: "lock.fill")
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.warmOrange)
+                            .fixedSize(horizontal: false, vertical: true)
+                    } else if let toNext = progressStore.xpToNextLevel {
+                        Text("\(toNext) XP to Level \(progressStore.level + 1)")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.primaryBlue)
                     } else {
-                        Text("You've reached the top tier \u{1F451}")
-                            .font(.system(size: 12, weight: .medium))
+                        Text("Top level reached 🎉")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                    }
+
+                    // Decisions you're ready for — the competence headline.
+                    if progressStore.readyPackCount > 0 {
+                        Label("\(progressStore.readyPackCount) decision path\(progressStore.readyPackCount == 1 ? "" : "s") you're ready for",
+                              systemImage: "checkmark.seal.fill")
+                            .font(.system(size: 12, weight: .bold))
                             .foregroundStyle(Theme.Colors.growthGreen)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 Spacer(minLength: 0)
@@ -226,165 +213,66 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Tier progression strip
+    // MARK: - Skill coverage (diagnostic)
 
-    private var tierProgressionStrip: some View {
-        let currentTier = ScoreTier(score: progressStore.numindScore)
-        let score = progressStore.numindScore
-        let tiers = ScoreTier.allCases
-
+    private var coverageCard: some View {
+        let coverage = progressStore.axisCoverage
         return NumindCard {
             VStack(alignment: .leading, spacing: 14) {
-                Text("YOUR JOURNEY")
+                Text("SKILL COVERAGE")
                     .font(.system(size: 10, weight: .bold))
                     .foregroundStyle(Theme.Colors.mutedText)
                     .kerning(0.6)
 
-                // Node strip
-                HStack(spacing: 0) {
-                    ForEach(Array(tiers.enumerated()), id: \.offset) { i, tier in
-                        // Node
-                        let isReached = score >= tier.minScore
-                        let isCurrent = tier == currentTier
-
-                        VStack(spacing: 6) {
-                            ZStack {
-                                Circle()
-                                    .fill(isReached ? tier.color : Theme.Colors.mutedTint)
-                                    .frame(width: isCurrent ? 36 : 28, height: isCurrent ? 36 : 28)
-
-                                Image(systemName: tier.icon)
-                                    .font(.system(size: isCurrent ? 15 : 11, weight: .bold))
-                                    .foregroundStyle(isReached ? .white : Theme.Colors.mutedText)
-                            }
-                            .shadow(color: isCurrent ? tier.color.opacity(0.4) : .clear,
-                                    radius: 6, y: 2)
-
-                            Text(tier.name)
-                                .font(.system(size: 9, weight: isCurrent ? .bold : .medium))
-                                .foregroundStyle(isCurrent ? tier.color : Theme.Colors.mutedText)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(2)
-                                .frame(width: 52)
-                        }
-
-                        // Connector line between nodes
-                        if i < tiers.count - 1 {
-                            let nextTier = tiers[i + 1]
-                            let nextReached = score >= nextTier.minScore
-                            Rectangle()
-                                .fill(nextReached
-                                      ? LinearGradient(colors: [tier.color, nextTier.color],
-                                                       startPoint: .leading, endPoint: .trailing)
-                                      : LinearGradient(colors: [Theme.Colors.mutedTint, Theme.Colors.mutedTint],
-                                                       startPoint: .leading, endPoint: .trailing))
-                                .frame(height: 2)
-                                .offset(y: -12) // align with node centers
-                                .frame(maxWidth: .infinity)
-                        }
-                    }
+                // Coverage shape (mastered / total) — NOT a competence grade.
+                let axes = coverage.map {
+                    RadarChartView.Axis(label: $0.axis.shortName, value: $0.fraction)
                 }
-                .frame(maxWidth: .infinity)
-
-                // Score threshold labels
-                HStack(spacing: 0) {
-                    ForEach(Array(tiers.enumerated()), id: \.offset) { i, tier in
-                        Text(tier.minScore == 0 ? "Start" : "\(tier.minScore)+")
-                            .font(.system(size: 9, weight: .medium))
-                            .foregroundStyle(score >= tier.minScore ? tier.color : Theme.Colors.mutedText)
-                            .frame(maxWidth: .infinity)
-                        if i < tiers.count - 1 {
-                            Spacer(minLength: 0).frame(maxWidth: .infinity)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private var scoreChartCard: some View {
-        let results = progressStore.numindAxisResults
-        return NumindCard {
-            VStack(alignment: .leading, spacing: 14) {
-                Text("PERFORMANCE BY SKILL")
-                    .font(.system(size: 10, weight: .bold))
-                    .foregroundStyle(Theme.Colors.mutedText)
-                    .kerning(0.6)
-
-                // 7-axis radar. Untested axes render at 0 (dim spoke);
-                // measured axes scale to their score / 100.
-                let current = results.map { r in
-                    RadarChartView.Axis(
-                        label: r.axis.shortName,
-                        value: r.evidence == .notStarted ? 0 : Double(r.score) / 100.0
-                    )
-                }
-                let previous: [RadarChartView.Axis]? = results.allSatisfy({
-                    progressStore.numindScore(forAxis: $0.axis, daysAgo: 7) != nil
-                })
-                ? results.map { r in
-                    RadarChartView.Axis(
-                        label: r.axis.shortName,
-                        value: Double(progressStore.numindScore(forAxis: r.axis, daysAgo: 7) ?? 0) / 100.0
-                    )
-                }
-                : nil
-                RadarChartView(axes: current, previousAxes: previous, size: 220)
+                RadarChartView(axes: axes, previousAxes: nil, size: 220)
                     .frame(maxWidth: .infinity)
 
-                if progressStore.numindScore == 0 {
-                    Text("Complete your first lesson to see your Numind Score.")
-                        .font(Theme.Typography.caption)
-                        .foregroundStyle(Theme.Colors.mutedText)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity)
+                Text("How much of each area you've locked in — not a grade.")
+                    .font(Theme.Typography.small)
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .frame(maxWidth: .infinity, alignment: .center)
+
+                Divider().background(Theme.Colors.hairline)
+
+                ForEach(coverage) { row in
+                    HStack(spacing: 12) {
+                        Image(systemName: skillIcon(row.axis))
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(skillColor(row.axis))
+                            .frame(width: 32, height: 32)
+                            .background(skillColor(row.axis).opacity(0.12))
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                        Text(row.axis.displayName)
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Spacer()
+                        Text("\(row.mastered)/\(row.total)")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundStyle(row.mastered > 0
+                                ? skillColor(row.axis) : Theme.Colors.mutedText)
+                    }
+                    .padding(.vertical, 4)
                 }
             }
         }
     }
 
-    /// Per-axis score breakdown — rendered below the radar in the score
-    /// detail sheet. Each row shows the axis name, score, and evidence
-    /// label (Untested / Early Read / Developing / Reliable).
-    private var moduleBreakdownCard: some View {
-        let results = progressStore.numindAxisResults
-        return NumindCard {
-            VStack(alignment: .leading, spacing: 12) {
-                Text("SKILL SCORES")
-                    .font(.system(size: 10, weight: .bold))
-                    .foregroundStyle(Theme.Colors.mutedText)
-                    .kerning(0.6)
+    // MARK: - Pack readiness board
 
-                ForEach(Array(results.enumerated()), id: \.element.axis) { i, r in
-                    HStack(spacing: 12) {
-                        Image(systemName: skillIcon(r.axis))
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(skillColor(r.axis))
-                            .frame(width: 32, height: 32)
-                            .background(skillColor(r.axis).opacity(0.12))
-                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(r.axis.displayName)
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundStyle(Theme.Colors.deepNavy)
-                            Text(r.evidence.label)
-                                .font(.system(size: 11, weight: .medium))
-                                .foregroundStyle(evidenceColor(r.evidence))
-                        }
-                        Spacer()
-                        Text("\(r.score)")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .foregroundStyle(r.evidence == .notStarted
-                                ? Theme.Colors.mutedText
-                                : skillColor(r.axis))
-                    }
-                    .padding(.vertical, 4)
-
-                    if i < results.count - 1 {
-                        Divider().background(Theme.Colors.hairline)
-                    }
-                }
-            }
+    private var readinessBoardCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("DECISIONS YOU'RE GETTING READY FOR")
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(Theme.Colors.mutedText)
+                .kerning(0.6)
+            PackReadinessBoard(rows: LocalContentRepository().allPacks().map {
+                PackReadinessBoard.Row(id: $0.id, title: $0.title,
+                                       state: progressStore.readiness(for: $0))
+            })
         }
     }
 
@@ -411,15 +299,6 @@ struct HomeView: View {
         case .bigPurchases:         return Theme.Colors.housingRose
         case .protectionAndBenefits: return Theme.Colors.insurancePurple
         case .investingAndFuture:   return Theme.Colors.growthGreen
-        }
-    }
-
-    private func evidenceColor(_ level: EvidenceLevel) -> Color {
-        switch level {
-        case .notStarted: return Theme.Colors.mutedText.opacity(0.55)
-        case .warmingUp:  return Theme.Colors.warmOrange
-        case .developing: return Theme.Colors.primaryBlue
-        case .reliable:   return Theme.Colors.growthGreen
         }
     }
 
@@ -450,9 +329,9 @@ struct HomeView: View {
                 axis: r.axis,
                 score: r.score,
                 evidence: r.evidence,
-                // Previous-week per-axis score comes straight from the
-                // snapshot history. Nil collapses gracefully in the radar.
-                previousScore: progressStore.numindScore(forAxis: r.axis, daysAgo: 7)
+                // Phase 9: composite score history is retired, so there's no
+                // prior-week overlay. Nil collapses gracefully in the radar.
+                previousScore: nil
             )
         }
         // Derive which axes appeared in this session's questions, via the

@@ -21,6 +21,7 @@
 		0F8D61E688F3E4D0E0CB7B75 /* NumindScoreRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71CD228AFCA2960955F0107 /* NumindScoreRing.swift */; };
 		9D0E0001A0B0C0D0E0F00007 /* LevelRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00008 /* LevelRing.swift */; };
 		9D0E0001A0B0C0D0E0F00009 /* ReadinessBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */; };
+		9D0E0001A0B0C0D0E0F0000B /* PackReadinessBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F0000C /* PackReadinessBoard.swift */; };
 		11B7027F6BE80FD314557ABD /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25112B5A1394145F294F64F /* LearnView.swift */; };
 		12F3444AA03E49F31E5139F1 /* ProgressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70F32E91A8A127C7D47AF1 /* ProgressData.swift */; };
 		159C34E9B830677B6780C663 /* MilestoneEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3CE5796EEC5790405D2E47 /* MilestoneEngine.swift */; };
@@ -277,6 +278,7 @@
 		A71CD228AFCA2960955F0107 /* NumindScoreRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindScoreRing.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F00008 /* LevelRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelRing.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessBadge.swift; sourceTree = "<group>"; };
+		9D0E0001A0B0C0D0E0F0000C /* PackReadinessBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackReadinessBoard.swift; sourceTree = "<group>"; };
 		AA70F32E91A8A127C7D47AF1 /* ProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressData.swift; sourceTree = "<group>"; };
 		AB886BF64295F4447C9EC146 /* AspirationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspirationPickerView.swift; sourceTree = "<group>"; };
 		AC02588669C25EEC373E8D3C /* DailyChallengeEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallengeEngine.swift; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 				A71CD228AFCA2960955F0107 /* NumindScoreRing.swift */,
 				9D0E0001A0B0C0D0E0F00008 /* LevelRing.swift */,
 				9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */,
+				9D0E0001A0B0C0D0E0F0000C /* PackReadinessBoard.swift */,
 				4139506B71190E6A45FF4430 /* NumpadView.swift */,
 				64F4759DFD820F280A98D905 /* OnboardingMultiCard.swift */,
 				D4C77E46621002C8A706DE22 /* OnboardingProgressBar.swift */,
@@ -1031,6 +1034,7 @@
 				0F8D61E688F3E4D0E0CB7B75 /* NumindScoreRing.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00007 /* LevelRing.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00009 /* ReadinessBadge.swift in Sources */,
+				9D0E0001A0B0C0D0E0F0000B /* PackReadinessBoard.swift in Sources */,
 				40CBB2EB7E0DCD4F862C5020 /* NumpadView.swift in Sources */,
 				B73D90DD8DC39CFC4A282CC6 /* OnboardingFlowView.swift in Sources */,
 				F3741ABD71ED1C39329DDA51 /* OnboardingMultiCard.swift in Sources */,

@@ -1,5 +1,17 @@
 import Foundation
 
+/// Per-axis lesson coverage (Phase 9): how many lessons whose *primary* skill is
+/// this axis the user has mastered, out of the total. The honest replacement for
+/// the old 0–100 per-axis composite — it answers "how much have you locked in
+/// here," not "how good are you" (a verdict the app can't validate).
+struct AxisCoverage: Identifiable {
+    var id: String { axis.rawValue }
+    let axis: SkillAxis
+    let mastered: Int
+    let total: Int
+    var fraction: Double { total > 0 ? Double(mastered) / Double(total) : 0 }
+}
+
 @MainActor
 final class ProgressStore: ObservableObject {
     private static let defaultsKey       = "numind.progress.v3"
@@ -439,6 +451,27 @@ final class ProgressStore: ObservableObject {
 
     /// Number of packs the user is Ready/Sharp on — the Home competence headline.
     var readyPackCount: Int { ReadinessEngine.readyPackCount(data: data) }
+
+    /// Per-axis lesson coverage (mastered / total) by primary skill axis.
+    /// Drives the coverage radar + rows on Home and Progress.
+    var axisCoverage: [AxisCoverage] {
+        let repo = LocalContentRepository()
+        let mastered = masteredLessonIds
+        var counts: [SkillAxis: (m: Int, t: Int)] = [:]
+        for axis in SkillAxis.allCases { counts[axis] = (0, 0) }
+        for module in repo.allModules() {
+            for lesson in repo.lessons(for: module.id) {
+                guard let axis = lesson.primarySkill else { continue }
+                var e = counts[axis] ?? (0, 0)
+                e.t += 1
+                if mastered.contains(lesson.id) { e.m += 1 }
+                counts[axis] = e
+            }
+        }
+        return SkillAxis.allCases.map {
+            AxisCoverage(axis: $0, mastered: counts[$0]?.m ?? 0, total: counts[$0]?.t ?? 0)
+        }
+    }
 
     /// Mastered skills that have gone stale (overdue) — surfaced as refresh opportunities.
     var staleSkillCount: Int {

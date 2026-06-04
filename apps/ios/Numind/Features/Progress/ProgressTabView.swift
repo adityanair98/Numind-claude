@@ -253,38 +253,8 @@ struct ProgressTabView: View {
     // MARK: - Skill coverage (mastered / total per axis, Phase 9)
     // ═══════════════════════════════════════════════════════════════
 
-    /// Per-axis lesson coverage: how many lessons whose *primary* skill is this
-    /// axis the user has mastered, out of the total. The honest replacement for
-    /// the old 0–100 per-axis composite — it answers "how much have you locked
-    /// in here," not "how good are you" (a verdict the app can't validate).
-    private struct AxisCoverage: Identifiable {
-        var id: String { axis.rawValue }
-        let axis: SkillAxis
-        let mastered: Int
-        let total: Int
-        var fraction: Double { total > 0 ? Double(mastered) / Double(total) : 0 }
-    }
-
-    private var axisCoverage: [AxisCoverage] {
-        let mastered = store.masteredLessonIds
-        var counts: [SkillAxis: (m: Int, t: Int)] = [:]
-        for axis in SkillAxis.allCases { counts[axis] = (0, 0) }
-        for module in modules {
-            for lesson in repo.lessons(for: module.id) {
-                guard let axis = lesson.primarySkill else { continue }
-                var e = counts[axis] ?? (0, 0)
-                e.t += 1
-                if mastered.contains(lesson.id) { e.m += 1 }
-                counts[axis] = e
-            }
-        }
-        return SkillAxis.allCases.map {
-            AxisCoverage(axis: $0, mastered: counts[$0]?.m ?? 0, total: counts[$0]?.t ?? 0)
-        }
-    }
-
     private var skillCoverageCard: some View {
-        let coverage = axisCoverage
+        let coverage = store.axisCoverage
         return NumindCard {
             VStack(alignment: .leading, spacing: 16) {
                 // Diagnostic radar — coverage shape (mastered / total), NOT a
@@ -339,42 +309,9 @@ struct ProgressTabView: View {
     /// next action that would advance it. The decision-scoped competence
     /// surface that replaced the global composite.
     private var packReadinessBoard: some View {
-        let packs = repo.allPacks()
-        return VStack(spacing: 0) {
-            ForEach(Array(packs.enumerated()), id: \.element.id) { i, pack in
-                let state = store.readiness(for: pack)
-                VStack(spacing: 0) {
-                    HStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(pack.title)
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundStyle(Theme.Colors.deepNavy)
-                                .lineLimit(1)
-                            if case .almostReady(_, let nextAction) = state {
-                                Text(nextAction)
-                                    .font(.system(size: 11))
-                                    .foregroundStyle(Theme.Colors.mutedText)
-                                    .lineLimit(1)
-                            }
-                        }
-                        Spacer(minLength: 8)
-                        ReadinessBadge(state: state)
-                    }
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 16)
-                    if i < packs.count - 1 {
-                        Divider().padding(.leading, 16)
-                    }
-                }
-            }
-        }
-        .background(Theme.Colors.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
-                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
-        )
-        .shadow(color: .black.opacity(0.06), radius: 7, y: 3)
+        PackReadinessBoard(rows: repo.allPacks().map {
+            PackReadinessBoard.Row(id: $0.id, title: $0.title, state: store.readiness(for: $0))
+        })
     }
 
     // ═══════════════════════════════════════════════════════════════
