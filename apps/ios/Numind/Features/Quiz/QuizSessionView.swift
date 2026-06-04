@@ -375,7 +375,7 @@ struct QuizSessionView: View {
     }
 
     private func resultHeroCard(isCorrect: Bool) -> some View {
-        let speedBonus = viewModel.currentSpeedBonus
+        let questionXP = viewModel.currentQuestionXP
         return NumindCard(background: isCorrect ? Theme.Colors.mindTealTint : Theme.Colors.warmOrangeTint) {
             VStack(spacing: 12) {
                 ZStack {
@@ -390,25 +390,9 @@ struct QuizSessionView: View {
                     .font(Theme.Typography.title)
                     .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
                 if isCorrect {
-                    VStack(spacing: 6) {
-                        Text("🎉 +10 XP · streak +1")
-                            .font(Theme.Typography.caption)
-                            .foregroundStyle(Theme.Colors.mindTeal)
-                        if speedBonus > 0 {
-                            HStack(spacing: 4) {
-                                Image(systemName: "bolt.fill")
-                                    .font(.system(size: 10, weight: .bold))
-                                Text("+\(speedBonus) XP speed bonus!")
-                                    .font(.system(size: 11, weight: .bold))
-                            }
-                            .foregroundStyle(Theme.Colors.insightText)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 4)
-                            .background(Theme.Colors.insightYellowTint)
-                            .clipShape(Capsule())
-                            .transition(.scale(scale: 0.85).combined(with: .opacity))
-                        }
-                    }
+                    Text("🎉 +\(questionXP) XP · streak +1")
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.mindTeal)
                 } else {
                     Text("No penalty — keep going.")
                         .font(Theme.Typography.caption)
@@ -416,7 +400,7 @@ struct QuizSessionView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: speedBonus)
+            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: questionXP)
         }
     }
 

@@ -161,17 +161,6 @@ struct SessionSummaryView: View {
                     .contentTransition(.numericText())
                     .animation(.easeOut(duration: 0.7).delay(0.3), value: xpAnimated)
 
-                if viewModel.bonusXP > 0 {
-                    HStack(spacing: 4) {
-                        Image(systemName: "bolt.fill")
-                            .font(.system(size: 10, weight: .bold))
-                        Text("+\(viewModel.bonusXP) XP speed bonus included")
-                            .font(.system(size: 12, weight: .semibold))
-                    }
-                    .foregroundStyle(Theme.Colors.insightText)
-                    .transition(.opacity.combined(with: .scale(scale: 0.9)))
-                }
-
                 if showPersonalBest {
                     HStack(spacing: 6) {
                         Text("🏆")

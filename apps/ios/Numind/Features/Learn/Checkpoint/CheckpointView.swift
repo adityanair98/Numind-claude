@@ -109,7 +109,6 @@ struct CheckpointView: View {
             totalCount: vm.total
         )
         record.questionResults = vm.questionResults
-        record.bonusXP         = vm.bonusXP
         progressStore.recordSession(record)
         newBadgeIds = progressStore.newlyEarnedBadgeIds
         sessionNumindScore = progressStore.level

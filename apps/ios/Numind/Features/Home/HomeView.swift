@@ -763,8 +763,6 @@ struct HomeView: View {
                 totalCount: results.count
             )
             record.questionResults = results
-            // Attach bonus XP only to the first sub-session to avoid double-counting.
-            record.bonusXP = i == 0 ? vm.bonusXP : 0
             progressStore.recordSession(record)
         }
     }

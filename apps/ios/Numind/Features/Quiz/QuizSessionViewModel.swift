@@ -106,38 +106,25 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     // MARK: - XP
 
-    /// Seconds thresholds and bonus amounts for speed XP.
-    static let speedFastSeconds: Double = 5
-    static let speedGoodSeconds: Double = 10
-    static let speedFastBonus:   Int    = 5
-    static let speedGoodBonus:   Int    = 2
-
     var correctCount: Int { results.filter(\.isCorrect).count }
 
-    /// Base XP: 10 per correct answer.
-    var xpEarned: Int { correctCount * 10 }
-
-    /// Speed bonus XP for the question currently showing feedback.
-    var currentSpeedBonus: Int {
-        guard case .feedback = sessionState, isCorrectAnswer else { return 0 }
-        return Self.speedBonus(for: lastQuestionTimeSpent)
-    }
-
-    /// Total speed bonus XP across all completed questions in this session.
-    var bonusXP: Int {
+    /// Session XP — difficulty-weighted per the Phase 9 model (easy 10 /
+    /// medium 15 / hard 25). Speed no longer affects XP (the speed bonus was
+    /// retired with the composite score).
+    var xpEarned: Int {
         results.reduce(0) { acc, r in
-            acc + (r.isCorrect ? Self.speedBonus(for: r.timeSpentSeconds) : 0)
+            acc + (r.isCorrect ? MomentumEngine.xp(for: r.question.difficulty) : 0)
         }
     }
 
-    /// Total XP including speed bonuses — use this for display and storage.
-    var totalXP: Int { xpEarned + bonusXP }
-
-    private static func speedBonus(for seconds: Double) -> Int {
-        if seconds < speedFastSeconds { return speedFastBonus }
-        if seconds < speedGoodSeconds { return speedGoodBonus }
-        return 0
+    /// XP just earned for the question currently showing feedback (0 if wrong).
+    var currentQuestionXP: Int {
+        guard case .feedback = sessionState, isCorrectAnswer else { return 0 }
+        return MomentumEngine.xp(for: currentQuestion.difficulty)
     }
+
+    /// Total session XP (difficulty-weighted). Used for display and storage.
+    var totalXP: Int { xpEarned }
 
     /// Maps completed results to the Codable `QuestionResult` type for `SessionRecord`.
     var questionResults: [QuestionResult] {
