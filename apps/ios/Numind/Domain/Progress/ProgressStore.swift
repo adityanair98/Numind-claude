@@ -38,12 +38,12 @@ final class ProgressStore: ObservableObject {
            let decoded = try? JSONDecoder().decode(ProgressData.self, from: raw) {
             data = decoded
         } else if let legacyRaw = UserDefaults.standard.data(forKey: Self.legacyDefaultsKey),
-                  var decoded = try? JSONDecoder().decode(ProgressData.self, from: legacyRaw) {
-            // v1 → v2 migration: sessions/badges/freezes survive; scoreHistory
-            // is dropped so it recomputes on next session under the new
-            // axis-based engine. We don't yet have real users, so this is a
-            // dev-data safety net (not a user-facing migration).
-            decoded.scoreHistory = []
+                  let decoded = try? JSONDecoder().decode(ProgressData.self, from: legacyRaw) {
+            // Legacy → current migration: sessions/badges/freezes survive.
+            // The retired composite `scoreHistory`/`pinnedAxes` keys simply drop
+            // out (JSONDecoder ignores unknown keys). XP/Level/Readiness all
+            // recompute from the session log. We don't yet have real users, so
+            // this is a dev-data safety net (not a user-facing migration).
             data = decoded
         } else {
             data = ProgressData()
@@ -85,14 +85,12 @@ final class ProgressStore: ObservableObject {
         let nowEarned = BadgeEvaluator.earned(from: data)
         newlyEarnedBadgeIds = nowEarned.subtracting(previouslyEarned)
         data.earnedBadgeIds = nowEarned
-        // Recompute Numind Score after every session so the radar + score ring
-        // always reflect the latest performance without extra callsite boilerplate.
-        let repo = LocalContentRepository()
-        let moduleIds = repo.allModules().map(\.id)
-        recomputeAndStoreScore(moduleIds: moduleIds)
-        // persist() is called inside recomputeAndStoreScore — no double write needed.
+        // Phase 9: XP/Level/Readiness are pure functions over the session log —
+        // nothing to recompute or persist beyond the session itself.
+        persist()
 
         // Check for milestone celebrations.
+        let repo = LocalContentRepository()
         let allModules = repo.allModules()
         let moduleNames = Dictionary(uniqueKeysWithValues: allModules.map { ($0.id, $0.title) })
         let moduleLessonCounts = Dictionary(uniqueKeysWithValues: allModules.map { ($0.id, $0.lessonIds.count) })
@@ -101,7 +99,9 @@ final class ProgressStore: ObservableObject {
             after: data,
             shownIds: data.shownMilestoneIds,
             moduleNames: moduleNames,
-            moduleLessonCounts: moduleLessonCounts
+            moduleLessonCounts: moduleLessonCounts,
+            beforeLevel: level(of: snapshotBefore),
+            afterLevel: level(of: data)
         )
 
         // Detect newly-completed packs and worlds for the celebration queue.
@@ -295,20 +295,6 @@ final class ProgressStore: ObservableObject {
         persist()
     }
 
-    // MARK: - Pinned axes (Phase 6a)
-
-    /// Axes the user has pinned in Profile. Used by `recomputeAndStoreScore`
-    /// to reweight the composite.
-    var pinnedAxes: Set<SkillAxis> { data.pinnedAxes }
-
-    /// Set the user's pinned axes (max 3). Recomputes the score so the
-    /// header reflects the new weighting immediately.
-    func setPinnedAxes(_ axes: Set<SkillAxis>) {
-        data.pinnedAxes = Set(axes.prefix(3))
-        let repo = LocalContentRepository()
-        recomputeAndStoreScore(moduleIds: repo.allModules().map(\.id))
-    }
-
     // MARK: - Milestones
 
     /// Marks a milestone as shown so it won't fire again.
@@ -407,28 +393,35 @@ final class ProgressStore: ObservableObject {
 
     // MARK: - Momentum (XP + Level, Phase 9)
 
-    /// Real lesson IDs the user has mastered (excludes daily/bonus/recall
+    /// Real lesson IDs mastered in a given snapshot (excludes daily/bonus/recall
     /// pseudo-lessons, which share the `lessonId` field but aren't curriculum).
-    private var masteredRealLessonIds: Set<String> {
+    private func masteredRealLessonIds(in d: ProgressData) -> Set<String> {
         let repo = LocalContentRepository()
         let real = Set(repo.allModules().flatMap { repo.lessons(for: $0.id).map(\.id) })
-        return masteredLessonIds.intersection(real)
+        let mastered = Set(d.sessions.map(\.lessonId)).filter { d.hasMasteredLesson($0) }
+        return mastered.intersection(real)
     }
 
-    /// Lifetime XP — the effort currency. Monotonic; pure over the session log.
-    var xp: Int {
+    /// Lifetime XP for a snapshot — the effort currency. Monotonic; pure.
+    func xp(of d: ProgressData) -> Int {
         MomentumEngine.totalXP(
-            sessions: data.sessions,
-            masteredLessonCount: masteredRealLessonIds.count,
-            readyPackCount: ReadinessEngine.readyPackCount(data: data)
+            sessions: d.sessions,
+            masteredLessonCount: masteredRealLessonIds(in: d).count,
+            readyPackCount: ReadinessEngine.readyPackCount(data: d)
         )
     }
 
-    /// Effective level — XP ladder, depth-gated above L8.
-    var level: Int {
-        let deep = masteredRealLessonIds.filter { data.masteredWithHard($0) }.count
-        return MomentumEngine.level(xp: xp, deepMasteryCount: deep)
+    /// Effective level for a snapshot — XP ladder, depth-gated above L8.
+    func level(of d: ProgressData) -> Int {
+        let deep = masteredRealLessonIds(in: d).filter { d.masteredWithHard($0) }.count
+        return MomentumEngine.level(xp: xp(of: d), deepMasteryCount: deep)
     }
+
+    /// Lifetime XP — the effort currency. Monotonic; pure over the session log.
+    var xp: Int { xp(of: data) }
+
+    /// Effective level — XP ladder, depth-gated above L8.
+    var level: Int { level(of: data) }
 
     var xpToNextLevel: Int? { MomentumEngine.xpToNextLevel(xp) }
     var levelProgress: Double { MomentumEngine.levelProgress(xp) }
@@ -438,7 +431,7 @@ final class ProgressStore: ObservableObject {
     /// question, or a pack reaching Ready). Drives honest "earn a deep mastery"
     /// copy instead of an "X XP to go" bar that would never move.
     var isDepthGated: Bool {
-        let deep = masteredRealLessonIds.filter { data.masteredWithHard($0) }.count
+        let deep = masteredRealLessonIds(in: data).filter { data.masteredWithHard($0) }.count
         return MomentumEngine.isDepthGated(xp: xp, deepMasteryCount: deep)
     }
 
@@ -587,53 +580,12 @@ final class ProgressStore: ObservableObject {
         LocalContentRepository().inProgressPacks(masteredLessonIds: masteredLessonIds)
     }
 
-    // MARK: - Numind Score
-
-    /// Current overall Numind Score (0–100). 0 if no score has been computed yet.
-    var numindScore: Int { data.scoreHistory.last?.overallScore ?? 0 }
-
-    /// Latest score for a specific module (0–100). 0 if never computed.
-    /// Compatibility shim: in the 7-axis world we average the lessons'
-    /// primary-axis scores from the most recent snapshot.
-    func numindScore(for moduleId: String) -> Int {
-        guard let entry = data.scoreHistory.last else { return 0 }
-        // Map module → primary axes of its lessons.
-        let lessons = LocalContentRepository().lessons(for: moduleId)
-        let primaryAxes = Set(lessons.compactMap { $0.primarySkill?.rawValue })
-        let scores = primaryAxes.compactMap { entry.axisScores[$0] }
-        guard !scores.isEmpty else { return 0 }
-        return scores.reduce(0, +) / scores.count
-    }
-
-    /// Module score from the nearest snapshot at or before `daysAgo` days ago.
-    /// Returns nil if no snapshot exists that far back.
-    func numindScoreHistory(for moduleId: String, daysAgo: Int) -> Int? {
-        let cutoff = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
-        guard let entry = data.scoreHistory
-            .filter({ $0.date <= cutoff })
-            .max(by: { $0.date < $1.date })
-        else { return nil }
-        let lessons = LocalContentRepository().lessons(for: moduleId)
-        let primaryAxes = Set(lessons.compactMap { $0.primarySkill?.rawValue })
-        let scores = primaryAxes.compactMap { entry.axisScores[$0] }
-        guard !scores.isEmpty else { return nil }
-        return scores.reduce(0, +) / scores.count
-    }
-
-    /// Latest score for a specific skill axis (0–100). 0 if never computed.
-    func numindScore(forAxis axis: SkillAxis) -> Int {
-        data.scoreHistory.last?.axisScores[axis.rawValue] ?? 0
-    }
-
-    /// Axis score from the nearest snapshot at or before `daysAgo` days ago.
-    /// Returns nil if no snapshot exists that far back.
-    func numindScore(forAxis axis: SkillAxis, daysAgo: Int) -> Int? {
-        let cutoff = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
-        return data.scoreHistory
-            .filter { $0.date <= cutoff }
-            .max { $0.date < $1.date }
-            .flatMap { $0.axisScores[axis.rawValue] }
-    }
+    // MARK: - Skill axes (private diagnostic, Phase 9)
+    //
+    // The 7-axis model survives only as an internal diagnostic — it feeds the
+    // coverage radar, the "focus next" recommendation, and the Daily Insight
+    // session radar. There is no longer a 0–100 composite, subtitle, delta, or
+    // score history; competence is expressed via per-pack Readiness.
 
     /// Axis evidence level (Untested / Early Read / Developing / Reliable),
     /// recomputed lazily from current sessions (cheap; bounded by axis count).
@@ -650,36 +602,6 @@ final class ProgressStore: ObservableObject {
         NumindScoreEngine.axisResults(
             sessions: sessionsWithDrillAttribution(),
             repository: LocalContentRepository()
-        )
-    }
-
-    /// Dynamic subtitle string ("Solid money sense. Strongest: Debt. Focus
-    /// next: Investing.") for the header below the score ring.
-    ///
-    /// Phase 6a — alternates between "Focus next: weakest" and "Biggest
-    /// gain this week" so the subtitle never leads with weakness on
-    /// successive renders. Parity is derived deterministically from
-    /// `scoreHistory.count` (no extra state needed); falls back gracefully
-    /// to "Focus next" when no positive week-over-week improvement exists.
-    var numindSubtitle: String {
-        let results = numindAxisResults
-        let variant: NumindScoreEngine.SubtitleVariant =
-            (data.scoreHistory.count % 2 == 0) ? .strongestAndWeakest : .strongestAndBiggestGain
-
-        // Build the prior-axis snapshot from the nearest score entry at
-        // least 7 days old. Empty dict if no history that far back.
-        var prior: [SkillAxis: Int] = [:]
-        for axis in SkillAxis.allCases {
-            if let s = numindScore(forAxis: axis, daysAgo: 7) {
-                prior[axis] = s
-            }
-        }
-
-        return NumindScoreEngine.subtitle(
-            results,
-            composite: numindScore,
-            variant: variant,
-            priorAxisScores: prior
         )
     }
 
@@ -706,43 +628,6 @@ final class ProgressStore: ObservableObject {
             }
         }
         return unfinished.first
-    }
-
-    /// How much the overall score changed versus 7 days ago.
-    /// Positive = improvement, negative = regression, 0 = no history.
-    var numindScoreDelta: Int {
-        guard let latest = data.scoreHistory.last else { return 0 }
-        let cutoff = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-        let prior = data.scoreHistory
-            .filter { $0.date <= cutoff }
-            .max { $0.date < $1.date }
-        return latest.overallScore - (prior?.overallScore ?? 0)
-    }
-
-    /// Recomputes Numind Scores for all given modules and appends a `ScoreEntry`
-    /// snapshot to `ProgressData`. Call this immediately after `recordSession`.
-    ///
-    /// - Parameter moduleIds: All known module IDs (from `ContentRepository.allModules()`).
-    func recomputeAndStoreScore(moduleIds: [String]) {
-        // Module IDs are accepted for legacy callers but ignored — the engine
-        // now scores along the 7 SkillAxis cases regardless of module count.
-        let scoringSessions = sessionsWithDrillAttribution()
-        let repo = LocalContentRepository()
-        let results = NumindScoreEngine.axisResults(sessions: scoringSessions, repository: repo)
-        var axisScores: [String: Int] = [:]
-        for r in results {
-            axisScores[r.axis.rawValue] = r.score
-        }
-        let overall = NumindScoreEngine.composite(results, pinnedAxes: data.pinnedAxes)
-
-        let entry = ScoreEntry(date: Date(), overallScore: overall, axisScores: axisScores)
-        data.scoreHistory.append(entry)
-
-        // Prune entries older than 90 days to prevent unbounded growth.
-        let horizon = Calendar.current.date(byAdding: .day, value: -90, to: Date()) ?? Date()
-        data.scoreHistory.removeAll { $0.date < horizon }
-
-        persist()
     }
 
     // MARK: - Drill attribution

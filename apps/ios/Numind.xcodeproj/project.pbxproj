@@ -18,7 +18,6 @@
 		0DD48EB0A90D24214AF78D5A /* ProgressTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AE88137BBFD45A10176D7C /* ProgressTabView.swift */; };
 		0E0F9CFA02AD22D1EC1B6001 /* QuizSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB92943AE0DCB4EB8250012 /* QuizSessionViewModel.swift */; };
 		0F2DA86DF8527D5C59A63600 /* RadarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99335656647D9B2C9D8A4279 /* RadarChartView.swift */; };
-		0F8D61E688F3E4D0E0CB7B75 /* NumindScoreRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71CD228AFCA2960955F0107 /* NumindScoreRing.swift */; };
 		9D0E0001A0B0C0D0E0F00007 /* LevelRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00008 /* LevelRing.swift */; };
 		9D0E0001A0B0C0D0E0F00009 /* ReadinessBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */; };
 		9D0E0001A0B0C0D0E0F0000B /* PackReadinessBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F0000C /* PackReadinessBoard.swift */; };
@@ -106,7 +105,6 @@
 		804758367F1A82CA5137811B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486939289C929BAA50861ECF /* Badge.swift */; };
 		85117D0CFAB65AD05D1F7ADE /* QuizEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */; };
 		7B2A4E1D9C5C8B0FF1A3D5C0 /* MilestoneEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */; };
-		B1ACE5C0D1E2F3A4B5C6D7E8 /* NumindScoreBaselineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACE5C0D1E2F3A4B5C6D7E8 /* NumindScoreBaselineTests.swift */; };
 		85AF38C1C1849D2390D5933F /* ContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48236569E3C71A34C541C4 /* ContentRepository.swift */; };
 		8620E8E68B231480A58942C0 /* QuestionTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7176E94F703A2718728DED /* QuestionTheme.swift */; };
 		879B9B70846F53D210E0A98E /* BrandHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DE23AED3330436019C72F /* BrandHeader.swift */; };
@@ -236,7 +234,6 @@
 		61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizEngineTests.swift; sourceTree = "<group>"; };
 		61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRepositoryTests.swift; sourceTree = "<group>"; };
 		7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneEngineTests.swift; sourceTree = "<group>"; };
-		B2ACE5C0D1E2F3A4B5C6D7E8 /* NumindScoreBaselineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindScoreBaselineTests.swift; sourceTree = "<group>"; };
 		63D2F05A692A69B987B2A19E /* ReviewMistakesEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMistakesEngine.swift; sourceTree = "<group>"; };
 		63E02F5424B02C5C35EB4D2E /* MotivatorCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivatorCopy.swift; sourceTree = "<group>"; };
 		64057FC5753D48B372179EF8 /* LevelUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpView.swift; sourceTree = "<group>"; };
@@ -275,7 +272,6 @@
 		9DE5C197942E28DFA3FAF3DF /* StreakLossView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakLossView.swift; sourceTree = "<group>"; };
 		A46E6272861ABFFCC9127521 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		A5EB9C1AB0D5B44747792E8B /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
-		A71CD228AFCA2960955F0107 /* NumindScoreRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindScoreRing.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F00008 /* LevelRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelRing.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessBadge.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F0000C /* PackReadinessBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackReadinessBoard.swift; sourceTree = "<group>"; };
@@ -545,7 +541,6 @@
 				F76E087252FEBD5528A5BC82 /* IconTile.swift */,
 				F03D63735F35453DE6F6546D /* ModuleBarsView.swift */,
 				09E47647944F778EBA32D80A /* NumindCard.swift */,
-				A71CD228AFCA2960955F0107 /* NumindScoreRing.swift */,
 				9D0E0001A0B0C0D0E0F00008 /* LevelRing.swift */,
 				9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */,
 				9D0E0001A0B0C0D0E0F0000C /* PackReadinessBoard.swift */,
@@ -814,7 +809,6 @@
 				61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */,
 				61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */,
 				7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */,
-				B2ACE5C0D1E2F3A4B5C6D7E8 /* NumindScoreBaselineTests.swift */,
 			);
 			path = NumindTests;
 			sourceTree = "<group>";
@@ -928,7 +922,6 @@
 				2FE105C8B1F17551E505F21E /* ContentRepositoryTests.swift in Sources */,
 				85117D0CFAB65AD05D1F7ADE /* QuizEngineTests.swift in Sources */,
 				7B2A4E1D9C5C8B0FF1A3D5C0 /* MilestoneEngineTests.swift in Sources */,
-				B1ACE5C0D1E2F3A4B5C6D7E8 /* NumindScoreBaselineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1031,7 +1024,6 @@
 				9D0E0001A0B0C0D0E0F00005 /* FreshnessEngine.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00003 /* ReadinessEngine.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00001 /* MomentumEngine.swift in Sources */,
-				0F8D61E688F3E4D0E0CB7B75 /* NumindScoreRing.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00007 /* LevelRing.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00009 /* ReadinessBadge.swift in Sources */,
 				9D0E0001A0B0C0D0E0F0000B /* PackReadinessBoard.swift in Sources */,

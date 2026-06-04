@@ -86,7 +86,7 @@ struct MilestoneCelebrationView: View {
             return Theme.Colors.warmOrange
         case .accuracyJump:
             return Theme.Colors.mindTeal
-        case .scoreThreshold:
+        case .levelUp:
             return Theme.Colors.growthGreen
         case .moduleCompleted:
             return Theme.Colors.primaryBlue

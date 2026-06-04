@@ -8,7 +8,7 @@ enum Milestone: Identifiable {
     case firstWeekStreak
     case twoWeekStreak
     case accuracyJump(percent: Int)
-    case scoreThreshold(score: Int)
+    case levelUp(level: Int)
     case moduleCompleted(name: String)
     case firstFreeze
 
@@ -20,7 +20,7 @@ enum Milestone: Identifiable {
         case .firstWeekStreak:           return "milestone_7_day_streak"
         case .twoWeekStreak:             return "milestone_14_day_streak"
         case .accuracyJump(let p):       return "milestone_accuracy_\(p)"
-        case .scoreThreshold(let s):     return "milestone_score_\(s)"
+        case .levelUp(let l):            return "milestone_level_\(l)"
         case .moduleCompleted(let n):    return "milestone_module_\(n)"
         case .firstFreeze:               return "milestone_first_freeze"
         }
@@ -34,7 +34,7 @@ enum Milestone: Identifiable {
         case .firstWeekStreak:      return "bolt.fill"
         case .twoWeekStreak:        return "bolt.shield.fill"
         case .accuracyJump:         return "arrow.up.right"
-        case .scoreThreshold:       return "chart.line.uptrend.xyaxis"
+        case .levelUp:              return "chevron.up.circle.fill"
         case .moduleCompleted:      return "checkmark.seal.fill"
         case .firstFreeze:          return "snowflake"
         }
@@ -48,7 +48,7 @@ enum Milestone: Identifiable {
         case .firstWeekStreak:           return "7-Day Streak!"
         case .twoWeekStreak:             return "14-Day Streak!"
         case .accuracyJump(let p):       return "Accuracy Up \(p)%!"
-        case .scoreThreshold(let s):     return "Numind Score: \(s)+"
+        case .levelUp(let l):            return "Level \(l) Reached!"
         case .moduleCompleted(let name): return "\(name) Complete!"
         case .firstFreeze:               return "Streak Freeze Earned!"
         }
@@ -68,10 +68,10 @@ enum Milestone: Identifiable {
             return "Two weeks straight. You're in the top tier of learners."
         case .accuracyJump:
             return "Your answers are getting sharper. The practice is paying off."
-        case .scoreThreshold(let s):
-            if s >= 75 { return "You're in elite territory. Seriously impressive." }
-            if s >= 50 { return "You've crossed the halfway mark \u{2014} real fluency is forming." }
-            return "Your first major milestone. The foundation is set."
+        case .levelUp(let l):
+            if l >= 12 { return "Elite territory. Your money sense is seriously sharp." }
+            if l >= 8 { return "Real fluency is forming \u{2014} and the depth is showing." }
+            return "Your reps are adding up. Keep the momentum going."
         case .moduleCompleted:
             return "Every lesson finished! You've mastered this topic."
         case .firstFreeze:
@@ -93,16 +93,25 @@ enum MilestoneEngine {
         after: ProgressData,
         shownIds: Set<String>,
         moduleNames: [String: String] = [:],
-        moduleLessonCounts: [String: Int] = [:]
+        moduleLessonCounts: [String: Int] = [:],
+        beforeLevel: Int = 0,
+        afterLevel: Int = 0
     ) -> Milestone? {
         let candidates = allTriggered(
             before: before,
             after: after,
             moduleNames: moduleNames,
-            moduleLessonCounts: moduleLessonCounts
+            moduleLessonCounts: moduleLessonCounts,
+            beforeLevel: beforeLevel,
+            afterLevel: afterLevel
         )
         return candidates.first { !shownIds.contains($0.id) }
     }
+
+    /// Levels that trigger a celebration overlay (Phase 9 — replaced the
+    /// composite 25/50/75 thresholds). Front-loaded then sparser so the
+    /// celebration stays meaningful as XP scales.
+    static let celebratedLevels = [3, 5, 8, 10, 12, 15]
 
     // MARK: - Internal
 
@@ -111,7 +120,9 @@ enum MilestoneEngine {
         before: ProgressData,
         after: ProgressData,
         moduleNames: [String: String],
-        moduleLessonCounts: [String: Int]
+        moduleLessonCounts: [String: Int],
+        beforeLevel: Int,
+        afterLevel: Int
     ) -> [Milestone] {
         var results: [Milestone] = []
 
@@ -144,12 +155,10 @@ enum MilestoneEngine {
             results.append(.firstFreeze)
         }
 
-        // Score thresholds (25, 50, 75)
-        let beforeScore = before.scoreHistory.last?.overallScore ?? 0
-        let afterScore = after.scoreHistory.last?.overallScore ?? 0
-        for threshold in [25, 50, 75] {
-            if beforeScore < threshold && afterScore >= threshold {
-                results.append(.scoreThreshold(score: threshold))
+        // Level-up milestones (Phase 9 — replaced composite score thresholds).
+        for milestoneLevel in celebratedLevels {
+            if beforeLevel < milestoneLevel && afterLevel >= milestoneLevel {
+                results.append(.levelUp(level: milestoneLevel))
             }
         }
 

@@ -1,7 +1,10 @@
 import Foundation
 
-/// Computes the Numind Score — a 0–100 composite that reflects how well a
-/// user can handle questions across the 7 competency axes.
+/// Per-axis competency diagnostic across the 7 skill axes (Phase 9: the global
+/// 0–100 composite, subtitle, and score history were retired — competence is
+/// now expressed via per-pack Readiness; this engine survives only as an
+/// internal diagnostic feeding the coverage radar, the "focus next"
+/// recommendation, and the Daily Insight session radar).
 ///
 /// ## Per-axis score (0–100)
 ///   Each question result is split between the lesson's primary skill axis
@@ -10,11 +13,6 @@ import Foundation
 ///   multipliers (see `SkillAxis.QuestionMultiplier`). Per-axis normalization
 ///   uses the axis's `WeightingProfile` to combine accuracy, speed, retention,
 ///   and scenario components.
-///
-/// ## Composite (overall Numind Score)
-///   `weightedRadarAvg × coverageFactor − imbalancePenalty`, then capped by
-///   the number of "covered" axes (Developing or Reliable evidence).
-///   Coverage caps: 1→60, 2→60, 3→70, 4→78, 5→85, 6→92, 7→100.
 enum NumindScoreEngine {
 
     // MARK: - Public types
@@ -35,11 +33,6 @@ enum NumindScoreEngine {
     // MARK: - Configuration
 
     static let maxScore: Int = 100
-
-    /// Coverage caps by number of "covered" axes (Developing + Reliable count
-    /// as 1.0; Early Read counts as 0.5; Untested counts as 0). Index = floor
-    /// of total coverage; e.g. 1.5 coverage → cap at index 1 = 60.
-    private static let coverageCaps: [Int] = [40, 60, 60, 70, 78, 85, 92, 100]
 
     /// Speed component thresholds (seconds per question).
     private static let fastThreshold: Double = 5
@@ -179,126 +172,6 @@ enum NumindScoreEngine {
         }
     }
 
-    /// Composite Numind Score across all 7 axes, with coverage cap and
-    /// exploration bonus applied. Returns 0..maxScore.
-    ///
-    /// Phase 6a change: dropped the stddev-based imbalance penalty (which
-    /// punished users who specialized in their problem area — the opposite
-    /// of the product promise). Replaced with a positive-only exploration
-    /// bonus that rewards breadth without penalizing depth. Optionally
-    /// reweights by `pinnedAxes` so users can foreground the axes they
-    /// care about.
-    ///
-    /// - Parameter pinnedAxes: When non-empty, pinned axes contribute 60%
-    ///   of the weighted average vs 40% for the other axes. Default empty
-    ///   = standard `compositeWeight`-only weighting.
-    static func composite(
-        _ results: [AxisResult],
-        pinnedAxes: Set<SkillAxis> = []
-    ) -> Int {
-        // Weighted radar avg — per-axis `compositeWeight`, optionally
-        // reweighted around the user's pinned axes.
-        let weighted: Double
-        if pinnedAxes.isEmpty {
-            // weights sum to 1.0; this is the standard weighted mean.
-            weighted = results.reduce(0.0) { $0 + Double($1.score) * $1.axis.compositeWeight }
-        } else {
-            let pinned = results.filter { pinnedAxes.contains($0.axis) }
-            let other  = results.filter { !pinnedAxes.contains($0.axis) }
-            let pinnedAvg = pinned.isEmpty ? 0
-                : pinned.reduce(0.0) { $0 + Double($1.score) } / Double(pinned.count)
-            let otherAvg  = other.isEmpty ? 0
-                : other.reduce(0.0) { $0 + Double($1.score) } / Double(other.count)
-            weighted = pinnedAvg * 0.6 + otherAvg * 0.4
-        }
-
-        // Coverage factor: how many axes have meaningful evidence.
-        let coverage = results.reduce(0.0) { $0 + $1.evidence.coverageWeight }
-        let coverageFactor = min(1.0, coverage / 7.0 + 0.4)
-        // +0.4 floor so a single tested axis doesn't crater the score by 7x.
-
-        // Exploration bonus: +5 per measured axis beyond the first, capped
-        // at +20. Positive-only — rewards breadth without punishing depth.
-        let coveredCount = results.filter { $0.evidence != .notStarted }.count
-        let explorationBonus = min(20.0, 5.0 * Double(max(0, coveredCount - 1)))
-
-        let raw = max(0, weighted * coverageFactor + explorationBonus)
-
-        // Coverage cap (count axes with at least Warming up evidence).
-        let capIndex = max(0, min(coverageCaps.count - 1, coveredCount))
-        let cap = coverageCaps[capIndex]
-
-        return Int(min(Double(cap), raw).rounded())
-    }
-
-    /// Variant of the subtitle to render. `ProgressStore` alternates between
-    /// these so the same flavor doesn't show twice in a row (Phase 6a — the
-    /// audit's "leading with weakness is demotivating" finding).
-    enum SubtitleVariant: String, Codable {
-        case strongestAndWeakest    // "Strongest: X. Focus next: Y."
-        case strongestAndBiggestGain // "Strongest: X. Biggest gain this week: Y."
-    }
-
-    /// A short, dynamic subtitle ("Solid money sense.") + axis callout.
-    /// Used as Home / Progress header copy.
-    ///
-    /// - Parameter results: Current per-axis snapshot.
-    /// - Parameter composite: Today's composite score.
-    /// - Parameter variant: Which flavor of axis callout to render.
-    /// - Parameter priorAxisScores: Per-axis scores N days ago (typically 7).
-    ///   Required for `strongestAndBiggestGain` variant; when missing or no
-    ///   positive deltas exist, falls back to `strongestAndWeakest`.
-    static func subtitle(
-        _ results: [AxisResult],
-        composite: Int,
-        variant: SubtitleVariant = .strongestAndWeakest,
-        priorAxisScores: [SkillAxis: Int] = [:]
-    ) -> String {
-        let bandCopy: String
-        switch composite {
-        case 90...:  bandCopy = "Numind master."
-        case 80...:  bandCopy = "Sharp money sense."
-        case 70...:  bandCopy = "Solid money sense."
-        case 60...:  bandCopy = "Building real fluency."
-        case 40...:  bandCopy = "On your way."
-        default:     bandCopy = "Just getting started."
-        }
-
-        let scored = results.filter { $0.evidence != .notStarted }
-        guard !scored.isEmpty else { return bandCopy }
-
-        let strongestAxis = scored.max(by: { $0.score < $1.score })?.axis
-        guard let strongest = strongestAxis else { return bandCopy }
-        let strongestName = strongest.displayName
-
-        switch variant {
-        case .strongestAndBiggestGain:
-            // Find the axis with the biggest positive delta vs the prior snapshot.
-            var biggestGainAxis: SkillAxis?
-            var biggestGainDelta = 0
-            for r in scored {
-                let prior = priorAxisScores[r.axis] ?? 0
-                let delta = r.score - prior
-                if delta > biggestGainDelta {
-                    biggestGainDelta = delta
-                    biggestGainAxis = r.axis
-                }
-            }
-            if let g = biggestGainAxis, g != strongest, biggestGainDelta > 0 {
-                return "\(bandCopy) Strongest: \(strongestName). Biggest gain this week: \(g.displayName)."
-            }
-            // No improvement — fall through to strongest+weakest.
-            fallthrough
-
-        case .strongestAndWeakest:
-            let weakest = scored.min(by: { $0.score < $1.score })?.axis
-            if let w = weakest, w != strongest {
-                return "\(bandCopy) Strongest: \(strongestName). Focus next: \(w.displayName)."
-            }
-            return "\(bandCopy) Strongest: \(strongestName)."
-        }
-    }
-
     // MARK: - Legacy per-module API (compat shim)
 
     /// Returns a 0–100 score for a module by averaging the axis scores of the
@@ -314,14 +187,6 @@ enum NumindScoreEngine {
         guard !relevant.isEmpty else { return 0 }
         let avg = relevant.reduce(0) { $0 + $1.score } / relevant.count
         return avg
-    }
-
-    /// Returns the overall 0–100 composite using all 7 axes. Module IDs are
-    /// retained in the signature for legacy callers but are ignored.
-    static func overallScore(moduleIds: [String], sessions: [SessionRecord]) -> Int {
-        let repo = LocalContentRepository()
-        let results = axisResults(sessions: sessions, repository: repo)
-        return composite(results)
     }
 
     // MARK: - Component computation
