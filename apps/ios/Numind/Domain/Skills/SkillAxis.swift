@@ -165,7 +165,7 @@ enum EvidenceLevel: String, Codable, Equatable {
         switch self {
         case .notStarted: return "Not started"
         case .warmingUp:  return "Warming up"
-        case .developing: return "Developing"
+        case .developing: return "Building"
         case .reliable:   return "Reliable"
         }
     }

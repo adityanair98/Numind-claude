@@ -320,63 +320,17 @@ final class ProgressStore: ObservableObject {
         persist()
     }
 
-    // MARK: - Blitz personal best
-
-    var blitzBest: Int { data.blitzBestScore }
-
-    func updateBlitzBest(score: Int) {
-        guard score > data.blitzBestScore else { return }
-        data.updateBlitzBest(score: score)
-        persist()
-    }
-
-    // MARK: - Streak mode personal best
-
-    var streakModeBest: Int { data.streakModeBestScore }
-
-    func updateStreakBest(score: Int) {
-        guard score > data.streakModeBestScore else { return }
-        data.updateStreakBest(score: score)
-        persist()
-    }
-
-    // MARK: - Speed Drill personal best
-
-    var speedDrillBest: Int { data.speedDrillBestScore }
-
-    func updateSpeedDrillBest(score: Int) {
-        guard score > data.speedDrillBestScore else { return }
-        data.updateSpeedDrillBest(score: score)
-        persist()
-    }
-
     // MARK: - Recall personal best
+    //
+    // The only surviving game-mode best — Recall ("review your weak spots")
+    // lives on Home. Blitz/Streak/Speed Drill/Estimation/Comparison were retired
+    // with their modes in Phase 7a.
 
     var recallBest: Int { data.recallBestScore }
 
     func updateRecallBest(score: Int) {
         guard score > data.recallBestScore else { return }
         data.updateRecallBest(score: score)
-        persist()
-    }
-
-    // MARK: - Estimation personal best
-
-    var estimationBest: Int { data.estimationBestScore }
-
-    func updateEstimationBest(score: Int) {
-        guard score > data.estimationBestScore else { return }
-        data.updateEstimationBest(score: score)
-        persist()
-    }
-
-    // MARK: - Comparison personal best
-
-    var comparisonBest: Int { data.comparisonBestScore }
-
-    func updateComparisonBest(score: Int) {
-        guard score > data.comparisonBestScore else { return }
-        data.updateComparisonBest(score: score)
         persist()
     }
 

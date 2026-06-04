@@ -6,18 +6,10 @@ struct ProgressData: Codable {
     var bestStreak: Int = 0
     /// Stable set of earned badge IDs. Default empty for backward compat.
     var earnedBadgeIds: Set<String> = []
-    /// Personal best for Blitz mode: highest number of correct answers in a 60-second session.
-    var blitzBestScore: Int = 0
-    /// Personal best for Streak mode: longest correct-answer streak in a single session.
-    var streakModeBestScore: Int = 0
-    /// Personal best for Speed Drill: highest correct count in a timed session.
-    var speedDrillBestScore: Int = 0
     /// Personal best for Recall mode: highest correct count reviewing past misses.
+    /// (The other game-mode bests — Blitz/Streak/Speed Drill/Estimation/Comparison —
+    /// were retired with those modes in Phase 7a; their stored keys drop out on decode.)
     var recallBestScore: Int = 0
-    /// Personal best for Estimation mode: highest correct count (2+ stars) in a session.
-    var estimationBestScore: Int = 0
-    /// Personal best for Comparison mode: highest score out of 15.
-    var comparisonBestScore: Int = 0
 
     /// Signals collected during the onboarding funnel.
     /// Nil for users who completed the old 3-page onboarding.
@@ -32,7 +24,7 @@ struct ProgressData: Codable {
     /// Used to detect streak loss on next app launch.
     var lastKnownStreak: Int = 0
 
-    /// Number of streak freezes currently banked (max 3).
+    /// Number of streak freezes currently banked (max 5, per Phase 6a).
     var availableFreezes: Int = 0
 
     /// How many 7-day streak milestones have been rewarded with a freeze.
@@ -160,8 +152,11 @@ struct ProgressData: Codable {
 
     // MARK: - XP
 
+    /// Lifetime base XP — difficulty-weighted (Phase 9), with a legacy fallback
+    /// for ungraded sessions. Delegates to `MomentumEngine` so badges, weekly XP,
+    /// and the headline all measure XP the same way.
     func computeTotalXP() -> Int {
-        sessions.reduce(0) { $0 + $1.correctCount * 10 + $1.bonusXP }
+        MomentumEngine.baseXP(sessions: sessions)
     }
 
     // MARK: - Module progress
@@ -284,32 +279,10 @@ struct ProgressData: Codable {
         return Double(count - lower) / Double(upper - lower)
     }
 
-    // MARK: - Blitz best score
-
-    /// Updates blitzBestScore if the new score exceeds the current record.
-    mutating func updateBlitzBest(score: Int) {
-        if score > blitzBestScore { blitzBestScore = score }
-    }
-
-    /// Updates streakModeBestScore if the new streak exceeds the current record.
-    mutating func updateStreakBest(score: Int) {
-        if score > streakModeBestScore { streakModeBestScore = score }
-    }
-
-    mutating func updateSpeedDrillBest(score: Int) {
-        if score > speedDrillBestScore { speedDrillBestScore = score }
-    }
+    // MARK: - Recall best score
 
     mutating func updateRecallBest(score: Int) {
         if score > recallBestScore { recallBestScore = score }
-    }
-
-    mutating func updateEstimationBest(score: Int) {
-        if score > estimationBestScore { estimationBestScore = score }
-    }
-
-    mutating func updateComparisonBest(score: Int) {
-        if score > comparisonBestScore { comparisonBestScore = score }
     }
 
     // MARK: - Personal best
@@ -319,13 +292,12 @@ struct ProgressData: Codable {
     func bestResult(for lessonId: String) -> (correctCount: Int, totalXP: Int)? {
         let prior = sessions.filter { $0.lessonId == lessonId }
         guard !prior.isEmpty else { return nil }
+        func xp(_ s: SessionRecord) -> Int { MomentumEngine.baseXP(sessions: [s]) }
         let best = prior.max { a, b in
-            let xpA = a.correctCount * 10 + a.bonusXP
-            let xpB = b.correctCount * 10 + b.bonusXP
-            return a.correctCount < b.correctCount
-                || (a.correctCount == b.correctCount && xpA < xpB)
+            a.correctCount < b.correctCount
+                || (a.correctCount == b.correctCount && xp(a) < xp(b))
         }!
-        return (best.correctCount, best.correctCount * 10 + best.bonusXP)
+        return (best.correctCount, xp(best))
     }
 
     // MARK: - Weekly
@@ -376,9 +348,8 @@ struct ProgressData: Codable {
                 byAdding: .weekOfYear, value: -weekOffset, to: currentMonday
             ) ?? currentMonday
             let weekEnd = calendar.date(byAdding: .weekOfYear, value: 1, to: weekStart) ?? weekStart
-            let xp = sessions
-                .filter { $0.date >= weekStart && $0.date < weekEnd }
-                .reduce(0) { $0 + $1.correctCount * 10 + $1.bonusXP }
+            let weekSessions = sessions.filter { $0.date >= weekStart && $0.date < weekEnd }
+            let xp = MomentumEngine.baseXP(sessions: weekSessions)
             return (
                 label: weekOffset == 0 ? "This week" : formatter.string(from: weekStart),
                 xp: xp,
