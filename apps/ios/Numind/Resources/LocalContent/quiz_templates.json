@@ -18443,5 +18443,89 @@
     ],
     "correctConceptChoice": "Yes — a 'qualifying life event' (birth, marriage, job loss) opens a special enrollment window, usually ~30-60 days, to change benefits mid-year. A new baby qualifies; act before it closes",
     "isApplication": true
+  },
+  {
+    "id": "car_decision_tradein_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Selling your old car: the dealer offers $8,000 as a trade-in, or you could sell it privately for ~$10,000 (more time and effort). In your state, sales tax on a new car applies only to the price AFTER a trade-in, and you're buying a $30,000 car taxed at 7%.",
+    "promptTemplate": "Which nets more, and what's the offsetting factor?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Private sale gets you ~$2,000 more cash ($10,000 vs $8,000). But in most states a trade-in lowers the sales-tax base on your new car: trading in $8,000 cuts the taxable amount by $8,000, saving 7% × $8,000 = $560 in tax you'd otherwise pay. So the real gap is closer to $2,000 − $560 = ~$1,440 in favor of selling privately — before counting your time and hassle. If your time is worth more than ~$1,440, the easy trade-in can win.",
+    "conceptChoices": [
+      "Private nets ~$2,000 more, but a trade-in saves sales tax on the new car (~$560 here, since tax applies after the trade-in) plus hassle — so the real gap is ~$1,440. Worth it if your time is worth less than that",
+      "Trade-in always nets more — it's simpler",
+      "They net exactly the same amount",
+      "Private sale nets $2,000 more with no offsetting factor"
+    ],
+    "correctConceptChoice": "Private nets ~$2,000 more, but a trade-in saves sales tax on the new car (~$560 here, since tax applies after the trade-in) plus hassle — so the real gap is ~$1,440. Worth it if your time is worth less than that",
+    "isApplication": true
+  },
+  {
+    "id": "car_decision_negotiate_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "At the dealership, the salesperson keeps steering the conversation to 'What monthly payment can you afford?' instead of the car's price.",
+    "promptTemplate": "Why is that a trap, and what should you negotiate?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Negotiate the OUT-THE-DOOR price (the car plus all fees and taxes), not the monthly payment. If you anchor on a monthly number, the dealer can hit it while quietly raising the price, stretching the loan term, or worsening the rate — and you end up paying far more in total. Settle the total price first, agree on the trade-in separately, then discuss financing (which you can often beat with an outside pre-approval).",
+    "conceptChoices": [
+      "Negotiate the out-the-door PRICE, not the monthly payment — focusing on the monthly lets them hide a higher price, longer term, or worse rate. Settle the price first, then discuss financing separately",
+      "Negotiate the monthly payment — it's all that matters",
+      "Accept whatever monthly payment fits your budget",
+      "The price and the monthly payment are the same thing"
+    ],
+    "correctConceptChoice": "Negotiate the out-the-door PRICE, not the monthly payment — focusing on the monthly lets them hide a higher price, longer term, or worse rate. Settle the price first, then discuss financing separately",
+    "isApplication": true
+  },
+  {
+    "id": "sl_decision_plus_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're a parent helping pay for college, choosing between a federal Parent PLUS loan and a private student loan. Your credit is good.",
+    "promptTemplate": "What's the key trade-off?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Parent PLUS is a federal loan: it carries federal protections — flexible/income-contingent repayment options, deferment and forbearance, and discharge if the parent borrower or the student dies — plus a fixed rate, but it charges an origination fee (a percentage taken off the top). A private loan can offer a lower rate to a parent with excellent credit, but it generally gives up those federal safety nets. The choice comes down to whether you value the protections or chase the potentially lower rate.",
+    "conceptChoices": [
+      "Parent PLUS keeps federal protections (flexible repayment, deferment, discharge if the borrower or student dies) and a fixed rate but charges an origination fee; private may be cheaper with great credit but drops those safety nets",
+      "Private is always cheaper, so always pick it",
+      "Parent PLUS is always the worse choice",
+      "They're identical — federal and private loans work the same way"
+    ],
+    "correctConceptChoice": "Parent PLUS keeps federal protections (flexible repayment, deferment, discharge if the borrower or student dies) and a fixed rate but charges an origination fee; private may be cheaper with great credit but drops those safety nets",
+    "isApplication": true
+  },
+  {
+    "id": "sl_decision_protections_d3",
+    "moduleId": "student_loans",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Two years ago you refinanced your federal student loans into a private loan for a slightly lower rate. Now you've lost your job and can't make the payments.",
+    "promptTemplate": "What options did you give up by refinancing?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Refinancing federal loans into a private loan is permanent, and it forfeits the federal safety nets you'd want exactly now: income-driven repayment (payments scaled to your income, sometimes as low as $0), deferment and forbearance (pausing payments during hardship), and any loan forgiveness like PSLF. Private lenders rarely match these. That's the hidden cost of refinancing for a lower rate — fine if you're confident you'll repay smoothly, risky if your income could drop.",
+    "conceptChoices": [
+      "The federal safety nets — income-driven repayment (even $0 payments), deferment/forbearance, and forgiveness like PSLF. Private lenders rarely offer these, and refinancing federal → private is permanent",
+      "Nothing — private and federal loans have the same protections",
+      "Only the interest rate changed; everything else is identical",
+      "You can switch back to federal loans anytime"
+    ],
+    "correctConceptChoice": "The federal safety nets — income-driven repayment (even $0 payments), deferment/forbearance, and forgiveness like PSLF. Private lenders rarely offer these, and refinancing federal → private is permanent",
+    "isApplication": true
   }
 ]

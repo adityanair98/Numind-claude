@@ -2460,7 +2460,8 @@
       "trade_in_hourly_d2",
       "trade_in_tax_benefit_d2",
       "trade_in_adjusted_d3",
-      "trade_in_decision_d3"
+      "trade_in_decision_d3",
+      "car_decision_tradein_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2481,7 +2482,8 @@
       "concept_dealer_payment_trap_d2",
       "concept_dealer_fi_office_d2",
       "concept_dealer_finance_markup_d3",
-      "concept_dealer_gap_insurance_d3"
+      "concept_dealer_gap_insurance_d3",
+      "car_decision_negotiate_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2690,7 +2692,8 @@
       "plus_vs_private_10yr_d2",
       "plus_origination_d2",
       "plus_total_cost_d3",
-      "plus_decision_d3"
+      "plus_decision_d3",
+      "sl_decision_plus_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -2734,7 +2737,8 @@
       "concept_sl_refi_one_way_d2",
       "concept_sl_refi_teacher_d2",
       "concept_sl_refi_when_makes_sense_d3",
-      "concept_sl_refi_vs_protections_d3"
+      "concept_sl_refi_vs_protections_d3",
+      "sl_decision_protections_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
