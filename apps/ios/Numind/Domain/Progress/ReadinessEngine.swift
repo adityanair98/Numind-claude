@@ -9,10 +9,9 @@ import Foundation
 /// - **depth** — every core lesson mastered *with a correct hard question*
 /// - **retention** — every core lesson answered correctly on ≥2 distinct days
 ///   (a hold-out proxy: it survived at least one gap)
-///
-/// An **application** gate (a correct scenario/decision item) is added in
-/// Phase 9E once scenario content + the `isApplication` flag exist; until then
-/// it's simply absent (the spec's fallback).
+/// - **application** (Phase 9E) — a correct answer on a scenario/decision item
+///   (`isApplication`) among the pack's core lessons. Added only when the pack
+///   actually carries application content; otherwise absent (the spec's fallback).
 ///
 /// The claim is scoped to the evidence — see `readyLabel(for:)` — never a bare
 /// "you're ready" verdict.
@@ -57,9 +56,21 @@ enum ReadinessEngine {
         let depth     = core.allSatisfy { data.masteredWithHard($0) }
         let retention = core.allSatisfy { retained($0, sessions: data.sessions) }
 
-        let unmet = [(Gate.coverage, coverage), (.depth, depth), (.retention, retention)]
-            .filter { !$0.1 }
-            .map(\.0)
+        var gates: [(Gate, Bool)] = [(.coverage, coverage), (.depth, depth), (.retention, retention)]
+
+        // Application gate (Phase 9E) — added only when the pack's core lessons
+        // actually carry application/decision items; otherwise the spec's
+        // fallback applies and the gate is simply absent (no penalty for content
+        // that doesn't exist yet).
+        let appIds = applicationTemplateIds(core: core, repository: repository)
+        if !appIds.isEmpty {
+            let application = data.sessions.contains { s in
+                s.questionResults.contains { $0.isCorrect && appIds.contains($0.templateId) }
+            }
+            gates.append((.application, application))
+        }
+
+        let unmet = gates.filter { !$0.1 }.map(\.0)
 
         if unmet.isEmpty {
             // Ready, or Sharp when every core lesson is also currently fresh.
@@ -95,6 +106,22 @@ enum ReadinessEngine {
     }
 
     // MARK: - Private
+
+    /// Application/decision template IDs across a pack's core lessons (Phase 9E).
+    /// Empty when the pack has no application content yet → the application gate
+    /// is skipped (the spec's fallback).
+    private static func applicationTemplateIds(
+        core: [String],
+        repository: ContentRepository
+    ) -> Set<String> {
+        var ids = Set<String>()
+        for lessonId in core {
+            for t in repository.templates(for: lessonId) where t.isApplicationItem {
+                ids.insert(t.id)
+            }
+        }
+        return ids
+    }
 
     /// Hold-out retention proxy: correct answers on ≥2 distinct calendar days.
     private static func retained(_ lessonId: String, sessions: [SessionRecord]) -> Bool {

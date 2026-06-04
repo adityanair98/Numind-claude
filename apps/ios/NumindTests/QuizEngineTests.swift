@@ -173,7 +173,8 @@ final class QuizEngineTests: XCTestCase {
                 "Length of credit history",
                 "Number of inquiries"
             ],
-            correctConceptChoice: "Payment history"
+            correctConceptChoice: "Payment history",
+            isApplication: nil
         )
         let q = QuizEngine.generate(from: template, seed: 42)
         XCTAssertEqual(q.choices.count, 4)
@@ -198,7 +199,8 @@ final class QuizEngineTests: XCTestCase {
             distractorStrategy: .roundedNeighbor,
             explanationTemplate: "Always A.",
             conceptChoices: ["A", "B", "C", "D"],
-            correctConceptChoice: "A"
+            correctConceptChoice: "A",
+            isApplication: nil
         )
         let q1 = QuizEngine.generate(from: template, seed: 42)
         let q2 = QuizEngine.generate(from: template, seed: 42)
