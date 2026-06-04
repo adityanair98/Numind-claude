@@ -46,7 +46,7 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **IconTile** for all tinted icon displays. Pass `size:` parameter for different sizes (36, 48, 52).
 - **PillButton** for primary CTAs. Use `.primary` variant by default.
 - **ConfettiBurst** for celebration effects. Always pair with `NewBestBadge` in summary views.
-- **NumindScoreRing** for displaying the composite Numind Score in summary views.
+- **LevelRing** for displaying the user's Level + XP-progress (Phase 9; replaced `NumindScoreRing`/the 0–100 composite). **ReadinessBadge** / **PackReadinessBoard** for per-pack Readiness state.
 - **HeroCard** for large hero cards.
 - **CalculatorShell** is the base scaffold for every Tools-tab calculator (summary header, input area, collapsible methodology block, global disclaimer). New calculators wrap their inputs/results in it and register in `CalculatorRegistry`.
 

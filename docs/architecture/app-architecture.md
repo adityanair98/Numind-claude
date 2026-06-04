@@ -33,12 +33,14 @@ Numind/
         IconTile.swift           # Tinted icon circles (sm/md/lg)
         ModuleBarsView.swift     # Module progress bars visualization
         NumindCard.swift         # Base card component
-        NumindScoreRing.swift    # Circular score ring for Numind Score display
+        LevelRing.swift          # Circular Level + XP-progress ring (Phase 9; replaced NumindScoreRing)
+        ReadinessBadge.swift     # Per-pack Readiness pill (Not started → Sharp)
+        PackReadinessBoard.swift # Card listing every pack's Readiness state
         NumpadView.swift         # Custom numeric keypad for free entry
         PillButton.swift         # Primary/secondary/ghost CTA buttons
         QuestionTheme.swift      # Quiz question styling helpers
         QuizGraphicBanner.swift  # Decorative quiz header
-        RadarChartView.swift     # Radar/spider chart for skill visualization
+        RadarChartView.swift     # Radar/spider chart — now a private coverage diagnostic
     Navigation/
       RootTabView.swift          # 4-tab navigation (Home, Learn, Progress, Profile)
     Notifications/
@@ -54,9 +56,12 @@ Numind/
       LocalContentRepository.swift  # JSON-backed implementation
     Progress/
       Celebration.swift          # Pack/world completion celebrations queued post-session
-      NumindScoreEngine.swift    # 7-axis Numind Score (per-question multipliers, weighting profiles, evidence levels, coverage-cap composite)
-      ProgressData.swift         # Codable progress state with computed helpers + best scores + streak freezes + dailyWorkoutDates + focusPackId
-      ProgressStore.swift        # ObservableObject wrapping ProgressData (UserDefaults v2) + autoApplyFreeze() + pendingCelebrations queue
+      MomentumEngine.swift       # XP + Level (Phase 9; difficulty-weighted, depth-gated above L8)
+      ReadinessEngine.swift      # Per-pack Readiness gates (coverage → depth → retention)
+      FreshnessEngine.swift      # Restorable staleness signal over the SRS overdue score
+      NumindScoreEngine.swift    # 7-axis per-axis diagnostic only (Phase 9 deleted the 0–100 composite/subtitle)
+      ProgressData.swift         # Codable progress state with computed helpers + mastery + streak freezes + dailyWorkoutDates + focusPackId
+      ProgressStore.swift        # ObservableObject wrapping ProgressData (UserDefaults v3) + xp/level/readiness/freshness accessors + pendingCelebrations queue
       SessionRecord.swift        # Per-session result record
     Skills/
       SkillAxis.swift            # 7 SkillAxis cases + WeightingProfile + QuestionMultiplier + EvidenceLevel
