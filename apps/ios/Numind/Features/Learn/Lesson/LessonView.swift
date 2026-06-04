@@ -150,6 +150,7 @@ struct LessonView: View {
                 ruleCard
                 workedExampleCard
                 whyCard
+                verifiedStamp
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.top, 8)
@@ -342,6 +343,38 @@ struct LessonView: View {
             .fill(Theme.Colors.insightYellow)
             .frame(width: 5)
         }
+    }
+
+    // MARK: - Verified stamp (E-E-A-T trust signal)
+
+    /// A quiet "Verified [Month Year]" line under the teaching cards, shown only
+    /// when the lesson carries a `lastVerified` date. Reinforces the accuracy
+    /// moat for YMYL content without competing with the lesson copy.
+    @ViewBuilder
+    private var verifiedStamp: some View {
+        if let raw = viewModel.lesson.lastVerified, !raw.isEmpty {
+            HStack(spacing: 6) {
+                Image(systemName: "checkmark.seal.fill")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.growthGreen)
+                Text("Verified \(Self.verifiedDateLabel(raw))")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(Theme.Colors.mutedText)
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.top, 2)
+        }
+    }
+
+    /// "2026-01-15" → "Jan 2026"; falls back to the raw string if unparseable.
+    private static func verifiedDateLabel(_ raw: String) -> String {
+        let parser = DateFormatter()
+        parser.dateFormat = "yyyy-MM-dd"
+        parser.locale = Locale(identifier: "en_US_POSIX")
+        guard let date = parser.date(from: raw) else { return raw }
+        let out = DateFormatter()
+        out.dateFormat = "MMM yyyy"
+        return out.string(from: date)
     }
 
     // MARK: - Footer
