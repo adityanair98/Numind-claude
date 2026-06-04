@@ -7,6 +7,7 @@ struct HomeView: View {
     @State private var dailyVM: QuizSessionViewModel? = nil
     @State private var bonusRoundVM: QuizSessionViewModel? = nil
     @State private var recallVM: QuizSessionViewModel? = nil
+    @State private var refreshVM: QuizSessionViewModel? = nil
     // insightLesson is now computed inline in insightView(for:) from the session's modules
     @State private var showInsight = false
     @State private var insightSessionVM: QuizSessionViewModel? = nil   // retained while sheet shows
@@ -30,6 +31,7 @@ struct HomeView: View {
                 )
                 dailyChallengeSection
                 streakSection
+                refreshSection
                 if let card = viewModel.continueCard {
                     continueSection(card)
                 }
@@ -93,6 +95,15 @@ struct HomeView: View {
                     recordMixedSession(vm: vm, lessonId: "recall_review")
                     progressStore.updateRecallBest(score: vm.correctCount)
                     recallVM = nil
+                }
+            }
+        }
+        // Refresh — keep mastered-but-stale skills sharp (Phase 9 Freshness)
+        .fullScreenCover(item: $refreshVM) { vm in
+            NavigationStack {
+                QuizSessionView(viewModel: vm) {
+                    recordMixedSession(vm: vm, lessonId: "refresh_review")
+                    refreshVM = nil
                 }
             }
         }
@@ -416,6 +427,69 @@ struct HomeView: View {
         } else {
             startBonusRound()
         }
+    }
+
+    // MARK: - Refresh (Freshness, Phase 9)
+
+    /// A gentle, opportunity-framed chip — "N skills to refresh" — that appears
+    /// only when mastered skills have gone stale (overdue per the SRS ladder).
+    /// Freshness is the only thing that decays; tapping starts a short review
+    /// session that brings those skills back current. Never a penalty.
+    @ViewBuilder
+    private var refreshSection: some View {
+        let count = progressStore.staleSkillCount
+        if count > 0 {
+            Button(action: launchRefresh) {
+                HStack(spacing: 14) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Theme.Colors.mindTeal.opacity(0.14))
+                            .frame(width: 44, height: 44)
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .font(.system(size: 19, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("\(count) skill\(count == 1 ? "" : "s") to refresh")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text("A quick review keeps them sharp.")
+                            .font(.system(size: 12))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+                .padding(14)
+                .background(Theme.Colors.cardBackground)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                        .strokeBorder(Theme.Colors.mindTeal.opacity(0.25), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.05), radius: 6, y: 3)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    /// Builds a short review session from the overdue mastered templates
+    /// (`FreshnessEngine.refreshTargets`), regenerated with fresh values.
+    private func launchRefresh() {
+        let ids = progressStore.refreshTargetIds(limit: 8)
+        let questions: [QuizQuestion] = ids.compactMap { id in
+            guard let template = repo.template(id: id) else { return nil }
+            return QuizEngine.generate(from: template)
+        }
+        guard !questions.isEmpty else { return }
+        refreshVM = QuizSessionViewModel(
+            questions: questions,
+            title: "Refresh",
+            shortcut: "Bring your mastered skills back to sharp \u{2014} a quick review so they stick.",
+            moduleColor: .teal
+        )
     }
 
     // MARK: - Streak
