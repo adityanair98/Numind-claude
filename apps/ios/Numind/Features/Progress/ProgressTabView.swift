@@ -292,7 +292,17 @@ struct ProgressTabView: View {
                                         .foregroundStyle(row.mastered > 0
                                             ? skillColor(row.axis) : Theme.Colors.mutedText)
                                 }
-                                BeadRail(progress: row.mastered, total: max(row.total, 1), variant: .dot)
+                                // Continuous bar — scales to any lesson count
+                                // (a per-bead rail overflows for axes with 20+ lessons).
+                                GeometryReader { geo in
+                                    ZStack(alignment: .leading) {
+                                        Capsule().fill(Theme.Colors.mutedTint)
+                                        Capsule()
+                                            .fill(skillColor(row.axis))
+                                            .frame(width: max(0, geo.size.width * row.fraction))
+                                    }
+                                }
+                                .frame(height: 6)
                             }
                         }
                     }
