@@ -17687,5 +17687,257 @@
     ],
     "correctConceptChoice": "The unsubsidized loan — it accrues interest WHILE you're in school (the subsidized one doesn't, because the government covers its interest then), so paying it down stops that interest from growing and capitalizing",
     "isApplication": true
+  },
+  {
+    "id": "inv_decision_alloc_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're 30, investing for retirement about 35 years away. A coworker keeps everything in cash and bonds 'to be safe.' You're deciding your stock/bond mix.",
+    "promptTemplate": "What allocation makes sense, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Asset allocation should match your time horizon. With 35 years until you need the money, short-term stock swings matter little — what matters is long-term growth, where stocks historically far outpace bonds and cash. A common guideline holds a high stock percentage when young (~80-90%) and adds bonds as the goal nears. Staying all-cash 'to be safe' is the hidden risk: inflation quietly erodes it and you forgo decades of compounding.",
+    "conceptChoices": [
+      "Lean heavily toward stocks (~80-90%) — with 35 years, their growth outweighs the swings. All cash/bonds is actually riskier for a long goal: inflation erodes it and you miss decades of growth",
+      "All cash and bonds — safety first, always",
+      "50/50 stocks and bonds at every age",
+      "All stocks, but only after you turn 50"
+    ],
+    "correctConceptChoice": "Lean heavily toward stocks (~80-90%) — with 35 years, their growth outweighs the swings. All cash/bonds is actually riskier for a long goal: inflation erodes it and you miss decades of growth",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_panic_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "The market drops 30% in a month. Your retirement account (20+ years away) is down $15,000. Your gut says 'sell before it gets worse.'",
+    "promptTemplate": "What should you do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Panic-selling in a downturn is the single most damaging investing mistake. A paper loss only becomes real when you sell — and markets have always eventually recovered from crashes. Worse, the market's best days often cluster right after the worst ones, so selling means missing the rebound. With a 20+-year horizon, a 30% drop is a temporary discount: keep contributing on schedule (you're buying shares cheaper). The hard part is behavioral — having a plan you'll stick to is what protects you.",
+    "conceptChoices": [
+      "Don't sell — selling locks in the loss and you'd likely miss the recovery (the best days often come right after crashes). With 20+ years, keep contributing; a crash is a sale on stocks, not a catastrophe",
+      "Sell everything now to stop the bleeding",
+      "Sell half to be safe and buy back lower",
+      "Move to cash until the market fully recovers"
+    ],
+    "correctConceptChoice": "Don't sell — selling locks in the loss and you'd likely miss the recovery (the best days often come right after crashes). With 20+ years, keep contributing; a crash is a sale on stocks, not a catastrophe",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_rental_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A $300,000 rental property would rent for $1,800/mo. The '1% rule' says monthly rent near 1% of price (~$3,000) is a quick sign it might cash-flow after all costs.",
+    "promptTemplate": "What does the math suggest?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The '1% rule' is a quick screen: monthly rent around 1% of price suggests a property might cash-flow positively after the many costs of ownership (mortgage, property tax, insurance, maintenance, vacancy, management). Here, $1,800 on a $300,000 home is just 0.6% — likely negative cash flow. That doesn't make it a terrible buy, but it means you'd rely on price appreciation (speculation) rather than rental income, which is riskier and not guaranteed. Run the full numbers, not just rent vs mortgage.",
+    "conceptChoices": [
+      "It likely won't cash-flow — $1,800 is ~0.6% of price, below the 1% rule (~$3,000). After mortgage, taxes, insurance, maintenance, and vacancy you'd probably lose money monthly and be betting on appreciation",
+      "Great deal — any rental income is pure profit",
+      "Buy it — the 1% rule doesn't apply to nice properties",
+      "It cash-flows as long as the rent covers the mortgage"
+    ],
+    "correctConceptChoice": "It likely won't cash-flow — $1,800 is ~0.6% of price, below the 1% rule (~$3,000). After mortgage, taxes, insurance, maintenance, and vacancy you'd probably lose money monthly and be betting on appreciation",
+    "isApplication": true
+  },
+  {
+    "id": "inv_decision_espp_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your company's ESPP lets you buy company stock at a 15% discount. You're deciding whether to participate and what to do with the shares.",
+    "promptTemplate": "What's the smart play?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "An ESPP discount is one of the best deals in personal finance: buying at 15% off is an immediate ~17.6% gain ($100 of stock for $85). The main risk is concentration — your paycheck AND your savings riding on one company. The common play: participate to capture the discount, then sell relatively soon and redeploy into a diversified fund rather than letting employer stock pile up. (Holding longer can earn better tax treatment but adds risk — weigh both.)",
+    "conceptChoices": [
+      "Participate — a 15% discount is a near-guaranteed ~17.6% gain. Then most people should sell soon to lock it in and avoid being over-concentrated in their own employer's stock",
+      "Skip it — buying company stock is too risky",
+      "Participate and hold forever — they're basically free shares",
+      "Only participate when the stock is going up"
+    ],
+    "correctConceptChoice": "Participate — a 15% discount is a near-guaranteed ~17.6% gain. Then most people should sell soon to lock it in and avoid being over-concentrated in their own employer's stock",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_vesting_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your employer match vests on a 3-year cliff (you keep $0 of the match if you leave before 3 years, 100% after). You're 2 years 10 months in and considering a new job.",
+    "promptTemplate": "How should vesting factor into your timing?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Vesting determines how much of the EMPLOYER's match you keep if you leave. On a 3-year cliff, you get 0% before 3 years and 100% after — so leaving at 2 years 10 months forfeits the entire accumulated match (your OWN contributions are always 100% yours). If that match is a few thousand dollars, waiting ~2 months to cross the cliff is an easy, high-value call. Always check your vesting schedule before timing a job change.",
+    "conceptChoices": [
+      "If the match is meaningful, wait the ~2 months to vest — leaving now forfeits 100% of the accumulated employer match. A short wait can be worth thousands",
+      "Leave now — vesting doesn't affect your own contributions",
+      "Vesting is fake — you always keep the match",
+      "Always wait a full 5 years before changing jobs"
+    ],
+    "correctConceptChoice": "If the match is meaningful, wait the ~2 months to vest — leaving now forfeits 100% of the accumulated employer match. A short wait can be worth thousands",
+    "isApplication": true
+  },
+  {
+    "id": "sal_decision_realraise_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You got a 3% raise. Inflation this year ran about 4%. You feel richer.",
+    "promptTemplate": "In real terms, what actually happened to your pay?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A 'real' raise is your nominal raise minus inflation. A 3% raise against 4% inflation is roughly a 1% decline in purchasing power — prices rose faster than your pay, so the same paycheck buys less. To actually get ahead, your raise has to BEAT inflation. This is why a cost-of-living adjustment that merely matches inflation keeps you flat, and why it's worth knowing the inflation rate when you evaluate a raise or negotiate.",
+    "conceptChoices": [
+      "It's actually a ~1% pay CUT in real terms — your 3% raise trailed 4% inflation, so your buying power fell. A raise below inflation is a real-terms cut",
+      "It's a solid 3% gain — inflation doesn't affect your salary",
+      "It's a 7% gain — the raise plus inflation",
+      "It's exactly break-even"
+    ],
+    "correctConceptChoice": "It's actually a ~1% pay CUT in real terms — your 3% raise trailed 4% inflation, so your buying power fell. A raise below inflation is a real-terms cut",
+    "isApplication": true
+  },
+  {
+    "id": "debt_decision_extra_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You have $5,000 left on a car loan at 5% and a $5,000 credit card balance at 22%. You have $2,000 extra — or you could invest it (markets average ~7-10% over the long run).",
+    "promptTemplate": "Where should the $2,000 go, and why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Paying off debt earns a guaranteed return equal to its interest rate. The 22% card is the clear winner: wiping it out is like earning a risk-free 22% — far above the 5% car loan and above even an optimistic 7-10% market return (which isn't guaranteed). Rule of thumb: pay off high-interest debt (above ~6-8%) before investing extra; for low-rate debt like the 5% car loan, investing can make sense. Grab the guaranteed high return first.",
+    "conceptChoices": [
+      "Pay the 22% credit card — eliminating it is a guaranteed 22% return, beating both the 5% car loan and the uncertain ~7-10% market",
+      "Invest it — the market always beats paying off debt",
+      "Pay the 5% car loan first — smaller rate, easier win",
+      "Split it evenly across all three options"
+    ],
+    "correctConceptChoice": "Pay the 22% credit card — eliminating it is a guaranteed 22% return, beating both the 5% car loan and the uncertain ~7-10% market",
+    "isApplication": true
+  },
+  {
+    "id": "debt_decision_utilization_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You charge $2,000/mo on a card with a $4,000 limit and pay in full every month, so you owe $0 in interest. But your credit report shows high 'utilization.'",
+    "promptTemplate": "Why, and what helps?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Credit-card utilization (balance ÷ limit) is a big score factor, and it's snapshotted when your STATEMENT closes — not after you pay. So even paying in full with $0 interest, a $2,000 balance on a $4,000 limit reports as 50% utilization. To show a lower number (ideally under ~30%, even under 10%), make a payment BEFORE the statement closing date, or ask for a credit-limit increase. You don't need to carry a balance — paying in full is still correct; it's about timing.",
+    "conceptChoices": [
+      "Utilization is reported at statement close, BEFORE your payment posts — so $2,000/$4,000 = 50% shows up even though you pay in full. Pay down before the statement closes, or raise your limit, to report lower utilization",
+      "Your score is wrong — paying in full means 0% utilization",
+      "Carry a balance to lower your utilization",
+      "Utilization doesn't actually affect your credit score"
+    ],
+    "correctConceptChoice": "Utilization is reported at statement close, BEFORE your payment posts — so $2,000/$4,000 = 50% shows up even though you pay in full. Pay down before the statement closes, or raise your limit, to report lower utilization",
+    "isApplication": true
+  },
+  {
+    "id": "debt_decision_creditscore_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You want to improve your credit score. You're tempted to close an old credit card you rarely use, and you often pay a few days late.",
+    "promptTemplate": "What should you actually do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Two of the biggest score factors are at play. Payment history is #1 (~35%): even a few days late, once it's reported (usually at 30+ days), can hurt a lot — always pay on time, even just the minimum. Closing an old card backfires: it shortens your average account age AND removes that card's limit, raising your overall utilization — both lower your score. Keep old no-fee cards open, use them occasionally, and automate at least the minimum so you're never late.",
+    "conceptChoices": [
+      "Keep the old card open (closing it shortens your history and raises utilization) and pay on time — payment history is the single biggest factor in your score",
+      "Close the old card and pay whenever you can — neither matters much",
+      "Close all your cards to avoid temptation; it helps your score",
+      "Carry a balance and pay late sometimes to show activity"
+    ],
+    "correctConceptChoice": "Keep the old card open (closing it shortens your history and raises utilization) and pay on time — payment history is the single biggest factor in your score",
+    "isApplication": true
+  },
+  {
+    "id": "mm_decision_peruse_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A $200 winter coat you'd wear ~100 times over 3 winters, versus a $60 coat you'd replace each year (~$180 over 3 years for three coats).",
+    "promptTemplate": "Which is the better buy, and how should you judge it?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "'Cost per use' reframes a purchase around how much you'll actually use it. A $200 coat worn 100 times is $2/wear; a $60 coat replaced yearly is ~$180 over three years for lower quality. The pricier, durable item can be cheaper per use AND barely more in total — plus less waste and hassle. The flip side: a $200 item used twice is $100/use. Buy quality for things you use often; go cheap for rarely-used items. Sticker price alone is a poor guide.",
+    "conceptChoices": [
+      "The $200 coat is ~$2 per wear and about the same 3-year total (~$200) as three $60 coats (~$180) — but more durable and less hassle. For things you use a lot, judge cost-per-use, not sticker price",
+      "The $60 coat — the lower price always wins",
+      "Never spend $200 on a coat",
+      "The $200 coat costs 3x more, period"
+    ],
+    "correctConceptChoice": "The $200 coat is ~$2 per wear and about the same 3-year total (~$200) as three $60 coats (~$180) — but more durable and less hassle. For things you use a lot, judge cost-per-use, not sticker price",
+    "isApplication": true
+  },
+  {
+    "id": "mm_decision_subaudit_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your subscriptions: streaming $16, music $11, cloud $10, two apps at $5 each, and a $40 gym you visit about twice a month — $87/mo total.",
+    "promptTemplate": "What's the right way to think about this?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Subscriptions feel small individually but compound: $87/mo is $1,044/yr. The trap is 'set and forget' — you keep paying for things you barely use. Do a periodic audit: list every recurring charge, multiply by 12, and cut or downgrade the ones that don't earn their keep. The $40 gym visited twice a month is $20/visit — often cheaper to pay drop-in rates or cancel. Even trimming $30/mo is $360/yr toward debt, savings, or something you actually value.",
+    "conceptChoices": [
+      "That's $1,044/yr — audit and cut what you underuse. The $40 gym at twice a month is ~$20/visit; go more, switch to drop-in, or cancel. Small recurring charges quietly add up",
+      "It's only $87 — too small to worry about",
+      "Keep them all; canceling subscriptions hurts your credit",
+      "Subscriptions are fixed costs you can't change"
+    ],
+    "correctConceptChoice": "That's $1,044/yr — audit and cut what you underuse. The $40 gym at twice a month is ~$20/visit; go more, switch to drop-in, or cancel. Small recurring charges quietly add up",
+    "isApplication": true
+  },
+  {
+    "id": "sm_decision_bogo_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A store advertises 'Buy One Get One Free' on $40 jeans. You only need one pair.",
+    "promptTemplate": "What's the real deal here?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "'Buy One Get One Free' is genuinely ~50% off — but ONLY across two items you'd both use. If you need just one pair, you pay the full $40 and the 'free' pair is worthless to you (or clutter you'll never wear). Retailers use BOGO to make you buy more than you planned. The test: would you have bought the second item at half price anyway? If yes, it's a real deal; if no, it's just full price with a nudge to overspend.",
+    "conceptChoices": [
+      "For one pair it's just full price ($40) — BOGO is only ~50% off if you actually need both. Don't buy two to 'save' on something you wouldn't have bought",
+      "Always buy — getting one free is free money",
+      "It's 50% off no matter what you need",
+      "Buy two and resell the second pair for profit"
+    ],
+    "correctConceptChoice": "For one pair it's just full price ($40) — BOGO is only ~50% off if you actually need both. Don't buy two to 'save' on something you wouldn't have bought",
+    "isApplication": true
   }
 ]

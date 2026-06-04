@@ -77,7 +77,8 @@
       "bogo_savings",
       "bogo_scenario_d2",
       "unit_price_grocery_d2",
-      "discount_compare_d2"
+      "discount_compare_d2",
+      "sm_decision_bogo_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -197,7 +198,7 @@
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Keep this in mind every time a store flashes a 'limited time' price."
   },
   {
@@ -212,7 +213,8 @@
       "yearly_cost_d1",
       "sub_audit_annual_d2",
       "subscription_compare_d2",
-      "sub_audit_cut_d3"
+      "sub_audit_cut_d3",
+      "mm_decision_subaudit_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -220,7 +222,7 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this once a year to see what your subscriptions actually cost you."
   },
   {
@@ -235,7 +237,8 @@
       "mm_cpu_book_d1",
       "cost_per_use_gym_d2",
       "mm_cpu_daily_d2",
-      "cost_per_use_scenario"
+      "cost_per_use_scenario",
+      "mm_decision_peruse_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -312,7 +315,7 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this when a small daily habit makes you wonder where your money goes."
   },
   {
@@ -482,7 +485,8 @@
       "inflation_raise_dollars_d1",
       "inflation_raise_scenario_d2",
       "inflation_raise_compare_d2",
-      "inflation_raise_negative_d3"
+      "inflation_raise_negative_d3",
+      "sal_decision_realraise_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -511,7 +515,7 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to instantly translate any hourly rate into a yearly salary.",
     "relatedCalculatorSlug": "salary_converter"
   },
@@ -666,7 +670,8 @@
       "vested_match_cliff_d1",
       "vested_match_forfeit_d2",
       "vested_match_milestone_d2",
-      "concept_vesting_cliff_vs_graded_d2"
+      "concept_vesting_cliff_vs_graded_d2",
+      "sal_decision_vesting_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -674,7 +679,7 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Check this before you quit a job and possibly walk away from unvested match.",
     "relatedCalculatorSlug": "401k_impact"
   },
@@ -943,7 +948,8 @@
       "espp_annualized_d2",
       "espp_lookback_value_d2",
       "espp_vs_market_d2",
-      "concept_espp_qualifying_disposition_d2"
+      "concept_espp_qualifying_disposition_d2",
+      "inv_decision_espp_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -951,7 +957,7 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when your company offers a stock purchase plan and you're unsure it's worth it."
   },
   {
@@ -1037,7 +1043,8 @@
       "concept_rental_real_expenses_d1",
       "concept_rental_reserves_d2",
       "concept_rental_cashflow_check_d2",
-      "concept_rental_speculation_d3"
+      "concept_rental_speculation_d3",
+      "inv_decision_rental_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1045,7 +1052,7 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Run this before you buy a rental expecting it to cash-flow."
   },
   {
@@ -1103,13 +1110,14 @@
       "concept_alloc_bonds_role_d2",
       "concept_target_date_d2",
       "concept_alloc_too_conservative_d3",
-      "concept_crash_response_d3"
+      "concept_crash_response_d3",
+      "inv_decision_alloc_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to decide how much of your portfolio should be stocks vs bonds."
   },
   {
@@ -1124,13 +1132,14 @@
       "concept_panic_sell_d2",
       "concept_market_timing_myth_d2",
       "concept_wait_for_dip_d3",
-      "concept_panic_sell_2020_d3"
+      "concept_panic_sell_2020_d3",
+      "inv_decision_panic_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Remember this the next time the market drops and you want to sell everything."
   },
   {
@@ -1242,7 +1251,8 @@
       "cc_extra_d1",
       "cc_annual_cost_d2",
       "cc_balance_interest_d2",
-      "principal_reduction_d3"
+      "principal_reduction_d3",
+      "debt_decision_extra_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1337,7 +1347,8 @@
       "cc_utilization_target_d2",
       "cc_after_payoff_d2",
       "concept_cc_statement_vs_due_d2",
-      "cc_multi_card_utilization_d2"
+      "cc_multi_card_utilization_d2",
+      "debt_decision_utilization_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1388,7 +1399,7 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this to understand the real rate a lender is quoting you."
   },
   {
@@ -1427,13 +1438,14 @@
       "concept_utilization_max_d2",
       "concept_close_old_card_d2",
       "concept_hard_inquiry_d3",
-      "concept_no_debt_myth_d3"
+      "concept_no_debt_myth_d3",
+      "debt_decision_creditscore_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this before a big application to understand what moves your score."
   },
   {
@@ -1456,7 +1468,7 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false,
+    "isScenarioEligible": true,
     "realWorldHint": "Use this when you're deciding whether a debt is worth taking on."
   },
   {
