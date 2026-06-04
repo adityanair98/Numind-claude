@@ -6,10 +6,10 @@ struct SessionSummaryView: View {
     @ObservedObject var viewModel: QuizSessionViewModel
     let isPersonalBest: Bool
     let newBadgeIds: Set<String>
-    /// Current overall Numind Score after this session was recorded.
-    let numindScore: Int
-    /// How the score changed this session (positive = improvement).
-    let scoreDelta: Int
+    /// Current Level after this session was recorded.
+    let level: Int
+    /// XP earned this session (positive = gained XP).
+    let xpDelta: Int
     let onContinue: () -> Void
     /// Called when the user wants to retry the quiz with fresh questions.
     /// Only shown when mastery threshold was not met.
@@ -107,7 +107,7 @@ struct SessionSummaryView: View {
                 resultHeader
                 statsCard
                 learnedCard
-                if numindScore > 0 { scoreCard }
+                if level > 0 { scoreCard }
                 masteryBanner
                 if !newBadgeIds.isEmpty { newBadgesSection }
                 recapSection
@@ -334,25 +334,23 @@ struct SessionSummaryView: View {
     private var scoreCard: some View {
         return NumindCard {
             HStack(spacing: 14) {
-                NumindScoreRing(score: numindScore, size: 52)
+                LevelRing(level: level, size: 52)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(progressStore.numindSubtitle)
-                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                    Text("Level \(level)")
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
                         .foregroundStyle(Theme.Colors.deepNavy)
-                        .fixedSize(horizontal: false, vertical: true)
 
-                    if scoreDelta != 0 {
-                        let isUp = scoreDelta > 0
+                    if xpDelta > 0 {
                         HStack(spacing: 4) {
-                            Image(systemName: isUp ? "arrow.up.right" : "arrow.down.right")
+                            Image(systemName: "plus.circle.fill")
                                 .font(.system(size: 11, weight: .bold))
-                            Text("\(isUp ? "+" : "")\(scoreDelta) pts this session")
+                            Text("+\(xpDelta) XP this session")
                                 .font(.system(size: 13, weight: .bold))
                         }
-                        .foregroundStyle(isUp ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
+                        .foregroundStyle(Theme.Colors.mindTeal)
                     } else {
-                        Text("Score unchanged")
+                        Text("Answer correctly to earn XP")
                             .font(.system(size: 13, weight: .medium))
                             .foregroundStyle(Theme.Colors.mutedText)
                     }
@@ -360,11 +358,10 @@ struct SessionSummaryView: View {
 
                 Spacer()
 
-                Text("NUMIND\nSCORE")
-                    .font(.system(size: 9, weight: .heavy))
+                Text("XP")
+                    .font(.system(size: 11, weight: .heavy))
                     .foregroundStyle(Theme.Colors.mutedText)
                     .tracking(0.5)
-                    .multilineTextAlignment(.trailing)
             }
         }
     }

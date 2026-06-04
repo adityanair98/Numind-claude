@@ -147,11 +147,6 @@ struct ModuleDetailView: View {
                     heroStat(value: "\(masteredCount)/\(total)", label: "Lessons")
                     heroDivider
                     heroStat(value: "\(Int(averageAccuracy * 100))%", label: "Accuracy")
-                    heroDivider
-                    heroStat(
-                        value: "\(progressStore.numindScore(for: viewModel.module.id))",
-                        label: "Score"
-                    )
                 }
                 .padding(.horizontal, 14)
                 .padding(.vertical, 12)

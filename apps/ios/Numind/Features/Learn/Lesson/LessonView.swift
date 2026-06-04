@@ -54,9 +54,9 @@ struct LessonView: View {
                         isNewPersonalBest = false
                     }
 
-                    // Capture level and score BEFORE recording.
+                    // Capture module level and XP BEFORE recording.
                     let prevLevel = progressStore.skillLevel(moduleId: viewModel.lesson.moduleId)
-                    let scoreBefore = progressStore.numindScore
+                    let xpBefore = progressStore.xp
 
                     var record = SessionRecord(
                         id: UUID(),
@@ -70,8 +70,8 @@ struct LessonView: View {
                     record.bonusXP = vm.bonusXP
                     progressStore.recordSession(record)
                     newBadgeIds = progressStore.newlyEarnedBadgeIds
-                    sessionNumindScore = progressStore.numindScore
-                    sessionScoreDelta = progressStore.numindScore - scoreBefore
+                    sessionNumindScore = progressStore.level
+                    sessionScoreDelta = progressStore.xp - xpBefore
 
                     // Level-up ceremony only fires when the user actually mastered the lesson.
                     // onDismiss of the fullScreenCover will set phase = .summary.
@@ -101,8 +101,8 @@ struct LessonView: View {
                     viewModel: vm,
                     isPersonalBest: isNewPersonalBest,
                     newBadgeIds: newBadgeIds,
-                    numindScore: sessionNumindScore,
-                    scoreDelta: sessionScoreDelta,
+                    level: sessionNumindScore,
+                    xpDelta: sessionScoreDelta,
                     onContinue: { dismiss() },
                     onRetry: { retryQuiz() }
                 )
