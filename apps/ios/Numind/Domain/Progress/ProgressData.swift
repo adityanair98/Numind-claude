@@ -248,6 +248,18 @@ struct ProgressData: Codable {
         let cal = Calendar.current
         let relevant = sessions.filter { $0.lessonId == lessonId && $0.totalCount > 0 }
 
+        // Phase 9 depth requirement: mastery needs at least one correct
+        // medium/hard answer — no mastering on easy-only. Enforced only when
+        // graded (difficulty-known) results exist, so legacy/ungraded sessions
+        // and tests aren't penalized.
+        let graded = relevant.flatMap { $0.questionResults }.filter { $0.difficulty != nil }
+        if !graded.isEmpty {
+            let hasNonEasy = graded.contains {
+                $0.isCorrect && ($0.difficulty == .medium || $0.difficulty == .hard)
+            }
+            if !hasNonEasy { return false }
+        }
+
         // Path (b): one 85%+ session.
         if relevant.contains(where: {
             Double($0.correctCount) / Double($0.totalCount) >= 0.85
@@ -269,6 +281,17 @@ struct ProgressData: Codable {
             }
         }
         return false
+    }
+
+    /// Deep mastery (Phase 9) — a mastered lesson with at least one correct
+    /// HARD answer. Counts toward the Level depth-gate above L8.
+    func masteredWithHard(_ lessonId: String) -> Bool {
+        guard hasMasteredLesson(lessonId) else { return false }
+        return sessions.contains { s in
+            s.lessonId == lessonId && s.questionResults.contains {
+                $0.isCorrect && $0.difficulty == .hard
+            }
+        }
     }
 
     /// Internal "Fluent" tier — ≥ 90% retained across a 7-day gap. Not

@@ -2,8 +2,8 @@ import Foundation
 
 @MainActor
 final class ProgressStore: ObservableObject {
-    private static let defaultsKey       = "numind.progress.v2"
-    private static let legacyDefaultsKey = "numind.progress.v1"
+    private static let defaultsKey       = "numind.progress.v3"
+    private static let legacyDefaultsKey = "numind.progress.v2"
     private static let dailyChallengeKey = "numind.dailyChallenge.lastCompleted"
     private static let dateFormatter: DateFormatter = {
         let f = DateFormatter(); f.dateFormat = "yyyy-MM-dd"; return f
@@ -387,11 +387,61 @@ final class ProgressStore: ObservableObject {
     var streak: Int               { data.computeStreak() }
     var bestStreak: Int           { data.bestStreak }
     var totalSessions: Int        { data.sessions.count }
-    var totalXP: Int              { data.computeTotalXP() }
+    var totalXP: Int              { xp }
     var accuracy: Double          { data.computeAccuracy() }
     var weeklyCompletions: [Bool] { data.computeWeeklyCompletions() }
     var weeklyWorkouts: Int       { data.computeWeeklyWorkouts() }
     let weeklyGoal: Int = 5
+
+    // MARK: - Momentum (XP + Level, Phase 9)
+
+    /// Real lesson IDs the user has mastered (excludes daily/bonus/recall
+    /// pseudo-lessons, which share the `lessonId` field but aren't curriculum).
+    private var masteredRealLessonIds: Set<String> {
+        let repo = LocalContentRepository()
+        let real = Set(repo.allModules().flatMap { repo.lessons(for: $0.id).map(\.id) })
+        return masteredLessonIds.intersection(real)
+    }
+
+    /// Lifetime XP — the effort currency. Monotonic; pure over the session log.
+    var xp: Int {
+        MomentumEngine.totalXP(
+            sessions: data.sessions,
+            masteredLessonCount: masteredRealLessonIds.count,
+            readyPackCount: ReadinessEngine.readyPackCount(data: data)
+        )
+    }
+
+    /// Effective level — XP ladder, depth-gated above L8.
+    var level: Int {
+        let deep = masteredRealLessonIds.filter { data.masteredWithHard($0) }.count
+        return MomentumEngine.level(xp: xp, deepMasteryCount: deep)
+    }
+
+    var xpToNextLevel: Int? { MomentumEngine.xpToNextLevel(xp) }
+    var levelProgress: Double { MomentumEngine.levelProgress(xp) }
+
+    // MARK: - Readiness + Freshness (Phase 9)
+
+    /// Readiness state for a pack (the decision-scoped competence signal).
+    func readiness(for pack: Pack) -> ReadinessEngine.State {
+        ReadinessEngine.state(for: pack, data: data)
+    }
+
+    /// Number of packs the user is Ready/Sharp on — the Home competence headline.
+    var readyPackCount: Int { ReadinessEngine.readyPackCount(data: data) }
+
+    /// Mastered skills that have gone stale (overdue) — surfaced as refresh opportunities.
+    var staleSkillCount: Int {
+        FreshnessEngine.staleCount(masteredLessonIds: masteredLessonIds, sessions: data.sessions)
+    }
+
+    /// Overdue template IDs from mastered lessons, for a refresh session.
+    func refreshTargetIds(limit: Int? = nil) -> [String] {
+        FreshnessEngine.refreshTargets(
+            masteredLessonIds: masteredLessonIds, sessions: data.sessions, limit: limit
+        )
+    }
 
     func moduleProgress(moduleId: String, totalLessons: Int) -> Double {
         data.moduleProgress(moduleId: moduleId, totalLessons: totalLessons)
@@ -411,27 +461,14 @@ final class ProgressStore: ObservableObject {
         data.hasMasteredLesson(lessonId)
     }
 
-    /// "Is this lesson *currently* mastered" — applies the Phase 6a mastery
-    /// decay rule. A lesson reverts to "attempted" if the user's recent
-    /// 3 attempts on its templates average <60%. Use this for the gold
-    /// checkmark, world-conquered crown, pack progress, and the
-    /// continue-card resume target.
+    /// "Is this lesson *currently* mastered." Phase 9: mastery no longer
+    /// decays — once earned, the star stays (the headline never goes down).
+    /// Skill staleness is carried by Freshness (FreshnessEngine), not by
+    /// revoking the star. Kept as a distinct method so call sites (gold
+    /// checkmark, world-conquered crown, pack progress, resume target) read
+    /// clearly and we can reintroduce a decay policy here if ever needed.
     func hasMasteredLessonNow(_ lessonId: String) -> Bool {
-        guard data.hasMasteredLesson(lessonId) else { return false }
-        // Mastery decay check: pull the lesson's template IDs, then the
-        // user's last 3 attempts on any of them. Average < 60% revokes.
-        let repo = LocalContentRepository()
-        guard let lesson = repo.lesson(id: lessonId) else { return true }
-        let templateIds = Set(lesson.quizTemplateIds)
-        let recentAttempts: [QuestionResult] = data.sessions
-            .sorted(by: { $0.date > $1.date })
-            .flatMap { $0.questionResults.filter { templateIds.contains($0.templateId) } }
-            .prefix(3)
-            .map { $0 }
-        guard recentAttempts.count >= 3 else { return true }
-        let correctCount = recentAttempts.filter(\.isCorrect).count
-        let avg = Double(correctCount) / Double(recentAttempts.count)
-        return avg >= 0.60
+        data.hasMasteredLesson(lessonId)
     }
 
     func skillLevel(moduleId: String) -> Int {

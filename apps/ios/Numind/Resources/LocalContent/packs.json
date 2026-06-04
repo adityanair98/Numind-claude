@@ -14,6 +14,11 @@
       "investing_401k_match",
       "taxes_w4_adjust"
     ],
+    "coreLessonIds": [
+      "net_pay_check",
+      "concept_taxes_paycheck_stub",
+      "taxes_brackets"
+    ],
     "anchorLessonId": "net_pay_check",
     "estimatedMinutes": 18,
     "lastVerified": "2026-05-26",
@@ -36,6 +41,11 @@
       "housing_first_month_true_cost",
       "housing_roommate_math",
       "concept_housing_lease_clauses"
+    ],
+    "coreLessonIds": [
+      "housing_rent_affordability",
+      "housing_first_month_true_cost",
+      "housing_true_cost"
     ],
     "anchorLessonId": "housing_first_month_true_cost",
     "estimatedMinutes": 16,
@@ -61,6 +71,11 @@
       "concept_debt_credit_scores",
       "debt_cc_rewards_vs_interest"
     ],
+    "coreLessonIds": [
+      "credit_card_interest",
+      "minimum_payment_trap",
+      "debt_cc_payoff_time"
+    ],
     "anchorLessonId": "debt_cc_payoff_time",
     "estimatedMinutes": 22,
     "lastVerified": "2026-05-26",
@@ -84,6 +99,11 @@
       "insurance_fsa_use_it",
       "concept_insurance_open_enrollment"
     ],
+    "coreLessonIds": [
+      "insurance_deductible_vs_premium",
+      "insurance_hdhp_vs_ppo",
+      "concept_insurance_open_enrollment"
+    ],
     "anchorLessonId": "concept_insurance_open_enrollment",
     "estimatedMinutes": 20,
     "lastVerified": "2026-05-26",
@@ -102,6 +122,11 @@
     "lessonIds": [
       "housing_affordability_full",
       "housing_mortgage_vs_rent",
+      "housing_cash_to_close",
+      "concept_housing_buy_vs_rent_framework"
+    ],
+    "coreLessonIds": [
+      "housing_affordability_full",
       "housing_cash_to_close",
       "concept_housing_buy_vs_rent_framework"
     ],
@@ -130,6 +155,11 @@
       "student_loan_refinance",
       "concept_sl_refi_protections_lost"
     ],
+    "coreLessonIds": [
+      "student_loan_monthly",
+      "student_loan_idr",
+      "concept_sl_refi_protections_lost"
+    ],
     "anchorLessonId": "concept_sl_refi_protections_lost",
     "estimatedMinutes": 22,
     "lastVerified": "2026-05-26",
@@ -155,6 +185,11 @@
       "investing_emergency_fund",
       "concept_investing_ef_location"
     ],
+    "coreLessonIds": [
+      "investing_401k_match",
+      "investing_roth_decision",
+      "investing_compound_growth"
+    ],
     "anchorLessonId": "investing_401k_match",
     "estimatedMinutes": 24,
     "lastVerified": "2026-05-26",
@@ -177,6 +212,11 @@
       "car_lease_vs_buy",
       "concept_car_negotiation",
       "concept_car_warranty"
+    ],
+    "coreLessonIds": [
+      "car_monthly_vs_total",
+      "car_20_4_10_rule",
+      "concept_car_negotiation"
     ],
     "anchorLessonId": "concept_car_negotiation",
     "estimatedMinutes": 20,
@@ -201,6 +241,11 @@
       "subscription_math",
       "discount_membership_worth"
     ],
+    "coreLessonIds": [
+      "tip_10_percent_trick",
+      "sales_tax_quick",
+      "discount_membership_worth"
+    ],
     "anchorLessonId": "discount_membership_worth",
     "estimatedMinutes": 16,
     "lastVerified": "2026-05-26",
@@ -223,6 +268,11 @@
       "taxes_refund",
       "taxes_w4_adjust",
       "taxes_capital_gains"
+    ],
+    "coreLessonIds": [
+      "concept_taxes_paycheck_stub",
+      "taxes_brackets",
+      "taxes_standard_vs_itemized"
     ],
     "anchorLessonId": "taxes_brackets",
     "estimatedMinutes": 19,
