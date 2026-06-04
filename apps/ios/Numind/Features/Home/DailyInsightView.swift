@@ -3,12 +3,12 @@ import SwiftUI
 /// Post-session insight screen shown after completing the Daily Workout
 /// (formerly Daily Challenge).
 ///
-/// Displays the user's current Numind Score, a 7-axis radar chart (or
-/// bar chart if fewer than 3 axes have evidence), session stats, and a
-/// recommended lesson for the weakest measured axis.
+/// Displays the user's current Level + XP earned this session, a 7-axis
+/// performance radar (or bar chart if fewer than 3 axes have evidence),
+/// session stats, and a recommended lesson for the weakest measured axis.
 ///
-/// Phase 5d wired in the 7-axis competency model — see
-/// `apps/ios/Numind/Domain/Progress/NumindScoreEngine.swift`.
+/// Phase 9 retired the 0–100 composite headline in favor of Level/XP; the
+/// radar survives as a per-session diagnostic over `NumindScoreEngine.axisResults`.
 struct DailyInsightView: View {
 
     // MARK: - Input
