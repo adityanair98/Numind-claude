@@ -80,16 +80,16 @@ struct MilestoneCelebrationView: View {
 
     private var accentColor: Color {
         switch milestone {
-        case .firstSession, .fiveSessions, .tenSessions:
+        case .firstSkillMastered:
             return Theme.Colors.primaryBlue
+        case .firstPackReady, .threePacksReady:
+            return Theme.Colors.growthGreen
+        case .firstRefreshSave:
+            return Theme.Colors.mindTeal
         case .firstWeekStreak, .twoWeekStreak:
             return Theme.Colors.warmOrange
         case .accuracyJump:
             return Theme.Colors.mindTeal
-        case .levelUp:
-            return Theme.Colors.growthGreen
-        case .moduleCompleted:
-            return Theme.Colors.primaryBlue
         case .firstFreeze:
             return Theme.Colors.mindTeal
         }
@@ -162,5 +162,5 @@ private struct ConfettiParticle: Identifiable {
 }
 
 #Preview {
-    MilestoneCelebrationView(milestone: .firstSession) {}
+    MilestoneCelebrationView(milestone: .firstPackReady(name: "First Paycheck")) {}
 }

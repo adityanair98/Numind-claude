@@ -92,19 +92,45 @@ final class ProgressStore: ObservableObject {
         // nothing to recompute or persist beyond the session itself.
         persist()
 
-        // Check for milestone celebrations.
+        // Check for milestone celebrations (Phase 10 — capability triggers;
+        // pack/world COMPLETION celebrations stay in the Celebration queue).
         let repo = LocalContentRepository()
-        let allModules = repo.allModules()
-        let moduleNames = Dictionary(uniqueKeysWithValues: allModules.map { ($0.id, $0.title) })
-        let moduleLessonCounts = Dictionary(uniqueKeysWithValues: allModules.map { ($0.id, $0.lessonIds.count) })
+        let packs = repo.allPacks()
+        func readyIds(_ d: ProgressData) -> Set<String> {
+            Set(packs.filter { pack in
+                switch ReadinessEngine.state(for: pack, data: d, repository: repo) {
+                case .ready, .sharp: return true
+                default: return false
+                }
+            }.map(\.id))
+        }
+        func masteredReal(_ d: ProgressData) -> Set<String> {
+            Set(d.sessions.map(\.lessonId))
+                .filter { d.hasMasteredLesson($0) && !$0.hasPrefix("review_") }
+        }
+        func staleCount(_ d: ProgressData) -> Int {
+            FreshnessEngine.staleCount(
+                masteredLessonIds: masteredReal(d), sessions: d.sessions, repository: repo
+            )
+        }
+        let lessonNames = Dictionary(
+            uniqueKeysWithValues: repo.allModules()
+                .flatMap { repo.lessons(for: $0.id) }
+                .map { ($0.id, $0.title) }
+        )
         pendingMilestone = MilestoneEngine.check(
             before: snapshotBefore,
             after: data,
             shownIds: data.shownMilestoneIds,
-            moduleNames: moduleNames,
-            moduleLessonCounts: moduleLessonCounts,
-            beforeLevel: level(of: snapshotBefore),
-            afterLevel: level(of: data)
+            beforeMastered: masteredReal(snapshotBefore),
+            afterMastered: masteredReal(data),
+            beforeReadyPackIds: readyIds(snapshotBefore),
+            afterReadyPackIds: readyIds(data),
+            packNames: Dictionary(uniqueKeysWithValues: packs.map { ($0.id, $0.title) }),
+            lessonNames: lessonNames,
+            beforeStaleCount: staleCount(snapshotBefore),
+            afterStaleCount: staleCount(data),
+            lastSessionLessonId: record.lessonId
         )
 
         // Detect newly-completed packs and worlds for the celebration queue.
