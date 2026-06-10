@@ -112,6 +112,7 @@
 		9D0E0002A0B0C0D0E0F00001 /* MomentumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F00002 /* MomentumTests.swift */; };
 		53597D8BDAB94FCF8BBE81E0 /* DailyRingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70183AE1D14F17BD598A6C /* DailyRingTests.swift */; };
 		D9DC2692ADEC437498AE3314 /* DailyWorkoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D65CCABB4F4E2F9BAA46D2 /* DailyWorkoutEngineTests.swift */; };
+		40782EE0807940419DEE3734 /* QuizSessionTeachTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23DD843D00B4539985FF4BE /* QuizSessionTeachTests.swift */; };
 		9D0E0002A0B0C0D0E0F00009 /* ContentInvariantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F0000A /* ContentInvariantTests.swift */; };
 		85AF38C1C1849D2390D5933F /* ContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48236569E3C71A34C541C4 /* ContentRepository.swift */; };
 		8620E8E68B231480A58942C0 /* QuestionTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7176E94F703A2718728DED /* QuestionTheme.swift */; };
@@ -134,6 +135,7 @@
 		AC2CE9448712D940D4B98677 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC603355770CC2CE67B6EFC6 /* ConfettiView.swift */; };
 		AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3433B4F7B4DF55F59F07BC /* LessonViewModel.swift */; };
 		ACB803C39F0CA76FA3EE61EA /* MotivatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A998436EA187651EC9B78E /* MotivatorView.swift */; };
+		767A7F3847174396B66A9501 /* TeachCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A2904B95C4062B836A244 /* TeachCardView.swift */; };
 		AED8DDABBEBFBA41DF4F8AA2 /* TimeCommitmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB43A8FC37C72C9557CD7DE /* TimeCommitmentView.swift */; };
 		B526ECBE131530A97D5E7409 /* PersonalizedPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B88F4243A021077238976F /* PersonalizedPlanView.swift */; };
 		B5311AB63A1F647D2E37D563 /* ModuleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */; };
@@ -249,6 +251,7 @@
 		9D0E0002A0B0C0D0E0F00002 /* MomentumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumTests.swift; sourceTree = "<group>"; };
 		0A70183AE1D14F17BD598A6C /* DailyRingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRingTests.swift; sourceTree = "<group>"; };
 		08D65CCABB4F4E2F9BAA46D2 /* DailyWorkoutEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWorkoutEngineTests.swift; sourceTree = "<group>"; };
+		D23DD843D00B4539985FF4BE /* QuizSessionTeachTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSessionTeachTests.swift; sourceTree = "<group>"; };
 		9D0E0002A0B0C0D0E0F0000A /* ContentInvariantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInvariantTests.swift; sourceTree = "<group>"; };
 		63D2F05A692A69B987B2A19E /* ReviewMistakesEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMistakesEngine.swift; sourceTree = "<group>"; };
 		63E02F5424B02C5C35EB4D2E /* MotivatorCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivatorCopy.swift; sourceTree = "<group>"; };
@@ -265,6 +268,7 @@
 		9D0E0001A0B0C0D0E0F00002 /* MomentumEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumEngine.swift; sourceTree = "<group>"; };
 		36478E60F8A4484E813A6F88 /* DailyRingEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRingEngine.swift; sourceTree = "<group>"; };
 		71A998436EA187651EC9B78E /* MotivatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivatorView.swift; sourceTree = "<group>"; };
+		041A2904B95C4062B836A244 /* TeachCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachCardView.swift; sourceTree = "<group>"; };
 		71DE6B84759E801EB7A509B4 /* LessonRecommendationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonRecommendationEngine.swift; sourceTree = "<group>"; };
 		742E5694B65A39CFBED1D89D /* QuizGraphicBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizGraphicBanner.swift; sourceTree = "<group>"; };
 		743E0C0D01628121EEE6312C /* LearnHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnHeader.swift; sourceTree = "<group>"; };
@@ -435,6 +439,7 @@
 				AFAADEFA77A75F4EBD768BE7 /* InlineEncouragementView.swift */,
 				64057FC5753D48B372179EF8 /* LevelUpView.swift */,
 				71A998436EA187651EC9B78E /* MotivatorView.swift */,
+				041A2904B95C4062B836A244 /* TeachCardView.swift */,
 				C98F41FD249430B232E53CD1 /* OptionCard.swift */,
 				85C0AA52152D1BE63F1AFA33 /* QuizSessionView.swift */,
 				8FB92943AE0DCB4EB8250012 /* QuizSessionViewModel.swift */,
@@ -835,6 +840,7 @@
 				9D0E0002A0B0C0D0E0F00002 /* MomentumTests.swift */,
 				0A70183AE1D14F17BD598A6C /* DailyRingTests.swift */,
 				08D65CCABB4F4E2F9BAA46D2 /* DailyWorkoutEngineTests.swift */,
+				D23DD843D00B4539985FF4BE /* QuizSessionTeachTests.swift */,
 				9D0E0002A0B0C0D0E0F0000A /* ContentInvariantTests.swift */,
 			);
 			path = NumindTests;
@@ -955,6 +961,7 @@
 				9D0E0002A0B0C0D0E0F00001 /* MomentumTests.swift in Sources */,
 				53597D8BDAB94FCF8BBE81E0 /* DailyRingTests.swift in Sources */,
 				D9DC2692ADEC437498AE3314 /* DailyWorkoutEngineTests.swift in Sources */,
+				40782EE0807940419DEE3734 /* QuizSessionTeachTests.swift in Sources */,
 				9D0E0002A0B0C0D0E0F00009 /* ContentInvariantTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1050,6 +1057,7 @@
 				F7A745936773742222DC99B1 /* MotivatorCopy.swift in Sources */,
 				7A527141E17C74EB86C9FC1D /* MotivatorEngine.swift in Sources */,
 				ACB803C39F0CA76FA3EE61EA /* MotivatorView.swift in Sources */,
+				767A7F3847174396B66A9501 /* TeachCardView.swift in Sources */,
 				642BEA7B091A54576B9583EA /* NameInputView.swift in Sources */,
 				D2C2769F0887CC05B33150FD /* NotificationManager.swift in Sources */,
 				5B32F6F3A8A042CE6865345A /* NotificationPermissionView.swift in Sources */,

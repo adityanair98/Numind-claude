@@ -9,6 +9,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         case answered(UUID)      // user picked a choice
         case feedback(UUID)      // answer checked, showing result
         case motivator(MotivatorCheckpoint)  // mid-session checkpoint
+        case teach(TeachCard)    // Phase 10: in-session teach moment before new material
         case complete            // all questions done
     }
 
@@ -290,7 +291,9 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         shortcut: String,
         moduleColor: ModuleColor = .blue,
         questionTimeLimit: TimeInterval? = nil,
-        repository: ContentRepository = LocalContentRepository()
+        repository: ContentRepository = LocalContentRepository(),
+        teachCards: [Int: TeachCard] = [:],
+        segmentLabels: [String]? = nil
     ) {
         lessonTitle = title
         self.moduleColor = moduleColor
@@ -300,10 +303,47 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         self.questions = questions
         self.questionTimeLimit = questionTimeLimit
         self.repository = repository
+        self.teachCards = teachCards
+        self.segmentLabels = segmentLabels
         // Start countdown for first question if a time limit is set.
         if questionTimeLimit != nil {
             questionTimeRemaining = questionTimeLimit!
         }
+    }
+
+    // MARK: - Teach cards (Phase 10)
+
+    /// Question index → teach card shown immediately before that question
+    /// (once per session). Set only by the Daily Workout path.
+    var teachCards: [Int: TeachCard] = [:]
+    /// Per-question workout segment labels ("Warm-up"/"Focus"/"Decision").
+    var segmentLabels: [String]? = nil
+    private var teachShownAt: Set<Int> = []
+    private var pendingQuestionIndex: Int = 0
+    private var teachEnteredAt: Date? = nil
+
+    /// The current question's workout segment, when labels are present.
+    var currentSegmentLabel: String? {
+        guard let segmentLabels, currentIndex < segmentLabels.count else { return nil }
+        return segmentLabels[currentIndex]
+    }
+
+    /// Single navigation path to a question — shows that index's teach card
+    /// first (once) when one is attached.
+    private func proceedToQuestion(_ index: Int) {
+        if let card = teachCards[index], !teachShownAt.contains(index) {
+            teachShownAt.insert(index)
+            pendingQuestionIndex = index
+            teachEnteredAt = Date()
+            sessionState = .teach(card)
+            return
+        }
+        currentIndex = index
+        sessionState = .question
+        hintRevealed = false
+        freeEntryText = ""
+        questionStartTime = Date()
+        startQuestionTimer()
     }
 
     // MARK: - Per-question timer management
@@ -399,15 +439,21 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     }
 
     func advance() {
+        // ── Dismissing a teach card → land on its question ──
+        if case .teach = sessionState {
+            // Reading time stays out of the session clock (same treatment
+            // as feedback time).
+            if questionTimeLimit == nil, let entered = teachEnteredAt {
+                totalFeedbackDuration += Date().timeIntervalSince(entered)
+                teachEnteredAt = nil
+            }
+            proceedToQuestion(pendingQuestionIndex)
+            return
+        }
+
         // ── Dismissing a motivator → proceed to next question ──
         if case .motivator = sessionState {
-            let next = currentIndex + 1
-            currentIndex = next
-            sessionState = .question
-            hintRevealed = false
-            freeEntryText = ""
-            questionStartTime = Date()
-            startQuestionTimer()
+            proceedToQuestion(currentIndex + 1)
             return
         }
 
@@ -438,27 +484,25 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         }
 
         // ── Evaluate motivator checkpoint ──
-        let correctFlags = results.map(\.isCorrect)
-        if let type = MotivatorEngine.evaluate(
-            correctFlags: correctFlags,
-            totalQuestions: questions.count,
-            justAnsweredIndex: currentIndex,
-            motivatorsShownAt: motivatorsShownAt,
-            isSpeedDrill: questionTimeLimit != nil
-        ) {
-            let checkpoint = buildCheckpoint(type: type)
-            motivatorsShownAt.append(currentIndex)
-            sessionState = .motivator(checkpoint)
-            return
+        // Capped at one per session when teach cards are present, so a
+        // 7-question workout never stacks three full-screen interstitials.
+        if teachCards.isEmpty || motivatorsShownAt.isEmpty {
+            let correctFlags = results.map(\.isCorrect)
+            if let type = MotivatorEngine.evaluate(
+                correctFlags: correctFlags,
+                totalQuestions: questions.count,
+                justAnsweredIndex: currentIndex,
+                motivatorsShownAt: motivatorsShownAt,
+                isSpeedDrill: questionTimeLimit != nil
+            ) {
+                let checkpoint = buildCheckpoint(type: type)
+                motivatorsShownAt.append(currentIndex)
+                sessionState = .motivator(checkpoint)
+                return
+            }
         }
 
-        // Normal advance
-        currentIndex = next
-        sessionState = .question
-        hintRevealed = false
-        freeEntryText = ""
-        questionStartTime = Date()
-        startQuestionTimer()
+        proceedToQuestion(next)
     }
 
     // MARK: - Motivator checkpoint builder
@@ -556,7 +600,8 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     // MARK: - Lifecycle
 
     func startSession() {
-        // Called after the view appears — starts the first question's timer.
-        startQuestionTimer()
+        // Called after the view appears. Routes through the single
+        // navigation path so an index-0 teach card shows before question 1.
+        proceedToQuestion(0)
     }
 }

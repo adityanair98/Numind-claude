@@ -394,16 +394,22 @@ struct HomeView: View {
     }
 
     private func startDailyChallenge() {
-        let questions = DailyChallengeEngine.dailyQuestions(
+        let plan = DailyWorkoutEngine.plan(
             from: repo,
             progressData: progressStore.data,
             focusPack: progressStore.focusPack
         )
+        var teachCards: [Int: TeachCard] = [:]
+        if let card = plan.teachCard, let index = plan.teachCardIndex {
+            teachCards[index] = card
+        }
         dailyVM = QuizSessionViewModel(
-            questions: questions,
+            questions: plan.questions,
             title: "Daily Workout",
             shortcut: "Draw on all the skills you've built \u{2014} tips, discounts, salary math, and more.",
-            moduleColor: .blue
+            moduleColor: .blue,
+            teachCards: teachCards,
+            segmentLabels: plan.segmentLabels
         )
     }
 

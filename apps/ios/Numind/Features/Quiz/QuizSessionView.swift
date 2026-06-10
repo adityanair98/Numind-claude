@@ -61,6 +61,9 @@ struct QuizSessionView: View {
             if case .motivator = newState {
                 showConfetti = false
             }
+            if case .teach = newState {
+                showConfetti = false
+            }
         }
     }
 
@@ -107,13 +110,25 @@ struct QuizSessionView: View {
 
     private var scrollContent: some View {
         Group {
-            if case .motivator(let checkpoint) = viewModel.sessionState {
+            if case .teach(let card) = viewModel.sessionState {
+                // Teach card takes over the full screen before new material.
+                TeachCardView(card: card, accent: viewModel.moduleColor.tintColor) {
+                    viewModel.advance()
+                }
+            } else if case .motivator(let checkpoint) = viewModel.sessionState {
                 // Motivator takes over the full screen — show with daily streak from ProgressStore
                 motivatorScreen(checkpoint: checkpoint)
             } else {
                 ScrollView {
                     VStack(spacing: Theme.Spacing.sectionSpacing) {
                         beadRail
+                        if let segment = viewModel.currentSegmentLabel {
+                            Text(segment.uppercased())
+                                .font(Theme.Typography.overline)
+                                .tracking(1.4)
+                                .foregroundStyle(Theme.Colors.mutedText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                         switch viewModel.sessionState {
                         case .question, .answered:
                             questionContent
@@ -134,7 +149,7 @@ struct QuizSessionView: View {
                                     .transition(.scale(scale: 0.9).combined(with: .opacity))
                                 }
                             }
-                        case .complete, .motivator:
+                        case .complete, .motivator, .teach:
                             EmptyView()
                         }
                     }
@@ -507,6 +522,8 @@ struct QuizSessionView: View {
             PillButton("Continue") { viewModel.advance() }
         case .motivator:
             EmptyView()   // CTA lives inside MotivatorView
+        case .teach:
+            EmptyView()   // CTA lives inside TeachCardView
         case .complete:
             EmptyView()
         }
