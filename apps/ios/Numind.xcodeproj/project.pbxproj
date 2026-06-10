@@ -109,6 +109,7 @@
 		9D0E0002A0B0C0D0E0F00005 /* ReadinessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F00006 /* ReadinessTests.swift */; };
 		9D0E0002A0B0C0D0E0F00003 /* MasteryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F00004 /* MasteryTests.swift */; };
 		9D0E0002A0B0C0D0E0F00001 /* MomentumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F00002 /* MomentumTests.swift */; };
+		53597D8BDAB94FCF8BBE81E0 /* DailyRingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70183AE1D14F17BD598A6C /* DailyRingTests.swift */; };
 		9D0E0002A0B0C0D0E0F00009 /* ContentInvariantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F0000A /* ContentInvariantTests.swift */; };
 		85AF38C1C1849D2390D5933F /* ContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48236569E3C71A34C541C4 /* ContentRepository.swift */; };
 		8620E8E68B231480A58942C0 /* QuestionTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7176E94F703A2718728DED /* QuestionTheme.swift */; };
@@ -157,6 +158,7 @@
 		9D0E0001A0B0C0D0E0F00005 /* FreshnessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00006 /* FreshnessEngine.swift */; };
 		9D0E0001A0B0C0D0E0F00003 /* ReadinessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00004 /* ReadinessEngine.swift */; };
 		9D0E0001A0B0C0D0E0F00001 /* MomentumEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00002 /* MomentumEngine.swift */; };
+		030504DA40E945C9A40F2684 /* DailyRingEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36478E60F8A4484E813A6F88 /* DailyRingEngine.swift */; };
 		E48997B4114D7ED116BEB5C5 /* LearnHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743E0C0D01628121EEE6312C /* LearnHeader.swift */; };
 		E9EE683A45B76E71FA8E5F64 /* SpacedRepetitionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2F584B0615097B6A32DE81 /* SpacedRepetitionEngine.swift */; };
 		EB7110E292B1F140F390751B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93AF8C68EA7C1F3DE444C1C /* HomeViewModel.swift */; };
@@ -243,6 +245,7 @@
 		9D0E0002A0B0C0D0E0F00006 /* ReadinessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessTests.swift; sourceTree = "<group>"; };
 		9D0E0002A0B0C0D0E0F00004 /* MasteryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasteryTests.swift; sourceTree = "<group>"; };
 		9D0E0002A0B0C0D0E0F00002 /* MomentumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumTests.swift; sourceTree = "<group>"; };
+		0A70183AE1D14F17BD598A6C /* DailyRingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRingTests.swift; sourceTree = "<group>"; };
 		9D0E0002A0B0C0D0E0F0000A /* ContentInvariantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInvariantTests.swift; sourceTree = "<group>"; };
 		63D2F05A692A69B987B2A19E /* ReviewMistakesEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMistakesEngine.swift; sourceTree = "<group>"; };
 		63E02F5424B02C5C35EB4D2E /* MotivatorCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivatorCopy.swift; sourceTree = "<group>"; };
@@ -257,6 +260,7 @@
 		9D0E0001A0B0C0D0E0F00006 /* FreshnessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshnessEngine.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F00004 /* ReadinessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessEngine.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F00002 /* MomentumEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumEngine.swift; sourceTree = "<group>"; };
+		36478E60F8A4484E813A6F88 /* DailyRingEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRingEngine.swift; sourceTree = "<group>"; };
 		71A998436EA187651EC9B78E /* MotivatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivatorView.swift; sourceTree = "<group>"; };
 		71DE6B84759E801EB7A509B4 /* LessonRecommendationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonRecommendationEngine.swift; sourceTree = "<group>"; };
 		742E5694B65A39CFBED1D89D /* QuizGraphicBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizGraphicBanner.swift; sourceTree = "<group>"; };
@@ -773,6 +777,7 @@
 				9D0E0001A0B0C0D0E0F00006 /* FreshnessEngine.swift */,
 				9D0E0001A0B0C0D0E0F00004 /* ReadinessEngine.swift */,
 				9D0E0001A0B0C0D0E0F00002 /* MomentumEngine.swift */,
+				36478E60F8A4484E813A6F88 /* DailyRingEngine.swift */,
 				AA70F32E91A8A127C7D47AF1 /* ProgressData.swift */,
 				CFB662BA3033BF189F6992B1 /* ProgressStore.swift */,
 				D29DDF75E961E74E542F381E /* SessionRecord.swift */,
@@ -823,6 +828,7 @@
 				9D0E0002A0B0C0D0E0F00006 /* ReadinessTests.swift */,
 				9D0E0002A0B0C0D0E0F00004 /* MasteryTests.swift */,
 				9D0E0002A0B0C0D0E0F00002 /* MomentumTests.swift */,
+				0A70183AE1D14F17BD598A6C /* DailyRingTests.swift */,
 				9D0E0002A0B0C0D0E0F0000A /* ContentInvariantTests.swift */,
 			);
 			path = NumindTests;
@@ -941,6 +947,7 @@
 				9D0E0002A0B0C0D0E0F00005 /* ReadinessTests.swift in Sources */,
 				9D0E0002A0B0C0D0E0F00003 /* MasteryTests.swift in Sources */,
 				9D0E0002A0B0C0D0E0F00001 /* MomentumTests.swift in Sources */,
+				53597D8BDAB94FCF8BBE81E0 /* DailyRingTests.swift in Sources */,
 				9D0E0002A0B0C0D0E0F00009 /* ContentInvariantTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1044,6 +1051,7 @@
 				9D0E0001A0B0C0D0E0F00005 /* FreshnessEngine.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00003 /* ReadinessEngine.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00001 /* MomentumEngine.swift in Sources */,
+				030504DA40E945C9A40F2684 /* DailyRingEngine.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00007 /* LevelRing.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00009 /* ReadinessBadge.swift in Sources */,
 				9D0E0001A0B0C0D0E0F0000B /* PackReadinessBoard.swift in Sources */,

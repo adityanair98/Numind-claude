@@ -60,6 +60,9 @@ final class ProgressStore: ObservableObject {
         // (pack / world) AFTER the session is recorded.
         let masteredBefore = masteredLessonIds
         data.sessions.append(record)
+        // Phase 10: any real practice can close the daily ring and mark the
+        // day for the streak (must run before computeStreak).
+        DailyRingEngine.markIfClosed(&data, now: record.date)
         let current = data.computeStreak()
         if current > data.bestStreak {
             data.bestStreak = current
@@ -182,8 +185,9 @@ final class ProgressStore: ObservableObject {
         let today = Self.dateFormatter.string(from: now)
         UserDefaults.standard.set(today, forKey: Self.dailyChallengeKey)
         dailyChallengeCompletedDate = today
-        let startOfDay = Calendar.current.startOfDay(for: now)
-        data.dailyWorkoutDates.insert(startOfDay)
+        // Phase 10: the day itself is marked by ring closure inside
+        // recordSession (DailyRingEngine.markIfClosed) — this method now
+        // only maintains the legacy "workout done today" card state.
         // Recompute streak so the rest of the app immediately reflects it.
         let current = data.computeStreak()
         if current > data.bestStreak { data.bestStreak = current }
@@ -196,6 +200,13 @@ final class ProgressStore: ObservableObject {
     func markDailyWorkoutCompleted() {
         markDailyChallengeCompleted()
     }
+
+    // MARK: - Daily ring (Phase 10)
+
+    var ringTarget: Int { DailyRingEngine.target(for: data) }
+    var todayQuestionCount: Int { DailyRingEngine.questionCount(on: Date(), sessions: data.sessions) }
+    var ringProgress: Double { DailyRingEngine.progress(on: Date(), data: data) }
+    var isRingClosedToday: Bool { DailyRingEngine.isClosed(on: Date(), data: data) }
 
     private func persist() {
         guard let encoded = try? JSONEncoder().encode(data) else { return }
