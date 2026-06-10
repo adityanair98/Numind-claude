@@ -2357,6 +2357,50 @@ struct QuizEngine {
                   (lA + lB) > 0 else { return nil }
             return (bA + bB) / (lA + lB) * 100
         },
+
+        // MARK: - Phase 10 Block 1: negotiation, job-change, payday, negative equity, shrinkflation
+        "negotiationValue": { vars in
+            // Career floor of a negotiated raise: extra salary × years (raises compound it higher).
+            guard let extra = vars["extraSalary"], let years = vars["years"] else { return nil }
+            return extra * years
+        },
+        "cashOutCost": { vars in
+            // 401(k) cash-out under 59½: income tax + 10% early-withdrawal penalty (per IRS).
+            guard let balance = vars["balance"], let rate = vars["taxRate"] else { return nil }
+            return balance * (rate + 10) / 100
+        },
+        "rolloverShortfall": { vars in
+            // Indirect-rollover mandatory withholding: 20% of the distribution (per IRS).
+            guard let balance = vars["balance"] else { return nil }
+            return balance * 0.20
+        },
+        "paydayFee": { vars in
+            guard let amount = vars["loanAmount"], let fee = vars["feePer100"] else { return nil }
+            return amount * fee / 100
+        },
+        "paydayAPR": { vars in
+            // Fee-per-$100 annualized: (fee/100) × (365/termDays) × 100 — the CFPB's APR framing.
+            guard let fee = vars["feePer100"], let days = vars["termDays"], days > 0 else { return nil }
+            return fee / 100 * 365 / days * 100
+        },
+        "overdraftFeePct": { vars in
+            guard let fee = vars["fee"], let purchase = vars["purchase"], purchase > 0 else { return nil }
+            return fee / purchase * 100
+        },
+        "carEquity": { vars in
+            // Negative-by-design: value − payoff drops below zero when upside down.
+            guard let value = vars["carValue"], let balance = vars["loanBalance"] else { return nil }
+            return value - balance
+        },
+        "rollInLoan": { vars in
+            guard let price = vars["newCarPrice"], let shortfall = vars["shortfall"] else { return nil }
+            return price + shortfall
+        },
+        "shrinkPct": { vars in
+            // Effective unit-price increase when package size shrinks at a constant price.
+            guard let oldSize = vars["oldSize"], let newSize = vars["newSize"], newSize > 0 else { return nil }
+            return (oldSize / newSize - 1) * 100
+        },
     ]
 
     /// Distinguishes the two failure modes when looking up and running a formula

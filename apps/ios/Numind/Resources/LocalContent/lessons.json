@@ -11,7 +11,8 @@
       "tip_bill_total",
       "tip_10_pct_d1",
       "tip_15_pct_d1",
-      "tip_total_15_d2"
+      "tip_total_15_d2",
+      "tip_decision_screen_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -33,7 +34,8 @@
       "tip_18_d2",
       "tip_per_hundred_d1",
       "tip_total_25_d2",
-      "tip_post_tax_scenario_d3"
+      "tip_post_tax_scenario_d3",
+      "tip_decision_pretax_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -55,7 +57,8 @@
       "tip_bill_total",
       "tip_group_per_person_d2",
       "tip_group_per_person_d3",
-      "tip_bar_d2"
+      "tip_bar_d2",
+      "tip_decision_autograt_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -573,7 +576,7 @@
     "id": "concept_salary_exempt_status",
     "moduleId": "salary",
     "title": "What 'exempt' vs 'non-exempt' actually means",
-    "concept": "FLSA divides employees into exempt (salaried, no overtime, must pass salary + duties tests) and non-exempt (overtime-eligible at 1.5×). Most people don't know which they are or that misclassification is common. The DOL's 2024 rule raised the federal salary threshold to $58,656/year for 2025 — but in November 2024 a Texas federal court vacated that rule, reverting the threshold to $35,568. Several states (CA, NY, WA) set their own higher thresholds. Always check both federal and state law.",
+    "concept": "FLSA divides employees into exempt (salaried, no overtime, must pass salary + duties tests) and non-exempt (overtime-eligible at 1.5×). Most people don't know which they are or that misclassification is common. A 2024 DOL rule briefly raised the federal salary threshold to $58,656/year, but federal courts vacated it — and in May 2026 the DOL formally restored the prior regulation, so the enforced federal floor is $35,568/year ($684/week, the 2019 level). Several states (CA, NY, WA) set much higher floors of their own — California's tracks 2× the state minimum wage and rises annually. Always check both federal and state law.",
     "shortcut": "Exempt = no OT, fixed salary. Non-exempt = OT-eligible, paid by the hour. Federal threshold currently $35,568/yr (after Nov 2024 court ruling vacated the $58,656 increase) AND must pass duties test (executive, administrative, professional). Many states have higher thresholds — California is over $66k. Below threshold OR failing duties = legally non-exempt regardless of what HR labels you.",
     "example": "Two job offers:\nA: $80k exempt salary, expected 50-hour weeks\nB: $35/hr non-exempt, 50-hour weeks\n\nA: $80,000/year\nB: (40×$35×52) + (10×$35×1.5×52)\n  = $72,800 + $27,300 = $100,100/year\n\nNon-exempt wins by $20k if hours are real.",
     "quizTemplateIds": [
@@ -1419,7 +1422,7 @@
     "id": "debt_bnpl_hidden_cost",
     "moduleId": "debt",
     "title": "Buy Now, Pay Later — the math they don't show",
-    "concept": "BNPL splits a purchase into 4 'easy payments.' Sounds free. Miss one payment = up to $35 late fee (sometimes 25% of the missed payment). On a $300 purchase that's an 11.7% surcharge — higher than most credit card APRs. The real danger is stacking: research from CFPB's BNPL industry studies shows BNPL users carry an average of 9 loans per year, and BNPL borrowers are roughly twice as likely as non-users to overdraft their bank account in the same period (per CFPB BNPL Market Trends Reports, 2022-23). None of these loans show up on your credit card statement, making the total cash drain invisible.",
+    "concept": "BNPL splits a purchase into 4 'easy payments.' Sounds free. Miss one payment = up to $35 late fee (sometimes 25% of the missed payment). On a $300 purchase that's an 11.7% surcharge — higher than most credit card APRs. The real danger is stacking: CFPB market studies found heavy BNPL users juggling many loans at once and overdrafting their bank accounts at roughly twice the rate of non-users. Visibility is messy in BOTH directions: the plans don't show on your credit card statement (the cash drain is invisible to you), and whether they show on your credit REPORT depends on the provider — as of mid-2026, Affirm reports most of its loans to bureaus, while Klarna's and Afterpay's pay-in-4 plans generally aren't reported. But a missed plan sent to collections absolutely IS reported, and FICO has announced BNPL-aware score models — so assume visibility is rising, not falling.",
     "shortcut": "Total BNPL = number of payments × payment amount. Surcharge from one late fee = lateFee ÷ originalPrice × 100. Stacked monthly burden = sum of all your BNPL payments across providers. The clean test: if you can't pay cash today, you can't afford it.",
     "example": "$300 item, 4 × $75 BNPL:\nMiss one: $35 late fee\nTotal paid: $335\nSurcharge: 11.7%\n\nTypical user (per CFPB):\n~9 BNPL loans/year stacked across Affirm/Klarna/Afterpay\nMonthly burden invisible to credit reports\n2× more likely to overdraft than non-users",
     "quizTemplateIds": [
@@ -2752,5 +2755,218 @@
     "isCore": false,
     "isScenarioEligible": true,
     "realWorldHint": "Read this before a refinance salesperson pitches you a lower rate."
+  },
+  {
+    "id": "scam_imposter_patterns",
+    "moduleId": "money_safety",
+    "title": "Spot the imposter scam",
+    "concept": "The most-reported fraud in America is the imposter scam: someone pretending to be your bank, the government, or a company you trust. The play is always the same three beats — (1) manufactured urgency ('your account is compromised'), (2) borrowed authority (caller ID can be spoofed to show your bank's real name and number), (3) an unusual action only a scammer would request: move your money to a 'safe account,' Zelle it to yourself, read back a security code, or buy gift cards. Per the FTC, your bank will never call or text you asking you to transfer money or share a passcode — and fake bank fraud-alert texts were among the most-reported text scams (FTC, 2024 data).",
+    "shortcut": "One rule beats every script: hang up and call the number on the back of your card. Real fraud departments never mind a callback — only imposters need you to stay on the line. Urgency + secrecy + 'move your money' = imposter, every time.",
+    "example": "Text: 'FRAUD ALERT: Did you authorize $480 at Walmart? Reply NO.'\nYou reply — your phone rings. 'Bank security' says move your checking to a 'safe account' now.\n\nThe tells:\n— Real banks freeze fraud internally; they never need YOU to move money\n— Caller ID showing the bank's number proves nothing (spoofable)\n— The callback test costs 60 seconds and defeats 100% of imposters",
+    "quizTemplateIds": [
+      "msafe_imposter_never_d1",
+      "msafe_imposter_callerid_d1",
+      "msafe_imposter_code_d2",
+      "msafe_decision_safeaccount_d2",
+      "msafe_imposter_pressure_d3",
+      "msafe_decision_callback_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this the moment any call or text about your money creates urgency."
+  },
+  {
+    "id": "scam_payment_rails",
+    "moduleId": "money_safety",
+    "title": "Payment methods scammers love",
+    "concept": "Every scam funnels to the same question: HOW do they want the money? Payment methods differ wildly in reversibility. Credit cards carry the strongest federal dispute rights; debit cards have protections but the cash leaves your account first. P2P apps (Zelle, Venmo, Cash App) treat a payment YOU sent as authorized — recovery is rare even when you were tricked. Wire transfers, gift cards, and crypto-ATM deposits are effectively cash: gone in minutes. That's why the FTC's rule of thumb is absolute: anyone who DEMANDS payment by gift card, wire, or crypto is running a scam — no legitimate business or government agency does that.",
+    "shortcut": "Reversibility ladder, top to bottom: credit card → debit card → P2P apps → wire / gift cards / crypto. The harder a payment is to reverse, the harder a scammer pushes it. The method IS the tell: when someone else picks the payment and it sits low on the ladder, walk away.",
+    "example": "Same $500 'purchase', four endings:\nCredit card → dispute it, provisional credit, federal billing rights\nDebit card → bank investigates; your cash is missing meanwhile\nZelle to a stranger → treated as authorized; usually gone\nGift card codes read over the phone → cashed out in minutes, gone\n\n'Pay only by gift card / wire / crypto ATM' = scam, 100% of the time (FTC)",
+    "quizTemplateIds": [
+      "msafe_rails_strongest_d1",
+      "msafe_rails_giftcard_d1",
+      "msafe_rails_zelle_goods_d2",
+      "msafe_rails_authorized_d2",
+      "msafe_rails_cryptoatm_d3",
+      "msafe_rails_overpayment_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Check the payment method before you check anything else about a deal."
+  },
+  {
+    "id": "credit_report_rights",
+    "moduleId": "money_safety",
+    "title": "Your credit file: free reports, disputes, freezes",
+    "concept": "Three federal rights most people never use. (1) Free reports: you can pull your credit report from EACH of the three bureaus free every week at AnnualCreditReport.com — the only federally authorized source (made permanent in 2023, per FTC). (2) Free disputes: if a report has an error, the bureau must investigate, generally within 30 days, at no cost (FCRA). Errors are common enough that checking matters. (3) Free freezes: a security freeze blocks new-account openings in your name; federal law (2018) made placing and lifting freezes free at all three bureaus. A freeze doesn't touch your score, your existing cards, or your ability to use credit — it only blocks NEW accounts until you thaw it.",
+    "shortcut": "Three free moves: PULL (AnnualCreditReport.com, weekly, each bureau), DISPUTE (in writing; bureau must answer in ~30 days), FREEZE (all three bureaus, free, zero score effect). If you're not opening credit soon, the freeze is the cheapest identity-theft defense that exists.",
+    "example": "Data breach in the news:\n1. Freeze at Equifax + Experian + TransUnion — ~15 min total, $0\n2. Pull all three reports — $0\n3. Spot an account you don't recognize → dispute in writing — $0\n\nApplying for a card next month? Thaw the freeze for a window — also $0.\nTotal cost of the full defense: $0. (FTC / CFPB)",
+    "quizTemplateIds": [
+      "msafe_credit_freereport_d1",
+      "msafe_credit_freeze_cost_d1",
+      "msafe_credit_freeze_vs_alert_d2",
+      "msafe_credit_dispute_d2",
+      "msafe_decision_breach_d3",
+      "msafe_decision_error_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "debt_and_credit",
+    "secondarySkills": [
+      "protection_and_benefits"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this after any data-breach headline — the whole defense costs $0."
+  },
+  {
+    "id": "salary_negotiation",
+    "moduleId": "salary",
+    "title": "Negotiate the offer — math and script",
+    "concept": "Negotiation is a 10-minute conversation that repeats its payoff every year of your career. Three mechanics: (1) Anchoring — the first number spoken frames everything after it, so when asked for your expectations, ask for THEIR budgeted range first. (2) The counter — recruiters budget for counters; a respectful, data-backed counter does not get offers pulled. Counter on the whole package (base, signing bonus, equity, start date, PTO), not just base. (3) Compounding — a higher base repeats every year, and every future percentage raise and next-job offer builds on it. A $3,000 win at 28 is tens of thousands by 40 before investing a cent of it.",
+    "shortcut": "The math: extra per year = salary × negotiated %. Career floor = extra × years (raises compound it higher). The script: 'Based on the role and market data, I was expecting something closer to $X — is there flexibility?' And when asked first: 'What range did you have budgeted for the role?'",
+    "example": "Offer: $70,000. You counter at $74,900 (+7%) with market data.\nThey settle at $73,000 → +$3,000/year.\n\n10-year floor: $30,000 extra (before raises compound it)\nEvery future % raise now builds on $73k, not $70k.\nTime invested: one slightly awkward 10-minute call.",
+    "quizTemplateIds": [
+      "sal_nego_delta_d1",
+      "sal_nego_decade_d2",
+      "sal_nego_firstnumber_d2",
+      "sal_nego_decision_counter_d2",
+      "sal_nego_totalcomp_d3",
+      "sal_nego_decision_compete_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "income_and_paycheck",
+    "secondarySkills": [],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this the day an offer letter lands — before you reply.",
+    "relatedCalculatorSlug": "salary_converter"
+  },
+  {
+    "id": "job_change_401k",
+    "moduleId": "investing",
+    "title": "Your 401(k) when you leave a job",
+    "concept": "Leaving a job hands you four options for your 401(k): leave it, roll it to the new employer's plan, roll it to an IRA, or cash out. Cashing out is the expensive trap — income tax plus a 10% penalty under age 59½ (per IRS) — yet roughly 41% of departing employees do it (UBC Sauder/HBR study of 162,000 separations). The subtler trap is HOW you roll: a DIRECT rollover moves money custodian-to-custodian, untouched. An INDIRECT rollover (they mail YOU a check) triggers mandatory 20% withholding (per IRS) — and you must deposit the FULL original amount within 60 days, replacing the withheld 20% from your own pocket, or the gap is taxed and penalized as a distribution.",
+    "shortcut": "Say the magic words: 'direct rollover.' Cash-out cost ≈ balance × (your tax rate + 10%) under 59½. Indirect-rollover trap: the check arrives 20% light, and the 60-day clock expects you to top it back up.",
+    "example": "$20,000 balance, 22% bracket, age 30:\n\nCash out → lose ~$6,400 (22% + 10% = 32%), keep ~$13,600\nIndirect rollover → check = $16,000; must deposit $20,000 within 60 days (find $4,000 yourself)\nDirect rollover → $20,000 moves whole. Costs $0.\n\n(IRS rollover rules; Topic 413)",
+    "quizTemplateIds": [
+      "jc401k_cashout_d1",
+      "jc401k_shortfall_d1",
+      "jc401k_direct_d2",
+      "jc401k_decision_check_d2",
+      "jc401k_60day_d3",
+      "jc401k_decision_small_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "investing_and_future",
+    "secondarySkills": [
+      "income_and_paycheck"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this in your last two weeks at any job — before HR mails a check.",
+    "relatedCalculatorSlug": "401k_impact"
+  },
+  {
+    "id": "job_change_health",
+    "moduleId": "insurance",
+    "title": "Health coverage when you leave a job",
+    "concept": "Losing job-based insurance opens two paths and one clock. COBRA lets you keep your exact plan (same doctors, same deductible progress) for up to 18 months — but you pay the FULL premium plus up to a 2% admin fee (102% of plan cost, per DOL), because the employer subsidy is what vanished. The marketplace path: losing job coverage triggers a Special Enrollment Period — 60 days to enroll at HealthCare.gov, where income-based subsidies (calculated on your NEW, lower income) often beat COBRA by hundreds a month. The clock: 60 days to elect COBRA too (from the later of the election notice or coverage ending). And one powerful wrinkle: COBRA is RETROACTIVE to your coverage-loss date if you elect within the window.",
+    "shortcut": "Compare two numbers before paying anything: COBRA ≈ full plan premium × 1.02 vs. a marketplace quote at your new income. Both decisions get ~60 days. The backstop play: you can hold off electing COBRA and elect retroactively within the window only if something happens — but calendar the deadline.",
+    "example": "Employer plan total cost: $650/mo (you paid $150, employer $500):\n\nCOBRA: $650 × 1.02 = $663/mo — sticker shock is the norm\nMarketplace, subsidized at reduced income: ~$280/mo\nDifference: $383/mo ≈ $4,600/yr\n\nSame 60-day window for both paths. (DOL COBRA guide; HealthCare.gov)",
+    "quizTemplateIds": [
+      "jchealth_cobra_cost_d1",
+      "jchealth_premium_d1",
+      "jchealth_window_d2",
+      "jchealth_decision_compare_d2",
+      "jchealth_retroactive_d3",
+      "jchealth_decision_gap_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [
+      "income_and_paycheck"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this the week a job ends — before the COBRA letter scares you into overpaying."
+  },
+  {
+    "id": "payday_loan_cost",
+    "moduleId": "debt",
+    "title": "Payday loans, cash advances & overdrafts — the real APR",
+    "concept": "A payday loan's fee sounds small: '$15 per $100 for two weeks' is the common structure ($10–$30 per $100 depending on state, per CFPB). Annualized, that's roughly 400% APR — against ~22% on even an expensive credit card. The trap is the rollover: if you can't repay in 14 days, you pay another fee to extend, and the CFPB found most borrowers end up re-borrowing rather than repaying — fees can pass the original loan within months. Cash-advance apps often repackage similar economics as 'tips' and 'express fees.' Overdrafts are the same lesson in miniature: a $35 fee to cover a $20 shortfall for three days is an astronomical effective rate — though fees now vary wildly by bank (several large banks charge $0–$10), and a polite call often gets a first fee waived.",
+    "shortcut": "APR ≈ (fee per $100 ÷ 100) × (365 ÷ term days) × 100. So $15 per $100 for 14 days ≈ 391%. Overdraft check: fee ÷ amount covered × 100 = the instant percentage. Waiver script: 'Hi — I've banked with you for X years and overdrew by accident this week. Could you waive the fee as a courtesy?'",
+    "example": "Borrow $300 for 2 weeks at $15 per $100:\nFee: $45 → repay $345\nAPR: (15 ÷ 100) × (365 ÷ 14) ≈ 391%\nRoll it over 4 times: $180 in fees on a $300 loan — 60% in two months, principal still owed.\n\nOverdraft: $35 fee covering a $20 shortfall = 175% of the amount, instantly.\n(CFPB payday-loan cost data)",
+    "quizTemplateIds": [
+      "payday_fee_d1",
+      "payday_apr_d2",
+      "payday_overdraft_d2",
+      "payday_decision_alternatives_d2",
+      "payday_rollover_d3",
+      "payday_decision_waiver_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "debt_and_credit",
+    "secondarySkills": [
+      "cash_flow_and_budgeting"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before any 'quick cash' decision — the APR math takes ten seconds."
+  },
+  {
+    "id": "car_negative_equity",
+    "moduleId": "car",
+    "title": "Upside down: negative equity on a car loan",
+    "concept": "You're 'upside down' when you owe more than the car is worth — and it's now mainstream: in Q1 2026, 30.9% of trade-ins toward new cars carried negative equity, averaging $7,183 owed beyond the car's value (Edmunds). The drivers: long loan terms (72–84 months) pay principal slower than cars depreciate. The most misleading phrase on the lot is 'we'll pay off your loan no matter what you owe' — they don't pay it off, they ROLL the shortfall into your NEW loan, so you drive off underwater on the new car from day one. On-time payments don't prevent any of this; depreciation simply outruns amortization on long loans. Escape routes, best to worst: keep the car and keep paying (equity returns as the loan amortizes), pay the gap in cash if you must trade, or at absolute minimum walk in knowing your number before the dealer frames it.",
+    "shortcut": "Equity = car's value − loan payoff. Negative = upside down by that much. Before any trade-in: look up the car's market value, call the lender for the exact payoff, subtract. Judge every dealer offer with that shortfall ADDED to the new loan.",
+    "example": "Car's market value: $14,000. Loan payoff: $19,500.\nEquity: 14,000 − 19,500 = −$5,500 (upside down)\n\nDealer 'pays off your loan' on a $30,000 new car:\nNew loan = $30,000 + $5,500 = $35,500\n— underwater on the new car before leaving the lot.\n\n(Edmunds Q1 2026: 30.9% of trade-ins, avg −$7,183)",
+    "quizTemplateIds": [
+      "negeq_equity_d1",
+      "negeq_rollin_d1",
+      "negeq_payoff_myth_d2",
+      "negeq_decision_trade_d2",
+      "negeq_prevalence_d3",
+      "negeq_decision_gap_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "big_purchases",
+    "secondarySkills": [
+      "debt_and_credit"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Run the equity math before any dealership visit — know your number before they do.",
+    "relatedCalculatorSlug": "loan"
+  },
+  {
+    "id": "shrinkflation_unit_price",
+    "moduleId": "smart_shopping",
+    "title": "Shrinkflation — same price, smaller box",
+    "concept": "When a price can't rise invisibly, the package shrinks instead. The GAO found downsized grocery products carried average unit-price increases of 12% (paper towels) to 32% (coffee) across 2019–2024 — while the shelf price looked unchanged (GAO-25-107451). It's legal, and it works precisely because shoppers track prices, not quantities; research shows people respond far less to downsizing than to an equivalent price hike. The defense is one number: the unit price — price ÷ quantity, in $/oz, per-sheet, or per-load. It's printed in small type on most shelf tags (a dozen-plus states require it), and it's the only number shrinkflation can't fool.",
+    "shortcut": "Unit price = total price ÷ quantity. Shrink % = (old size ÷ new size − 1) × 100 — a 16 oz → 14 oz 'same-price' shrink is 16/14 − 1 ≈ +14% per ounce. Compare $/oz across brands AND across time; ignore the sticker.",
+    "example": "Cereal: $4.99 for 18 oz → $4.99 for 15.3 oz\nOld unit price: 27.7¢/oz\nNew unit price: 32.6¢/oz\nEffective increase: 18 ÷ 15.3 − 1 ≈ +17.6% per oz — at the 'same' price.\n\n(GAO: downsized categories averaged 12–32% unit-price hikes)",
+    "quizTemplateIds": [
+      "shrink_unitprice_d1",
+      "shrink_tag_d1",
+      "shrink_pct_d2",
+      "shrink_decision_compare_d2",
+      "shrink_psychology_d3",
+      "shrink_decision_swap_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "everyday_money_math",
+    "secondarySkills": [
+      "cash_flow_and_budgeting"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use the unit-price line on the shelf tag — it's the one number the package can't shrink."
   }
 ]

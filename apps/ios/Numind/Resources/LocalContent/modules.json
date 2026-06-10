@@ -16,7 +16,8 @@
       "discount_coupon_vs_cashback",
       "discount_price_plus_tax",
       "discount_membership_worth",
-      "concept_shopping_manipulation"
+      "concept_shopping_manipulation",
+      "shrinkflation_unit_price"
     ]
   },
   {
@@ -61,7 +62,8 @@
       "salary_rsu_basics",
       "salary_w2_vs_1099_offer",
       "salary_401k_vesting",
-      "salary_bonus_after_tax"
+      "salary_bonus_after_tax",
+      "salary_negotiation"
     ]
   },
   {
@@ -90,7 +92,8 @@
       "investing_rental_yield",
       "investing_on_track",
       "concept_investing_asset_allocation",
-      "concept_investing_behavioral_traps"
+      "concept_investing_behavioral_traps",
+      "job_change_401k"
     ]
   },
   {
@@ -116,7 +119,8 @@
       "debt_cc_payoff_time",
       "debt_balance_transfer",
       "debt_cc_statement_cycle",
-      "debt_cc_rewards_vs_interest"
+      "debt_cc_rewards_vs_interest",
+      "payday_loan_cost"
     ]
   },
   {
@@ -182,7 +186,8 @@
       "concept_insurance_policy_priority",
       "concept_insurance_disability",
       "concept_insurance_open_enrollment",
-      "insurance_medical_bill_eob"
+      "insurance_medical_bill_eob",
+      "job_change_health"
     ]
   },
   {
@@ -203,7 +208,8 @@
       "car_lease_vs_buy",
       "car_trade_in_vs_private",
       "concept_car_negotiation",
-      "concept_car_warranty"
+      "concept_car_warranty",
+      "car_negative_equity"
     ]
   },
   {
@@ -225,6 +231,20 @@
       "student_loan_parent_plus",
       "concept_sl_subsidized_vs_unsubsidized",
       "concept_sl_refi_protections_lost"
+    ]
+  },
+  {
+    "id": "money_safety",
+    "title": "Protect Your Money",
+    "subtitle": "Scams, fraud, and your consumer rights",
+    "icon": "shield.fill",
+    "color": "crimson",
+    "mascot": "🛡️",
+    "glyph": "!",
+    "lessonIds": [
+      "scam_imposter_patterns",
+      "scam_payment_rails",
+      "credit_report_rights"
     ]
   }
 ]

@@ -4093,10 +4093,10 @@
       {
         "name": "medicalBills",
         "options": [
-          500,
+          400,
+          600,
           800,
-          1000,
-          1200
+          900
         ]
       }
     ],
@@ -5071,7 +5071,7 @@
     "id": "car_down_scenario_d2",
     "moduleId": "car",
     "difficulty": 2,
-    "promptTemplate": "Car price: ${{carPrice}}. You put {{downPercent}}% down. The remaining loan will cost ${{interestRate}}% in total interest. What's the total interest you'll pay?",
+    "promptTemplate": "Car price: ${{carPrice}}. You put {{downPercent}}% down. Over the LIFE of the loan, total interest comes to {{interestRate}}% of the amount you borrow. What's the total interest you'll pay?",
     "variableRules": [
       {
         "name": "carPrice",
@@ -5128,9 +5128,9 @@
       {
         "name": "interest20",
         "options": [
+          2400,
           2800,
-          3360,
-          3920
+          3200
         ]
       }
     ],
@@ -8522,7 +8522,7 @@
     "id": "on_track_multiple_d1",
     "moduleId": "investing",
     "difficulty": 1,
-    "promptTemplate": "You've saved ${{currentSavings}} for retirement. Your current salary is ${{currentSalary}}. What's your savings multiple?",
+    "promptTemplate": "You've saved ${{currentSavings}} for retirement and earn ${{currentSalary}}. Your savings equal what PERCENTAGE of your salary?",
     "variableRules": [
       {
         "name": "currentSavings",
@@ -8549,7 +8549,7 @@
     "answerFormula": "savingsMultiple",
     "answerFormat": "percent",
     "distractorStrategy": "offByDecimal",
-    "explanationTemplate": "Savings \u00f7 salary. ${{currentSavings}} \u00f7 ${{currentSalary}} = {{answer}}% (i.e. ~{{answer}}/100 \u00d7 salary)."
+    "explanationTemplate": "Savings \u00f7 salary \u00d7 100 = {{answer}}% of one year's salary. Benchmarks speak in multiples: 100% = 1\u00d7 salary (the Fidelity-style age-30 marker), 300% = 3\u00d7. Same math, two phrasings."
   },
   {
     "id": "on_track_target_d1",
@@ -11320,7 +11320,7 @@
     "id": "w4_lifetime_d3",
     "moduleId": "taxes",
     "difficulty": 3,
-    "promptTemplate": "If you over-withhold ${{refundAmount}} every year for {{years}} years and invest at 6% annually instead, your approximate gain (vs taking refunds): refund \u00d7 3% \u00d7 years compounding. Simplified: refund \u00d7 0.03 \u00d7 years = ?",
+    "promptTemplate": "If you over-withhold ${{refundAmount}} every year for {{years}} years and invest it instead, a simplified LINEAR estimate of the growth you forfeit is: refund \u00d7 3% \u00d7 years = ?",
     "variableRules": [
       {
         "name": "refundAmount",
@@ -11345,7 +11345,7 @@
     "answerFormula": "w4LifetimeGain",
     "answerFormat": "currency",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "${{refundAmount}} \u00d7 3% \u00d7 {{years}} = ${{answer}} approximate lifetime forfeit."
+    "explanationTemplate": "${{refundAmount}} \u00d7 3% \u00d7 {{years}} = ${{answer}} \u2014 a deliberately simple linear floor. Real compounding over {{years}} years makes the true forfeit larger; the point survives either way: over-withholding is an interest-free loan you volunteer for."
   },
   {
     "id": "ins_exposure_range_d3",
@@ -13559,19 +13559,19 @@
     "moduleId": "salary",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "promptTemplate": "After a Texas federal court vacated the 2024 DOL overtime rule in November 2024, what's the currently enforced federal minimum salary for FLSA-exempt status?",
+    "promptTemplate": "What is the enforced federal minimum salary for FLSA-exempt status (as of 2026)?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "The federal threshold reverted to $35,568/year ($684/week \u2014 the 2019 level) after the November 2024 Texas court ruling vacated the DOL's $58,656 increase. Many states have set higher thresholds \u2014 California is around $66,560, New York and Washington are also higher. Always check both federal and state law.",
+    "explanationTemplate": "A 2024 DOL rule briefly raised the threshold to $58,656, but federal courts vacated it \u2014 and in May 2026 the DOL formally restored the prior regulation. The enforced federal floor is $35,568/year ($684/week, the 2019 level). Many states set far higher floors of their own \u2014 California's tracks 2\u00d7 the state minimum wage and rises annually; New York and Washington are also higher. Always check both federal and state law.",
     "conceptChoices": [
-      "$35,568/year (reverted federal threshold after Nov 2024 court ruling)",
+      "$35,568/year ($684/week — the restored 2019-rule level)",
       "$43,888/year",
       "$58,656/year (the vacated 2024 DOL rule)",
       "$75,000/year"
     ],
-    "correctConceptChoice": "$35,568/year (reverted federal threshold after Nov 2024 court ruling)"
+    "correctConceptChoice": "$35,568/year ($684/week — the restored 2019-rule level)"
   },
   {
     "id": "concept_exempt_misclass_d2",
@@ -13583,14 +13583,14 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "Misclassification is common. To be exempt federally, an employee must (1) earn at least $35,568/year (the current federal floor after the Nov 2024 court ruling) AND (2) perform exempt duties (executive, administrative, professional). State thresholds are often higher \u2014 California's is around $66,560. Admin assistants usually fail the duties test. At $45k with no genuine executive duties, this is likely misclassification \u2014 you may be owed back overtime pay.",
+    "explanationTemplate": "Misclassification is common. To be exempt federally, an employee must (1) earn at least $35,568/year (the restored federal floor) AND (2) perform exempt duties (executive, administrative, professional). $45,000 clears the federal salary floor \u2014 but admin assistants usually fail the DUTIES test, so the exemption likely fails anyway. And in higher-threshold states (California's floor is far above $45k), the salary test fails too. Likely misclassification \u2014 you may be owed back overtime pay.",
     "conceptChoices": [
       "Yes \u2014 employers can classify any employee as exempt",
       "Yes \u2014 admin staff are always exempt",
-      "No \u2014 below the federal salary threshold AND admin work typically fails the 'duties test' for exemption",
+      "No, likely not \u2014 the salary may clear the federal floor, but admin work typically fails the 'duties test' that exemption ALSO requires",
       "It depends entirely on which state they work in"
     ],
-    "correctConceptChoice": "No \u2014 below the federal salary threshold AND admin work typically fails the 'duties test' for exemption"
+    "correctConceptChoice": "No, likely not \u2014 the salary may clear the federal floor, but admin work typically fails the 'duties test' that exemption ALSO requires"
   },
   {
     "id": "concept_exempt_tradeoff_d3",
@@ -16922,7 +16922,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "A 1099 contractor pays BOTH halves of Social Security/Medicare (~15.3% total vs ~7.65% for an employee), so about 7.65% comes off the top. You also lose employer health insurance (often $400-600/mo of value), PTO, and any 401(k) match. A common rule of thumb: a 1099 rate should be ~25-30% higher than a W-2 rate to break even. At only 11% more ($50 vs $45), the W-2 is often the better deal once benefits are counted.",
+    "explanationTemplate": "A 1099 contractor pays BOTH halves of Social Security/Medicare (~15.3% total vs ~7.65% for an employee), so about 7.65% comes off the top. You also lose employer health insurance (often $400-600/mo of value), PTO, and any 401(k) match. The rule of thumb: a 1099 rate needs to be roughly 40-45% higher than the W-2 rate to break even (the ×0.70 rule inverted). At only 11% more ($50 vs $45), the W-2 is clearly the better deal once benefits are counted.",
     "conceptChoices": [
       "Not necessarily — the extra ~7.65% self-employment tax plus lost health insurance, PTO, and 401(k) match often make the 1099 worth LESS than the $45 W-2; a rule of thumb is it should pay ~25-30% more to break even",
       "Yes — $50 is more than $45, so always take the 1099",
@@ -17153,7 +17153,7 @@
     "answerFormula": null,
     "answerFormat": "integer",
     "distractorStrategy": "roundedNeighbor",
-    "explanationTemplate": "The 'minimum payment trap': minimums are set low (often ~2-3% of the balance), and at 24% APR most of that goes to interest, so the balance barely moves. Paying a FIXED amount above the minimum — here $250/mo — clears the $4,000 in about 19 months. Paying only the declining minimum can stretch the same debt across many years and roughly double its cost. The fix: pick a fixed payment you can sustain and hold it steady.",
+    "explanationTemplate": "The 'minimum payment trap': minimums are set low (typically ~1% of the balance plus that month's interest), and at 24% APR most of the payment IS the interest, so the balance barely moves. Paying a FIXED amount above the minimum — here $250/mo — clears the $4,000 in about 19 months. Paying only the declining minimum can stretch the same debt across many years and roughly double its cost. The fix: pick a fixed payment you can sustain and hold it steady.",
     "conceptChoices": [
       "Pay a fixed $250/mo — that clears the $4,000 in about 19 months. Paying only the ~$100 minimum keeps you in debt for years because most of it goes to interest, not principal",
       "Pay the minimum — it's the responsible, on-time choice",
@@ -18652,6 +18652,1154 @@
       "You lose your federal loan entirely and it becomes private"
     ],
     "correctConceptChoice": "Much more total interest - stretching to 25 years raises total repayment from about $38,000 to about $52,600, roughly $14,000 more, even though each payment is smaller",
+    "isApplication": true
+  },
+  {
+    "id": "msafe_imposter_never_d1",
+    "moduleId": "money_safety",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "According to the FTC, which of these will your real bank NEVER do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Real banks DO send fraud-alert texts, decline suspicious charges, and ask security questions when YOU call THEM. What they never do, per the FTC: contact you and ask you to move your money or read back a passcode. Those two requests are the imposter's signature - the moment you hear either one, hang up and call the number on the back of your card.",
+    "conceptChoices": [
+      "Call or text you asking to transfer your money or read back a security passcode",
+      "Text you a fraud alert asking you to confirm a purchase",
+      "Decline a suspicious charge automatically",
+      "Ask you security questions when YOU call THEM"
+    ],
+    "correctConceptChoice": "Call or text you asking to transfer your money or read back a security passcode"
+  },
+  {
+    "id": "msafe_imposter_callerid_d1",
+    "moduleId": "money_safety",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your phone rings and the caller ID shows your bank's real name and phone number. What does that prove?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Nothing. Caller ID can be spoofed to display any name and any number, including your bank's published one - scammers do this constantly. Caller ID can only ever prove a call is FAKE (a number that's obviously wrong); it can never prove a call is real. The only reliable verification is outbound: hang up and dial the number printed on your card or statement yourself.",
+    "conceptChoices": [
+      "Nothing - caller ID can be spoofed to show any name or number, so it can never prove a call is real",
+      "The call is legitimately from your bank",
+      "The call is at least coming from inside the United States",
+      "The call is real if the name AND number both match"
+    ],
+    "correctConceptChoice": "Nothing - caller ID can be spoofed to show any name or number, so it can never prove a call is real"
+  },
+  {
+    "id": "msafe_imposter_code_d2",
+    "moduleId": "money_safety",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A caller claiming to be your bank's fraud team says they need to verify your identity: 'We just texted you a 6-digit security code - read it back to me to confirm you're the account holder.'",
+    "promptTemplate": "What is actually happening?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "That 6-digit text is YOUR one-time passcode - the scammer is logging into your account or resetting your password right now, and the only thing stopping them is the code on your phone. Reading it back hands them the keys. Note the giveaway: the code arrived from the bank's REAL short code, because the bank really did send it - triggered by the scammer's login attempt. Banks never ask you to read a passcode to a caller, ever.",
+    "conceptChoices": [
+      "The caller is logging into YOUR account right now - the texted code is your one-time passcode, and reading it back hands them access",
+      "This is standard identity verification that banks use on outbound calls",
+      "It's safe because the code arrived from the bank's real text short code",
+      "It's safe as long as you don't also share your password"
+    ],
+    "correctConceptChoice": "The caller is logging into YOUR account right now - the texted code is your one-time passcode, and reading it back hands them access"
+  },
+  {
+    "id": "msafe_decision_safeaccount_d2",
+    "moduleId": "money_safety",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "'Bank security' calls: your account has been compromised, and you need to move your $3,200 balance to a 'safe account' tonight using Zelle before the hackers drain it. The caller is calm, professional, and knows your name.",
+    "promptTemplate": "What do you do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Hang up and call the number on the back of your card. Banks protect compromised accounts by freezing them internally - they never need YOU to move money, and there is no such thing as a 'safe account' you Zelle funds into. That account belongs to the scammer; per the FTC this is one of the most common bank-imposter plays. Knowing your name proves nothing (data breaches made names cheap). The professional tone is the product - it's literally their job.",
+    "conceptChoices": [
+      "Hang up and call the number on the back of your card - banks never ask you to move money, and the 'safe account' is the scammer's account",
+      "Move the money - better safe than sorry, and you can transfer it back tomorrow",
+      "Move half the balance as a reasonable compromise while you verify",
+      "Stay on the line and ask the caller to prove they work for the bank first"
+    ],
+    "correctConceptChoice": "Hang up and call the number on the back of your card - banks never ask you to move money, and the 'safe account' is the scammer's account",
+    "isApplication": true
+  },
+  {
+    "id": "msafe_imposter_pressure_d3",
+    "moduleId": "money_safety",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which combination of signals is the classic imposter-scam signature?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The signature is urgency ('act in the next 20 minutes') + secrecy ('don't tell the branch staff - they may be involved') + an unusual money action (transfer, gift cards, crypto, passcodes). Each element has a job: urgency stops you from thinking, secrecy stops anyone from warning you, and the unusual action is the actual theft. Note what's NOT a tell: business hours, your real name, and official-looking logos are all easy to fake - and real scammers will happily tell you to avoid the branch, because a teller would recognize the scam instantly.",
+    "conceptChoices": [
+      "Urgency + secrecy ('don't tell anyone at the branch') + an unusual money action like transfers or gift cards",
+      "A call during business hours that uses your real name",
+      "An email that includes the bank's official logo",
+      "A caller who asks you to come into your local branch"
+    ],
+    "correctConceptChoice": "Urgency + secrecy ('don't tell anyone at the branch') + an unusual money action like transfers or gift cards"
+  },
+  {
+    "id": "msafe_decision_callback_d3",
+    "moduleId": "money_safety",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Mid-call, you start doubting the 'fraud investigator.' Sensing it, they warn you: 'This fraud involves bank insiders - do NOT call the branch or the number on your card, they'll tip off the criminals. Work only with me.'",
+    "promptTemplate": "What's the smartest move?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Any story that forbids independent verification IS the scam confirming itself. The callback test (hang up, dial the published number yourself) defeats every imposter script, which is exactly why sophisticated scripts now pre-block it with the 'insider' story. Staying on the line keeps you inside their script; employee IDs can't be verified and badge numbers are invented on the spot. There is no scenario - none - where your real bank needs you to avoid its own published phone number.",
+    "conceptChoices": [
+      "End the call and independently dial the published number - any story that forbids verification is the scam confirming itself",
+      "Stay on the line while you Google whether this type of fraud is real",
+      "Ask for their employee ID and badge number and write them down",
+      "Comply quickly - in real fraud cases every second counts"
+    ],
+    "correctConceptChoice": "End the call and independently dial the published number - any story that forbids verification is the scam confirming itself",
+    "isApplication": true
+  },
+  {
+    "id": "msafe_rails_strongest_d1",
+    "moduleId": "money_safety",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're buying from a website you're not 100% sure about. Which payment method gives you the strongest rights if something goes wrong?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Credit card. Federal billing-dispute rights let you contest the charge and withhold payment while it's investigated - the money at stake is the card company's, not cash from your account. Debit has protections too, but your own cash is gone while the bank investigates. Zelle and wire transfers move YOUR money immediately and are treated as payments you authorized - recovery is rare. For any purchase you're unsure about, the credit card is the armored option.",
+    "conceptChoices": [
+      "A credit card - federal dispute rights, and it's the card company's money on the line while it's investigated",
+      "A debit card - it's connected to your bank, so the bank protects it best",
+      "Zelle - it's run by the big banks, so payments are guaranteed",
+      "A wire transfer - wires are the most official and traceable method"
+    ],
+    "correctConceptChoice": "A credit card - federal dispute rights, and it's the card company's money on the line while it's investigated"
+  },
+  {
+    "id": "msafe_rails_giftcard_d1",
+    "moduleId": "money_safety",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A caller says you owe back taxes and must pay TODAY using gift cards from a pharmacy. What's the verdict?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "It's a scam, full stop. Per the FTC: no government agency and no legitimate business demands payment by gift card - gift cards are for gifts, and anyone who insists on them is a scammer. The IRS in particular initiates contact by postal mail, not threatening phone calls. Gift-card codes are cashed out within minutes of being read aloud, which is exactly why scammers love them. Americans report hundreds of millions in gift-card scam losses (FTC).",
+    "conceptChoices": [
+      "100% a scam - no government agency or real business demands gift cards as payment (FTC); hang up",
+      "Possibly real - the IRS uses retail partners to collect small balances",
+      "Real if the caller already knows your Social Security number",
+      "Real if they let you pay with cards from any store you choose"
+    ],
+    "correctConceptChoice": "100% a scam - no government agency or real business demands gift cards as payment (FTC); hang up"
+  },
+  {
+    "id": "msafe_rails_zelle_goods_d2",
+    "moduleId": "money_safety",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A marketplace stranger has the $400 game console you've hunted for months - at a great price. They'll only take Zelle, paid before shipping: 'First to pay gets it, I've had too many flakes.'",
+    "promptTemplate": "What's the smart move?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Walk away, or insist on a protected method (credit card via a platform with buyer protection, or local meetup with cash). Zelle to a stranger is the worst possible rail for goods: the payment is treated as authorized by YOU, so when the console never ships, recovery is rare. Zelle being 'run by banks' makes the transfer fast, not protected - it's designed for people you know and trust. Sellers who insist on irreversible payment are pre-selecting victims; screenshots document the loss, they don't prevent it.",
+    "conceptChoices": [
+      "Walk away or insist on a protected method - P2P payments to strangers are treated as authorized and rarely recovered when goods never arrive",
+      "Pay - Zelle is run by major banks, so purchases are protected like a credit card",
+      "Pay half now and half when the console arrives",
+      "Pay by Zelle but screenshot the listing and chat as proof for your bank"
+    ],
+    "correctConceptChoice": "Walk away or insist on a protected method - P2P payments to strangers are treated as authorized and rarely recovered when goods never arrive",
+    "isApplication": true
+  },
+  {
+    "id": "msafe_rails_authorized_d2",
+    "moduleId": "money_safety",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Why is money you sent through a P2P app (Zelle, Venmo, Cash App) so hard to get back - even when you were tricked into sending it?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Because YOU authorized it. The strongest fraud protections center on UNauthorized transactions - someone else using your account. When a scammer tricks you into pressing send yourself, the payment is classified as authorized, and the legal machinery mostly isn't built for 'authorized but deceived.' That single word - authorized - is why scammers engineer stories that make YOU initiate the payment instead of stealing your login. The defense is upstream: be ruthless about who you send to, because downstream recovery is rare.",
+    "conceptChoices": [
+      "Because you authorized the payment yourself - protections center on UNauthorized transactions, and 'tricked but authorized' is treated very differently",
+      "Because P2P apps have no customer service departments",
+      "Because federal law makes all electronic transfers final",
+      "Because P2P transfers are anonymous and can't be traced"
+    ],
+    "correctConceptChoice": "Because you authorized the payment yourself - protections center on UNauthorized transactions, and 'tricked but authorized' is treated very differently"
+  },
+  {
+    "id": "msafe_rails_cryptoatm_d3",
+    "moduleId": "money_safety",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A 'federal agent' calls: your accounts are tied to a money-laundering case, but you can 'protect' your savings by withdrawing cash and depositing it into a crypto ATM at the gas station - they text you a QR code for the 'secure government wallet.'",
+    "promptTemplate": "What's the verdict?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A scam with zero exceptions. No government agency protects money through crypto ATMs, sends wallet QR codes, or asks citizens to withdraw cash - the QR code is the scammer's wallet, and the deposit is irreversible the moment it confirms. This exact script (government imposter + cash + crypto ATM) drives some of the largest individual losses the FTC tracks because it drains savings in one visit. A 'test amount' is just a smaller donation; receipts from a crypto ATM recover nothing.",
+    "conceptChoices": [
+      "100% a scam - no agency protects money via crypto ATMs; the QR code is the scammer's wallet and deposits are irreversible on confirmation",
+      "Suspicious but worth complying with a small test amount first",
+      "Plausibly real - agencies have modernized how they secure citizens' funds",
+      "Comply but keep the ATM receipt so the deposit can be reversed later"
+    ],
+    "correctConceptChoice": "100% a scam - no agency protects money via crypto ATMs; the QR code is the scammer's wallet and deposits are irreversible on confirmation",
+    "isApplication": true
+  },
+  {
+    "id": "msafe_rails_overpayment_d3",
+    "moduleId": "money_safety",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're selling a couch for $300. A 'buyer' sends a check for $800, apologizes for the 'assistant's error,' and asks you to wire back the $500 difference once the check shows up in your account balance.",
+    "promptTemplate": "Your bank shows the $800 as available. What's actually going on?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "It's the classic overpayment scam, and the trap is the gap between AVAILABLE and CLEARED. Banks make check funds available quickly (often by law), but a fake check can take days or weeks to bounce. When it does, the bank claws back the full $800 - and the $500 you wired was your real money, gone for good. Nobody legitimate overpays a stranger and asks for a refund through an irreversible rail. 'Available balance' is a courtesy, not a verdict on the check.",
+    "conceptChoices": [
+      "An overpayment scam - 'available' isn't 'cleared'; the check will bounce later and the $500 you wire back is your real money, gone",
+      "A genuine mistake - once the $800 shows in your balance, the check has cleared",
+      "Safe to refund - banks verify checks are real before showing the funds",
+      "A win - legally you can keep the entire $800 if they overpaid"
+    ],
+    "correctConceptChoice": "An overpayment scam - 'available' isn't 'cleared'; the check will bounce later and the $500 you wire back is your real money, gone",
+    "isApplication": true
+  },
+  {
+    "id": "msafe_credit_freereport_d1",
+    "moduleId": "money_safety",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Where can you get your actual credit reports for free, as guaranteed by federal law?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "AnnualCreditReport.com is the only federally authorized source - and despite the name, you can now pull your report from EACH of the three bureaus free every week (made permanent in 2023, per the FTC). Score apps like Credit Karma show estimates and monitoring, not your official file from all bureaus. Lookalike 'free report' sites are often paid-monitoring funnels. You never need to pay a bureau to see your own file.",
+    "conceptChoices": [
+      "AnnualCreditReport.com - free reports from each of the 3 bureaus, every week, per federal law (FTC)",
+      "Credit Karma - it shows your official file from all three bureaus",
+      "Any site with 'free credit report' in the name",
+      "Directly from each bureau for a $19.95 processing fee"
+    ],
+    "correctConceptChoice": "AnnualCreditReport.com - free reports from each of the 3 bureaus, every week, per federal law (FTC)"
+  },
+  {
+    "id": "msafe_credit_freeze_cost_d1",
+    "moduleId": "money_safety",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What does a credit freeze cost, and what does it do to your credit score?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Free, and nothing. Federal law (2018) requires all three bureaus to place AND lift security freezes at no charge, and a freeze has zero effect on your score, your existing cards, or your ability to use credit you already have. It does exactly one thing: blocks lenders from pulling your file for NEW accounts, which is what stops identity thieves from opening loans in your name. You thaw it - also free - whenever you apply for something.",
+    "conceptChoices": [
+      "Free at all three bureaus by federal law, with zero effect on your score or your existing cards",
+      "About $10 per bureau each time you place or lift it",
+      "Free, but it lowers your score while it's active",
+      "Free, but your existing credit cards stop working while frozen"
+    ],
+    "correctConceptChoice": "Free at all three bureaus by federal law, with zero effect on your score or your existing cards"
+  },
+  {
+    "id": "msafe_credit_freeze_vs_alert_d2",
+    "moduleId": "money_safety",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What's the difference between a credit FREEZE and a fraud ALERT?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A freeze BLOCKS: lenders can't pull your file for new credit at all until you thaw it - an identity thief's application dies at the door. A fraud alert only ASKS: it flags your file so lenders should take extra steps to verify identity, but the application can still proceed. Both are free. The freeze is the stronger tool; the alert is the lighter-touch option when you expect to apply for credit soon and don't want to manage thaw windows.",
+    "conceptChoices": [
+      "A freeze blocks new-account pulls entirely until you thaw it; an alert just asks lenders to verify identity - the freeze is stronger",
+      "An alert blocks new accounts; a freeze just adds a warning note",
+      "They're two names for the same protection",
+      "A freeze is free but fraud alerts cost a monthly fee"
+    ],
+    "correctConceptChoice": "A freeze blocks new-account pulls entirely until you thaw it; an alert just asks lenders to verify identity - the freeze is stronger"
+  },
+  {
+    "id": "msafe_credit_dispute_d2",
+    "moduleId": "money_safety",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You find an account on your credit report that isn't yours. What are your rights?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Under the FCRA, you dispute directly with the credit bureau - free - and the bureau generally must investigate within 30 days and remove anything it can't verify. Credit-repair companies can't do anything you can't do yourself for $0; their pitch is doing the same dispute and charging you for it. Disputing with the bureau (in writing, with documentation) creates the paper trail that matters. You can also dispute with the lender that furnished the data, but the bureau route carries the legal clock.",
+    "conceptChoices": [
+      "Dispute it free with the bureau - under the FCRA they generally must investigate within ~30 days and remove what they can't verify",
+      "Hire a credit-repair company - only licensed firms can remove errors",
+      "Pay the bureau's dispute-processing fee to start an investigation",
+      "Errors can only be fixed by the lender that reported them, never the bureau"
+    ],
+    "correctConceptChoice": "Dispute it free with the bureau - under the FCRA they generally must investigate within ~30 days and remove what they can't verify"
+  },
+  {
+    "id": "msafe_decision_breach_d3",
+    "moduleId": "money_safety",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A company you've used announces a massive data breach - names, SSNs, addresses. You don't plan to apply for any credit in the next year. The breach site offers you 6 months of credit monitoring.",
+    "promptTemplate": "What's the strongest protection you can take right now?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Freeze your file at all three bureaus - about 15 minutes and $0 - and pull your free reports to check for damage. A freeze BLOCKS new-account fraud at the source; monitoring only tells you about fraud after it happens. Since you're not applying for credit soon, the freeze costs you nothing in convenience. Closing your own cards hurts your credit and stops zero identity theft (thieves open NEW accounts). Take the free monitoring too if offered - but the freeze is the actual defense.",
+    "conceptChoices": [
+      "Freeze all three bureaus (free, ~15 min) and pull your free reports - it blocks new-account fraud at the source; thaw whenever you next apply",
+      "Buy credit monitoring - only paid monitoring can actually block fraud",
+      "Close your credit cards so thieves can't use your accounts",
+      "Nothing - breaches rarely lead to actual identity theft"
+    ],
+    "correctConceptChoice": "Freeze all three bureaus (free, ~15 min) and pull your free reports - it blocks new-account fraud at the source; thaw whenever you next apply",
+    "isApplication": true
+  },
+  {
+    "id": "msafe_decision_error_d3",
+    "moduleId": "money_safety",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Three months before you apply for a mortgage, you pull your reports and find a $900 collection account you don't recognize on two of the three bureaus.",
+    "promptTemplate": "What's the right sequence?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Dispute it in writing with each bureau showing it, now - the FCRA's ~30-day investigation clock means it can resolve well before underwriting - and send the collector a debt-validation request, since they must prove the debt is yours. Do NOT pay a debt you don't recognize: payment doesn't guarantee removal, can look like you're accepting the debt, and on old debts can even restart legal clocks. And don't wait for the mortgage to 'sort it' - underwriters price what they see. A repair firm would just file the same free dispute for $500.",
+    "conceptChoices": [
+      "Dispute in writing with each bureau showing it (free, ~30-day clock) and demand validation from the collector - it can clear before underwriting",
+      "Pay the $900 immediately - paid collections always disappear from your report",
+      "Wait - the mortgage application process will investigate it for you",
+      "Pay a credit-repair company $500 to handle it professionally"
+    ],
+    "correctConceptChoice": "Dispute in writing with each bureau showing it (free, ~30-day clock) and demand validation from the collector - it can clear before underwriting",
+    "isApplication": true
+  },
+  {
+    "id": "sal_nego_delta_d1",
+    "moduleId": "salary",
+    "difficulty": 1,
+    "inputMode": "freeEntry",
+    "promptTemplate": "The offer is ${{annualSalary}}. You negotiate {{raisePercent}}% more. How much extra per year is that?",
+    "variableRules": [
+      {
+        "name": "annualSalary",
+        "options": [60000, 65000, 70000, 75000, 80000, 85000]
+      },
+      {
+        "name": "raisePercent",
+        "options": [4, 5, 6, 8, 10]
+      }
+    ],
+    "answerFormula": "raiseAmount",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "10% of ${{annualSalary}} is the decimal-shift number; scale from there to get {{raisePercent}}% = ${{answer}}. That's the annual value of one slightly awkward conversation - and every future raise compounds on top of it."
+  },
+  {
+    "id": "sal_nego_decade_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You negotiated ${{extraSalary}} more in base salary. Ignoring raises, what's that worth over {{years}} years - as a floor?",
+    "variableRules": [
+      {
+        "name": "extraSalary",
+        "options": [2000, 3000, 4000, 5000]
+      },
+      {
+        "name": "years",
+        "options": [5, 10]
+      }
+    ],
+    "answerFormula": "negotiationValue",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{extraSalary}} x {{years}} = ${{answer}} - and that's the FLOOR. Every percentage raise, bonus target, and next-job offer is calculated off your base, so the real value compounds higher. Ten minutes of negotiation, paid annually."
+  },
+  {
+    "id": "sal_nego_firstnumber_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A recruiter asks: 'What are your salary expectations?' What's the strongest reply?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The first specific number spoken anchors the whole negotiation - so try to make it theirs. 'What range did you have budgeted for this role?' is a completely normal question that recruiters answer all the time, and many states now require posted ranges anyway. Naming your current salary anchors you to your old job's pay, not this job's value. If you must give a number, give a researched range and anchor toward its top.",
+    "conceptChoices": [
+      "Ask for their budgeted range first - the first number anchors the negotiation, and asking is completely normal",
+      "Give your current salary - honesty builds goodwill with the recruiter",
+      "Instantly name a number 30% above your current pay, no research needed",
+      "Refuse to discuss compensation until a written offer arrives"
+    ],
+    "correctConceptChoice": "Ask for their budgeted range first - the first number anchors the negotiation, and asking is completely normal"
+  },
+  {
+    "id": "sal_nego_decision_counter_d2",
+    "moduleId": "salary",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You get an offer for $68,000. Your market research (postings, salary data for the role and city) shows $70,000-$78,000. You want this job, and part of you is scared the offer evaporates if you push.",
+    "promptTemplate": "What do you do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Counter with data, professionally: 'I'm excited about the role - based on market data I was expecting something closer to $74,000. Is there flexibility?' Recruiters expect counters and budget room for them; a respectful, researched counter doesn't get offers rescinded. Accepting instantly leaves the budgeted gap on the table permanently. Ultimatums burn goodwill you'll want later, and 'renegotiating after starting' is the weakest position there is - your leverage peaks the moment they've decided they want you and you haven't said yes.",
+    "conceptChoices": [
+      "Counter professionally with data ('I was expecting closer to $74k based on market range - is there flexibility?') - counters are expected and don't rescind offers",
+      "Accept immediately - pushing back risks losing the offer entirely",
+      "Demand $80,000, take it or leave it - strength wins negotiations",
+      "Accept now, then renegotiate once you've started and proven yourself"
+    ],
+    "correctConceptChoice": "Counter professionally with data ('I was expecting closer to $74k based on market range - is there flexibility?') - counters are expected and don't rescind offers",
+    "isApplication": true
+  },
+  {
+    "id": "sal_nego_totalcomp_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "The hiring manager says base salary is truly maxed for the level. What's the strong next move?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Base is one lever on a panel. Signing bonuses come from a different budget and don't repeat, which makes them EASIER to grant; equity, an earlier review date ('can we revisit comp at 6 months?'), extra PTO, title, and remote flexibility are all negotiable when base isn't. 'Maxed for the level' is often literally true within their pay bands - and completely compatible with a $5,000 signing bonus. Walking away over base alone, or just accepting, both ignore the rest of the panel.",
+    "conceptChoices": [
+      "Shift levers: signing bonus (different budget, one-time = easier yes), earlier comp review, equity, PTO, title, remote flexibility",
+      "Walk away - 'maxed' always means the company lowballs everyone",
+      "Accept as-is - if base can't move, nothing else can either",
+      "Ask them to reclassify the job to a higher level on the spot"
+    ],
+    "correctConceptChoice": "Shift levers: signing bonus (different budget, one-time = easier yes), earlier comp review, equity, PTO, title, remote flexibility"
+  },
+  {
+    "id": "sal_nego_decision_compete_d3",
+    "moduleId": "salary",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You hold two offers: Company A at $82,000 and Company B - the team you actually want - at $78,000. Both want answers this week.",
+    "promptTemplate": "What's the smartest play?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Tell B the truth: 'I have a competing offer at $82k, but you're my first choice - can you close the gap?' A real competing offer is the strongest leverage that exists in salary negotiation, and using it honestly is standard practice, not rudeness. Best case B matches or beats; worst case B says no and you make the same choice you faced anyway. Never inflate A's number - offers are verifiable and a caught bluff can sink both. And taking A purely for $4k when you prefer B prices your day-to-day happiness at about $2/working hour.",
+    "conceptChoices": [
+      "Tell B about A's number honestly and ask them to close the gap - a real competing offer is the strongest leverage there is, and you lose nothing by asking",
+      "Take A - four thousand dollars is four thousand dollars",
+      "Say nothing to B about A - mentioning other offers is unprofessional",
+      "Tell B that A offered $90k to maximize the counter"
+    ],
+    "correctConceptChoice": "Tell B about A's number honestly and ask them to close the gap - a real competing offer is the strongest leverage there is, and you lose nothing by asking",
+    "isApplication": true
+  },
+  {
+    "id": "jc401k_cashout_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're 30, in the {{taxRate}}% bracket, and cash out a ${{balance}} 401(k) when leaving a job. Roughly how much goes to income tax plus the 10% early-withdrawal penalty (per IRS)?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [10000, 15000, 20000, 30000]
+      },
+      {
+        "name": "taxRate",
+        "options": [12, 22, 24]
+      }
+    ],
+    "answerFormula": "cashOutCost",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Cash-out cost = balance x (tax rate + 10% penalty) = ${{answer}} gone immediately (per IRS early-distribution rules) - before counting the decades of growth that money will never do. This is why the ~41% of job-changers who cash out (UBC Sauder/HBR study) are making one of the most expensive common mistakes in personal finance."
+  },
+  {
+    "id": "jc401k_shortfall_d1",
+    "moduleId": "investing",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You ask your old plan to mail YOU a check for your ${{balance}} 401(k) (an indirect rollover). How much does the plan withhold, per IRS rules?",
+    "variableRules": [
+      {
+        "name": "balance",
+        "options": [8000, 10000, 15000, 20000, 25000]
+      }
+    ],
+    "answerFormula": "rolloverShortfall",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Mandatory 20% withholding = ${{answer}} (per IRS). Here's the trap: to complete a tax-free rollover you must deposit the FULL ${{balance}} into the new account within 60 days - which means finding ${{answer}} from your own pocket and reclaiming it at tax time. A DIRECT rollover (custodian to custodian) skips this entirely."
+  },
+  {
+    "id": "jc401k_direct_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What's the difference between a DIRECT and an INDIRECT 401(k) rollover?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Direct: the money moves custodian-to-custodian; you never touch it, nothing is withheld, nothing to remember. Indirect: the check comes to YOU minus mandatory 20% withholding, and the IRS gives you 60 days to deposit the full original amount - including replacing the withheld 20% from your own money - or the shortfall is taxed and (under 59 1/2) penalized as a distribution. Same destination, wildly different risk. Always say 'direct rollover.'",
+    "conceptChoices": [
+      "Direct moves custodian-to-custodian with no withholding; indirect mails YOU a check minus 20%, and you must redeposit the FULL amount within 60 days",
+      "They're identical except direct is faster",
+      "Indirect is better - you get to hold the money briefly",
+      "Direct rollovers are taxed; indirect rollovers are tax-free"
+    ],
+    "correctConceptChoice": "Direct moves custodian-to-custodian with no withholding; indirect mails YOU a check minus 20%, and you must redeposit the FULL amount within 60 days"
+  },
+  {
+    "id": "jc401k_decision_check_d2",
+    "moduleId": "investing",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your last week at a job. HR asks how to handle your $18,000 401(k): 'We can mail you a check, or you can set up a transfer to your new plan - the check is faster.'",
+    "promptTemplate": "What do you say?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "'Direct rollover, please' - the two words that move all $18,000 untouched. The 'faster' check is an indirect rollover: it arrives as $14,400 (minus mandatory 20% withholding, per IRS), and completing a tax-free rollover then requires depositing the full $18,000 within 60 days - meaning you front $3,600 of your own money and wait until tax season to get it back. Faster mail, slower everything else.",
+    "conceptChoices": [
+      "'Direct rollover to the new plan' - the money moves whole; the check route withholds 20% and starts a 60-day clock to top it back up yourself",
+      "Take the check - faster is better, and you'll deposit it next week anyway",
+      "Take the check and deposit exactly what you received - that completes the rollover",
+      "Cash out - $18,000 is too small an account to be worth rollover paperwork"
+    ],
+    "correctConceptChoice": "'Direct rollover to the new plan' - the money moves whole; the check route withholds 20% and starts a 60-day clock to top it back up yourself",
+    "isApplication": true
+  },
+  {
+    "id": "jc401k_60day_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You took the indirect route: a $16,000 check arrived for your $20,000 401(k) (20% withheld). To owe zero tax on the rollover, what must you do within 60 days?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Deposit the full $20,000 - the $16,000 check PLUS $4,000 of your own money - into the new retirement account within 60 days (per IRS). The withheld $4,000 comes back to you at tax time as a credit. Deposit only the $16,000 and the missing $4,000 is treated as a distribution: taxed, and penalized 10% if you're under 59 1/2. This asymmetry is the whole reason 'direct rollover' is the magic phrase.",
+    "conceptChoices": [
+      "Deposit $20,000 - the check plus $4,000 of your own money; the withheld $4,000 returns as a credit at tax time",
+      "Deposit the $16,000 check - that's everything you received, so the rollover is complete",
+      "Nothing - the 60-day rule only applies to IRAs, not 401(k)s",
+      "Deposit $16,000 and file a form asking the IRS to transfer the $4,000 directly"
+    ],
+    "correctConceptChoice": "Deposit $20,000 - the check plus $4,000 of your own money; the withheld $4,000 returns as a credit at tax time"
+  },
+  {
+    "id": "jc401k_decision_small_d3",
+    "moduleId": "investing",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're 30, leaving a job with $12,000 in your 401(k). A coworker shrugs: 'It's a small account - everyone just cashes those out. Treat yourself.'",
+    "promptTemplate": "What does the math say?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Your coworker is statistically right that 'everyone does it' - about 41% of departing employees cash out (UBC Sauder/HBR, 162,000 separations) - and financially wrong by six figures. Cashing out at the 22% bracket costs ~$3,840 immediately (22% + 10% penalty). The deeper cost: $12,000 left growing at 7% for 35 years is roughly $128,000. The 'small account' framing is exactly why the mistake is common - small balances feel spendable. Roll it (directly) and forget it.",
+    "conceptChoices": [
+      "Roll it over directly - cashing out costs ~$3,800 now (tax + penalty) and forfeits roughly $128,000 of growth by 65; 'everyone does it' is the bug, not a reason",
+      "Cash out - accounts under $20,000 grow too slowly to matter",
+      "Cash out - the 10% penalty doesn't apply to balances this small",
+      "Leave it and decide later - old accounts can't be touched once you've left"
+    ],
+    "correctConceptChoice": "Roll it over directly - cashing out costs ~$3,800 now (tax + penalty) and forfeits roughly $128,000 of growth by 65; 'everyone does it' is the bug, not a reason",
+    "isApplication": true
+  },
+  {
+    "id": "jchealth_cobra_cost_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your paycheck deducted $150/month for health insurance. The COBRA letter quotes $663/month for the same plan. Why?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Because your employer was quietly paying most of the premium. COBRA lets you keep the plan, but YOU now pay both shares plus up to a 2% administration fee - by law your cost can be up to 102% of the plan's total cost (per DOL). The plan didn't get more expensive; the subsidy walked out the door with the job. That's why the first move is comparing COBRA against a subsidized marketplace quote, not paying the letter in panic.",
+    "conceptChoices": [
+      "The employer's subsidy vanished - COBRA charges you the FULL premium plus up to 2% admin (102% of plan cost, per DOL)",
+      "COBRA plans add extra coverage, which costs more",
+      "It's a penalty for leaving the company",
+      "The insurer reprices you as higher-risk once you're unemployed"
+    ],
+    "correctConceptChoice": "The employer's subsidy vanished - COBRA charges you the FULL premium plus up to 2% admin (102% of plan cost, per DOL)"
+  },
+  {
+    "id": "jchealth_premium_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "COBRA would cost ${{oldPayment}}/month. A subsidized marketplace plan at your reduced income quotes ${{newPayment}}/month. How much do you save monthly with the marketplace?",
+    "variableRules": [
+      {
+        "name": "oldPayment",
+        "options": [600, 650, 700, 750]
+      },
+      {
+        "name": "newPayment",
+        "options": [250, 280, 300, 350]
+      }
+    ],
+    "answerFormula": "monthlyDifference",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{oldPayment}} - ${{newPayment}} = ${{answer}}/month - often $4,000+ per year. Marketplace subsidies are computed on your CURRENT income, and a job gap usually means a lower income and a bigger subsidy. COBRA can still win when you need specific doctors or you've already met a big deductible - but run this comparison before paying the COBRA letter."
+  },
+  {
+    "id": "jchealth_window_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You just lost job-based health coverage. How long do you have to make a coverage decision?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "About 60 days on both paths: 60 days to elect COBRA (from the later of the election notice or losing coverage, per DOL), and a 60-day marketplace Special Enrollment Period from the coverage loss (HealthCare.gov). Losing job coverage is a 'qualifying life event' - you do NOT wait for fall open enrollment. The deadline discipline matters because missing both windows can mean months uninsurable until the next open enrollment.",
+    "conceptChoices": [
+      "~60 days for both: the COBRA election window (per DOL) and the marketplace Special Enrollment Period (HealthCare.gov)",
+      "Until the next fall open-enrollment period - that's the only time anyone can enroll",
+      "30 days, after which you owe a federal uninsured penalty",
+      "There's no deadline - both options stay open indefinitely"
+    ],
+    "correctConceptChoice": "~60 days for both: the COBRA election window (per DOL) and the marketplace Special Enrollment Period (HealthCare.gov)"
+  },
+  {
+    "id": "jchealth_decision_compare_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're laid off. The COBRA election letter arrives: $680/month to keep your plan. You're mid-treatment with a specialist you trust, but money is suddenly tight.",
+    "promptTemplate": "What's the right process?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Get the marketplace quote BEFORE deciding - your 60-day Special Enrollment Period means the layoff itself unlocked enrollment, and subsidies at your reduced income often cut the price dramatically. Then weigh the real trade: marketplace savings vs. COBRA's continuity (your specialist stays in-network and your deductible progress carries over - marketplace plans reset both). Mid-treatment, COBRA's continuity can genuinely be worth a premium. The mistake isn't picking COBRA - it's paying the letter without ever pricing the alternative.",
+    "conceptChoices": [
+      "Quote the marketplace at your new income first, then weigh savings vs. COBRA's continuity (same specialist, deductible progress carries over) - decide with both numbers",
+      "Pay the COBRA letter immediately - health coverage is not something to shop on",
+      "Skip both - you're between jobs, and ERs must treat you anyway",
+      "Pick the marketplace automatically - it's always cheaper than COBRA"
+    ],
+    "correctConceptChoice": "Quote the marketplace at your new income first, then weigh savings vs. COBRA's continuity (same specialist, deductible progress carries over) - decide with both numbers",
+    "isApplication": true
+  },
+  {
+    "id": "jchealth_retroactive_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Here's a little-known COBRA mechanic: what happens if you DON'T elect immediately, and then get injured during the 60-day election window?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "COBRA is retroactive: if you elect any time within the 60-day window, coverage applies back to the day your job coverage ended - and you pay the back-premiums for that period. That creates the 'backstop play': hold off electing, and only pay if something major happens mid-gap. The cost of the strategy is discipline - blow the deadline and you have nothing retroactively. It's a legitimate, DOL-documented mechanic, not a loophole.",
+    "conceptChoices": [
+      "You can still elect COBRA and it covers you RETROACTIVELY to the coverage-loss date - you pay back-premiums, but the injury is covered",
+      "You're uninsured for the injury - COBRA only covers events after the day you elect",
+      "The injury voids your COBRA eligibility as a pre-existing condition",
+      "The plan covers the injury for free since you were in the election window"
+    ],
+    "correctConceptChoice": "You can still elect COBRA and it covers you RETROACTIVELY to the coverage-loss date - you pay back-premiums, but the injury is covered"
+  },
+  {
+    "id": "jchealth_decision_gap_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're healthy, between jobs for exactly 6 weeks, and your new employer's coverage starts on day one. COBRA would cost $660/month. The marketplace quote is $310/month.",
+    "promptTemplate": "What's the financially sharp play for the 6-week gap?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Use COBRA's retroactivity as a free backstop: don't elect yet, calendar the 60-day deadline, and only elect (paying back-premiums) if something major happens during the gap. Your 6-week gap sits entirely inside the election window, so you're protected against catastrophe while paying $0 if nothing happens. Paying ~$990 of COBRA or ~$465 of marketplace premiums buys peace of mind but likely zero claims. The one non-negotiable: this only works if you actually track the deadline - 'uninsured with no backstop' is the careless version of the same six weeks.",
+    "conceptChoices": [
+      "Hold the COBRA election as a retroactive backstop: calendar the 60-day deadline, pay nothing now, elect with back-premiums only if something major happens",
+      "Pay COBRA from day one - any gap in coverage is reckless regardless of the backstop",
+      "Buy the marketplace plan - it's cheaper than COBRA, so it must be the right answer",
+      "Go uninsured and uncalendared - six healthy weeks never need a plan"
+    ],
+    "correctConceptChoice": "Hold the COBRA election as a retroactive backstop: calendar the 60-day deadline, pay nothing now, elect with back-premiums only if something major happens",
+    "isApplication": true
+  },
+  {
+    "id": "payday_fee_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "inputMode": "freeEntry",
+    "promptTemplate": "A payday lender charges ${{feePer100}} per $100 borrowed. What's the fee to borrow ${{loanAmount}} until payday?",
+    "variableRules": [
+      {
+        "name": "loanAmount",
+        "options": [200, 300, 400, 500]
+      },
+      {
+        "name": "feePer100",
+        "options": [10, 15, 20, 25]
+      }
+    ],
+    "answerFormula": "paydayFee",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{loanAmount}} has {{loanAmount}}/100 hundreds in it - multiply by ${{feePer100}} each = ${{answer}}. Sounds manageable until you annualize it: this fee structure runs roughly 400% APR (per CFPB), and it repeats in full every time the loan rolls over."
+  },
+  {
+    "id": "payday_apr_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A loan charges ${{feePer100}} per $100 for {{termDays}} days. Roughly what APR is that?",
+    "variableRules": [
+      {
+        "name": "feePer100",
+        "options": [10, 15, 20, 25]
+      },
+      {
+        "name": "termDays",
+        "options": [14, 30]
+      }
+    ],
+    "answerFormula": "paydayAPR",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "APR = ({{feePer100}}/100) x (365/{{termDays}}) x 100 = about {{answer}}%. The fee 'per $100' hides the time dimension - annualized, payday-style pricing runs hundreds of percent (the CFPB pegs the typical $15-per-$100 two-week loan at almost 400% APR), versus ~22% on even an expensive credit card."
+  },
+  {
+    "id": "payday_overdraft_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your account goes negative by ${{purchase}} and the bank charges a ${{fee}} overdraft fee. The fee is what percent of the amount covered?",
+    "variableRules": [
+      {
+        "name": "fee",
+        "options": [25, 30, 35]
+      },
+      {
+        "name": "purchase",
+        "options": [5, 10, 20, 25]
+      }
+    ],
+    "answerFormula": "overdraftFeePct",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{fee}} / ${{purchase}} x 100 = {{answer}}% - instantly, before annualizing anything. Overdraft pricing varies wildly now: several large banks charge $0-$10 while others still charge ~$35. If you're paying the high end more than rarely, the fix is usually a different account, not different behavior."
+  },
+  {
+    "id": "payday_decision_alternatives_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Rent is due in 5 days; payday is in 9. You're $300 short. The payday storefront on the corner advertises 'cash in 10 minutes - $15 per $100.'",
+    "promptTemplate": "What's the smart order of operations?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Work the ladder before the storefront: (1) ask the landlord for a few days - a short documented delay usually costs $0-50 in late fees, (2) a credit-union Payday Alternative Loan or small personal loan, (3) even a credit-card cash advance at ~30% APR is a tenth of the payday loan's ~400% (CFPB). The storefront's real danger isn't the first $45 fee - it's that most borrowers can't clear the balloon repayment plus living costs in two weeks, and the rollover cycle begins. 'Designed for exactly this' is the marketing; re-borrowing is the business model.",
+    "conceptChoices": [
+      "Ladder first: ask the landlord for a short delay, try a credit-union PAL, even a card cash advance - all cost a fraction of ~400% APR and avoid the rollover trap",
+      "Take the payday loan - $45 for 9 days is exactly what these are designed for",
+      "Use a cash-advance app instead - tips and express fees aren't really interest",
+      "Pay rent 9 days late without telling the landlord - silence avoids awkwardness"
+    ],
+    "correctConceptChoice": "Ladder first: ask the landlord for a short delay, try a credit-union PAL, even a card cash advance - all cost a fraction of ~400% APR and avoid the rollover trap",
+    "isApplication": true
+  },
+  {
+    "id": "payday_rollover_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Why do payday loans trap people when the first fee seems affordable?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The full balance is due in one balloon payment in ~two weeks - and if you were $300 short THIS paycheck, you're usually $345 short the next one. So the loan rolls: another $45 fee buys two more weeks, principal untouched. Four rollovers = $180 in fees on a $300 loan (60% in two months) with the $300 still owed. The CFPB's research found most payday borrowers end up re-borrowing rather than repaying - the rollover isn't the failure mode, it's the business model.",
+    "conceptChoices": [
+      "The balloon repayment recreates the same shortfall, so the loan rolls over - the fee repeats in full each time while the principal never shrinks",
+      "The interest rate secretly increases with each week the loan is held",
+      "Lenders report every payday loan to credit bureaus, wrecking your score",
+      "They don't trap people - the fee is one-time and most repay in two weeks"
+    ],
+    "correctConceptChoice": "The balloon repayment recreates the same shortfall, so the loan rolls over - the fee repeats in full each time while the principal never shrinks"
+  },
+  {
+    "id": "payday_decision_waiver_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A forgotten $12 subscription overdrew your account and triggered a $35 fee. It's your first overdraft in two years at this bank.",
+    "promptTemplate": "What's the move?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Call and ask - one sentence: 'I've banked here two years, this was an accidental first overdraft - could you waive it as a courtesy?' First-time waivers are routinely granted; the rep has the button and goodwill costs the bank less than churn. Then fix the system: kill the forgotten subscription, and if your bank still charges $35 while several large banks charge $0-$10, the durable fix is switching accounts, not perfect vigilance. Fees are bank policy, not law - 'final' is just the default for people who don't ask.",
+    "conceptChoices": [
+      "Call and ask for a courtesy waiver (first-time waivers are routinely granted), cancel the zombie subscription, and consider a $0-overdraft account",
+      "Nothing - overdraft fees are set by federal law and can't be waived",
+      "Close the account immediately in protest",
+      "Ignore it - one $35 fee isn't worth a phone call"
+    ],
+    "correctConceptChoice": "Call and ask for a courtesy waiver (first-time waivers are routinely granted), cancel the zombie subscription, and consider a $0-overdraft account",
+    "isApplication": true
+  },
+  {
+    "id": "negeq_equity_d1",
+    "moduleId": "car",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your car's market value is ${{carValue}} and your loan payoff is ${{loanBalance}}. What's your equity?",
+    "variableRules": [
+      {
+        "name": "carValue",
+        "options": [12000, 14000, 16000]
+      },
+      {
+        "name": "loanBalance",
+        "options": [17000, 19000, 21000]
+      }
+    ],
+    "answerFormula": "carEquity",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Equity = value - payoff = ${{answer}}. The negative sign is the whole story: you'd owe that much MORE than the car is worth if you sold or traded today. That number follows you into any 'deal' - a dealer who 'pays off your loan' is adding it to your next one."
+  },
+  {
+    "id": "negeq_rollin_d1",
+    "moduleId": "car",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're ${{shortfall}} upside down on your trade-in. The new car costs ${{newCarPrice}} and the dealer 'pays off your old loan.' How big is your new loan (before fees and tax)?",
+    "variableRules": [
+      {
+        "name": "newCarPrice",
+        "options": [25000, 28000, 30000, 32000]
+      },
+      {
+        "name": "shortfall",
+        "options": [3000, 5000, 7000]
+      }
+    ],
+    "answerFormula": "rollInLoan",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{newCarPrice}} + ${{shortfall}} = ${{answer}} - the old debt didn't vanish, it moved. You now owe ${{answer}} on a car worth ${{newCarPrice}} the moment you sign: underwater on day one, on a fresh depreciation curve. This is how nearly a third of trade-ins end up carrying negative equity (Edmunds, Q1 2026)."
+  },
+  {
+    "id": "negeq_payoff_myth_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A dealership ad promises: 'We'll pay off your trade-in, no matter how much you owe!' What does that actually mean?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "It means the loan gets PAID, not FORGIVEN - the dealer settles your old lender and adds whatever you owed beyond the trade-in's value straight into your new loan. The debt changes vehicles; it doesn't disappear. Nothing about the ad is illegal, which is exactly why the phrasing survives: it's technically true and reliably misread. The defense is arithmetic: know your equity number before you walk in, and evaluate every offer with the shortfall added to the new loan.",
+    "conceptChoices": [
+      "They roll what you still owe into your NEW loan - the debt moves to the next car, often putting you underwater from day one",
+      "The dealership absorbs your remaining balance as a cost of winning your business",
+      "The manufacturer pays off loyal customers' loans as an incentive",
+      "It's illegal false advertising - dealers can't make that claim"
+    ],
+    "correctConceptChoice": "They roll what you still owe into your NEW loan - the debt moves to the next car, often putting you underwater from day one"
+  },
+  {
+    "id": "negeq_decision_trade_d2",
+    "moduleId": "car",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You owe $19,500 on a car worth $14,000 ($5,500 upside down). It runs fine, but you're bored of it - and a dealer ad guarantees they'll 'pay off your loan' on a trade.",
+    "promptTemplate": "What does the math say to do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Keep driving it. Every month of payments shrinks the loan while depreciation slows on an older car - the equity gap closes on its own, and 'bored' is the most expensive reason in car buying. Trading now rolls $5,500 of dead debt into a new loan and restarts the cycle on a fresh depreciation curve (that's how trade-ins hit a record ~31% underwater - Edmunds Q1 2026). A cheaper car doesn't fix it - the shortfall rolls regardless. And voluntary repossession is a credit catastrophe that still leaves you owing the deficiency.",
+    "conceptChoices": [
+      "Keep the car and keep paying - amortization closes the gap over time; trading rolls $5,500 of old debt onto a new depreciation curve",
+      "Trade it - the ad guarantees the loan gets paid off, so the $5,500 is handled",
+      "Trade DOWN to a cheaper car - a smaller price tag erases negative equity",
+      "Let the bank repossess it - walking away clears the slate fastest"
+    ],
+    "correctConceptChoice": "Keep the car and keep paying - amortization closes the gap over time; trading rolls $5,500 of old debt onto a new depreciation curve",
+    "isApplication": true
+  },
+  {
+    "id": "negeq_prevalence_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "How common is negative equity on trade-ins right now - and what causes it for people who never miss a payment?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "About 31% of trade-ins toward new cars carried negative equity in Q1 2026, averaging roughly $7,200 owed beyond the car's value (Edmunds) - near-record territory. The cause isn't missed payments: on 72-84-month loans, early payments are mostly interest, so principal falls SLOWER than the car depreciates. Perfect payment history and underwater can coexist for years of a long loan. That's the quiet case for shorter terms and real down payments: they keep your payoff curve below the car's value curve.",
+    "conceptChoices": [
+      "~31% of trade-ins, averaging ~$7,200 (Edmunds Q1 2026) - long loan terms pay principal slower than the car depreciates, even with perfect payments",
+      "Under 5% - it only happens to people who miss payments",
+      "It's impossible if you make every payment on time",
+      "About 80% - essentially every financed car is underwater until the last payment"
+    ],
+    "correctConceptChoice": "~31% of trade-ins, averaging ~$7,200 (Edmunds Q1 2026) - long loan terms pay principal slower than the car depreciates, even with perfect payments"
+  },
+  {
+    "id": "negeq_decision_gap_d3",
+    "moduleId": "car",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're financing a car with a small down payment on a 72-month loan - the classic recipe for being underwater in years 1-3. You're worried about one specific risk: the car gets totaled while you owe more than it's worth.",
+    "promptTemplate": "What actually protects you there?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "That exact scenario - insurance pays the car's VALUE while you owe MORE - is what gap coverage exists for: it pays the difference so a totaled car doesn't leave you making payments on nothing. Buy it from your own insurer (often $20-40/year added to your policy) rather than the dealer's rolled-into-the-loan version at several hundred dollars. And note the structural fix: a bigger down payment or shorter term shrinks the underwater window itself, which is cheaper than insuring it. Regular collision coverage explicitly does NOT cover the loan gap - it pays market value, full stop.",
+    "conceptChoices": [
+      "Gap coverage - it pays the loan-vs-value difference on a total loss; buy it from your insurer (~$20-40/yr), not the dealer's marked-up version",
+      "Regular collision insurance - it always pays off whatever you owe on the loan",
+      "Nothing exists for this - it's just a risk you accept when financing",
+      "An extended warranty - it covers the car in any catastrophic event"
+    ],
+    "correctConceptChoice": "Gap coverage - it pays the loan-vs-value difference on a total loss; buy it from your insurer (~$20-40/yr), not the dealer's marked-up version",
+    "isApplication": true
+  },
+  {
+    "id": "shrink_unitprice_d1",
+    "moduleId": "smart_shopping",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A package costs ${{totalPrice}} for {{quantity}} oz. What's the unit price per ounce?",
+    "variableRules": [
+      {
+        "name": "totalPrice",
+        "options": [4, 5, 6, 8]
+      },
+      {
+        "name": "quantity",
+        "options": [8, 10, 16, 20]
+      }
+    ],
+    "answerFormula": "unitPrice",
+    "answerFormat": "currency",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "${{totalPrice}} / {{quantity}} oz = ${{answer}} per ounce. This one division is the entire defense against shrinkflation and pack-size games - the sticker price can lie by shrinking the box, but dollars-per-ounce can't."
+  },
+  {
+    "id": "shrink_tag_d1",
+    "moduleId": "smart_shopping",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Where do you find a product's unit price without doing any math?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "It's the small print on the shelf tag - usually in a corner, as $/oz, per-sheet, per-load, or per-100-count. A dozen-plus states require stores to display it (per GAO), and most large chains print it everywhere. It's the only number on the shelf that exposes shrinkflation, pack-size tricks, and 'bonus size' marketing all at once. The package itself will never volunteer it.",
+    "conceptChoices": [
+      "The small print on the SHELF tag (e.g., cents per oz) - required in a dozen-plus states and printed by most large chains",
+      "The product's barcode encodes it",
+      "The front of the package, next to the brand name",
+      "Unit prices aren't displayed anywhere - you always have to compute them"
+    ],
+    "correctConceptChoice": "The small print on the SHELF tag (e.g., cents per oz) - required in a dozen-plus states and printed by most large chains"
+  },
+  {
+    "id": "shrink_pct_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A product shrinks from {{oldSize}} oz to {{newSize}} oz at the same price. What's the effective price increase per ounce?",
+    "variableRules": [
+      {
+        "name": "oldSize",
+        "options": [16, 18, 20]
+      },
+      {
+        "name": "newSize",
+        "options": [12, 14, 15]
+      }
+    ],
+    "answerFormula": "shrinkPct",
+    "answerFormat": "percent",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Same dollars, fewer ounces: {{oldSize}}/{{newSize}} - 1 = {{answer}}% more per ounce. This is squarely in the range the GAO documented - downsized products averaged 12% to 32% unit-price increases depending on category - and it never shows up on the sticker."
+  },
+  {
+    "id": "shrink_decision_compare_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your usual peanut butter is the 'same price' as always, but the jar quietly went from 16 oz to 13 oz. Next to it: a club-size 40 oz jar with a bigger sticker price, and a store brand at 16 oz.",
+    "promptTemplate": "How do you actually find the best deal?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Put all three on one scale: dollars per ounce, off the shelf tags. The shrunk jar just took a ~23% unit-price hike while looking unchanged (16/13 - 1); the scary-sticker club size is often the cheapest ounce in the aisle; the store brand frequently wins outright. GAO found downsized products averaged 12-32% unit-price increases - precisely because shoppers compare stickers, not ounces. One caveat on bulk: the cheapest ounce you won't finish isn't cheap.",
+    "conceptChoices": [
+      "Compare $/oz across all three on the shelf tags - the shrunk jar took a hidden ~23% hike, and the big sticker is often the cheapest ounce",
+      "Stick with the usual jar - the price didn't change, so the deal didn't either",
+      "Avoid the club size - a higher sticker price means you're spending more, period",
+      "Buy whichever package looks largest for the money"
+    ],
+    "correctConceptChoice": "Compare $/oz across all three on the shelf tags - the shrunk jar took a hidden ~23% hike, and the big sticker is often the cheapest ounce",
+    "isApplication": true
+  },
+  {
+    "id": "shrink_psychology_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Why do companies shrink packages instead of just raising prices?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Because it works on attention, not deception in the legal sense: shoppers track PRICES, and research reviewed by the GAO shows consumers respond far less to downsizing than to an equivalent price increase. A $4.99 -> $5.79 sticker triggers comparison shopping; 18 oz -> 15.3 oz at $4.99 triggers nothing. It's legal (sizes are on the label), which is why the practical defense isn't outrage - it's making quantity visible again with the unit price.",
+    "conceptChoices": [
+      "Shoppers track prices, not quantities - consumers respond far less to downsizing than to an equivalent price hike (GAO), so the shrink flies under attention",
+      "Smaller packages cost meaningfully less to ship, and savings are passed along",
+      "Laws cap how much prices can rise per year, so shrinking is the only option",
+      "Retailers force manufacturers to keep stickers constant"
+    ],
+    "correctConceptChoice": "Shoppers track prices, not quantities - consumers respond far less to downsizing than to an equivalent price hike (GAO), so the shrink flies under attention"
+  },
+  {
+    "id": "shrink_decision_swap_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Coffee was the GAO's worst shrinkflation category - downsized products averaged a 32% unit-price jump. Your usual brand's bag just shrank from 12 oz to 10 oz at the same $11.99.",
+    "promptTemplate": "What's the rational response at the shelf?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Downsizing is brand-by-brand, not market-wide - so re-run the whole shelf on $/oz: other brands' sizes, the store brand, whole-bean vs ground. Your old brand just charged you 20% more per ounce (12/10 - 1) for loyalty; switching recovers it instantly if a rival didn't shrink. Quality matters - but test that with one bag, not with permanent loyalty to a stealth price hike. Buying 'the most ounces' regardless of total cost ignores your actual budget, and boycotting coffee entirely is a punishment you serve yourself.",
+    "conceptChoices": [
+      "Re-rank the shelf by $/oz - shrinks are brand-specific, and switching to a non-shrunk rival or store brand recovers the hidden 20% hike immediately",
+      "Stay loyal - established brands shrink packages only when quality improves",
+      "Buy whichever bag has the most total ounces, whatever it costs",
+      "Stop buying coffee entirely until prices come back down"
+    ],
+    "correctConceptChoice": "Re-rank the shelf by $/oz - shrinks are brand-specific, and switching to a non-shrunk rival or store brand recovers the hidden 20% hike immediately",
+    "isApplication": true
+  },
+  {
+    "id": "tip_decision_screen_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You grab a $6 to-go coffee. The counter iPad flips around: 20% - 25% - 30%, with 'custom' and 'no tip' in smaller text below. The barista is watching.",
+    "promptTemplate": "What's actually true about that screen?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The suggested buttons are configured by the merchant, and they often START above the 15-20% table-service norm - that's anchoring, not etiquette. Counter-service tipping is discretionary: 'custom' and 'no tip' are fully legitimate options, and surveys show roughly 3 in 10 people tip LESS when screens push suggestions (WalletHub). The honest rule: tip for service rendered, not for the software. A barista who made you a drink? Tip if you want. A tablet that rotated? Not a service.",
+    "conceptChoices": [
+      "The buttons are merchant-configured anchors that often start above the table-service norm - 'custom' and 'no tip' are fully legitimate at counter service",
+      "20% is the mandatory minimum at any business that presents a tip screen",
+      "Pressing 'no tip' lets the store add a gratuity back later",
+      "The suggested percentages are set by state law"
+    ],
+    "correctConceptChoice": "The buttons are merchant-configured anchors that often start above the table-service norm - 'custom' and 'no tip' are fully legitimate at counter service",
+    "isApplication": true
+  },
+  {
+    "id": "tip_decision_pretax_d2",
+    "moduleId": "smart_shopping",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Dinner: $80 of food and drinks + $7.20 tax = $87.20 total. You're tipping 20% and your friend asks: 'On which number?'",
+    "promptTemplate": "What's the convention - and how much does it actually change?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The long-standing convention is the PRE-tax total: 20% of $80 = $16.00. Tipping on the post-tax $87.20 gives $17.44 - a difference of $1.44, which is just your tip rate applied to the tax line. Neither choice is wrong; pre-tax is simply the etiquette default, and knowing that ends the debate at the table in five seconds. The real money is in the percentage you pick, not the base you compute it on.",
+    "conceptChoices": [
+      "Convention is the PRE-tax $80, so $16.00 - tipping post-tax adds only $1.44; either is acceptable, pre-tax is the default",
+      "Post-tax is required - the tax is part of what the server delivered",
+      "Pre-tax only - tipping on the post-tax total is a recognized faux pas",
+      "It doesn't matter because tax is excluded from tip math automatically"
+    ],
+    "correctConceptChoice": "Convention is the PRE-tax $80, so $16.00 - tipping post-tax adds only $1.44; either is acceptable, pre-tax is the default",
+    "isApplication": true
+  },
+  {
+    "id": "tip_decision_autograt_d3",
+    "moduleId": "smart_shopping",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Eight of you split a birthday dinner. The bill lands: $412.86. You're the one doing the math for the table.",
+    "promptTemplate": "What do you check BEFORE adding a tip?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Scan the bill for a 'service charge', 'gratuity included', or 'large party gratuity' line - restaurants routinely auto-add 18-20% for parties of 6-8 or more, and it's usually printed mid-bill where nobody looks. The most common group-dinner error is tipping ANOTHER 20% on top, turning the tip into ~36-40%. If gratuity is included, anything extra is optional recognition, not obligation. Thirty seconds of reading saves the table $70.",
+    "conceptChoices": [
+      "Scan for a 'service charge' or 'gratuity included' line - restaurants commonly auto-add 18-20% for large parties, and double-tipping is the classic group error",
+      "Nothing - auto-gratuity is illegal, so the bill can't already include a tip",
+      "Whether the restaurant accepts credit cards for tips",
+      "Each person's itemized order - exact itemizing is always worth the time"
+    ],
+    "correctConceptChoice": "Scan for a 'service charge' or 'gratuity included' line - restaurants commonly auto-add 18-20% for large parties, and double-tipping is the classic group error",
     "isApplication": true
   }
 ]

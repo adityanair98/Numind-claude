@@ -22,7 +22,7 @@ final class ContentInvariantTests: XCTestCase {
         // ── Legitimately negative-by-design: comparisons, deltas, inflation-real
         // raises, ROI, net-of-cost values, break-even gaps, and "is it worth it?"
         // results where a ≤ 0 answer is the actual teaching outcome.
-        "buy_net_cost_d2", "capgains_compare_d3", "capgains_long_d1", "car_down_compare_d2",
+        "buy_net_cost_d2", "capgains_compare_d3", "capgains_long_d1",
         "car_payment_compare_d2", "car_rule_scenario_d2", "car_tco_compare_d2",
         "car_term_difference_d1", "car_term_extra_cost_d3", "car_term_impact_d3",
         "cc_net_rewards_with_balance_d2", "cc_payoff_principal_slice_d1",
@@ -35,6 +35,7 @@ final class ContentInvariantTests: XCTestCase {
         "job_offer_compare_d3", "lease_break_decision_d3", "lease_stay_savings_d3",
         "life_quote_compare_d2", "membership_compare_d3", "membership_decision_d3",
         "membership_net_saving_d2", "missing_benefit_d2", "mortgage_vs_rent_decision_d3",
+        "negeq_equity_d1",  // carEquity: teaches negative equity — the negative IS the lesson
         "offer_compare_d3", "offer_compare_total_comp_d2", "on_track_gap_d2", "over_budget_d3",
         "refund_annual_loss_d3", "roi_compare_d3", "roommate_compare_d3",
         "roommate_utilities_d2", "save_vs_borrow_d3", "sl_refi_saving_d1",

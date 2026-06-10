@@ -15,6 +15,7 @@ extension ModuleColor {
         case .purple: return Theme.Colors.insurancePurple
         case .rose:   return Theme.Colors.housingRose
         case .slate:  return Theme.Colors.taxSlate
+        case .crimson: return Theme.Colors.safetyCrimson
         case .muted:  return Theme.Colors.mutedText
         }
     }
@@ -31,6 +32,7 @@ extension ModuleColor {
         case .purple: return Theme.Colors.insurancePurpleTint
         case .rose:   return Theme.Colors.housingRoseTint
         case .slate:  return Theme.Colors.taxSlateTint
+        case .crimson: return Theme.Colors.safetyCrimsonTint
         case .muted:  return Theme.Colors.mutedTint
         }
     }
