@@ -165,7 +165,7 @@ struct ProgressTabView: View {
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 22)
 
-                sectionLabel("XP over time")
+                sectionLabel("Practice over time")
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 10)
                 weeklyXPCard
@@ -209,39 +209,42 @@ struct ProgressTabView: View {
     }
 
     // ═══════════════════════════════════════════════════════════════
-    // MARK: - Level (XP effort headline, Phase 9)
+    // MARK: - Skills ledger (Phase 10 — capability counts, no Level/XP)
     // ═══════════════════════════════════════════════════════════════
 
     private var levelCard: some View {
-        NumindCard {
+        let masteredCount = store.masteredLessonIds.filter { !$0.hasPrefix("review_") }.count
+        let stale = store.staleSkillCount
+        return NumindCard {
             HStack(spacing: 16) {
-                LevelRing(level: store.level, progress: store.levelProgress, size: 88)
-
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("LEVEL \(store.level)")
+                    Text("SKILLS")
                         .font(.system(size: 10, weight: .heavy))
                         .foregroundStyle(Theme.Colors.mutedText)
                         .kerning(0.6)
-                    Text("\(store.xp) XP")
+                    Text("\(masteredCount) mastered")
                         .font(.system(size: 26, weight: .bold, design: .rounded))
                         .foregroundStyle(Theme.Colors.deepNavy)
 
-                    // Next-level hint — honest when depth-gated (the XP bar
-                    // would otherwise sit full and never advance).
-                    if store.isDepthGated {
-                        Label("Master a lesson's hard questions to reach Level \(store.level + 1)",
-                              systemImage: "lock.fill")
-                            .font(.system(size: 11, weight: .semibold))
+                    if stale > 0 {
+                        Label("\(stale) to refresh", systemImage: "arrow.counterclockwise")
+                            .font(.system(size: 12, weight: .semibold))
                             .foregroundStyle(Theme.Colors.warmOrange)
-                            .fixedSize(horizontal: false, vertical: true)
-                    } else if let toNext = store.xpToNextLevel {
-                        Text("\(toNext) XP to Level \(store.level + 1)")
+                    } else if masteredCount > 0 {
+                        Label("All fresh", systemImage: "checkmark.circle.fill")
                             .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.primaryBlue)
+                            .foregroundStyle(Theme.Colors.growthGreen)
                     } else {
-                        Text("Top level reached 🎉")
+                        Text("Master your first lesson to start the ledger")
                             .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.mindTeal)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+
+                    if store.readyPackCount > 0 {
+                        Label("\(store.readyPackCount) decision path\(store.readyPackCount == 1 ? "" : "s") ready",
+                              systemImage: "checkmark.seal.fill")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(Theme.Colors.growthGreen)
                     }
                 }
                 Spacer(minLength: 0)
@@ -388,7 +391,7 @@ struct ProgressTabView: View {
     private var improvementCard: some View {
         let stats = ImprovementCalculator.compute(
             from: store.data,
-            xpThisWeek: store.weeklyXPHistory().last?.xp ?? 0
+            xpThisWeek: store.data.weeklyQuestionHistory().last?.count ?? 0
         )
         let speedUp = ImprovementCalculator.speedImprovement(stats)
         let accUp = ImprovementCalculator.accuracyImprovement(stats)
@@ -454,8 +457,8 @@ struct ProgressTabView: View {
         if stats.xpThisWeek > 0 {
             items.append(ImprovementItem(
                 icon: "bolt.fill",
-                value: "+\(stats.xpThisWeek) XP",
-                label: "Earned this week",
+                value: "\(stats.xpThisWeek)",
+                label: "Questions this week",
                 color: Theme.Colors.growthGreen
             ))
         }
@@ -538,7 +541,7 @@ struct ProgressTabView: View {
 
                     // Inline stats
                     HStack(spacing: 0) {
-                        inlineStat(value: "\(store.totalXP)", label: "Total XP")
+                        inlineStat(value: "\(store.masteredLessonIds.filter { !$0.hasPrefix("review_") }.count)", label: "Skills")
                         statDivider
                         inlineStat(value: store.totalSessions > 0 ? "\(Int(store.accuracy * 100))%" : "\u{2014}", label: "Accuracy")
                         statDivider
@@ -718,11 +721,12 @@ struct ProgressTabView: View {
     }
 
     // ═══════════════════════════════════════════════════════════════
-    // MARK: - Weekly XP
+    // MARK: - Practice over time (Phase 10 — questions, not XP)
     // ═══════════════════════════════════════════════════════════════
 
     private var weeklyXPCard: some View {
-        let weeks = store.weeklyXPHistory()
+        let weeks = store.data.weeklyQuestionHistory()
+            .map { (label: $0.label, xp: $0.count, isCurrent: $0.isCurrent) }
         let maxXP = max(1, weeks.map { $0.xp }.max() ?? 1)
         let currentXP = weeks.last?.xp ?? 0
         let rank = weeks.filter { $0.xp > currentXP }.count + 1
@@ -735,11 +739,11 @@ struct ProgressTabView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(currentXP > 0
                          ? "Ranked #\(rank) of last 4 weeks"
-                         : "No XP yet this week")
+                         : "No practice yet this week")
                         .font(.system(size: 17, weight: .bold, design: .rounded))
                         .foregroundStyle(Theme.Colors.deepNavy)
                     HStack(spacing: 0) {
-                        Text("\(currentXP) XP")
+                        Text("\(currentXP) questions")
                             .font(Theme.Typography.small)
                             .fontWeight(.bold)
                             .foregroundStyle(Theme.Colors.primaryBlue)

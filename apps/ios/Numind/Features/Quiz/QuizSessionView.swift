@@ -390,8 +390,7 @@ struct QuizSessionView: View {
     }
 
     private func resultHeroCard(isCorrect: Bool) -> some View {
-        let questionXP = viewModel.currentQuestionXP
-        return NumindCard(background: isCorrect ? Theme.Colors.mindTealTint : Theme.Colors.warmOrangeTint) {
+        NumindCard(background: isCorrect ? Theme.Colors.mindTealTint : Theme.Colors.warmOrangeTint) {
             VStack(spacing: 12) {
                 ZStack {
                     Circle()
@@ -405,7 +404,7 @@ struct QuizSessionView: View {
                     .font(Theme.Typography.title)
                     .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
                 if isCorrect {
-                    Text("🎉 +\(questionXP) XP · streak +1")
+                    Text("One more toward today's ring.")
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Colors.mindTeal)
                 } else {
@@ -415,7 +414,6 @@ struct QuizSessionView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: questionXP)
         }
     }
 

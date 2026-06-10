@@ -16,18 +16,12 @@ struct CheckpointView: View {
     @State private var sessionVM: QuizSessionViewModel? = nil
     @State private var isNewPersonalBest = false
     @State private var newBadgeIds: Set<String> = []
-    @State private var sessionNumindScore: Int = 0
-    @State private var sessionScoreDelta: Int = 0
-    @State private var pendingLevelUp: LevelUpInfo? = nil
+    @State private var skillChanges: [SkillMove] = []
 
     var body: some View {
         NavigationStack {
             phaseContent
                 .background(Theme.Colors.softBackground.ignoresSafeArea())
-        }
-        // Level-up ceremony (if a module level crossed) → then summary.
-        .fullScreenCover(item: $pendingLevelUp, onDismiss: { phase = .summary }) { info in
-            LevelUpView(info: info)
         }
         .onAppear { buildQuiz() }
     }
@@ -50,8 +44,7 @@ struct CheckpointView: View {
                     viewModel: vm,
                     isPersonalBest: isNewPersonalBest,
                     newBadgeIds: newBadgeIds,
-                    level: sessionNumindScore,
-                    xpDelta: sessionScoreDelta,
+                    skillChanges: skillChanges,
                     onContinue: { dismiss() },
                     onRetry:    { retryQuiz() }
                 )
@@ -75,7 +68,7 @@ struct CheckpointView: View {
     private func retryQuiz() {
         isNewPersonalBest = false
         newBadgeIds       = []
-        pendingLevelUp    = nil
+        skillChanges      = []
         buildQuiz()
     }
 
@@ -96,14 +89,14 @@ struct CheckpointView: View {
             isNewPersonalBest = false
         }
 
-        // Capture module level and XP BEFORE recording.
-        let prevLevel = progressStore.skillLevel(moduleId: module.id)
-        let xpBefore = progressStore.xp
+        // Diff mastery across the recording for capability language in the
+        // summary (Phase 10 — replaces +XP/Level).
+        let masteredBefore = progressStore.masteredLessonIds
 
         var record = SessionRecord(
             id: UUID(),
             lessonId: reviewId,       // e.g. "review_tips_0" — stable for mastery tracking
-            moduleId: module.id,      // ties to module for XP / streak context
+            moduleId: module.id,      // ties to module for streak context
             date: Date(),
             correctCount: vm.correctCount,
             totalCount: vm.total
@@ -111,25 +104,13 @@ struct CheckpointView: View {
         record.questionResults = vm.questionResults
         progressStore.recordSession(record)
         newBadgeIds = progressStore.newlyEarnedBadgeIds
-        sessionNumindScore = progressStore.level
-        sessionScoreDelta = progressStore.xp - xpBefore
 
-        // Level-up ceremony only fires when the user actually mastered the review.
-        if didMasterThisSession {
-            let newLevel = progressStore.skillLevel(moduleId: module.id)
-            if newLevel > prevLevel {
-                pendingLevelUp = LevelUpInfo(
-                    moduleName:  module.title,
-                    moduleIcon:  module.icon,
-                    moduleColor: module.color,
-                    newLevel:    newLevel
-                )
-                // phase = .summary deferred to fullScreenCover onDismiss
-            } else {
-                phase = .summary
-            }
-        } else {
-            phase = .summary
-        }
+        let repo = LocalContentRepository()
+        skillChanges = progressStore.masteredLessonIds
+            .subtracting(masteredBefore)
+            .compactMap { repo.lesson(id: $0) }
+            .map { SkillMove(title: $0.title, change: .mastered) }
+
+        phase = .summary
     }
 }

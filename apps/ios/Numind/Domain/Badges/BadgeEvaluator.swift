@@ -60,8 +60,9 @@ enum BadgeEvaluator {
         if sessionCount >= 10 { ids.insert("sessions_10") }
         if sessionCount >= 25 { ids.insert("sessions_25") }
 
-        // MARK: XP
-        if xp >= 100 { ids.insert("xp_100") }
+        // MARK: Early momentum (Phase 10 — question-count trigger replaces the
+        // retired visible-XP framing; id kept for earned-set compatibility)
+        if totalQs >= 10 { ids.insert("xp_100") }
 
         // MARK: Breadth
         if uniqueLessons >= 5 { ids.insert("lessons_5") }

@@ -19,14 +19,18 @@ struct HomeView: View {
 
     private let repo = LocalContentRepository()
 
+    /// Skills mastered during today's workout — feeds the insight sheet's
+    /// capability language (Phase 10).
+    @State private var insightSkillMoves: [SkillMove] = []
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
                 BrandHeader(
                     name: userName,
                     isDailyChallengeCompleted: progressStore.isDailyChallengeCompleted,
-                    level: progressStore.level,
-                    levelProgress: progressStore.levelProgress,
+                    ringProgress: progressStore.ringProgress,
+                    isRingClosed: progressStore.isRingClosedToday,
                     onScoreTap: { showScoreDetail = true }
                 )
                 dailyChallengeSection
@@ -57,9 +61,16 @@ struct HomeView: View {
         .fullScreenCover(item: $dailyVM) { vm in
             NavigationStack {
                 QuizSessionView(viewModel: vm) {
+                    // Diff mastery across the recording for the insight
+                    // sheet's capability language (Phase 10).
+                    let masteredBefore = progressStore.masteredLessonIds
                     recordMixedSession(
                         vm: vm, lessonId: "daily_challenge"
                     )
+                    insightSkillMoves = progressStore.masteredLessonIds
+                        .subtracting(masteredBefore)
+                        .compactMap { repo.lesson(id: $0) }
+                        .map { SkillMove(title: $0.title, change: .mastered) }
                     lastDailyCorrectCount = vm.correctCount
                     progressStore.markDailyChallengeCompleted()
                     insightSessionVM = vm
@@ -150,7 +161,7 @@ struct HomeView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    levelHero
+                    readinessHero
                         .padding(.top, 4)
 
                     // Coverage diagnostic (mastered / total per axis)
@@ -163,7 +174,7 @@ struct HomeView: View {
                 .padding(.vertical, 12)
             }
             .background(Theme.Colors.softBackground.ignoresSafeArea())
-            .navigationTitle("Level & Readiness")
+            .navigationTitle("Readiness")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -175,51 +186,51 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Level hero
+    // MARK: - Readiness hero (Phase 10 — capability language, no Level/XP)
 
-    private var levelHero: some View {
+    private var readinessHero: some View {
         NumindCard {
-            HStack(spacing: 20) {
-                LevelRing(level: progressStore.level,
-                          progress: progressStore.levelProgress,
-                          size: 110)
+            VStack(alignment: .leading, spacing: 12) {
+                if let pack = progressStore.focusPack {
+                    let state = progressStore.readiness(for: pack)
+                    let core = ReadinessEngine.coreLessons(for: pack)
+                    let mastered = core.filter { progressStore.hasMasteredLessonNow($0) }.count
 
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("LEVEL \(progressStore.level)")
-                        .font(.system(size: 12, weight: .heavy))
-                        .foregroundStyle(Theme.Colors.mutedText)
-                        .kerning(0.5)
-                    Text("\(progressStore.xp) XP")
-                        .font(.system(size: 28, weight: .bold, design: .rounded))
-                        .foregroundStyle(Theme.Colors.deepNavy)
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(pack.title.uppercased())
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundStyle(Theme.Colors.mutedText)
+                                .kerning(0.6)
+                            Text("\(mastered) of \(core.count) core skills mastered")
+                                .font(.system(size: 17, weight: .bold, design: .rounded))
+                                .foregroundStyle(Theme.Colors.deepNavy)
+                        }
+                        Spacer()
+                        ReadinessBadge(state: state)
+                    }
 
-                    // Next-level hint — honest when depth-gated.
-                    if progressStore.isDepthGated {
-                        Label("Master a lesson's hard questions to reach Level \(progressStore.level + 1)",
-                              systemImage: "lock.fill")
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.warmOrange)
-                            .fixedSize(horizontal: false, vertical: true)
-                    } else if let toNext = progressStore.xpToNextLevel {
-                        Text("\(toNext) XP to Level \(progressStore.level + 1)")
+                    // The named missing gate follows the pack everywhere.
+                    if case .almostReady(_, let nextAction) = state {
+                        Label(nextAction, systemImage: "arrow.right.circle.fill")
                             .font(.system(size: 12, weight: .semibold))
                             .foregroundStyle(Theme.Colors.primaryBlue)
-                    } else {
-                        Text("Top level reached 🎉")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.mindTeal)
-                    }
-
-                    // Decisions you're ready for — the competence headline.
-                    if progressStore.readyPackCount > 0 {
-                        Label("\(progressStore.readyPackCount) decision path\(progressStore.readyPackCount == 1 ? "" : "s") you're ready for",
-                              systemImage: "checkmark.seal.fill")
-                            .font(.system(size: 12, weight: .bold))
-                            .foregroundStyle(Theme.Colors.growthGreen)
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                } else {
+                    Text("Pick a path to get decision-ready")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.deepNavy)
                 }
-                Spacer(minLength: 0)
+
+                // Decisions you're ready for — the competence headline.
+                if progressStore.readyPackCount > 0 {
+                    Label("\(progressStore.readyPackCount) decision path\(progressStore.readyPackCount == 1 ? "" : "s") you're ready for",
+                          systemImage: "checkmark.seal.fill")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(Theme.Colors.growthGreen)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
     }
@@ -323,7 +334,8 @@ struct HomeView: View {
             timeUntilReset: viewModel.timeUntilDailyReset,
             hasHistory: progressStore.totalSessions > 0,
             onStart: { startDailyChallenge() },
-            onBonusRound: { startBonusRound() }
+            onBonusRound: { startBonusRound() },
+            total: DailyChallengeEngine.questionCount(for: progressStore.data)
         )
     }
 
@@ -352,13 +364,10 @@ struct HomeView: View {
                 repo.lesson(forTemplateId: qr.templateId)?.primarySkill
             }
         )
-        let sessionXP = vm.questionResults.reduce(0) { acc, qr in
-            acc + (qr.isCorrect ? MomentumEngine.xp(for: qr.difficulty) : 0)
-        }
         DailyInsightView(
-            level: progressStore.level,
-            levelProgress: progressStore.levelProgress,
-            sessionXP: sessionXP,
+            ringProgress: progressStore.ringProgress,
+            ringClosed: progressStore.isRingClosedToday,
+            skillsMoved: insightSkillMoves,
             axisScores: axisScores,
             sessionAxes: sessionAxes,
             sessionCorrect: vm.correctCount,

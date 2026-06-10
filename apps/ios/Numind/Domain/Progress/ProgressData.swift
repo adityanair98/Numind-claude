@@ -357,4 +357,32 @@ struct ProgressData: Codable {
             )
         }
     }
+
+    /// Questions answered per week over the trailing 4 weeks (Phase 10 —
+    /// "practice over time" replaces the visible-XP chart).
+    func weeklyQuestionHistory() -> [(label: String, count: Int, isCurrent: Bool)] {
+        let calendar = Calendar.current
+        let today = Date()
+        var comps = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)
+        comps.weekday = 2 // Monday
+        let currentMonday = calendar.date(from: comps) ?? today
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+
+        return (0..<4).reversed().map { weekOffset in
+            let weekStart = calendar.date(
+                byAdding: .weekOfYear, value: -weekOffset, to: currentMonday
+            ) ?? currentMonday
+            let weekEnd = calendar.date(byAdding: .weekOfYear, value: 1, to: weekStart) ?? weekStart
+            let count = sessions
+                .filter { $0.date >= weekStart && $0.date < weekEnd }
+                .reduce(0) { $0 + $1.totalCount }
+            return (
+                label: weekOffset == 0 ? "This week" : formatter.string(from: weekStart),
+                count: count,
+                isCurrent: weekOffset == 0
+            )
+        }
+    }
 }

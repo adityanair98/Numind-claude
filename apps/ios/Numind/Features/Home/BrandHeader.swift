@@ -5,12 +5,11 @@ import SwiftUI
 struct BrandHeader: View {
     let name: String
     let isDailyChallengeCompleted: Bool
-    /// Current Level (Phase 9 — an effort signal, not a 0–100 verdict). 0 hides
-    /// the ring until the user has sessions.
-    var level: Int = 0
-    /// 0–1 progress through the current level toward the next.
-    var levelProgress: Double = 0
-    /// Called when the user taps the level ring.
+    /// Daily ring fill (0–1) — the one glanceable daily signal (Phase 10).
+    var ringProgress: Double = 0
+    /// Whether today's ring is closed (the day counts toward the streak).
+    var isRingClosed: Bool = false
+    /// Called when the user taps the ring (opens the readiness sheet).
     var onScoreTap: (() -> Void)? = nil
 
     var body: some View {
@@ -75,16 +74,14 @@ struct BrandHeader: View {
                 }
             }
             Spacer()
-            // Small level ring — only shown after first session
-            if level > 0 {
-                Button {
-                    onScoreTap?()
-                } label: {
-                    LevelRing(level: level, progress: levelProgress, size: 52)
-                        .padding(.bottom, 4)
-                }
-                .buttonStyle(.plain)
+            // Daily goal ring — meaningful from day one (Phase 10).
+            Button {
+                onScoreTap?()
+            } label: {
+                GoalRing(progress: ringProgress, isClosed: isRingClosed, size: 52)
+                    .padding(.bottom, 4)
             }
+            .buttonStyle(.plain)
         }
     }
 

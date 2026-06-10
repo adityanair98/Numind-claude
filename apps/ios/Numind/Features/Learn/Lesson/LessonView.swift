@@ -11,22 +11,13 @@ struct LessonView: View {
     @State private var sessionVM: QuizSessionViewModel?
     @State private var isNewPersonalBest: Bool = false
     @State private var newBadgeIds: Set<String> = []
-    @State private var sessionNumindScore: Int = 0
-    @State private var sessionScoreDelta: Int = 0
-    @State private var pendingLevelUp: LevelUpInfo? = nil
+    @State private var skillChanges: [SkillMove] = []
     @State private var showCalc = false
 
     var body: some View {
         NavigationStack {
             phaseContent
                 .background(Theme.Colors.softBackground.ignoresSafeArea())
-        }
-        // Level-up modal — shown BEFORE summary so summary animations fire when visible.
-        // onDismiss triggers phase = .summary after the user taps "Keep going".
-        .fullScreenCover(item: $pendingLevelUp, onDismiss: {
-            phase = .summary
-        }) { info in
-            LevelUpView(info: info)
         }
     }
 
@@ -54,9 +45,9 @@ struct LessonView: View {
                         isNewPersonalBest = false
                     }
 
-                    // Capture module level and XP BEFORE recording.
-                    let prevLevel = progressStore.skillLevel(moduleId: viewModel.lesson.moduleId)
-                    let xpBefore = progressStore.xp
+                    // Diff mastery across the recording to surface capability
+                    // language in the summary (Phase 10 — replaces +XP/Level).
+                    let masteredBefore = progressStore.masteredLessonIds
 
                     var record = SessionRecord(
                         id: UUID(),
@@ -69,29 +60,14 @@ struct LessonView: View {
                     record.questionResults = vm.questionResults
                     progressStore.recordSession(record)
                     newBadgeIds = progressStore.newlyEarnedBadgeIds
-                    sessionNumindScore = progressStore.level
-                    sessionScoreDelta = progressStore.xp - xpBefore
 
-                    // Level-up ceremony only fires when the user actually mastered the lesson.
-                    // onDismiss of the fullScreenCover will set phase = .summary.
-                    if didMasterThisSession {
-                        let newLevel = progressStore.skillLevel(moduleId: viewModel.lesson.moduleId)
-                        if newLevel > prevLevel {
-                            let module = LocalContentRepository().allModules()
-                                .first { $0.id == viewModel.lesson.moduleId }
-                            pendingLevelUp = LevelUpInfo(
-                                moduleName: module?.title ?? viewModel.moduleTitle,
-                                moduleIcon: module?.icon  ?? "star.fill",
-                                moduleColor: viewModel.moduleColor,
-                                newLevel: newLevel
-                            )
-                            // phase = .summary is deferred to fullScreenCover onDismiss
-                        } else {
-                            phase = .summary
-                        }
-                    } else {
-                        phase = .summary
-                    }
+                    let repo = LocalContentRepository()
+                    skillChanges = progressStore.masteredLessonIds
+                        .subtracting(masteredBefore)
+                        .compactMap { repo.lesson(id: $0) }
+                        .map { SkillMove(title: $0.title, change: .mastered) }
+
+                    phase = .summary
                 }
             }
         case .summary:
@@ -100,8 +76,7 @@ struct LessonView: View {
                     viewModel: vm,
                     isPersonalBest: isNewPersonalBest,
                     newBadgeIds: newBadgeIds,
-                    level: sessionNumindScore,
-                    xpDelta: sessionScoreDelta,
+                    skillChanges: skillChanges,
                     onContinue: { dismiss() },
                     onRetry: { retryQuiz() }
                 )
@@ -441,7 +416,7 @@ struct LessonView: View {
         )
         isNewPersonalBest = false
         newBadgeIds = []
-        pendingLevelUp = nil
+        skillChanges = []
         sessionVM = vm
         phase = .quiz
     }

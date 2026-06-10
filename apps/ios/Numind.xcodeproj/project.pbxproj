@@ -18,8 +18,8 @@
 		0DD48EB0A90D24214AF78D5A /* ProgressTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AE88137BBFD45A10176D7C /* ProgressTabView.swift */; };
 		0E0F9CFA02AD22D1EC1B6001 /* QuizSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB92943AE0DCB4EB8250012 /* QuizSessionViewModel.swift */; };
 		0F2DA86DF8527D5C59A63600 /* RadarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99335656647D9B2C9D8A4279 /* RadarChartView.swift */; };
-		9D0E0001A0B0C0D0E0F00007 /* LevelRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00008 /* LevelRing.swift */; };
 		9D0E0001A0B0C0D0E0F00009 /* ReadinessBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */; };
+		3C3C718582AE42DDADA91889 /* GoalRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2791EA271BF04944B87A2A12 /* GoalRing.swift */; };
 		9D0E0001A0B0C0D0E0F0000B /* PackReadinessBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F0000C /* PackReadinessBoard.swift */; };
 		11B7027F6BE80FD314557ABD /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25112B5A1394145F294F64F /* LearnView.swift */; };
 		12F3444AA03E49F31E5139F1 /* ProgressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70F32E91A8A127C7D47AF1 /* ProgressData.swift */; };
@@ -102,7 +102,6 @@
 		79C53E7BC19A3FA5B3E0458D /* QuizTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912929E50EF5E5526AB94217 /* QuizTemplate.swift */; };
 		7A527141E17C74EB86C9FC1D /* MotivatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56614279808E0A70F5A6CCB6 /* MotivatorEngine.swift */; };
 		7BFAF2FF7BEDB0448D746D27 /* SocialProofView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F49DB5905A84DC574EBD6F /* SocialProofView.swift */; };
-		7F643EFCD0CC5BF54B2487F6 /* LevelUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64057FC5753D48B372179EF8 /* LevelUpView.swift */; };
 		804758367F1A82CA5137811B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486939289C929BAA50861ECF /* Badge.swift */; };
 		85117D0CFAB65AD05D1F7ADE /* QuizEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61ABF44DCA5CA2562B92AA15 /* QuizEngineTests.swift */; };
 		7B2A4E1D9C5C8B0FF1A3D5C0 /* MilestoneEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */; };
@@ -255,7 +254,6 @@
 		9D0E0002A0B0C0D0E0F0000A /* ContentInvariantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInvariantTests.swift; sourceTree = "<group>"; };
 		63D2F05A692A69B987B2A19E /* ReviewMistakesEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMistakesEngine.swift; sourceTree = "<group>"; };
 		63E02F5424B02C5C35EB4D2E /* MotivatorCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivatorCopy.swift; sourceTree = "<group>"; };
-		64057FC5753D48B372179EF8 /* LevelUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpView.swift; sourceTree = "<group>"; };
 		64F4759DFD820F280A98D905 /* OnboardingMultiCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMultiCard.swift; sourceTree = "<group>"; };
 		6548097DBAAE47F7FF2E5C49 /* MilestoneCelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneCelebrationView.swift; sourceTree = "<group>"; };
 		6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalContentRepository.swift; sourceTree = "<group>"; };
@@ -293,8 +291,8 @@
 		9DE5C197942E28DFA3FAF3DF /* StreakLossView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakLossView.swift; sourceTree = "<group>"; };
 		A46E6272861ABFFCC9127521 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		A5EB9C1AB0D5B44747792E8B /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
-		9D0E0001A0B0C0D0E0F00008 /* LevelRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelRing.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessBadge.swift; sourceTree = "<group>"; };
+		2791EA271BF04944B87A2A12 /* GoalRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRing.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F0000C /* PackReadinessBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackReadinessBoard.swift; sourceTree = "<group>"; };
 		AA70F32E91A8A127C7D47AF1 /* ProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressData.swift; sourceTree = "<group>"; };
 		AB886BF64295F4447C9EC146 /* AspirationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspirationPickerView.swift; sourceTree = "<group>"; };
@@ -437,7 +435,6 @@
 			children = (
 				CC603355770CC2CE67B6EFC6 /* ConfettiView.swift */,
 				AFAADEFA77A75F4EBD768BE7 /* InlineEncouragementView.swift */,
-				64057FC5753D48B372179EF8 /* LevelUpView.swift */,
 				71A998436EA187651EC9B78E /* MotivatorView.swift */,
 				041A2904B95C4062B836A244 /* TeachCardView.swift */,
 				C98F41FD249430B232E53CD1 /* OptionCard.swift */,
@@ -565,8 +562,8 @@
 				F76E087252FEBD5528A5BC82 /* IconTile.swift */,
 				F03D63735F35453DE6F6546D /* ModuleBarsView.swift */,
 				09E47647944F778EBA32D80A /* NumindCard.swift */,
-				9D0E0001A0B0C0D0E0F00008 /* LevelRing.swift */,
 				9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */,
+				2791EA271BF04944B87A2A12 /* GoalRing.swift */,
 				9D0E0001A0B0C0D0E0F0000C /* PackReadinessBoard.swift */,
 				4139506B71190E6A45FF4430 /* NumpadView.swift */,
 				64F4759DFD820F280A98D905 /* OnboardingMultiCard.swift */,
@@ -1040,7 +1037,6 @@
 				B6095DD0E0F33C3D93010706 /* LessonRecommendationEngine.swift in Sources */,
 				04969645E6CE3F25880D2488 /* LessonView.swift in Sources */,
 				AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */,
-				7F643EFCD0CC5BF54B2487F6 /* LevelUpView.swift in Sources */,
 				D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */,
 				55E6CCEC35C6BFC4D616968E /* MilestoneCelebrationView.swift in Sources */,
 				159C34E9B830677B6780C663 /* MilestoneEngine.swift in Sources */,
@@ -1068,8 +1064,8 @@
 				9D0E0001A0B0C0D0E0F00003 /* ReadinessEngine.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00001 /* MomentumEngine.swift in Sources */,
 				030504DA40E945C9A40F2684 /* DailyRingEngine.swift in Sources */,
-				9D0E0001A0B0C0D0E0F00007 /* LevelRing.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00009 /* ReadinessBadge.swift in Sources */,
+				3C3C718582AE42DDADA91889 /* GoalRing.swift in Sources */,
 				9D0E0001A0B0C0D0E0F0000B /* PackReadinessBoard.swift in Sources */,
 				40CBB2EB7E0DCD4F862C5020 /* NumpadView.swift in Sources */,
 				B73D90DD8DC39CFC4A282CC6 /* OnboardingFlowView.swift in Sources */,

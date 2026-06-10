@@ -1,21 +1,27 @@
 import SwiftUI
 
+/// A skill whose state moved during a session (Phase 10 — capability
+/// language replaces "+XP" everywhere the user reads progress).
+struct SkillMove: Equatable, Identifiable {
+    enum Change: Equatable { case mastered, refreshed, progressed }
+    let title: String
+    let change: Change
+    var id: String { title }
+}
+
 struct SessionSummaryView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var progressStore: ProgressStore
     @ObservedObject var viewModel: QuizSessionViewModel
     let isPersonalBest: Bool
     let newBadgeIds: Set<String>
-    /// Current Level after this session was recorded.
-    let level: Int
-    /// XP earned this session (positive = gained XP).
-    let xpDelta: Int
+    /// Skills whose state changed this session ("Net pay — Mastered").
+    let skillChanges: [SkillMove]
     let onContinue: () -> Void
     /// Called when the user wants to retry the quiz with fresh questions.
     /// Only shown when mastery threshold was not met.
     let onRetry: () -> Void
 
-    @State private var xpAnimated: Int = 0
     @State private var showPersonalBest: Bool = false
     @State private var reviewVM: QuizSessionViewModel? = nil
     /// Results from the most recent review session (nil = no review done yet).
@@ -57,13 +63,6 @@ struct SessionSummaryView: View {
             }
         }
         .onAppear {
-            if didMaster {
-                withAnimation(.easeOut(duration: 0.7).delay(0.3)) {
-                    xpAnimated = viewModel.totalXP
-                }
-            } else {
-                xpAnimated = viewModel.totalXP   // immediate, no fanfare on failure
-            }
             if isPersonalBest && didMaster {
                 withAnimation(.spring(response: 0.42, dampingFraction: 0.62).delay(1.0)) {
                     showPersonalBest = true
@@ -107,7 +106,8 @@ struct SessionSummaryView: View {
                 resultHeader
                 statsCard
                 learnedCard
-                if level > 0 { scoreCard }
+                if !skillChanges.isEmpty { skillsMovedCard }
+                ringCard
                 masteryBanner
                 if !newBadgeIds.isEmpty { newBadgesSection }
                 recapSection
@@ -151,16 +151,6 @@ struct SessionSummaryView: View {
             }
 
             VStack(spacing: 8) {
-                Text("+\(xpAnimated) XP")
-                    .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Theme.Colors.insightText)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 5)
-                    .background(Theme.Colors.insightYellowTint)
-                    .clipShape(Capsule())
-                    .contentTransition(.numericText())
-                    .animation(.easeOut(duration: 0.7).delay(0.3), value: xpAnimated)
-
                 if showPersonalBest {
                     HStack(spacing: 6) {
                         Text("🏆")
@@ -201,15 +191,6 @@ struct SessionSummaryView: View {
             }
 
             VStack(spacing: 8) {
-                Text("+\(viewModel.totalXP) XP")
-                    .font(Theme.Typography.body)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Theme.Colors.insightText)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 6)
-                    .background(Theme.Colors.insightYellowTint)
-                    .clipShape(Capsule())
-
                 HStack(spacing: 6) {
                     Image(systemName: "star")
                         .font(.system(size: 13, weight: .semibold))
@@ -318,39 +299,60 @@ struct SessionSummaryView: View {
         }
     }
 
-    // MARK: - Score card
+    // MARK: - Skills moved (Phase 10)
 
-    private var scoreCard: some View {
-        return NumindCard {
+    private var skillsMovedCard: some View {
+        NumindCard {
+            VStack(alignment: .leading, spacing: 12) {
+                ForEach(skillChanges) { move in
+                    HStack(spacing: 10) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .font(.system(size: 16))
+                            .foregroundStyle(accent)
+                        Text(move.title)
+                            .font(Theme.Typography.body)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Spacer()
+                        Text(changeLabel(move.change))
+                            .font(Theme.Typography.small)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                    }
+                }
+            }
+        }
+    }
+
+    private func changeLabel(_ change: SkillMove.Change) -> String {
+        switch change {
+        case .mastered:   return "Mastered"
+        case .refreshed:  return "Refreshed"
+        case .progressed: return "Progressed"
+        }
+    }
+
+    // MARK: - Daily ring (Phase 10)
+
+    private var ringCard: some View {
+        NumindCard {
             HStack(spacing: 14) {
-                LevelRing(level: level, size: 52)
+                GoalRing(progress: progressStore.ringProgress,
+                         isClosed: progressStore.isRingClosedToday,
+                         size: 52)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Level \(level)")
+                    Text(progressStore.isRingClosedToday ? "Daily ring closed" : "Daily ring")
                         .font(.system(size: 15, weight: .bold, design: .rounded))
                         .foregroundStyle(Theme.Colors.deepNavy)
-
-                    if xpDelta > 0 {
-                        HStack(spacing: 4) {
-                            Image(systemName: "plus.circle.fill")
-                                .font(.system(size: 11, weight: .bold))
-                            Text("+\(xpDelta) XP this session")
-                                .font(.system(size: 13, weight: .bold))
-                        }
-                        .foregroundStyle(Theme.Colors.mindTeal)
-                    } else {
-                        Text("Answer correctly to earn XP")
-                            .font(.system(size: 13, weight: .medium))
-                            .foregroundStyle(Theme.Colors.mutedText)
-                    }
+                    Text(progressStore.isRingClosedToday
+                         ? "Today counts toward your streak."
+                         : "\(max(0, progressStore.ringTarget - progressStore.todayQuestionCount)) more to close today's ring")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(Theme.Colors.mutedText)
                 }
 
                 Spacer()
-
-                Text("XP")
-                    .font(.system(size: 11, weight: .heavy))
-                    .foregroundStyle(Theme.Colors.mutedText)
-                    .tracking(0.5)
             }
         }
     }
