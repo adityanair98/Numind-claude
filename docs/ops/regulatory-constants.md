@@ -19,6 +19,12 @@ reading the lesson can tell at a glance whether the number is still current.
 > §127 employer student-loan benefit made permanent, the RAP repayment plan
 > replacing SAVE/legacy IDR for new borrowers, and the March 2025 PSLF
 > executive order narrowing qualifying employers.
+>
+> **2026-06 additions (Phase 10 curriculum wave, verified against primary
+> sources):** payday fee→APR conventions, the CRA repeal of the CFPB
+> overdraft cap, free-weekly credit reports + freeze/dispute rights,
+> FTC imposter-scam data, 401(k) rollover/cash-out mechanics, COBRA +
+> marketplace SEP windows, and Edmunds Q1-2026 negative-equity stats.
 
 ## Quick rules
 
@@ -124,6 +130,27 @@ reading the lesson can tell at a glance whether the number is still current.
 | Typical credit-card APR (avg) | ~22-24% | CFPB Consumer Credit Card Market Report | `credit_card_interest`, `minimum_payment_trap`, `debt_cc_payoff_time` (used as example default) | CFPB report cycle |
 | FDIC insurance per depositor per bank | $250,000 | FDIC | `investing_apy_savings`, web HYSA calculator | Legislative only |
 | BNPL stats (CFPB) | ~9 loans/yr avg; 2x overdraft risk | CFPB BNPL Market Trends | `debt_bnpl_hidden_cost` | CFPB report cycle |
+| Typical payday-loan fee | $10–$30 per $100 borrowed (a $15/$100 two-week loan ≈ 391% APR) | CFPB "What is a payday loan?" | `payday_loan_cost` | CFPB page updates |
+| Overdraft fee | Varies by bank (~$25–$35 at large banks; some eliminated). The CFPB's $5 cap rule was **repealed via CRA, May 2025** — the lesson teaches fee variance + the waiver-call script, not a cap | CFPB / Congressional Review Act (May 2025) | `payday_loan_cost` | Any new CFPB rulemaking |
+| Free credit reports | Free **weekly** from each bureau at AnnualCreditReport.com (made permanent Oct 2023) | FTC / AnnualCreditReport.com | `credit_report_rights` | FCRA rulemaking |
+| Credit freeze / dispute rights | Freezes free at all 3 bureaus (FCRA, 2018); disputes resolved within 30 days (45 with extension) | FCRA § 605A / § 611 | `credit_report_rights` | FCRA rulemaking |
+| Imposter-scam / payment-rail stats | FTC 2025 data: imposter scams the #1 fraud category; gift cards / wire / crypto-ATM payments are effectively irreversible | FTC Consumer Sentinel (2026 release for 2025 data) | `scam_imposter_patterns`, `scam_payment_rails` | FTC annual Sentinel data book |
+
+### Job changes / rollovers (statutory, stable)
+
+| Constant | Current value | Source | Lessons referencing | Refresh trigger |
+|---|---|---|---|---|
+| Indirect-rollover withholding | 20% mandatory federal withholding on employer-plan distributions paid to the participant; 60-day deposit window | IRC § 3405(c) / § 402(c)(3) | `job_change_401k` | Legislative only |
+| Early-withdrawal penalty | 10% additional tax under 59½ (Rule of 55 exception for plan of the employer you separate from at 55+) | IRC § 72(t) | `job_change_401k` | Legislative only |
+| Mandatory cash-out thresholds | Balances < $1,000 may be cashed out; $1,000–$7,000 force-rolled to an IRA (SECURE 2.0 raised cap) | IRC § 401(a)(31)(B) | `job_change_401k` | Legislative only |
+| COBRA election window / premium | 60 days to elect; up to 102% of the full premium | COBRA (IRC § 4980B) | `job_change_health` | Legislative only |
+| Marketplace SEP after losing coverage | 60 days before/after loss of employer coverage | HealthCare.gov / 45 CFR § 155.420 | `job_change_health` | HHS rulemaking |
+
+### Car market stats (refresh annually)
+
+| Constant | Current value | Source | Lessons referencing | Refresh trigger |
+|---|---|---|---|---|
+| Negative-equity trade-in share | 30.9% of trade-ins with a loan were upside down, avg $7,183 underwater (Q1 2026) | Edmunds quarterly used-car report | `car_negative_equity` | Edmunds quarterly reports |
 
 ### Real estate (varies by market; refresh annually)
 
