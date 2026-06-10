@@ -336,6 +336,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
             pendingQuestionIndex = index
             teachEnteredAt = Date()
             sessionState = .teach(card)
+            AnalyticsService.capture(.teachCardShown, properties: ["lesson_id": card.id])
             return
         }
         currentIndex = index

@@ -72,6 +72,9 @@ struct HomeView: View {
                         .map { SkillMove(title: $0.title, change: .mastered) }
                     lastDailyCorrectCount = vm.correctCount
                     progressStore.markDailyChallengeCompleted()
+                    AnalyticsService.capture(.workoutCompleted, properties: [
+                        "correct": vm.correctCount, "total": vm.total
+                    ])
                     insightSessionVM = vm
                     dailyVM = nil
                     showInsight = true
@@ -410,6 +413,9 @@ struct HomeView: View {
             teachCards: teachCards,
             segmentLabels: plan.segmentLabels
         )
+        AnalyticsService.capture(.workoutStarted, properties: [
+            "question_count": plan.questions.count
+        ])
     }
 
     private func startBonusRound() {
@@ -486,6 +492,9 @@ struct HomeView: View {
             shortcut: "Bring your skills back to sharp \u{2014} same methods, fresh numbers.",
             moduleColor: .teal
         )
+        AnalyticsService.capture(.refreshStarted, properties: [
+            "skill_count": session.skillCount
+        ])
     }
 
     // MARK: - Streak
@@ -761,6 +770,14 @@ struct HomeView: View {
             record.questionResults = results
             progressStore.recordSession(record)
         }
+
+        let sessionType: String = switch lessonId {
+        case "daily_challenge": "daily_workout"
+        case "bonus_round":     "more_practice"
+        case "refresh_review":  "refresh"
+        default:                lessonId
+        }
+        AnalyticsService.capture(.sessionCompleted, properties: ["type": sessionType])
     }
 
     // MARK: - Helpers

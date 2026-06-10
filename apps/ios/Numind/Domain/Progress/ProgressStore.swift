@@ -63,6 +63,11 @@ final class ProgressStore: ObservableObject {
         // Phase 10: any real practice can close the daily ring and mark the
         // day for the streak (must run before computeStreak).
         DailyRingEngine.markIfClosed(&data, now: record.date)
+        let day = Calendar.current.startOfDay(for: record.date)
+        if !snapshotBefore.dailyWorkoutDates.contains(day),
+           data.dailyWorkoutDates.contains(day) {
+            AnalyticsService.capture(.ringClosed)
+        }
         let current = data.computeStreak()
         if current > data.bestStreak {
             data.bestStreak = current
@@ -118,26 +123,35 @@ final class ProgressStore: ObservableObject {
                 .flatMap { repo.lessons(for: $0.id) }
                 .map { ($0.id, $0.title) }
         )
+        let beforeReadyIds = readyIds(snapshotBefore)
+        let afterReadyIds = readyIds(data)
         pendingMilestone = MilestoneEngine.check(
             before: snapshotBefore,
             after: data,
             shownIds: data.shownMilestoneIds,
             beforeMastered: masteredReal(snapshotBefore),
             afterMastered: masteredReal(data),
-            beforeReadyPackIds: readyIds(snapshotBefore),
-            afterReadyPackIds: readyIds(data),
+            beforeReadyPackIds: beforeReadyIds,
+            afterReadyPackIds: afterReadyIds,
             packNames: Dictionary(uniqueKeysWithValues: packs.map { ($0.id, $0.title) }),
             lessonNames: lessonNames,
             beforeStaleCount: staleCount(snapshotBefore),
             afterStaleCount: staleCount(data),
             lastSessionLessonId: record.lessonId
         )
+        for packId in afterReadyIds.subtracting(beforeReadyIds) {
+            AnalyticsService.capture(.packStateChanged,
+                                     properties: ["pack_id": packId, "state": "ready"])
+        }
 
         // Detect newly-completed packs and worlds for the celebration queue.
         // Pack celebration fires first when both a pack and a world complete
         // in the same session (per the spec).
         let masteredAfter = masteredLessonIds
         let newlyMastered = masteredAfter.subtracting(masteredBefore)
+        for lessonId in newlyMastered where !lessonId.hasPrefix("review_") {
+            AnalyticsService.capture(.lessonMastered, properties: ["lesson_id": lessonId])
+        }
         if !newlyMastered.isEmpty {
             enqueueCompletionCelebrations(
                 newlyMastered: newlyMastered,
@@ -293,6 +307,7 @@ final class ProgressStore: ObservableObject {
             guard data.availableFreezes > 0 else { break }
             data.freezeDate(date)
             data.availableFreezes -= 1
+            AnalyticsService.capture(.streakFreezeUsed)
         }
 
         let current = data.computeStreak()

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18B51A2D033045638C119CB7 /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = 69E8289385F44B2BB5433901 /* PostHog */; };
+		178935DD361D42CB83938439 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 0500701881DC44558DF2C6B6 /* Sentry */; };
 		01B56C4E7FBF42769DDBE271 /* AspirationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB886BF64295F4447C9EC146 /* AspirationPickerView.swift */; };
 		040404023710447B0236B6F7 /* OnboardingSelectCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8752737455CCCC978D4424DB /* OnboardingSelectCard.swift */; };
 		04969645E6CE3F25880D2488 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955388FC06C02C5CD3B96B14 /* LessonView.swift */; };
@@ -149,6 +151,7 @@
 		D114DA262F77F327931A6ACC /* DiagnosticIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1DA43FEDC3AD9F0A7077F /* DiagnosticIntroView.swift */; };
 		D2BBD4CB841B0E12FE793C1D /* StreakRevivalQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29726BEA0B6647799A05940C /* StreakRevivalQuizView.swift */; };
 		D2C2769F0887CC05B33150FD /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46E6272861ABFFCC9127521 /* NotificationManager.swift */; };
+		D0DDEBEA3F2B423BA1786926 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54EC264CE334C49BF3AF75B /* AnalyticsService.swift */; };
 		D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */; };
 		D4D5F9DBBF8F1E79368BB884 /* ImprovementCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55035B46DF8BF7906221ED /* ImprovementCalculator.swift */; };
 		D4E8D4AEE50CF935F16C07CB /* StreakLossView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE5C197942E28DFA3FAF3DF /* StreakLossView.swift */; };
@@ -293,6 +296,7 @@
 		9D07D972E9B9DED4B8623883 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		9DE5C197942E28DFA3FAF3DF /* StreakLossView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakLossView.swift; sourceTree = "<group>"; };
 		A46E6272861ABFFCC9127521 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		F54EC264CE334C49BF3AF75B /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		A5EB9C1AB0D5B44747792E8B /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessBadge.swift; sourceTree = "<group>"; };
 		2791EA271BF04944B87A2A12 /* GoalRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRing.swift; sourceTree = "<group>"; };
@@ -370,6 +374,18 @@
 		FD29BAB16DEC1A66045D564D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FF48236569E3C71A34C541C4 /* ContentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA27F06645EB4B12A7F4F22B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18B51A2D033045638C119CB7 /* PostHog in Frameworks */,
+				178935DD361D42CB83938439 /* Sentry in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		085C178A06590F8935C3BFAB /* Features */ = {
@@ -655,8 +671,17 @@
 				2D7A70CC1AD72F39B40E1257 /* DesignSystem */,
 				4DCB558F55545418F95E471A /* Navigation */,
 				9C2658942ABA7F8E30DD6ABE /* Notifications */,
+				74448918B0C04D03A91422DD /* Services */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		74448918B0C04D03A91422DD /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F54EC264CE334C49BF3AF75B /* AnalyticsService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		9C2658942ABA7F8E30DD6ABE /* Notifications */ = {
@@ -884,6 +909,7 @@
 			buildConfigurationList = BD8ED3BE70AFF3AF69806309 /* Build configuration list for PBXNativeTarget "Numind" */;
 			buildPhases = (
 				864419133C2581C4849EEF1F /* Sources */,
+				FA27F06645EB4B12A7F4F22B /* Frameworks */,
 				A06C02AB194147D7AFE953BC /* Resources */,
 			);
 			buildRules = (
@@ -892,6 +918,8 @@
 			);
 			name = Numind;
 			packageProductDependencies = (
+				69E8289385F44B2BB5433901 /* PostHog */,
+				0500701881DC44558DF2C6B6 /* Sentry */,
 			);
 			productName = Numind;
 			productReference = 3BDDFD6CE2DC30D6EC1423F1 /* Numind.app */;
@@ -923,6 +951,10 @@
 			);
 			mainGroup = EC32BD8E40A0662F64D5CF93;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3AD0908CB7EA4067A1F2B162 /* XCRemoteSwiftPackageReference "posthog-ios" */,
+				02F3177E89A24DE499839EBE /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C09751E4AF15CC014A7BAAD4 /* Products */;
 			projectDirPath = "";
@@ -1064,6 +1096,7 @@
 				767A7F3847174396B66A9501 /* TeachCardView.swift in Sources */,
 				642BEA7B091A54576B9583EA /* NameInputView.swift in Sources */,
 				D2C2769F0887CC05B33150FD /* NotificationManager.swift in Sources */,
+				D0DDEBEA3F2B423BA1786926 /* AnalyticsService.swift in Sources */,
 				5B32F6F3A8A042CE6865345A /* NotificationPermissionView.swift in Sources */,
 				53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */,
 				386DA9689A4A1B0D7EB90AC2 /* NumindCard.swift in Sources */,
@@ -1384,6 +1417,38 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3AD0908CB7EA4067A1F2B162 /* XCRemoteSwiftPackageReference "posthog-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PostHog/posthog-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		02F3177E89A24DE499839EBE /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		69E8289385F44B2BB5433901 /* PostHog */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3AD0908CB7EA4067A1F2B162 /* XCRemoteSwiftPackageReference "posthog-ios" */;
+			productName = PostHog;
+		};
+		0500701881DC44558DF2C6B6 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02F3177E89A24DE499839EBE /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 11A61BE67F9C423CBC296339 /* Project object */;
 }
