@@ -181,11 +181,11 @@ struct DailyChallengeCard: View {
         .buttonStyle(.plain)
     }
 
-    // MARK: - Bonus round button (frosted glass)
+    // MARK: - More-practice button (frosted glass)
 
     private var bonusButton: some View {
         Button(action: onBonusRound) {
-            Text("Try a bonus round \u{2192}")
+            Text("More practice \u{2192}")
                 .font(.system(size: 16, weight: .bold))
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)

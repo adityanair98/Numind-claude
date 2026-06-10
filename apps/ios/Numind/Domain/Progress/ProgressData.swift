@@ -5,11 +5,10 @@ struct ProgressData: Codable {
     var sessions: [SessionRecord] = []
     var bestStreak: Int = 0
     /// Stable set of earned badge IDs. Default empty for backward compat.
+    /// (All game-mode personal bests — Blitz/Streak/Speed Drill/Estimation/
+    /// Comparison in 7a, Recall in 10-A8 — were retired with their modes;
+    /// their stored keys drop out on decode.)
     var earnedBadgeIds: Set<String> = []
-    /// Personal best for Recall mode: highest correct count reviewing past misses.
-    /// (The other game-mode bests — Blitz/Streak/Speed Drill/Estimation/Comparison —
-    /// were retired with those modes in Phase 7a; their stored keys drop out on decode.)
-    var recallBestScore: Int = 0
 
     /// Signals collected during the onboarding funnel.
     /// Nil for users who completed the old 3-page onboarding.
@@ -277,12 +276,6 @@ struct ProgressData: Codable {
         let upper = thresholds[level + 1]
         guard upper > lower else { return 1.0 }
         return Double(count - lower) / Double(upper - lower)
-    }
-
-    // MARK: - Recall best score
-
-    mutating func updateRecallBest(score: Int) {
-        if score > recallBestScore { recallBestScore = score }
     }
 
     // MARK: - Personal best

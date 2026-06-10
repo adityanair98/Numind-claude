@@ -357,20 +357,6 @@ final class ProgressStore: ObservableObject {
         persist()
     }
 
-    // MARK: - Recall personal best
-    //
-    // The only surviving game-mode best — Recall ("review your weak spots")
-    // lives on Home. Blitz/Streak/Speed Drill/Estimation/Comparison were retired
-    // with their modes in Phase 7a.
-
-    var recallBest: Int { data.recallBestScore }
-
-    func updateRecallBest(score: Int) {
-        guard score > data.recallBestScore else { return }
-        data.updateRecallBest(score: score)
-        persist()
-    }
-
     // MARK: - Computed (forwarded from ProgressData)
 
     var streak: Int               { data.computeStreak() }
@@ -460,13 +446,6 @@ final class ProgressStore: ObservableObject {
     /// Mastered skills that have gone stale (overdue) — surfaced as refresh opportunities.
     var staleSkillCount: Int {
         FreshnessEngine.staleCount(masteredLessonIds: masteredLessonIds, sessions: data.sessions)
-    }
-
-    /// Overdue template IDs from mastered lessons, for a refresh session.
-    func refreshTargetIds(limit: Int? = nil) -> [String] {
-        FreshnessEngine.refreshTargets(
-            masteredLessonIds: masteredLessonIds, sessions: data.sessions, limit: limit
-        )
     }
 
     func moduleProgress(moduleId: String, totalLessons: Int) -> Double {

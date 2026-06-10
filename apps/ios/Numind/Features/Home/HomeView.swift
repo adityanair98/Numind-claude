@@ -6,7 +6,6 @@ struct HomeView: View {
     @State private var launchCard: HomeViewModel.LessonCard?
     @State private var dailyVM: QuizSessionViewModel? = nil
     @State private var bonusRoundVM: QuizSessionViewModel? = nil
-    @State private var recallVM: QuizSessionViewModel? = nil
     @State private var refreshVM: QuizSessionViewModel? = nil
     // insightLesson is now computed inline in insightView(for:) from the session's modules
     @State private var showInsight = false
@@ -99,17 +98,8 @@ struct HomeView: View {
                 }
             }
         }
-        // Recall — "review your weak spots" (moved from Practice in 7a)
-        .fullScreenCover(item: $recallVM) { vm in
-            NavigationStack {
-                QuizSessionView(viewModel: vm) {
-                    recordMixedSession(vm: vm, lessonId: "recall_review")
-                    progressStore.updateRecallBest(score: vm.correctCount)
-                    recallVM = nil
-                }
-            }
-        }
-        // Refresh — keep mastered-but-stale skills sharp (Phase 9 Freshness)
+        // Refresh — the one consolidated review entry point (Phase 10-A8):
+        // stale mastered skills + unfixed mistakes in a single session
         .fullScreenCover(item: $refreshVM) { vm in
             NavigationStack {
                 QuizSessionView(viewModel: vm) {
@@ -426,33 +416,25 @@ struct HomeView: View {
         let questions = DailyChallengeEngine.bonusRoundQuestions(from: repo, progressData: progressStore.data)
         bonusRoundVM = QuizSessionViewModel(
             questions: questions,
-            title: "Bonus Round",
+            title: "More Practice",
             shortcut: "Extra practice \u{2014} a fresh set of questions from your modules.",
             moduleColor: .blue
         )
     }
 
-    /// "Review your weak spots" — rebuilds a quiz from the questions the user
-    /// has previously missed (Recall, moved from the retired Practice tab).
-    /// Falls back to a fresh bonus round when there's no history yet.
-    private func launchRecall() {
-        let allResults = progressStore.data.sessions.flatMap { $0.questionResults }
-        if let vm = ReviewMistakesEngine.build(fromStored: allResults, moduleColor: .indigo, repository: repo) {
-            recallVM = vm
-        } else {
-            startBonusRound()
-        }
-    }
+    // MARK: - Refresh (consolidated, Phase 10-A8)
 
-    // MARK: - Refresh (Freshness, Phase 9)
-
-    /// A gentle, opportunity-framed chip — "N skills to refresh" — that appears
-    /// only when mastered skills have gone stale (overdue per the SRS ladder).
-    /// Freshness is the only thing that decays; tapping starts a short review
-    /// session that brings those skills back current. Never a penalty.
+    /// A gentle, opportunity-framed card — "N skills to refresh" — that appears
+    /// when mastered skills have gone stale OR recent mistakes are still
+    /// unfixed (the old Recall surface folded in). Tapping starts one short
+    /// session that restores both. Never a penalty.
     @ViewBuilder
     private var refreshSection: some View {
-        let count = progressStore.staleSkillCount
+        let count = RefreshSessionBuilder.skillCount(
+            masteredLessonIds: progressStore.masteredLessonIds,
+            sessions: progressStore.data.sessions,
+            repository: repo
+        )
         if count > 0 {
             Button(action: launchRefresh) {
                 HStack(spacing: 14) {
@@ -468,7 +450,7 @@ struct HomeView: View {
                         Text("\(count) skill\(count == 1 ? "" : "s") to refresh")
                             .font(.system(size: 15, weight: .bold, design: .rounded))
                             .foregroundStyle(Theme.Colors.deepNavy)
-                        Text("A quick review keeps them sharp.")
+                        Text("Bring back fading skills and fix recent misses.")
                             .font(.system(size: 12))
                             .foregroundStyle(Theme.Colors.mutedText)
                     }
@@ -490,19 +472,18 @@ struct HomeView: View {
         }
     }
 
-    /// Builds a short review session from the overdue mastered templates
-    /// (`FreshnessEngine.refreshTargets`), regenerated with fresh values.
+    /// Builds the consolidated refresh session — stale mastered templates
+    /// plus unfixed mistakes, regenerated with fresh values.
     private func launchRefresh() {
-        let ids = progressStore.refreshTargetIds(limit: 8)
-        let questions: [QuizQuestion] = ids.compactMap { id in
-            guard let template = repo.template(id: id) else { return nil }
-            return QuizEngine.generate(from: template)
-        }
-        guard !questions.isEmpty else { return }
+        guard let session = RefreshSessionBuilder.build(
+            masteredLessonIds: progressStore.masteredLessonIds,
+            sessions: progressStore.data.sessions,
+            repository: repo
+        ) else { return }
         refreshVM = QuizSessionViewModel(
-            questions: questions,
+            questions: session.questions,
             title: "Refresh",
-            shortcut: "Bring your mastered skills back to sharp \u{2014} a quick review so they stick.",
+            shortcut: "Bring your skills back to sharp \u{2014} same methods, fresh numbers.",
             moduleColor: .teal
         )
     }
@@ -656,17 +637,17 @@ struct HomeView: View {
     // MARK: - Quick access (Phase 6c)
 
     /// Compact entry points below the fold — replaces the retired Game Modes
-    /// carousel. An "Open Tools" chip and a Recall "Review weak spots" chip
-    /// get added here in 7a once the Tools tab + Recall move from Practice.
+    /// carousel. (Phase 10-A8: the Recall chip folded into the Refresh card;
+    /// its slot is now extra practice.)
     private var quickAccessRow: some View {
         VStack(alignment: .leading, spacing: 12) {
             sectionLabel("Quick access")
             HStack(spacing: 12) {
-                quickChip(icon: "arrow.uturn.backward",
-                          title: "Review weak spots",
-                          subtitle: "Redo what you've missed",
+                quickChip(icon: "square.stack.3d.up.fill",
+                          title: "More practice",
+                          subtitle: "A fresh set of questions",
                           tint: Theme.Colors.primaryBlue) {
-                    launchRecall()
+                    startBonusRound()
                 }
                 quickChip(icon: progressStore.focusPack == nil ? "map.fill" : "rectangle.stack.fill",
                           title: progressStore.focusPack == nil ? "Pick a path" : "Browse paths",
