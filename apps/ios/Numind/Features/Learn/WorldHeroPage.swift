@@ -1,16 +1,15 @@
 import SwiftUI
 
-/// A single full-screen "world hero" page in the Learn → Worlds carousel.
+/// A single full-screen topic hero page in the Learn → Explore carousel.
 ///
-/// Inspired by Brilliant's course carousel: each world fills the screen with
-/// a themed illustration, title, world-N label, and a "Continue" card at
+/// Inspired by Brilliant's course carousel: each topic fills the screen with
+/// a themed illustration, title, topic label, and a "Continue" card at
 /// the bottom showing the user's next undone lesson. Swipe left/right (via
-/// the parent TabView page style) to switch worlds. Tap Continue to push
-/// into that world's quest map.
+/// the parent TabView page style) to switch topics. Tap Continue to push
+/// into that topic's lesson map. (Phase 10: "World N" quest framing retired.)
 struct WorldHeroPage: View {
     @EnvironmentObject private var progressStore: ProgressStore
     let section: LearnViewModel.PathSection
-    let worldNumber: Int
     /// Action invoked when the user taps the Continue CTA. Parent owns the
     /// navigation so the carousel stays in one place.
     let onContinue: (LearnViewModel.PathNode) -> Void
@@ -71,7 +70,7 @@ struct WorldHeroPage: View {
 
     private var heroSection: some View {
         VStack(spacing: 18) {
-            Text("WORLD \(worldNumber)")
+            Text(module.shortName.uppercased())
                 .font(.system(size: 13, weight: .bold))
                 .foregroundStyle(accent)
                 .kerning(1.2)
@@ -155,8 +154,8 @@ struct WorldHeroPage: View {
 
                 Button(action: { onContinue(node) }) {
                     Text(node.state == .current || node.state == .attempted
-                         ? "Continue world"
-                         : "Start world")
+                         ? "Continue"
+                         : "Start")
                         .font(.system(size: 16, weight: .bold, design: .rounded))
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
@@ -187,11 +186,11 @@ struct WorldHeroPage: View {
     private var conqueredCard: some View {
         VStack(spacing: 12) {
             HStack(spacing: 12) {
-                Image(systemName: "crown.fill")
+                Image(systemName: "checkmark.seal.fill")
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(Theme.Colors.insightYellow)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("WORLD CONQUERED")
+                    Text("TOPIC COMPLETE")
                         .font(.system(size: 11, weight: .bold))
                         .foregroundStyle(Theme.Colors.insightText)
                         .kerning(0.6)
@@ -205,15 +204,13 @@ struct WorldHeroPage: View {
                     .foregroundStyle(Theme.Colors.insightText)
             }
 
-            // "Review this world" — opens the quest map to revisit any lesson.
-            // 7a upgrades this to fire an 8Q quiz scoped to mastered lessons
-            // (shared machinery with the "Practice this world" quest-map pill).
+            // "Review this topic" — opens the lesson map to revisit any lesson.
             if let node = continueNode {
                 Button(action: { onContinue(node) }) {
                     HStack(spacing: 6) {
                         Image(systemName: "arrow.counterclockwise")
                             .font(.system(size: 13, weight: .bold))
-                        Text("Review this world")
+                        Text("Review this topic")
                             .font(.system(size: 15, weight: .bold, design: .rounded))
                     }
                     .foregroundStyle(Theme.Colors.deepNavy)

@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Transient celebration sheet shown when the user masters the last
-/// remaining lesson in a world (module). Sister to PackCompletionSheet;
+/// remaining lesson in a topic (module). Sister to PackCompletionSheet;
 /// shown after pack celebrations when both fire in the same session.
 struct WorldCompletionSheet: View {
     @Environment(\.dismiss) private var dismiss
@@ -12,9 +12,9 @@ struct WorldCompletionSheet: View {
         VStack(spacing: Theme.Spacing.sectionSpacing) {
             Spacer()
             VStack(spacing: 16) {
-                Text("👑")
+                Text(module.mascot)
                     .font(.system(size: 72))
-                Text("World conquered")
+                Text("Topic complete")
                     .font(Theme.Typography.display)
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .multilineTextAlignment(.center)

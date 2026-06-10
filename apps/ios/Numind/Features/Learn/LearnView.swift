@@ -6,8 +6,9 @@ struct LearnView: View {
 
     // MARK: - Presentation state
 
-    /// Top-level segmented tab inside the Learn tab. Worlds = module-by-module
-    /// quest map (existing UX). Paths = curated Life-Event Packs grid.
+    /// Top-level segmented tab inside the Learn tab. Explore = module-by-module
+    /// topic library (Phase 10: quest framing retired). Paths = curated
+    /// Life-Event Packs grid.
     private enum LearnTab: Hashable { case worlds, paths }
     @State private var selectedTab: LearnTab = .worlds
 
@@ -109,7 +110,6 @@ struct LearnView: View {
             ForEach(Array(viewModel.sections.enumerated()), id: \.element.id) { idx, section in
                 WorldHeroPage(
                     section: section,
-                    worldNumber: idx + 1,
                     onContinue: { _ in
                         withAnimation(.easeInOut(duration: 0.25)) {
                             openedWorldId = section.id
@@ -134,7 +134,7 @@ struct LearnView: View {
     ) -> some View {
         VStack(spacing: 0) {
             // Back-chevron row — sits ABOVE the scrolling content so it
-            // never overlaps the world banner's "WORLD N" eyebrow.
+            // never overlaps the topic banner's eyebrow.
             HStack {
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.25)) {
@@ -149,7 +149,7 @@ struct LearnView: View {
                         .clipShape(Circle())
                         .shadow(color: .black.opacity(0.08), radius: 6, y: 2)
                 }
-                .accessibilityLabel("Back to worlds")
+                .accessibilityLabel("Back to topics")
                 Spacer()
             }
             .padding(.horizontal, 16)
@@ -189,7 +189,7 @@ struct LearnView: View {
 
     private var tabSegmentedControl: some View {
         Picker("View", selection: $selectedTab) {
-            Text("Worlds").tag(LearnTab.worlds)
+            Text("Explore").tag(LearnTab.worlds)
             Text("Paths").tag(LearnTab.paths)
         }
         .pickerStyle(.segmented)
@@ -313,23 +313,24 @@ struct LearnView: View {
 
             // Content
             VStack(alignment: .leading, spacing: 10) {
-                // Eyebrow row: "World N" + optional "Conquered"
+                // Eyebrow row: topic name + optional "Complete"
                 HStack(spacing: 8) {
-                    worldEyebrow(index: sectionIndex, accent: accent)
+                    topicEyebrow(module: section.module, accent: accent)
                     if isComplete {
-                        conqueredBadge
+                        completeBadge
                     }
                 }
 
                 HStack(spacing: 14) {
-                    // Mascot emoji tile
+                    // Module icon tile (Phase 10: mascot emoji reserved for
+                    // celebration sheets, not the everyday library)
                     ZStack {
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
                             .fill(accent)
                             .shadow(color: accent.opacity(0.45), radius: 8, y: 4)
-                        Text(section.module.mascot)
-                            .font(.system(size: 28))
-                            .shadow(color: .black.opacity(0.2), radius: 1, y: 1)
+                        Image(systemName: section.module.icon)
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundStyle(.white)
                     }
                     .frame(width: 56, height: 56)
 
@@ -356,29 +357,24 @@ struct LearnView: View {
         .padding(.bottom, 20)
     }
 
-    private func worldEyebrow(index: Int, accent: Color) -> some View {
-        HStack(spacing: 4) {
-            Image(systemName: "star.fill")
-                .font(.system(size: 9, weight: .bold))
-                .foregroundStyle(accent)
-            Text("World \(index + 1)")
-                .font(.system(size: 10, weight: .heavy))
-                .foregroundStyle(accent)
-                .textCase(.uppercase)
-                .tracking(0.6)
-        }
-        .padding(.horizontal, 9)
-        .padding(.vertical, 3)
-        .background(accent.opacity(0.18))
-        .clipShape(Capsule())
+    private func topicEyebrow(module: Module, accent: Color) -> some View {
+        Text(module.shortName)
+            .font(.system(size: 10, weight: .heavy))
+            .foregroundStyle(accent)
+            .textCase(.uppercase)
+            .tracking(0.6)
+            .padding(.horizontal, 9)
+            .padding(.vertical, 3)
+            .background(accent.opacity(0.18))
+            .clipShape(Capsule())
     }
 
-    private var conqueredBadge: some View {
+    private var completeBadge: some View {
         HStack(spacing: 4) {
-            Image(systemName: "crown.fill")
+            Image(systemName: "checkmark.seal.fill")
                 .font(.system(size: 9, weight: .bold))
                 .foregroundStyle(Theme.Colors.insightText)
-            Text("Conquered")
+            Text("Complete")
                 .font(.system(size: 10, weight: .heavy))
                 .foregroundStyle(Theme.Colors.insightText)
                 .textCase(.uppercase)
@@ -430,7 +426,7 @@ struct LearnView: View {
     }
 
     // ═══════════════════════════════════════════════════════════════
-    // MARK: - World Conquered Banner
+    // MARK: - Topic Complete Banner
     // ═══════════════════════════════════════════════════════════════
 
     @ViewBuilder
@@ -439,10 +435,10 @@ struct LearnView: View {
         let total = section.nodes.count
         if mastered == total && total > 0 {
             HStack(spacing: 8) {
-                Image(systemName: "crown.fill")
+                Image(systemName: "checkmark.seal.fill")
                     .font(.system(size: 14, weight: .bold))
                     .foregroundStyle(.white)
-                Text("WORLD CONQUERED")
+                Text("TOPIC COMPLETE")
                     .font(.system(size: 13, weight: .heavy, design: .rounded))
                     .foregroundStyle(.white)
                     .tracking(0.5)
@@ -469,52 +465,21 @@ struct LearnView: View {
     // ═══════════════════════════════════════════════════════════════
 
     private func sectionNodes(_ section: LearnViewModel.PathSection) -> some View {
-        ZStack {
-            // Floating decorative numbers in margins
-            floatingDecorations(module: section.module, nodeCount: section.nodes.count)
-
-            VStack(spacing: 0) {
-                ForEach(Array(section.nodes.enumerated()), id: \.element.id) { i, node in
-                    VStack(spacing: 0) {
-                        if i > 0 {
-                            let prev = section.nodes[i - 1]
-                            trailConnector(
-                                fromLeft:   prev.isLeft,
-                                toLeft:     node.isLeft,
-                                isMastered: prev.state == .mastered,
-                                accent:     node.module.color.tintColor
-                            )
-                        }
-                        questNodeRow(node)
+        VStack(spacing: 0) {
+            ForEach(Array(section.nodes.enumerated()), id: \.element.id) { i, node in
+                VStack(spacing: 0) {
+                    if i > 0 {
+                        let prev = section.nodes[i - 1]
+                        trailConnector(
+                            fromLeft:   prev.isLeft,
+                            toLeft:     node.isLeft,
+                            isMastered: prev.state == .mastered,
+                            accent:     node.module.color.tintColor
+                        )
                     }
+                    questNodeRow(node)
                 }
             }
-        }
-    }
-
-    // ═══════════════════════════════════════════════════════════════
-    // MARK: - Floating Decorations
-    // ═══════════════════════════════════════════════════════════════
-
-    private func floatingDecorations(module: Module, nodeCount: Int) -> some View {
-        let accent = module.color.tintColor
-        let totalH = CGFloat(nodeCount) * (nodeSize + 24 + 30) + CGFloat(max(0, nodeCount - 1)) * connectorHeight
-        return ZStack {
-            floatingNumber(module.glyph, color: accent, size: 36, x: 20, relY: 0.08)
-            floatingNumber("42", color: accent, size: 20, x: UIScreen.main.bounds.width - 50, relY: 0.22)
-            floatingNumber("\u{00BD}", color: accent, size: 28, x: 28, relY: 0.48)
-            floatingNumber(module.glyph, color: accent, size: 22, x: UIScreen.main.bounds.width - 40, relY: 0.72)
-        }
-        .frame(height: max(totalH, 200))
-        .allowsHitTesting(false)
-    }
-
-    private func floatingNumber(_ text: String, color: Color, size: CGFloat, x: CGFloat, relY: CGFloat) -> some View {
-        GeometryReader { geo in
-            Text(text)
-                .font(.system(size: size, weight: .heavy, design: .rounded))
-                .foregroundStyle(color.opacity(0.16))
-                .position(x: x, y: geo.size.height * relY)
         }
     }
 
@@ -589,10 +554,14 @@ struct LearnView: View {
         let fill = nodeFill(node, accent: accent)
 
         return ZStack {
-            // Pulsing ring for current node
+            // Static halo for the current node (Phase 10: pulsing retired)
             if node.state == .current {
-                QuestPulsingRing(color: node.isReview ? Theme.Colors.insightYellow : accent)
-                    .frame(width: nodeSize + 30, height: nodeSize + 30)
+                Circle()
+                    .stroke(
+                        (node.isReview ? Theme.Colors.insightYellow : accent).opacity(0.35),
+                        lineWidth: 3
+                    )
+                    .frame(width: nodeSize + 18, height: nodeSize + 18)
             }
 
             // Coloured glow
@@ -625,7 +594,7 @@ struct LearnView: View {
                 QuestMasteredBadge()
             }
 
-            // Review crown badge (still gated for review nodes — only shown
+            // Review badge (still gated for review nodes — only shown
             // when the review is actually available)
             if node.isReview && node.state != .notYetSuggested && node.state != .mastered {
                 QuestCrownBadge()
@@ -650,7 +619,7 @@ struct LearnView: View {
             if node.state == .current {
                 QuestStartBadge(
                     accent: node.isReview ? Theme.Colors.insightYellow : accent,
-                    label: node.isReview ? "BOSS" : "START",
+                    label: node.isReview ? "REVIEW" : "NEXT",
                     textColor: node.isReview ? Theme.Colors.insightText : .white
                 )
             } else {
@@ -791,32 +760,6 @@ struct LearnView: View {
 // MARK: - Supporting Views
 // ═══════════════════════════════════════════════════════════════════
 
-/// Pulsing ring animation behind the current quest node.
-private struct QuestPulsingRing: View {
-    let color: Color
-    @State private var animating = false
-
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(color.opacity(animating ? 0 : 0.55), lineWidth: animating ? 2 : 3)
-                .scaleEffect(animating ? 1.5 : 1.0)
-                .animation(
-                    .easeOut(duration: 1.6).repeatForever(autoreverses: false),
-                    value: animating
-                )
-            Circle()
-                .stroke(color.opacity(animating ? 0 : 0.35), lineWidth: animating ? 2 : 2)
-                .scaleEffect(animating ? 1.5 : 1.0)
-                .animation(
-                    .easeOut(duration: 1.6).delay(0.4).repeatForever(autoreverses: false),
-                    value: animating
-                )
-        }
-        .onAppear { animating = true }
-    }
-}
-
 /// Golden star badge shown on mastered nodes.
 private struct QuestMasteredBadge: View {
     var body: some View {
@@ -837,10 +780,11 @@ private struct QuestMasteredBadge: View {
     }
 }
 
-/// Crown badge shown on review nodes that are available/current.
+/// Review-affordance badge shown on review nodes that are available/current.
+/// (Phase 10: crown retired with the quest framing.)
 private struct QuestCrownBadge: View {
     var body: some View {
-        Image(systemName: "crown.fill")
+        Image(systemName: "arrow.counterclockwise.circle.fill")
             .font(.system(size: 18, weight: .bold))
             .foregroundStyle(Theme.Colors.insightYellow)
             .offset(y: -44)
