@@ -11,6 +11,7 @@
 		178935DD361D42CB83938439 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 0500701881DC44558DF2C6B6 /* Sentry */; };
 		040404023710447B0236B6F7 /* OnboardingSelectCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8752737455CCCC978D4424DB /* OnboardingSelectCard.swift */; };
 		04969645E6CE3F25880D2488 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955388FC06C02C5CD3B96B14 /* LessonView.swift */; };
+		FADE001AAAAA001AAAAA001A /* LessonStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE0019AAAA0019AAAA0019 /* LessonStoryView.swift */; };
 		052A6EB945C9AE1B247C0BB0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 262DCD427D44997284AB8536 /* LaunchScreen.storyboard */; };
 		0785F541BEA4D7A03C55D161 /* DiagnosticQuestionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CD54AB8E6BFCB29B404F52 /* DiagnosticQuestionBuilder.swift */; };
 		08ECDE4B423BE11F7011106C /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F0704BD6A634C7DF076BC /* Radius.swift */; };
@@ -338,6 +339,7 @@
 		90C909E1AD7BA90CD7D7DAAC /* WelcomeConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeConfirmView.swift; sourceTree = "<group>"; };
 		912929E50EF5E5526AB94217 /* QuizTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTemplate.swift; sourceTree = "<group>"; };
 		955388FC06C02C5CD3B96B14 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
+		FADE0019AAAA0019AAAA0019 /* LessonStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonStoryView.swift; sourceTree = "<group>"; };
 		99335656647D9B2C9D8A4279 /* RadarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarChartView.swift; sourceTree = "<group>"; };
 		9D07D972E9B9DED4B8623883 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		9DE5C197942E28DFA3FAF3DF /* StreakLossView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakLossView.swift; sourceTree = "<group>"; };
@@ -959,6 +961,7 @@
 			isa = PBXGroup;
 			children = (
 				955388FC06C02C5CD3B96B14 /* LessonView.swift */,
+				FADE0019AAAA0019AAAA0019 /* LessonStoryView.swift */,
 				8E3433B4F7B4DF55F59F07BC /* LessonViewModel.swift */,
 			);
 			path = Lesson;
@@ -1217,6 +1220,7 @@
 				0F545B9518A76971941437D5 /* TipSplitCalculator.swift in Sources */,
 				B6095DD0E0F33C3D93010706 /* LessonRecommendationEngine.swift in Sources */,
 				04969645E6CE3F25880D2488 /* LessonView.swift in Sources */,
+				FADE001AAAAA001AAAAA001A /* LessonStoryView.swift in Sources */,
 				AC7E57CA75073BB4077D0C99 /* LessonViewModel.swift in Sources */,
 				D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */,
 				55E6CCEC35C6BFC4D616968E /* MilestoneCelebrationView.swift in Sources */,
