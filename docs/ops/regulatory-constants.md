@@ -131,7 +131,17 @@ reading the lesson can tell at a glance whether the number is still current.
 | FDIC insurance per depositor per bank | $250,000 | FDIC | `investing_apy_savings`, web HYSA calculator | Legislative only |
 | BNPL stats (CFPB) | ~9 loans/yr avg; 2x overdraft risk | CFPB BNPL Market Trends | `debt_bnpl_hidden_cost` | CFPB report cycle |
 | Typical payday-loan fee | $10–$30 per $100 borrowed (a $15/$100 two-week loan ≈ 391% APR) | CFPB "What is a payday loan?" | `payday_loan_cost` | CFPB page updates |
-| Overdraft fee | Varies by bank (~$25–$35 at large banks; some eliminated). The CFPB's $5 cap rule was **repealed via CRA, May 2025** — the lesson teaches fee variance + the waiver-call script, not a cap | CFPB / Congressional Review Act (May 2025) | `payday_loan_cost` | Any new CFPB rulemaking |
+| Overdraft fee | Bimodal market: many banks $0–$10 (Capital One, Ally, Citi…), others ~$34 (Chase); Bankrate 2025 avg ~$26.77. The CFPB's $5 cap rule was **repealed via CRA, May 2025** (the repeal killed only the never-effective cap — **Reg E debit/ATM opt-in protection is intact**) | CFPB / Bankrate 2025 / Congressional Review Act (May 2025) | `payday_loan_cost`, `banking_basics_fees` | Any new CFPB rulemaking |
+| Reg E overdraft opt-in (debit/ATM) | Banks may not charge overdraft fees on one-time debit/ATM transactions without affirmative opt-in; default = declined free. Checks/ACH/recurring not covered | 12 CFR § 1005.17 | `banking_basics_fees` | CFPB rulemaking |
+| Checking maintenance fees | Avg $5.47/mo non-interest checking; ~95% waivable (direct deposit most common); ~47% of basic accounts free outright | Bankrate 2025 checking survey | `banking_basics_fees` | Bankrate annual survey |
+| FDIC / NCUA deposit insurance | $250,000 per depositor, per institution, per ownership category (NCUA equivalent for credit unions) | FDIC / NCUA | `banking_basics_fees`, `investing_apy_savings` | Legislative only |
+| FCBA credit-card dispute window | 60 days from the statement containing the error, in writing; unauthorized-use liability capped at $50 (networks: $0) | FCBA / 12 CFR § 1026.13 | `dispute_a_charge` | Legislative only |
+| Reg E debit fraud liability tiers | Report within 2 business days = $50 cap; within 60 days of statement = $500; later = unlimited | 12 CFR § 1005.6 | `dispute_a_charge` | CFPB rulemaking |
+| FICO minimum scoring criteria | ≥1 account open 6+ months AND ≥1 account reported within last 6 months | myFICO | `credit_from_zero` | FICO model changes |
+| Secured card mechanics | Refundable deposit (typical $200 min) ≈ credit line; on-time use can graduate to unsecured | CFPB / issuer terms | `credit_from_zero` | Issuer-market shifts |
+| Authorized-user rules | Account history can appear on the AU's report (issuer-dependent); AU has no legal liability for the debt | CFPB | `credit_from_zero` | CFPB guidance |
+| Credit-builder loans | Funds locked in savings while payments are reported; released after payoff (CFPB study: helps thin-file consumers most) | CFPB credit-builder loan study | `credit_from_zero` | CFPB guidance |
+| FICO weightings | Payment history ~35%, utilization ~30% | myFICO | `credit_from_zero`, `concept_debt_credit_scores` | FICO model changes |
 | Free credit reports | Free **weekly** from each bureau at AnnualCreditReport.com (made permanent Oct 2023) | FTC / AnnualCreditReport.com | `credit_report_rights` | FCRA rulemaking |
 | Credit freeze / dispute rights | Freezes free at all 3 bureaus (FCRA, 2018); disputes resolved within 30 days (45 with extension) | FCRA § 605A / § 611 | `credit_report_rights` | FCRA rulemaking |
 | Imposter-scam / payment-rail stats | FTC 2025 data: imposter scams the #1 fraud category; gift cards / wire / crypto-ATM payments are effectively irreversible | FTC Consumer Sentinel (2026 release for 2025 data) | `scam_imposter_patterns`, `scam_payment_rails` | FTC annual Sentinel data book |
@@ -151,6 +161,30 @@ reading the lesson can tell at a glance whether the number is still current.
 | Constant | Current value | Source | Lessons referencing | Refresh trigger |
 |---|---|---|---|---|
 | Negative-equity trade-in share | 30.9% of trade-ins with a loan were upside down, avg $7,183 underwater (Q1 2026) | Edmunds quarterly used-car report | `car_negative_equity` | Edmunds quarterly reports |
+
+### Filing mechanics (annual, every January)
+
+| Constant | Current value | Source | Lessons referencing | Refresh trigger |
+|---|---|---|---|---|
+| IRS Free File AGI cap | $89,000 or less (2026 season); Fillable Forms at any income | IRS Free File | `taxes_filing_mechanics` | Every January |
+| IRS Direct File | **Discontinued after the 2025 season** — do not present as an option | IRS (2026 season guidance) | `taxes_filing_mechanics` | Any IRS announcement |
+| VITA income threshold | Generally $69,000 or less (2026 season); MilTax: no income limit for military families | IRS VITA / DOD MilTax | `taxes_filing_mechanics` | Every January |
+| W-2 furnishing deadline | End of January (Feb 2, 2026 actual due to weekend) | IRS | `taxes_filing_mechanics` | Stable |
+| Refund timing | E-file + direct deposit: most within ~21 days; EITC/ACTC refunds held until ~Mar 2 | IRS | `taxes_filing_mechanics` | Stable |
+
+### Insurance & estate (refresh annually)
+
+| Constant | Current value | Source | Lessons referencing | Refresh trigger |
+|---|---|---|---|---|
+| Renters insurance avg premium | ~$171/yr (NAIC 2022, latest published); ~57% of renters insured (III); landlord policy covers building only; replacement cost ≈ +10% premium vs ACV | NAIC / III | `insurance_renters` | NAIC annual report |
+| Auto full-coverage avg premium | ~$2,697/yr (Bankrate, June 2026) | Bankrate true-cost report | `insurance_auto_shopping` | Bankrate updates |
+| Auto liability minimums | Vary by state (FL: no BI requirement; CA: 30/60/15 from 2025); 100/300/100 = common adequacy guidance | State statutes / Consumer Reports | `insurance_auto_shopping` | State legislative sessions |
+| Deductible $500→$1,000 savings | Trims roughly 5–15% of total premium (III: 40%+ of comp/collision portion) | III | `insurance_auto_shopping` | III guidance |
+| Drop-collision rule of thumb | When comp+collision premium exceeds ~10% of the car's value | III | `insurance_auto_shopping` | III guidance |
+| Price optimization / loyalty penalty | Documented industry practice; ~20 states restrict it — re-quote every 1–2 years | Consumer Reports / state DOIs | `insurance_auto_shopping` | State regulation changes |
+| Beneficiary form supersedes will | Kennedy v. DuPont, 555 U.S. 285 (2009); Egelhoff, 532 U.S. 141 (2001) — the form controls, even vs divorce decrees, for ERISA plans | SCOTUS / DOL | `estate_beneficiaries` | Legislative only |
+| ERISA spousal 401(k) beneficiary | Spouse is automatic beneficiary unless they sign a notarized/plan-witnessed waiver; IRAs differ (no federal requirement) | ERISA § 205 | `estate_beneficiaries` | Legislative only |
+| POD/TOD designations | Pass directly outside probate; FDIC insures POD up to $250K per owner per eligible beneficiary | FDIC / state TOD statutes | `estate_beneficiaries` | Legislative only |
 
 ### Real estate (varies by market; refresh annually)
 

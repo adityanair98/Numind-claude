@@ -37,7 +37,8 @@
       "money_math_weekly_monthly",
       "concept_money_needs_vs_wants",
       "money_math_sinking_funds",
-      "investing_emergency_fund"
+      "investing_emergency_fund",
+      "banking_basics_fees"
     ]
   },
   {
@@ -120,7 +121,8 @@
       "debt_balance_transfer",
       "debt_cc_statement_cycle",
       "debt_cc_rewards_vs_interest",
-      "payday_loan_cost"
+      "payday_loan_cost",
+      "credit_from_zero"
     ]
   },
   {
@@ -163,7 +165,8 @@
       "taxes_standard_vs_itemized",
       "taxes_capital_gains",
       "taxes_w4_adjust",
-      "concept_taxes_paycheck_stub"
+      "concept_taxes_paycheck_stub",
+      "taxes_filing_mechanics"
     ]
   },
   {
@@ -187,7 +190,10 @@
       "concept_insurance_disability",
       "concept_insurance_open_enrollment",
       "insurance_medical_bill_eob",
-      "job_change_health"
+      "job_change_health",
+      "insurance_renters",
+      "insurance_auto_shopping",
+      "estate_beneficiaries"
     ]
   },
   {
@@ -244,7 +250,8 @@
     "lessonIds": [
       "scam_imposter_patterns",
       "scam_payment_rails",
-      "credit_report_rights"
+      "credit_report_rights",
+      "dispute_a_charge"
     ]
   }
 ]

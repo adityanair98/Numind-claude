@@ -16,7 +16,9 @@
       "salary_401k_paycheck_impact",
       "salary_total_comp",
       "investing_401k_match",
-      "taxes_w4_adjust"
+      "taxes_w4_adjust",
+      "banking_basics_fees",
+      "credit_from_zero"
     ],
     "coreLessonIds": [
       "net_pay_check",
@@ -47,13 +49,15 @@
       "housing_roommate_math",
       "housing_rent_increase",
       "housing_lease_break",
-      "concept_housing_lease_clauses"
+      "concept_housing_lease_clauses",
+      "insurance_renters"
     ],
     "coreLessonIds": [
       "housing_rent_affordability",
       "housing_first_month_true_cost",
       "housing_true_cost",
-      "concept_housing_lease_clauses"
+      "concept_housing_lease_clauses",
+      "insurance_renters"
     ],
     "anchorLessonId": "housing_first_month_true_cost",
     "estimatedMinutes": 22,
@@ -80,7 +84,8 @@
       "concept_debt_credit_scores",
       "concept_ef_vs_debt_priority",
       "payday_loan_cost",
-      "debt_cc_rewards_vs_interest"
+      "debt_cc_rewards_vs_interest",
+      "credit_from_zero"
     ],
     "coreLessonIds": [
       "credit_card_interest",
@@ -247,7 +252,8 @@
       "car_lease_vs_buy",
       "debt_to_income",
       "concept_car_negotiation",
-      "concept_car_warranty"
+      "concept_car_warranty",
+      "insurance_auto_shopping"
     ],
     "coreLessonIds": [
       "car_monthly_vs_total",
@@ -311,13 +317,15 @@
       "taxes_refund",
       "taxes_self_employment",
       "taxes_w4_adjust",
-      "taxes_capital_gains"
+      "taxes_capital_gains",
+      "taxes_filing_mechanics"
     ],
     "coreLessonIds": [
       "concept_taxes_paycheck_stub",
       "taxes_brackets",
       "taxes_standard_vs_itemized",
-      "taxes_refund"
+      "taxes_refund",
+      "taxes_filing_mechanics"
     ],
     "anchorLessonId": "taxes_brackets",
     "estimatedMinutes": 22,
@@ -342,13 +350,16 @@
       "investing_emergency_fund",
       "concept_investing_ef_location",
       "concept_insurance_policy_priority",
-      "insurance_medical_bill_eob"
+      "insurance_medical_bill_eob",
+      "dispute_a_charge",
+      "estate_beneficiaries"
     ],
     "coreLessonIds": [
       "scam_imposter_patterns",
       "scam_payment_rails",
       "credit_report_rights",
-      "investing_emergency_fund"
+      "investing_emergency_fund",
+      "dispute_a_charge"
     ],
     "anchorLessonId": "scam_imposter_patterns",
     "estimatedMinutes": 25,

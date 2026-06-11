@@ -2968,5 +2968,169 @@
     "isCore": false,
     "isScenarioEligible": true,
     "realWorldHint": "Use the unit-price line on the shelf tag — it's the one number the package can't shrink."
+  },
+  {
+    "id": "taxes_filing_mechanics",
+    "moduleId": "taxes",
+    "title": "How filing actually works",
+    "concept": "Filing a return is a reconciliation, not a bill. Your employer withholds estimated tax from every paycheck all year (set by your W-4); the return computes what you actually owed. A refund means you overpaid through withholding - it's your own money coming back, not a bonus. The pipeline: your W-2 must be sent by the end of January (IRS); you file by April 15; e-file with direct deposit and most refunds arrive within ~21 days (IRS). Free ways to file: IRS Free File guided software if your AGI is $89,000 or less (2026 season), Free File Fillable Forms at any income, VITA in-person help if you make about $69,000 or less, and MilTax for military families at any income. (IRS Direct File ran 2024-2025 and was discontinued for 2026.)",
+    "shortcut": "Refund = your own overpaid withholding coming back. The free path: W-2 lands by end of January -> Free File if under $89K AGI -> e-file + direct deposit -> ~21 days.",
+    "example": "Single, $52,000 salary, one W-2:\n1. W-2 arrives by end of January\n2. AGI under $89,000 -> IRS Free File guided software, $0\n3. E-file + direct deposit by April 15\n4. Refund (if any) in ~21 days\n\nA paid preparer for this return buys convenience, not a bigger refund - the numbers are the numbers. (IRS)",
+    "quizTemplateIds": [
+      "filing_reconciliation_d1",
+      "filing_w2_timing_d1",
+      "filing_free_options_d2",
+      "filing_refund_timing_d2",
+      "filing_decision_firsttime_d3",
+      "filing_decision_refund_advance_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "income_and_paycheck",
+    "secondarySkills": [
+      "cash_flow_and_budgeting"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Pull this up the week your W-2 arrives - the free path takes one evening."
+  },
+  {
+    "id": "credit_from_zero",
+    "moduleId": "debt",
+    "title": "Building credit from zero",
+    "concept": "A FICO score doesn't exist until your file has at least one account open 6+ months AND one account reported to a bureau in the last 6 months (myFICO). Three starter tools: (1) a secured card - your refundable deposit (usually $200 minimum) typically becomes your credit line, and on-time use can graduate it to a regular card with the deposit returned; (2) becoming an authorized user on a trusted person's old card - the account's history can appear on YOUR report (issuer-dependent) and you carry zero legal liability for the debt (CFPB); (3) a credit-builder loan - the money sits locked in savings while your payments get reported (CFPB). What moves the score: payment history is ~35% of FICO and utilization ~30% - so one small recurring charge, autopaid in full, does almost all the work.",
+    "shortcut": "One small card + one recurring bill + autopay in full. Six months of on-time payments = a score exists. Keep the balance tiny relative to the limit.",
+    "example": "22, no credit history:\n1. Secured card, $200 deposit -> $200 limit\n2. Put one subscription (~$15/mo) on it\n3. Autopay the FULL statement every month\n4. ~6 months later: a FICO score exists; the card can graduate and the $200 comes back\n\nLate payments get reported the same way on-time ones do - autopay is the whole game. (myFICO / CFPB)",
+    "quizTemplateIds": [
+      "czero_fico_file_d1",
+      "czero_secured_mechanics_d1",
+      "czero_authorized_user_d2",
+      "czero_builder_loan_d2",
+      "czero_decision_first_card_d3",
+      "czero_decision_small_limit_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "debt_and_credit",
+    "secondarySkills": [],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Setting up a first card? Put ONE small subscription on it and turn on full-balance autopay before you leave the app."
+  },
+  {
+    "id": "dispute_a_charge",
+    "moduleId": "money_safety",
+    "title": "Disputing a charge: your rights",
+    "concept": "Two different rulebooks. CREDIT cards (Fair Credit Billing Act): you have 60 days from the date of the statement containing the error to dispute in writing, and your maximum liability for unauthorized use is $50 - and the major card networks contractually take that to $0. DEBIT cards (Regulation E): speed sets your cap - report within 2 business days of learning about it and you're liable for at most $50; report within 60 days of the statement and it's up to $500; wait longer and the losses can be unlimited. For billing mistakes (double charge, wrong amount, item never arrived), contacting the merchant first is usually fastest - but the issuer dispute (chargeback) is your legal backstop, and banks generally provide provisional credit while they investigate.",
+    "shortcut": "Credit card: 60-day clock from the statement, $50 max on fraud (usually $0). Debit card: speed is everything - 2 days = $50 cap, 60 days = $500, later = no cap. Report fast, in writing.",
+    "example": "Unknown $214 charge on your credit card statement:\n1. Don't recognize it? Check the merchant name online (many bill under odd names)\n2. Still unknown -> dispute with your issuer IN WRITING within 60 days of that statement\n3. Issuer investigates; your fraud liability tops out at $50 (networks: $0)\n\nSame charge on a DEBIT card? Report it the day you see it - the $50 cap only holds for 2 business days. (FTC / CFPB)",
+    "quizTemplateIds": [
+      "dispute_fcba_window_d1",
+      "dispute_card_liability_d1",
+      "dispute_debit_speed_d2",
+      "dispute_merchant_vs_issuer_d2",
+      "dispute_decision_unknown_charge_d3",
+      "dispute_decision_debit_skim_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "debt_and_credit",
+    "secondarySkills": [
+      "protection_and_benefits"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "See a charge you don't recognize? The clock is already running - check it today, not at the end of the month."
+  },
+  {
+    "id": "banking_basics_fees",
+    "moduleId": "money_math",
+    "title": "Checking accounts: stop paying for your own money",
+    "concept": "Three checks decide whether your bank quietly costs you money. (1) Overdraft opt-in: under Regulation E, a bank cannot charge overdraft fees on DEBIT-card and ATM transactions unless you explicitly opted in - the default is the purchase is simply declined, free. (Checks and recurring payments aren't covered by that protection.) The fee landscape is now split: many banks charge $0 or $10, while others still charge ~$34 per overdraft. (2) Monthly maintenance fees: about 95% are waivable, usually by direct deposit or a minimum balance - and nearly half of basic checking accounts are free outright (Bankrate 2025). (3) Insurance: confirm FDIC (banks) or NCUA (credit unions) coverage - $250,000 per depositor, per institution, per ownership category.",
+    "shortcut": "Three questions for any checking account: Am I opted IN to debit overdraft? (Opted out = declined free.) Is my monthly fee waived? (Direct deposit usually does it.) Is it FDIC/NCUA insured? ($250K.)",
+    "example": "New job, picking an account:\n1. Decline debit overdraft 'coverage' - a declined card costs $0; an overdraft can cost $34\n2. Set up direct deposit -> monthly fee waived at most banks\n3. Confirm FDIC/NCUA on the bank's site\n\nPaying $12/month in maintenance fees is $144/year for a service that's free across the street. (CFPB / FDIC / Bankrate 2025)",
+    "quizTemplateIds": [
+      "bank_optin_default_d1",
+      "bank_fee_waiver_d1",
+      "bank_insured_d2",
+      "bank_overdraft_landscape_d2",
+      "bank_decision_optin_d3",
+      "bank_decision_fee_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "cash_flow_and_budgeting",
+    "secondarySkills": [
+      "protection_and_benefits"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Opening any account, the teller will offer 'overdraft protection' on your debit card - now you know what that actually means."
+  },
+  {
+    "id": "insurance_renters",
+    "moduleId": "insurance",
+    "title": "Renters insurance: the $15/month most people skip",
+    "concept": "Your landlord's insurance covers the BUILDING - never your stuff. Renters insurance (average ~$171/year, NAIC 2022 - roughly $15/month) covers three things: your possessions (fire, theft, vandalism and other named perils - flood and earthquake excluded), liability if you, your family, or your pet injures someone or damages property, and additional living expenses - the hotel and meals if a covered loss makes your place unlivable. One choice matters at purchase: actual cash value pays what your used stuff was worth (depreciated); replacement cost pays what NEW equivalents cost - for roughly 10% more premium, it's the better protection (III). About 57% of renters carry it, and roughly half of landlords now require it in the lease.",
+    "shortcut": "Landlord's policy = the building. ~$15/month = your stuff + lawsuits + a hotel if it burns. Pick REPLACEMENT COST, not actual cash value.",
+    "example": "Apartment fire next door, smoke ruins your things:\n- Landlord's policy: rebuilds the walls. Pays you $0.\n- Your renters policy: replaces possessions, covers the 3 weeks in temporary housing\n\n5-year-old laptop stolen:\n- Actual cash value: pays its depreciated worth (maybe $200)\n- Replacement cost: pays for a comparable NEW one (III / NAIC)",
+    "quizTemplateIds": [
+      "renters_landlord_gap_d1",
+      "renters_cost_d1",
+      "renters_acv_vs_replacement_d2",
+      "renters_ale_d2",
+      "renters_decision_skip_d3",
+      "renters_decision_claim_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Signing a lease this year? Quote renters insurance the same day - it's the cheapest line on the move-in list."
+  },
+  {
+    "id": "insurance_auto_shopping",
+    "moduleId": "insurance",
+    "title": "Auto insurance without overpaying",
+    "concept": "Average full coverage now runs about $2,700/year (Bankrate, June 2026) - and the spread between insurers for the SAME driver is huge, which makes shopping the biggest lever. State minimums vary wildly (Florida requires no bodily-injury liability at all; California raised its floor to 30/60/15 in 2025) and are rarely enough - the common adequacy guidance is 100/300/100 for real protection (Consumer Reports). Four verified ways to pay less: (1) re-quote every 1-2 years - 'price optimization' (charging loyal non-shoppers more) is a documented industry practice that ~20 states restrict; (2) bundle auto with renters/home (~10-25% off, but compare the final total); (3) raise your deductible IF you can cover it from savings - $500 to $1,000 typically trims roughly 5-15% off the total premium; (4) on an old car, drop collision/comprehensive when that part of the premium exceeds ~10% of the car's value (III's rule of thumb).",
+    "shortcut": "Re-quote every year or two - loyalty literally costs money. Bundle, raise the deductible you can actually cover, and when comp+collision costs more than 10% of the car's value, drop it.",
+    "example": "Renewal letter: up $400 for no reason:\n1. Get 3 quotes (same coverage levels) - 30 minutes\n2. Ask current insurer to match - they often do for shoppers\n3. 12-year-old car worth $3,000 with $480/yr comp+collision? That's 16% of the car's value - drop it and self-insure\n\nThe quietest tax on autopilot customers is the loyalty penalty. (III / Consumer Reports / Bankrate 2026)",
+    "quizTemplateIds": [
+      "auto_minimums_vary_d1",
+      "auto_loyalty_d1",
+      "auto_deductible_tradeoff_d2",
+      "auto_drop_collision_d2",
+      "auto_decision_renewal_d3",
+      "auto_decision_old_car_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [
+      "big_purchases"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "When the renewal letter lands, that's the moment - 30 minutes of quotes is the highest-paid half hour of your year."
+  },
+  {
+    "id": "estate_beneficiaries",
+    "moduleId": "insurance",
+    "title": "Beneficiaries: 10 minutes that override your will",
+    "concept": "Accounts with named beneficiaries - 401(k)s, IRAs, life insurance, and payable-on-death (POD) bank accounts - pass directly to whoever is on the FORM, regardless of what your will says. The Supreme Court has enforced this even against an ex-spouse who waived the money in a divorce (Kennedy v. DuPont, 2009): the form controls. Two more rules worth knowing: under ERISA, your spouse is automatically your 401(k) beneficiary unless they sign a notarized waiver (IRAs work differently); and a CONTINGENT beneficiary only inherits if every primary is gone - so name a backup. The whole defense is a 10-minute audit: check the beneficiary on your 401(k), IRA, life insurance, and bank accounts, and re-check after every marriage, divorce, birth, or death (FINRA).",
+    "shortcut": "The FORM beats the will - every time. Audit four places: 401(k), IRA, life insurance, bank POD. Name a backup. Re-check after every big life event.",
+    "example": "Divorced two years ago, never touched the 401(k) form:\n- Will says everything to your kids\n- Form still names the ex-spouse\n-> The ex-spouse gets the 401(k). The Supreme Court has enforced exactly this.\n\nThe fix: log in, update the beneficiary, add a contingent. Ten minutes, $0. (DOL / FINRA / Kennedy v. DuPont)",
+    "quizTemplateIds": [
+      "benef_supersedes_d1",
+      "benef_contingent_d1",
+      "benef_erisa_spouse_d2",
+      "benef_pod_d2",
+      "benef_decision_divorce_d3",
+      "benef_decision_newjob_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [
+      "investing_and_future"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Next time you log into your 401(k), spend the extra two minutes on the beneficiary tab - it outranks your will."
   }
 ]

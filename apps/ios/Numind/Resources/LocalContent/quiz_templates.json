@@ -19801,5 +19801,831 @@
     ],
     "correctConceptChoice": "Scan for a 'service charge' or 'gratuity included' line - restaurants commonly auto-add 18-20% for large parties, and double-tipping is the classic group error",
     "isApplication": true
+  },
+  {
+    "id": "filing_reconciliation_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your tax refund arrives. What is that money, really?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "A refund is a reconciliation result: your employer withheld estimated tax from every paycheck (per your W-4), and your return computed what you actually owed. Withheld more than owed = the difference comes back. It's your own money that sat with the IRS interest-free - not a reward, and not the government's generosity.",
+    "conceptChoices": [
+      "Your own overpaid withholding coming back to you",
+      "A government bonus for filing on time",
+      "Interest the IRS pays you for the year",
+      "A discount for using tax software"
+    ],
+    "correctConceptChoice": "Your own overpaid withholding coming back to you"
+  },
+  {
+    "id": "filing_w2_timing_d1",
+    "moduleId": "taxes",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "When must your employer send your W-2?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Employers must furnish W-2s by the end of January (IRS). If mid-February passes with no W-2, contact the employer first, then the IRS. You can't complete an accurate return without it - the W-2 carries your year's wages and everything already withheld.",
+    "conceptChoices": [
+      "By the end of January",
+      "By April 15, the filing deadline",
+      "Within 30 days of your request",
+      "Only if you ask for one"
+    ],
+    "correctConceptChoice": "By the end of January"
+  },
+  {
+    "id": "filing_free_options_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your AGI is $61,000 with one W-2. Which FREE filing routes are open to you?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "At $61,000 you're under both bars: IRS Free File guided software (AGI $89,000 or less for the 2026 season) and VITA in-person volunteer prep (generally $69,000 or less). Free File Fillable Forms works at ANY income but offers no guidance. Note: IRS Direct File was discontinued after 2025 - it's no longer an option.",
+    "conceptChoices": [
+      "Both IRS Free File guided software AND in-person VITA help",
+      "Only paid software - free options stop at $50,000",
+      "Only IRS Direct File",
+      "None - free filing is only for people with no W-2"
+    ],
+    "correctConceptChoice": "Both IRS Free File guided software AND in-person VITA help"
+  },
+  {
+    "id": "filing_refund_timing_d2",
+    "moduleId": "taxes",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What's the fastest legitimate way to get your refund?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "E-file plus direct deposit - the IRS issues most of those refunds within ~21 days. Paper returns take far longer. 'Refund advance' products don't make the IRS faster; they're loans against your own refund, sometimes with fees attached.",
+    "conceptChoices": [
+      "E-file with direct deposit - most such refunds arrive within ~21 days",
+      "File a paper return - it skips the e-file queue",
+      "Pay a preparer - paid returns are processed first",
+      "Request a paper check - checks are printed before deposits"
+    ],
+    "correctConceptChoice": "E-file with direct deposit - most such refunds arrive within ~21 days"
+  },
+  {
+    "id": "filing_decision_firsttime_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "It's February. You earn $52,000, have one W-2 and no other income, and you've never filed by yourself before. A coworker says their tax preparer charges $300 and 'always finds more.'",
+    "promptTemplate": "What's the smartest path?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "One W-2 at $52,000 is exactly what IRS Free File guided software exists for: $0, walks you through every step, e-file + direct deposit gets the refund in ~21 days. A $300 preparer buys no extra refund on a simple return - the numbers are the numbers. Waiting until October risks penalties if you owe; ignoring it risks more.",
+    "conceptChoices": [
+      "Use IRS Free File guided software - you're under the $89,000 AGI cap - and e-file with direct deposit",
+      "Pay a $300 preparer - professionals always find $300+ more in refunds on simple returns",
+      "Wait until October - first-year filers get an automatic extension",
+      "Skip filing - your employer's withholding already counts as filing"
+    ],
+    "correctConceptChoice": "Use IRS Free File guided software - you're under the $89,000 AGI cap - and e-file with direct deposit",
+    "isApplication": true
+  },
+  {
+    "id": "filing_decision_refund_advance_d3",
+    "moduleId": "taxes",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A tax-prep storefront offers a 'refund advance' - your expected $1,400 refund today, with a $79 processing fee plus a $49 'document fee.' Your return is a single W-2.",
+    "promptTemplate": "What would you do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Decline the advance. It's a short-term loan against your OWN refund - e-file + direct deposit already delivers most refunds in ~21 days for free. Paying fees (or accepting fee-loaded 'no-fee' products) to get your own money three weeks early is exactly the kind of leak this lesson exists to stop.",
+    "conceptChoices": [
+      "Decline it - e-file + direct deposit already gets the refund in ~21 days at $0 cost",
+      "Take it - getting money today always beats waiting three weeks",
+      "Take it but only if the fee is under $100",
+      "Take it and cancel the underlying tax return afterward"
+    ],
+    "correctConceptChoice": "Decline it - e-file + direct deposit already gets the refund in ~21 days at $0 cost",
+    "isApplication": true
+  },
+  {
+    "id": "czero_fico_file_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What does your credit file need before a FICO score exists at all?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "myFICO's minimum scoring criteria: at least one account open 6+ months, and at least one account reported to the bureau within the last 6 months (one account can satisfy both). No file, no score - which is why the first six months of any starter account are the whole game.",
+    "conceptChoices": [
+      "At least one account open 6+ months and one reported within the last 6 months",
+      "A salary above $30,000 reported by your employer",
+      "At least three credit cards in good standing",
+      "A history of paying rent and utilities on time"
+    ],
+    "correctConceptChoice": "At least one account open 6+ months and one reported within the last 6 months"
+  },
+  {
+    "id": "czero_secured_mechanics_d1",
+    "moduleId": "debt",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "How does a secured credit card actually work?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "You put down a refundable deposit (typically $200 minimum) and that deposit usually becomes your credit line. You use it like any card and payments get reported. With on-time use, issuers can graduate the account to a regular unsecured card and return the deposit. It's training wheels that report to the bureaus.",
+    "conceptChoices": [
+      "Your refundable deposit becomes the credit line; on-time use can graduate it to a regular card",
+      "The bank lends you the deposit amount as a personal loan",
+      "It works like a debit card and never reports to credit bureaus",
+      "It's a prepaid card you reload each month"
+    ],
+    "correctConceptChoice": "Your refundable deposit becomes the credit line; on-time use can graduate it to a regular card"
+  },
+  {
+    "id": "czero_authorized_user_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A parent adds you as an authorized user on their 10-year-old card. What's true?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Per the CFPB: an authorized user is NOT legally responsible for the debt - only the account holder is. Meanwhile the account's age and payment history CAN appear on your report (most issuers report authorized users, but it's worth confirming). A long, clean account is one of the fastest exits from credit invisibility.",
+    "conceptChoices": [
+      "The account's history can appear on your report, and you have no legal liability for the debt",
+      "You become equally liable for the full balance",
+      "It only helps if you also use the card every month",
+      "Authorized-user accounts never affect anyone's credit file"
+    ],
+    "correctConceptChoice": "The account's history can appear on your report, and you have no legal liability for the debt"
+  },
+  {
+    "id": "czero_builder_loan_d2",
+    "moduleId": "debt",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "How does a credit-builder loan work?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Backwards from a normal loan: the lender locks the 'loan' (typically $300-$1,000) in savings, you make the monthly payments first, each payment gets reported to the bureaus, and the money is released to you at the end. You're buying a payment history. Caution: missed payments get reported just as faithfully (CFPB).",
+    "conceptChoices": [
+      "The money sits locked in savings while your payments get reported; you receive it after paying",
+      "You receive the cash upfront at 0% interest",
+      "The lender reports it only if you miss a payment",
+      "It's a payday loan that banks offer to students"
+    ],
+    "correctConceptChoice": "The money sits locked in savings while your payments get reported; you receive it after paying"
+  },
+  {
+    "id": "czero_decision_first_card_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You're 22 with no credit history. Options in front of you: a secured card ($200 refundable deposit), a store card at 30% APR with '10% off today,' and a $9/month 'credit boost' app.",
+    "promptTemplate": "What's the strongest first move?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The secured card wins: $200 deposit (refundable), reports to all three bureaus, and one autopaid subscription builds the 35%-of-FICO payment history with zero interest risk. The store card's 30% APR is a trap if you ever carry a balance; the 'credit boost' app reports no real tradeline here; waiting builds nothing.",
+    "conceptChoices": [
+      "Open the secured card, put one small subscription on it, autopay in full every month",
+      "Take the store card - retail cards build credit twice as fast",
+      "Use a paid 'credit boost' app instead of a real account",
+      "Wait until you can qualify for a premium rewards card"
+    ],
+    "correctConceptChoice": "Open the secured card, put one small subscription on it, autopay in full every month",
+    "isApplication": true
+  },
+  {
+    "id": "czero_decision_small_limit_d3",
+    "moduleId": "debt",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your first secured card arrived: $200 limit. You spend about $180/month on subscriptions and food, and you plan to pay in full either way.",
+    "promptTemplate": "What's the right play with this card?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Utilization (~30% of FICO) measures balance against limit - $180 of spending on a $200 limit reads as 90% utilization even if you pay in full. Keep the card's job small: one ~$15 subscription is well under 30% utilization, autopay handles the 35% (payment history), and your regular spending stays on debit until the limit grows.",
+    "conceptChoices": [
+      "Put one small subscription (~$15) on it and keep the rest of your spending elsewhere for now",
+      "Run all $180 of monthly spending through it - more activity builds credit faster",
+      "Max it out monthly but pay in full - utilization doesn't matter if you pay",
+      "Never use it at all - an unused card builds credit fastest"
+    ],
+    "correctConceptChoice": "Put one small subscription (~$15) on it and keep the rest of your spending elsewhere for now",
+    "isApplication": true
+  },
+  {
+    "id": "dispute_fcba_window_d1",
+    "moduleId": "money_safety",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "How long do you have to dispute a billing error on a CREDIT card?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The Fair Credit Billing Act gives you 60 days from the date of the statement that contains the error, and the dispute should be in writing to preserve your rights. That's why checking statements monthly matters - the clock starts at the statement, not when you happen to notice.",
+    "conceptChoices": [
+      "60 days from the statement containing the error, in writing",
+      "30 days from the day the charge was made",
+      "One year from the transaction",
+      "There's no deadline for disputes"
+    ],
+    "correctConceptChoice": "60 days from the statement containing the error, in writing"
+  },
+  {
+    "id": "dispute_card_liability_d1",
+    "moduleId": "money_safety",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Someone steals your CREDIT card number and runs up charges. Your maximum legal liability?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Federal law (FCBA) caps your liability for unauthorized credit-card use at $50 - and the major card networks contractually bring that to $0. This is a key reason credit cards are the safer rail for online purchases: the fraud risk sits with the issuer, not you.",
+    "conceptChoices": [
+      "$50 by law - and card networks usually take it to $0",
+      "The full amount until the police recover it",
+      "Half of whatever was charged",
+      "$500 if you report within 60 days"
+    ],
+    "correctConceptChoice": "$50 by law - and card networks usually take it to $0"
+  },
+  {
+    "id": "dispute_debit_speed_d2",
+    "moduleId": "money_safety",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Why does reporting speed matter so much more for a DEBIT card?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Regulation E ties your liability cap to how fast you report: within 2 business days of learning about it = $50 max; within 60 days of the statement = up to $500; beyond that, losses can be unlimited. And unlike a credit card, the stolen money is YOURS while the bank investigates - speed protects both the cap and your cash flow.",
+    "conceptChoices": [
+      "Your liability cap grows with delay: $50 within 2 days, $500 within 60 days, unlimited after",
+      "Debit disputes are only allowed in the first 48 hours",
+      "It doesn't - debit and credit cards have identical protections",
+      "Banks pay interest on fraud losses if you report fast"
+    ],
+    "correctConceptChoice": "Your liability cap grows with delay: $50 within 2 days, $500 within 60 days, unlimited after"
+  },
+  {
+    "id": "dispute_merchant_vs_issuer_d2",
+    "moduleId": "money_safety",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You were double-charged by a store. Merchant first, or bank first?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "For billing mistakes, the merchant is usually fastest - most fix a double charge in days. The issuer dispute (chargeback) is the legal backstop when the merchant won't cooperate, and filing in writing within the 60-day window preserves it. For UNAUTHORIZED charges (fraud), skip the merchant - go straight to your issuer.",
+    "conceptChoices": [
+      "Merchant first for billing mistakes - the issuer dispute is your backstop within the 60-day window",
+      "Always the bank first - contacting the merchant voids your dispute rights",
+      "Neither - double charges reverse automatically after 30 days",
+      "Small-claims court is the standard first step"
+    ],
+    "correctConceptChoice": "Merchant first for billing mistakes - the issuer dispute is your backstop within the 60-day window"
+  },
+  {
+    "id": "dispute_decision_unknown_charge_d3",
+    "moduleId": "money_safety",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Reviewing your credit-card statement, you find a $214 charge from 'TKL*DIGITALSVC' dated five weeks ago. You don't recognize it.",
+    "promptTemplate": "What do you do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Five weeks in, you're still inside the 60-day FCBA window - but not by much. Quick check of the merchant name (many bill under odd corporate names), then dispute in writing with your issuer immediately if it's still unknown. Waiting for next month's statement could push you past the window; paying it quietly trains the thief to keep going.",
+    "conceptChoices": [
+      "Check the merchant name online today; if still unknown, dispute it in writing with your issuer now - the 60-day clock is running",
+      "Wait for next month's statement to see if it repeats",
+      "Pay it to protect your credit score, then investigate",
+      "Call the police before contacting the card issuer"
+    ],
+    "correctConceptChoice": "Check the merchant name online today; if still unknown, dispute it in writing with your issuer now - the 60-day clock is running",
+    "isApplication": true
+  },
+  {
+    "id": "dispute_decision_debit_skim_d3",
+    "moduleId": "money_safety",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You check your banking app and see two ATM withdrawals from yesterday in a city you've never visited - $200 and $180 - on your DEBIT card, which is still in your wallet.",
+    "promptTemplate": "What's the right first move?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Report to the bank TODAY - you're inside the 2-business-day window, which caps your liability at $50 (Reg E). The bank kills the card and investigates, generally with provisional credit. Waiting 'to see if more charges appear' is exactly how the $50 cap becomes a $500 cap. The police report can follow; the liability clock can't.",
+    "conceptChoices": [
+      "Call the bank today - reporting within 2 business days caps your liability at $50",
+      "Watch the account for a week to collect evidence of more fraud first",
+      "File a police report first - banks require one before acting",
+      "Drain the account to zero so there's nothing left to steal"
+    ],
+    "correctConceptChoice": "Call the bank today - reporting within 2 business days caps your liability at $50",
+    "isApplication": true
+  },
+  {
+    "id": "bank_optin_default_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You never opted in to debit-card overdraft coverage. Your card is swiped for more than your balance. What happens?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Under Regulation E, the default is simple: the transaction is declined and you pay nothing. Banks can only charge debit/ATM overdraft fees if you affirmatively opted in. (Checks and recurring payments are a different story - they can still overdraw and incur fees.)",
+    "conceptChoices": [
+      "The purchase is declined and you pay no fee",
+      "The purchase goes through with an automatic ~$35 fee",
+      "Your account is frozen until you deposit funds",
+      "The bank converts the gap into a small loan automatically"
+    ],
+    "correctConceptChoice": "The purchase is declined and you pay no fee"
+  },
+  {
+    "id": "bank_fee_waiver_d1",
+    "moduleId": "money_math",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your checking account charges a $12 monthly maintenance fee. What's the most common way to make it $0?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "About 95% of maintenance fees are waivable (Bankrate 2025), and the most common trigger is a qualifying direct deposit - many accounts waive on that alone. Minimum balances also work. And nearly half of basic checking accounts charge no fee at all - switching is the other lever.",
+    "conceptChoices": [
+      "Set up direct deposit - it's the most common waiver condition",
+      "Ask the teller nicely once a year",
+      "Keep the account at exactly $0",
+      "Maintenance fees can never be waived"
+    ],
+    "correctConceptChoice": "Set up direct deposit - it's the most common waiver condition"
+  },
+  {
+    "id": "bank_insured_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What does FDIC (or NCUA) insurance actually guarantee?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$250,000 per depositor, per insured institution, per ownership category - backed by the federal government. If the bank fails, your money up to that limit is safe. Credit unions carry the equivalent NCUA coverage with the same $250,000 figure. It protects against bank failure - not against fraud on your account or bad investments.",
+    "conceptChoices": [
+      "Your deposits up to $250,000 per depositor, per institution, per ownership category, if the institution fails",
+      "All your money, in any amount, against any kind of loss",
+      "Protection against fraudulent charges on your debit card",
+      "A guaranteed interest rate on savings"
+    ],
+    "correctConceptChoice": "Your deposits up to $250,000 per depositor, per institution, per ownership category, if the institution fails"
+  },
+  {
+    "id": "bank_overdraft_landscape_d2",
+    "moduleId": "money_math",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Which best describes overdraft fees in 2026?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The market split: a growing list of banks charge $0 (Capital One, Ally, Citi and others) or cut to ~$10, while some large banks still charge ~$34 per item. The average across banks is about $27 (Bankrate 2025). Translation: the fee you pay is now a CHOICE of bank, not a fact of banking.",
+    "conceptChoices": [
+      "Split market: many banks now charge $0-$10, while others still charge ~$34 - your bank choice decides",
+      "A federally fixed $5 at every bank",
+      "Uniformly ~$35 everywhere, as always",
+      "Illegal nationwide since 2025"
+    ],
+    "correctConceptChoice": "Split market: many banks now charge $0-$10, while others still charge ~$34 - your bank choice decides"
+  },
+  {
+    "id": "bank_decision_optin_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Opening a checking account, the banker says: 'I'd recommend overdraft protection on your debit card - that way your card always works even if you're a little short.'",
+    "promptTemplate": "What do you tell them?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Decline it. 'Overdraft coverage' on a debit card means: instead of a declined $6 coffee (cost: $0 and mild embarrassment), the bank approves it and may charge ~$34. Opted out, Reg E protects you by default. The only people who benefit from debit overdraft 'protection' on small purchases are the fee's collectors.",
+    "conceptChoices": [
+      "Decline - opted out means a short purchase is simply declined, free",
+      "Opt in - it's rude to decline services the banker recommends",
+      "Opt in - declined cards damage your credit score",
+      "Opt in for ATM only, since cash emergencies are different"
+    ],
+    "correctConceptChoice": "Decline - opted out means a short purchase is simply declined, free",
+    "isApplication": true
+  },
+  {
+    "id": "bank_decision_fee_d3",
+    "moduleId": "money_math",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "You notice you've paid a $12 'monthly maintenance fee' on your checking account every month for the past two years - $288 total. Your paycheck goes to this account by direct deposit already, but you never enrolled it as the fee waiver.",
+    "promptTemplate": "What's the move?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$12/month is $144/year for nothing. First call: ask whether direct deposit waives it (most common waiver). If this account can't be made free, switch - nearly half of basic checking accounts are free outright. Loyalty to a fee-charging account is a pure leak; the 30-minute fix pays $144 every year after.",
+    "conceptChoices": [
+      "Get the fee waived via direct deposit - or switch to one of the many free checking accounts",
+      "Keep paying - $12 is the standard cost of having a bank",
+      "Close all bank accounts and use prepaid cards",
+      "Overdraw the account once so the bank owes you a favor"
+    ],
+    "correctConceptChoice": "Get the fee waived via direct deposit - or switch to one of the many free checking accounts",
+    "isApplication": true
+  },
+  {
+    "id": "renters_landlord_gap_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A kitchen fire damages your apartment and everything in it. What does your LANDLORD's insurance pay you?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Nothing for your possessions. The landlord's policy covers the BUILDING - walls, structure, systems. Your furniture, electronics, clothes, and the hotel you'll need are on you, which is the entire reason renters insurance exists (III).",
+    "conceptChoices": [
+      "Nothing for your possessions - it covers the building only",
+      "The full replacement value of your belongings",
+      "Half the value of your belongings",
+      "Your belongings, but only if the landlord caused the fire"
+    ],
+    "correctConceptChoice": "Nothing for your possessions - it covers the building only"
+  },
+  {
+    "id": "renters_cost_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "About how much does renters insurance typically cost?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "About $171 a year on the national average (NAIC 2022) - roughly $15 a month. For that, you get possessions coverage, liability protection, and additional living expenses. It's routinely the cheapest meaningful insurance an adult can buy.",
+    "conceptChoices": [
+      "Roughly $15 a month (~$171/year on average)",
+      "Roughly $150 a month",
+      "About 1% of your annual rent per month",
+      "It's free if your landlord has insurance"
+    ],
+    "correctConceptChoice": "Roughly $15 a month (~$171/year on average)"
+  },
+  {
+    "id": "renters_acv_vs_replacement_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Actual cash value vs replacement cost coverage - what's the real difference?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Actual cash value pays what your used stuff was WORTH - depreciated. Replacement cost pays what NEW equivalents cost. A 5-year-old laptop might be 'worth' $200 depreciated but cost $1,000 to replace. Replacement cost runs ~10% more in premium and is usually the right call (III).",
+    "conceptChoices": [
+      "ACV pays depreciated value of your old stuff; replacement cost pays for new equivalents (~10% more premium)",
+      "They're identical - the names refer to payment timing",
+      "ACV pays more because it includes sentimental value",
+      "Replacement cost only applies to electronics"
+    ],
+    "correctConceptChoice": "ACV pays depreciated value of your old stuff; replacement cost pays for new equivalents (~10% more premium)"
+  },
+  {
+    "id": "renters_ale_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "A covered fire makes your apartment unlivable for three weeks. Which part of renters insurance handles the hotel?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Additional living expenses (ALE), also called loss of use - it covers the extra costs of living elsewhere during covered repairs: hotel, meals beyond your normal costs, even pet boarding under many policies. It's the part of the policy people don't know they own.",
+    "conceptChoices": [
+      "Additional living expenses (loss of use) coverage",
+      "The liability portion",
+      "The personal property portion",
+      "Nothing - temporary housing is never covered"
+    ],
+    "correctConceptChoice": "Additional living expenses (loss of use) coverage"
+  },
+  {
+    "id": "renters_decision_skip_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your new roommate says you're both wasting money: 'The landlord already has insurance on this building. If anything happens, that covers us.'",
+    "promptTemplate": "What's wrong with the roommate's reasoning?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The landlord's policy covers the BUILDING, not tenant property - if the place burns, it pays the owner to rebuild and pays you $0 for everything you own, plus nothing for the months of temporary housing. ~$15/month closes that entire gap. The roommate is describing protection that does not exist.",
+    "conceptChoices": [
+      "The landlord's policy covers the building only - your possessions and temporary housing are entirely your problem",
+      "Nothing - tenants are automatically covered by landlord policies",
+      "Renters insurance is redundant if you have health insurance",
+      "Only homeowners can buy property coverage"
+    ],
+    "correctConceptChoice": "The landlord's policy covers the building only - your possessions and temporary housing are entirely your problem",
+    "isApplication": true
+  },
+  {
+    "id": "renters_decision_claim_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your 4-year-old laptop (new equivalent: $1,300) is stolen. Your renters policy is ACTUAL CASH VALUE, with a deductible you'll clear.",
+    "promptTemplate": "What payout should you expect, and what's the lesson for renewal?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "With ACTUAL CASH VALUE coverage, the insurer pays the depreciated worth of a 4-year-old laptop - a few hundred dollars, not the $1,300 a new equivalent costs. At renewal, switching to replacement cost (~10% more premium) is what makes future claims pay for NEW equivalents. This is the choice that decides whether a claim feels like protection or an insult.",
+    "conceptChoices": [
+      "A depreciated few hundred dollars - and at renewal, switch to replacement cost coverage",
+      "The full $1,300 price of a new equivalent - all policies pay new-for-old",
+      "Nothing - theft outside the home is never covered",
+      "Double the laptop's value, as a theft penalty paid by the insurer"
+    ],
+    "correctConceptChoice": "A depreciated few hundred dollars - and at renewal, switch to replacement cost coverage",
+    "isApplication": true
+  },
+  {
+    "id": "auto_minimums_vary_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Are state-minimum liability limits generally enough protection?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Rarely. Minimums vary wildly by state (Florida requires no bodily-injury liability at all) and were mostly set decades ago. One serious accident can exceed a low cap quickly - and everything above your limit comes out of your assets and future wages. That's why the common adequacy guidance is 100/300/100 rather than the state floor (Consumer Reports).",
+    "conceptChoices": [
+      "No - minimums vary wildly and one serious accident can blow past them; 100/300/100 is the common adequacy guidance",
+      "Yes - states calculate minimums to cover any realistic accident",
+      "Yes, as long as you drive carefully",
+      "Minimums only matter for commercial drivers"
+    ],
+    "correctConceptChoice": "No - minimums vary wildly and one serious accident can blow past them; 100/300/100 is the common adequacy guidance"
+  },
+  {
+    "id": "auto_loyalty_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Why does staying with the same auto insurer for years often COST you money?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "'Price optimization' is a documented industry practice: insurers can charge loyal non-shoppers more than identical-risk customers who shop, because retention data says they'll tolerate it. Roughly 20 states restrict the practice - the universal defense is re-quoting every year or two.",
+    "conceptChoices": [
+      "Insurers can charge loyal non-shoppers more - re-quoting every 1-2 years is the defense",
+      "It doesn't - loyalty always earns automatic discounts",
+      "Old policies lose coverage features over time",
+      "Insurers legally must raise every rate 10% per year"
+    ],
+    "correctConceptChoice": "Insurers can charge loyal non-shoppers more - re-quoting every 1-2 years is the defense"
+  },
+  {
+    "id": "auto_deductible_tradeoff_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What's the real trade in raising your deductible from $500 to $1,000?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "You self-insure $500 more of any claim in exchange for a lower premium - typically trimming roughly 5-15% off the total (III pegs the comp/collision portion savings higher). The rule: only raise it if the new deductible could come out of savings tomorrow without a card balance. Otherwise you've traded a known premium for unaffordable surprise risk.",
+    "conceptChoices": [
+      "A lower premium (typically ~5-15% off the total) in exchange for covering $500 more of any claim yourself - only worth it if savings can absorb it",
+      "Pure savings - the deductible never actually gets paid",
+      "A higher premium but faster claim payouts",
+      "It cancels your collision coverage entirely"
+    ],
+    "correctConceptChoice": "A lower premium (typically ~5-15% off the total) in exchange for covering $500 more of any claim yourself - only worth it if savings can absorb it"
+  },
+  {
+    "id": "auto_drop_collision_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "When does it make sense to DROP collision and comprehensive on an old car?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "III's rule of thumb: when the comp+collision portion of your premium exceeds ~10% of the car's value, the coverage may no longer be cost-effective - the most the insurer would ever pay (the car's value, minus your deductible) is too small relative to what you pay for the protection. Liability coverage stays either way; it protects everyone else.",
+    "conceptChoices": [
+      "When that part of the premium exceeds ~10% of the car's value - the max payout no longer justifies the cost",
+      "Never - dropping any coverage is always reckless",
+      "As soon as the car is paid off",
+      "Only when the car stops running"
+    ],
+    "correctConceptChoice": "When that part of the premium exceeds ~10% of the car's value - the max payout no longer justifies the cost"
+  },
+  {
+    "id": "auto_decision_renewal_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your renewal letter shows a $400/year increase. No accidents, no tickets, same car. You've been with this insurer six years and have never compared prices.",
+    "promptTemplate": "What's the strongest response?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Shop it: three quotes at the same coverage levels takes ~30 minutes and directly attacks the loyalty pricing that produced the increase. Then give your current insurer the chance to match - shoppers get the good rates. Auto-renewing rewards the increase; dropping coverage to save money exposes your assets at exactly the wrong layer.",
+    "conceptChoices": [
+      "Get 3 same-coverage quotes, then ask your current insurer to match - loyalty pricing only works on non-shoppers",
+      "Auto-renew - switching insurers resets your accident protections",
+      "Drop to state-minimum liability to offset the increase",
+      "Cancel insurance until the next time you're pulled over"
+    ],
+    "correctConceptChoice": "Get 3 same-coverage quotes, then ask your current insurer to match - loyalty pricing only works on non-shoppers",
+    "isApplication": true
+  },
+  {
+    "id": "auto_decision_old_car_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "Your 12-year-old car is worth about $3,000. Comp + collision is $480/year of your premium, with a $500 deductible.",
+    "promptTemplate": "What does the 10% rule of thumb say here?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "$480 against a $3,000 car is 16% - well past III's ~10% threshold. The most a collision claim could ever pay is the car's value minus your deductible (~$2,500), and you're paying $480 every year for that shrinking ceiling. Drop comp/collision, keep liability (that's for other people's cars and bodies), and put the $480 toward the next-car fund.",
+    "conceptChoices": [
+      "Drop comp/collision (16% of the car's value is past the ~10% threshold), keep liability, bank the savings",
+      "Keep everything - older cars need MORE coverage",
+      "Drop liability instead, since the car is old",
+      "Raise the deductible to $5,000 and keep collision"
+    ],
+    "correctConceptChoice": "Drop comp/collision (16% of the car's value is past the ~10% threshold), keep liability, bank the savings",
+    "isApplication": true
+  },
+  {
+    "id": "benef_supersedes_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "Your will says one thing; the beneficiary form on your 401(k) says another. Who gets the money?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The form. Beneficiary designations on 401(k)s, IRAs, life insurance, and POD accounts pass assets directly - outside the will entirely. The Supreme Court has enforced an outdated form even against a divorce agreement (Kennedy v. DuPont, 2009). The will governs what's left over; the forms govern themselves.",
+    "conceptChoices": [
+      "Whoever is named on the beneficiary form - it overrides the will",
+      "Whoever is named in the will - wills are the final word",
+      "The court splits the difference",
+      "The money is frozen until the family agrees"
+    ],
+    "correctConceptChoice": "Whoever is named on the beneficiary form - it overrides the will"
+  },
+  {
+    "id": "benef_contingent_d1",
+    "moduleId": "insurance",
+    "difficulty": 1,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What does a CONTINGENT beneficiary do?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The contingent (backup) inherits only if every primary beneficiary has died, can't be located, or declines. If any primary survives, contingents get nothing. Naming one is what keeps the asset out of probate limbo when the unexpected happens to your first choice (FINRA).",
+    "conceptChoices": [
+      "Inherits only if all primary beneficiaries are gone - the backup plan",
+      "Splits the asset 50/50 with the primary",
+      "Manages the money on the primary's behalf",
+      "Receives the asset only if the will approves it"
+    ],
+    "correctConceptChoice": "Inherits only if all primary beneficiaries are gone - the backup plan"
+  },
+  {
+    "id": "benef_erisa_spouse_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "You're married and want your sibling as your 401(k) beneficiary. What does federal law require?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "ERISA makes your spouse the automatic 401(k) beneficiary - naming anyone else requires the spouse's written, notarized (or plan-witnessed) consent. Without that waiver, the spouse inherits regardless of the form. IRAs are different: no federal spousal-consent requirement (state community-property rules can apply instead).",
+    "conceptChoices": [
+      "Your spouse must sign a notarized waiver - otherwise they automatically inherit the 401(k)",
+      "Nothing - you can name anyone at any time",
+      "A judge must approve any non-spouse beneficiary",
+      "Siblings are barred from inheriting retirement accounts"
+    ],
+    "correctConceptChoice": "Your spouse must sign a notarized waiver - otherwise they automatically inherit the 401(k)"
+  },
+  {
+    "id": "benef_pod_d2",
+    "moduleId": "insurance",
+    "difficulty": 2,
+    "inputMode": "multipleChoice",
+    "promptTemplate": "What does a payable-on-death (POD) designation on a bank account accomplish?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "It passes the account directly to your named person at death - skipping probate entirely; they claim it with a death certificate and ID. Brokerage accounts use the equivalent TOD (transfer-on-death) registration. Bonus: FDIC can insure POD accounts up to $250,000 per owner per eligible beneficiary. It costs nothing to set up.",
+    "conceptChoices": [
+      "The account passes directly to your named person at death, skipping probate - free to set up",
+      "It locks the account so no one can access it after death",
+      "It converts the account into a trust managed by the bank",
+      "It lets the beneficiary withdraw money while you're alive"
+    ],
+    "correctConceptChoice": "The account passes directly to your named person at death, skipping probate - free to set up"
+  },
+  {
+    "id": "benef_decision_divorce_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "A friend divorced two years ago and rewrote their will to leave everything to their kids. Their 401(k) beneficiary form, untouched since 2019, still names the ex-spouse.",
+    "promptTemplate": "What does this person need to understand?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "The 401(k) form still controls - and the Supreme Court enforced exactly this in Kennedy v. DuPont: the ex-spouse named on the form collected despite waiving the money in the divorce. For ERISA plans, state laws that auto-revoke an ex don't apply. The new will fixes nothing here. The fix is logging in and changing the form - ten minutes.",
+    "conceptChoices": [
+      "The form beats the will and the divorce decree - update the 401(k) beneficiary directly, today",
+      "The new will already redirected the 401(k) - nothing to do",
+      "Divorce automatically removed the ex from every account",
+      "Only a court order can ever change a beneficiary"
+    ],
+    "correctConceptChoice": "The form beats the will and the divorce decree - update the 401(k) beneficiary directly, today",
+    "isApplication": true
+  },
+  {
+    "id": "benef_decision_newjob_d3",
+    "moduleId": "insurance",
+    "difficulty": 3,
+    "inputMode": "multipleChoice",
+    "scenarioTemplate": "First week at a new job, you're enrolling in the 401(k). You've picked your contribution percent and the target-date fund.",
+    "promptTemplate": "Beyond picking funds, what's the 10-minute move most people skip?",
+    "variableRules": [],
+    "answerFormula": null,
+    "answerFormat": "integer",
+    "distractorStrategy": "roundedNeighbor",
+    "explanationTemplate": "Complete the beneficiary designation - primary AND contingent - during enrollment. Skip it and the plan's default rules (or probate) decide who gets the account; fill it once and never revisit, and a future life event can leave it pointing at the wrong person. Enrollment day is the one moment everyone is already in the portal.",
+    "conceptChoices": [
+      "Name a primary AND contingent beneficiary in the enrollment portal right now",
+      "Nothing else - beneficiaries auto-populate from your HR file",
+      "Mail the plan a copy of your will instead",
+      "Wait until retirement to fill in beneficiaries"
+    ],
+    "correctConceptChoice": "Name a primary AND contingent beneficiary in the enrollment portal right now",
+    "isApplication": true
   }
 ]
