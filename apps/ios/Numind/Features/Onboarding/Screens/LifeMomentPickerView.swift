@@ -106,7 +106,9 @@ struct LifeMomentPickerView: View {
                             .background(moment.color)
                             .clipShape(Capsule())
                     } else if isSecondary {
-                        CheckBadge(selected: true, color: moment.color)
+                        // Secondaries share one neutral check — only the FOCUS
+                        // earns its pack color, so the hierarchy reads at a glance.
+                        CheckBadge(selected: true, color: Theme.Colors.primaryBlue)
                     }
                 }
 
@@ -120,17 +122,21 @@ struct LifeMomentPickerView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(14)
             .padding(.top, 2)
-            .background(selected ? moment.color.opacity(0.06) : Theme.Colors.cardBackground)
+            .background(isFocus ? moment.color.opacity(0.06)
+                        : (isSecondary ? Theme.Colors.primaryBlueTint.opacity(0.5)
+                           : Theme.Colors.cardBackground))
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .strokeBorder(
-                        selected ? moment.color : Theme.Colors.hairline,
+                        isFocus ? moment.color
+                            : (isSecondary ? Theme.Colors.primaryBlue : Theme.Colors.hairline),
                         lineWidth: isFocus ? 2 : (selected ? 1.5 : 1)
                     )
             )
             .shadow(
-                color: selected ? moment.color.opacity(0.12) : .black.opacity(0.04),
+                color: isFocus ? moment.color.opacity(0.12)
+                    : (isSecondary ? Theme.Colors.primaryBlue.opacity(0.10) : .black.opacity(0.04)),
                 radius: selected ? 8 : 3, x: 0, y: 2
             )
         }

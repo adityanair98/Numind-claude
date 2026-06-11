@@ -78,6 +78,52 @@ struct InsecurityMirrorView: View {
         !viewModel.signals.feltMoments.subtracting([.noneYet]).isEmpty
     }
 
+    /// One verified cost stat per felt moment — the reveal mirrors EXACTLY
+    /// what the user just admitted to, in their own words.
+    private static let momentStats: [FeltMoment: (stat: String, text: String, source: String)] = [
+        .acceptedWithoutNegotiating: (
+            "10 min",
+            "is what a negotiation conversation takes \u{2014} and its payoff repeats every year you hold the job. Most people skip it.",
+            "Numind curriculum \u{00B7} verified 2026"
+        ),
+        .guessedHealthPlan: (
+            "$4.5B",
+            "in FSA money is forfeited annually \u{2014} benefits chosen by guessing leak money all year",
+            "EBRI"
+        ),
+        .carriedCardBalance: (
+            "~22%",
+            "is the typical card APR \u{2014} interest that compounds against a carried balance every single day",
+            "CFPB"
+        ),
+        .almostScammed: (
+            "44%",
+            "of fraud reports from people in their 20s involved lost money \u{2014} the most-scammed cohort by frequency",
+            "FTC Consumer Sentinel"
+        ),
+        .signedLeaseBlind: (
+            "3\u{2013}4\u{00D7}",
+            "monthly rent is what move-in actually costs before you get keys \u{2014} most renters find out at signing",
+            "Numind curriculum \u{00B7} verified 2026"
+        ),
+    ]
+
+    /// Stats for what they selected, in their own words; padded with the
+    /// remaining moments (framed as "coming") when fewer than 2 picked.
+    private var selectedStats: [(moment: FeltMoment, isYours: Bool)] {
+        let picked = FeltMoment.allCases.filter {
+            $0 != .noneYet && viewModel.signals.feltMoments.contains($0)
+        }
+        var rows = picked.map { (moment: $0, isYours: true) }
+        if rows.count < 2 {
+            let fillers: [FeltMoment] = [.almostScammed, .guessedHealthPlan, .carriedCardBalance]
+            for f in fillers where !picked.contains(f) && rows.count < 3 {
+                rows.append((moment: f, isYours: false))
+            }
+        }
+        return rows
+    }
+
     private var revealState: some View {
         VStack(alignment: .leading, spacing: 0) {
             ScrollView {
@@ -97,14 +143,23 @@ struct InsecurityMirrorView: View {
                         .lineSpacing(2)
                         .padding(.top, 12)
 
-                    // Verified cost stats
-                    VStack(spacing: 10) {
-                        costRow(stat: "41%", text: "of people cash out their 401(k) when changing jobs \u{2014} paying tax plus a 10% penalty",
-                                source: "UBC Sauder / HBR")
-                        costRow(stat: "$24B", text: "in employer 401(k) match goes unclaimed every year",
-                                source: "Financial Engines")
-                        costRow(stat: "$4.5B", text: "in FSA money is forfeited annually \u{2014} use it or lose it",
-                                source: "EBRI")
+                    // Verified cost stats — driven by the user's selections.
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(selectedStats, id: \.moment) { row in
+                            if let s = Self.momentStats[row.moment] {
+                                VStack(alignment: .leading, spacing: 6) {
+                                    Text(row.isYours
+                                         ? "You said \u{00B7} \(row.moment.displayText)"
+                                         : "Also coming for most people")
+                                        .font(.system(size: 11, weight: .semibold))
+                                        .foregroundStyle(row.isYours
+                                                         ? Theme.Colors.primaryBlue
+                                                         : Theme.Colors.mutedText)
+                                        .padding(.leading, 4)
+                                    costRow(stat: s.stat, text: s.text, source: s.source)
+                                }
+                            }
+                        }
                     }
                     .padding(.top, 22)
 

@@ -138,8 +138,12 @@ final class OnboardingViewModel: ObservableObject {
         signals.dailyMinutes = minutes
     }
 
-    func setPaycheck(cadence: PaycheckSchedule.Cadence, anchorDate: Date) {
-        signals.paycheck = PaycheckSchedule(cadence: cadence, anchorDate: anchorDate)
+    func setPaycheck(cadence: PaycheckSchedule.Cadence, anchorDate: Date,
+                     secondPaydayDay: Int? = nil) {
+        signals.paycheck = PaycheckSchedule(
+            cadence: cadence, anchorDate: anchorDate,
+            secondPaydayDay: cadence == .semimonthly ? secondPaydayDay : nil
+        )
     }
 
     func clearPaycheck() {
@@ -353,16 +357,18 @@ enum OnboardingScreen: Int, CaseIterable, Equatable {
     case mirroring = 8
     case deadline = 9
     case timeCommitment = 10
-    case paydayCapture = 11
-    case kaizen = 12
-    case adhd = 13
-    case nameInput = 14
-    case ageRange = 15
-    case diagnosticIntro = 16
-    case diagnosticQuiz = 17
-    case preparingResults = 18
-    case moneyMap = 19
-    case personalizedPlan = 20
+    case kaizen = 11
+    case adhd = 12
+    case nameInput = 13
+    case ageRange = 14
+    case diagnosticIntro = 15
+    case diagnosticQuiz = 16
+    case preparingResults = 17
+    case moneyMap = 18
+    case personalizedPlan = 19
+    // Payday lands right before the notifications ask — "we'll time your
+    // sessions to your money" is the strongest case for granting permission.
+    case paydayCapture = 20
     case notificationPermission = 21
     case paywallPriming = 22
     case streakGoal = 23

@@ -50,4 +50,18 @@ final class PaycheckScheduleTests: XCTestCase {
         let next = s.nextOccurrences(count: 1, from: date(2026, 6, 12))
         XCTAssertEqual(calendar.component(.day, from: next[0]), 19)
     }
+
+    func test_semimonthly_explicitSecondDay_overridesHeuristic() {
+        // Anchor on the 15th, second payday explicitly "last day" (31,
+        // clamped per month) — the +15 wrap heuristic would have said the 2nd.
+        let s = PaycheckSchedule(cadence: .semimonthly,
+                                 anchorDate: date(2026, 6, 15),
+                                 secondPaydayDay: 31)
+        let next = s.nextOccurrences(count: 3, from: date(2026, 6, 16))
+        let days = next.map { calendar.dateComponents([.month, .day], from: $0) }
+        XCTAssertEqual(days[0].day, 30)   // June 30 (31 clamped)
+        XCTAssertEqual(days[1].day, 15)   // July 15
+        XCTAssertEqual(days[1].month, 7)
+        XCTAssertEqual(days[2].day, 31)   // July 31
+    }
 }

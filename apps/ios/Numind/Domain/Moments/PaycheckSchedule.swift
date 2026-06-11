@@ -27,6 +27,10 @@ struct PaycheckSchedule: Codable, Equatable {
     var cadence: Cadence
     /// A payday the user identified; all occurrences derive from it.
     var anchorDate: Date
+    /// Semimonthly only: the OTHER payday's day-of-month, asked for
+    /// explicitly (e.g. anchor on the 15th, second on the 31st = "last day").
+    /// Optional for decode-compat; nil falls back to the +15-day heuristic.
+    var secondPaydayDay: Int? = nil
 
     /// Next `count` paydays strictly after `now`, ascending.
     func nextOccurrences(count: Int, from now: Date = Date(),
@@ -41,7 +45,9 @@ struct PaycheckSchedule: Codable, Equatable {
                                       count: count, from: now, calendar: calendar)
         case .semimonthly:
             let d1 = anchorDay(calendar)
-            let d2 = (d1 + 15 - 1) % 28 + 1   // wrapped into 1–28
+            // Prefer the explicitly-captured second day; the wrap heuristic
+            // only covers schedules saved before it existed.
+            let d2 = secondPaydayDay ?? ((d1 + 15 - 1) % 28 + 1)
             return monthlyOccurrences(days: [d1, d2].sorted(),
                                       count: count, from: now, calendar: calendar)
         }

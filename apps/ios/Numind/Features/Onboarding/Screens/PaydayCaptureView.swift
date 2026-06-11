@@ -11,6 +11,23 @@ struct PaydayCaptureView: View {
 
     @State private var cadence: PaycheckSchedule.Cadence? = nil
     @State private var anchorDate = Date()
+    @State private var secondPaydayDay = 31   // semimonthly: "Last day" default
+
+    /// Day-of-month options for the second semimonthly payday (31 = last day).
+    private static let secondDayOptions = [1, 5, 10, 15, 20, 25, 31]
+
+    private static func secondDayLabel(_ day: Int) -> String {
+        day == 31 ? "Last day" : "The \(day)\(ordinalSuffix(day))"
+    }
+
+    private static func ordinalSuffix(_ day: Int) -> String {
+        switch day {
+        case 1, 21, 31: return "st"
+        case 2, 22:     return "nd"
+        case 3, 23:     return "rd"
+        default:        return "th"
+        }
+    }
 
     var body: some View {
         ZStack {
@@ -70,6 +87,40 @@ struct PaydayCaptureView: View {
                             )
                             .padding(.top, 14)
                             .transition(.move(edge: .top).combined(with: .opacity))
+
+                            // Twice a month = two known days; one anchor can't
+                            // tell us the other, so ask.
+                            if cadence == .semimonthly {
+                                HStack(spacing: 14) {
+                                    Image(systemName: "calendar.badge.plus")
+                                        .font(.system(size: 16, weight: .semibold))
+                                        .foregroundStyle(Theme.Colors.growthGreen)
+                                        .frame(width: 36, height: 36)
+                                        .background(Theme.Colors.growthGreen.opacity(0.12))
+                                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                    Text("Your other payday")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundStyle(Theme.Colors.deepNavy)
+                                    Spacer()
+                                    Picker("", selection: $secondPaydayDay) {
+                                        ForEach(Self.secondDayOptions, id: \.self) { day in
+                                            Text(Self.secondDayLabel(day)).tag(day)
+                                        }
+                                    }
+                                    .pickerStyle(.menu)
+                                    .tint(Theme.Colors.deepNavy)
+                                    .onChange(of: secondPaydayDay) { _, _ in save() }
+                                }
+                                .padding(14)
+                                .background(Theme.Colors.cardBackground)
+                                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                        .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+                                )
+                                .padding(.top, 10)
+                                .transition(.move(edge: .top).combined(with: .opacity))
+                            }
                         }
                     }
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
@@ -99,13 +150,15 @@ struct PaydayCaptureView: View {
             if let saved = viewModel.signals.paycheck {
                 cadence = saved.cadence
                 anchorDate = saved.anchorDate
+                if let second = saved.secondPaydayDay { secondPaydayDay = second }
             }
         }
     }
 
     private func save() {
         guard let cadence else { return }
-        viewModel.setPaycheck(cadence: cadence, anchorDate: anchorDate)
+        viewModel.setPaycheck(cadence: cadence, anchorDate: anchorDate,
+                              secondPaydayDay: secondPaydayDay)
     }
 }
 

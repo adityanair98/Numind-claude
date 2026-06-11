@@ -108,9 +108,28 @@ enum Motivation: String, Codable, CaseIterable, Equatable, Hashable {
     case getAheadOfDebt
     case growMoney
     case staySharp             // maintenance identity
+
+    /// The exact card label the user tapped — mirrored back verbatim on
+    /// later screens so personalization is visibly theirs.
+    var displayText: String {
+        switch self {
+        case .stopLeavingMoney:     return "Stop leaving money on the table"
+        case .stopGettingTaken:     return "Stop getting taken advantage of"
+        case .decideWithConfidence: return "Decide with confidence, not anxiety"
+        case .understandPaycheck:   return "Actually understand my paycheck"
+        case .getAheadOfDebt:       return "Get ahead of my debt"
+        case .growMoney:            return "Make my money grow"
+        case .staySharp:            return "Keep my money instincts sharp"
+        }
+    }
 }
 
 enum AgeRange: String, Codable, CaseIterable, Equatable {
+    case under18
+    case age18to24
+    /// Legacy bucket from the first funnel build — kept ONLY so stored
+    /// payloads decode (ProgressData decode failure = full reset). Never
+    /// shown in the picker.
     case age13to24
     case age25to34
     case age35to44
@@ -118,8 +137,16 @@ enum AgeRange: String, Codable, CaseIterable, Equatable {
     case age55to64
     case age65plus
 
+    /// Buckets offered in onboarding — 18 splits out so we know who the
+    /// minors are (analytics consent, marketing claims, App Store rating).
+    static var pickerCases: [AgeRange] {
+        [.under18, .age18to24, .age25to34, .age35to44, .age45to54, .age55to64, .age65plus]
+    }
+
     var displayText: String {
         switch self {
+        case .under18:   return "Under 18"
+        case .age18to24: return "18–24"
         case .age13to24: return "13–24"
         case .age25to34: return "25–34"
         case .age35to44: return "35–44"

@@ -21,6 +21,7 @@ struct ProfileView: View {
     @AppStorage("numind.paydayReminderEnabled") private var paydayReminderEnabled = false
     @State private var paydayCadence: PaycheckSchedule.Cadence = .biweekly
     @State private var paydayAnchor = Date()
+    @State private var paydaySecondDay = 31
     @State private var paydaySet = false
 
     var body: some View {
@@ -252,6 +253,31 @@ struct ProfileView: View {
                         .onChange(of: paydayCadence) { _, _ in savePayday(enabled: true) }
                         .onChange(of: paydayAnchor) { _, _ in savePayday(enabled: true) }
                         .transition(.move(edge: .top).combined(with: .opacity))
+
+                        if paydayCadence == .semimonthly {
+                            Divider()
+                                .background(Theme.Colors.hairline)
+                                .padding(.leading, 18 + 36 + 14)
+
+                            HStack(spacing: 14) {
+                                IconTile(systemName: "calendar.badge.plus", tintColor: Theme.Colors.mutedText, size: 36)
+                                Text("Other payday")
+                                    .font(Theme.Typography.body)
+                                    .foregroundStyle(Theme.Colors.deepNavy)
+                                Spacer()
+                                Picker("", selection: $paydaySecondDay) {
+                                    ForEach([1, 5, 10, 15, 20, 25, 31], id: \.self) { day in
+                                        Text(day == 31 ? "Last day" : "Day \(day)").tag(day)
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                                .tint(Theme.Colors.deepNavy)
+                            }
+                            .padding(.vertical, 14)
+                            .padding(.horizontal, 18)
+                            .onChange(of: paydaySecondDay) { _, _ in savePayday(enabled: true) }
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                        }
                     }
                 }
             }
@@ -263,6 +289,7 @@ struct ProfileView: View {
         if let schedule = progressStore.data.onboardingSignals?.paycheck {
             paydayCadence = schedule.cadence
             paydayAnchor = schedule.anchorDate
+            if let second = schedule.secondPaydayDay { paydaySecondDay = second }
             paydaySet = true
         }
     }
@@ -270,7 +297,9 @@ struct ProfileView: View {
     private func savePayday(enabled: Bool) {
         progressStore.updateSignals { signals in
             signals.paycheck = enabled
-                ? PaycheckSchedule(cadence: paydayCadence, anchorDate: paydayAnchor)
+                ? PaycheckSchedule(
+                    cadence: paydayCadence, anchorDate: paydayAnchor,
+                    secondPaydayDay: paydayCadence == .semimonthly ? paydaySecondDay : nil)
                 : nil
         }
 

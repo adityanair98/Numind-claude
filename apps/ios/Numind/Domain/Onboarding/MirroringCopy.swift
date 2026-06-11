@@ -39,10 +39,19 @@ enum MirroringCopy {
         }
     }
 
+    /// One reinforcement bullet, optionally tagged with the user's own
+    /// selection text so the mirroring is visibly derived from their answers.
+    struct Bullet: Equatable {
+        let tag: String?    // "You picked · Get ahead of my debt" — nil for defaults
+        let text: String
+    }
+
     /// Three personalized reinforcement bullets from motivations + felt moments.
+    /// Every matched bullet carries the user's own words as its tag — the
+    /// screen must never read as static boilerplate after a personal question.
     static func bullets(for motivations: Set<Motivation>,
-                        feltMoments: Set<FeltMoment>) -> [String] {
-        var matched: [String] = []
+                        feltMoments: Set<FeltMoment>) -> [Bullet] {
+        var matched: [Bullet] = []
 
         let motivationCopy: [(Motivation, String)] = [
             (.stopLeavingMoney, "One in four employees leaves part of their 401(k) match unclaimed \u{2014} a five-minute check ends that for good."),
@@ -53,14 +62,20 @@ enum MirroringCopy {
             (.growMoney, "A handful of decisions \u{2014} match, account type, allocation \u{2014} drive most investing outcomes. They\u{2019}re all learnable."),
             (.staySharp, "Skills fade. Numind tracks what\u{2019}s going stale and brings it back in minutes \u{2014} that\u{2019}s how it sticks for good."),
         ]
-        matched.append(contentsOf: motivationCopy.filter { motivations.contains($0.0) }.map(\.1))
+        matched.append(contentsOf: motivationCopy
+            .filter { motivations.contains($0.0) }
+            .map { Bullet(tag: "You picked \u{00B7} \($0.0.displayText)", text: $0.1) })
 
         // If they admitted a felt moment, mirror it back once.
         if feltMoments.contains(.almostScammed) && matched.count < 3 {
-            matched.append("Adults in their 20s and 30s are the MOST-scammed age group by report rate \u{2014} pattern recognition is the defense.")
+            matched.append(Bullet(
+                tag: "You said \u{00B7} \(FeltMoment.almostScammed.displayText)",
+                text: "Adults in their 20s and 30s are the MOST-scammed age group by report rate \u{2014} pattern recognition is the defense."))
         }
         if feltMoments.contains(.acceptedWithoutNegotiating) && matched.count < 3 {
-            matched.append("Most first offers have room in them. The counter is a script plus one number \u{2014} both learnable in one session.")
+            matched.append(Bullet(
+                tag: "You said \u{00B7} \(FeltMoment.acceptedWithoutNegotiating.displayText)",
+                text: "Most first offers have room in them. The counter is a script plus one number \u{2014} both learnable in one session."))
         }
 
         let defaults = [
@@ -69,7 +84,7 @@ enum MirroringCopy {
             "Honest progress: we tell you when you\u{2019}re ready \u{2014} and when you\u{2019}re not yet.",
         ]
         for d in defaults where matched.count < 3 {
-            matched.append(d)
+            matched.append(Bullet(tag: nil, text: d))
         }
 
         return Array(matched.prefix(3))

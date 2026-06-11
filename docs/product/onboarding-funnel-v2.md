@@ -37,16 +37,16 @@ Three structural changes:
 | 8 | Mirroring | Pack-keyed stakes headline + motivation/feltMoment bullets | — |
 | 9 | The Deadline (dark) | NEW. Dated moments: real countdown (Open enrollment Nov 1, Tax day Apr 15 via `MomentsRegistry`). Undated: cost-of-waiting | — |
 | 10 | Time Commitment | Same 4 cards; output = daily ring target (5/8/10/12 questions) | `dailyMinutes` |
-| 11 | Payday Capture | NEW (Phase 12). "When do you get paid?" — cadence cards (weekly/biweekly/semimonthly/monthly) + most-recent-payday date + prominent Skip. "We'll time your sessions to your money." | `paycheck` (PaycheckSchedule, optional) |
-| 12 | Kaizen (dark) | Hours/yr stat kept; 37.8× replaced with "every moment this year, met prepared" | — |
-| 13 | ADHD | KEPT (TikTok-acquired 22–40 audience skews high-ADHD; product shape genuinely fits). "decision-sized sessions" supportive line; EndeavorOTC stat unchanged | `adhdStatus` |
-| 14 | Name | unchanged | userName |
-| 15 | Age | unchanged | `ageRange` |
-| 16 | Diagnostic Intro | "where you stand on [pack]"; chips: ~3 min / No grades / Shortcuts; "we'll show you the shortcut behind every question — that's the product" | — |
-| 17 | Diagnostic-as-demo | ~5 focus-core ladder (1 easy entry → d2/d3) + 2 secondary + 1 application item last. Shortcut reveal card after each answer (lesson placement word + THE SHORTCUT). GoalRing fills per question answered | `diagnosticResults` (with `lessonId`) |
-| 18 | Preparing (dark) | steps: mapping moments / placing skills / building readiness plan | calibration runs |
-| 19 | Money Map | Focus card ("N core skills stand between you and Ready; starting strong on M"), per-skill placement rows + beads, secondary chips, honesty card | — |
-| 20 | Personalized Plan | Ring card (anything counts) + Path card (4 named gates: learn → prove → hold → apply) + DATED timeline ("Ready around Oct 18, before Nov 1") | — |
+| 11 | Kaizen (dark) | Hours/yr stat kept; 37.8× replaced with "every moment this year, met prepared" | — |
+| 12 | ADHD | KEPT (TikTok-acquired 22–40 audience skews high-ADHD; product shape genuinely fits). "decision-sized sessions" supportive line; EndeavorOTC stat unchanged | `adhdStatus` |
+| 13 | Name | unchanged | userName |
+| 14 | Age | unchanged | `ageRange` |
+| 15 | Diagnostic Intro | "where you stand on [pack]"; chips: ~3 min / No grades / Shortcuts; "we'll show you the shortcut behind every question — that's the product" | — |
+| 16 | Diagnostic-as-demo | ~5 focus-core ladder (1 easy entry → d2/d3) + 2 secondary + 1 application item last. Shortcut reveal card after each answer (lesson placement word + THE SHORTCUT). GoalRing fills per question answered | `diagnosticResults` (with `lessonId`) |
+| 17 | Preparing (dark) | steps: mapping moments / placing skills / building readiness plan | calibration runs |
+| 18 | Money Map | Focus card ("N core skills stand between you and Ready; starting strong on M"), per-skill placement rows + beads, secondary chips, honesty card | — |
+| 19 | Personalized Plan | Ring card (anything counts) + Path card (4 named gates: learn → prove → hold → apply) + DATED timeline ("Ready around Oct 18, before Nov 1") | — |
+| 20 | Payday Capture | Moved before the notifications ask (strongest permission case). For "twice a month," a second day-of-month is captured explicitly. "When do you get paid?" — cadence cards (weekly/biweekly/semimonthly/monthly) + most-recent-payday date + prominent Skip. "We'll time your sessions to your money." | `paycheck` (PaycheckSchedule, optional) |
 | 21 | Notifications | Mocks: open ring / fading skills (Freshness) / moment countdown | permission |
 | 22 | Paywall Priming | Coffee anchor kept; Quick Math → verified mistake costs (401k cash-out −$2,000+, unclaimed match, FSA forfeits) vs $59.88/yr | — |
 | 23 | Streak Goal | "How many days in a row will you close your ring?" 7 recommended (past-trial lever) | `streakGoal` |
@@ -58,6 +58,14 @@ Three structural changes:
 **Account creation (Sign in with Apple via Supabase) slots between 25 and 26
 when auth ships** — anonymous until maximum sunk cost, account framed as
 "save your Money Map."
+
+**Personalization is visible (post-feedback pass, June 2026):** the
+insecurity-mirror reveal shows one verified cost stat PER selected felt
+moment, tagged "You said · [their words]"; the mirroring screen's bullets
+carry "You picked · [their card]" tags; motivation cards share one accent
+color (selection ≠ theme rainbow); in the life-moment grid only the FOCUS
+carries its pack color — secondaries get a neutral check. Age buckets:
+Under 18 / 18–24 split (was 13–24).
 
 **Habit-buyer copy branch (Phase 12):** when `focusPackId == "everyday_spending"`
 or motivations include `.staySharp`, Kaizen and Projection render the

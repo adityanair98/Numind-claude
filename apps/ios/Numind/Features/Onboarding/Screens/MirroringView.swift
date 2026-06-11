@@ -76,18 +76,29 @@ struct MirroringView: View {
         }
     }
 
-    private func mirrorRow(_ text: String) -> some View {
+    private func mirrorRow(_ bullet: MirroringCopy.Bullet) -> some View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 20))
                 .foregroundStyle(Theme.Colors.mindTeal)
                 .padding(.top, 1)
 
-            Text(text)
-                .font(.system(size: 15))
-                .foregroundStyle(Theme.Colors.deepNavy)
-                .lineSpacing(4)
+            VStack(alignment: .leading, spacing: 4) {
+                // The user's own selection, echoed back — the proof that
+                // this screen was built from their answers.
+                if let tag = bullet.tag {
+                    Text(tag)
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.primaryBlue)
+                }
+                Text(bullet.text)
+                    .font(.system(size: 15))
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .lineSpacing(4)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 

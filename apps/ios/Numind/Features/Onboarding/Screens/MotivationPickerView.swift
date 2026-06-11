@@ -6,14 +6,17 @@ struct MotivationPickerView: View {
     @ObservedObject var viewModel: OnboardingViewModel
     let onContinue: () -> Void
 
-    private let options: [(motivation: Motivation, label: String, sub: String, emoji: String, color: Color)] = [
-        (.stopLeavingMoney, "Stop leaving money on the table", "Negotiation, benefits, the match", "\u{1F4BC}", Theme.Colors.warmOrange),
-        (.stopGettingTaken, "Stop getting taken advantage of", "Scams, fees, dealer tactics", "\u{1F6E1}", Theme.Colors.debtCoral),
-        (.decideWithConfidence, "Decide with confidence, not anxiety", "Know your numbers before the moment", "\u{1F4AA}", Theme.Colors.mindTeal),
-        (.understandPaycheck, "Actually understand my paycheck", "Deductions, benefits, taxes", "\u{1F9FE}", Theme.Colors.taxSlate),
-        (.getAheadOfDebt, "Get ahead of my debt", "Interest, payoff, the real cost", "\u{1F4B3}", Theme.Colors.primaryBlue),
-        (.growMoney, "Make my money grow", "Match, accounts, compounding", "\u{1F4C8}", Theme.Colors.investIndigo),
-        (.staySharp, "Keep my money instincts sharp", "Daily reps, no fading skills", "\u{26A1}", Theme.Colors.growthGreen),
+    // One accent for every card — selection feedback should read as
+    // "selected", not as seven competing theme colors. Labels come from
+    // Motivation.displayText so later screens can echo them verbatim.
+    private let options: [(motivation: Motivation, sub: String, emoji: String)] = [
+        (.stopLeavingMoney, "Negotiation, benefits, the match", "\u{1F4BC}"),
+        (.stopGettingTaken, "Scams, fees, dealer tactics", "\u{1F6E1}"),
+        (.decideWithConfidence, "Know your numbers before the moment", "\u{1F4AA}"),
+        (.understandPaycheck, "Deductions, benefits, taxes", "\u{1F9FE}"),
+        (.getAheadOfDebt, "Interest, payoff, the real cost", "\u{1F4B3}"),
+        (.growMoney, "Match, accounts, compounding", "\u{1F4C8}"),
+        (.staySharp, "Daily reps, no fading skills", "\u{26A1}"),
     ]
 
     var body: some View {
@@ -46,14 +49,14 @@ struct MotivationPickerView: View {
                         VStack(spacing: 8) {
                             ForEach(options, id: \.motivation) { opt in
                                 OnboardingMultiCard(
-                                    label: opt.label,
+                                    label: opt.motivation.displayText,
                                     subtitle: opt.sub,
                                     selected: viewModel.signals.motivations.contains(opt.motivation),
-                                    accentColor: opt.color
+                                    accentColor: Theme.Colors.primaryBlue
                                 ) {
                                     viewModel.toggleMotivation(opt.motivation)
                                 } icon: {
-                                    OnboardingIconTile(emoji: opt.emoji, color: opt.color, size: 36)
+                                    OnboardingIconTile(emoji: opt.emoji, color: Theme.Colors.primaryBlue, size: 36)
                                 }
                             }
                         }

@@ -34,21 +34,21 @@ struct OnboardingProgressBar: View {
         if screen <= 4 {
             return 0.05 + Double(screen - 2) * 0.05
         }
-        // Phase 2 (Personalization): screens 5–15 (11 screens)
-        if screen <= 15 {
-            return 0.20 + Double(screen - 4) * 0.024
+        // Phase 2 (Personalization): screens 5–14 (10 screens)
+        if screen <= 14 {
+            return 0.20 + Double(screen - 4) * 0.027
         }
-        // Phase 3 (Diagnostic): screens 16–18
-        if screen <= 18 {
-            return 0.50 + Double(screen - 15) * 0.04
+        // Phase 3 (Diagnostic): screens 15–17
+        if screen <= 17 {
+            return 0.50 + Double(screen - 14) * 0.04
         }
-        // Phase 4 (Money Map): screen 19
-        if screen == 19 {
+        // Phase 4 (Money Map): screen 18
+        if screen == 18 {
             return 0.66
         }
-        // Phase 5 (Plan + Priming): screens 20–25
+        // Phase 5 (Plan + Priming + Payday): screens 19–25
         if screen <= 25 {
-            return 0.70 + Double(screen - 19) * 0.04
+            return 0.70 + Double(screen - 18) * 0.035
         }
 
         return nil
