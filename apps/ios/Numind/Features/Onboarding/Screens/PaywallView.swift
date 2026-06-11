@@ -197,7 +197,7 @@ struct PaywallView: View {
                 .tracking(1)
                 .foregroundStyle(Theme.Colors.mutedText)
 
-            featureRow("All 12 life-moment paths \u{00B7} 127 skills")
+            featureRow("All 12 life-moment paths \u{00B7} 134 skills")
             featureRow("Daily workout + honest Readiness tracking")
             featureRow("12 built-in calculators")
             featureRow("Skill refresh + streak protection")

@@ -10,8 +10,8 @@ The content layer is Numind's product: it encodes the **financial education** th
 | File | Purpose | Count (Phase 10, June 2026) |
 |---|---|---|
 | `modules.json` | Module definitions (id, title, icon, color) | 11 |
-| `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 127 |
-| `quiz_templates.json` | Quiz question templates (445 numerical + 304 concept; 124 `isApplication` decision items) | 749 |
+| `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 134 |
+| `quiz_templates.json` | Quiz question templates (445 numerical + 346 concept; 138 `isApplication` decision items) | 791 |
 | `packs.json` | Life-Event Packs (curated lesson sequences with 3–6-lesson cores) | 12 |
 
 ## Module

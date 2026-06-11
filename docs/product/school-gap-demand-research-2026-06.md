@@ -184,3 +184,23 @@ method, never the promise) and the brand-line adoption.
    to it.
 5. **Brand-guidelines language rule** — codify the positioning sentence and
    the math-budget rule.
+
+## 8. Status — shipped (Phase 12, June 2026)
+
+All five workstreams above shipped in Phase 12 on `phase-9-score-redesign`:
+
+1. De-math copy pass → 12-L (22 strings; one disarm line lives in
+   DiagnosticIntroView; rule codified in `docs/brand/brand-guidelines.md`).
+2. Administrative-adulting wave → 12-C (all 7 lessons, 42 templates,
+   14 decision items; facts verified against primary sources 2026-06-11;
+   constants logged in `docs/ops/regulatory-constants.md`).
+3. Moments rework → 12-M (`MomentsRegistry` replaced MomentCalendar;
+   honest windows, "about N weeks", pack-scoped awareness).
+4. Paycheck-day trigger → 12-O/12-N (`PaycheckSchedule` captured in
+   onboarding screen 11 + Profile; ≤3 one-off payday notifications).
+5. Language rule → 12-L (positioning sentence + math-budget rule in
+   brand guidelines).
+
+Phase 12 also shipped the "felt sharpness" mechanics this research argued
+for: favorable-only speed deltas, the monthly sharpness check, the
+real-world saves ledger, and the Home Screen widget.
