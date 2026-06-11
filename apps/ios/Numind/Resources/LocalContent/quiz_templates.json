@@ -4,7 +4,7 @@
     "moduleId": "smart_shopping",
     "difficulty": 1,
     "inputMode": "freeEntry",
-    "promptTemplate": "The bill is ${{billAmount}}. Using the double-the-10% trick, what is the 20% tip?",
+    "promptTemplate": "The bill is ${{billAmount}}. What is the 20% tip?",
     "variableRules": [
       {
         "name": "billAmount",
@@ -613,7 +613,7 @@
     "difficulty": 2,
     "inputMode": "freeEntry",
     "scenarioTemplate": "You're comparing savings accounts or investment options and wondering how long it takes for money to double.",
-    "promptTemplate": "Using the Rule of 72, how many years does it take for money to double at {{interestRate}}% per year?",
+    "promptTemplate": "Roughly how many years does it take for money to double at {{interestRate}}% per year?",
     "variableRules": [
       {
         "name": "interestRate",
@@ -1471,7 +1471,7 @@
     "id": "overtime_d2",
     "moduleId": "salary",
     "difficulty": 2,
-    "promptTemplate": "Your regular pay is ${{regularRate}}/hour. You work {{overtimeHours}} hours of overtime at 1.5\u00d7 rate. How much do you earn in overtime?",
+    "promptTemplate": "Your regular pay is ${{regularRate}}/hour. You work {{overtimeHours}} hours of overtime this week. How much do you earn in overtime?",
     "variableRules": [
       {
         "name": "regularRate",
@@ -2050,7 +2050,7 @@
     "id": "rule72_d1",
     "moduleId": "investing",
     "difficulty": 1,
-    "promptTemplate": "Your investment grows at {{interestRate}}% per year. Using the Rule of 72, how many years to double your money?",
+    "promptTemplate": "Your investment grows at {{interestRate}}% per year. About how many years until your money doubles?",
     "variableRules": [
       {
         "name": "interestRate",
@@ -2073,7 +2073,7 @@
     "moduleId": "investing",
     "difficulty": 2,
     "scenarioTemplate": "Your 401(k) has historically returned about {{interestRate}}% per year.",
-    "promptTemplate": "Using the Rule of 72, roughly how many years will it take your balance to double?",
+    "promptTemplate": "Roughly how many years will it take your balance to double?",
     "variableRules": [
       {
         "name": "interestRate",
@@ -2530,7 +2530,7 @@
     "id": "rent_afford_basic_d1",
     "moduleId": "housing",
     "difficulty": 1,
-    "promptTemplate": "Your monthly salary is ${{monthlySalary}}. Using the 28% rule, what's the maximum rent you should pay?",
+    "promptTemplate": "Your monthly salary is ${{monthlySalary}}. By the standard affordability guideline, what's the maximum rent you should pay?",
     "variableRules": [
       {
         "name": "monthlySalary",
@@ -2555,7 +2555,7 @@
     "moduleId": "housing",
     "difficulty": 1,
     "scenarioTemplate": "You just got a job paying ${{monthlySalary}}/month. You're apartment hunting.",
-    "promptTemplate": "Using the 28% rule, what's the most you should spend on rent?",
+    "promptTemplate": "By the standard affordability guideline, what's the most you should spend on rent?",
     "variableRules": [
       {
         "name": "monthlySalary",
@@ -2603,7 +2603,7 @@
     "moduleId": "housing",
     "difficulty": 3,
     "scenarioTemplate": "You're budgeting for the year ahead. Monthly salary: ${{monthlySalary}}.",
-    "promptTemplate": "Using the 28% rule, what's the most you should spend on rent for the full year?",
+    "promptTemplate": "By the standard affordability guideline, what's the most you should spend on rent across the full year?",
     "variableRules": [
       {
         "name": "monthlySalary",
@@ -3355,7 +3355,7 @@
     "id": "se_tax_basic_d1",
     "moduleId": "taxes",
     "difficulty": 1,
-    "promptTemplate": "You earned ${{freelanceIncome}} freelancing. Self-employment tax applies 15.3% to 92.35% of earnings. How much SE tax do you owe (rounded)?",
+    "promptTemplate": "You earned ${{freelanceIncome}} freelancing. How much self-employment tax do you owe (rounded)?",
     "variableRules": [
       {
         "name": "freelanceIncome",
@@ -3377,7 +3377,7 @@
     "id": "se_tax_amount_d1",
     "moduleId": "taxes",
     "difficulty": 1,
-    "promptTemplate": "Gig income: ${{freelanceIncome}}. Calculate the self-employment tax (15.3% on 92.35% of earnings).",
+    "promptTemplate": "Gig income: ${{freelanceIncome}}. What's your self-employment tax bill?",
     "variableRules": [
       {
         "name": "freelanceIncome",
@@ -3400,7 +3400,7 @@
     "moduleId": "taxes",
     "difficulty": 2,
     "scenarioTemplate": "You did freelance design work and earned ${{freelanceIncome}}.",
-    "promptTemplate": "How much self-employment tax (15.3% applied to 92.35% of earnings) will you owe?",
+    "promptTemplate": "How much self-employment tax will you owe?",
     "variableRules": [
       {
         "name": "freelanceIncome",
@@ -3422,7 +3422,7 @@
     "id": "se_tax_compare_d2",
     "moduleId": "taxes",
     "difficulty": 2,
-    "promptTemplate": "Freelance earnings: ${{freelanceIncome}}. Self-employment tax (15.3% \u00d7 92.35% of earnings). Amount owed?",
+    "promptTemplate": "Freelance earnings: ${{freelanceIncome}}. What do you owe in self-employment tax?",
     "variableRules": [
       {
         "name": "freelanceIncome",
@@ -5143,7 +5143,7 @@
     "id": "car_max_payment_d1",
     "moduleId": "car",
     "difficulty": 1,
-    "promptTemplate": "The 10% rule: car payments shouldn't exceed 10% of your monthly income. You earn ${{monthlyIncome}}/month. What's your max car payment?",
+    "promptTemplate": "You earn ${{monthlyIncome}}/month. By the common income guideline, what's your maximum monthly car payment?",
     "variableRules": [
       {
         "name": "monthlyIncome",
@@ -5166,7 +5166,7 @@
     "id": "car_20pct_down_d1",
     "moduleId": "car",
     "difficulty": 1,
-    "promptTemplate": "The 20/4/10 rule says put 20% down. On a ${{carPrice}} car, how much is that?",
+    "promptTemplate": "You're following the 20/4/10 guideline on a ${{carPrice}} car. How much should you put down?",
     "variableRules": [
       {
         "name": "carPrice",
@@ -5195,7 +5195,7 @@
     "id": "car_10pct_rule_d2",
     "moduleId": "car",
     "difficulty": 2,
-    "promptTemplate": "You earn ${{annualSalary}} per year. Using the 10% rule, what's the maximum you should pay monthly for a car?",
+    "promptTemplate": "You earn ${{annualSalary}} per year. By the common income guideline, what's the maximum you should pay monthly for a car?",
     "variableRules": [
       {
         "name": "annualSalary",
@@ -5218,7 +5218,7 @@
     "id": "car_rule_scenario_d2",
     "moduleId": "car",
     "difficulty": 2,
-    "promptTemplate": "Income: ${{monthlyIncome}}/month. A car you like is ${{carPrice}} with ${{monthlyPayment}}/month payments. Does this pass the 10% rule? By how much are you over or under?",
+    "promptTemplate": "Income: ${{monthlyIncome}}/month. A car you like is ${{carPrice}} with ${{monthlyPayment}}/month payments. Does this pass the common income guideline? By how much are you over or under?",
     "variableRules": [
       {
         "name": "monthlyIncome",
@@ -5256,7 +5256,7 @@
     "id": "car_afford_check_d3",
     "moduleId": "car",
     "difficulty": 3,
-    "promptTemplate": "You earn ${{monthlyIncome}}/month. Following 20/4/10: 20% down, 4-year max, 10% payment max. Your max payment is 10% of income for 48 months, plus your 20% down. What's the most expensive car you can buy?",
+    "promptTemplate": "You earn ${{monthlyIncome}}/month. Following the 20/4/10 guideline and financing over the maximum term, what's the most expensive car you can buy?",
     "variableRules": [
       {
         "name": "monthlyIncome",
@@ -5403,7 +5403,7 @@
     "id": "sl_monthly_estimate_d1",
     "moduleId": "student_loans",
     "difficulty": 1,
-    "promptTemplate": "You owe ${{loanBalance}} in student loans at roughly ${{paymentPer10k}} per month for every $10,000 borrowed. What's your estimated monthly payment?",
+    "promptTemplate": "Your repayment plan comes to about ${{paymentPer10k}}/month per $10,000 borrowed. You owe ${{loanBalance}}. What's your estimated monthly payment?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -5961,7 +5961,7 @@
     "moduleId": "smart_shopping",
     "difficulty": 1,
     "inputMode": "freeEntry",
-    "promptTemplate": "Your bill is ${{billAmount}}. Using the $20-per-$100 rule, what's a 20% tip?",
+    "promptTemplate": "Your bill is ${{billAmount}}. What should a 20% tip come to?",
     "variableRules": [
       {
         "name": "billAmount",
@@ -6213,7 +6213,7 @@
     "id": "disc_tax_amount_d2",
     "moduleId": "smart_shopping",
     "difficulty": 2,
-    "promptTemplate": "Item ${{originalPrice}}, {{discountPercent}}% off, {{taxPercent}}% tax. How much sales tax do you pay (on the discounted price)?",
+    "promptTemplate": "Item ${{originalPrice}}, {{discountPercent}}% off, {{taxPercent}}% tax. How much sales tax do you pay?",
     "variableRules": [
       {
         "name": "originalPrice",
@@ -6786,7 +6786,7 @@
     "id": "all_three_buckets_d2",
     "moduleId": "money_math",
     "difficulty": 2,
-    "promptTemplate": "Take-home ${{income}}/month. Using 50/30/20, what's your wants budget (30%)?",
+    "promptTemplate": "Take-home ${{income}}/month. Under 50/30/20, what's your wants budget?",
     "variableRules": [
       {
         "name": "income",
@@ -6816,7 +6816,7 @@
     "id": "over_budget_d3",
     "moduleId": "money_math",
     "difficulty": 3,
-    "promptTemplate": "Income ${{income}}/month. Your needs (rent + food + transport + insurance) total ${{needs}}. How much MORE is that than the 50% needs cap?",
+    "promptTemplate": "Income ${{income}}/month. Your needs (rent + food + transport + insurance) total ${{needs}}. How much MORE is that than the 50/30/20 needs cap?",
     "variableRules": [
       {
         "name": "income",
@@ -7028,7 +7028,7 @@
     "id": "weekly_to_monthly_d1",
     "moduleId": "money_math",
     "difficulty": 1,
-    "promptTemplate": "Your grocery budget is ${{weekly}}/week. What's the correct monthly equivalent (using 4.33)?",
+    "promptTemplate": "Your grocery budget is ${{weekly}}/week. What's the true monthly equivalent?",
     "variableRules": [
       {
         "name": "weekly",
@@ -7052,7 +7052,7 @@
     "id": "biweekly_to_monthly_d1",
     "moduleId": "money_math",
     "difficulty": 1,
-    "promptTemplate": "Your biweekly paycheck is ${{biweekly}}. What's your correct monthly income (using 2.17)?",
+    "promptTemplate": "Your biweekly paycheck is ${{biweekly}}. What's your true monthly income?",
     "variableRules": [
       {
         "name": "biweekly",
@@ -7076,7 +7076,7 @@
     "id": "monthly_to_weekly_d2",
     "moduleId": "money_math",
     "difficulty": 2,
-    "promptTemplate": "Your monthly budget is ${{monthly}}. What's the weekly equivalent (using \u00f7 4.33)?",
+    "promptTemplate": "Your monthly budget is ${{monthly}}. What's the true weekly equivalent?",
     "variableRules": [
       {
         "name": "monthly",
@@ -7177,7 +7177,7 @@
     "id": "total_weekly_with_ot_d3",
     "moduleId": "salary",
     "difficulty": 3,
-    "promptTemplate": "You earn ${{regularRate}}/hour. This week you worked {{totalHours}} hours (40 regular + the rest overtime at 1.5\u00d7). What's your total gross weekly pay?",
+    "promptTemplate": "You're non-exempt and earn ${{regularRate}}/hour. This week you worked {{totalHours}} hours. What's your total gross weekly pay?",
     "variableRules": [
       {
         "name": "regularRate",
@@ -8213,7 +8213,7 @@
     "id": "fund_fee_30yr_d3",
     "moduleId": "investing",
     "difficulty": 3,
-    "promptTemplate": "Rule of thumb: every 0.5% in extra fees costs ~10% of your 30-year final balance. If your projected balance is ${{projectedBalance}} and you're paying {{extraFee}}% more in fees than necessary, roughly how much are you losing?",
+    "promptTemplate": "Your projected 30-year balance is ${{projectedBalance}}, and you're paying {{extraFee}}% more in fees than necessary. Roughly how much of that final balance are you losing to the extra fees?",
     "variableRules": [
       {
         "name": "projectedBalance",
@@ -9324,7 +9324,7 @@
     "id": "snowball_difference_d3",
     "moduleId": "debt",
     "difficulty": 3,
-    "promptTemplate": "You have a ${{extraPayment}}/month surplus and two debts: ${{balanceA}} at {{aprA}}% APR and ${{balanceB}} at {{aprB}}% APR. Snowball targets the smaller balance. By how much more annual interest does avalanche save than snowball?",
+    "promptTemplate": "You have a ${{extraPayment}}/month surplus and two debts: ${{balanceA}} at {{aprA}}% APR and ${{balanceB}} at {{aprB}}% APR. By how much more annual interest does avalanche save than snowball?",
     "variableRules": [
       {
         "name": "extraPayment",
@@ -9639,7 +9639,7 @@
     "id": "apy_doubling_time_d2",
     "moduleId": "investing",
     "difficulty": 2,
-    "promptTemplate": "Using the Rule of 72, roughly how many years does it take for cash in a {{apy}}% APY savings account to double?",
+    "promptTemplate": "Roughly how many years does it take for cash in a {{apy}}% APY savings account to double?",
     "variableRules": [
       {
         "name": "apy",
@@ -9820,7 +9820,7 @@
     "id": "rent_min_income_d3",
     "moduleId": "housing",
     "difficulty": 3,
-    "promptTemplate": "You found an apartment for ${{monthlyRent}}/month. Using the 28% rule, what minimum monthly gross income do you need to afford it?",
+    "promptTemplate": "You found an apartment for ${{monthlyRent}}/month. What minimum monthly gross income do you need for it to count as affordable by the standard guideline?",
     "variableRules": [
       {
         "name": "monthlyRent",
@@ -9844,7 +9844,7 @@
     "id": "house_max_piti_d1",
     "moduleId": "housing",
     "difficulty": 1,
-    "promptTemplate": "Your monthly GROSS income is ${{monthlyGross}}. Using the 28% rule, what's the maximum PITI (principal + interest + tax + insurance) you can afford?",
+    "promptTemplate": "Your monthly GROSS income is ${{monthlyGross}}. By the standard lender guideline, what's the maximum monthly PITI (principal + interest + tax + insurance) you can afford?",
     "variableRules": [
       {
         "name": "monthlyGross",
@@ -9869,7 +9869,7 @@
     "id": "house_loan_from_pi_d1",
     "moduleId": "housing",
     "difficulty": 1,
-    "promptTemplate": "Your monthly P&I budget is ${{pAndI}}. At a 6% mortgage rate (factor 0.006 per $1 of loan), how much loan can you support?",
+    "promptTemplate": "Your monthly P&I budget is ${{pAndI}}. At a 6% 30-year rate, how much mortgage can you support?",
     "variableRules": [
       {
         "name": "pAndI",
@@ -9929,7 +9929,7 @@
     "id": "house_income_needed_d2",
     "moduleId": "housing",
     "difficulty": 2,
-    "promptTemplate": "You want to buy a ${{purchasePrice}} home with {{downPct}}% down at a 6% rate (factor 0.006). Assuming ~1.5%/yr tax + insurance, what minimum GROSS monthly income do you need (28% rule)?",
+    "promptTemplate": "You want to buy a ${{purchasePrice}} home with {{downPct}}% down at a 6% rate. Assume ~1.5%/yr for property tax + insurance. By the standard lender guideline, what minimum GROSS monthly income do you need?",
     "variableRules": [
       {
         "name": "purchasePrice",
@@ -10050,7 +10050,7 @@
     "id": "mortgage_rate_factor_d1",
     "moduleId": "housing",
     "difficulty": 1,
-    "promptTemplate": "${{loanAmount}} mortgage at 6% over 30 years uses factor 0.006. Estimate the monthly payment.",
+    "promptTemplate": "Estimate the monthly payment on a ${{loanAmount}} mortgage at 6% over 30 years.",
     "variableRules": [
       {
         "name": "loanAmount",
@@ -10079,7 +10079,7 @@
     "id": "mortgage_per_100k_d1",
     "moduleId": "housing",
     "difficulty": 1,
-    "promptTemplate": "At 6% over 30 years, each $100k of mortgage costs about $600/month. What's the monthly payment on a ${{loanAmount}} loan?",
+    "promptTemplate": "You're borrowing ${{loanAmount}} for a home at 6% over 30 years. About how much is the monthly payment?",
     "variableRules": [
       {
         "name": "loanAmount",
@@ -10109,7 +10109,7 @@
     "id": "mortgage_rate_compare_d2",
     "moduleId": "housing",
     "difficulty": 2,
-    "promptTemplate": "${{loanAmount}} mortgage. At 5% the factor is 0.0054; at 7% it's 0.0067. How much more per month does the 7% rate cost?",
+    "promptTemplate": "${{loanAmount}} 30-year mortgage. Roughly how much more per month does a 7% rate cost than a 5% rate?",
     "variableRules": [
       {
         "name": "loanAmount",
@@ -10131,7 +10131,7 @@
     "id": "mortgage_pi_taxes_d3",
     "moduleId": "housing",
     "difficulty": 3,
-    "promptTemplate": "${{loanAmount}} mortgage at 6% (factor 0.006) plus ${{taxAndInsurance}}/month for property tax + insurance. What's your total monthly housing cost?",
+    "promptTemplate": "${{loanAmount}} mortgage at 6% over 30 years, plus ${{taxAndInsurance}}/month for property tax and insurance. What's your total monthly housing cost?",
     "variableRules": [
       {
         "name": "loanAmount",
@@ -10169,7 +10169,7 @@
     "id": "mortgage_vs_rent_decision_d3",
     "moduleId": "housing",
     "difficulty": 3,
-    "promptTemplate": "Renting: ${{monthlyRent}}/month. Buying: ${{loanAmount}} mortgage at 6% (factor 0.006) + ${{taxAndInsurance}}/month for tax/insurance. Which is cheaper per month, and by how much?",
+    "promptTemplate": "Renting: ${{monthlyRent}}/month. Buying: a ${{loanAmount}} mortgage at 6% over 30 years plus ${{taxAndInsurance}}/month for tax and insurance. Which is cheaper per month, and by how much?",
     "variableRules": [
       {
         "name": "monthlyRent",
@@ -10338,7 +10338,7 @@
     "id": "roommate_compare_d3",
     "moduleId": "housing",
     "difficulty": 3,
-    "promptTemplate": "Solo 1BR: ${{soloRent}}/mo. Shared 2BR: ${{sharedRent}}/mo (your half: half of that). What's your annual savings?",
+    "promptTemplate": "Solo 1BR: ${{soloRent}}/mo. Shared 2BR: ${{sharedRent}}/mo, split evenly with your roommate. What's your annual savings?",
     "variableRules": [
       {
         "name": "soloRent",
@@ -10696,7 +10696,7 @@
     "id": "lease_break_decision_d3",
     "moduleId": "housing",
     "difficulty": 3,
-    "promptTemplate": "{{monthsLeft}} months left at ${{currentRent}}/month. New apartment: ${{newRent}}/month. Breaking costs ${{breakFee}} in penalty + ${{movingCost}} to move. Net cost to break (break costs \u2212 savings from cheaper rent for remaining months)?",
+    "promptTemplate": "{{monthsLeft}} months left at ${{currentRent}}/month. New apartment: ${{newRent}}/month. Breaking costs ${{breakFee}} in penalty + ${{movingCost}} to move. What's your net cost to break the lease?",
     "variableRules": [
       {
         "name": "monthsLeft",
@@ -10826,7 +10826,7 @@
     "id": "se_quarterly_combined_d3",
     "moduleId": "taxes",
     "difficulty": 3,
-    "promptTemplate": "You earned ${{quarterlyIncome}} freelancing this quarter. SE tax (15.3% on 92.35% of earnings) + income tax ~{{incomeTaxPct}}%. What's your quarterly estimated payment?",
+    "promptTemplate": "You earned ${{quarterlyIncome}} freelancing this quarter, and your income tax runs about {{incomeTaxPct}}%. What's your quarterly estimated payment (self-employment tax + income tax)?",
     "variableRules": [
       {
         "name": "quarterlyIncome",
@@ -11275,7 +11275,7 @@
     "id": "w4_invested_d2",
     "moduleId": "taxes",
     "difficulty": 2,
-    "promptTemplate": "You bump each biweekly paycheck by ${{biweeklyBump}} and invest it at 6%/year. Approximate end-of-year balance? (use simple 3% half-year avg return)",
+    "promptTemplate": "You bump each biweekly paycheck by ${{biweeklyBump}} and invest it at 6%/year. Roughly what's your balance at the end of the year?",
     "variableRules": [
       {
         "name": "biweeklyBump",
@@ -11320,7 +11320,7 @@
     "id": "w4_lifetime_d3",
     "moduleId": "taxes",
     "difficulty": 3,
-    "promptTemplate": "If you over-withhold ${{refundAmount}} every year for {{years}} years and invest it instead, a simplified LINEAR estimate of the growth you forfeit is: refund \u00d7 3% \u00d7 years = ?",
+    "promptTemplate": "If you over-withhold ${{refundAmount}} every year for {{years}} years and invest the difference instead, roughly how much growth do you forfeit over those years (simple linear estimate)?",
     "variableRules": [
       {
         "name": "refundAmount",
@@ -11473,7 +11473,7 @@
     "id": "ins_visits_breakeven_d3",
     "moduleId": "insurance",
     "difficulty": 3,
-    "promptTemplate": "HDHP: ${{hdhpPremium}}/mo, ${{hdhpVisitCost}}/visit until deductible met. PPO: ${{ppoPremium}}/mo, ${{ppoCopay}}/visit. Monthly premium savings on HDHP \u00d7 12 = annual savings. How many doctor visits would make the PPO cheaper than HDHP?",
+    "promptTemplate": "HDHP: ${{hdhpPremium}}/mo, ${{hdhpVisitCost}}/visit until the deductible is met. PPO: ${{ppoPremium}}/mo, ${{ppoCopay}}/visit. How many doctor visits in a year would make the PPO cheaper than the HDHP?",
     "variableRules": [
       {
         "name": "hdhpPremium",
@@ -11593,7 +11593,7 @@
     "id": "fsa_net_result_d2",
     "moduleId": "insurance",
     "difficulty": 2,
-    "promptTemplate": "FSA election: ${{fsaElection}}. Tax rate: {{taxRate}}%. You actually spend ${{actualSpent}} on medical. What's your NET financial result (tax savings minus forfeited unspent funds)?",
+    "promptTemplate": "FSA election: ${{fsaElection}}. Tax rate: {{taxRate}}%. You actually spend ${{actualSpent}} on medical. What's your NET financial result from the election?",
     "variableRules": [
       {
         "name": "fsaElection",
@@ -11696,7 +11696,7 @@
     "id": "fsa_max_safe_d3",
     "moduleId": "insurance",
     "difficulty": 3,
-    "promptTemplate": "You'll definitely spend ${{guaranteedSpend}} on medical this year. At {{taxRate}}% bracket, how much MORE could you safely elect to FSA? (Hint: max election where you still break even.)",
+    "promptTemplate": "You'll definitely spend ${{guaranteedSpend}} on medical this year. At {{taxRate}}% bracket, how much MORE could you elect and still come out ahead overall, even if the extra goes unused?",
     "variableRules": [
       {
         "name": "guaranteedSpend",
@@ -11725,7 +11725,7 @@
     "id": "life_basic_10x_d1",
     "moduleId": "insurance",
     "difficulty": 1,
-    "promptTemplate": "Annual salary ${{annualSalary}}. Using the 10\u00d7 rule, what's your baseline life insurance need?",
+    "promptTemplate": "Annual salary ${{annualSalary}}. By the common income-replacement guideline, what's your baseline life insurance need?",
     "variableRules": [
       {
         "name": "annualSalary",
@@ -11748,7 +11748,7 @@
     "id": "life_dime_adjusted_d2",
     "moduleId": "insurance",
     "difficulty": 2,
-    "promptTemplate": "Salary ${{annualSalary}} (use 10\u00d7 rule). Mortgage balance ${{mortgageBalance}}. Savings ${{savings}}. What's your adjusted life insurance need?",
+    "promptTemplate": "Salary ${{annualSalary}}. Mortgage balance ${{mortgageBalance}}. Savings ${{savings}}. Starting from the income-replacement baseline, what's your adjusted life insurance need?",
     "variableRules": [
       {
         "name": "annualSalary",
@@ -12683,7 +12683,7 @@
     "id": "sl_rule_thumb_d1",
     "moduleId": "student_loans",
     "difficulty": 1,
-    "promptTemplate": "Standard 10-year repayment: ~$110 per $10,000 borrowed at 5% APR. Your balance is ${{loanBalance}}. Estimate your monthly payment.",
+    "promptTemplate": "Your balance is ${{loanBalance}} at about 5% APR on the standard 10-year plan. Estimate your monthly payment.",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -12706,7 +12706,7 @@
     "id": "sl_rule_apply_d2",
     "moduleId": "student_loans",
     "difficulty": 2,
-    "promptTemplate": "${{loanBalance}} loan. Rule of thumb says ~${{paymentPer10k}} per $10k at this APR. Estimated monthly payment?",
+    "promptTemplate": "${{loanBalance}} loan. Your plan works out to about ${{paymentPer10k}} per $10,000 borrowed each month. Estimated monthly payment?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -12737,7 +12737,7 @@
     "id": "sl_per10k_compare_d2",
     "moduleId": "student_loans",
     "difficulty": 2,
-    "promptTemplate": "${{loanBalance}} loan. Lower-rate estimate: $100/$10k. Higher-rate estimate: $120/$10k. What's the monthly payment RANGE (difference between high and low estimate)?",
+    "promptTemplate": "${{loanBalance}} loan. Depending on whether your APR is near 4% or 7%, what's the RANGE between your low and high estimated monthly payment?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -12759,7 +12759,7 @@
     "id": "sl_monthly_range_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "${{loanBalance}} loan at ~{{apr}}% APR. Using $100/$10k for 4-5% and $120/$10k for 6-7%, what's your estimated monthly payment?",
+    "promptTemplate": "${{loanBalance}} loan at ~{{apr}}% APR on the standard 10-year plan. What's your estimated monthly payment?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -12908,7 +12908,7 @@
     "id": "sl_employer_with_interest_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "Employer pays ${{annualBenefit}}/year \u00d7 {{years}} years toward a ${{loanBalance}} loan at {{interestRate}}% interest. Approximate additional interest saved (rough: benefit \u00d7 rate \u00d7 years / 2)?",
+    "promptTemplate": "Employer pays ${{annualBenefit}}/year for {{years}} years toward a ${{loanBalance}} loan at {{interestRate}}% interest. Beyond the principal itself, roughly how much ADDITIONAL interest does that save you?",
     "variableRules": [
       {
         "name": "annualBenefit",
@@ -13073,7 +13073,7 @@
     "id": "sl_grace_vs_interest_only_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "${{balance}} loan at {{interestRate}}% APR. If you skip grace-period payments, ${{accruedAmount}} interest capitalizes. If you make interest-only payments instead, you save the capitalized amount + future interest on it. Approximate total saving (capitalized + ~5% of capitalized for future interest)?",
+    "promptTemplate": "${{balance}} loan at {{interestRate}}% APR. If you skip grace-period payments, ${{accruedAmount}} of interest capitalizes. Roughly how much do you save in total by making interest-only payments during grace instead?",
     "variableRules": [
       {
         "name": "balance",
@@ -13144,7 +13144,7 @@
     "id": "sl_grace_lifetime_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "If grace-period interest of ${{accruedAmount}} capitalizes onto your ${{balance}} loan at {{interestRate}}% APR, approximately how much extra interest do you pay over a 10-year repayment (rough: capitalized \u00d7 rate \u00d7 5)?",
+    "promptTemplate": "If grace-period interest of ${{accruedAmount}} capitalizes onto your ${{balance}} loan at {{interestRate}}% APR, roughly how much extra interest does that cost you over a 10-year repayment?",
     "variableRules": [
       {
         "name": "balance",
@@ -13217,7 +13217,7 @@
     "id": "plus_vs_private_10yr_d2",
     "moduleId": "student_loans",
     "difficulty": 2,
-    "promptTemplate": "${{loanBalance}} loan. Parent PLUS at {{plusRate}}% vs private at {{privateRate}}%. Approximate 10-year interest difference (annual diff \u00d7 10, simplified)?",
+    "promptTemplate": "${{loanBalance}} loan. Parent PLUS at {{plusRate}}% vs private at {{privateRate}}%. Roughly what's the 10-year interest difference (simplified \u2014 ignore paydown)?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -13274,7 +13274,7 @@
     "id": "plus_total_cost_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "${{loanBalance}} Parent PLUS at 9.07% + 4.228% origination. Private alternative: {{privateRate}}% no fee. Approximate total 10-yr difference (interest gap \u00d7 10 + origination)?",
+    "promptTemplate": "${{loanBalance}} Parent PLUS at 9.07% + 4.228% origination, vs a private alternative at {{privateRate}}% with no fee. Counting both the rate gap and the origination fee, roughly what's the total 10-year difference?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -13302,7 +13302,7 @@
     "id": "plus_decision_d3",
     "moduleId": "student_loans",
     "difficulty": 3,
-    "promptTemplate": "${{loanBalance}} loan. PLUS annual interest at 9.07% vs private at {{privateRate}}%. Annual interest savings = balance \u00d7 rate difference. How much more per month does PLUS cost you in interest?",
+    "promptTemplate": "${{loanBalance}} loan. Parent PLUS charges 9.07% vs a private loan at {{privateRate}}%. How much more per MONTH does PLUS cost you in interest?",
     "variableRules": [
       {
         "name": "loanBalance",
@@ -13857,7 +13857,7 @@
     "moduleId": "investing",
     "difficulty": 1,
     "inputMode": "multipleChoice",
-    "promptTemplate": "Using the '120 minus your age' rule of thumb, a 30-year-old should hold roughly what % in stocks?",
+    "promptTemplate": "By the age-based rule of thumb, roughly what % of a 30-year-old's portfolio should be in stocks?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
@@ -15698,7 +15698,7 @@
     "id": "w2_equivalent_quick_d1",
     "moduleId": "salary",
     "difficulty": 1,
-    "promptTemplate": "Quick screen: an offer is ${{hourly1099}}/hr as a 1099 contractor. Using the rough rule that 1099 hourly × 0.70 ≈ W-2 take-home equivalent (after SE tax + missing benefits + missing PTO, net of the QBI deduction), what W-2 hourly does this approximately match?",
+    "promptTemplate": "Quick screen: an offer is ${{hourly1099}}/hr as a 1099 contractor. After self-employment tax, missing benefits, and missing PTO, roughly what W-2 hourly rate does this offer match?",
     "variableRules": [
       {"name": "hourly1099", "options": [40, 50, 60, 75, 90, 100]}
     ],
@@ -15711,7 +15711,7 @@
     "id": "w2_equivalent_breakeven_d2",
     "moduleId": "salary",
     "difficulty": 2,
-    "promptTemplate": "You currently earn ${{currentW2Hourly}}/hr W-2 with full benefits. What 1099 hourly rate would you need to roughly break even on take-home? Use the 1099 × 0.70 ≈ W-2 take-home rule.",
+    "promptTemplate": "You currently earn ${{currentW2Hourly}}/hr W-2 with full benefits. Roughly what 1099 hourly rate would you need to break even on take-home?",
     "variableRules": [
       {"name": "currentW2Hourly", "options": [30, 35, 40, 45, 50, 60]}
     ],
@@ -15724,7 +15724,7 @@
     "id": "se_tax_on_1099_d2",
     "moduleId": "salary",
     "difficulty": 2,
-    "promptTemplate": "On ${{annual1099}} of 1099 income, what's your effective self-employment tax? Use the IRS Schedule SE effective rate of ~14.13% (15.3% applied to 92.35% of earnings, per IRS).",
+    "promptTemplate": "On ${{annual1099}} of 1099 income, what's your self-employment tax?",
     "variableRules": [
       {"name": "annual1099", "options": [60000, 80000, 100000, 120000, 150000]}
     ],
@@ -15946,7 +15946,7 @@
     "id": "cash_to_close_quick_d1",
     "moduleId": "housing",
     "difficulty": 1,
-    "promptTemplate": "You're buying a ${{purchasePrice}} home with {{downPct}}% down. Using the quick rule that cash-to-close ≈ down payment + 5% of purchase price (covers closing costs, escrow, reserves), approximately how much cash do you need at the closing table?",
+    "promptTemplate": "You're buying a ${{purchasePrice}} home with {{downPct}}% down. Counting closing costs, escrow, and reserves on top of the down payment, approximately how much cash do you need at the closing table?",
     "variableRules": [
       {"name": "purchasePrice", "options": [250000, 300000, 400000, 500000, 600000]},
       {"name": "downPct", "options": [5, 10, 15, 20]}
@@ -15973,7 +15973,7 @@
     "id": "cash_to_close_20pct_down_d2",
     "moduleId": "housing",
     "difficulty": 2,
-    "promptTemplate": "You're buying a $400,000 home with 20% down (avoiding PMI). Using the quick rule: cash needed at closing ≈ down + 5% of price + $3K moving. What's your total cash requirement before move-in?",
+    "promptTemplate": "You're buying a $400,000 home with 20% down (avoiding PMI). Counting closing costs, escrow, reserves, and about $3,000 for moving, what's your total cash requirement before move-in?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "currency",
@@ -15992,7 +15992,7 @@
     "id": "cash_to_close_total_with_moving_d2",
     "moduleId": "housing",
     "difficulty": 2,
-    "promptTemplate": "A ${{purchasePrice}} home with {{downPct}}% down. Estimate the total cash needed BEFORE move-in (closing + moving / setup combined): down + 5% closing + ${{movingCash}} moving / setup.",
+    "promptTemplate": "A ${{purchasePrice}} home with {{downPct}}% down. Counting closing costs plus ${{movingCash}} for moving and setup, estimate the total cash you need BEFORE move-in.",
     "variableRules": [
       {"name": "purchasePrice", "options": [300000, 400000, 500000]},
       {"name": "downPct", "options": [10, 15, 20]},
@@ -16098,7 +16098,7 @@
     "id": "first_month_total_basic_d1",
     "moduleId": "housing",
     "difficulty": 1,
-    "promptTemplate": "Move-in cash on a $1,800/mo apartment (first + last + security): $5,400. Add the typical extras: ~$3,000 for a 1BR move (utilities setup + furniture + moving + restock). What's the total first-month TRUE cost?",
+    "promptTemplate": "You're signing for a $1,800/mo 1BR apartment with first month, last month, and security due at signing. Counting typical setup extras for a 1BR move, what's the total first-month TRUE cost?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "currency",
@@ -16117,7 +16117,7 @@
     "id": "first_month_padding_rule_d1",
     "moduleId": "housing",
     "difficulty": 1,
-    "promptTemplate": "Quick rule: first-month padding ≈ $3,000 base + $1,000 per bedroom. For a {{bedrooms}}-bedroom apartment, what padding should you add to the rent-component move-in cost?",
+    "promptTemplate": "Beyond the rent-driven move-in costs, how much should you budget as setup padding for a {{bedrooms}}-bedroom apartment?",
     "variableRules": [
       {"name": "bedrooms", "options": [1, 2, 3, 4]}
     ],
@@ -16144,7 +16144,7 @@
     "id": "first_month_no_broker_d2",
     "moduleId": "housing",
     "difficulty": 2,
-    "promptTemplate": "Moving into a ${{monthlyRent}}/mo apartment in a broker-fee city (NYC, Boston, parts of SF). Broker fee = 1 month's rent. Rent-component cash = first + last + security + broker = 4 × rent. Add ${{padding}} for utilities + furniture + moving + restock. Total first-month TRUE cost?",
+    "promptTemplate": "Moving into a ${{monthlyRent}}/mo apartment in a broker-fee city (NYC, Boston, parts of SF) where the broker charges one month's rent. Counting everything due at signing plus ${{padding}} for utilities, furniture, moving, and restocking, what's the total first-month TRUE cost?",
     "variableRules": [
       {"name": "monthlyRent", "options": [2400, 2800, 3200, 3600]},
       {"name": "padding", "options": [3000, 4000, 5000]}
@@ -16417,7 +16417,7 @@
     "id": "reverse_goal_basic_d1",
     "moduleId": "investing",
     "difficulty": 1,
-    "promptTemplate": "Using the mental anchor ($100/mo at 8% × 30 yrs ≈ $150K), roughly how much per month do you need to invest to reach ${{goal}} in 30 years at 8% nominal return?",
+    "promptTemplate": "Roughly how much per month do you need to invest to reach ${{goal}} in 30 years at an 8% nominal return?",
     "variableRules": [
       {"name": "goal", "options": [300000, 500000, 750000, 1000000, 1500000, 2000000]}
     ],
@@ -16443,7 +16443,7 @@
     "id": "reverse_goal_500k_d1",
     "moduleId": "investing",
     "difficulty": 1,
-    "promptTemplate": "Target $500,000 in 25 years at 8% nominal return. Using the anchor ($100/mo × 25 yrs at 8% ≈ $95K), roughly how much per month?",
+    "promptTemplate": "Target: $500,000 in 25 years at 8%. Anchor: $100/mo at 8% grows to about $95,000 over 25 years. Roughly how much per month do you need?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "currency",
@@ -16462,7 +16462,7 @@
     "id": "reverse_goal_2m_d2",
     "moduleId": "investing",
     "difficulty": 2,
-    "promptTemplate": "Target $2,000,000 in 35 years at 8% nominal return. Using the anchor ($100/mo × 35 yrs ≈ $230K), about how much per month?",
+    "promptTemplate": "Target: $2,000,000 in 35 years at 8%. Anchor: $100/mo at 8% grows to about $230,000 over 35 years. About how much per month do you need?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "currency",
@@ -16832,8 +16832,8 @@
     "moduleId": "money_math",
     "difficulty": 3,
     "inputMode": "multipleChoice",
-    "scenarioTemplate": "You take home $4,000/mo. Your needs (rent, utilities, groceries, minimum debt payments) run $2,600. Under 50/30/20, needs should be about $2,000.",
-    "promptTemplate": "Is this budget on track, and what does it mean?",
+    "scenarioTemplate": "You take home $4,000/mo. Your needs (rent, utilities, groceries, minimum debt payments) run $2,600.",
+    "promptTemplate": "Under 50/30/20, is this budget on track, and what does it mean?",
     "variableRules": [],
     "answerFormula": null,
     "answerFormat": "integer",
@@ -17021,7 +17021,7 @@
     "moduleId": "housing",
     "difficulty": 3,
     "inputMode": "multipleChoice",
-    "scenarioTemplate": "You earn $4,500/mo gross. An apartment you love rents for $1,600/mo. The 28% rule says housing should be at most about 28% of gross.",
+    "scenarioTemplate": "You earn $4,500/mo gross. An apartment you love rents for $1,600/mo.",
     "promptTemplate": "Does this fit the guideline, and what should you weigh?",
     "variableRules": [],
     "answerFormula": null,
@@ -18176,7 +18176,7 @@
     "moduleId": "salary",
     "difficulty": 2,
     "inputMode": "multipleChoice",
-    "scenarioTemplate": "You're non-exempt, earn $20/hr, and work 45 hours this week. Overtime is time-and-a-half for hours past 40.",
+    "scenarioTemplate": "You're non-exempt, earn $20/hr, and work 45 hours this week.",
     "promptTemplate": "What's your gross pay for the week?",
     "variableRules": [],
     "answerFormula": null,
@@ -19138,7 +19138,7 @@
     "moduleId": "investing",
     "difficulty": 1,
     "inputMode": "multipleChoice",
-    "promptTemplate": "You're 30, in the {{taxRate}}% bracket, and cash out a ${{balance}} 401(k) when leaving a job. Roughly how much goes to income tax plus the 10% early-withdrawal penalty (per IRS)?",
+    "promptTemplate": "You're 30, in the {{taxRate}}% bracket, and cash out a ${{balance}} 401(k) when leaving a job. Roughly how much goes to income tax plus the early-withdrawal penalty?",
     "variableRules": [
       {
         "name": "balance",
