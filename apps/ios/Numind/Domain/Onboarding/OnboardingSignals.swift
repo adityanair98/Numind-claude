@@ -80,7 +80,7 @@ enum FeltMoment: String, Codable, CaseIterable, Equatable, Hashable {
         case .guessedHealthPlan:          return "Picked a health plan by guessing"
         case .carriedCardBalance:         return "Carried a card balance longer than planned"
         case .almostScammed:              return "Got a scam text that almost got me"
-        case .signedLeaseBlind:           return "Signed a lease without doing the math"
+        case .signedLeaseBlind:           return "Signed a lease without checking the numbers"
         case .noneYet:                    return "None of these (yet)"
         }
     }

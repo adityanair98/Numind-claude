@@ -28,7 +28,7 @@ struct DailyMicroView: View {
                     + Text("moments")
                         .fontWeight(.semibold)
                         .foregroundColor(Theme.Colors.deepNavy)
-                    + Text(" \u{2014} a job offer every few years, open enrollment every fall, a lease every year. Five minutes a day keeps the math sharp for whichever one is next."))
+                    + Text(" \u{2014} a job offer every few years, open enrollment every fall, a lease every year. Five minutes a day keeps your money instincts sharp for whichever one is next."))
                     .font(Theme.Typography.body)
                     .foregroundStyle(Theme.Colors.mutedText)
                     .lineSpacing(4)

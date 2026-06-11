@@ -51,9 +51,10 @@ struct DiagnosticIntroView: View {
                         }
                         .padding(.top, 22)
 
-                        Text("We\u{2019}ll show you the shortcut behind every question \u{2014} that\u{2019}s the product.")
+                        Text("You don\u{2019}t need to be a math person \u{2014} every shortcut here is 20 seconds, and we show it to you after every question.")
                             .font(.system(size: 11))
                             .foregroundStyle(Theme.Colors.mutedText.opacity(0.8))
+                            .lineSpacing(2)
                             .padding(.top, 16)
                     }
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)

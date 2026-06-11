@@ -126,9 +126,9 @@ struct DeadlineView: View {
     private var undatedBody: String {
         switch packId {
         case "credit_card_cleanup":
-            return "On a typical balance at today\u{2019}s average APR, every month of \u{201C}I\u{2019}ll deal with it later\u{201D} costs real money. The payoff math takes minutes to learn \u{2014} and it works immediately."
+            return "On a typical balance at today\u{2019}s average APR, every month of \u{201C}I\u{2019}ll deal with it later\u{201D} costs real money. Turning it around takes minutes to learn \u{2014} and works immediately."
         case "the_job_offer":
-            return "The call comes, they name a number, and you have seconds to respond. The people who counter well aren\u{2019}t braver \u{2014} they\u{2019}ve just done the math before the phone rang."
+            return "The call comes, they name a number, and you have seconds to respond. The people who counter well aren\u{2019}t braver \u{2014} they just knew their number before the phone rang."
         case "protect_your_money":
             return "Adults in their 20s and 30s report losing money to scams more often than any other age group. The defense is pattern recognition \u{2014} and patterns are learnable."
         default:

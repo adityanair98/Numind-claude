@@ -22,7 +22,7 @@ enum SkillAxis: String, Codable, CaseIterable, Equatable {
     /// User-facing display name (used in radar labels, subtitle copy, evidence labels).
     var displayName: String {
         switch self {
-        case .everydayMoneyMath:    return "Everyday Money Math"
+        case .everydayMoneyMath:    return "Everyday Money"
         case .cashFlowAndBudgeting: return "Cash Flow & Budgeting"
         case .incomeAndPaycheck:    return "Income & Paycheck"
         case .debtAndCredit:        return "Debt & Credit"
@@ -35,7 +35,7 @@ enum SkillAxis: String, Codable, CaseIterable, Equatable {
     /// Short label for the radar chart spokes (≤14 chars target for legibility).
     var shortName: String {
         switch self {
-        case .everydayMoneyMath:    return "Everyday Math"
+        case .everydayMoneyMath:    return "Everyday"
         case .cashFlowAndBudgeting: return "Cash Flow"
         case .incomeAndPaycheck:    return "Income"
         case .debtAndCredit:        return "Debt & Credit"

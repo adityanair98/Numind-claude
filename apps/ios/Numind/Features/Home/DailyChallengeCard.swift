@@ -105,7 +105,7 @@ struct DailyChallengeCard: View {
         VStack(alignment: .leading, spacing: 6) {
             Text(hasHistory
                  ? "\(total) questions\npicked for you"
-                 : "\(total) questions\ntest your mental math")
+                 : "\(total) questions\nto get you started")
                 .font(.system(size: 28, weight: .bold, design: .rounded))
                 .foregroundStyle(.white)
                 .lineSpacing(1)

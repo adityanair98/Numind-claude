@@ -408,7 +408,7 @@ struct HomeView: View {
         dailyVM = QuizSessionViewModel(
             questions: plan.questions,
             title: "Daily Workout",
-            shortcut: "Draw on all the skills you've built \u{2014} tips, discounts, salary math, and more.",
+            shortcut: "Draw on all the skills you've built \u{2014} tips, discounts, paychecks, and more.",
             moduleColor: .blue,
             teachCards: teachCards,
             segmentLabels: plan.segmentLabels

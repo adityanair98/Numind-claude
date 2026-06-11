@@ -93,7 +93,7 @@ struct KaizenView: View {
                         )
                         .padding(.top, 28)
 
-                        Text("Short sessions. Real scenarios. No fluff \u{2014} a few minutes a day keeps the math sharp for whichever decision is next.")
+                        Text("Short sessions. Real scenarios. No fluff \u{2014} a few minutes a day keeps your instincts sharp for whichever decision is next.")
                             .font(.system(size: 15))
                             .foregroundStyle(.white.opacity(0.78))
                             .lineSpacing(4)

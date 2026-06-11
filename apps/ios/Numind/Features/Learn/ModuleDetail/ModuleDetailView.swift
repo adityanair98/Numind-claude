@@ -426,7 +426,7 @@ struct ModuleDetailView: View {
             module: Module(
                 id: "smart_shopping",
                 title: "Smart Shopping",
-                subtitle: "Tips, discounts, and everyday saving math",
+                subtitle: "Tips, discounts, and everyday savings",
                 icon: "cart.fill",
                 color: .blue,
                 lessonIds: ["tip_18_percent"],

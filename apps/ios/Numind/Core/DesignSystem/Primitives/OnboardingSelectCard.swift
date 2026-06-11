@@ -118,7 +118,7 @@ extension OnboardingSelectCard {
 
 #Preview {
     VStack(spacing: 10) {
-        OnboardingSelectCard(label: "I struggle", subtitle: "Everyday math feels hard", selected: false) {
+        OnboardingSelectCard(label: "I freeze", subtitle: "I just go with whatever they offer", selected: false) {
             Text("\u{1F630}")
                 .font(.system(size: 20))
                 .frame(width: 38, height: 38)

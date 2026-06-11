@@ -96,7 +96,7 @@ extension OnboardingMultiCard {
         }
         OnboardingMultiCard(
             label: "Build confidence",
-            subtitle: "Stop second-guessing math",
+            subtitle: "Know your numbers before the moment",
             selected: false,
             accentColor: Theme.Colors.mindTeal
         ) {

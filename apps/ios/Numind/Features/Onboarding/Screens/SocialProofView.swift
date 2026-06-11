@@ -55,7 +55,7 @@ struct SocialProofView: View {
                     .frame(width: 32, height: 3)
                     .padding(.top, 16)
 
-                Text("Not because they\u{2019}re bad with money \u{2014} because nobody showed them the 20-second version of the math.")
+                Text("Not because they\u{2019}re bad with money \u{2014} because nobody ever showed them the 20-second version.")
                     .font(Theme.Typography.body)
                     .foregroundStyle(.white.opacity(0.72))
                     .lineSpacing(3)

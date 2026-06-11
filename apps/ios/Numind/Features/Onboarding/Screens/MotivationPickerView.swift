@@ -9,7 +9,7 @@ struct MotivationPickerView: View {
     private let options: [(motivation: Motivation, label: String, sub: String, emoji: String, color: Color)] = [
         (.stopLeavingMoney, "Stop leaving money on the table", "Negotiation, benefits, the match", "\u{1F4BC}", Theme.Colors.warmOrange),
         (.stopGettingTaken, "Stop getting taken advantage of", "Scams, fees, dealer tactics", "\u{1F6E1}", Theme.Colors.debtCoral),
-        (.decideWithConfidence, "Decide with confidence, not anxiety", "Know the math before the moment", "\u{1F4AA}", Theme.Colors.mindTeal),
+        (.decideWithConfidence, "Decide with confidence, not anxiety", "Know your numbers before the moment", "\u{1F4AA}", Theme.Colors.mindTeal),
         (.understandPaycheck, "Actually understand my paycheck", "Deductions, benefits, taxes", "\u{1F9FE}", Theme.Colors.taxSlate),
         (.getAheadOfDebt, "Get ahead of my debt", "Interest, payoff, the real cost", "\u{1F4B3}", Theme.Colors.primaryBlue),
         (.growMoney, "Make my money grow", "Match, accounts, compounding", "\u{1F4C8}", Theme.Colors.investIndigo),

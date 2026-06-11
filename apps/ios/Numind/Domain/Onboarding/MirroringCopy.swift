@@ -15,7 +15,7 @@ enum MirroringCopy {
         case "open_enrollment":
             return "Open enrollment is one form \u{2014} and most people guess. You won\u{2019}t."
         case "first_apartment":
-            return "A lease is the biggest check you sign all year. You\u{2019}ll know the math before you sign it."
+            return "A lease is the biggest check you sign all year. You\u{2019}ll know exactly what you\u{2019}re signing."
         case "credit_card_cleanup":
             return "Card interest works against you every single day \u{2014} until you know exactly how to turn it off."
         case "buying_a_home":
@@ -25,7 +25,7 @@ enum MirroringCopy {
         case "investing_starter":
             return "Four decisions drive almost everything in investing. You\u{2019}ll own all four."
         case "car_buying":
-            return "The dealership runs on math they hope you won\u{2019}t do. You\u{2019}ll do it in your head."
+            return "The dealership runs on numbers they hope you won\u{2019}t check. You\u{2019}ll check them in your head."
         case "everyday_spending":
             return "Small money decisions happen every day \u{2014} sharp instincts turn them all your way."
         case "taxes_without_panic":
@@ -35,7 +35,7 @@ enum MirroringCopy {
         case "first_paycheck":
             return "Your paycheck has a story in it \u{2014} you\u{2019}re about to read every line of it."
         default:
-            return "You know the moment you\u{2019}re preparing for \u{2014} and we know the math behind it."
+            return "You know the moment you\u{2019}re preparing for \u{2014} and we know the numbers behind it."
         }
     }
 
@@ -47,9 +47,9 @@ enum MirroringCopy {
         let motivationCopy: [(Motivation, String)] = [
             (.stopLeavingMoney, "One in four employees leaves part of their 401(k) match unclaimed \u{2014} a five-minute check ends that for good."),
             (.stopGettingTaken, "Fees, dealer tactics, and scam patterns all repeat. Once you\u{2019}ve seen the pattern, it stops working on you."),
-            (.decideWithConfidence, "Confidence isn\u{2019}t a personality trait here \u{2014} it\u{2019}s knowing the 20-second version of the math before the moment arrives."),
+            (.decideWithConfidence, "Confidence isn\u{2019}t a personality trait here \u{2014} it\u{2019}s knowing the 20-second answer before the moment arrives."),
             (.understandPaycheck, "Your paycheck, your benefits, your withholding \u{2014} each one is a 5-minute skill, not a finance degree."),
-            (.getAheadOfDebt, "The interest math that works against you is exactly the math that gets you out \u{2014} once you can run it yourself."),
+            (.getAheadOfDebt, "The same interest that works against you becomes the thing that gets you out \u{2014} once you know how it moves."),
             (.growMoney, "A handful of decisions \u{2014} match, account type, allocation \u{2014} drive most investing outcomes. They\u{2019}re all learnable."),
             (.staySharp, "Skills fade. Numind tracks what\u{2019}s going stale and brings it back in minutes \u{2014} that\u{2019}s how it sticks for good."),
         ]

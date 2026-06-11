@@ -43,7 +43,7 @@ struct WelcomeHookView: View {
                 // Value props
                 VStack(spacing: 12) {
                     valueRow(emoji: "\u{1F3AF}", tint: Theme.Colors.primaryBlueTint, title: "Decision-sized sessions", sub: "5 minutes, built for real moments")
-                    valueRow(emoji: "\u{1F9ED}", tint: Theme.Colors.mindTealTint, title: "Job offers, health plans, leases, loans", sub: "The math behind each one")
+                    valueRow(emoji: "\u{1F9ED}", tint: Theme.Colors.mindTealTint, title: "Job offers, health plans, leases, loans", sub: "Know your number for each one")
                     valueRow(emoji: "\u{2705}", tint: Theme.Colors.insightYellowTint, title: "Honest progress", sub: "We tell you when you\u{2019}re actually ready")
                 }
                 .padding(.horizontal, Theme.Spacing.screenHorizontal)

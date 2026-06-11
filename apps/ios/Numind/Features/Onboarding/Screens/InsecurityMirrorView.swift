@@ -90,8 +90,8 @@ struct InsecurityMirrorView: View {
                         .padding(.top, 4)
 
                     Text(hasRealMoment
-                         ? "Every one of these has a 5-minute version of the math."
-                         : "These moments are coming \u{2014} and each has a 5-minute version of the math.")
+                         ? "Every one of these has a 5-minute fix."
+                         : "These moments are coming \u{2014} and each has a 5-minute fix.")
                         .font(Theme.Typography.title)
                         .foregroundStyle(Theme.Colors.deepNavy)
                         .lineSpacing(2)
@@ -108,7 +108,7 @@ struct InsecurityMirrorView: View {
                     }
                     .padding(.top, 22)
 
-                    Text("Not because people are careless \u{2014} because nobody showed them the 20-second version of the math before the moment arrived.")
+                    Text("Not because people are careless \u{2014} because nobody showed them what to look for before the moment arrived.")
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Colors.mutedText)
                         .lineSpacing(3)
