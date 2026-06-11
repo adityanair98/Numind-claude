@@ -190,17 +190,25 @@ After all questions:
   - If mastered: "Review mistakes" + "Continue learning"
   - If not mastered: "Retry quiz" (primary, orange) + "Skip for now"
 
-## Future Onboarding / Paywall
-Later flow:
-Welcome
--> motivation selection
--> self-rating
--> diagnostic
--> results
--> personalized plan
--> hard paywall with 7-day free trial
+## Onboarding / Paywall (v2 baseline built — Phase 11)
+26-screen decision-first funnel, anonymous end-to-end, hard paywall at the
+end (CalAI pattern). Spec: `docs/product/onboarding-funnel-v2.md`.
 
-Do not build this before the core app loop exists.
+Welcome ("Money decisions don't wait")
+-> money-stress proof + moments framing + insecurity mirror (felt moments → verified costs)
+-> confidence + motivations
+-> **life-moment picker** (the 12 packs as moments; first pick = focus pack)
+-> mirroring + real deadline (Open enrollment Nov 1 / Tax day Apr 15 via MomentCalendar)
+-> ring target + kaizen + ADHD tuning + name/age
+-> **diagnostic-as-demo** (pack-weighted 8Q; shortcut reveal after every answer; goal ring fills live; 1 decision item)
+-> **Money Map** (per-skill placement: Solid start / Shaky / New to you; no LVL badge; "Ready is earned" honesty line)
+-> personalized plan (ring + 4 named readiness gates + dated timeline)
+-> notifications -> ROI priming (verified mistake costs) -> ring-streak goal -> capability projection -> trial-reminder transparency
+-> 7-day-trial paywall (RevenueCat TODO) -> welcome -> first workout
+
+Honesty constraints: diagnostic never grants mastery or Readiness (placement
+language only); projections say "on track to Ready", never "Ready". Account
+creation (Sign in with Apple) slots just before the paywall when auth ships.
 
 ## Website Layer
 The website (`apps/web/`) is not the product. It supports acquisition through SEO-optimized calculator tools that drive App Store downloads.

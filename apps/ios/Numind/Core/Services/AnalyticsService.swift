@@ -25,6 +25,10 @@ enum AnalyticsService {
     enum Event: String {
         case workoutStarted    = "workout_started"
         case workoutCompleted  = "workout_completed"
+        case onboardingStepViewed = "onboarding_step_viewed"
+        case onboardingCompleted  = "onboarding_completed"
+        case diagnosticStarted    = "diagnostic_started"
+        case diagnosticCompleted  = "diagnostic_completed"
         case ringClosed        = "ring_closed"
         case sessionCompleted  = "session_completed"
         case lessonStarted     = "lesson_started"

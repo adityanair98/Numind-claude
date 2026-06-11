@@ -26,20 +26,20 @@ struct NotificationPermissionView: View {
                         // Mock notifications
                         VStack(spacing: 10) {
                             notificationBanner(
-                                emoji: "\u{1F525}",
+                                emoji: "\u{1F9ED}",
                                 bg: Theme.Colors.warmOrange,
-                                body: "Keep your streak alive! 5 minutes to level up."
+                                body: "Your ring\u{2019}s still open \u{2014} 6 minutes closes it."
                             )
                             notificationBanner(
-                                emoji: "\u{1F3C6}",
-                                bg: Theme.Colors.insightYellow,
-                                body: "New milestone! You\u{2019}ve mastered Tipping.",
+                                emoji: "\u{1F504}",
+                                bg: Theme.Colors.mindTeal,
+                                body: "2 skills are fading \u{2014} 3 minutes brings them back.",
                                 scale: 0.96
                             )
                             notificationBanner(
-                                emoji: "\u{1F4A1}",
-                                bg: Theme.Colors.mindTeal,
-                                body: "Daily challenge ready \u{2014} quick session?",
+                                emoji: "\u{1F4C5}",
+                                bg: Theme.Colors.insightYellow,
+                                body: "Open enrollment is in 3 weeks \u{2014} you\u{2019}re 2 skills from Ready.",
                                 scale: 0.96,
                                 opacity: 0.5
                             )

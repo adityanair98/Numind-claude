@@ -16,7 +16,7 @@ struct PaywallPrimingView: View {
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .padding(.top, 8)
 
-                        Text("The average overtipping mistake costs $200+/yr. Numind pays for itself.")
+                        Text("One unprepared money decision costs more than a year of Numind. Usually a lot more.")
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Colors.mutedText)
                             .lineSpacing(3)
@@ -37,7 +37,7 @@ struct PaywallPrimingView: View {
                                 emoji: "\u{1F9E0}",
                                 label: "Numind / month",
                                 price: "$4.99",
-                                sub: "Unlimited skill building",
+                                sub: "Every money decision, prepared",
                                 tint: Theme.Colors.primaryBlueTint,
                                 color: Theme.Colors.primaryBlue,
                                 featured: true
@@ -45,24 +45,25 @@ struct PaywallPrimingView: View {
                         }
                         .padding(.top, 26)
 
-                        // Quick math card
+                        // Quick math card — verified real-mistake costs
                         NumindCard {
                             VStack(alignment: .leading, spacing: 8) {
-                                Text("Quick math")
+                                Text("What unprepared costs")
                                     .font(Theme.Typography.small)
                                     .textCase(.uppercase)
                                     .tracking(1)
                                     .foregroundStyle(Theme.Colors.mutedText)
 
-                                mathLine(left: "Yearly cost", right: "$59.88")
-                                mathLine(left: "Avg. tipping mistake", right: "\u{2212}$200", muted: true)
+                                mathLine(left: "Cashing out a 401(k) at a job change", right: "\u{2212}$2,000+", muted: true)
+                                mathLine(left: "A year of unclaimed employer match", right: "\u{2212}$1,000+", muted: true)
+                                mathLine(left: "Forfeited FSA money (use it or lose it)", right: "\u{2212}$400+", muted: true)
                                 Divider().padding(.vertical, 4)
-                                mathLine(left: "You save", right: "+$140/yr", highlight: true)
+                                mathLine(left: "Numind, for the whole year", right: "$59.88", highlight: true)
                             }
                         }
                         .padding(.top, 22)
 
-                        Text("And that\u{2019}s only one mistake. We could keep going.")
+                        Text("One prepared decision pays for a decade of it.")
                             .font(.system(size: 13))
                             .foregroundStyle(Theme.Colors.mutedText.opacity(0.7))
                             .frame(maxWidth: .infinity)

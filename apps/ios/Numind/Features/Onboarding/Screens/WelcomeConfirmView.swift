@@ -9,7 +9,9 @@ struct WelcomeConfirmView: View {
     let onExploreFirst: () -> Void
 
     private var minutesPerDay: Int { viewModel.signals.dailyMinutes ?? 10 }
-    private var topicCount: Int { max(1, viewModel.signals.topicInterests.count) }
+    private var packShortName: String {
+        viewModel.focusPack?.title ?? "Your path"
+    }
     private var streakDays: String {
         if let goal = viewModel.signals.streakGoal { return "\(goal)d" }
         return "7d"
@@ -47,7 +49,7 @@ struct WelcomeConfirmView: View {
                     .lineSpacing(2)
                     .padding(.top, 12)
 
-                Text("Your daily plan is ready. Let\u{2019}s get the first 5 minutes done.")
+                Text("\(packShortName) is your focus. Let\u{2019}s close your first ring.")
                     .font(Theme.Typography.body)
                     .foregroundStyle(.white.opacity(0.72))
                     .multilineTextAlignment(.center)
@@ -59,9 +61,9 @@ struct WelcomeConfirmView: View {
                 HStack(spacing: 0) {
                     statPill(value: "\(minutesPerDay)", label: "min/day")
                     statDivider
-                    statPill(value: "\(topicCount)", label: "topics")
+                    statPill(value: "\(viewModel.signals.dailyChallengeCount)", label: "ring target")
                     statDivider
-                    statPill(value: streakDays, label: "streak goal")
+                    statPill(value: streakDays, label: "ring streak")
                 }
                 .padding(.vertical, 12)
                 .padding(.horizontal, 14)
@@ -80,7 +82,7 @@ struct WelcomeConfirmView: View {
                 // CTAs
                 VStack(spacing: 6) {
                     Button(action: onStartFirstSession) {
-                        Text("Start your first session \u{2192}")
+                        Text("Start today\u{2019}s workout \u{2192}")
                             .font(Theme.Typography.headline)
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .frame(maxWidth: .infinity)

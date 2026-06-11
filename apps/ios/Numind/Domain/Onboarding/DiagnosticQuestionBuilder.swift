@@ -1,150 +1,166 @@
 import Foundation
 
-/// Selects 8 diagnostic questions from the user's chosen topic interests.
+/// Selects 8 diagnostic questions for the onboarding diagnostic-as-demo
+/// (Phase 11 v2 — pack-aware).
 ///
-/// Distribution:
-/// - 2 topics → 4 questions each
-/// - 3 topics → 3-3-2 split (topic with fewest templates gets 2)
-/// - 4+ topics → 2 questions each
+/// Composition:
+/// - ~5 from the FOCUS pack's core lessons (1 easy entry, then a d1→d3
+///   ladder across distinct core lessons)
+/// - ~2 from secondary packs (their anchor/core lessons)
+/// - 1 "what would you do" application item from the focus pack, served last
 ///
-/// Each topic uses 1 easy (d1) + remaining harder (d2/d3) questions.
+/// Each question carries its lesson's title + shortcut so the quiz can show
+/// the shortcut reveal after every answer — the diagnostic doubles as the
+/// product demo that carries the end-of-funnel paywall.
 enum DiagnosticQuestionBuilder {
 
-    /// A question paired with its source module ID.
+    /// A question paired with its source metadata.
     struct TaggedQuestion {
         let question: QuizQuestion
         let moduleId: String
+        let lessonId: String
+        let lessonTitle: String
+        let shortcut: String
+        let isApplication: Bool
     }
 
-    /// Build questions with module ID tracking for diagnostic results.
-    static func buildQuestionsWithModuleIds(
-        topicInterests: Set<String>,
-        repository: ContentRepository
+    static func build(
+        focusPackId: String?,
+        secondaryPackIds: Set<String>,
+        repository: ContentRepository,
+        total: Int = 8
     ) -> [TaggedQuestion] {
-        let topics = Array(topicInterests).sorted()
-        guard !topics.isEmpty else { return [] }
-
-        let distribution = questionDistribution(topicCount: topics.count, total: 8)
-        var tagged: [TaggedQuestion] = []
-
-        for (index, topicId) in topics.enumerated() {
-            let count = index < distribution.count ? distribution[index] : 2
-            let lessons = repository.lessons(for: topicId)
-            let templates = lessons.flatMap { repository.templates(for: $0.id) }
-            guard !templates.isEmpty else { continue }
-
-            let easyTemplates = templates.filter { $0.difficulty == 1 }
-            let hardTemplates = templates.filter { $0.difficulty >= 2 }
-            var topicQuestions: [TaggedQuestion] = []
-
-            if let easyTemplate = easyTemplates.randomElement() ?? templates.randomElement() {
-                let q = QuizEngine.generate(from: easyTemplate, targetDifficulty: .easy)
-                topicQuestions.append(TaggedQuestion(question: q, moduleId: topicId))
-            }
-
-            let remainingCount = count - topicQuestions.count
-            let hardPool = hardTemplates.isEmpty ? templates : hardTemplates
-            var usedTemplateIds: Set<String> = []
-
-            for _ in 0..<remainingCount {
-                let available = hardPool.filter { !usedTemplateIds.contains($0.id) }
-                let template = available.randomElement() ?? hardPool.randomElement()
-                if let template {
-                    let q = QuizEngine.generate(from: template)
-                    topicQuestions.append(TaggedQuestion(question: q, moduleId: topicId))
-                    usedTemplateIds.insert(template.id)
-                }
-            }
-
-            tagged.append(contentsOf: topicQuestions)
+        guard let focusId = focusPackId,
+              let focusPack = repository.pack(id: focusId) else {
+            return []
         }
 
-        return tagged.shuffled()
-    }
+        let focusLessons = coreLessons(of: focusPack, repository: repository)
+        var used = Set<String>()           // template IDs already picked
+        var ordered: [TaggedQuestion] = []
 
-    static func buildQuestions(
-        topicInterests: Set<String>,
-        repository: ContentRepository
-    ) -> [QuizQuestion] {
-        let topics = Array(topicInterests).sorted()
-        guard !topics.isEmpty else { return [] }
+        // ── 1 application item from the focus pack, reserved for the END ──
+        let applicationPick = pickApplication(
+            from: focusLessons, repository: repository, excluding: used
+        )
+        if let app = applicationPick { used.insert(app.question.templateId) }
 
-        // Determine question count per topic
-        let distribution = questionDistribution(topicCount: topics.count, total: 8)
-
-        var questions: [QuizQuestion] = []
-
-        for (index, topicId) in topics.enumerated() {
-            let count = index < distribution.count ? distribution[index] : 2
-
-            // Get all templates for lessons in this module
-            let lessons = repository.lessons(for: topicId)
-            let templates = lessons.flatMap { repository.templates(for: $0.id) }
-
-            guard !templates.isEmpty else { continue }
-
-            // Separate by difficulty
-            let easyTemplates = templates.filter { $0.difficulty == 1 }
-            let hardTemplates = templates.filter { $0.difficulty >= 2 }
-
-            var topicQuestions: [QuizQuestion] = []
-
-            // 1 easy question
-            if let easyTemplate = easyTemplates.randomElement() ?? templates.randomElement() {
-                let q = QuizEngine.generate(from: easyTemplate, targetDifficulty: .easy)
-                topicQuestions.append(q)
+        // ── Secondary-pack questions (1 each, max 2) ──
+        var secondaryPicks: [TaggedQuestion] = []
+        for packId in secondaryPackIds.sorted().prefix(2) {
+            guard let pack = repository.pack(id: packId) else { continue }
+            let lessons = coreLessons(of: pack, repository: repository)
+            if let pick = pickOne(from: lessons, repository: repository,
+                                  maxDifficulty: 2, excluding: used) {
+                secondaryPicks.append(pick)
+                used.insert(pick.question.templateId)
             }
-
-            // Remaining harder questions
-            let remainingCount = count - topicQuestions.count
-            let hardPool = hardTemplates.isEmpty ? templates : hardTemplates
-            var usedTemplateIds: Set<String> = Set(topicQuestions.compactMap { _ in nil as String? })
-
-            for _ in 0..<remainingCount {
-                // Try to pick an unused template
-                let available = hardPool.filter { !usedTemplateIds.contains($0.id) }
-                let template = available.randomElement() ?? hardPool.randomElement()
-
-                if let template {
-                    let q = QuizEngine.generate(from: template)
-                    topicQuestions.append(q)
-                    usedTemplateIds.insert(template.id)
-                }
-            }
-
-            questions.append(contentsOf: topicQuestions)
         }
 
-        // Shuffle to avoid topic clustering
-        return questions.shuffled()
+        // ── Focus-pack ladder fills the rest ──
+        let focusCount = total - secondaryPicks.count - (applicationPick == nil ? 0 : 1)
+        var focusPicks: [TaggedQuestion] = []
+
+        // Entry question: one easy from the first core lesson.
+        if let first = focusLessons.first,
+           let easy = pickOne(from: [first], repository: repository,
+                              maxDifficulty: 1, excluding: used) {
+            focusPicks.append(easy)
+            used.insert(easy.question.templateId)
+        }
+
+        // Ladder: rotate across distinct core lessons, harder as we go.
+        var lessonCursor = focusLessons.isEmpty ? [] : Array(focusLessons.dropFirst()) + focusLessons
+        while focusPicks.count < focusCount && !lessonCursor.isEmpty {
+            let lesson = lessonCursor.removeFirst()
+            let targetDifficulty = focusPicks.count < focusCount / 2 ? 2 : 3
+            if let pick = pickOne(from: [lesson], repository: repository,
+                                  preferredDifficulty: targetDifficulty,
+                                  excluding: used) {
+                focusPicks.append(pick)
+                used.insert(pick.question.templateId)
+            }
+        }
+
+        // Assemble: focus ladder, then secondaries interleaved, decision last.
+        ordered = focusPicks
+        for (i, pick) in secondaryPicks.enumerated() {
+            let slot = min(ordered.count, (i + 1) * 2 + 1)
+            ordered.insert(pick, at: slot)
+        }
+        if let app = applicationPick { ordered.append(app) }
+
+        return ordered
     }
 
     // MARK: - Private
 
-    /// Returns an array where each index is the question count for that topic.
-    private static func questionDistribution(topicCount: Int, total: Int) -> [Int] {
-        guard topicCount > 0 else { return [] }
+    /// The pack's readiness-defining lessons, falling back to all lessons.
+    private static func coreLessons(of pack: Pack, repository: ContentRepository) -> [Lesson] {
+        let ids = pack.coreLessonIds.isEmpty ? pack.lessonIds : pack.coreLessonIds
+        return ids.compactMap { repository.lesson(id: $0) }
+    }
 
-        switch topicCount {
-        case 1:
-            return [total]
-        case 2:
-            let half = total / 2
-            return [half, total - half]
-        case 3:
-            // 3-3-2 split — last topic gets fewer
-            let base = total / 3      // 2
-            let remainder = total % 3  // 2
-            return (0..<3).map { i in
-                base + (i < remainder ? 1 : 0)
+    private static func tag(_ template: QuizTemplate, lesson: Lesson,
+                            targetDifficulty: QuestionDifficulty? = nil) -> TaggedQuestion {
+        let question: QuizQuestion
+        if let target = targetDifficulty {
+            question = QuizEngine.generate(from: template, targetDifficulty: target)
+        } else {
+            question = QuizEngine.generate(from: template)
+        }
+        return TaggedQuestion(
+            question: question,
+            moduleId: lesson.moduleId,
+            lessonId: lesson.id,
+            lessonTitle: lesson.title,
+            shortcut: lesson.shortcut,
+            isApplication: template.isApplicationItem
+        )
+    }
+
+    /// Pick one non-application template from the given lessons near the
+    /// preferred difficulty.
+    private static func pickOne(
+        from lessons: [Lesson],
+        repository: ContentRepository,
+        maxDifficulty: Int = 3,
+        preferredDifficulty: Int? = nil,
+        excluding used: Set<String>
+    ) -> TaggedQuestion? {
+        for lesson in lessons.shuffled() {
+            let pool = repository.templates(for: lesson.id)
+                .filter { !used.contains($0.id) && !$0.isApplicationItem && $0.difficulty <= maxDifficulty }
+            guard !pool.isEmpty else { continue }
+
+            let template: QuizTemplate?
+            if let preferred = preferredDifficulty {
+                template = pool.filter { $0.difficulty == preferred }.randomElement()
+                    ?? pool.max(by: { abs($0.difficulty - preferred) > abs($1.difficulty - preferred) })
+            } else {
+                template = pool.filter { $0.difficulty == 1 }.randomElement() ?? pool.randomElement()
             }
-        default:
-            // 4+ topics: 2 each, fill from first if any remainder
-            let base = total / topicCount
-            let remainder = total % topicCount
-            return (0..<topicCount).map { i in
-                base + (i < remainder ? 1 : 0)
+            guard let template else { continue }
+
+            let target: QuestionDifficulty? = template.difficulty == 1 ? .easy : nil
+            return tag(template, lesson: lesson, targetDifficulty: target)
+        }
+        return nil
+    }
+
+    /// Pick one "what would you do" decision item from the lessons.
+    private static func pickApplication(
+        from lessons: [Lesson],
+        repository: ContentRepository,
+        excluding used: Set<String>
+    ) -> TaggedQuestion? {
+        for lesson in lessons.shuffled() {
+            let pool = repository.templates(for: lesson.id)
+                .filter { !used.contains($0.id) && $0.isApplicationItem }
+            if let template = pool.randomElement() {
+                return tag(template, lesson: lesson)
             }
         }
+        return nil
     }
 }

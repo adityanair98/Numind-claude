@@ -6,9 +6,9 @@ struct StreakGoalView: View {
     let onContinue: () -> Void
 
     private let options: [(days: Int, label: String, sub: String, glyph: String, color: Color, recommended: Bool)] = [
-        (3, "3 days", "Build your first habit loop", "\u{1F525}", Theme.Colors.warmOrange, false),
-        (7, "7 days", "Complete your first module", "\u{1F3C6}", Theme.Colors.insightYellow, true),
-        (14, "14 days", "Measurable speed improvement", "\u{26A1}", Theme.Colors.primaryBlue, false),
+        (3, "3 days", "Build the habit", "\u{1F525}", Theme.Colors.warmOrange, false),
+        (7, "7 days", "First core skills at solid", "\u{1F9ED}", Theme.Colors.insightYellow, true),
+        (14, "14 days", "Within reach of your first Ready", "\u{26A1}", Theme.Colors.primaryBlue, false),
     ]
 
     private var ctaLabel: String {
@@ -25,12 +25,12 @@ struct StreakGoalView: View {
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("Set your first streak goal")
+                        Text("How many days in a row will you close your ring?")
                             .font(Theme.Typography.title)
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .padding(.top, 8)
 
-                        Text("Don\u{2019}t worry \u{2014} you can extend it anytime.")
+                        Text("Anything counts toward it \u{2014} and you can extend anytime.")
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Colors.mutedText)
                             .padding(.top, 8)

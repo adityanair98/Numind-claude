@@ -7,13 +7,13 @@ struct MotivationPickerView: View {
     let onContinue: () -> Void
 
     private let options: [(motivation: Motivation, label: String, sub: String, emoji: String, color: Color)] = [
-        (.financialDecisions, "Better financial decisions", "Tips, budgets, investments", "\u{1F4B0}", Theme.Colors.primaryBlue),
-        (.buildConfidence, "Build confidence", "Stop second-guessing math", "\u{1F4AA}", Theme.Colors.mindTeal),
-        (.careerGrowth, "Career growth", "Salary, business math", "\u{1F4C8}", Theme.Colors.warmOrange),
-        (.staySharp, "Stay mentally sharp", "Keep my mind active", "\u{1F9E0}", Theme.Colors.investIndigo),
-        (.supportEducation, "Support my education", "School, exams, coursework", "\u{1F4DA}", Theme.Colors.growthGreen),
-        (.appearSharper, "Appear sharper socially", "Impress friends, split bills", "\u{2728}", Theme.Colors.insightYellow),
-        (.boostFocus, "Boost focus & analysis", "Train my brain", "\u{1F3AF}", Theme.Colors.debtCoral),
+        (.stopLeavingMoney, "Stop leaving money on the table", "Negotiation, benefits, the match", "\u{1F4BC}", Theme.Colors.warmOrange),
+        (.stopGettingTaken, "Stop getting taken advantage of", "Scams, fees, dealer tactics", "\u{1F6E1}", Theme.Colors.debtCoral),
+        (.decideWithConfidence, "Decide with confidence, not anxiety", "Know the math before the moment", "\u{1F4AA}", Theme.Colors.mindTeal),
+        (.understandPaycheck, "Actually understand my paycheck", "Deductions, benefits, taxes", "\u{1F9FE}", Theme.Colors.taxSlate),
+        (.getAheadOfDebt, "Get ahead of my debt", "Interest, payoff, the real cost", "\u{1F4B3}", Theme.Colors.primaryBlue),
+        (.growMoney, "Make my money grow", "Match, accounts, compounding", "\u{1F4C8}", Theme.Colors.investIndigo),
+        (.staySharp, "Keep my money instincts sharp", "Daily reps, no fading skills", "\u{26A1}", Theme.Colors.growthGreen),
     ]
 
     var body: some View {

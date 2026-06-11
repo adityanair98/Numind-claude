@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Screen 8 — Mirroring / Reinforcement
-/// NLP mirroring: reflects motivation + aspiration back with benefit framing.
+/// Reflects the chosen life moment + motivations back with stakes framing.
 struct MirroringView: View {
     @ObservedObject var viewModel: OnboardingViewModel
     let onContinue: () -> Void
@@ -23,14 +23,14 @@ struct MirroringView: View {
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("Based on your goals")
+                        Text("Based on what\u{2019}s coming up")
                             .font(Theme.Typography.small)
                             .textCase(.uppercase)
                             .tracking(1.5)
                             .foregroundStyle(Theme.Colors.primaryBlue)
                             .padding(.top, 4)
 
-                        Text(MirroringCopy.headline(for: viewModel.signals.aspiration))
+                        Text(MirroringCopy.headline(forPackId: viewModel.signals.focusPackId))
                             .font(Theme.Typography.title)
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .lineSpacing(2)
@@ -39,7 +39,10 @@ struct MirroringView: View {
                         // Bullet card
                         NumindCard {
                             VStack(spacing: 0) {
-                                let bullets = MirroringCopy.bullets(for: viewModel.signals.motivations)
+                                let bullets = MirroringCopy.bullets(
+                                    for: viewModel.signals.motivations,
+                                    feltMoments: viewModel.signals.feltMoments
+                                )
                                 ForEach(Array(bullets.enumerated()), id: \.offset) { index, bullet in
                                     if index > 0 {
                                         Divider()
@@ -95,9 +98,9 @@ struct MirroringView: View {
                 progressStore: ProgressStore(),
                 repository: LocalContentRepository()
             )
-            vm.setAspiration(.confidentWithMoney)
-            vm.toggleMotivation(.careerGrowth)
-            vm.toggleMotivation(.buildConfidence)
+            vm.toggleLifeMoment("the_job_offer")
+            vm.toggleMotivation(.stopLeavingMoney)
+            vm.toggleMotivation(.decideWithConfidence)
             return vm
         }(),
         onContinue: {}

@@ -46,7 +46,7 @@ struct PaywallView: View {
                         }
                         .padding(.top, 8)
 
-                        Text("Try Numind Pro free for 7 days")
+                        Text("Try Numind free for 7 days \u{2014} be ready for what\u{2019}s coming")
                             .font(.system(size: 26, weight: .semibold, design: .rounded))
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .multilineTextAlignment(.center)
@@ -197,10 +197,11 @@ struct PaywallView: View {
                 .tracking(1)
                 .foregroundStyle(Theme.Colors.mutedText)
 
-            featureRow("Full access to all 6 topic tracks")
-            featureRow("Adaptive difficulty + smart review")
-            featureRow("Streaks, badges & weekly reports")
-            featureRow("Early access to new modules")
+            featureRow("All 12 life-moment paths \u{00B7} 127 skills")
+            featureRow("Daily workout + honest Readiness tracking")
+            featureRow("12 built-in calculators")
+            featureRow("Skill refresh + streak protection")
+            featureRow("Moment alerts \u{2014} enrollment, tax season, FSA deadlines")
         }
         .padding(18)
         .background(Theme.Colors.cardBackground)

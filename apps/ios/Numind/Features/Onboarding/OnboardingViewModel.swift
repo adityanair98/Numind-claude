@@ -1,10 +1,10 @@
 import SwiftUI
 
-/// Central state machine for the 26-screen onboarding funnel.
+/// Central state machine for the 26-screen onboarding funnel (v2).
 ///
-/// Owns `OnboardingSignals`, manages navigation, and orchestrates
-/// the diagnostic quiz. Individual screen views call typed setters
-/// to accumulate signals.
+/// Owns `OnboardingSignals`, manages navigation, and orchestrates the
+/// diagnostic-as-demo. Individual screen views call typed setters to
+/// accumulate signals.
 @MainActor
 final class OnboardingViewModel: ObservableObject {
 
@@ -14,22 +14,21 @@ final class OnboardingViewModel: ObservableObject {
     @Published var signals = OnboardingSignals()
 
     // Diagnostic quiz state
-    @Published var diagnosticQuestions: [QuizQuestion] = []
-    /// Parallel array: moduleId for each diagnostic question.
-    @Published var diagnosticModuleIds: [String] = []
+    @Published var diagnosticItems: [DiagnosticQuestionBuilder.TaggedQuestion] = []
     @Published var diagnosticIndex: Int = 0
-    @Published var diagnosticFlash: DiagnosticFlash? = nil
+    /// The post-answer shortcut reveal — the demo beat after every question.
+    @Published var diagnosticReveal: DiagnosticReveal? = nil
 
     /// Tracks whether we're going forward (true) or back (false) for transitions.
     @Published var isForward: Bool = true
 
-    // Screen 4 sub-state
-    @Published var screenTimeRevealed: Bool = false
+    // Insecurity-mirror (screen 4) sub-state
+    @Published var mirrorRevealed: Bool = false
 
     // MARK: - Dependencies
 
     private var progressStore: ProgressStore
-    private var repository: ContentRepository
+    private(set) var repository: ContentRepository
 
     // MARK: - Init
 
@@ -44,8 +43,6 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     /// Re-bind to the real ProgressStore from the environment.
-    /// Called from OnboardingFlowView.onAppear so the coordinator
-    /// can inject the environment-provided store.
     func rebind(progressStore: ProgressStore, repository: ContentRepository) {
         self.progressStore = progressStore
         self.repository = repository
@@ -58,28 +55,29 @@ final class OnboardingViewModel: ObservableObject {
 
     func advance() {
         isForward = true
-        let next = currentScreen.next
         // Handle screen 4 sub-state
-        if currentScreen == .screenTime && !screenTimeRevealed {
-            screenTimeRevealed = true
+        if currentScreen == .insecurityMirror && !mirrorRevealed {
+            mirrorRevealed = true
             return
         }
-        if currentScreen == .screenTime && screenTimeRevealed {
-            screenTimeRevealed = false
+        if currentScreen == .insecurityMirror && mirrorRevealed {
+            mirrorRevealed = false
         }
-        currentScreen = next
+        currentScreen = currentScreen.next
         persistSignals()
+        AnalyticsService.capture(.onboardingStepViewed, properties: [
+            "step": currentScreen.number
+        ])
     }
 
     func goBack() {
         isForward = false
-        // Can't go back past welcome or during diagnostic
         guard currentScreen != .welcome,
               !currentScreen.isDiagnosticQuiz,
               currentScreen != .preparingResults else { return }
 
-        if currentScreen == .screenTime && screenTimeRevealed {
-            screenTimeRevealed = false
+        if currentScreen == .insecurityMirror && mirrorRevealed {
+            mirrorRevealed = false
             return
         }
 
@@ -87,6 +85,20 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     // MARK: - Signal Setters
+
+    func toggleFeltMoment(_ moment: FeltMoment) {
+        if moment == .noneYet {
+            // "None of these" is exclusive.
+            signals.feltMoments = signals.feltMoments.contains(.noneYet) ? [] : [.noneYet]
+            return
+        }
+        signals.feltMoments.remove(.noneYet)
+        if signals.feltMoments.contains(moment) {
+            signals.feltMoments.remove(moment)
+        } else {
+            signals.feltMoments.insert(moment)
+        }
+    }
 
     func setConfidence(_ level: ConfidenceLevel) {
         signals.confidenceLevel = level
@@ -100,24 +112,30 @@ final class OnboardingViewModel: ObservableObject {
         }
     }
 
-    func setAspiration(_ aspiration: Aspiration) {
-        signals.aspiration = aspiration
-    }
-
-    func toggleTopicInterest(_ moduleId: String) {
-        if signals.topicInterests.contains(moduleId) {
-            signals.topicInterests.remove(moduleId)
-        } else if signals.topicInterests.count < 4 {
-            signals.topicInterests.insert(moduleId)
+    /// Moment picker: first tap sets the focus pack; further taps toggle
+    /// secondaries (max 2). Tapping the focus pack clears it (promoting the
+    /// first secondary, if any).
+    func toggleLifeMoment(_ packId: String) {
+        if signals.focusPackId == packId {
+            signals.focusPackId = signals.secondaryPackIds.sorted().first
+            if let promoted = signals.focusPackId {
+                signals.secondaryPackIds.remove(promoted)
+            }
+            return
+        }
+        if signals.secondaryPackIds.contains(packId) {
+            signals.secondaryPackIds.remove(packId)
+            return
+        }
+        if signals.focusPackId == nil {
+            signals.focusPackId = packId
+        } else if signals.secondaryPackIds.count < 2 {
+            signals.secondaryPackIds.insert(packId)
         }
     }
 
     func setDailyMinutes(_ minutes: Int) {
         signals.dailyMinutes = minutes
-    }
-
-    func setSocialMediaMinutes(_ minutes: Int) {
-        signals.socialMediaMinutes = minutes
     }
 
     func setADHDStatus(_ status: ADHDStatus) {
@@ -136,78 +154,143 @@ final class OnboardingViewModel: ObservableObject {
         signals.trialReminderDays = days
     }
 
-    // MARK: - Diagnostic Quiz
+    // MARK: - Diagnostic (demo mode)
+
+    var focusPack: Pack? {
+        guard let id = signals.focusPackId else { return nil }
+        return repository.pack(id: id)
+    }
 
     func startDiagnostic() {
-        let result = DiagnosticQuestionBuilder.buildQuestionsWithModuleIds(
-            topicInterests: signals.topicInterests,
+        diagnosticItems = DiagnosticQuestionBuilder.build(
+            focusPackId: signals.focusPackId,
+            secondaryPackIds: signals.secondaryPackIds,
             repository: repository
         )
-        diagnosticQuestions = result.map(\.question)
-        diagnosticModuleIds = result.map(\.moduleId)
         diagnosticIndex = 0
+        diagnosticReveal = nil
+        AnalyticsService.capture(.diagnosticStarted, properties: [
+            "focus_pack": signals.focusPackId ?? "none"
+        ])
         advance() // Move to diagnostic quiz screen
     }
 
     func answerDiagnostic(choiceId: UUID) {
-        guard diagnosticIndex < diagnosticQuestions.count else { return }
+        guard diagnosticIndex < diagnosticItems.count, diagnosticReveal == nil else { return }
 
-        let question = diagnosticQuestions[diagnosticIndex]
-        let isCorrect = question.correctChoiceId == choiceId
-        let moduleId = diagnosticIndex < diagnosticModuleIds.count
-            ? diagnosticModuleIds[diagnosticIndex]
-            : "unknown"
+        let item = diagnosticItems[diagnosticIndex]
+        let isCorrect = item.question.correctChoiceId == choiceId
 
-        // Record result
-        let result = DiagnosticResult(
-            topicArea: moduleId,
-            templateId: question.templateId,
+        signals.diagnosticResults.append(DiagnosticResult(
+            topicArea: item.moduleId,
+            templateId: item.question.templateId,
             isCorrect: isCorrect,
-            difficulty: question.difficulty.rawValue
+            difficulty: item.question.difficulty.rawValue,
+            lessonId: item.lessonId
+        ))
+
+        // The demo beat: show the shortcut behind the question.
+        diagnosticReveal = DiagnosticReveal(
+            correct: isCorrect,
+            lessonTitle: item.lessonTitle,
+            shortcut: item.shortcut,
+            isApplication: item.isApplication
         )
-        signals.diagnosticResults.append(result)
+    }
 
-        // Flash feedback
-        diagnosticFlash = DiagnosticFlash(correct: isCorrect)
-
-        // After flash, advance to next question or finish
-        Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(400))
-            diagnosticFlash = nil
-
-            if diagnosticIndex + 1 < diagnosticQuestions.count {
-                diagnosticIndex += 1
-            } else {
-                // Diagnostic complete — advance to preparing results
-                signals.diagnosticDate = Date()
-                advance()
-            }
+    /// Called from the reveal card's "Next" — advances or finishes.
+    func advanceDiagnostic() {
+        diagnosticReveal = nil
+        if diagnosticIndex + 1 < diagnosticItems.count {
+            diagnosticIndex += 1
+        } else {
+            signals.diagnosticDate = Date()
+            advance() // → preparing results
         }
     }
 
     func finishPreparing() {
-        // Run calibration
         signals.startingDifficulties = DiagnosticCalibrator.calibrate(
             results: signals.diagnosticResults,
             confidenceLevel: signals.confidenceLevel
         )
 
-        // Set recommendation priority (topics sorted by weakness)
+        // Recommendation priority: topics sorted by weakness.
         let grouped = Dictionary(grouping: signals.diagnosticResults, by: { $0.topicArea })
         signals.recommendationPriority = grouped.sorted { a, b in
             let accA = Double(a.value.filter(\.isCorrect).count) / max(1, Double(a.value.count))
             let accB = Double(b.value.filter(\.isCorrect).count) / max(1, Double(b.value.count))
-            return accA < accB // Weaker topics first
+            return accA < accB
         }.map(\.key)
 
         persistSignals()
-        advance() // Move to diagnostic results
+        advance() // → Money Map
+    }
+
+    // MARK: - Money Map placement
+
+    enum SkillPlacement {
+        case solidStart   // answered correctly
+        case shaky        // attempted, missed
+        case newToYou     // core skill not yet attempted
+
+        var label: String {
+            switch self {
+            case .solidStart: return "Solid start"
+            case .shaky:      return "Shaky"
+            case .newToYou:   return "New to you"
+            }
+        }
+
+        var beadFill: Int {
+            switch self {
+            case .solidStart: return 4
+            case .shaky:      return 2
+            case .newToYou:   return 1
+            }
+        }
+    }
+
+    struct MoneyMapRow: Identifiable {
+        var id: String { lessonId }
+        let lessonId: String
+        let title: String
+        let placement: SkillPlacement
+    }
+
+    /// Per-core-skill placement for the focus pack, from diagnostic results.
+    var moneyMapRows: [MoneyMapRow] {
+        guard let pack = focusPack else { return [] }
+        let coreIds = pack.coreLessonIds.isEmpty ? Array(pack.lessonIds.prefix(5)) : pack.coreLessonIds
+        let byLesson = Dictionary(grouping: signals.diagnosticResults, by: { $0.lessonId ?? "" })
+
+        return coreIds.compactMap { lessonId in
+            guard let lesson = repository.lesson(id: lessonId) else { return nil }
+            let attempts = byLesson[lessonId] ?? []
+            let placement: SkillPlacement
+            if attempts.isEmpty {
+                placement = .newToYou
+            } else if attempts.contains(where: \.isCorrect) {
+                placement = .solidStart
+            } else {
+                placement = .shaky
+            }
+            return MoneyMapRow(lessonId: lessonId, title: lesson.title, placement: placement)
+        }
     }
 
     // MARK: - Completion
 
     func completeOnboarding() {
+        // The chosen moment becomes the live focus pack on Home.
+        if let focusId = signals.focusPackId {
+            progressStore.setFocusPack(focusId)
+        }
         persistSignals()
+        AnalyticsService.capture(.onboardingCompleted, properties: [
+            "focus_pack": signals.focusPackId ?? "none",
+            "streak_goal": signals.streakGoal ?? 0
+        ])
     }
 
     // MARK: - Computed Properties
@@ -246,13 +329,13 @@ final class OnboardingViewModel: ObservableObject {
 enum OnboardingScreen: Int, CaseIterable, Equatable {
     case welcome = 1
     case socialProof = 2
-    case dailyMicro = 3
-    case screenTime = 4
+    case momentsFraming = 3
+    case insecurityMirror = 4
     case confidence = 5
     case motivation = 6
-    case aspiration = 7
+    case lifeMoment = 7
     case mirroring = 8
-    case topicInterest = 9
+    case deadline = 9
     case timeCommitment = 10
     case kaizen = 11
     case adhd = 12
@@ -261,7 +344,7 @@ enum OnboardingScreen: Int, CaseIterable, Equatable {
     case diagnosticIntro = 15
     case diagnosticQuiz = 16
     case preparingResults = 17
-    case diagnosticResults = 18
+    case moneyMap = 18
     case personalizedPlan = 19
     case notificationPermission = 20
     case paywallPriming = 21
@@ -283,7 +366,7 @@ enum OnboardingScreen: Int, CaseIterable, Equatable {
 
     var isDark: Bool {
         switch self {
-        case .welcome, .socialProof, .kaizen, .preparingResults,
+        case .welcome, .socialProof, .deadline, .kaizen, .preparingResults,
              .improvementProjection, .welcomeConfirm:
             return true
         default:
@@ -296,8 +379,12 @@ enum OnboardingScreen: Int, CaseIterable, Equatable {
     }
 }
 
-// MARK: - Diagnostic Flash
+// MARK: - Diagnostic Reveal
 
-struct DiagnosticFlash: Equatable {
+/// The shortcut card shown after every diagnostic answer — the demo beat.
+struct DiagnosticReveal: Equatable {
     let correct: Bool
+    let lessonTitle: String
+    let shortcut: String
+    let isApplication: Bool
 }

@@ -24,14 +24,14 @@ struct WelcomeHookView: View {
 
                 // Headline
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Real math.")
-                        .font(.system(size: 38, weight: .heavy, design: .rounded))
+                    Text("Money decisions")
+                        .font(.system(size: 34, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white)
-                    Text("Real life.")
-                        .font(.system(size: 38, weight: .heavy, design: .rounded))
+                    Text("don\u{2019}t wait.")
+                        .font(.system(size: 34, weight: .heavy, design: .rounded))
                         .foregroundStyle(Theme.Colors.insightYellow)
 
-                    Text("Build everyday math skills that help you make smarter decisions — every day.")
+                    Text("Five minutes a day to walk into every one of them prepared.")
                         .font(Theme.Typography.body)
                         .foregroundStyle(.white.opacity(0.72))
                         .lineSpacing(3)
@@ -42,9 +42,9 @@ struct WelcomeHookView: View {
 
                 // Value props
                 VStack(spacing: 12) {
-                    valueRow(emoji: "\u{26A1}", tint: Theme.Colors.primaryBlueTint, title: "Short, focused workouts", sub: "5\u{2013}10 minutes to build momentum")
-                    valueRow(emoji: "\u{1F6D2}", tint: Theme.Colors.mindTealTint, title: "Practical & relevant", sub: "Learn skills you can use today")
-                    valueRow(emoji: "\u{1F4CA}", tint: Theme.Colors.insightYellowTint, title: "Track progress, build habits", sub: "Streaks, goals, and rewards")
+                    valueRow(emoji: "\u{1F3AF}", tint: Theme.Colors.primaryBlueTint, title: "Decision-sized sessions", sub: "5 minutes, built for real moments")
+                    valueRow(emoji: "\u{1F9ED}", tint: Theme.Colors.mindTealTint, title: "Job offers, health plans, leases, loans", sub: "The math behind each one")
+                    valueRow(emoji: "\u{2705}", tint: Theme.Colors.insightYellowTint, title: "Honest progress", sub: "We tell you when you\u{2019}re actually ready")
                 }
                 .padding(.horizontal, Theme.Spacing.screenHorizontal)
                 .padding(.top, 18)

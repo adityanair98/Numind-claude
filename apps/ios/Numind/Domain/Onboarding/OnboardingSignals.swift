@@ -1,17 +1,28 @@
 import Foundation
 
-/// All data collected during the onboarding funnel.
+/// All data collected during the onboarding funnel (v2 — decision-first).
 /// Persisted inside `ProgressData.onboardingSignals`.
+///
+/// v2 (Phase 11): the funnel sells decision-readiness, not mental math.
+/// `topicInterests` (module IDs) became `focusPackId` + `secondaryPackIds`
+/// (Life-Event Packs), `aspiration` was absorbed into the moment picker
+/// (the moment IS the aspiration), and `socialMediaMinutes` became
+/// `feltMoments` (the insecurity-mirror checklist).
 struct OnboardingSignals: Codable, Equatable {
 
-    // MARK: - Phase 2: Data Collection
+    // MARK: - Phase 1–2: Problem framing + personalization
 
+    /// "Which of these have happened to you?" — the insecurity mirror.
+    var feltMoments: Set<FeltMoment> = []
     var confidenceLevel: ConfidenceLevel?
     var motivations: Set<Motivation> = []
-    var aspiration: Aspiration?
-    var topicInterests: Set<String> = []          // module IDs
+
+    /// The life moment the user picked first — becomes the focus pack.
+    var focusPackId: String?
+    /// Up to 2 additional moments (pack IDs).
+    var secondaryPackIds: Set<String> = []
+
     var dailyMinutes: Int?                         // 5, 10, 15, 20
-    var socialMediaMinutes: Int?                   // from screen 4
     var adhdStatus: ADHDStatus?
     var ageRange: AgeRange?
 
@@ -32,7 +43,15 @@ struct OnboardingSignals: Codable, Equatable {
 
     // MARK: - Derived
 
-    /// Daily challenge question count derived from time commitment.
+    /// All selected pack IDs, focus first.
+    var selectedPackIds: [String] {
+        var ids: [String] = []
+        if let focus = focusPackId { ids.append(focus) }
+        ids.append(contentsOf: secondaryPackIds.sorted().filter { $0 != focusPackId })
+        return ids
+    }
+
+    /// Daily ring target derived from time commitment.
     var dailyChallengeCount: Int {
         switch dailyMinutes {
         case 5:  return 5
@@ -46,6 +65,27 @@ struct OnboardingSignals: Codable, Equatable {
 
 // MARK: - Supporting Enums
 
+/// "Which of these have happened to you?" — screen 4 multi-select.
+enum FeltMoment: String, Codable, CaseIterable, Equatable, Hashable {
+    case acceptedWithoutNegotiating
+    case guessedHealthPlan
+    case carriedCardBalance
+    case almostScammed
+    case signedLeaseBlind
+    case noneYet
+
+    var displayText: String {
+        switch self {
+        case .acceptedWithoutNegotiating: return "Accepted a job offer without negotiating"
+        case .guessedHealthPlan:          return "Picked a health plan by guessing"
+        case .carriedCardBalance:         return "Carried a card balance longer than planned"
+        case .almostScammed:              return "Got a scam text that almost got me"
+        case .signedLeaseBlind:           return "Signed a lease without doing the math"
+        case .noneYet:                    return "None of these (yet)"
+        }
+    }
+}
+
 enum ConfidenceLevel: String, Codable, CaseIterable, Equatable {
     case struggle
     case getBy
@@ -53,21 +93,15 @@ enum ConfidenceLevel: String, Codable, CaseIterable, Equatable {
     case quick
 }
 
+/// v2 motivations — money-decision outcomes, not math skills.
 enum Motivation: String, Codable, CaseIterable, Equatable, Hashable {
-    case financialDecisions
-    case buildConfidence
-    case careerGrowth
-    case staySharp
-    case supportEducation
-    case appearSharper
-    case boostFocus
-}
-
-enum Aspiration: String, Codable, CaseIterable, Equatable {
-    case tipInstantly
-    case confidentWithMoney
-    case spotGoodDeals
-    case fasterThanPhone
+    case stopLeavingMoney      // at work: negotiation, benefits, match
+    case stopGettingTaken      // scams, fees, dealer tactics
+    case decideWithConfidence  // anxiety → confidence
+    case understandPaycheck    // paycheck, benefits, taxes
+    case getAheadOfDebt
+    case growMoney
+    case staySharp             // maintenance identity
 }
 
 enum AgeRange: String, Codable, CaseIterable, Equatable {
@@ -124,10 +158,14 @@ enum StartingDifficulty: String, Codable, Equatable {
 
 /// A single question result from the onboarding diagnostic quiz.
 /// Intentionally separate from `QuestionResult` — diagnostic results
-/// NEVER create `SessionRecord`s or affect Numind Score.
+/// NEVER create `SessionRecord`s, so Readiness stays honest (placement
+/// language only; nothing is "mastered" by the diagnostic).
 struct DiagnosticResult: Codable, Equatable {
     let topicArea: String    // module ID
     let templateId: String
     let isCorrect: Bool
     let difficulty: Int      // 1, 2, or 3
+    /// Source lesson — drives the Money Map per-skill placement.
+    /// Optional for decode-compat with pre-v2 saved signals.
+    var lessonId: String?
 }

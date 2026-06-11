@@ -1,10 +1,13 @@
 import SwiftUI
 
 /// Screen 15 — Diagnostic Intro
-/// "Let's see where you're starting" with gauge illustration.
+/// "Let's see where you stand on [moment]" with gauge illustration.
 struct DiagnosticIntroView: View {
+    @ObservedObject var viewModel: OnboardingViewModel
     @AppStorage("numind.userName") private var userName = "You"
     let onStart: () -> Void
+
+    private var packTitle: String { viewModel.focusPack?.title ?? "your money moments" }
 
     var body: some View {
         ZStack {
@@ -21,20 +24,20 @@ struct DiagnosticIntroView: View {
                         }
                         .padding(.top, 20)
 
-                        Text("Let\u{2019}s see where you\u{2019}re starting")
+                        Text("Let\u{2019}s see where you stand on \(packTitle)")
                             .font(Theme.Typography.title)
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .padding(.top, 28)
 
-                        Text("8 quick questions \u{2014} no pressure, just calibration.")
+                        Text("8 quick questions \u{2014} no grades, just an honest starting picture.")
                             .font(Theme.Typography.body)
                             .foregroundStyle(Theme.Colors.mutedText)
                             .lineSpacing(3)
                             .padding(.top, 12)
 
                         Text(userName == "You"
-                            ? "This helps us build your personal plan."
-                            : "\(userName), this helps us build your personal plan.")
+                            ? "This builds your Money Map and your plan."
+                            : "\(userName), this builds your Money Map and your plan.")
                             .font(Theme.Typography.headline)
                             .fontWeight(.semibold)
                             .foregroundStyle(Theme.Colors.deepNavy)
@@ -43,14 +46,14 @@ struct DiagnosticIntroView: View {
                         // Info chips
                         HStack(spacing: 10) {
                             diagnosticChip(glyph: "\u{23F1}", label: "~3 min")
-                            diagnosticChip(glyph: "\u{1F3AF}", label: "No score")
-                            diagnosticChip(glyph: "\u{2728}", label: "Calibrate")
+                            diagnosticChip(glyph: "\u{1F3AF}", label: "No grades")
+                            diagnosticChip(glyph: "\u{1F4A1}", label: "Shortcuts")
                         }
                         .padding(.top, 22)
 
-                        Text("Won\u{2019}t affect anything in your profile.")
-                            .font(.system(size: 10))
-                            .foregroundStyle(Theme.Colors.mutedText.opacity(0.7))
+                        Text("We\u{2019}ll show you the shortcut behind every question \u{2014} that\u{2019}s the product.")
+                            .font(.system(size: 11))
+                            .foregroundStyle(Theme.Colors.mutedText.opacity(0.8))
                             .padding(.top, 16)
                     }
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
@@ -84,5 +87,11 @@ struct DiagnosticIntroView: View {
 }
 
 #Preview {
-    DiagnosticIntroView(onStart: {})
+    DiagnosticIntroView(
+        viewModel: OnboardingViewModel(
+            progressStore: ProgressStore(),
+            repository: LocalContentRepository()
+        ),
+        onStart: {}
+    )
 }

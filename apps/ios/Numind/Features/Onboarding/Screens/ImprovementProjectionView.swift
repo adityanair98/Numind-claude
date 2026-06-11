@@ -9,11 +9,14 @@ struct ImprovementProjectionView: View {
     private var streakDays: Int { viewModel.signals.streakGoal ?? 7 }
     private var minutesPerDay: Int { viewModel.signals.dailyMinutes ?? 10 }
     private var challengeCount: Int { viewModel.signals.dailyChallengeCount }
-    private var topicCount: Int { max(1, viewModel.signals.topicInterests.count) }
+    private var packTitle: String { viewModel.focusPack?.title ?? "your moment" }
 
-    private var lessonsEstimate: Int { streakDays * 2 }
+    private var skillsEstimate: Int { max(2, min(streakDays / 2, viewModel.moneyMapRows.count)) }
     private var questionsEstimate: Int { streakDays * challengeCount }
-    private var minutesEstimate: Int { streakDays * minutesPerDay }
+    private var readyDateText: String {
+        MomentCalendar.readyEstimate(coreSkillCount: max(viewModel.moneyMapRows.count, 3))
+            .formatted(.dateTime.month(.wide).day())
+    }
 
     var body: some View {
         ZStack {
@@ -48,26 +51,26 @@ struct ImprovementProjectionView: View {
                             unlockRow(
                                 glyph: "\u{2705}",
                                 color: Theme.Colors.mindTeal,
-                                title: "\(lessonsEstimate) lessons completed",
-                                sub: "Across your \(topicCount) focus topic\(topicCount == 1 ? "" : "s")"
+                                title: "\(skillsEstimate) core skills at solid",
+                                sub: "From \(packTitle)"
                             )
                             unlockRow(
                                 glyph: "\u{1F3AF}",
                                 color: Theme.Colors.primaryBlue,
-                                title: "~\(questionsEstimate) questions practiced",
-                                sub: "Smart-shuffled to your level"
+                                title: "~\(questionsEstimate) real questions practiced",
+                                sub: "Tuned to where your diagnostic placed you"
                             )
                             unlockRow(
-                                glyph: "\u{1F3C5}",
+                                glyph: "\u{1F9ED}",
                                 color: Theme.Colors.insightYellow,
-                                title: "First mastery badge",
-                                sub: "Worth showing off"
+                                title: "On track to Ready by \(readyDateText)",
+                                sub: "Earned, not granted \u{2014} that\u{2019}s the point"
                             )
                             unlockRow(
-                                glyph: "\u{23F1}",
+                                glyph: "\u{1F504}",
                                 color: Theme.Colors.warmOrange,
-                                title: "\(minutesEstimate) minutes of focused practice",
-                                sub: "Compounds into real skill"
+                                title: "Your first refresh",
+                                sub: "The moment a skill tries to fade \u{2014} and you catch it"
                             )
                         }
                         .padding(.top, 22)

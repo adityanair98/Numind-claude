@@ -1,25 +1,32 @@
 import SwiftUI
 
-/// Screen 18 — Diagnostic Results
-/// Shows starting level badge + per-topic breakdown.
+/// Screen 18 — Money Map (v2; the old LVL 1–3 badge is retired with the
+/// rest of the level language).
+///
+/// Shows the focus pack's core skills with honest placement words
+/// (Solid start / Shaky / New to you), the secondary moments as chips, and
+/// the honesty line that doubles as positioning: nothing is "Ready" yet —
+/// Ready is earned by proving and holding skills, never granted by a
+/// diagnostic.
 struct DiagnosticResultsView: View {
     @ObservedObject var viewModel: OnboardingViewModel
     let onContinue: () -> Void
 
-    private var overallLabel: String {
-        DiagnosticCalibrator.overallLevel(difficulties: viewModel.signals.startingDifficulties)
+    private var packTitle: String { viewModel.focusPack?.title ?? "Your focus" }
+
+    private var rows: [OnboardingViewModel.MoneyMapRow] { viewModel.moneyMapRows }
+
+    private var solidCount: Int {
+        rows.filter { $0.placement == .solidStart }.count
     }
 
-    private var overallNumber: Int {
-        DiagnosticCalibrator.overallLevelNumber(difficulties: viewModel.signals.startingDifficulties)
-    }
-
-    private var levelSubtext: String {
-        switch overallNumber {
-        case 3:  return "Strong foundations \u{2014} let\u{2019}s take you further."
-        case 1:  return "We\u{2019}ve built your perfect starting point."
-        default: return "You\u{2019}ll move quickly with practice."
+    private var summaryLine: String {
+        let total = rows.count
+        guard total > 0 else { return "Your starting picture is ready." }
+        if solidCount == 0 {
+            return "\(total) core skills stand between you and Ready \u{2014} all of them learnable in days."
         }
+        return "\(total) core skills stand between you and Ready. You\u{2019}re starting strong on \(solidCount) of them."
     }
 
     var body: some View {
@@ -29,7 +36,7 @@ struct DiagnosticResultsView: View {
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("Diagnostic complete")
+                        Text("Your Money Map")
                             .font(Theme.Typography.small)
                             .textCase(.uppercase)
                             .tracking(1.5)
@@ -46,60 +53,68 @@ struct DiagnosticResultsView: View {
                             .foregroundStyle(Theme.Colors.mutedText)
                             .padding(.top, 8)
 
-                        // Summary card
-                        summaryCard
+                        // Focus pack card
+                        focusCard
                             .padding(.top, 22)
 
-                        // Per-topic breakdown
-                        Text("Your topics")
-                            .font(Theme.Typography.small)
-                            .textCase(.uppercase)
-                            .tracking(1.5)
-                            .foregroundStyle(Theme.Colors.mutedText)
-                            .padding(.top, 22)
-
+                        // Core skill placement rows
                         VStack(spacing: 10) {
-                            ForEach(topicRows, id: \.name) { row in
-                                topicRowView(row)
+                            ForEach(rows) { row in
+                                skillRow(row)
                             }
                         }
                         .padding(.top, 12)
+
+                        // Secondary moments
+                        if !secondaryChips.isEmpty {
+                            Text("Also on your map")
+                                .font(Theme.Typography.small)
+                                .textCase(.uppercase)
+                                .tracking(1.5)
+                                .foregroundStyle(Theme.Colors.mutedText)
+                                .padding(.top, 22)
+
+                            HStack(spacing: 8) {
+                                ForEach(secondaryChips, id: \.title) { chip in
+                                    secondaryChipView(chip)
+                                }
+                            }
+                            .padding(.top, 10)
+                        }
+
+                        // The honesty line — positioning as copy.
+                        honestyCard
+                            .padding(.top, 22)
                     }
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 120)
                 }
 
                 onboardingFooter(dark: false) {
-                    PillButton("See my plan") { onContinue() }
+                    PillButton("Show me the plan") { onContinue() }
                 }
             }
         }
     }
 
-    // MARK: - Summary Card
+    // MARK: - Focus card
 
-    private var summaryCard: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Starting level")
-                    .font(Theme.Typography.small)
-                    .textCase(.uppercase)
-                    .tracking(1)
-                    .foregroundStyle(Theme.Colors.mutedText)
-                Text(overallLabel)
-                    .font(.system(size: 28, weight: .heavy, design: .rounded))
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                Text(levelSubtext)
-                    .font(Theme.Typography.caption)
-                    .foregroundStyle(Theme.Colors.mutedText)
-            }
-            Spacer()
-            levelBadge
+    private var focusCard: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(packTitle.uppercased())
+                .font(.system(size: 11, weight: .heavy))
+                .tracking(0.8)
+                .foregroundStyle(Theme.Colors.mindTeal)
+            Text(summaryLine)
+                .font(.system(size: 17, weight: .bold, design: .rounded))
+                .foregroundStyle(Theme.Colors.deepNavy)
+                .lineSpacing(3)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
         .background(
             LinearGradient(
-                colors: [Theme.Colors.cardBackground, Theme.Colors.primaryBlueTint],
+                colors: [Theme.Colors.cardBackground, Theme.Colors.mindTealTint],
                 startPoint: .leading,
                 endPoint: .trailing
             )
@@ -108,118 +123,35 @@ struct DiagnosticResultsView: View {
         .shadow(color: .black.opacity(0.06), radius: 12, x: 0, y: 4)
     }
 
-    private var levelBadge: some View {
-        VStack(spacing: 2) {
-            Text("LVL")
-                .font(.system(size: 9, weight: .medium))
-                .foregroundStyle(.white.opacity(0.7))
-                .tracking(1)
-            Text("\(overallNumber)")
-                .font(.system(size: 24, weight: .heavy, design: .rounded))
-                .foregroundStyle(.white)
-        }
-        .frame(width: 64, height: 64)
-        .background(Theme.Colors.primaryBlue)
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .shadow(color: Theme.Colors.primaryBlue.opacity(0.35), radius: 9, x: 0, y: 4)
-    }
+    // MARK: - Skill rows
 
-    // MARK: - Topic Rows
-
-    private struct TopicRowData {
-        let name: String
-        let status: String
-        let note: String
-        let color: Color
-        let glyph: String
-        let fillCount: Int
-    }
-
-    private var topicRows: [TopicRowData] {
-        let colorMap: [String: Color] = [
-            "smart_shopping": Theme.Colors.primaryBlue,
-            "salary": Theme.Colors.warmOrange,
-            "investing": Theme.Colors.investIndigo,
-            "debt": Theme.Colors.debtCoral,
-            "housing": Theme.Colors.housingRose,
-            "taxes": Theme.Colors.taxSlate,
-            "insurance": Theme.Colors.insurancePurple,
-            "car": Theme.Colors.mindTeal,
-            "student_loans": Theme.Colors.warmOrange,
-        ]
-        let nameMap: [String: String] = [
-            "smart_shopping": "Tips & smart shopping",
-            "salary": "Salary & income",
-            "investing": "Returns & investing",
-            "debt": "Debt & interest",
-            "housing": "Housing & rent",
-            "taxes": "Taxes & paycheck",
-            "insurance": "Insurance & healthcare",
-            "car": "Car buying & big purchases",
-            "student_loans": "Student loans & education",
-        ]
-
-        return viewModel.signals.topicInterests.sorted().compactMap { topicId in
-            let difficulty = viewModel.signals.startingDifficulties[topicId] ?? .beginner
-            let status: String
-            let note: String
-            let glyph: String
-            let fill: Int
-
-            switch difficulty {
-            case .intermediate:
-                status = "strong"
-                note = "Strong foundations"
-                glyph = "\u{2713}"
-                fill = 5
-            case .foundation:
-                status = "work"
-                note = "Needs work"
-                glyph = "\u{21BB}"
-                fill = 3
-            case .beginner:
-                status = "fresh"
-                note = "Starting fresh"
-                glyph = "\u{2726}"
-                fill = 1
-            }
-
-            return TopicRowData(
-                name: nameMap[topicId] ?? topicId.capitalized,
-                status: status,
-                note: note,
-                color: colorMap[topicId] ?? Theme.Colors.primaryBlue,
-                glyph: glyph,
-                fillCount: fill
-            )
+    private func placementColor(_ p: OnboardingViewModel.SkillPlacement) -> Color {
+        switch p {
+        case .solidStart: return Theme.Colors.growthGreen
+        case .shaky:      return Theme.Colors.warmOrange
+        case .newToYou:   return Theme.Colors.primaryBlue
         }
     }
 
-    private func topicRowView(_ row: TopicRowData) -> some View {
-        HStack(spacing: 12) {
-            Text(row.glyph)
-                .font(.system(size: 16, weight: .heavy))
-                .foregroundStyle(row.color)
-                .frame(width: 36, height: 36)
-                .background(row.color.opacity(0.12))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-
+    private func skillRow(_ row: OnboardingViewModel.MoneyMapRow) -> some View {
+        let color = placementColor(row.placement)
+        return HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
-                Text(row.name)
+                Text(row.title)
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundStyle(Theme.Colors.deepNavy)
-                Text(row.note)
+                Text(row.placement.label)
                     .font(Theme.Typography.small)
-                    .foregroundStyle(Theme.Colors.mutedText)
+                    .foregroundStyle(color)
             }
 
             Spacer()
 
-            // Bead bar
+            // Placement beads (a starting picture, not a score)
             HStack(spacing: 4) {
                 ForEach(0..<5, id: \.self) { i in
                     RoundedRectangle(cornerRadius: 3)
-                        .fill(i < row.fillCount ? row.color : Theme.Colors.mutedTint)
+                        .fill(i < row.placement.beadFill ? color : Theme.Colors.mutedTint)
                         .frame(width: 8, height: 16)
                 }
             }
@@ -232,6 +164,71 @@ struct DiagnosticResultsView: View {
                 .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.04), radius: 3, x: 0, y: 1)
+    }
+
+    // MARK: - Secondary chips
+
+    private struct SecondaryChip {
+        let title: String
+        let note: String
+    }
+
+    private var secondaryChips: [SecondaryChip] {
+        viewModel.signals.secondaryPackIds.sorted().compactMap { packId in
+            guard let pack = viewModel.repository.pack(id: packId) else { return nil }
+            let results = viewModel.signals.diagnosticResults.filter { result in
+                guard let lessonId = result.lessonId else { return false }
+                return pack.lessonIds.contains(lessonId)
+            }
+            let note: String
+            if results.contains(where: \.isCorrect) {
+                note = "Solid start"
+            } else if results.isEmpty {
+                note = "Up next"
+            } else {
+                note = "Worth the reps"
+            }
+            return SecondaryChip(title: pack.title, note: note)
+        }
+    }
+
+    private func secondaryChipView(_ chip: SecondaryChip) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(chip.title)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundStyle(Theme.Colors.deepNavy)
+                .lineLimit(1)
+            Text(chip.note)
+                .font(.system(size: 11))
+                .foregroundStyle(Theme.Colors.mutedText)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Theme.Colors.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+    }
+
+    // MARK: - Honesty card
+
+    private var honestyCard: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: "checkmark.seal")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(Theme.Colors.mindTeal)
+                .padding(.top, 1)
+
+            Text("Nothing here is \u{201C}Ready\u{201D} yet \u{2014} Ready is earned by proving skills and holding them over time. Most apps hand out badges. We don\u{2019}t.")
+                .font(.system(size: 13))
+                .foregroundStyle(Theme.Colors.deepNavy)
+                .lineSpacing(3)
+        }
+        .padding(16)
+        .background(Theme.Colors.mindTealTint)
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }
 
