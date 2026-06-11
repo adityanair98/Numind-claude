@@ -251,6 +251,7 @@ final class ProgressStore: ObservableObject {
     private func persist() {
         guard let encoded = try? JSONEncoder().encode(data) else { return }
         UserDefaults.standard.set(encoded, forKey: Self.defaultsKey)
+        WidgetSnapshotWriter.write(from: data)
     }
 
     // MARK: - Streak revival

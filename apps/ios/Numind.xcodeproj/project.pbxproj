@@ -193,6 +193,11 @@
 		F9AAFFC5ABD56D315748406F /* RadioDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E5A8BD37783DB0BC70CACF /* RadioDot.swift */; };
 		FB9B652F0B6D8B14AC1445B5 /* ModuleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427D2A94E6C31ADD56597941 /* ModuleDetailView.swift */; };
 		FE55C17616E35A6AE696BECC /* QuizGraphicBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E5694B65A39CFBED1D89D /* QuizGraphicBanner.swift */; };
+		FADE000FAAAA000FAAAA000F /* NumindWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE0009AAAA0009AAAA0009 /* NumindWidget.swift */; };
+		FADE0010AAAA0010AAAA0010 /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE000DAAAA000DAAAA000D /* WidgetSnapshot.swift */; };
+		FADE0011AAAA0011AAAA0011 /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE000DAAAA000DAAAA000D /* WidgetSnapshot.swift */; };
+		FADE0012AAAA0012AAAA0012 /* WidgetSnapshotWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE000EAAAA000EAAAA000E /* WidgetSnapshotWriter.swift */; };
+		FADE0013AAAA0013AAAA0013 /* NumindWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FADE0008AAAA0008AAAA0008 /* NumindWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,7 +208,28 @@
 			remoteGlobalIDString = B86209802F63D9D14D87AA55;
 			remoteInfo = Numind;
 		};
+		FADE0015AAAA0015AAAA0015 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 11A61BE67F9C423CBC296339 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FADE0001AAAA0001AAAA0001;
+			remoteInfo = NumindWidget;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FADE0014AAAA0014AAAA0014 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FADE0013AAAA0013AAAA0013 /* NumindWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		017889551C99CD6484F6074C /* MotivatorCheckpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivatorCheckpoint.swift; sourceTree = "<group>"; };
@@ -393,6 +419,13 @@
 		805BF907EDD0466EAA7F24F2 /* PaydayCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaydayCaptureView.swift; sourceTree = "<group>"; };
 		FD29BAB16DEC1A66045D564D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FF48236569E3C71A34C541C4 /* ContentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRepository.swift; sourceTree = "<group>"; };
+		FADE0008AAAA0008AAAA0008 /* NumindWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NumindWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FADE0009AAAA0009AAAA0009 /* NumindWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindWidget.swift; sourceTree = "<group>"; };
+		FADE000AAAAA000AAAAA000A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FADE000BAAAA000BAAAA000B /* NumindWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NumindWidget.entitlements; sourceTree = "<group>"; };
+		FADE000CAAAA000CAAAA000C /* Numind.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Numind/App/Numind.entitlements; sourceTree = "<group>"; };
+		FADE000DAAAA000DAAAA000D /* WidgetSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshot.swift; sourceTree = "<group>"; };
+		FADE000EAAAA000EAAAA000E /* WidgetSnapshotWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotWriter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +435,13 @@
 			files = (
 				18B51A2D033045638C119CB7 /* PostHog in Frameworks */,
 				178935DD361D42CB83938439 /* Sentry in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FADE0006AAAA0006AAAA0006 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,6 +741,7 @@
 				4DCB558F55545418F95E471A /* Navigation */,
 				9C2658942ABA7F8E30DD6ABE /* Notifications */,
 				74448918B0C04D03A91422DD /* Services */,
+				FADE0018AAAA0018AAAA0018 /* Widget */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -787,6 +828,7 @@
 			children = (
 				3BDDFD6CE2DC30D6EC1423F1 /* Numind.app */,
 				2B2DC0C71D0E0F8576E6AEAC /* NumindTests.xctest */,
+				FADE0008AAAA0008AAAA0008 /* NumindWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -874,6 +916,7 @@
 			isa = PBXGroup;
 			children = (
 				90E39ADD622EB4C2A214C636 /* Numind */,
+				FADE0017AAAA0017AAAA0017 /* NumindWidget */,
 				F7A1545B0965B41DA93277A6 /* NumindTests */,
 				C09751E4AF15CC014A7BAAD4 /* Products */,
 			);
@@ -921,6 +964,25 @@
 			path = Lesson;
 			sourceTree = "<group>";
 		};
+		FADE0018AAAA0018AAAA0018 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				FADE000DAAAA000DAAAA000D /* WidgetSnapshot.swift */,
+				FADE000EAAAA000EAAAA000E /* WidgetSnapshotWriter.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		FADE0017AAAA0017AAAA0017 /* NumindWidget */ = {
+			isa = PBXGroup;
+			children = (
+				FADE0009AAAA0009AAAA0009 /* NumindWidget.swift */,
+				FADE000AAAAA000AAAAA000A /* Info.plist */,
+				FADE000BAAAA000BAAAA000B /* NumindWidget.entitlements */,
+			);
+			path = NumindWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -949,10 +1011,12 @@
 				864419133C2581C4849EEF1F /* Sources */,
 				FA27F06645EB4B12A7F4F22B /* Frameworks */,
 				A06C02AB194147D7AFE953BC /* Resources */,
+				FADE0014AAAA0014AAAA0014 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FADE0016AAAA0016AAAA0016 /* PBXTargetDependency */,
 			);
 			name = Numind;
 			packageProductDependencies = (
@@ -962,6 +1026,25 @@
 			productName = Numind;
 			productReference = 3BDDFD6CE2DC30D6EC1423F1 /* Numind.app */;
 			productType = "com.apple.product-type.application";
+		};
+		FADE0001AAAA0001AAAA0001 /* NumindWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FADE0002AAAA0002AAAA0002 /* Build configuration list for PBXNativeTarget "NumindWidget" */;
+			buildPhases = (
+				FADE0005AAAA0005AAAA0005 /* Sources */,
+				FADE0006AAAA0006AAAA0006 /* Frameworks */,
+				FADE0007AAAA0007AAAA0007 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NumindWidget;
+			packageProductDependencies = (
+			);
+			productName = NumindWidget;
+			productReference = FADE0008AAAA0008AAAA0008 /* NumindWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -976,6 +1059,9 @@
 						DevelopmentTeam = "";
 					};
 					B86209802F63D9D14D87AA55 = {
+						DevelopmentTeam = "";
+					};
+					FADE0001AAAA0001AAAA0001 = {
 						DevelopmentTeam = "";
 					};
 				};
@@ -1000,6 +1086,7 @@
 			targets = (
 				B86209802F63D9D14D87AA55 /* Numind */,
 				A0DD3D4967F978C124CE7D61 /* NumindTests */,
+				FADE0001AAAA0001AAAA0001 /* NumindWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -1015,6 +1102,13 @@
 				6104FF691FB7D2DCB8BD4FE5 /* modules.json in Resources */,
 				F019F76F7180D1815BFCAD16 /* quiz_templates.json in Resources */,
 				D4E6F2B9F3A2C47BCD6E8F11 /* packs.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FADE0007AAAA0007AAAA0007 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1048,6 +1142,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FADE0011AAAA0011AAAA0011 /* WidgetSnapshot.swift in Sources */,
+				FADE0012AAAA0012AAAA0012 /* WidgetSnapshotWriter.swift in Sources */,
 				76AA78F8262024F82B18A58A /* ADHDScreenView.swift in Sources */,
 				607DF1616DC189DBB8FBF451 /* AdaptiveDifficultyEngine.swift in Sources */,
 				42154B786FCE9107AECD8BCE /* AgeRangeView.swift in Sources */,
@@ -1213,6 +1309,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FADE0005AAAA0005AAAA0005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FADE000FAAAA000FAAAA000F /* NumindWidget.swift in Sources */,
+				FADE0010AAAA0010AAAA0010 /* WidgetSnapshot.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1220,6 +1325,11 @@
 			isa = PBXTargetDependency;
 			target = B86209802F63D9D14D87AA55 /* Numind */;
 			targetProxy = 217D6A6CDB87B544DE96B108 /* PBXContainerItemProxy */;
+		};
+		FADE0016AAAA0016AAAA0016 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FADE0001AAAA0001AAAA0001 /* NumindWidget */;
+			targetProxy = FADE0015AAAA0015AAAA0015 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1277,6 +1387,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = Numind/App/Numind.entitlements;
 				INFOPLIST_FILE = Numind/App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1296,6 +1407,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = Numind/App/Numind.entitlements;
 				INFOPLIST_FILE = Numind/App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1434,6 +1546,54 @@
 			};
 			name = Debug;
 		};
+		FADE0003AAAA0003AAAA0003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CODE_SIGN_ENTITLEMENTS = NumindWidget/NumindWidget.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NumindWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Numind;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.numind.app.NumindWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FADE0004AAAA0004AAAA0004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CODE_SIGN_ENTITLEMENTS = NumindWidget/NumindWidget.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NumindWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Numind;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.numind.app.NumindWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1463,6 +1623,15 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
+		};
+		FADE0002AAAA0002AAAA0002 /* Build configuration list for PBXNativeTarget "NumindWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FADE0003AAAA0003AAAA0003 /* Debug */,
+				FADE0004AAAA0004AAAA0004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
