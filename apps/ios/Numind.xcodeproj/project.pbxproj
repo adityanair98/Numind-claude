@@ -154,6 +154,7 @@
 		D114DA262F77F327931A6ACC /* DiagnosticIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1DA43FEDC3AD9F0A7077F /* DiagnosticIntroView.swift */; };
 		D2BBD4CB841B0E12FE793C1D /* StreakRevivalQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29726BEA0B6647799A05940C /* StreakRevivalQuizView.swift */; };
 		D2C2769F0887CC05B33150FD /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46E6272861ABFFCC9127521 /* NotificationManager.swift */; };
+		DC50EAACDC26492DA6702EA6 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CEEED3FD564C529D5D568A /* NotificationScheduler.swift */; };
 		D0DDEBEA3F2B423BA1786926 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54EC264CE334C49BF3AF75B /* AnalyticsService.swift */; };
 		D4396ED29E58B75ADF5DAB80 /* LocalContentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6692B1334257A3F232BB08 /* LocalContentRepository.swift */; };
 		D4D5F9DBBF8F1E79368BB884 /* ImprovementCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55035B46DF8BF7906221ED /* ImprovementCalculator.swift */; };
@@ -309,6 +310,7 @@
 		9D07D972E9B9DED4B8623883 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		9DE5C197942E28DFA3FAF3DF /* StreakLossView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakLossView.swift; sourceTree = "<group>"; };
 		A46E6272861ABFFCC9127521 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		A5CEEED3FD564C529D5D568A /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 		F54EC264CE334C49BF3AF75B /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		A5EB9C1AB0D5B44747792E8B /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F0000A /* ReadinessBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessBadge.swift; sourceTree = "<group>"; };
@@ -707,6 +709,7 @@
 			isa = PBXGroup;
 			children = (
 				A46E6272861ABFFCC9127521 /* NotificationManager.swift */,
+				A5CEEED3FD564C529D5D568A /* NotificationScheduler.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1124,6 +1127,7 @@
 				767A7F3847174396B66A9501 /* TeachCardView.swift in Sources */,
 				642BEA7B091A54576B9583EA /* NameInputView.swift in Sources */,
 				D2C2769F0887CC05B33150FD /* NotificationManager.swift in Sources */,
+				DC50EAACDC26492DA6702EA6 /* NotificationScheduler.swift in Sources */,
 				D0DDEBEA3F2B423BA1786926 /* AnalyticsService.swift in Sources */,
 				5B32F6F3A8A042CE6865345A /* NotificationPermissionView.swift in Sources */,
 				53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */,

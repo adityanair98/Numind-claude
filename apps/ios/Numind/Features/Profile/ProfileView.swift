@@ -18,6 +18,7 @@ struct ProfileView: View {
     @State private var reminderTime = Date()
 
     // Payday (Phase 12) — drives the payday moment chip + reminders.
+    @AppStorage("numind.paydayReminderEnabled") private var paydayReminderEnabled = false
     @State private var paydayCadence: PaycheckSchedule.Cadence = .biweekly
     @State private var paydayAnchor = Date()
     @State private var paydaySet = false
@@ -272,6 +273,38 @@ struct ProfileView: View {
                 ? PaycheckSchedule(cadence: paydayCadence, anchorDate: paydayAnchor)
                 : nil
         }
+
+        if enabled {
+            // Same permission flow as the daily reminder: prompt only on an
+            // explicit toggle; payday reminders piggyback on any grant.
+            NotificationManager.checkPermission { status in
+                switch status {
+                case .authorized, .provisional, .ephemeral:
+                    paydayReminderEnabled = true
+                    syncPaydayNotifications()
+                case .notDetermined:
+                    NotificationManager.requestPermission { granted in
+                        paydayReminderEnabled = granted
+                        if granted { syncPaydayNotifications() }
+                    }
+                case .denied:
+                    paydayReminderEnabled = false
+                @unknown default:
+                    paydayReminderEnabled = false
+                }
+            }
+        } else {
+            paydayReminderEnabled = false
+            NotificationManager.removePending(withPrefix: NotificationManager.paycheckPrefix)
+        }
+    }
+
+    private func syncPaydayNotifications() {
+        NotificationManager.syncPaydayReminders(
+            schedule: progressStore.data.onboardingSignals?.paycheck,
+            hour: reminderHour,
+            minute: reminderMinute
+        )
     }
 
     // MARK: - App section
