@@ -26,6 +26,12 @@ struct OnboardingSignals: Codable, Equatable {
     var adhdStatus: ADHDStatus?
     var ageRange: AgeRange?
 
+    /// Pay cadence + a known payday — drives the payday moment + reminders
+    /// (Phase 12). Optional for decode-compat.
+    var paycheck: PaycheckSchedule?
+    /// Month (1–12) the user's lease renews. Optional for decode-compat.
+    var leaseRenewalMonth: Int?
+
     // MARK: - Phase 5: Priming
 
     var streakGoal: Int?                           // 3, 7, 14

@@ -11,9 +11,9 @@ struct DeadlineView: View {
 
     private var packId: String? { viewModel.signals.focusPackId }
     private var packTitle: String { viewModel.focusPack?.title ?? "your moment" }
-    private var deadline: MomentCalendar.Deadline? {
+    private var deadline: MomentsRegistry.Deadline? {
         guard let id = packId else { return nil }
-        return MomentCalendar.nextDeadline(for: id)
+        return MomentsRegistry.nextDeadline(for: id)
     }
 
     var body: some View {
@@ -58,8 +58,8 @@ struct DeadlineView: View {
     // MARK: - Dated moment
 
     @ViewBuilder
-    private func datedContent(_ deadline: MomentCalendar.Deadline) -> some View {
-        let days = MomentCalendar.daysUntil(deadline.date)
+    private func datedContent(_ deadline: MomentsRegistry.Deadline) -> some View {
+        let days = MomentsRegistry.daysUntil(deadline.date)
 
         Text("This one has a real deadline")
             .font(Theme.Typography.small)

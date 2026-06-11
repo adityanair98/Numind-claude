@@ -17,12 +17,18 @@ struct ProfileView: View {
     @State private var showPermissionDeniedAlert = false
     @State private var reminderTime = Date()
 
+    // Payday (Phase 12) — drives the payday moment chip + reminders.
+    @State private var paydayCadence: PaycheckSchedule.Cadence = .biweekly
+    @State private var paydayAnchor = Date()
+    @State private var paydaySet = false
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
                 profileCard
                 statsSection
                 remindersSection
+                paydaySection
                 appearanceSection
                 appSection
                 #if DEBUG
@@ -36,7 +42,7 @@ struct ProfileView: View {
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.large)
-        .onAppear { syncReminderTime(); checkNotificationStatus() }
+        .onAppear { syncReminderTime(); checkNotificationStatus(); syncPayday() }
         .alert("Reset progress?", isPresented: $showResetAlert) {
             Button("Reset", role: .destructive) { progressStore.reset() }
             Button("Cancel", role: .cancel) {}
@@ -187,6 +193,84 @@ struct ProfileView: View {
                 }
             }
             .animation(.easeOut(duration: 0.22), value: reminderEnabled)
+        }
+    }
+
+    // MARK: - Payday (Phase 12)
+
+    private var paydaySection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Payday")
+            NumindCard {
+                VStack(spacing: 0) {
+                    HStack(spacing: 14) {
+                        IconTile(systemName: "dollarsign.circle", tintColor: Theme.Colors.growthGreen, size: 36)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Track my paydays")
+                                .font(Theme.Typography.body)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Theme.Colors.deepNavy)
+                            Text(paydaySet ? "Sessions timed to your money" : "Off")
+                                .font(Theme.Typography.small)
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        }
+                        Spacer()
+                        Toggle("", isOn: Binding(
+                            get: { paydaySet },
+                            set: { newValue in
+                                paydaySet = newValue
+                                savePayday(enabled: newValue)
+                            }
+                        ))
+                        .labelsHidden()
+                        .tint(Theme.Colors.growthGreen)
+                    }
+                    .padding(.vertical, 14)
+                    .padding(.horizontal, 18)
+
+                    if paydaySet {
+                        Divider()
+                            .background(Theme.Colors.hairline)
+                            .padding(.leading, 18 + 36 + 14)
+
+                        HStack(spacing: 14) {
+                            IconTile(systemName: "repeat", tintColor: Theme.Colors.mutedText, size: 36)
+                            Picker("", selection: $paydayCadence) {
+                                ForEach(PaycheckSchedule.Cadence.allCases, id: \.self) {
+                                    Text($0.displayText).tag($0)
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .tint(Theme.Colors.deepNavy)
+                            Spacer()
+                            DatePicker("", selection: $paydayAnchor, displayedComponents: .date)
+                                .labelsHidden()
+                        }
+                        .padding(.vertical, 14)
+                        .padding(.horizontal, 18)
+                        .onChange(of: paydayCadence) { _, _ in savePayday(enabled: true) }
+                        .onChange(of: paydayAnchor) { _, _ in savePayday(enabled: true) }
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                    }
+                }
+            }
+            .animation(.easeOut(duration: 0.22), value: paydaySet)
+        }
+    }
+
+    private func syncPayday() {
+        if let schedule = progressStore.data.onboardingSignals?.paycheck {
+            paydayCadence = schedule.cadence
+            paydayAnchor = schedule.anchorDate
+            paydaySet = true
+        }
+    }
+
+    private func savePayday(enabled: Bool) {
+        progressStore.updateSignals { signals in
+            signals.paycheck = enabled
+                ? PaycheckSchedule(cadence: paydayCadence, anchorDate: paydayAnchor)
+                : nil
         }
     }
 

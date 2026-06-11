@@ -51,7 +51,6 @@
 		52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE486F2F680E34E639390E3 /* DesignSystemPreviewView.swift */; };
 		53DE83C197E694E56E42F2C3 /* NumindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0DEC7575E25148AFEC91E5 /* NumindApp.swift */; };
 		558AE15C4DEC3A7067FD76E6 /* MirroringCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E75F5613C36A1E38C23605 /* MirroringCopy.swift */; };
-		0FAC2082F52B42F5BC0F1925 /* MomentCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F84489EE4744402865F880F /* MomentCalendar.swift */; };
 		55E6CCEC35C6BFC4D616968E /* MilestoneCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6548097DBAAE47F7FF2E5C49 /* MilestoneCelebrationView.swift */; };
 		565047704AF7EC130CABC068 /* ConfidenceRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCBB1AF45DB0883E8D454A /* ConfidenceRatingView.swift */; };
 		B333E3DCB5594C418C89A9D3 /* DeadlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1DCB2F52844F0B5D0E957 /* DeadlineView.swift */; };
@@ -112,6 +111,8 @@
 		7B2A4E1D9C5C8B0FF1A3D5C0 /* MilestoneEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */; };
 		9D0E0002A0B0C0D0E0F00007 /* FreshnessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F00008 /* FreshnessTests.swift */; };
 		5A210E7B357E4BFBBC39C973 /* SharpnessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006CBB0562F64663AF419EBE /* SharpnessTests.swift */; };
+		B64A0DD8907049128810B046 /* PaycheckScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A34E394A4744D18105DF59 /* PaycheckScheduleTests.swift */; };
+		1EC251A5C8FA4D778C1394E5 /* MomentsRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E88AF7893C2413BBE4CFA1D /* MomentsRegistryTests.swift */; };
 		9D0E0002A0B0C0D0E0F00005 /* ReadinessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F00006 /* ReadinessTests.swift */; };
 		9D0E0002A0B0C0D0E0F00003 /* MasteryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F00004 /* MasteryTests.swift */; };
 		9D0E0002A0B0C0D0E0F00001 /* MomentumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F00002 /* MomentumTests.swift */; };
@@ -166,6 +167,8 @@
 		E0824FF4B592C151DF27AC31 /* NumindScoreEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AF66C96127CDC6E452DC23 /* NumindScoreEngine.swift */; };
 		9D0E0001A0B0C0D0E0F00005 /* FreshnessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00006 /* FreshnessEngine.swift */; };
 		B96C21C6B2A543E18A20D1F6 /* SharpnessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A6F877116F4AA882D4AA74 /* SharpnessEngine.swift */; };
+		6804EABBCAB84083889C94C4 /* PaycheckSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B8CE019E04F609C2737F8 /* PaycheckSchedule.swift */; };
+		12E2DC7E125D41EDAB50DFAC /* MomentsRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F5F2BF72954665949BC316 /* MomentsRegistry.swift */; };
 		9D0E0001A0B0C0D0E0F00003 /* ReadinessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00004 /* ReadinessEngine.swift */; };
 		9D0E0001A0B0C0D0E0F00001 /* MomentumEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00002 /* MomentumEngine.swift */; };
 		030504DA40E945C9A40F2684 /* DailyRingEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36478E60F8A4484E813A6F88 /* DailyRingEngine.swift */; };
@@ -256,6 +259,8 @@
 		7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneEngineTests.swift; sourceTree = "<group>"; };
 		9D0E0002A0B0C0D0E0F00008 /* FreshnessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshnessTests.swift; sourceTree = "<group>"; };
 		006CBB0562F64663AF419EBE /* SharpnessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpnessTests.swift; sourceTree = "<group>"; };
+		93A34E394A4744D18105DF59 /* PaycheckScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaycheckScheduleTests.swift; sourceTree = "<group>"; };
+		9E88AF7893C2413BBE4CFA1D /* MomentsRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentsRegistryTests.swift; sourceTree = "<group>"; };
 		9D0E0002A0B0C0D0E0F00006 /* ReadinessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessTests.swift; sourceTree = "<group>"; };
 		9D0E0002A0B0C0D0E0F00004 /* MasteryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasteryTests.swift; sourceTree = "<group>"; };
 		9D0E0002A0B0C0D0E0F00002 /* MomentumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumTests.swift; sourceTree = "<group>"; };
@@ -275,6 +280,8 @@
 		70AF66C96127CDC6E452DC23 /* NumindScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindScoreEngine.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F00006 /* FreshnessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshnessEngine.swift; sourceTree = "<group>"; };
 		34A6F877116F4AA882D4AA74 /* SharpnessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpnessEngine.swift; sourceTree = "<group>"; };
+		113B8CE019E04F609C2737F8 /* PaycheckSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaycheckSchedule.swift; sourceTree = "<group>"; };
+		A9F5F2BF72954665949BC316 /* MomentsRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentsRegistry.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F00004 /* ReadinessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessEngine.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F00002 /* MomentumEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumEngine.swift; sourceTree = "<group>"; };
 		36478E60F8A4484E813A6F88 /* DailyRingEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRingEngine.swift; sourceTree = "<group>"; };
@@ -347,7 +354,6 @@
 		BF29714841AD0FB6EC413113 /* DotProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotProgress.swift; sourceTree = "<group>"; };
 		C371CBBF6F2120C1836D8114 /* MirroringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirroringView.swift; sourceTree = "<group>"; };
 		C3E75F5613C36A1E38C23605 /* MirroringCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirroringCopy.swift; sourceTree = "<group>"; };
-		3F84489EE4744402865F880F /* MomentCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentCalendar.swift; sourceTree = "<group>"; };
 		C6BDC1D8146AF56C25548BF5 /* BeadRail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeadRail.swift; sourceTree = "<group>"; };
 		C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		C98F41FD249430B232E53CD1 /* OptionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCard.swift; sourceTree = "<group>"; };
@@ -425,7 +431,6 @@
 				8EE0B63A4ED6FB2654ADA701 /* DiagnosticCalibrator.swift */,
 				D8CD54AB8E6BFCB29B404F52 /* DiagnosticQuestionBuilder.swift */,
 				C3E75F5613C36A1E38C23605 /* MirroringCopy.swift */,
-				3F84489EE4744402865F880F /* MomentCalendar.swift */,
 				779FEBCC6BB1A7A2531D2E45 /* OnboardingSignals.swift */,
 			);
 			path = Onboarding;
@@ -605,9 +610,19 @@
 			path = Primitives;
 			sourceTree = "<group>";
 		};
+		DB4E28170CFD4F0EAA2B2F1C /* Moments */ = {
+			isa = PBXGroup;
+			children = (
+				113B8CE019E04F609C2737F8 /* PaycheckSchedule.swift */,
+				A9F5F2BF72954665949BC316 /* MomentsRegistry.swift */,
+			);
+			path = Moments;
+			sourceTree = "<group>";
+		};
 		834D48C7B6907E90C86F4EAF /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				DB4E28170CFD4F0EAA2B2F1C /* Moments */,
 				246A6E84C3359FBD53D142B7 /* Badges */,
 				4D1473833EC781D2C8BF2FCE /* LessonEngine */,
 				E7B961ABFB7AC727B5D3A204 /* Models */,
@@ -868,6 +883,8 @@
 				7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */,
 				9D0E0002A0B0C0D0E0F00008 /* FreshnessTests.swift */,
 				006CBB0562F64663AF419EBE /* SharpnessTests.swift */,
+				93A34E394A4744D18105DF59 /* PaycheckScheduleTests.swift */,
+				9E88AF7893C2413BBE4CFA1D /* MomentsRegistryTests.swift */,
 				9D0E0002A0B0C0D0E0F00006 /* ReadinessTests.swift */,
 				9D0E0002A0B0C0D0E0F00004 /* MasteryTests.swift */,
 				9D0E0002A0B0C0D0E0F00002 /* MomentumTests.swift */,
@@ -998,6 +1015,8 @@
 				7B2A4E1D9C5C8B0FF1A3D5C0 /* MilestoneEngineTests.swift in Sources */,
 				9D0E0002A0B0C0D0E0F00007 /* FreshnessTests.swift in Sources */,
 				5A210E7B357E4BFBBC39C973 /* SharpnessTests.swift in Sources */,
+				B64A0DD8907049128810B046 /* PaycheckScheduleTests.swift in Sources */,
+				1EC251A5C8FA4D778C1394E5 /* MomentsRegistryTests.swift in Sources */,
 				9D0E0002A0B0C0D0E0F00005 /* ReadinessTests.swift in Sources */,
 				9D0E0002A0B0C0D0E0F00003 /* MasteryTests.swift in Sources */,
 				9D0E0002A0B0C0D0E0F00001 /* MomentumTests.swift in Sources */,
@@ -1090,7 +1109,6 @@
 				55E6CCEC35C6BFC4D616968E /* MilestoneCelebrationView.swift in Sources */,
 				159C34E9B830677B6780C663 /* MilestoneEngine.swift in Sources */,
 				558AE15C4DEC3A7067FD76E6 /* MirroringCopy.swift in Sources */,
-				0FAC2082F52B42F5BC0F1925 /* MomentCalendar.swift in Sources */,
 				4684430FF5B1A85FA2D0E4A4 /* MirroringView.swift in Sources */,
 				5D254947FA29FBF59459543A /* Module.swift in Sources */,
 				345F9D15ABF851FCF3522629 /* ModuleBarsView.swift in Sources */,
@@ -1113,6 +1131,8 @@
 				E0824FF4B592C151DF27AC31 /* NumindScoreEngine.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00005 /* FreshnessEngine.swift in Sources */,
 				B96C21C6B2A543E18A20D1F6 /* SharpnessEngine.swift in Sources */,
+				6804EABBCAB84083889C94C4 /* PaycheckSchedule.swift in Sources */,
+				12E2DC7E125D41EDAB50DFAC /* MomentsRegistry.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00003 /* ReadinessEngine.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00001 /* MomentumEngine.swift in Sources */,
 				030504DA40E945C9A40F2684 /* DailyRingEngine.swift in Sources */,

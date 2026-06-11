@@ -14,7 +14,7 @@ struct ImprovementProjectionView: View {
     private var skillsEstimate: Int { max(2, min(streakDays / 2, viewModel.moneyMapRows.count)) }
     private var questionsEstimate: Int { streakDays * challengeCount }
     private var readyDateText: String {
-        MomentCalendar.readyEstimate(coreSkillCount: max(viewModel.moneyMapRows.count, 3))
+        MomentsRegistry.readyEstimate(coreSkillCount: max(viewModel.moneyMapRows.count, 3))
             .formatted(.dateTime.month(.wide).day())
     }
 

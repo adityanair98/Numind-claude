@@ -372,6 +372,14 @@ final class ProgressStore: ObservableObject {
         persist()
     }
 
+    /// In-place mutation of saved signals (Profile edits: payday, lease month).
+    func updateSignals(_ mutate: (inout OnboardingSignals) -> Void) {
+        var signals = data.onboardingSignals ?? OnboardingSignals()
+        mutate(&signals)
+        data.onboardingSignals = signals
+        persist()
+    }
+
     // MARK: - Computed (forwarded from ProgressData)
 
     var streak: Int               { data.computeStreak() }

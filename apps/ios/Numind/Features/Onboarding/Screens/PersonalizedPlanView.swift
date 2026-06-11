@@ -15,13 +15,13 @@ struct PersonalizedPlanView: View {
     private var packTitle: String { viewModel.focusPack?.title ?? "your focus" }
     private var coreCount: Int { max(viewModel.moneyMapRows.count, 3) }
 
-    private var deadline: MomentCalendar.Deadline? {
+    private var deadline: MomentsRegistry.Deadline? {
         guard let id = viewModel.signals.focusPackId else { return nil }
-        return MomentCalendar.nextDeadline(for: id)
+        return MomentsRegistry.nextDeadline(for: id)
     }
 
     private var readyDate: Date {
-        MomentCalendar.readyEstimate(coreSkillCount: coreCount)
+        MomentsRegistry.readyEstimate(coreSkillCount: coreCount)
     }
 
     var body: some View {

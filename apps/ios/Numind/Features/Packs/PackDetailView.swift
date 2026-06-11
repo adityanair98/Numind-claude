@@ -121,6 +121,24 @@ struct PackDetailView: View {
                 .font(Theme.Typography.body)
                 .foregroundStyle(Theme.Colors.deepNavy.opacity(0.8))
 
+            // Live moment line (Phase 12) — only inside a genuine window.
+            if let moment = MomentsRegistry.currentMoments(
+                signals: progressStore.data.onboardingSignals,
+                packIds: [pack.id]
+            ).first(where: { $0.packId == pack.id }) {
+                HStack(spacing: 6) {
+                    Image(systemName: "calendar")
+                        .font(.system(size: 11, weight: .bold))
+                    Text(moment.title)
+                        .font(.system(size: 12, weight: .bold))
+                }
+                .foregroundStyle(Theme.Colors.insightText)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(Theme.Colors.insightYellowTint)
+                .clipShape(Capsule())
+            }
+
             // Description
             Text(pack.description)
                 .font(Theme.Typography.caption)

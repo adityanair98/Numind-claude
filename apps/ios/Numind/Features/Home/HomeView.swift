@@ -39,6 +39,7 @@ struct HomeView: View {
                     onScoreTap: { showScoreDetail = true }
                 )
                 dailyChallengeSection
+                momentChipSection
                 streakSection
                 refreshSection
                 if let card = viewModel.continueCard {
@@ -543,6 +544,65 @@ struct HomeView: View {
         AnalyticsService.capture(.refreshStarted, properties: [
             "skill_count": session.skillCount
         ])
+    }
+
+    // MARK: - Coming up (moments, Phase 12)
+
+    /// Pack IDs the moments registry treats as "this user's moments".
+    private var momentPackIds: Set<String> {
+        var ids = Set(progressStore.data.onboardingSignals?.selectedPackIds ?? [])
+        ids.formUnion(progressStore.inProgressPacks.map(\.id))
+        if let focus = progressStore.focusPackId { ids.insert(focus) }
+        return ids
+    }
+
+    /// Top-1 live moment as a slim chip — "about N weeks" granularity,
+    /// nothing rendered outside a genuine window.
+    @ViewBuilder
+    private var momentChipSection: some View {
+        if let moment = MomentsRegistry.currentMoments(
+            signals: progressStore.data.onboardingSignals,
+            packIds: momentPackIds
+        ).first {
+            Button {
+                if let packId = moment.packId, let pack = repo.pack(id: packId) {
+                    presentedPack = pack
+                }
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "calendar")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(Theme.Colors.insightText)
+                        .frame(width: 36, height: 36)
+                        .background(Theme.Colors.insightYellowTint)
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(moment.title)
+                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text(moment.detail)
+                            .font(.system(size: 12))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .lineLimit(2)
+                            .multilineTextAlignment(.leading)
+                    }
+                    Spacer(minLength: 0)
+                    if moment.packId != nil {
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                }
+                .padding(12)
+                .background(Theme.Colors.cardBackground)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                        .strokeBorder(Theme.Colors.insightYellow.opacity(0.35), lineWidth: 1)
+                )
+            }
+            .buttonStyle(.plain)
+        }
     }
 
     // MARK: - Refresh-save toast (Phase 12)
