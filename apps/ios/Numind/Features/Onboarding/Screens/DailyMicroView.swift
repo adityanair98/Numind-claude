@@ -22,6 +22,7 @@ struct DailyMicroView: View {
                     .font(Theme.Typography.title)
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 30)
 
                 (Text("Money decisions arrive as ")
@@ -32,6 +33,7 @@ struct DailyMicroView: View {
                     .font(Theme.Typography.body)
                     .foregroundStyle(Theme.Colors.mutedText)
                     .lineSpacing(4)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 14)
 
                 Spacer()

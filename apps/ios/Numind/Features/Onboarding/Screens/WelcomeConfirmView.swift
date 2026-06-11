@@ -47,6 +47,7 @@ struct WelcomeConfirmView: View {
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
                     .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 12)
 
                 Text("\(packShortName) is your focus. Let\u{2019}s close your first ring.")
@@ -54,6 +55,7 @@ struct WelcomeConfirmView: View {
                     .foregroundStyle(.white.opacity(0.72))
                     .multilineTextAlignment(.center)
                     .lineSpacing(3)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 14)
                     .padding(.horizontal, 28)
 

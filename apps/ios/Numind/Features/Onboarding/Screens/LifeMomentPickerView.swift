@@ -53,6 +53,7 @@ struct LifeMomentPickerView: View {
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Colors.mutedText)
                             .lineSpacing(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding(.top, 8)
 
                         LazyVGrid(columns: [
@@ -113,6 +114,7 @@ struct LifeMomentPickerView: View {
                     .font(.system(size: 15, weight: .bold))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .multilineTextAlignment(.leading)
             }
             .frame(maxWidth: .infinity, alignment: .leading)

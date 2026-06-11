@@ -47,6 +47,7 @@ struct SocialProofView: View {
                 Text("adults say money is a significant source of stress")
                     .font(.system(size: 22, weight: .semibold, design: .rounded))
                     .foregroundStyle(.white)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.trailing, 40)
 
                 // Accent bar
@@ -59,6 +60,7 @@ struct SocialProofView: View {
                     .font(Theme.Typography.body)
                     .foregroundStyle(.white.opacity(0.72))
                     .lineSpacing(3)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 12)
 
                 Text("Source: APA Stress in America")

@@ -433,16 +433,41 @@ struct QuizSessionView: View {
         }
     }
 
+    @ViewBuilder
     private func answerRevealPill(for q: QuizQuestion, isCorrect: Bool) -> some View {
-        let correct = q.choices.first { $0.id == q.correctChoiceId }
-        return Text(correct?.text ?? "")
-            .font(.system(size: 30, weight: .bold, design: .rounded))
-            .foregroundStyle(.white)
-            .padding(.horizontal, 32)
+        let text = q.choices.first { $0.id == q.correctChoiceId }?.text ?? ""
+        let background = isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange
+        if text.count <= 22 {
+            // Short answers ("$2.43", "Roth IRA") get the big celebratory pill.
+            Text(text)
+                .font(.system(size: 30, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 32)
+                .padding(.vertical, 14)
+                .frame(maxWidth: .infinity)
+                .background(background)
+                .clipShape(Capsule())
+        } else {
+            // Sentence-length concept answers: a capsule of wrapped 30pt text
+            // reads as a blob — render a labeled answer card instead.
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Correct answer")
+                    .font(.system(size: 11, weight: .bold))
+                    .textCase(.uppercase)
+                    .kerning(0.8)
+                    .foregroundStyle(.white.opacity(0.75))
+                Text(text)
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 18)
             .padding(.vertical, 14)
-            .frame(maxWidth: .infinity)
-            .background(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
-            .clipShape(Capsule())
+            .background(background)
+            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        }
     }
 
     private func optionsRecap(for q: QuizQuestion, isCorrect: Bool) -> some View {
