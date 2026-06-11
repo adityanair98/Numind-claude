@@ -274,6 +274,10 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         }
         built.shuffle()
         questions = built
+        // Speed-delta baselines for repeat material (Phase 12 — favorable-only).
+        speedBaselines = SharpnessEngine.baselines(
+            for: built.map(\.templateId), sessions: sessions
+        )
     }
 
     /// Initialiser for pre-generated question sets (daily challenge, game modes).
@@ -293,7 +297,8 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         questionTimeLimit: TimeInterval? = nil,
         repository: ContentRepository = LocalContentRepository(),
         teachCards: [Int: TeachCard] = [:],
-        segmentLabels: [String]? = nil
+        segmentLabels: [String]? = nil,
+        speedBaselines: [String: Double] = [:]
     ) {
         lessonTitle = title
         self.moduleColor = moduleColor
@@ -305,6 +310,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         self.repository = repository
         self.teachCards = teachCards
         self.segmentLabels = segmentLabels
+        self.speedBaselines = speedBaselines
         // Start countdown for first question if a time limit is set.
         if questionTimeLimit != nil {
             questionTimeRemaining = questionTimeLimit!
@@ -316,6 +322,14 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     /// Question index → teach card shown immediately before that question
     /// (once per session). Set only by the Daily Workout path.
     var teachCards: [Int: TeachCard] = [:]
+
+    /// templateId → prior rolling median seconds (Phase 12 sharpness).
+    /// Snapshot at session start; templates absent here never show a delta.
+    var speedBaselines: [String: Double] = [:]
+
+    /// The favorable speed delta for the just-answered question, or nil.
+    /// Set in `checkAnswer()`, cleared in `advance()`.
+    @Published private(set) var currentSpeedDelta: SharpnessEngine.SpeedDelta? = nil
     /// Per-question workout segment labels ("Warm-up"/"Focus"/"Decision").
     var segmentLabels: [String]? = nil
     private var teachShownAt: Set<Int> = []
@@ -421,6 +435,14 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         if isCorrectAnswer {
             evaluateInlineEncouragement()
         }
+
+        // Sharpness: favorable-only speed delta on repeat material (untimed only).
+        currentSpeedDelta = (questionTimeLimit == nil && isCorrectAnswer)
+            ? SharpnessEngine.favorableDelta(
+                currentSeconds: lastQuestionTimeSpent,
+                priorMedian: speedBaselines[currentQuestion.templateId]
+              )
+            : nil
     }
 
     func appendDigit(_ digit: String) {
@@ -466,8 +488,9 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
             feedbackEnteredAt = nil
         }
 
-        // Clear inline encouragement
+        // Clear inline encouragement + speed delta
         inlineEncouragement = nil
+        currentSpeedDelta = nil
 
         results.append(QuizResult(
             question: currentQuestion,

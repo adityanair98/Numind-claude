@@ -22,6 +22,12 @@ struct HomeView: View {
     /// capability language (Phase 10).
     @State private var insightSkillMoves: [SkillMove] = []
 
+    /// Skills restored by the last refresh session (Phase 12 — the
+    /// recurring "caught it fading" narration; first-ever save shows the
+    /// milestone instead).
+    @State private var refreshSaveMoves: [SkillMove] = []
+    @State private var showRefreshSaveToast = false
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
@@ -46,6 +52,20 @@ struct HomeView: View {
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
+        // Refresh-save toast — the recurring everyday echo of a skill caught
+        // before it faded (the first-ever save shows a milestone instead).
+        .overlay(alignment: .top) {
+            if showRefreshSaveToast {
+                refreshSaveToast
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            withAnimation { showRefreshSaveToast = false }
+                        }
+                    }
+            }
+        }
+        .animation(.easeInOut(duration: 0.35), value: showRefreshSaveToast)
         // Lesson launch
         .fullScreenCover(item: $launchCard) { card in
             LessonView(viewModel: LessonViewModel(
@@ -106,7 +126,23 @@ struct HomeView: View {
         .fullScreenCover(item: $refreshVM) { vm in
             NavigationStack {
                 QuizSessionView(viewModel: vm) {
+                    let staleBefore = Set(FreshnessEngine.staleLessons(
+                        masteredLessonIds: progressStore.masteredLessonIds,
+                        sessions: progressStore.data.sessions,
+                        repository: repo
+                    ))
                     recordMixedSession(vm: vm, lessonId: "refresh_review")
+                    let staleAfter = Set(FreshnessEngine.staleLessons(
+                        masteredLessonIds: progressStore.masteredLessonIds,
+                        sessions: progressStore.data.sessions,
+                        repository: repo
+                    ))
+                    refreshSaveMoves = staleBefore.subtracting(staleAfter)
+                        .compactMap { repo.lesson(id: $0) }
+                        .map { SkillMove(title: $0.title, change: .refreshed) }
+                    if !refreshSaveMoves.isEmpty && progressStore.pendingMilestone == nil {
+                        withAnimation { showRefreshSaveToast = true }
+                    }
                     refreshVM = nil
                 }
             }
@@ -411,7 +447,11 @@ struct HomeView: View {
             shortcut: "Draw on all the skills you've built \u{2014} tips, discounts, paychecks, and more.",
             moduleColor: .blue,
             teachCards: teachCards,
-            segmentLabels: plan.segmentLabels
+            segmentLabels: plan.segmentLabels,
+            speedBaselines: SharpnessEngine.baselines(
+                for: plan.questions.map(\.templateId),
+                sessions: progressStore.data.sessions
+            )
         )
         AnalyticsService.capture(.workoutStarted, properties: [
             "question_count": plan.questions.count
@@ -424,7 +464,11 @@ struct HomeView: View {
             questions: questions,
             title: "More Practice",
             shortcut: "Extra practice \u{2014} a fresh set of questions from your modules.",
-            moduleColor: .blue
+            moduleColor: .blue,
+            speedBaselines: SharpnessEngine.baselines(
+                for: questions.map(\.templateId),
+                sessions: progressStore.data.sessions
+            )
         )
     }
 
@@ -490,11 +534,53 @@ struct HomeView: View {
             questions: session.questions,
             title: "Refresh",
             shortcut: "Bring your skills back to sharp \u{2014} same methods, fresh numbers.",
-            moduleColor: .teal
+            moduleColor: .teal,
+            speedBaselines: SharpnessEngine.baselines(
+                for: session.questions.map(\.templateId),
+                sessions: progressStore.data.sessions
+            )
         )
         AnalyticsService.capture(.refreshStarted, properties: [
             "skill_count": session.skillCount
         ])
+    }
+
+    // MARK: - Refresh-save toast (Phase 12)
+
+    private var refreshSaveToast: some View {
+        let titles = refreshSaveMoves.map(\.title)
+        let line = titles.prefix(2).joined(separator: ", ")
+            + (titles.count > 2 ? " +\(titles.count - 2) more" : "")
+        return HStack(spacing: 10) {
+            Image(systemName: "arrow.triangle.2.circlepath")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundStyle(.white)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Back to sharp")
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white)
+                Text("Refreshed: \(line)")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(.white.opacity(0.85))
+                    .lineLimit(1)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [Theme.Colors.mindTeal, Theme.Colors.growthGreen],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .shadow(color: Theme.Colors.mindTeal.opacity(0.3), radius: 10, y: 4)
+        )
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+        .padding(.top, 8)
     }
 
     // MARK: - Streak

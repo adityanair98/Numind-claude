@@ -412,6 +412,22 @@ struct QuizSessionView: View {
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Colors.mutedText)
                 }
+
+                // Sharpness: shown only when favorable + statistically real
+                // (SharpnessEngine returns nil otherwise — by design).
+                if let delta = viewModel.currentSpeedDelta {
+                    HStack(spacing: 6) {
+                        Image(systemName: "bolt.fill")
+                            .font(.system(size: 11, weight: .bold))
+                        Text("\(Int(delta.priorMedianSeconds))s \u{2192} \(Int(delta.currentSeconds.rounded()))s \u{2014} quicker than your usual")
+                            .font(.system(size: 12, weight: .bold))
+                    }
+                    .foregroundStyle(Theme.Colors.insightText)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Theme.Colors.insightYellowTint)
+                    .clipShape(Capsule())
+                }
             }
             .frame(maxWidth: .infinity)
         }
