@@ -93,7 +93,9 @@ struct KaizenView: View {
                         )
                         .padding(.top, 28)
 
-                        Text("Short sessions. Real scenarios. No fluff \u{2014} a few minutes a day keeps your instincts sharp for whichever decision is next.")
+                        Text(viewModel.isHabitBuyer
+                             ? "Week one, tips stop needing your phone. Month one, you read a paycheck like a native. Month three, a dealer can\u{2019}t number you."
+                             : "Short sessions. Real scenarios. No fluff \u{2014} a few minutes a day keeps your instincts sharp for whichever decision is next.")
                             .font(.system(size: 15))
                             .foregroundStyle(.white.opacity(0.78))
                             .lineSpacing(4)

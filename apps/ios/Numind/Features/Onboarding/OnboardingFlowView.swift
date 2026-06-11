@@ -119,6 +119,9 @@ struct OnboardingFlowView: View {
         case .timeCommitment:
             TimeCommitmentView(viewModel: viewModel, onContinue: { viewModel.advance() })
 
+        case .paydayCapture:
+            PaydayCaptureView(viewModel: viewModel, onContinue: { viewModel.advance() })
+
         case .kaizen:
             KaizenView(viewModel: viewModel, onContinue: { viewModel.advance() })
 

@@ -138,6 +138,22 @@ final class OnboardingViewModel: ObservableObject {
         signals.dailyMinutes = minutes
     }
 
+    func setPaycheck(cadence: PaycheckSchedule.Cadence, anchorDate: Date) {
+        signals.paycheck = PaycheckSchedule(cadence: cadence, anchorDate: anchorDate)
+    }
+
+    func clearPaycheck() {
+        signals.paycheck = nil
+    }
+
+    /// Habit-buyer doorway: the user is here to stay sharp, not for a single
+    /// dated moment — Kaizen/Mirroring/Projection pivot to the compounding
+    /// fluency ladder.
+    var isHabitBuyer: Bool {
+        signals.focusPackId == "everyday_spending"
+            || signals.motivations.contains(.staySharp)
+    }
+
     func setADHDStatus(_ status: ADHDStatus) {
         signals.adhdStatus = status
     }
@@ -337,22 +353,23 @@ enum OnboardingScreen: Int, CaseIterable, Equatable {
     case mirroring = 8
     case deadline = 9
     case timeCommitment = 10
-    case kaizen = 11
-    case adhd = 12
-    case nameInput = 13
-    case ageRange = 14
-    case diagnosticIntro = 15
-    case diagnosticQuiz = 16
-    case preparingResults = 17
-    case moneyMap = 18
-    case personalizedPlan = 19
-    case notificationPermission = 20
-    case paywallPriming = 21
-    case streakGoal = 22
-    case improvementProjection = 23
-    case trialReminder = 24
-    case paywall = 25
-    case welcomeConfirm = 26
+    case paydayCapture = 11
+    case kaizen = 12
+    case adhd = 13
+    case nameInput = 14
+    case ageRange = 15
+    case diagnosticIntro = 16
+    case diagnosticQuiz = 17
+    case preparingResults = 18
+    case moneyMap = 19
+    case personalizedPlan = 20
+    case notificationPermission = 21
+    case paywallPriming = 22
+    case streakGoal = 23
+    case improvementProjection = 24
+    case trialReminder = 25
+    case paywall = 26
+    case welcomeConfirm = 27
 
     var number: Int { rawValue }
 

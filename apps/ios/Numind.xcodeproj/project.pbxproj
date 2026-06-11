@@ -143,6 +143,7 @@
 		ACB803C39F0CA76FA3EE61EA /* MotivatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A998436EA187651EC9B78E /* MotivatorView.swift */; };
 		767A7F3847174396B66A9501 /* TeachCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A2904B95C4062B836A244 /* TeachCardView.swift */; };
 		AED8DDABBEBFBA41DF4F8AA2 /* TimeCommitmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB43A8FC37C72C9557CD7DE /* TimeCommitmentView.swift */; };
+		C65FDB34EF164E21B8612488 /* PaydayCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805BF907EDD0466EAA7F24F2 /* PaydayCaptureView.swift */; };
 		B526ECBE131530A97D5E7409 /* PersonalizedPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B88F4243A021077238976F /* PersonalizedPlanView.swift */; };
 		B5311AB63A1F647D2E37D563 /* ModuleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B839FF2105AB1EEFB4988F /* ModuleDetailViewModel.swift */; };
 		B6095DD0E0F33C3D93010706 /* LessonRecommendationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE6B84759E801EB7A509B4 /* LessonRecommendationEngine.swift */; };
@@ -383,6 +384,7 @@
 		F76E087252FEBD5528A5BC82 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
 		F90D290A95551415D993EC4C /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		FAB43A8FC37C72C9557CD7DE /* TimeCommitmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCommitmentView.swift; sourceTree = "<group>"; };
+		805BF907EDD0466EAA7F24F2 /* PaydayCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaydayCaptureView.swift; sourceTree = "<group>"; };
 		FD29BAB16DEC1A66045D564D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FF48236569E3C71A34C541C4 /* ContentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -765,6 +767,7 @@
 				53F49DB5905A84DC574EBD6F /* SocialProofView.swift */,
 				7A85B7A04ED9978C2F4434E9 /* StreakGoalView.swift */,
 				FAB43A8FC37C72C9557CD7DE /* TimeCommitmentView.swift */,
+				805BF907EDD0466EAA7F24F2 /* PaydayCaptureView.swift */,
 				8C1B5203DD42F11A288B577B /* TrialReminderView.swift */,
 				90C909E1AD7BA90CD7D7DAAC /* WelcomeConfirmView.swift */,
 				12834E4101001792C6050DA9 /* WelcomeHookView.swift */,
@@ -1190,6 +1193,7 @@
 				91AA0CFA38F90FE8477908EC /* StreakStripCard.swift in Sources */,
 				ABB4DCEF756B3B22D030E601 /* Theme.swift in Sources */,
 				AED8DDABBEBFBA41DF4F8AA2 /* TimeCommitmentView.swift in Sources */,
+				C65FDB34EF164E21B8612488 /* PaydayCaptureView.swift in Sources */,
 				4FE72E8167C580B3945DBF82 /* TrialReminderView.swift in Sources */,
 				2D0CCB9595793F157B29D8E4 /* Typography.swift in Sources */,
 				8CFA29F9D5B83AA542AACF32 /* WelcomeConfirmView.swift in Sources */,

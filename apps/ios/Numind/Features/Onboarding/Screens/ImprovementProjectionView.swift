@@ -60,12 +60,21 @@ struct ImprovementProjectionView: View {
                                 title: "~\(questionsEstimate) real questions practiced",
                                 sub: "Tuned to where your diagnostic placed you"
                             )
-                            unlockRow(
-                                glyph: "\u{1F9ED}",
-                                color: Theme.Colors.insightYellow,
-                                title: "On track to Ready by \(readyDateText)",
-                                sub: "Earned, not granted \u{2014} that\u{2019}s the point"
-                            )
+                            if viewModel.isHabitBuyer {
+                                unlockRow(
+                                    glyph: "\u{26A1}",
+                                    color: Theme.Colors.insightYellow,
+                                    title: "Answers that arrive before you reach for your phone",
+                                    sub: "Second nature \u{2014} that\u{2019}s the whole point"
+                                )
+                            } else {
+                                unlockRow(
+                                    glyph: "\u{1F9ED}",
+                                    color: Theme.Colors.insightYellow,
+                                    title: "On track to Ready by \(readyDateText)",
+                                    sub: "Earned, not granted \u{2014} that\u{2019}s the point"
+                                )
+                            }
                             unlockRow(
                                 glyph: "\u{1F504}",
                                 color: Theme.Colors.warmOrange,
