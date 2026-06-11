@@ -52,6 +52,18 @@ struct ProgressData: Codable {
     /// state via `ProgressStore.canTakeRestDay(on:)`.
     var restDaysUsed: Set<Date> = []
 
+    // MARK: - Sharpness check + real-world saves (Phase 12)
+    // All three Optional for decode-compat with pre-Phase-12 payloads
+    // (the store decodes with try?, so a missing-key failure would reset
+    // dev data).
+
+    /// Monthly sharpness-check results — NEVER session records.
+    var sharpnessChecks: [SharpnessCheckRecord]?
+    /// Self-reported real-world skill uses.
+    var realWorldSaves: [RealWorldSave]?
+    /// Last time the weekly "did this come up in real life?" prompt showed.
+    var lastSavePromptDate: Date?
+
     // MARK: - Streak
 
     /// Active days = (Daily Workout days OR session days) ∪ frozen dates

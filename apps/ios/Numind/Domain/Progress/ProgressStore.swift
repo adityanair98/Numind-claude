@@ -380,6 +380,46 @@ final class ProgressStore: ObservableObject {
         persist()
     }
 
+    // MARK: - Sharpness check + real-world saves (Phase 12)
+
+    var sharpnessChecks: [SharpnessCheckRecord] { data.sharpnessChecks ?? [] }
+    var realWorldSaves: [RealWorldSave] { data.realWorldSaves ?? [] }
+
+    /// Due 28+ days after the last check (or the day-1 diagnostic / first
+    /// session when no check exists yet).
+    var isSharpnessCheckDue: Bool {
+        let anchor = data.onboardingSignals?.diagnosticDate
+            ?? data.sessions.map(\.date).min()
+        return SharpnessCheckGate.isCheckDue(
+            lastCheck: sharpnessChecks.map(\.date).max(),
+            anchor: anchor
+        )
+    }
+
+    func recordSharpnessCheck(_ record: SharpnessCheckRecord) {
+        data.sharpnessChecks = sharpnessChecks + [record]
+        persist()
+    }
+
+    var isSavePromptDue: Bool {
+        SharpnessCheckGate.isSavePromptDue(
+            lastPrompt: data.lastSavePromptDate,
+            sessionCount: data.sessions.count
+        )
+    }
+
+    /// Marks the prompt shown (regardless of answer) and stores a save
+    /// when the user picked one.
+    func recordSavePrompt(label: String?) {
+        data.lastSavePromptDate = Date()
+        if let label {
+            data.realWorldSaves = realWorldSaves + [
+                RealWorldSave(id: UUID(), date: Date(), label: label)
+            ]
+        }
+        persist()
+    }
+
     // MARK: - Computed (forwarded from ProgressData)
 
     var streak: Int               { data.computeStreak() }

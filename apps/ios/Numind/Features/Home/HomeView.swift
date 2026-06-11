@@ -28,6 +28,11 @@ struct HomeView: View {
     @State private var refreshSaveMoves: [SkillMove] = []
     @State private var showRefreshSaveToast = false
 
+    // Sharpness check + real-world saves (Phase 12)
+    @State private var checkVM: QuizSessionViewModel? = nil
+    @State private var checkResult: SharpnessCheckRecord? = nil
+    @State private var showSavePrompt = false
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
@@ -42,6 +47,7 @@ struct HomeView: View {
                 momentChipSection
                 streakSection
                 refreshSection
+                sharpnessCheckSection
                 if let card = viewModel.continueCard {
                     continueSection(card)
                 }
@@ -106,10 +112,59 @@ struct HomeView: View {
         .sheet(isPresented: $showInsight, onDismiss: {
             insightSessionVM = nil
             viewModel.refresh(using: progressStore)
+            // Weekly real-world saves prompt (max 1/7 days, post-ring moment).
+            if progressStore.isSavePromptDue,
+               !SharpnessCheckGate.saveChips(sessions: progressStore.data.sessions).isEmpty {
+                showSavePrompt = true
+            }
         }) {
             if let vm = insightSessionVM {
                 insightView(for: vm)
             }
+        }
+        // Sharpness check session (diagnostic mode — never a SessionRecord)
+        .fullScreenCover(item: $checkVM) { vm in
+            NavigationStack {
+                QuizSessionView(viewModel: vm) {
+                    let seconds = vm.results.map(\.timeSpentSeconds).sorted()
+                    let median = seconds.isEmpty ? 0
+                        : seconds.count % 2 == 0
+                            ? (seconds[seconds.count / 2 - 1] + seconds[seconds.count / 2]) / 2
+                            : seconds[seconds.count / 2]
+                    let record = SharpnessCheckRecord(
+                        date: Date(),
+                        correct: vm.correctCount,
+                        total: vm.total,
+                        medianSeconds: median
+                    )
+                    progressStore.recordSharpnessCheck(record)
+                    checkVM = nil
+                    checkResult = record
+                }
+            }
+        }
+        // Sharpness check result
+        .sheet(item: $checkResult) { record in
+            let previous = progressStore.sharpnessChecks
+                .filter { $0.date < record.date }
+                .max { $0.date < $1.date }
+            let day1: (correct: Int, total: Int)? = {
+                let results = progressStore.data.onboardingSignals?.diagnosticResults ?? []
+                guard !results.isEmpty else { return nil }
+                return (results.filter(\.isCorrect).count, results.count)
+            }()
+            SharpnessCheckResultView(
+                record: record,
+                dayOne: day1,
+                previousCheck: previous,
+                staleCount: progressStore.staleSkillCount,
+                onStartRefresh: { launchRefresh() }
+            )
+        }
+        // Weekly real-world saves prompt
+        .sheet(isPresented: $showSavePrompt) {
+            savePromptSheet
+                .presentationDetents([.medium])
         }
         // Bonus round launch
         .fullScreenCover(item: $bonusRoundVM) { vm in
@@ -603,6 +658,131 @@ struct HomeView: View {
             }
             .buttonStyle(.plain)
         }
+    }
+
+    // MARK: - Sharpness check (Phase 12)
+
+    /// Monthly 2-minute check — appears 28+ days after the last one (or
+    /// the day-1 diagnostic). Results never touch the session log.
+    @ViewBuilder
+    private var sharpnessCheckSection: some View {
+        if progressStore.isSharpnessCheckDue, progressStore.focusPackId != nil {
+            Button(action: launchSharpnessCheck) {
+                HStack(spacing: 14) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Theme.Colors.investIndigo.opacity(0.14))
+                            .frame(width: 44, height: 44)
+                        Image(systemName: "waveform.path.ecg")
+                            .font(.system(size: 19, weight: .bold))
+                            .foregroundStyle(Theme.Colors.investIndigo)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Monthly sharpness check")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text("2 minutes \u{2014} see how far you\u{2019}ve come since day 1.")
+                            .font(.system(size: 12))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+                .padding(14)
+                .background(Theme.Colors.cardBackground)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                        .strokeBorder(Theme.Colors.investIndigo.opacity(0.25), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.05), radius: 6, y: 3)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    private func launchSharpnessCheck() {
+        let signals = progressStore.data.onboardingSignals
+        let items = DiagnosticQuestionBuilder.build(
+            focusPackId: progressStore.focusPackId ?? signals?.focusPackId,
+            secondaryPackIds: signals?.secondaryPackIds ?? [],
+            repository: repo
+        )
+        guard !items.isEmpty else { return }
+        checkVM = QuizSessionViewModel(
+            questions: items.map(\.question),
+            title: "Sharpness Check",
+            shortcut: "No grades \u{2014} just an honest look at where your skills sit today.",
+            moduleColor: .indigo,
+            speedBaselines: SharpnessEngine.baselines(
+                for: items.map(\.question.templateId),
+                sessions: progressStore.data.sessions
+            )
+        )
+    }
+
+    // MARK: - Real-world saves prompt (Phase 12)
+
+    private var savePromptSheet: some View {
+        let chips = SharpnessCheckGate.saveChips(sessions: progressStore.data.sessions)
+        return VStack(alignment: .leading, spacing: 16) {
+            Text("Real life check")
+                .font(Theme.Typography.small)
+                .textCase(.uppercase)
+                .tracking(1.5)
+                .foregroundStyle(Theme.Colors.mutedText)
+                .padding(.top, 24)
+
+            Text("Did any of these come up in real life this week?")
+                .font(Theme.Typography.title)
+                .foregroundStyle(Theme.Colors.deepNavy)
+                .lineSpacing(2)
+
+            VStack(spacing: 10) {
+                ForEach(chips, id: \.self) { chip in
+                    Button {
+                        progressStore.recordSavePrompt(label: chip)
+                        showSavePrompt = false
+                    } label: {
+                        HStack {
+                            Image(systemName: "checkmark.circle")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.growthGreen)
+                            Text(chip)
+                                .font(.system(size: 15, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.deepNavy)
+                                .multilineTextAlignment(.leading)
+                            Spacer()
+                        }
+                        .padding(14)
+                        .background(Theme.Colors.cardBackground)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+                        )
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+
+            Button {
+                progressStore.recordSavePrompt(label: nil)
+                showSavePrompt = false
+            } label: {
+                Text("None this week")
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 44)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+        .background(Theme.Colors.softBackground.ignoresSafeArea())
     }
 
     // MARK: - Refresh-save toast (Phase 12)

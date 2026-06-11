@@ -27,6 +27,7 @@
 		159C34E9B830677B6780C663 /* MilestoneEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3CE5796EEC5790405D2E47 /* MilestoneEngine.swift */; };
 		1E98FD9F292CA463803B6D05 /* OnboardingProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C77E46621002C8A706DE22 /* OnboardingProgressBar.swift */; };
 		26E7BE706C99A63444E84383 /* DailyInsightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3ECD664788C66D550D0964A /* DailyInsightView.swift */; };
+		03EE9F18EEF144B6AF18839E /* SharpnessCheckResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC8479E629B4F8191B29C12 /* SharpnessCheckResultView.swift */; };
 		2778C25561181BC0947FF2D7 /* ImprovementProjectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B8992A003A24D85E3C97F3 /* ImprovementProjectionView.swift */; };
 		2D0CCB9595793F157B29D8E4 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AF57A5FE030A7BA6EAAFB9 /* Typography.swift */; };
 		2FE105C8B1F17551E505F21E /* ContentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8364ACD305CD0B29D6153 /* ContentRepositoryTests.swift */; };
@@ -111,6 +112,7 @@
 		7B2A4E1D9C5C8B0FF1A3D5C0 /* MilestoneEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */; };
 		9D0E0002A0B0C0D0E0F00007 /* FreshnessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F00008 /* FreshnessTests.swift */; };
 		5A210E7B357E4BFBBC39C973 /* SharpnessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006CBB0562F64663AF419EBE /* SharpnessTests.swift */; };
+		C30D5F72EF3B48EFBBEC37C5 /* SharpnessCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0BBA8DE374D6EB53A1F55 /* SharpnessCheckTests.swift */; };
 		B64A0DD8907049128810B046 /* PaycheckScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A34E394A4744D18105DF59 /* PaycheckScheduleTests.swift */; };
 		1EC251A5C8FA4D778C1394E5 /* MomentsRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E88AF7893C2413BBE4CFA1D /* MomentsRegistryTests.swift */; };
 		9D0E0002A0B0C0D0E0F00005 /* ReadinessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0002A0B0C0D0E0F00006 /* ReadinessTests.swift */; };
@@ -169,6 +171,7 @@
 		E0824FF4B592C151DF27AC31 /* NumindScoreEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AF66C96127CDC6E452DC23 /* NumindScoreEngine.swift */; };
 		9D0E0001A0B0C0D0E0F00005 /* FreshnessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00006 /* FreshnessEngine.swift */; };
 		B96C21C6B2A543E18A20D1F6 /* SharpnessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A6F877116F4AA882D4AA74 /* SharpnessEngine.swift */; };
+		6F8CE1FE78E94E77A680E8A3 /* SharpnessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC83EA1A13E4D6D9D72F83D /* SharpnessCheck.swift */; };
 		6804EABBCAB84083889C94C4 /* PaycheckSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B8CE019E04F609C2737F8 /* PaycheckSchedule.swift */; };
 		12E2DC7E125D41EDAB50DFAC /* MomentsRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F5F2BF72954665949BC316 /* MomentsRegistry.swift */; };
 		9D0E0001A0B0C0D0E0F00003 /* ReadinessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E0001A0B0C0D0E0F00004 /* ReadinessEngine.swift */; };
@@ -261,6 +264,7 @@
 		7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneEngineTests.swift; sourceTree = "<group>"; };
 		9D0E0002A0B0C0D0E0F00008 /* FreshnessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshnessTests.swift; sourceTree = "<group>"; };
 		006CBB0562F64663AF419EBE /* SharpnessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpnessTests.swift; sourceTree = "<group>"; };
+		79B0BBA8DE374D6EB53A1F55 /* SharpnessCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpnessCheckTests.swift; sourceTree = "<group>"; };
 		93A34E394A4744D18105DF59 /* PaycheckScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaycheckScheduleTests.swift; sourceTree = "<group>"; };
 		9E88AF7893C2413BBE4CFA1D /* MomentsRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentsRegistryTests.swift; sourceTree = "<group>"; };
 		9D0E0002A0B0C0D0E0F00006 /* ReadinessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessTests.swift; sourceTree = "<group>"; };
@@ -282,6 +286,7 @@
 		70AF66C96127CDC6E452DC23 /* NumindScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumindScoreEngine.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F00006 /* FreshnessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshnessEngine.swift; sourceTree = "<group>"; };
 		34A6F877116F4AA882D4AA74 /* SharpnessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpnessEngine.swift; sourceTree = "<group>"; };
+		4BC83EA1A13E4D6D9D72F83D /* SharpnessCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpnessCheck.swift; sourceTree = "<group>"; };
 		113B8CE019E04F609C2737F8 /* PaycheckSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaycheckSchedule.swift; sourceTree = "<group>"; };
 		A9F5F2BF72954665949BC316 /* MomentsRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentsRegistry.swift; sourceTree = "<group>"; };
 		9D0E0001A0B0C0D0E0F00004 /* ReadinessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessEngine.swift; sourceTree = "<group>"; };
@@ -381,6 +386,7 @@
 		F0F35251B474BAD35EECC078 /* DailyChallengeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallengeCard.swift; sourceTree = "<group>"; };
 		F375C1FCBCF06A3121E9C12C /* BadgeEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeEvaluator.swift; sourceTree = "<group>"; };
 		F3ECD664788C66D550D0964A /* DailyInsightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyInsightView.swift; sourceTree = "<group>"; };
+		0EC8479E629B4F8191B29C12 /* SharpnessCheckResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpnessCheckResultView.swift; sourceTree = "<group>"; };
 		F76E087252FEBD5528A5BC82 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
 		F90D290A95551415D993EC4C /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		FAB43A8FC37C72C9557CD7DE /* TimeCommitmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCommitmentView.swift; sourceTree = "<group>"; };
@@ -722,6 +728,7 @@
 				F00DE23AED3330436019C72F /* BrandHeader.swift */,
 				F0F35251B474BAD35EECC078 /* DailyChallengeCard.swift */,
 				F3ECD664788C66D550D0964A /* DailyInsightView.swift */,
+				0EC8479E629B4F8191B29C12 /* SharpnessCheckResultView.swift */,
 				860D435039106101616AB8EF /* HomeView.swift */,
 				E93AF8C68EA7C1F3DE444C1C /* HomeViewModel.swift */,
 				9DE5C197942E28DFA3FAF3DF /* StreakLossView.swift */,
@@ -838,6 +845,7 @@
 				70AF66C96127CDC6E452DC23 /* NumindScoreEngine.swift */,
 				9D0E0001A0B0C0D0E0F00006 /* FreshnessEngine.swift */,
 				34A6F877116F4AA882D4AA74 /* SharpnessEngine.swift */,
+				4BC83EA1A13E4D6D9D72F83D /* SharpnessCheck.swift */,
 				9D0E0001A0B0C0D0E0F00004 /* ReadinessEngine.swift */,
 				9D0E0001A0B0C0D0E0F00002 /* MomentumEngine.swift */,
 				36478E60F8A4484E813A6F88 /* DailyRingEngine.swift */,
@@ -889,6 +897,7 @@
 				7B2A4E1E9C5C8B0FF1A3D5C1 /* MilestoneEngineTests.swift */,
 				9D0E0002A0B0C0D0E0F00008 /* FreshnessTests.swift */,
 				006CBB0562F64663AF419EBE /* SharpnessTests.swift */,
+				79B0BBA8DE374D6EB53A1F55 /* SharpnessCheckTests.swift */,
 				93A34E394A4744D18105DF59 /* PaycheckScheduleTests.swift */,
 				9E88AF7893C2413BBE4CFA1D /* MomentsRegistryTests.swift */,
 				9D0E0002A0B0C0D0E0F00006 /* ReadinessTests.swift */,
@@ -1021,6 +1030,7 @@
 				7B2A4E1D9C5C8B0FF1A3D5C0 /* MilestoneEngineTests.swift in Sources */,
 				9D0E0002A0B0C0D0E0F00007 /* FreshnessTests.swift in Sources */,
 				5A210E7B357E4BFBBC39C973 /* SharpnessTests.swift in Sources */,
+				C30D5F72EF3B48EFBBEC37C5 /* SharpnessCheckTests.swift in Sources */,
 				B64A0DD8907049128810B046 /* PaycheckScheduleTests.swift in Sources */,
 				1EC251A5C8FA4D778C1394E5 /* MomentsRegistryTests.swift in Sources */,
 				9D0E0002A0B0C0D0E0F00005 /* ReadinessTests.swift in Sources */,
@@ -1062,6 +1072,7 @@
 				312A9875057E447090A47BD3 /* DailyWorkoutEngine.swift in Sources */,
 				38B41D8A1F4A46D6998D856F /* RefreshSessionBuilder.swift in Sources */,
 				26E7BE706C99A63444E84383 /* DailyInsightView.swift in Sources */,
+				03EE9F18EEF144B6AF18839E /* SharpnessCheckResultView.swift in Sources */,
 				B74CFB567CF4C55F82411EF7 /* DailyMicroView.swift in Sources */,
 				52D417DD291F7986F3177BD1 /* DesignSystemPreviewView.swift in Sources */,
 				9874FA91774C8D3903513DE4 /* DiagnosticCalibrator.swift in Sources */,
@@ -1138,6 +1149,7 @@
 				E0824FF4B592C151DF27AC31 /* NumindScoreEngine.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00005 /* FreshnessEngine.swift in Sources */,
 				B96C21C6B2A543E18A20D1F6 /* SharpnessEngine.swift in Sources */,
+				6F8CE1FE78E94E77A680E8A3 /* SharpnessCheck.swift in Sources */,
 				6804EABBCAB84083889C94C4 /* PaycheckSchedule.swift in Sources */,
 				12E2DC7E125D41EDAB50DFAC /* MomentsRegistry.swift in Sources */,
 				9D0E0001A0B0C0D0E0F00003 /* ReadinessEngine.swift in Sources */,

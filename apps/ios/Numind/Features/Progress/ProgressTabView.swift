@@ -246,6 +246,14 @@ struct ProgressTabView: View {
                             .font(.system(size: 12, weight: .bold))
                             .foregroundStyle(Theme.Colors.growthGreen)
                     }
+
+                    // Real-world saves (Phase 12) — the wild-use ledger.
+                    if !store.realWorldSaves.isEmpty {
+                        Label("\(store.realWorldSaves.count) real-world save\(store.realWorldSaves.count == 1 ? "" : "s")",
+                              systemImage: "hand.thumbsup.fill")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                    }
                 }
                 Spacer(minLength: 0)
             }
