@@ -1,13 +1,13 @@
 import SwiftUI
 
 /// Screen 25 — Paywall (RevenueCat placeholder)
-/// Toggle monthly/yearly, feature list, trial timeline.
+/// Toggle weekly/yearly, feature list, trial timeline.
 struct PaywallView: View {
     @State private var selectedPlan: Plan = .annual
     let onSubscribe: () -> Void
     let onRestore: () -> Void
 
-    enum Plan { case monthly, annual }
+    enum Plan { case weekly, annual }
 
     var body: some View {
         ZStack {
@@ -60,12 +60,12 @@ struct PaywallView: View {
                         // Plan cards
                         HStack(spacing: 12) {
                             planCard(
-                                label: "Monthly", price: "$4.99", period: "/ month",
-                                sub: "Cancel anytime", plan: .monthly
+                                label: "Weekly", price: "$3.99", period: "/ week",
+                                sub: "Cancel anytime", plan: .weekly
                             )
                             planCard(
                                 label: "Annual", price: "$29.99", period: "/ year",
-                                sub: "$2.50/mo \u{00B7} Save 50%", plan: .annual,
+                                sub: "$0.58/wk \u{00B7} Save 85%", plan: .annual,
                                 badge: "BEST VALUE"
                             )
                         }
@@ -89,7 +89,7 @@ struct PaywallView: View {
                     VStack(spacing: 4) {
                         PillButton("Start 7-day free trial") { onSubscribe() }
 
-                        Text("Free for 7 days, then \(selectedPlan == .annual ? "$29.99/year" : "$4.99/month"). Cancel anytime.")
+                        Text("Free for 7 days, then \(selectedPlan == .annual ? "$29.99/year" : "$3.99/week"). Cancel anytime.")
                             .font(.system(size: 10))
                             .foregroundStyle(Theme.Colors.mutedText)
                             .multilineTextAlignment(.center)

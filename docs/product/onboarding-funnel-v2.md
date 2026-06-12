@@ -48,7 +48,7 @@ Three structural changes:
 | 19 | Personalized Plan | Ring card (anything counts) + Path card (4 named gates: learn → prove → hold → apply) + DATED timeline ("Ready around Oct 18, before Nov 1") | — |
 | 20 | Payday Capture | Moved before the notifications ask (strongest permission case). For "twice a month," a second day-of-month is captured explicitly. "When do you get paid?" — cadence cards (weekly/biweekly/semimonthly/monthly) + most-recent-payday date + prominent Skip. "We'll time your sessions to your money." | `paycheck` (PaycheckSchedule, optional) |
 | 21 | Notifications | Mocks: open ring / fading skills (Freshness) / moment countdown | permission |
-| 22 | Paywall Priming | Coffee anchor kept; Quick Math → verified mistake costs (401k cash-out −$2,000+, unclaimed match, FSA forfeits) vs $59.88/yr | — |
+| 22 | Paywall Priming | Coffee anchor vs Numind/WEEK ($3.99 < one coffee); Quick Math → verified mistake costs (401k cash-out −$2,000+, unclaimed match, FSA forfeits) vs $29.99/yr annual plan. Pricing: $3.99/wk or $29.99/yr (save 85%) | — |
 | 23 | Streak Goal | "How many days in a row will you close your ring?" 7 recommended (past-trial lever) | `streakGoal` |
 | 24 | Projection (dark) | Capability rows: skills at solid / questions practiced / **on track to** Ready by date / first refresh. Badge-flex row deleted | — |
 | 25 | Trial Reminder | unchanged (trust counterweight) | `trialReminderDays` |

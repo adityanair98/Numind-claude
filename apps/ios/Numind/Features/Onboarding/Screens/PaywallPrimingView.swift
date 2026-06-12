@@ -35,8 +35,8 @@ struct PaywallPrimingView: View {
                             )
                             comparisonCard(
                                 emoji: "\u{1F9E0}",
-                                label: "Numind / month",
-                                price: "$4.99",
+                                label: "Numind / week",
+                                price: "$3.99",
                                 sub: "Every money decision, prepared",
                                 tint: Theme.Colors.primaryBlueTint,
                                 color: Theme.Colors.primaryBlue,
@@ -58,7 +58,7 @@ struct PaywallPrimingView: View {
                                 mathLine(left: "A year of unclaimed employer match", right: "\u{2212}$1,000+", muted: true)
                                 mathLine(left: "Forfeited FSA money (use it or lose it)", right: "\u{2212}$400+", muted: true)
                                 Divider().padding(.vertical, 4)
-                                mathLine(left: "Numind, for the whole year", right: "$59.88", highlight: true)
+                                mathLine(left: "Numind, for a whole year (annual plan)", right: "$29.99", highlight: true)
                             }
                         }
                         .padding(.top, 22)
