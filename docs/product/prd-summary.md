@@ -190,9 +190,13 @@ After all questions:
   - If mastered: "Review mistakes" + "Continue learning"
   - If not mastered: "Retry quiz" (primary, orange) + "Skip for now"
 
-## Onboarding / Paywall (v2 baseline built — Phase 11)
-26-screen decision-first funnel, anonymous end-to-end, hard paywall at the
+## Onboarding / Paywall (v2 baseline built — Phase 11; 27 screens after Phase 12 payday capture)
+27-screen decision-first funnel, anonymous end-to-end, hard paywall at the
 end (CalAI pattern). Spec: `docs/product/onboarding-funnel-v2.md`.
+
+**Pricing (June 2026):** weekly model — **$3.99/week or $29.99/year (save 85%)**.
+**Visual direction (Phase 13, specced):** "Warm-Premium Money Tool" —
+`docs/brand/design-language-spec.md` (implementation pending).
 
 Welcome ("Money decisions don't wait")
 -> money-stress proof + moments framing + insecurity mirror (felt moments → verified costs)

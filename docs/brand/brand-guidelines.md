@@ -21,7 +21,15 @@ Our audience overlaps heavily with math-anxious adults — every "math" in promi
 - Honest-progress vocabulary stays capability-based: skills mastered, skills to refresh, packs Ready — never points, levels, or grades.
 
 ## Brand Feel
-Friendly, clean, modern, useful, lightly playful, financially credible.
+Friendly, clean, modern, useful, lightly playful, financially credible — and
+**alive**. (The Phase 13 research reframed "premium" so it never reads as flat
+or sterile: life comes from illustration, depth, motion, and earned celebration,
+not from rainbow color, mascots, or per-answer confetti.)
+
+> **Visual execution is governed by `design-language-spec.md`** (Phase 13,
+> "Warm-Premium Money Tool"). This file owns voice, positioning, the language
+> rule, motifs, and the honest-progress vocabulary; the spec owns the color/type/
+> shape/illustration/feedback/motion system. They agree by construction.
 
 ## Logo
 Primary logo is the Numind app badge, built on the beads-on-rails motif — beads
@@ -30,6 +38,10 @@ a literal abacus or math iconography.
 Wordmark is Numind with rounded friendly typography and teal dot accent.
 
 ## Colors
+Pre-Phase-13 baseline (cool blue-led). **The redesign palette — warm-neutral
+base, the four single-job accents (ink / teal / gold / ember), the demoted
+topic-accent set, and full light + dark tokens — lives in
+`design-language-spec.md` and is the source of truth.**
 - Primary Blue
 - Deep Navy
 - Mind Teal

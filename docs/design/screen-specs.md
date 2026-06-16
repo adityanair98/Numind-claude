@@ -1,5 +1,9 @@
 # Numind — Screen Specs (V1)
 
+> **Visual styling superseded by the Phase 13 redesign** — see
+> `docs/brand/design-language-spec.md` ("Warm-Premium Money Tool"). The *layout
+> and behavior* notes below remain useful; colors/type/treatments reflect the
+> pre-redesign system.
 > **Last updated:** May 2026 (after V1 refinement — completion-based progression, 10 modules, dynamic question count, streak freezes).
 > **Status:** Implemented screens, reflecting the current SwiftUI codebase.
 > **Tokens referenced** are the Swift constants in `apps/ios/Numind/Core/DesignSystem/Tokens/`. Do not introduce new tokens here — if a value is missing, propose it as a token first.

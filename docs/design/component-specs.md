@@ -1,5 +1,8 @@
 # Numind — Component Specs (V1)
 
+> **Visual styling superseded by the Phase 13 redesign** — see
+> `docs/brand/design-language-spec.md`. Component *structure/behavior* below is
+> current; colors/type/depth reflect the pre-redesign system.
 > **Last updated:** May 2026 (after M56).
 > **Status:** Implemented components reflecting the current SwiftUI codebase.
 > **M1 primitives** already in code: `NumindCard`, `IconTile`, `PillButton`, `BeadRail`. This doc covers all primitives and composed components used across the app.
