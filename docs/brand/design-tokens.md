@@ -1,5 +1,11 @@
 # Design Tokens
 
+> **Superseded for the visual language by `design-language-spec.md` (Phase 13
+> "Warm-Premium Money Tool" redesign).** The values below are the pre-redesign
+> baseline (cool blue-led palette, SF Rounded). The spec is the source of truth
+> for color/type/shape/illustration/feedback/motion going forward; the shape +
+> spacing values here are carried into it unchanged.
+
 ## Colors
 Primary Blue: #2F6BFF
 Deep Navy: #10224A
