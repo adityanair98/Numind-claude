@@ -400,9 +400,11 @@ Speed bonus indicator in quiz feedback and session summary.
 
 ---
 
-## F. Practice Tab Patterns
+## F. Practice Tab Patterns *(retired in Phase 7a)*
 
-Components and patterns specific to `Features/Practice/PracticeView.swift`.
+> The Practice tab and `Features/Practice/PracticeView.swift` were removed in Phase 7a (replaced by the Tools tab). This section is retained as history only — these patterns are no longer in the codebase.
+
+Components and patterns formerly in `Features/Practice/PracticeView.swift`.
 
 ### F1. Module Tab Strip
 

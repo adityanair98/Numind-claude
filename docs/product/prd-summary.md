@@ -1,6 +1,6 @@
 # Numind PRD Summary
 
-> **Last updated:** May 2026 (after V1 refinement, V3 concept lessons, and Phase 1 audit fixes — module restructure, scoring reweight, adaptive difficulty, streak freezes, concept template support, regulated-content accuracy review, lastVerified field).
+> **Last updated:** June 2026 (after Phase 10 Block 1 — Protect Your Money module + curriculum wave, 12-pack re-weave, daily goal ring, 3-segment workout with teach cards, XP/Level retired from all surfaces, Worlds → Explore, consolidated Refresh, analytics seam).
 
 ## Product Thesis
 Numind is an iOS **financial education app that heavily uses math as its teaching method**.
@@ -14,18 +14,19 @@ Each lesson is a financial literacy unit (credit-card APR, FICA, IDR, OOP max, m
 
 The product should feel like a short useful workout, not a textbook, calculator utility, or generic brain-training app.
 
-Coverage spans the 10 modules below — chosen to map to real US adult money decisions (search-volume + Reddit-frequency weighted), not to a math-curriculum hierarchy:
+Coverage spans the 11 modules below — chosen to map to real US adult money decisions (search-volume + Reddit-frequency weighted), not to a math-curriculum hierarchy:
 
-- smart shopping (tips, bill splitting, discounts, membership break-even)
+- smart shopping (tips, bill splitting, discounts, membership break-even, shrinkflation)
 - budgeting, subscriptions, and sales tax
-- salary, raises, and pay periods
-- investing basics (Rule of 72, ROI, 401k match, compound growth, allocation)
-- debt math (credit cards, loans, DTI, BNPL, credit scores)
+- salary, raises, and pay periods (incl. negotiation, total comp, job-offer math)
+- investing basics (Rule of 72, ROI, 401k match, compound growth, allocation, job-change 401(k))
+- debt math (credit cards, loans, DTI, BNPL, credit scores, payday/overdraft true cost)
 - housing and rent (affordability, leases, mortgage vs rent)
 - taxes and paycheck (brackets, deductions, take-home pay, filing status)
-- insurance and healthcare (deductibles, OOP max, HDHP vs PPO, HSA, FSA)
-- car and big purchases (20/4/10, depreciation, TCO, lease vs buy)
+- insurance and healthcare (deductibles, OOP max, HDHP vs PPO, HSA, FSA, COBRA vs marketplace)
+- car and big purchases (20/4/10, depreciation, TCO, lease vs buy, negative equity)
 - student loans (IDR, PSLF, refinance, employer benefits)
+- protect your money (imposter-scam patterns, irreversible payment rails, credit-report rights)
 
 ## Core Promise
 Become financially fluent in 5 minutes a day — by learning the math behind every real money decision.
@@ -57,19 +58,20 @@ They may feel slow or rusty when:
 - deciding whether to refinance student loans
 - sanity-checking a car-loan or mortgage offer in real time
 
-## V1 Modules (10 total)
-1. **Smart Shopping** (smart_shopping) - tipping shortcuts, bill splitting, stacked discounts, BOGO math, coupon vs cashback, discount + tax, membership break-even, retailer manipulation (9 lessons)
-2. **Budgets & Spending** (money_math) - subscription audits, cost per use, tax + budget, 50/30/20 rule, latte factor, weekly-to-monthly conversion, needs vs wants (7 lessons)
-3. **Salary & Income** (salary) - net pay, raises (with after-tax), overtime totals, pay-period comparison, inflation-adjusted raises, hourly-to-salary, total comp, side hustles, exempt vs non-exempt (9 lessons)
-4. **Investing Basics** (investing) - Rule of 72, ROI, 401(k) match, Roth vs Traditional, compound growth, DCA, fund fees, emergency fund, rental yield, "am I on track", asset classes, allocation by age, panic-sell behavior (13 lessons)
-5. **Debt & Loans** (debt) - credit card interest, minimum payment trap, true loan cost, DTI, extra payments, avalanche vs snowball, APR vs APY, BNPL, credit scores, good vs bad debt (10 lessons)
-6. **Housing & Rent** (housing) - rent affordability, rent increase + renewal-vs-move, move-in costs, roommate math, true cost of renting, mortgage (rate-factor method), lease break math, buy vs rent, lease clauses (9 lessons)
-7. **Taxes & Paycheck** (taxes) - marginal brackets, paycheck deductions, tax refund (behavioral), self-employment, standard vs itemized, capital gains, W-4 adjustment, paycheck stub, filing status (9 lessons)
-8. **Insurance & Healthcare** (insurance) - deductible vs premium, copay vs coinsurance, OOP max, HDHP vs PPO, HSA, FSA, life insurance, brand vs generic Rx, policies you need, disability insurance (10 lessons)
-9. **Car & Big Purchases** (car) - monthly vs total cost, loan term delta, down payment savings, 20/4/10 rule, depreciation, TCO, lease vs buy, trade-in vs private sale, dealer tactics, warranties (10 lessons)
+## V1 Modules (11 total)
+1. **Smart Shopping** (smart_shopping) - tipping shortcuts, bill splitting, stacked discounts, BOGO math, coupon vs cashback, discount + tax, membership break-even, retailer manipulation, shrinkflation unit price (10 lessons)
+2. **Budgets & Spending** (money_math) - subscription audits, cost per use, tax + budget, 50/30/20 rule, latte factor, weekly-to-monthly conversion, needs vs wants, sinking funds, emergency fund sizing, checking-account fees (10 lessons)
+3. **Salary & Income** (salary) - net pay, raises (with after-tax), overtime totals, pay-period comparison, inflation-adjusted raises, hourly-to-salary, total comp, side hustles, exempt vs non-exempt, RSUs, W-2 vs 1099 offer, 401(k) vesting, bonus after tax, salary negotiation (15 lessons)
+4. **Investing Basics** (investing) - Rule of 72, what stocks/bonds/funds are (lesson 2), ROI, 401(k) match, Roth vs Traditional, compound growth, DCA, APY/HYSA, fund fees, EF location, rental yield, "am I on track", asset allocation, panic-sell behavior, ESPP, three accounts, reverse goal, job-change 401(k) (19 lessons)
+5. **Debt & Loans** (debt) - credit card interest, minimum payment trap, true loan cost, DTI, extra payments, avalanche vs snowball, APR, BNPL, credit scores, good vs bad debt, payoff time, balance transfer, statement cycle, rewards vs interest, EF-vs-debt priority, payday/overdraft true cost, building credit from zero (17 lessons)
+6. **Housing & Rent** (housing) - rent affordability, rent increase + renewal-vs-move, move-in costs, roommate math, true cost of renting, mortgage (rate-factor method), lease break math, buy vs rent, lease clauses, full affordability, cash-to-close, COL relocation, first-month true cost (13 lessons)
+7. **Taxes & Paycheck** (taxes) - marginal brackets, paycheck deductions, tax refund (behavioral), self-employment, standard vs itemized, capital gains, W-4 adjustment, paycheck stub + filing status, how filing actually works (9 lessons)
+8. **Insurance & Healthcare** (insurance) - deductible vs premium, copay vs coinsurance, OOP max, HDHP vs PPO, HSA, FSA, life insurance, brand vs generic Rx, policies you need, disability insurance, open enrollment, medical bill EOB, job-change health coverage, renters insurance, auto insurance shopping, beneficiary designations (16 lessons)
+9. **Car & Big Purchases** (car) - monthly vs total cost, loan term delta, down payment savings, 20/4/10 rule, depreciation, TCO, lease vs buy, trade-in vs private sale, dealer tactics, warranties, negative equity (11 lessons)
 10. **Student Loans & Education** (student_loans) - monthly payment (rule of thumb), total cost, refinance vs PSLF, IDR, PSLF, employer benefit, grace period, Parent PLUS, subsidized vs unsubsidized, federal protections (10 lessons)
+11. **Protect Your Money** (money_safety) - imposter-scam patterns ("bank will never ask"), irreversible payment rails (gift cards / wire / crypto ATM), credit-report rights (free weekly reports, disputes, freezes), disputing a charge (FCBA / Reg E) (4 lessons — Phase 10 + 12)
 
-**Total: 118 lessons, 590 quiz templates** (433 numerical + 157 concept templates), **10 Life-Event Packs**, **7 competency axes** driving the Numind Score. Phase 2 audit added 5 topic-gap lessons. Phase 3 added 5 more (RSUs, ESPP, CC statement cycle, open enrollment, three-accounts), rebuilt taxes_brackets with explicit taxable-income concept + real 2025 IRS brackets, and shipped the per-number `regulatory-constants.md` registry. Phase 4 added 11 search-intent lessons (W-2 vs 1099 offer, 401(k) vesting, cash-to-close, COL relocation, EF location, first-month true cost, medical bill EOB, CC rewards vs interest, sinking funds, compound reverse goal, bonus after tax). **Phase 5** added 2 more packs (Everyday Spending, Taxes Without Panic) for 10 total; mapped all 118 lessons to one of 7 SkillAxis values (primarySkill + 0–2 secondarySkills); shipped iOS pack-aware Home + Learn segmented control + Progress "Paths in progress" section; replaced the 10-module Numind Score with 7-axis competency scoring (per-question multipliers, weighting profiles, evidence levels, coverage-cap composite — see `docs/ops/numind-score-baseline-2026-05.md`). Roth/APR-APY splits + Filing Status merge from Phase 2 retained. Every lesson carries a `lastVerified` field per `docs/ops/content-audit-cadence.md`.
+**Total: 134 lessons, 791 quiz templates** (445 numerical + 346 concept/decision; 138 fact-based decision/application items covering 121 of 134 lessons), **12 Life-Event Packs**, a decision-first progress model (daily goal ring + per-pack Readiness + Freshness — see "Progress model"). Phase 2 audit added 5 topic-gap lessons. Phase 3 added 5 more (RSUs, ESPP, CC statement cycle, open enrollment, three-accounts), rebuilt taxes_brackets with explicit taxable-income concept + real 2025 IRS brackets, and shipped the per-number `regulatory-constants.md` registry. Phase 4 added 11 search-intent lessons (W-2 vs 1099 offer, 401(k) vesting, cash-to-close, COL relocation, EF location, first-month true cost, medical bill EOB, CC rewards vs interest, sinking funds, compound reverse goal, bonus after tax). **Phase 5** added 2 more packs (Everyday Spending, Taxes Without Panic) for 10 total; mapped all 118 lessons to one of 7 SkillAxis values (primarySkill + 0–2 secondarySkills); shipped iOS pack-aware Home + Learn segmented control + Progress "Paths in progress" section; replaced the 10-module Numind Score with 7-axis competency scoring (per-question multipliers, weighting profiles, evidence levels, coverage-cap composite — see `docs/ops/numind-score-baseline-2026-05.md`). Roth/APR-APY splits + Filing Status merge from Phase 2 retained. Every lesson carries a `lastVerified` field per `docs/ops/content-audit-cadence.md`. **Phase 6a** realigned the behavioral loop (recency-weighted score decay, exploration bonus replacing the old imbalance penalty, pinnable axes, mastery decay, rest-day streak mechanic, extended SRS ladder to 30/60-day intervals, evidence-label renames Not started/Warming up/Building/Reliable). **Phase 6b** refreshed every year-bound regulatory number to 2026 (IRS Rev Proc 2025-32, Notice 2025-67, Rev Proc 2025-19; SSA wage base $184,500; HHS poverty line) and absorbed OBBBA 2025 (DCFSA cap $7,500, SALT cap $40,400 with phaseout, TCJA bracket permanence, the RAP repayment plan replacing SAVE/legacy IDR, the March-2025 PSLF qualifying-employer narrowing) plus SECURE 2.0 super catch-up; the 1099 QBI multiplier moved 0.65→0.70; the emergency-fund lesson moved from Investing to Budgets & Spending and Investing was reordered so "what are stocks" is lesson 2. Counts unchanged (118 lessons / 590 templates / 10 modules / 10 packs). **Phase 9** retired the global 0–100 Numind Score for a two-currency model — XP/Level + per-pack Readiness + restorable Freshness (see "Progress model" below); the 7 axes survive as a private coverage diagnostic; new MomentumEngine/ReadinessEngine/FreshnessEngine + 31 regression tests. Phase 9E (scenario/decision templates) shipped. A June-2026 3-lens content audit (`docs/ops/full-content-audit-2026-06.md`) independently verified all 2026 regulatory numbers against primary sources (all correct), closed the final 6 application-coverage gaps (102 decision items, 102/118 lessons), and corrected the one confirmed factual error (student-loan interest no longer auto-capitalizes at end of grace, per the 2023 Direct Loan rule). **Phase 10 Block 1 (June 2026)** added the 11th module Protect Your Money + 9 search-validated lessons (salary negotiation, job-change 401(k)/health, payday true cost, negative equity, shrinkflation, scams ×2, credit rights) and tipflation/BNPL refreshes → 127 lessons / 749 templates; re-wove packs to 12 (new: Protect Your Money, The Job Offer) with stakes-sized cores of 3–6 and 105/127 lessons placed (22 deliberate library-only); shipped the daily goal ring (`DailyRingEngine` — any practice closes it; single streak write path), the 3-segment Daily Workout with teach cards (`DailyWorkoutEngine`), full XP/Level surface retirement (GoalRing + skill moves + skills ledger + capability milestones), Worlds → Explore (quest framing stripped), one consolidated Refresh (`RefreshSessionBuilder`; Recall retired), and the `AnalyticsService` PostHog/Sentry seam (no-op without keys). **Phase 11 (June 2026)** rebuilt the onboarding funnel v2 (insecurity mirror, life-moment picker, deadline screen, diagnostic-as-demo with shortcut reveals, Money Map, honest projection). **Phase 12 (June 2026)** shipped the "felt sharpness" loop: a de-math language pass (math is the method, never the promise; one disarm line), favorable-only speed deltas (`SharpnessEngine`), a refresh-save toast, the `MomentsRegistry` (open enrollment / FSA / tax season / IRS limits / lease renewal / payday windows with honest "about N weeks" granularity) + payday-anchored notifications (`PaycheckSchedule`, captured in onboarding screen 11 and Profile), a monthly sharpness check (diagnostic-shaped, never writes SessionRecords) + a real-world saves ledger, a WidgetKit extension (ring + streak + next moment via App Group snapshot), and the 7-lesson administrative-adulting content wave (filing mechanics, credit from zero, disputing a charge, banking fees, renters insurance, auto insurance shopping, beneficiaries) — **134 lessons / 791 templates (445 numerical + 346 concept) / 138 application items across 121 lessons / 12 packs (112 lessons placed, 22 library-only)**.
 
 ## Core User Loop
 Home / Today
@@ -77,14 +79,14 @@ Home / Today
 -> read short lesson (concept + shortcut + example)
 -> quiz: 5 questions (first attempt) or 8 questions (subsequent)
 -> instant feedback per question (correct/wrong + explanation)
--> session summary with XP, personal best, mastery status
--> progress update (streak, badges, level-up)
+-> session summary with skill moves (mastered/refreshed/progressed), ring progress, mastery status
+-> progress update (streak, ring, badges, capability milestones)
 
 ## Learning Path
-The Learn tab has two top-level sub-tabs (segmented picker): **Worlds** and **Paths**.
+The Learn tab has two top-level sub-tabs (segmented picker): **Explore** and **Paths**. (Phase 10 retired the "Worlds" quest framing — no WORLD-N eyebrows, crowns, BOSS badges, mascot tiles, or pulsing rings on adult surfaces; mascots survive only on celebration sheets.)
 
-- **Worlds** (default) presents the 10 modules as a Brilliant-style fullscreen page-swipe carousel. Each world fills the screen as a themed hero: module-color gradient background, "WORLD N" eyebrow, module title, themed illustration (composed from the module's SF Symbol + emoji mascot + math-glyph watermark — no bespoke artwork needed), and a Continue card with the user's next undone lesson. Page dots at the bottom indicate position; horizontal swipe switches worlds. Tapping Continue opens the world's quest map — a zigzag of lesson and review nodes with curved connectors — as a fullscreen view with a floating down-chevron to return to the carousel. Inside the quest map, lessons are grouped chronologically and a **checkpoint review** node appears every 3 lessons that tests across all 3 preceding lessons. With Phase 5 soft locks, every lesson is tappable (dimmed if not-yet-suggested); review nodes remain gated on their covered lessons.
-- **Paths** presents the 10 Life-Event Packs (curated lesson sequences across modules) — see `apps/web/src/lib/content/packs.ts` for the canonical list. Tapping a pack opens its detail sheet with the ordered lesson list + an anchor lesson + a "Make this my focus" CTA.
+- **Explore** (default) presents the 11 modules as a Brilliant-style fullscreen page-swipe carousel of topic hero pages: module-color gradient background, module shortName eyebrow, title, SF-Symbol illustration, and a Continue card with the user's next undone lesson. Tapping Continue opens the topic's lesson map — a zigzag of lesson and review nodes with curved connectors — as a fullscreen view with a floating down-chevron to return. The current node gets a static halo + "NEXT" badge ("REVIEW" for review nodes); a fully-mastered topic shows "Topic complete". Lessons are grouped chronologically and a **checkpoint review** node appears every 3 lessons that tests across all 3 preceding lessons. With Phase 5 soft locks, every lesson is tappable (dimmed if not-yet-suggested); review nodes remain gated on their covered lessons.
+- **Paths** presents the 12 Life-Event Packs (curated lesson sequences across modules; `packs.json` is canonical). Tapping a pack opens its detail sheet with the ordered lesson list + an anchor lesson + a "Make this my focus" CTA.
 
 ### Progression & Mastery
 - **Completion-based progression:** any attempt at a lesson unlocks the next node (no score gate)
@@ -110,19 +112,24 @@ The Learn tab has two top-level sub-tabs (segmented picker): **Worlds** and **Pa
 
 ## Progress & Gamification
 
-### XP System
-- Base XP per correct answer: 10
-- Speed bonus: extra XP for fast answers (< 5 seconds)
-- XP displayed in session summary and on progress tab
+### Daily Goal Ring (Phase 10)
+- One ring on Home (BrandHeader) and in the session summary / insight sheet
+- Target = the day's workout size (min 5, max 8 questions); ANY practice counts (workout, lesson, pack, refresh)
+- Closing the ring is the single write path into `dailyWorkoutDates` — the ring, not a specific mode, anchors the streak
+
+### XP System (invisible fuel after Phase 10)
+- XP/Level still accrue in `MomentumEngine` (easy 10 / med 15 / hard 25, depth-gated above L8) but appear on **no surface** — they exist as a tested substrate if a future surface needs them
+- User-facing progress language is capability-based: skills mastered, skills to refresh, packs Ready
 
 ### Streaks
-A streak is the number of consecutive calendar days on which the user completed at least one quiz session. Users earn one streak freeze per 7-day milestone (max 3 banked). Freezes are auto-applied on missed days before showing a streak loss.
+A streak is the number of consecutive calendar days on which the user completed at least one quiz session. Users earn one streak freeze per 7-day milestone (max 5 banked; first at day 3, per Phase 6a). Freezes are auto-applied on missed days before showing a streak loss.
 
-### Numind Score (0–100)
-Composite per-module score reflecting competence:
-- Accuracy: 0–60 pts (primary driver)
-- Difficulty: 0–25 pts (weighted by adaptive difficulty tier)
-- Speed: 0–15 pts (bonus only — deliberately down-weighted so accurate-but-slow users still see a fair score)
+### Progress model (Phase 9, de-gamified in Phase 10)
+The global composite score is retired. Progress is capability + a freshness signal:
+- **XP / Level** — effort fuel, hidden since Phase 10. XP = `10 × difficulty` per correct answer (easy 10 / med 15 / hard 25) + milestones (lesson mastered +50, pack Ready +150). Monotonic; never decays. Level is a front-loaded ladder, **depth-gated above L8** (each level past 8 also needs one "deep mastery" — a lesson mastered with a correct hard question, or a pack at Ready) so easy-only volume can't grind to the top.
+- **Readiness (per pack)** — the honest, decision-scoped competence signal: *Not started → Learning → Almost ready (names the one missing gate) → Ready → Sharp*, gated on coverage (all core lessons attempted) + depth (each core mastered-with-hard) + retention (correct across ≥2 distinct days). Claims are scoped to the evidence, never a "ready for real life" verdict.
+- **Freshness** — the only thing that decays. Derived from the SRS overdue signal; surfaced as a Home "N skills to refresh" chip. Reviewing restores it; it never touches XP/Level/mastery.
+- The 7 competency axes survive only as a **private coverage diagnostic** (radar + per-axis mastered/total), not a graded composite. Full spec: `docs/product/scoring-system-research.md`.
 
 ### Badges
 27 earnable badges across categories:
@@ -134,33 +141,22 @@ Composite per-module score reflecting competence:
 - **Breadth:** 5 unique lessons, 3+ modules
 - **Speed:** triple perfect, 5 speed sessions, fast five (5 correct < 5s in one session)
 
-### Skill Levels
-Module-level skill levels based on sessions completed within each module.
+### Capability Milestones (Phase 10 — replaced volume/level celebrations)
+Full-screen milestone overlays fire on capability, never volume: first skill mastered (named), first pack Ready (named), 3 packs Ready, first refresh save, 7/14-day streak, accuracy jump, first freeze. Level-up and session-count ceremonies are retired; pack/topic *completion* celebrations live exclusively in the Celebration queue (PackCompletionSheet / WorldCompletionSheet).
 
-### Level-Up Ceremony
-When a module level increases, a full-screen animated celebration appears before the session summary.
-
-### Weekly XP Leaderboard
-Progress tab shows a 4-week XP bar chart with "Best week!" indicator.
+### Practice Over Time
+Progress tab shows a skills ledger (mastered count, skills to refresh, packs Ready) and a 4-week questions-per-week bar chart with "Best week!" indicator (replaced the XP chart in Phase 10).
 
 ### Personal Bests
-Personal bests tracked per game mode: Speed Drill, Blitz, Recall, Streak, Estimation, Comparison. Displayed as decorative orb overlays on Practice tab drill cards. Summary screens show "New personal best!" badge with confetti burst animation when a new best is achieved.
-
-### High Score Celebration
-When a user achieves a new personal best in any game mode, the summary screen shows:
-- ConfettiBurst particle animation (Canvas + TimelineView, 60 particles, 3-second duration)
-- NewBestBadge trophy capsule with spring bounce-in animation
-- Previous best comparison text (when applicable)
+All game-mode personal bests are retired with their modes (Speed Drill/Blitz/Streak/Estimation/Comparison in Phase 7a; Recall in Phase 10-A8). Stored keys drop out on decode.
 
 ## Session Types
-- **Lesson quiz:** 5 questions (first attempt) or 8 (subsequent) from that lesson's 5 templates
+- **Lesson quiz:** 5 questions (first attempt) or 8 (subsequent) from that lesson's templates
 - **Checkpoint review:** 8 questions round-robined across 3 lessons' templates
-- **Speed Drill:** 8 MCQ questions, 15s per question countdown timer
-- **Blitz:** 60-second sprint, auto-advance on tap, no feedback phase
-- **Recall:** Review mode targeting previously missed questions
-- **Streak:** Consecutive correct answers, one miss ends the game
-- **Estimation:** 10 slider-based proximity questions, 10s timer per question, 3-star grading
-- **Comparison:** 15 side-by-side pairs, 8s per question, tap the larger answer
+- **Daily Workout (Phase 10):** 5–8 questions in three labeled segments — *Warm-up* (2–3 reps from mastered skills, everyday-math biased), *Focus* (the focus pack's failing Readiness gate; a one-screen **teach card** precedes a never-attempted core lesson's question), *Decision* (one "what would you do" application item). Date-seeded and deterministic per day; closes the ring.
+- **Refresh (consolidated in Phase 10-A8):** one short session combining stale mastered skills (SRS-overdue) + unfixed mistakes (latest attempt wrong), max 8 questions with fresh values. The old Recall mode is retired.
+- **More practice:** a fresh mixed set (the renamed bonus round)
+- *Retired in Phase 7a: the timed game modes — Speed Drill, Blitz, Streak, Estimation, Comparison — along with the Practice tab. The Tools tab (12 calculators) replaced them.*
 
 ## Lessons
 Each lesson is a micro-primer, not long content.
@@ -177,35 +173,42 @@ Feedback is immediate, per-question.
 Correct:
 - teal result card with checkmark
 - reinforce shortcut
-- show XP earned
+- "One more toward today's ring." (XP capsule retired in Phase 10)
 
 Incorrect:
-- red result card
+- warm-orange result card (6c: not error-red)
 - show correct answer
 - explain the simplest shortcut
 
 ## Session Summary
-After all 8 questions:
+After all questions:
 - Score display (correct/total)
-- XP earned breakdown (base + speed bonus)
+- **Skills moved** card (mastered / refreshed / progressed — capability language) + ring card (Phase 10; XP breakdown retired)
 - **Mastery banner:** green if >= 75% ("Lesson mastered!"), orange if < 75% ("Need 75% to master")
-- Personal best indicator
 - New badge celebration
 - **Actions:**
   - If mastered: "Review mistakes" + "Continue learning"
   - If not mastered: "Retry quiz" (primary, orange) + "Skip for now"
 
-## Future Onboarding / Paywall
-Later flow:
-Welcome
--> motivation selection
--> self-rating
--> diagnostic
--> results
--> personalized plan
--> hard paywall with 7-day free trial
+## Onboarding / Paywall (v2 baseline built — Phase 11)
+26-screen decision-first funnel, anonymous end-to-end, hard paywall at the
+end (CalAI pattern). Spec: `docs/product/onboarding-funnel-v2.md`.
 
-Do not build this before the core app loop exists.
+Welcome ("Money decisions don't wait")
+-> money-stress proof + moments framing + insecurity mirror (felt moments → verified costs)
+-> confidence + motivations
+-> **life-moment picker** (the 12 packs as moments; first pick = focus pack)
+-> mirroring + real deadline (Open enrollment Nov 1 / Tax day Apr 15 via MomentCalendar)
+-> ring target + kaizen + ADHD tuning + name/age
+-> **diagnostic-as-demo** (pack-weighted 8Q; shortcut reveal after every answer; goal ring fills live; 1 decision item)
+-> **Money Map** (per-skill placement: Solid start / Shaky / New to you; no LVL badge; "Ready is earned" honesty line)
+-> personalized plan (ring + 4 named readiness gates + dated timeline)
+-> notifications -> ROI priming (verified mistake costs) -> ring-streak goal -> capability projection -> trial-reminder transparency
+-> 7-day-trial paywall (RevenueCat TODO) -> welcome -> first workout
+
+Honesty constraints: diagnostic never grants mastery or Readiness (placement
+language only); projections say "on track to Ready", never "Ready". Account
+creation (Sign in with Apple) slots just before the paywall when auth ships.
 
 ## Website Layer
 The website (`apps/web/`) is not the product. It supports acquisition through SEO-optimized calculator tools that drive App Store downloads.
@@ -227,35 +230,29 @@ Currently implemented:
 - Design tokens and theme system
 - Local content model with JSON-based lessons and templates
 - Template-driven quiz engine with 300+ answer formulas
-- All 10 modules with 118 lessons (post-Phase-4 audit)
-- 590 quiz templates (~5 per lesson) with proportional distractor generation
+- All 11 modules with 134 lessons (post-Phase-12 administrative-adulting wave)
+- 791 quiz templates with proportional distractor generation
 - Concept template support added (text-MCQ, no formula evaluation) for lessons covering critical financial literacy topics that aren't reducible to mental math
 - Completion-based progression (mastery = gold star, not gate)
 - Checkpoint review quizzes
-- Zigzag learning path
-- XP, streaks, badges, levels
-- Streak freezes (earned every 7-day milestone, max 3 banked, auto-applied)
-- Personal bests and weekly leaderboard
-- Session summary with retry flow
-- Level-up ceremony
-- 6 game modes (Speed Drill, Blitz, Recall, Streak, Estimation, Comparison)
-- Practice tab with module spotlight, hero quiz card, and 6 drill cards
-- Home tab with horizontally scrollable mode cards
-- Personal best tracking for all game modes with decorative orb display
-- High score celebration (confetti + badge) across all modes
-- Numind Score with reweighted scoring (accuracy 60, difficulty 25, speed 15)
-- Estimation slider with anti-center positioning and proximity grading
+- Zigzag lesson map (Explore tab, de-quested in Phase 10)
+- Daily goal ring + streaks + badges (XP/Level retained as invisible fuel)
+- Streak freezes (first at day 3, then every 7 days, max 5 banked, auto-applied)
+- Session summary with skill moves + ring + retry flow
+- Capability milestone celebrations (first skill / first pack Ready / 3 packs Ready / first refresh save)
+- Tools tab with 12 in-app calculators on `CalculatorShell` (replaced the Practice tab in Phase 7a)
+- Consolidated Refresh on Home (stale skills + unfixed mistakes; Recall retired in Phase 10)
+- Per-pack Readiness (coverage → depth → retention → application gates)
 - Adaptive difficulty engine with onboarding diagnostic calibration
 - Dynamic question count (5 first attempt, 8 subsequent, diagnostic-adjusted)
-- previousBest/isNewBest pattern on all game mode ViewModels
+- AnalyticsService seam (PostHog + Sentry via SPM; no-op without Info.plist keys)
 - `lastVerified` date stamp on `Lesson` (optional) so future audits surface stale regulated content systematically
 - Phase 1 audit fixes shipped: Overtime arithmetic, Parent PLUS rate update (9.08% → 8.94% for 2025-26), Overtime exempt/non-exempt caveat, realistic minimum-payment formula replacing the "2% of balance" simplification, OOP max framing carve-outs, IDR reframed as a concept lesson post-SAVE litigation, Standard deduction expanded to include Head of Household
 
 Not built yet:
 - backend (Supabase)
 - payments (RevenueCat)
-- analytics (PostHog)
-- crash reporting (Sentry)
+- analytics/crash-reporting keys + dashboards (SDK seam shipped in Phase 10-D; keys land at release)
 - onboarding/paywall flow
 - push notifications
 - social features

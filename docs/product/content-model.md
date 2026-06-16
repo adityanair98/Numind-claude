@@ -7,11 +7,12 @@ All content is stored locally as JSON in `Resources/LocalContent/`. No backend r
 
 The content layer is Numind's product: it encodes the **financial education** the app delivers (mental math is the teaching method). Numerical lessons exercise mental-math shortcuts; concept lessons cover financial literacy that isn't reducible to arithmetic.
 
-| File | Purpose | Count |
+| File | Purpose | Count (Phase 10, June 2026) |
 |---|---|---|
-| `modules.json` | Module definitions (id, title, icon, color) | 10 |
-| `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 96 |
-| `quiz_templates.json` | Quiz question templates (numerical + concept) | 479 |
+| `modules.json` | Module definitions (id, title, icon, color) | 11 |
+| `lessons.json` | Lesson content (concept, shortcut, example, template IDs) | 134 |
+| `quiz_templates.json` | Quiz question templates (445 numerical + 346 concept; 138 `isApplication` decision items) | 791 |
+| `packs.json` | Life-Event Packs (curated lesson sequences with 3–6-lesson cores) | 12 |
 
 ## Module
 A group of lessons covering a topic area.

@@ -12,7 +12,8 @@ struct DailyChallengeCard: View {
     let onStart: () -> Void
     let onBonusRound: () -> Void
 
-    private let total = DailyChallengeEngine.defaultQuestionCount
+    /// Per-user workout size (onboarding-driven); defaults for previews.
+    var total: Int = DailyChallengeEngine.defaultQuestionCount
 
     var body: some View {
         if isDone {
@@ -54,7 +55,7 @@ struct DailyChallengeCard: View {
                     .font(.system(size: 26, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
                     .padding(.top, 14)
-                Text("\(correctCount)/\(total) correct today. Streak +1. Come back tomorrow for a fresh set.")
+                Text("\(correctCount)/\(total) correct today. Ring closed. Come back tomorrow for a fresh set.")
                     .font(Theme.Typography.caption)
                     .foregroundStyle(.white.opacity(0.85))
                     .padding(.top, 6)
@@ -104,7 +105,7 @@ struct DailyChallengeCard: View {
         VStack(alignment: .leading, spacing: 6) {
             Text(hasHistory
                  ? "\(total) questions\npicked for you"
-                 : "\(total) questions\ntest your mental math")
+                 : "\(total) questions\nto get you started")
                 .font(.system(size: 28, weight: .bold, design: .rounded))
                 .foregroundStyle(.white)
                 .lineSpacing(1)
@@ -139,9 +140,9 @@ struct DailyChallengeCard: View {
 
     private var xpChip: some View {
         HStack(spacing: 4) {
-            Image(systemName: "sparkles")
+            Image(systemName: "circle.dashed")
                 .font(.system(size: 11, weight: .bold))
-            Text("+\(total * 10) XP max")
+            Text("Closes your ring")
                 .font(.system(size: 12, weight: .bold))
         }
         .foregroundStyle(Theme.Colors.insightYellow)
@@ -180,11 +181,11 @@ struct DailyChallengeCard: View {
         .buttonStyle(.plain)
     }
 
-    // MARK: - Bonus round button (frosted glass)
+    // MARK: - More-practice button (frosted glass)
 
     private var bonusButton: some View {
         Button(action: onBonusRound) {
-            Text("Try a bonus round \u{2192}")
+            Text("More practice \u{2192}")
                 .font(.system(size: 16, weight: .bold))
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)

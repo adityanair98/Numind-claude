@@ -6,6 +6,8 @@
 
 This document defines the per-screen layout, copy, and states for V1 screens. Every screen sits inside `Theme.Colors.softBackground` and uses the standard `Theme.Spacing.screenHorizontal = 20` gutter unless noted.
 
+> **Retired in Phase 7a:** §03b (Practice), §12 (Speed Drill), §13 (Blitz Mode), and §14 (Home — Game Modes Section) describe surfaces that were removed. The Practice tab was replaced by the **Tools tab** (12 calculators); the timed game modes are gone. Those sections are kept as history only. **Recall** survives as a Home "review your weak spots" entry.
+
 ---
 
 ## Conventions

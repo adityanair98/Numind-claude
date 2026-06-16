@@ -13,6 +13,7 @@ struct PackDetailView: View {
     let pack: Pack
 
     @State private var launchLesson: LessonLaunch?
+    @State private var presentedCalc: CalcRef?
 
     /// Resolves lesson lookups + pack-level neighbors (which module each
     /// lesson lives in, for the right `moduleColor` and lesson index).
@@ -26,6 +27,9 @@ struct PackDetailView: View {
                     if let anchor = anchorLesson {
                         anchorSection(anchor: anchor)
                     }
+                    readinessSection
+                    outcomesSection
+                    toolsForPathSection
                     lessonListSection
                     ctaSection
                 }
@@ -50,6 +54,18 @@ struct PackDetailView: View {
                 totalLessons: launch.totalLessons,
                 moduleColor: launch.module.color
             ))
+        }
+        .sheet(item: $presentedCalc) { ref in
+            NavigationStack {
+                CalculatorRegistry.view(for: ref.id)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") { presentedCalc = nil }
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Theme.Colors.primaryBlue)
+                        }
+                    }
+            }
         }
     }
 
@@ -105,6 +121,24 @@ struct PackDetailView: View {
                 .font(Theme.Typography.body)
                 .foregroundStyle(Theme.Colors.deepNavy.opacity(0.8))
 
+            // Live moment line (Phase 12) — only inside a genuine window.
+            if let moment = MomentsRegistry.currentMoments(
+                signals: progressStore.data.onboardingSignals,
+                packIds: [pack.id]
+            ).first(where: { $0.packId == pack.id }) {
+                HStack(spacing: 6) {
+                    Image(systemName: "calendar")
+                        .font(.system(size: 11, weight: .bold))
+                    Text(moment.title)
+                        .font(.system(size: 12, weight: .bold))
+                }
+                .foregroundStyle(Theme.Colors.insightText)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(Theme.Colors.insightYellowTint)
+                .clipShape(Capsule())
+            }
+
             // Description
             Text(pack.description)
                 .font(Theme.Typography.caption)
@@ -153,6 +187,138 @@ struct PackDetailView: View {
                     }
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .padding(.vertical, 10)
+                }
+            }
+        }
+    }
+
+    // MARK: - Readiness (Phase 9)
+
+    /// The honest, decision-scoped competence signal for this path: a state
+    /// badge + contextual copy + (when Almost ready) the single next action.
+    /// Replaces any "you're ready for real life" verdict with an evidence-
+    /// scoped claim ("you've got the essentials down").
+    private var readinessSection: some View {
+        let state = progressStore.readiness(for: pack)
+        return NumindCard {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Text("Your readiness")
+                        .font(Theme.Typography.headline)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Spacer()
+                    ReadinessBadge(state: state)
+                }
+                Text(readinessCopy(for: state))
+                    .font(Theme.Typography.caption)
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    private func readinessCopy(for state: ReadinessEngine.State) -> String {
+        switch state {
+        case .notStarted:
+            return "Start with the core lessons below to build toward Ready."
+        case .learning:
+            return "You're building. Master the core lessons to reach Ready."
+        case .almostReady(_, let nextAction):
+            return "Almost there — \(nextAction)"
+        case .ready:
+            return ReadinessEngine.readyLabel(for: pack)
+        case .sharp:
+            return "\(ReadinessEngine.readyLabel(for: pack)) And it's all fresh — nicely done."
+        }
+    }
+
+    // MARK: - Outcomes (Phase 6c)
+
+    /// Up to 4 distinct money-moment hints from the pack's lessons — answers
+    /// "what real situations does this path prepare me for?"
+    private var outcomeHints: [String] {
+        var seen = Set<String>()
+        var hints: [String] = []
+        for id in pack.lessonIds {
+            guard let h = repo.lesson(id: id)?.realWorldHint, !seen.contains(h) else { continue }
+            seen.insert(h)
+            hints.append(h)
+            if hints.count == 4 { break }
+        }
+        return hints
+    }
+
+    @ViewBuilder
+    private var outcomesSection: some View {
+        let hints = outcomeHints
+        if !hints.isEmpty {
+            NumindCard {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Real-life moments this path prepares you for")
+                        .font(Theme.Typography.headline)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(Array(hints.enumerated()), id: \.offset) { _, hint in
+                            HStack(alignment: .top, spacing: 10) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 15, weight: .semibold))
+                                    .foregroundStyle(Theme.Colors.mindTeal)
+                                    .padding(.top, 1)
+                                Text(hint)
+                                    .font(Theme.Typography.caption)
+                                    .foregroundStyle(Theme.Colors.deepNavy.opacity(0.85))
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - Tools for this path (Phase 7b cross-link)
+
+    /// Distinct calculator slugs across the pack's lessons (registry-backed).
+    private var packCalcSlugs: [String] {
+        var seen = Set<String>(); var out: [String] = []
+        for id in pack.lessonIds {
+            if let s = repo.lesson(id: id)?.relatedCalculatorSlug,
+               CalculatorRegistry.name(for: s) != nil, !seen.contains(s) {
+                seen.insert(s); out.append(s)
+            }
+        }
+        return out
+    }
+
+    @ViewBuilder
+    private var toolsForPathSection: some View {
+        let slugs = packCalcSlugs
+        if !slugs.isEmpty {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("TOOLS FOR THIS PATH")
+                    .font(.system(size: 11, weight: .heavy))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .tracking(1.0)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(slugs, id: \.self) { slug in
+                            Button { presentedCalc = CalcRef(id: slug) } label: {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "wrench.and.screwdriver")
+                                        .font(.system(size: 12, weight: .semibold))
+                                    Text(CalculatorRegistry.name(for: slug) ?? "")
+                                        .font(.system(size: 13, weight: .semibold))
+                                }
+                                .foregroundStyle(Theme.Colors.primaryBlue)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 9)
+                                .background(Theme.Colors.primaryBlueTint)
+                                .clipShape(Capsule())
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
                 }
             }
         }
@@ -257,6 +423,9 @@ struct PackDetailView: View {
         )
     }
 }
+
+/// Identifiable slug wrapper for presenting a calculator sheet (Phase 7b).
+struct CalcRef: Identifiable { let id: String }
 
 /// Lightweight payload for `.fullScreenCover(item:)` to launch a lesson.
 struct LessonLaunch: Identifiable {

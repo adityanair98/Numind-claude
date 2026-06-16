@@ -39,6 +39,7 @@ extension Theme {
         static let insurancePurple  = Color(uiColor: .adaptive(light: 0x7C4DBC, dark: 0xA070E0))
         static let housingRose   = Color(uiColor: .adaptive(light: 0xD14D72, dark: 0xE06090))
         static let taxSlate      = Color(uiColor: .adaptive(light: 0x4A7C8A, dark: 0x6BA0B0))
+        static let safetyCrimson = Color(uiColor: .adaptive(light: 0xB02A37, dark: 0xE25563))
 
         // ── Surfaces ──────────────────────────────────────────────────────────────────
         /// Page / scroll background
@@ -63,6 +64,7 @@ extension Theme {
         static var insurancePurpleTint:  Color { insurancePurple.opacity(0.12) }
         static var housingRoseTint:   Color { housingRose.opacity(0.12) }
         static var taxSlateTint:      Color { taxSlate.opacity(0.12) }
+        static var safetyCrimsonTint: Color { safetyCrimson.opacity(0.12) }
         static var mutedTint:         Color { mutedText.opacity(0.12) }
 
         // ── Lines & shadows ───────────────────────────────────────────────────────────

@@ -56,7 +56,21 @@ enum LessonRecommendationEngine {
         onboardingSignals: OnboardingSignals? = nil,
         limit: Int = 5
     ) -> [LessonRecommendation] {
-        let topicInterests = onboardingSignals?.topicInterests ?? []
+        // v2 onboarding: interests are Life-Event Packs; derive the module ids
+        // their lessons touch so the urgency boost keeps working.
+        let topicInterests: Set<String> = {
+            guard let signals = onboardingSignals else { return [] }
+            var ids = Set<String>()
+            for packId in signals.selectedPackIds {
+                guard let pack = repository.pack(id: packId) else { continue }
+                for lessonId in pack.lessonIds {
+                    if let lesson = repository.lesson(id: lessonId) {
+                        ids.insert(lesson.moduleId)
+                    }
+                }
+            }
+            return ids
+        }()
         let recommendationPriority = onboardingSignals?.recommendationPriority ?? []
 
         let modules = repository.allModules()

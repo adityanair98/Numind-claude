@@ -95,11 +95,11 @@ struct OnboardingFlowView: View {
         case .socialProof:
             SocialProofView(onContinue: { viewModel.advance() })
 
-        case .dailyMicro:
+        case .momentsFraming:
             DailyMicroView(onContinue: { viewModel.advance() })
 
-        case .screenTime:
-            ScreenTimeView(viewModel: viewModel, onContinue: { viewModel.advance() })
+        case .insecurityMirror:
+            InsecurityMirrorView(viewModel: viewModel, onContinue: { viewModel.advance() })
 
         case .confidence:
             ConfidenceRatingView(viewModel: viewModel, onContinue: { viewModel.advance() })
@@ -107,17 +107,20 @@ struct OnboardingFlowView: View {
         case .motivation:
             MotivationPickerView(viewModel: viewModel, onContinue: { viewModel.advance() })
 
-        case .aspiration:
-            AspirationPickerView(viewModel: viewModel, onContinue: { viewModel.advance() })
+        case .lifeMoment:
+            LifeMomentPickerView(viewModel: viewModel, onContinue: { viewModel.advance() })
 
         case .mirroring:
             MirroringView(viewModel: viewModel, onContinue: { viewModel.advance() })
 
-        case .topicInterest:
-            TopicInterestView(viewModel: viewModel, onContinue: { viewModel.advance() })
+        case .deadline:
+            DeadlineView(viewModel: viewModel, onContinue: { viewModel.advance() })
 
         case .timeCommitment:
             TimeCommitmentView(viewModel: viewModel, onContinue: { viewModel.advance() })
+
+        case .paydayCapture:
+            PaydayCaptureView(viewModel: viewModel, onContinue: { viewModel.advance() })
 
         case .kaizen:
             KaizenView(viewModel: viewModel, onContinue: { viewModel.advance() })
@@ -132,7 +135,7 @@ struct OnboardingFlowView: View {
             AgeRangeView(viewModel: viewModel, onContinue: { viewModel.advance() })
 
         case .diagnosticIntro:
-            DiagnosticIntroView(onStart: { viewModel.startDiagnostic() })
+            DiagnosticIntroView(viewModel: viewModel, onStart: { viewModel.startDiagnostic() })
 
         case .diagnosticQuiz:
             DiagnosticQuizView(viewModel: viewModel)
@@ -140,7 +143,7 @@ struct OnboardingFlowView: View {
         case .preparingResults:
             PreparingResultsView(onFinish: { viewModel.finishPreparing() })
 
-        case .diagnosticResults:
+        case .moneyMap:
             DiagnosticResultsView(viewModel: viewModel, onContinue: { viewModel.advance() })
 
         case .personalizedPlan:

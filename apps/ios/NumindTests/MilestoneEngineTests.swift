@@ -1,156 +1,183 @@
 import XCTest
 @testable import Numind
 
+/// Phase 10 — capability milestones (volume/level/module-completion cases
+/// retired; completion celebrations live in the Celebration queue).
 final class MilestoneEngineTests: XCTestCase {
 
     // MARK: - Helpers
 
-    private func makeSession(lessonId: String, moduleId: String) -> SessionRecord {
-        SessionRecord(
-            id: UUID(),
-            lessonId: lessonId,
-            moduleId: moduleId,
-            date: Date(),
-            correctCount: 5,
-            totalCount: 5
-        )
+    private func makeSession(lessonId: String, moduleId: String = "smart_shopping",
+                             correct: Int = 5, total: Int = 5) -> SessionRecord {
+        SessionRecord(id: UUID(), lessonId: lessonId, moduleId: moduleId,
+                      date: Date(), correctCount: correct, totalCount: total)
     }
 
-    private func makeProgress(sessions: [SessionRecord]) -> ProgressData {
+    private func makeProgress(sessions: [SessionRecord] = []) -> ProgressData {
         var p = ProgressData()
         p.sessions = sessions
         return p
     }
 
-    /// 15 baseline sessions in `other_mod` so session-count milestones
-    /// (firstSession/fiveSessions/tenSessions) have already fired and won't
-    /// outrank moduleCompleted in priority during these tests.
-    private var baselineSessions: [SessionRecord] {
-        (1...15).map { makeSession(lessonId: "padding_\($0)", moduleId: "other_mod") }
+    // MARK: - First skill mastered
+
+    func test_firstSkillMastered_firesOnce_withLessonName() {
+        let before = makeProgress()
+        let after = makeProgress(sessions: [makeSession(lessonId: "net_pay_check")])
+
+        let m = MilestoneEngine.check(
+            before: before, after: after, shownIds: [],
+            beforeMastered: [], afterMastered: ["net_pay_check"],
+            lessonNames: ["net_pay_check": "Gross vs net"]
+        )
+        guard case .firstSkillMastered(let name) = m else {
+            return XCTFail("expected firstSkillMastered, got \(String(describing: m))")
+        }
+        XCTAssertEqual(name, "Gross vs net")
+
+        // Already shown → never again.
+        let again = MilestoneEngine.check(
+            before: before, after: after, shownIds: [m!.id],
+            beforeMastered: [], afterMastered: ["net_pay_check"],
+            lessonNames: ["net_pay_check": "Gross vs net"]
+        )
+        XCTAssertNil(again)
     }
 
-    // MARK: - Module completion bug regression
-
-    /// Bug: prior to this fix, finishing the FIRST lesson in a module would fire
-    /// .moduleCompleted because the check was `afterLessons.count > beforeLessons.count`
-    /// (any new lesson) instead of "all lessons completed". Lock that in.
-    func test_moduleCompleted_doesNotFireOnFirstLesson() {
-        let before = makeProgress(sessions: baselineSessions)
-        let after = makeProgress(sessions: baselineSessions + [makeSession(lessonId: "lesson_a", moduleId: "test_mod")])
-
-        let result = MilestoneEngine.check(
-            before: before,
-            after: after,
-            shownIds: [],
-            moduleNames: ["test_mod": "Test Module"],
-            moduleLessonCounts: ["test_mod": 5]   // 5 lessons total — should not fire on 1
+    func test_firstSkillMastered_doesNotFire_whenAlreadyHadMastery() {
+        let m = MilestoneEngine.check(
+            before: makeProgress(), after: makeProgress(), shownIds: [],
+            beforeMastered: ["tip_10_percent_trick"],
+            afterMastered: ["tip_10_percent_trick", "net_pay_check"]
         )
+        XCTAssertNil(m)
+    }
 
-        if case .moduleCompleted = result {
-            XCTFail("moduleCompleted should not fire when only 1 of 5 lessons is done")
+    // MARK: - Pack readiness
+
+    func test_firstPackReady_firesWithPackName() {
+        let m = MilestoneEngine.check(
+            before: makeProgress(), after: makeProgress(), shownIds: [],
+            beforeMastered: ["x"], afterMastered: ["x"],   // mastery quiet
+            beforeReadyPackIds: [], afterReadyPackIds: ["first_paycheck"],
+            packNames: ["first_paycheck": "First Paycheck"]
+        )
+        guard case .firstPackReady(let name) = m else {
+            return XCTFail("expected firstPackReady, got \(String(describing: m))")
+        }
+        XCTAssertEqual(name, "First Paycheck")
+    }
+
+    func test_firstPackReady_doesNotFire_forSecondPack() {
+        let m = MilestoneEngine.check(
+            before: makeProgress(), after: makeProgress(), shownIds: [],
+            beforeMastered: ["x"], afterMastered: ["x"],
+            beforeReadyPackIds: ["first_paycheck"],
+            afterReadyPackIds: ["first_paycheck", "everyday_spending"]
+        )
+        XCTAssertNil(m)
+    }
+
+    func test_threePacksReady_firesOnCrossingThree() {
+        let m = MilestoneEngine.check(
+            before: makeProgress(), after: makeProgress(),
+            shownIds: ["milestone_first_pack_ready"],
+            beforeMastered: ["x"], afterMastered: ["x"],
+            beforeReadyPackIds: ["a", "b"],
+            afterReadyPackIds: ["a", "b", "c"]
+        )
+        guard case .threePacksReady = m else {
+            return XCTFail("expected threePacksReady, got \(String(describing: m))")
         }
     }
 
-    func test_moduleCompleted_doesNotFireMidwayThrough() {
-        let lessons = ["a", "b", "c"].map { makeSession(lessonId: "lesson_\($0)", moduleId: "test_mod") }
-        let before = makeProgress(sessions: baselineSessions + Array(lessons.prefix(2)))   // 2 lessons done
-        let after = makeProgress(sessions: baselineSessions + lessons)                     // 3 lessons done
+    // MARK: - Refresh save
 
-        let result = MilestoneEngine.check(
-            before: before,
-            after: after,
-            shownIds: [],
-            moduleNames: ["test_mod": "Test Module"],
-            moduleLessonCounts: ["test_mod": 5]   // still 2 more to go
+    func test_firstRefreshSave_firesOnlyForRefreshSessions_thatReduceStaleness() {
+        // Refresh session that restored a skill → fires.
+        let fires = MilestoneEngine.check(
+            before: makeProgress(), after: makeProgress(), shownIds: [],
+            beforeMastered: ["x"], afterMastered: ["x"],
+            beforeStaleCount: 3, afterStaleCount: 2,
+            lastSessionLessonId: "refresh_review"
         )
+        guard case .firstRefreshSave = fires else {
+            return XCTFail("expected firstRefreshSave, got \(String(describing: fires))")
+        }
 
-        if case .moduleCompleted = result {
-            XCTFail("moduleCompleted should not fire when only 3 of 5 lessons are done")
+        // Same staleness drop from a normal lesson → silent.
+        let lessonPath = MilestoneEngine.check(
+            before: makeProgress(), after: makeProgress(), shownIds: [],
+            beforeMastered: ["x"], afterMastered: ["x"],
+            beforeStaleCount: 3, afterStaleCount: 2,
+            lastSessionLessonId: "net_pay_check"
+        )
+        XCTAssertNil(lessonPath)
+
+        // Refresh session with no staleness change → silent.
+        let noChange = MilestoneEngine.check(
+            before: makeProgress(), after: makeProgress(), shownIds: [],
+            beforeMastered: ["x"], afterMastered: ["x"],
+            beforeStaleCount: 2, afterStaleCount: 2,
+            lastSessionLessonId: "refresh_review"
+        )
+        XCTAssertNil(noChange)
+    }
+
+    // MARK: - Streak + freeze (preserved from Phase 9)
+
+    func test_weekStreak_firesOnCrossingSeven() {
+        let calendar = Calendar.current
+        var before = makeProgress()
+        before.dailyWorkoutDates = Set((1...6).map {
+            calendar.startOfDay(for: calendar.date(byAdding: .day, value: -$0, to: Date())!)
+        })
+        var after = before
+        after.dailyWorkoutDates.insert(calendar.startOfDay(for: Date()))
+
+        let m = MilestoneEngine.check(
+            before: before, after: after, shownIds: [],
+            beforeMastered: ["x"], afterMastered: ["x"]
+        )
+        guard case .firstWeekStreak = m else {
+            return XCTFail("expected firstWeekStreak, got \(String(describing: m))")
         }
     }
 
-    func test_moduleCompleted_firesOnFinalLesson() {
-        let fourLessons = ["a", "b", "c", "d"].map { makeSession(lessonId: "lesson_\($0)", moduleId: "test_mod") }
-        let fiveLessons = fourLessons + [makeSession(lessonId: "lesson_e", moduleId: "test_mod")]
+    func test_firstFreeze_firesWhenFreezeAwarded() {
+        let before = makeProgress()
+        var after = makeProgress()
+        after.availableFreezes = 1
 
-        let before = makeProgress(sessions: baselineSessions + fourLessons)
-        let after = makeProgress(sessions: baselineSessions + fiveLessons)
-
-        let result = MilestoneEngine.check(
-            before: before,
-            after: after,
-            shownIds: [],
-            moduleNames: ["test_mod": "Test Module"],
-            moduleLessonCounts: ["test_mod": 5]
+        let m = MilestoneEngine.check(
+            before: before, after: after, shownIds: [],
+            beforeMastered: ["x"], afterMastered: ["x"]
         )
-
-        guard case .moduleCompleted(let name) = result else {
-            XCTFail("moduleCompleted should fire when crossing 4 → 5 of 5 lessons. Got: \(String(describing: result))")
-            return
-        }
-        XCTAssertEqual(name, "Test Module")
-    }
-
-    func test_moduleCompleted_doesNotRefireAfterCompletion() {
-        // Already completed all 5 lessons; user replays one — should NOT re-trigger
-        let allLessons = ["a", "b", "c", "d", "e"].map { makeSession(lessonId: "lesson_\($0)", moduleId: "test_mod") }
-        let before = makeProgress(sessions: baselineSessions + allLessons)
-        // Replaying lesson_a adds a session but no new lesson
-        let after = makeProgress(sessions: baselineSessions + allLessons + [makeSession(lessonId: "lesson_a", moduleId: "test_mod")])
-
-        let result = MilestoneEngine.check(
-            before: before,
-            after: after,
-            shownIds: ["milestone_module_Test Module"],   // already shown
-            moduleNames: ["test_mod": "Test Module"],
-            moduleLessonCounts: ["test_mod": 5]
-        )
-
-        // Even ignoring shownIds, the engine's threshold-crossing logic should not fire:
-        // beforeLessons.count = 5 (not < 5), so the crossedThreshold guard fails.
-        if case .moduleCompleted = result {
-            XCTFail("moduleCompleted should not fire on lesson replay after completion")
+        guard case .firstFreeze = m else {
+            return XCTFail("expected firstFreeze, got \(String(describing: m))")
         }
     }
 
-    func test_moduleCompleted_ignoresReviewSessions() {
-        // 5 real lesson sessions + 1 review session — only the 5 real lessons should count
-        let lessons = ["a", "b", "c", "d", "e"].map { makeSession(lessonId: "lesson_\($0)", moduleId: "test_mod") }
-        let withReview = lessons + [makeSession(lessonId: "review_test_mod_0", moduleId: "test_mod")]
+    // MARK: - Priority
 
-        let before = makeProgress(sessions: baselineSessions + Array(lessons.prefix(4)))
-        let after = makeProgress(sessions: baselineSessions + withReview)
+    func test_capabilityOutranksStreak() {
+        // Pack readiness + week streak in the same transition → pack first.
+        let calendar = Calendar.current
+        var before = makeProgress()
+        before.dailyWorkoutDates = Set((1...6).map {
+            calendar.startOfDay(for: calendar.date(byAdding: .day, value: -$0, to: Date())!)
+        })
+        var after = before
+        after.dailyWorkoutDates.insert(calendar.startOfDay(for: Date()))
 
-        let result = MilestoneEngine.check(
-            before: before,
-            after: after,
-            shownIds: [],
-            moduleNames: ["test_mod": "Test Module"],
-            moduleLessonCounts: ["test_mod": 5]
+        let m = MilestoneEngine.check(
+            before: before, after: after, shownIds: [],
+            beforeMastered: ["x"], afterMastered: ["x"],
+            beforeReadyPackIds: [], afterReadyPackIds: ["p"],
+            packNames: ["p": "Pack"]
         )
-
-        guard case .moduleCompleted = result else {
-            XCTFail("moduleCompleted should fire when 5 real lessons + a review are done")
-            return
-        }
-    }
-
-    func test_moduleCompleted_doesNotFireWithoutLessonCounts() {
-        // Without moduleLessonCounts, we have no way to know what "complete" means.
-        // Engine should safely skip the check rather than fire spuriously.
-        let lessons = ["a"].map { makeSession(lessonId: "lesson_\($0)", moduleId: "test_mod") }
-        let after = makeProgress(sessions: baselineSessions + lessons)
-
-        let result = MilestoneEngine.check(
-            before: makeProgress(sessions: baselineSessions),
-            after: after,
-            shownIds: [],
-            moduleNames: ["test_mod": "Test Module"]
-            // moduleLessonCounts omitted
-        )
-
-        if case .moduleCompleted = result {
-            XCTFail("moduleCompleted should not fire when moduleLessonCounts is unsupplied")
+        guard case .firstPackReady = m else {
+            return XCTFail("capability should outrank streak, got \(String(describing: m))")
         }
     }
 }

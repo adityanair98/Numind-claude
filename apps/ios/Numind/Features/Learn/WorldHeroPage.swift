@@ -1,16 +1,15 @@
 import SwiftUI
 
-/// A single full-screen "world hero" page in the Learn → Worlds carousel.
+/// A single full-screen topic hero page in the Learn → Explore carousel.
 ///
-/// Inspired by Brilliant's course carousel: each world fills the screen with
-/// a themed illustration, title, world-N label, and a "Continue" card at
+/// Inspired by Brilliant's course carousel: each topic fills the screen with
+/// a themed illustration, title, topic label, and a "Continue" card at
 /// the bottom showing the user's next undone lesson. Swipe left/right (via
-/// the parent TabView page style) to switch worlds. Tap Continue to push
-/// into that world's quest map.
+/// the parent TabView page style) to switch topics. Tap Continue to push
+/// into that topic's lesson map. (Phase 10: "World N" quest framing retired.)
 struct WorldHeroPage: View {
     @EnvironmentObject private var progressStore: ProgressStore
     let section: LearnViewModel.PathSection
-    let worldNumber: Int
     /// Action invoked when the user taps the Continue CTA. Parent owns the
     /// navigation so the carousel stays in one place.
     let onContinue: (LearnViewModel.PathNode) -> Void
@@ -71,7 +70,7 @@ struct WorldHeroPage: View {
 
     private var heroSection: some View {
         VStack(spacing: 18) {
-            Text("WORLD \(worldNumber)")
+            Text(module.shortName.uppercased())
                 .font(.system(size: 13, weight: .bold))
                 .foregroundStyle(accent)
                 .kerning(1.2)
@@ -90,8 +89,9 @@ struct WorldHeroPage: View {
                 .padding(.bottom, 8)
 
             // Themed illustration — composed from Module fields rather than
-            // bespoke artwork. Layered: tinted circle, watermark glyph,
-            // large SF Symbol, mascot emoji floating overlay.
+            // bespoke artwork: a tinted accent circle + the module's SF Symbol.
+            // (Phase 6c: dropped the math-coded glyph watermark + mascot
+            // overlay; mascot/glyph are reserved for celebration sheets now.)
             illustration
                 .frame(width: 240, height: 240)
                 .padding(.top, 4)
@@ -108,22 +108,10 @@ struct WorldHeroPage: View {
                         .strokeBorder(accent.opacity(0.28), lineWidth: 2)
                 )
 
-            // Glyph watermark in the background
-            Text(module.glyph)
-                .font(.system(size: 180, weight: .heavy, design: .rounded))
-                .foregroundStyle(accent.opacity(0.10))
-                .offset(x: 6, y: -10)
-
-            // Main SF Symbol
+            // Module SF Symbol
             Image(systemName: module.icon)
-                .font(.system(size: 88, weight: .semibold))
+                .font(.system(size: 92, weight: .semibold))
                 .foregroundStyle(accent)
-
-            // Mascot floating top-right
-            Text(module.mascot)
-                .font(.system(size: 44))
-                .offset(x: 78, y: -78)
-                .shadow(color: .black.opacity(0.12), radius: 6, y: 3)
         }
     }
 
@@ -166,8 +154,8 @@ struct WorldHeroPage: View {
 
                 Button(action: { onContinue(node) }) {
                     Text(node.state == .current || node.state == .attempted
-                         ? "Continue world"
-                         : "Start world")
+                         ? "Continue"
+                         : "Start")
                         .font(.system(size: 16, weight: .bold, design: .rounded))
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
@@ -196,23 +184,43 @@ struct WorldHeroPage: View {
     }
 
     private var conqueredCard: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "crown.fill")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(Theme.Colors.insightYellow)
-            VStack(alignment: .leading, spacing: 2) {
-                Text("WORLD CONQUERED")
-                    .font(.system(size: 11, weight: .bold))
+        VStack(spacing: 12) {
+            HStack(spacing: 12) {
+                Image(systemName: "checkmark.seal.fill")
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.insightYellow)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("TOPIC COMPLETE")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(Theme.Colors.insightText)
+                        .kerning(0.6)
+                    Text("Every lesson at 75%+")
+                        .font(Theme.Typography.headline)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                }
+                Spacer()
+                Text("\(masteredCount)/\(totalLessons)")
+                    .font(.system(size: 14, weight: .bold))
                     .foregroundStyle(Theme.Colors.insightText)
-                    .kerning(0.6)
-                Text("Every lesson at 75%+")
-                    .font(Theme.Typography.headline)
-                    .foregroundStyle(Theme.Colors.deepNavy)
             }
-            Spacer()
-            Text("\(masteredCount)/\(totalLessons)")
-                .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(Theme.Colors.insightText)
+
+            // "Review this topic" — opens the lesson map to revisit any lesson.
+            if let node = continueNode {
+                Button(action: { onContinue(node) }) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "arrow.counterclockwise")
+                            .font(.system(size: 13, weight: .bold))
+                        Text("Review this topic")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                    }
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 44)
+                    .background(Theme.Colors.cardBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }
+                .buttonStyle(.plain)
+            }
         }
         .padding(16)
         .background(Theme.Colors.insightYellowTint)

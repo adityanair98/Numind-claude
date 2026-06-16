@@ -8,8 +8,23 @@ Pair this with `content-audit-cadence.md` — that doc says *when* to refresh;
 this doc says *what* to refresh.
 
 Convention: every lesson that references one of these values should include
-an explicit year tag inline (e.g. `"(2025)"` or `"in 2025"`) so a user
+an explicit year tag inline (e.g. `"(2026)"` or `"in 2026"`) so a user
 reading the lesson can tell at a glance whether the number is still current.
+
+> **Last full refresh: 2026-05 (verified against primary IRS/SSA/HHS/FSA
+> sources).** This pass absorbed the 2026 inflation adjustments
+> (Rev Proc 2025-32, Notice 2025-67, Rev Proc 2025-19) **and** the
+> One Big Beautiful Bill Act (OBBBA, July 2025): DCFSA cap $5,000 → $7,500,
+> SALT cap $10,000 → $40,000+, TCJA bracket structure made permanent,
+> §127 employer student-loan benefit made permanent, the RAP repayment plan
+> replacing SAVE/legacy IDR for new borrowers, and the March 2025 PSLF
+> executive order narrowing qualifying employers.
+>
+> **2026-06 additions (Phase 10 curriculum wave, verified against primary
+> sources):** payday fee→APR conventions, the CRA repeal of the CFPB
+> overdraft cap, free-weekly credit reports + freeze/dispute rights,
+> FTC imposter-scam data, 401(k) rollover/cash-out mechanics, COBRA +
+> marketplace SEP windows, and Edmunds Q1-2026 negative-equity stats.
 
 ## Quick rules
 
@@ -22,26 +37,31 @@ reading the lesson can tell at a glance whether the number is still current.
 
 ### Tax (annual, every January)
 
-| Constant | 2025 value | Source | Lessons referencing | Next refresh |
+| Constant | 2026 value | Source | Lessons referencing | Next refresh |
 |---|---|---|---|---|
-| Standard deduction — Single | $15,750 | IRS Rev Proc 2024-40 | `taxes_brackets`, `taxes_standard_vs_itemized`, `concept_taxes_paycheck_stub` | Jan 2026 (when IRS publishes 2026 values) |
-| Standard deduction — HoH | $23,625 | IRS Rev Proc 2024-40 | `taxes_standard_vs_itemized`, `concept_taxes_paycheck_stub` | Jan 2026 |
-| Standard deduction — MFJ | $31,500 | IRS Rev Proc 2024-40 | `taxes_standard_vs_itemized`, `concept_taxes_paycheck_stub` | Jan 2026 |
-| Federal tax brackets — Single | 10%/$11,925 → 12%/$48,475 → 22%/$103,350 → 24%/$197,300 → 32%/$250,525 → 35%/$626,350 → 37%+ | IRS Rev Proc 2024-40 | `taxes_brackets` (all 4 numerical templates) | Jan 2026 |
-| Long-term capital gains brackets | 0% / 15% / 20% at adjusted thresholds | IRS | `taxes_capital_gains` | Jan 2026 |
-| Social Security wage base (FICA cap) | $176,100 | SSA | `taxes_deductions`, `concept_taxes_paycheck_stub` | Oct 2025 announcement applies to 2026 |
+| Standard deduction — Single | $16,100 | IRS Rev Proc 2025-32 | `taxes_brackets`, `taxes_standard_vs_itemized`, `concept_taxes_paycheck_stub` | Jan 2027 (when IRS publishes 2027 values) |
+| Standard deduction — HoH | $24,150 | IRS Rev Proc 2025-32 | `taxes_standard_vs_itemized`, `concept_taxes_paycheck_stub` | Jan 2027 |
+| Standard deduction — MFJ | $32,200 | IRS Rev Proc 2025-32 | `taxes_standard_vs_itemized`, `concept_taxes_paycheck_stub` | Jan 2027 |
+| Federal tax brackets — Single | 10%/$12,400 → 12%/$50,400 → 22%/$105,700 → 24%/$201,775 → 32%/$256,225 → 35%/$640,600 → 37%+ | IRS Rev Proc 2025-32 | `taxes_brackets` (all 4 numerical templates) | Jan 2027 |
+| Long-term capital gains brackets — Single | 0% to $49,450 → 15% to $545,500 → 20%+ | IRS Rev Proc 2025-32 | `taxes_capital_gains` | Jan 2027 |
+| Net Investment Income Tax (NIIT) | 3.8% on the lesser of net investment income or MAGI over $200K single / $250K MFJ | IRC § 1411 | `taxes_capital_gains` | NOT indexed — statutory thresholds |
+| Social Security wage base (FICA cap) | $184,500 | SSA (Oct 2025 announcement) | `taxes_deductions`, `concept_taxes_paycheck_stub` | Oct 2026 announcement applies to 2027 |
 | Additional Medicare Tax threshold | $200K single / $250K MFJ | IRS | `taxes_deductions` | Not indexed — only changes by legislation |
+| SALT deduction cap | $40,400 (2026); phased down 30% of MAGI over $500K joint / $250K MFS, floor $10K; reverts to $10K in 2030 | OBBBA 2025 (P.L. 119-21) | `taxes_standard_vs_itemized` | Annually 2026-2029; reverts 2030 |
 
 ### Retirement plans (annual, every November announcement)
 
-| Constant | 2025 value | Source | Lessons referencing | Next refresh |
+| Constant | 2026 value | Source | Lessons referencing | Next refresh |
 |---|---|---|---|---|
-| IRA contribution limit | $7,000 (under 50) / $8,000 (50+) | IRS Rev Proc 2024-25 | `investing_roth_vs_traditional`, `investing_roth_decision`, `concept_investing_three_accounts` | Nov 2025 for 2026 |
-| 401(k) elective deferral | $23,500 | IRS Notice 2024-80 | `investing_401k_match` (indirect), `salary_401k_paycheck_impact` (indirect), `concept_investing_three_accounts` | Nov 2025 for 2026 |
-| 401(k) catch-up (50+) | $7,500 | IRS Notice 2024-80 | `concept_investing_three_accounts` | Nov 2025 for 2026 |
-| Overall §415 contribution cap (employee + employer) | $70,000 | IRS Notice 2024-80 | `concept_investing_three_accounts` | Nov 2025 for 2026 |
-| Roth IRA phaseout (single) | $150K start, $165K full phaseout | IRS Rev Proc 2024-40 | `investing_roth_vs_traditional`, `investing_roth_decision`, `concept_investing_three_accounts` | Nov 2025 for 2026 |
-| Roth IRA phaseout (MFJ) | $236K start, $246K full phaseout | IRS Rev Proc 2024-40 | `investing_roth_vs_traditional`, `investing_roth_decision`, `concept_investing_three_accounts` | Nov 2025 for 2026 |
+| IRA contribution limit | $7,500 (under 50) / $8,600 (50+) | IRS Notice 2025-67 | `investing_roth_vs_traditional`, `investing_roth_decision`, `concept_investing_three_accounts` | Nov 2026 for 2027 |
+| IRA catch-up (50+) | $1,100 (now inflation-indexed per SECURE 2.0) | IRS Notice 2025-67 | `concept_investing_three_accounts` | Nov 2026 for 2027 |
+| 401(k) elective deferral | $24,500 | IRS Notice 2025-67 | `investing_401k_match` (indirect), `salary_401k_paycheck_impact` (indirect), `concept_investing_three_accounts` | Nov 2026 for 2027 |
+| 401(k) catch-up (50+) | $8,000 | IRS Notice 2025-67 | `concept_investing_three_accounts` | Nov 2026 for 2027 |
+| 401(k) super catch-up (ages 60-63) | $11,250 (SECURE 2.0) | IRS Notice 2025-67 | `concept_investing_three_accounts` | Nov 2026 for 2027 |
+| Overall §415 contribution cap (employee + employer) | $72,000 | IRS Notice 2025-67 | `concept_investing_three_accounts` | Nov 2026 for 2027 |
+| Roth IRA phaseout (single) | $153K start, $168K full phaseout | IRS Notice 2025-67 | `investing_roth_vs_traditional`, `investing_roth_decision`, `concept_investing_three_accounts` | Nov 2026 for 2027 |
+| Roth IRA phaseout (MFJ) | $242K start, $252K full phaseout | IRS Notice 2025-67 | `investing_roth_vs_traditional`, `investing_roth_decision`, `concept_investing_three_accounts` | Nov 2026 for 2027 |
+| Roth 401(k) catch-up mandate | Catch-up must be Roth (after-tax) if prior-year FICA wages > $150K (SECURE 2.0, effective 2026) | IRS Notice 2025-67 | `concept_investing_three_accounts` | Legislative |
 | RMD start age (Traditional) | 73 (per SECURE 2.0) | IRC § 401(a)(9) | `investing_roth_decision`, `concept_investing_three_accounts` | Legislation-bound; SECURE 2.0 raises to 75 starting 2033 |
 | Roth 401(k) RMD removal | Eliminated in 2024 (per SECURE 2.0) | IRC § 401(a)(9)(H) | `concept_investing_three_accounts` | Legislative |
 | IRS supplemental withholding rate | 22% (≤$1M cumulative supplemental wages); 37% above | IRS Pub 15 | `salary_rsu_basics` | Annually via IRS Pub 15 |
@@ -52,26 +72,28 @@ reading the lesson can tell at a glance whether the number is still current.
 
 ### HSA / FSA / DCFSA / commuter (annual, various announcement dates)
 
-| Constant | 2025 value | Source | Lessons referencing | Next refresh |
+| Constant | 2026 value | Source | Lessons referencing | Next refresh |
 |---|---|---|---|---|
-| HSA limit — self-only | $4,300 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage`, `concept_insurance_open_enrollment` | May 2025 for 2026 |
-| HSA limit — family | $8,550 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage`, `concept_insurance_open_enrollment` | May 2025 for 2026 |
-| HDHP min deductible (HSA eligibility) — self | $1,650 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage`, `concept_insurance_open_enrollment` | May 2025 for 2026 |
-| HDHP min deductible — family | $3,300 | IRS Rev Proc 2024-25 | `insurance_hsa_advantage` | May 2025 for 2026 |
-| Health FSA cap | $3,300 | IRS Rev Proc 2024-40 | `insurance_fsa_use_it`, `concept_insurance_open_enrollment` | Oct 2025 for 2026 |
-| Health FSA carryover max | $660 | IRS Rev Proc 2024-40 | `insurance_fsa_use_it`, `concept_insurance_open_enrollment` | Oct 2025 for 2026 |
-| Dependent Care FSA cap (per household) | $5,000 | IRS § 129(a)(2)(A) | `concept_insurance_open_enrollment` | NOT inflation-indexed; legislative only — has been $5,000 for decades |
-| Commuter (transit + parking) cap | $315/mo each (2025) | IRS § 132(f)(2) | `concept_insurance_open_enrollment` | Annually each Oct/Nov |
+| HSA limit — self-only | $4,400 | IRS Rev Proc 2025-19 | `insurance_hsa_advantage`, `concept_insurance_open_enrollment` | May 2026 for 2027 |
+| HSA limit — family | $8,750 | IRS Rev Proc 2025-19 | `insurance_hsa_advantage`, `concept_insurance_open_enrollment` | May 2026 for 2027 |
+| HDHP min deductible (HSA eligibility) — self | $1,700 | IRS Rev Proc 2025-19 | `insurance_hsa_advantage`, `concept_insurance_open_enrollment` | May 2026 for 2027 |
+| HDHP min deductible — family | $3,400 | IRS Rev Proc 2025-19 | `insurance_hsa_advantage` | May 2026 for 2027 |
+| HDHP max out-of-pocket — self / family | $8,500 / $17,000 | IRS Rev Proc 2025-19 | `insurance_hsa_advantage` | May 2026 for 2027 |
+| Health FSA cap | $3,400 | IRS Rev Proc 2025-32 | `insurance_fsa_use_it`, `concept_insurance_open_enrollment` | Oct 2026 for 2027 |
+| Health FSA carryover max | $680 | IRS Rev Proc 2025-32 | `insurance_fsa_use_it`, `concept_insurance_open_enrollment` | Oct 2026 for 2027 |
+| Dependent Care FSA cap (per household) | $7,500 ($3,750 MFS) — raised from $5,000 by OBBBA 2025, first increase since 1986 | OBBBA 2025 / IRC § 129(a)(2)(A) | `concept_insurance_open_enrollment`, `insurance_fsa_use_it` | NOT inflation-indexed; legislative only |
+| Commuter (transit + parking) cap | $340/mo each | IRS Rev Proc 2025-32 / § 132(f)(2) | `concept_insurance_open_enrollment` | Annually each Oct/Nov |
 
 ### Student loans (annual, every June for rates; per-tier-of-degree fixed)
 
-| Constant | 2025-26 value | Source | Lessons referencing | Next refresh |
+| Constant | 2026-27 value | Source | Lessons referencing | Next refresh |
 |---|---|---|---|---|
-| Direct Subsidized / Unsubsidized (undergrad) | 6.53% | Federal Student Aid | `student_loan_monthly`, `student_loan_total_cost`, `student_loan_grace_period`, `concept_sl_subsidized_vs_unsubsidized` | June 2026 for 2026-27 |
-| Direct Unsubsidized (graduate) | 8.08% | Federal Student Aid | (referenced) | June 2026 |
-| Direct PLUS (grad/Parent PLUS) | 8.94% | Federal Student Aid | `student_loan_parent_plus`, `concept_sl_subsidized_vs_unsubsidized` | June 2026 |
+| Direct Subsidized / Unsubsidized (undergrad) | 6.52% | Federal Student Aid (May 2026 Treasury auction) | `student_loan_monthly`, `student_loan_total_cost`, `student_loan_grace_period`, `concept_sl_subsidized_vs_unsubsidized` | June 2027 for 2027-28 |
+| Direct Unsubsidized (graduate) | 8.07% | Federal Student Aid | (referenced) | June 2027 |
+| Direct PLUS (grad/Parent PLUS) | 9.07% | Federal Student Aid | `student_loan_parent_plus`, `concept_sl_subsidized_vs_unsubsidized` | June 2027 |
 | Origination fee — Direct Subsidized/Unsubsidized | 1.057% | Federal Student Aid | (referenced indirectly) | Updated periodically; current fee table valid through Oct 1, 2026 |
 | Origination fee — Direct PLUS | 4.228% | Federal Student Aid | `student_loan_parent_plus` | Current fee table valid through Oct 1, 2026 |
+| Parent PLUS borrowing limits (new borrowers on/after July 1 2026) | $20,000/yr per student, $65,000 aggregate per student | OBBBA 2025 | `student_loan_parent_plus` | Legislative |
 | IRC § 127 employer benefit cap | $5,250/yr tax-free | IRC § 127 (made permanent by OBBBA 2025) | `student_loan_employer_benefit` | Not indexed; legislative only |
 | Subsidized loan annual limits (undergrad) | $3,500-$5,500 by year | Federal Student Aid | `concept_sl_subsidized_vs_unsubsidized` | Set by Higher Education Act; legislative only |
 
@@ -79,18 +101,19 @@ reading the lesson can tell at a glance whether the number is still current.
 
 | Topic | Current state (May 2026) | Source | Lessons referencing | Refresh trigger |
 |---|---|---|---|---|
-| SAVE plan | Vacated in court 2024-2025; ED is transitioning borrowers off SAVE into legal repayment plans | Federal Student Aid SAVE updates | `student_loan_idr` | Any ED announcement / court ruling |
-| PAYE / IBR / ICR | Available; specific eligibility windows for new enrollees | Federal Student Aid | `student_loan_idr`, `student_loan_pslf` | Any policy change |
-| PSLF | 120 qualifying payments still operative | Federal Student Aid PSLF page | `student_loan_pslf`, `concept_sl_refi_protections_lost` | Any policy change |
+| RAP (Repayment Assistance Plan) | Created by OBBBA 2025. The default income-driven option for borrowers taking out **new** loans on/after July 1, 2026. Payments scale 1%-10% of AGI by income band, $10/mo floor, forgiveness after 360 qualifying payments (30 yrs). | OBBBA 2025 / Federal Student Aid | `student_loan_idr` | Any ED rulemaking |
+| SAVE plan | Vacated in court; permanently closed. Borrowers migrated off into IBR or RAP. No longer accepting enrollees. | Federal Student Aid | `student_loan_idr` | Historical — closed |
+| Legacy IDR (PAYE / ICR) | Closing to new enrollees; existing borrowers being transitioned. IBR remains the statutory income-driven plan for pre-July-2026 borrowers. | Federal Student Aid | `student_loan_idr`, `student_loan_pslf` | Any policy change |
+| PSLF | 120 qualifying payments still operative. March 2025 executive order **narrowed the definition of a qualifying employer** (excludes orgs engaged in certain activities); rule in active litigation. | Federal Student Aid PSLF page / EO March 2025 | `student_loan_pslf`, `concept_sl_refi_protections_lost` | Any policy change / court ruling |
 
 **Verification cadence for IDR content:** every quarter, plus on any federal court ruling. The lesson copy intentionally avoids quoting specific monthly amounts because the formula varies materially across plans.
 
 ### Federal poverty guidelines (annual, every January)
 
-| Constant | 2025 value | Source | Lessons referencing | Next refresh |
+| Constant | 2026 value | Source | Lessons referencing | Next refresh |
 |---|---|---|---|---|
-| Federal poverty line — 1 person, contiguous US | $15,650 | HHS Poverty Guidelines | `student_loan_idr` (IDR formula reference) | Jan 2026 |
-| FPL — 4 person household | $32,150 | HHS Poverty Guidelines | (referenced indirectly) | Jan 2026 |
+| Federal poverty line — 1 person, contiguous US | $15,960 | HHS Poverty Guidelines | `student_loan_idr` (IDR formula reference) | Jan 2027 |
+| FPL — 4 person household | $33,000 | HHS Poverty Guidelines | (referenced indirectly) | Jan 2027 |
 
 ### Employment law (event-triggered)
 
@@ -107,6 +130,61 @@ reading the lesson can tell at a glance whether the number is still current.
 | Typical credit-card APR (avg) | ~22-24% | CFPB Consumer Credit Card Market Report | `credit_card_interest`, `minimum_payment_trap`, `debt_cc_payoff_time` (used as example default) | CFPB report cycle |
 | FDIC insurance per depositor per bank | $250,000 | FDIC | `investing_apy_savings`, web HYSA calculator | Legislative only |
 | BNPL stats (CFPB) | ~9 loans/yr avg; 2x overdraft risk | CFPB BNPL Market Trends | `debt_bnpl_hidden_cost` | CFPB report cycle |
+| Typical payday-loan fee | $10–$30 per $100 borrowed (a $15/$100 two-week loan ≈ 391% APR) | CFPB "What is a payday loan?" | `payday_loan_cost` | CFPB page updates |
+| Overdraft fee | Bimodal market: many banks $0–$10 (Capital One, Ally, Citi…), others ~$34 (Chase); Bankrate 2025 avg ~$26.77. The CFPB's $5 cap rule was **repealed via CRA, May 2025** (the repeal killed only the never-effective cap — **Reg E debit/ATM opt-in protection is intact**) | CFPB / Bankrate 2025 / Congressional Review Act (May 2025) | `payday_loan_cost`, `banking_basics_fees` | Any new CFPB rulemaking |
+| Reg E overdraft opt-in (debit/ATM) | Banks may not charge overdraft fees on one-time debit/ATM transactions without affirmative opt-in; default = declined free. Checks/ACH/recurring not covered | 12 CFR § 1005.17 | `banking_basics_fees` | CFPB rulemaking |
+| Checking maintenance fees | Avg $5.47/mo non-interest checking; ~95% waivable (direct deposit most common); ~47% of basic accounts free outright | Bankrate 2025 checking survey | `banking_basics_fees` | Bankrate annual survey |
+| FDIC / NCUA deposit insurance | $250,000 per depositor, per institution, per ownership category (NCUA equivalent for credit unions) | FDIC / NCUA | `banking_basics_fees`, `investing_apy_savings` | Legislative only |
+| FCBA credit-card dispute window | 60 days from the statement containing the error, in writing; unauthorized-use liability capped at $50 (networks: $0) | FCBA / 12 CFR § 1026.13 | `dispute_a_charge` | Legislative only |
+| Reg E debit fraud liability tiers | Report within 2 business days = $50 cap; within 60 days of statement = $500; later = unlimited | 12 CFR § 1005.6 | `dispute_a_charge` | CFPB rulemaking |
+| FICO minimum scoring criteria | ≥1 account open 6+ months AND ≥1 account reported within last 6 months | myFICO | `credit_from_zero` | FICO model changes |
+| Secured card mechanics | Refundable deposit (typical $200 min) ≈ credit line; on-time use can graduate to unsecured | CFPB / issuer terms | `credit_from_zero` | Issuer-market shifts |
+| Authorized-user rules | Account history can appear on the AU's report (issuer-dependent); AU has no legal liability for the debt | CFPB | `credit_from_zero` | CFPB guidance |
+| Credit-builder loans | Funds locked in savings while payments are reported; released after payoff (CFPB study: helps thin-file consumers most) | CFPB credit-builder loan study | `credit_from_zero` | CFPB guidance |
+| FICO weightings | Payment history ~35%, utilization ~30% | myFICO | `credit_from_zero`, `concept_debt_credit_scores` | FICO model changes |
+| Free credit reports | Free **weekly** from each bureau at AnnualCreditReport.com (made permanent Oct 2023) | FTC / AnnualCreditReport.com | `credit_report_rights` | FCRA rulemaking |
+| Credit freeze / dispute rights | Freezes free at all 3 bureaus (FCRA, 2018); disputes resolved within 30 days (45 with extension) | FCRA § 605A / § 611 | `credit_report_rights` | FCRA rulemaking |
+| Imposter-scam / payment-rail stats | FTC 2025 data: imposter scams the #1 fraud category; gift cards / wire / crypto-ATM payments are effectively irreversible | FTC Consumer Sentinel (2026 release for 2025 data) | `scam_imposter_patterns`, `scam_payment_rails` | FTC annual Sentinel data book |
+
+### Job changes / rollovers (statutory, stable)
+
+| Constant | Current value | Source | Lessons referencing | Refresh trigger |
+|---|---|---|---|---|
+| Indirect-rollover withholding | 20% mandatory federal withholding on employer-plan distributions paid to the participant; 60-day deposit window | IRC § 3405(c) / § 402(c)(3) | `job_change_401k` | Legislative only |
+| Early-withdrawal penalty | 10% additional tax under 59½ (Rule of 55 exception for plan of the employer you separate from at 55+) | IRC § 72(t) | `job_change_401k` | Legislative only |
+| Mandatory cash-out thresholds | Balances < $1,000 may be cashed out; $1,000–$7,000 force-rolled to an IRA (SECURE 2.0 raised cap) | IRC § 401(a)(31)(B) | `job_change_401k` | Legislative only |
+| COBRA election window / premium | 60 days to elect; up to 102% of the full premium | COBRA (IRC § 4980B) | `job_change_health` | Legislative only |
+| Marketplace SEP after losing coverage | 60 days before/after loss of employer coverage | HealthCare.gov / 45 CFR § 155.420 | `job_change_health` | HHS rulemaking |
+
+### Car market stats (refresh annually)
+
+| Constant | Current value | Source | Lessons referencing | Refresh trigger |
+|---|---|---|---|---|
+| Negative-equity trade-in share | 30.9% of trade-ins with a loan were upside down, avg $7,183 underwater (Q1 2026) | Edmunds quarterly used-car report | `car_negative_equity` | Edmunds quarterly reports |
+
+### Filing mechanics (annual, every January)
+
+| Constant | Current value | Source | Lessons referencing | Refresh trigger |
+|---|---|---|---|---|
+| IRS Free File AGI cap | $89,000 or less (2026 season); Fillable Forms at any income | IRS Free File | `taxes_filing_mechanics` | Every January |
+| IRS Direct File | **Discontinued after the 2025 season** — do not present as an option | IRS (2026 season guidance) | `taxes_filing_mechanics` | Any IRS announcement |
+| VITA income threshold | Generally $69,000 or less (2026 season); MilTax: no income limit for military families | IRS VITA / DOD MilTax | `taxes_filing_mechanics` | Every January |
+| W-2 furnishing deadline | End of January (Feb 2, 2026 actual due to weekend) | IRS | `taxes_filing_mechanics` | Stable |
+| Refund timing | E-file + direct deposit: most within ~21 days; EITC/ACTC refunds held until ~Mar 2 | IRS | `taxes_filing_mechanics` | Stable |
+
+### Insurance & estate (refresh annually)
+
+| Constant | Current value | Source | Lessons referencing | Refresh trigger |
+|---|---|---|---|---|
+| Renters insurance avg premium | ~$171/yr (NAIC 2022, latest published); ~57% of renters insured (III); landlord policy covers building only; replacement cost ≈ +10% premium vs ACV | NAIC / III | `insurance_renters` | NAIC annual report |
+| Auto full-coverage avg premium | ~$2,697/yr (Bankrate, June 2026) | Bankrate true-cost report | `insurance_auto_shopping` | Bankrate updates |
+| Auto liability minimums | Vary by state (FL: no BI requirement; CA: 30/60/15 from 2025); 100/300/100 = common adequacy guidance | State statutes / Consumer Reports | `insurance_auto_shopping` | State legislative sessions |
+| Deductible $500→$1,000 savings | Trims roughly 5–15% of total premium (III: 40%+ of comp/collision portion) | III | `insurance_auto_shopping` | III guidance |
+| Drop-collision rule of thumb | When comp+collision premium exceeds ~10% of the car's value | III | `insurance_auto_shopping` | III guidance |
+| Price optimization / loyalty penalty | Documented industry practice; ~20 states restrict it — re-quote every 1–2 years | Consumer Reports / state DOIs | `insurance_auto_shopping` | State regulation changes |
+| Beneficiary form supersedes will | Kennedy v. DuPont, 555 U.S. 285 (2009); Egelhoff, 532 U.S. 141 (2001) — the form controls, even vs divorce decrees, for ERISA plans | SCOTUS / DOL | `estate_beneficiaries` | Legislative only |
+| ERISA spousal 401(k) beneficiary | Spouse is automatic beneficiary unless they sign a notarized/plan-witnessed waiver; IRAs differ (no federal requirement) | ERISA § 205 | `estate_beneficiaries` | Legislative only |
+| POD/TOD designations | Pass directly outside probate; FDIC insures POD up to $250K per owner per eligible beneficiary | FDIC / state TOD statutes | `estate_beneficiaries` | Legislative only |
 
 ### Real estate (varies by market; refresh annually)
 

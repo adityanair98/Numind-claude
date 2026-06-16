@@ -46,10 +46,9 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **IconTile** for all tinted icon displays. Pass `size:` parameter for different sizes (36, 48, 52).
 - **PillButton** for primary CTAs. Use `.primary` variant by default.
 - **ConfettiBurst** for celebration effects. Always pair with `NewBestBadge` in summary views.
-- **EstimationSlider** for estimation mode. Custom slider with step snapping, floating callout, correct answer marker, error band, and haptic ticks.
-- **NumindScoreRing** for displaying the composite Numind Score in summary views.
-- **ModeCard** for game mode cards on the Home tab. Use the convenience constructors (`.speedDrill()`, `.blitz()`, `.streak()`, etc.).
-- **HeroCard** for large hero cards (used in Practice tab hero quiz card).
+- **LevelRing** for displaying the user's Level + XP-progress (Phase 9; replaced `NumindScoreRing`/the 0–100 composite). **ReadinessBadge** / **PackReadinessBoard** for per-pack Readiness state.
+- **HeroCard** for large hero cards.
+- **CalculatorShell** is the base scaffold for every Tools-tab calculator (summary header, input area, collapsible methodology block, global disclaimer). New calculators wrap their inputs/results in it and register in `CalculatorRegistry`.
 
 ## Quiz System
 
@@ -60,42 +59,18 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **Checkpoint reviews** appear after every 3 lessons within a module. They round-robin across covered lessons' templates.
 - **Review IDs** use the format `review_{moduleId}_{groupIndex}` (e.g., `review_smart_shopping_0`).
 
-## Game Modes
+## Tools Tab (replaced the game-mode "Practice" tab in Phase 7a)
 
-- **MasteredTemplatePool** is the shared gateway for all game modes. Always call `MasteredTemplatePool.mcqTemplates(from:)` or `.templates(from:)` — never read all templates directly for mode content.
-- **Game modes only show content from completed lessons.** Users only get questions on concepts they've attempted. This enforces the "unlock by learning" progression.
-- **MCQ-only for timed modes** (Speed Drill, Blitz). Free-entry questions are excluded — typing under time pressure is frustrating. Filter via `.mcqTemplates(from:)`.
-- **Modes are gated** until `MasteredTemplatePool.hasUnlockedModes(progressData:)` returns true. Show locked card UI with "Complete a lesson to unlock" when false. Completion-based: any attempt unlocks, not mastery (≥75%).
-- **Session ID conventions for modes:**
-  - Daily Challenge: `lessonId: "daily_challenge"`, `moduleId: "mixed"`
-  - Speed Drill: `lessonId: "speed_drill"`, `moduleId: "mixed"`
-  - Blitz: `lessonId: "blitz_session"`, `moduleId: "mixed"`
-  - Streak: `lessonId: "streak_mode"`, `moduleId: "mixed"`
-  - Estimation: `lessonId: "estimation"`, `moduleId: "mixed"`
-  - Comparison: `lessonId: "comparison"`, `moduleId: "mixed"`
-- **Daily Challenge** is 10 questions (bumped from 5). Pass `progressData:` to `DailyChallengeEngine.dailyQuestions(from:progressData:)` to filter to mastered templates.
-- **Speed Drill** reuses `QuizSessionViewModel` and `QuizSessionView` with `questionTimeLimit: 15.0`. The view shows a circular countdown ring; timeout = automatic wrong answer.
-  - Call `viewModel.startSession()` from `.onAppear` to begin the first question's timer.
-- **Blitz** uses dedicated `BlitzViewModel` + `BlitzView` + `BlitzSummaryView`. The lifecycle (no feedback phase, auto-advance on tap, global 60s countdown) differs from the standard quiz. Do not try to adapt `QuizSessionViewModel` for Blitz.
-  - Queue pre-generated with `BlitzEngine.generateQuestionQueue(from:)` (~45 questions).
-  - Personal best stored in `ProgressData.blitzBestScore`; persist via `progressStore.updateBlitzBest(score:)`.
-- **No speed bonus XP for Blitz.** Everything is speed — XP is simply `score * 10`.
-- **Streak** uses dedicated `StreakViewModel` + `StreakView`. Large MCQ pool (~40 questions) from `MasteredTemplatePool.mcqTemplates(from:)`. Game continues until one wrong answer. Personal best stored in `ProgressData.streakModeBestScore`; persist via `progressStore.updateStreakBest(score:)`.
-  - Session ID: `lessonId: "streak_mode"`, `moduleId: "mixed"`.
-- **Estimation** uses dedicated `EstimationViewModel` + `EstimationView` + `EstimationSlider`. 10 slider-based questions with 10-second countdown. Graded on proximity: ≤5% = 3 stars (perfect), ≤15% = 2 stars (good), ≤30% = 1 star (okay), >30% = 0 stars (miss). Templates filtered to `difficulty >= 2` first (falls back to all if not enough). Slider range computed by `SliderRange.compute()` with anti-center positioning (correct answer placed in 18–38% OR 62–82% of slider range, never near center).
-  - Session ID: `lessonId: "estimation"`, `moduleId: "mixed"`.
-  - Personal best stored in `ProgressData.estimationBestScore`; persist via `progressStore.updateEstimationBest(score:)`.
-- **Comparison** uses dedicated `ComparisonViewModel` + `ComparisonView`. 15 side-by-side pairs with 8s countdown per question. Pairs generated via `ComparisonViewModel.generatePairs(from:count:)`. Player taps the side with the larger answer.
-  - Session ID: `lessonId: "comparison"`, `moduleId: "mixed"`.
-  - Personal best stored in `ProgressData.comparisonBestScore`; persist via `progressStore.updateComparisonBest(score:)`.
+- **The Practice tab and all timed game modes — Speed Drill, Blitz, Streak, Estimation, Comparison — were retired in Phase 7a.** Their views, view models, and supporting engines (`BlitzEngine`, `MasteredTemplatePool`, `ModeCard`, `EstimationSlider`, `PracticeQuizContainer`) were deleted. The per-mode personal-best fields remain in `ProgressData` for snapshot back-compat, but no UI writes them anymore.
+- **The Tools tab replaced Practice in `RootTabView`** (`NumindTab.tools`, SF Symbol `wrench.and.screwdriver.fill`). It hosts 12 in-app calculators built on `CalculatorShell` and dispatched through `CalculatorRegistry.view(for:)`. Lessons deep-link to a calculator via `Lesson.relatedCalculatorSlug`.
+- **Recall ("review your weak spots") survives** as a Home quick-access entry. Build the session with `ReviewMistakesEngine.build(fromStored:moduleColor:repository:)`; fall back to a bonus round when there's no miss history. Persist the best via `progressStore.updateRecallBest(score:)`.
+- **Daily Workout** is the streak anchor: 10 mixed questions via `DailyChallengeEngine.dailyQuestions(from:progressData:focusPack:)` (pack-aware when a focus pack is set). The storage key `numind.dailyChallenge.lastCompleted` is kept for back-compat; user-facing strings say "Daily Workout."
 
 ## Celebration / Personal Best
 
-- **`previousBest` pattern.** All game mode ViewModels accept a `previousBest: Int` parameter at init. The launch function captures the current best from `ProgressStore` before creating the ViewModel. The VM exposes `var isNewBest: Bool` (computed: `score > previousBest && score > 0`).
-- **`PracticeQuizContainer`** (used for Speed Drill and Recall in PracticeView) accepts an optional `previousBest: Int?` parameter. It detects `isNewBest` before calling the `recordSession` closure.
+- **`previousBest` pattern.** The Recall flow captures the current best from `ProgressStore` before the session and shows a celebration when `score > previousBest && score > 0`.
 - **`ConfettiBurst`** is a reusable Canvas + TimelineView confetti particle system in `Core/DesignSystem/Primitives/ConfettiBurst.swift`. 60 particles, 3-second duration, fires on appear. Use as a ZStack overlay on summary views: `if viewModel.isNewBest { ConfettiBurst() }`.
-- **`NewBestBadge`** is a reusable golden trophy capsule badge (also in `ConfettiBurst.swift`). Spring bounce-in animation on appear. All summary views show it when `isNewBest` is true.
-- **Practice tab drill cards** show personal best inside the decorative orb (70pt circle, bottom-right) when `bestScore > 0`. The subtitle always remains visible.
+- **`NewBestBadge`** is a reusable golden trophy capsule badge (also in `ConfettiBurst.swift`). Spring bounce-in animation on appear. Summary views show it when `isNewBest` is true.
 
 ## Mid-Session Motivators
 
@@ -105,9 +80,6 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **2-question cooldown.** At least 2 questions between any two full-screen motivators.
 - **Priority order:** Coaching > Momentum > Progress > Near Finish. Struggling users need help more than succeeding users need celebration.
 - **Coaching tips** reuse `Lesson.shortcut` and `Lesson.example` — no new content fields. Look up via `ContentRepository.lesson(forTemplateId:)`.
-- **Estimation coaching** uses generic tips from `MotivatorCopy.estimationTips` since estimation questions don't map cleanly to lesson shortcuts.
-- **Speed Drill:** Max 1 motivator, no coaching (too slow for speed context).
-- **Auto-advance modes get nothing.** Blitz, Streak, Comparison have no natural pause point. Do not add motivators to these modes.
 - **Inline encouragement** is non-blocking, does not count toward the 2-motivator cap, and has its own 3-question cooldown.
 - **Copy rotation.** Always use `MotivatorCopy` static methods to pick copy — they randomize from 4-5 variants per type. Never hardcode motivator text in views.
 

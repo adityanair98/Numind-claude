@@ -25,7 +25,7 @@ struct PackCompletionSheet: View {
                     .font(Theme.Typography.title)
                     .foregroundStyle(Theme.Colors.mindTeal)
                     .multilineTextAlignment(.center)
-                Text("You finished all \(pack.lessonIds.count) lessons. The next time this life event comes up — you'll know the math.")
+                Text("You finished all \(pack.lessonIds.count) lessons. The next time this life event comes up — you'll know exactly what to do.")
                     .font(Theme.Typography.body)
                     .foregroundStyle(Theme.Colors.mutedText)
                     .multilineTextAlignment(.center)

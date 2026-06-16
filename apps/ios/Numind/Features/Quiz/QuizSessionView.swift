@@ -61,6 +61,9 @@ struct QuizSessionView: View {
             if case .motivator = newState {
                 showConfetti = false
             }
+            if case .teach = newState {
+                showConfetti = false
+            }
         }
     }
 
@@ -107,13 +110,25 @@ struct QuizSessionView: View {
 
     private var scrollContent: some View {
         Group {
-            if case .motivator(let checkpoint) = viewModel.sessionState {
+            if case .teach(let card) = viewModel.sessionState {
+                // Teach card takes over the full screen before new material.
+                TeachCardView(card: card, accent: viewModel.moduleColor.tintColor) {
+                    viewModel.advance()
+                }
+            } else if case .motivator(let checkpoint) = viewModel.sessionState {
                 // Motivator takes over the full screen — show with daily streak from ProgressStore
                 motivatorScreen(checkpoint: checkpoint)
             } else {
                 ScrollView {
                     VStack(spacing: Theme.Spacing.sectionSpacing) {
                         beadRail
+                        if let segment = viewModel.currentSegmentLabel {
+                            Text(segment.uppercased())
+                                .font(Theme.Typography.overline)
+                                .tracking(1.4)
+                                .foregroundStyle(Theme.Colors.mutedText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                         switch viewModel.sessionState {
                         case .question, .answered:
                             questionContent
@@ -134,7 +149,7 @@ struct QuizSessionView: View {
                                     .transition(.scale(scale: 0.9).combined(with: .opacity))
                                 }
                             }
-                        case .complete, .motivator:
+                        case .complete, .motivator, .teach:
                             EmptyView()
                         }
                     }
@@ -375,12 +390,11 @@ struct QuizSessionView: View {
     }
 
     private func resultHeroCard(isCorrect: Bool) -> some View {
-        let speedBonus = viewModel.currentSpeedBonus
-        return NumindCard(background: isCorrect ? Theme.Colors.mindTealTint : Theme.Colors.errorSoftRedTint) {
+        NumindCard(background: isCorrect ? Theme.Colors.mindTealTint : Theme.Colors.warmOrangeTint) {
             VStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+                        .fill(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
                         .frame(width: 64, height: 64)
                     Image(systemName: isCorrect ? "checkmark" : "xmark")
                         .font(.system(size: 28, weight: .bold))
@@ -388,48 +402,72 @@ struct QuizSessionView: View {
                 }
                 Text(isCorrect ? "Nice — that's right." : "Not quite.")
                     .font(Theme.Typography.title)
-                    .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+                    .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
                 if isCorrect {
-                    VStack(spacing: 6) {
-                        Text("🎉 +10 XP · streak +1")
-                            .font(Theme.Typography.caption)
-                            .foregroundStyle(Theme.Colors.mindTeal)
-                        if speedBonus > 0 {
-                            HStack(spacing: 4) {
-                                Image(systemName: "bolt.fill")
-                                    .font(.system(size: 10, weight: .bold))
-                                Text("+\(speedBonus) XP speed bonus!")
-                                    .font(.system(size: 11, weight: .bold))
-                            }
-                            .foregroundStyle(Theme.Colors.insightText)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 4)
-                            .background(Theme.Colors.insightYellowTint)
-                            .clipShape(Capsule())
-                            .transition(.scale(scale: 0.85).combined(with: .opacity))
-                        }
-                    }
+                    Text("One more toward today's ring.")
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.mindTeal)
                 } else {
                     Text("No penalty — keep going.")
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Colors.mutedText)
                 }
+
+                // Sharpness: shown only when favorable + statistically real
+                // (SharpnessEngine returns nil otherwise — by design).
+                if let delta = viewModel.currentSpeedDelta {
+                    HStack(spacing: 6) {
+                        Image(systemName: "bolt.fill")
+                            .font(.system(size: 11, weight: .bold))
+                        Text("\(Int(delta.priorMedianSeconds))s \u{2192} \(Int(delta.currentSeconds.rounded()))s \u{2014} quicker than your usual")
+                            .font(.system(size: 12, weight: .bold))
+                    }
+                    .foregroundStyle(Theme.Colors.insightText)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Theme.Colors.insightYellowTint)
+                    .clipShape(Capsule())
+                }
             }
             .frame(maxWidth: .infinity)
-            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: speedBonus)
         }
     }
 
+    @ViewBuilder
     private func answerRevealPill(for q: QuizQuestion, isCorrect: Bool) -> some View {
-        let correct = q.choices.first { $0.id == q.correctChoiceId }
-        return Text(correct?.text ?? "")
-            .font(.system(size: 30, weight: .bold, design: .rounded))
-            .foregroundStyle(.white)
-            .padding(.horizontal, 32)
+        let text = q.choices.first { $0.id == q.correctChoiceId }?.text ?? ""
+        let background = isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange
+        if text.count <= 22 {
+            // Short answers ("$2.43", "Roth IRA") get the big celebratory pill.
+            Text(text)
+                .font(.system(size: 30, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 32)
+                .padding(.vertical, 14)
+                .frame(maxWidth: .infinity)
+                .background(background)
+                .clipShape(Capsule())
+        } else {
+            // Sentence-length concept answers: a capsule of wrapped 30pt text
+            // reads as a blob — render a labeled answer card instead.
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Correct answer")
+                    .font(.system(size: 11, weight: .bold))
+                    .textCase(.uppercase)
+                    .kerning(0.8)
+                    .foregroundStyle(.white.opacity(0.75))
+                Text(text)
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 18)
             .padding(.vertical, 14)
-            .frame(maxWidth: .infinity)
-            .background(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
-            .clipShape(Capsule())
+            .background(background)
+            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+        }
     }
 
     private func optionsRecap(for q: QuizQuestion, isCorrect: Bool) -> some View {
@@ -523,6 +561,8 @@ struct QuizSessionView: View {
             PillButton("Continue") { viewModel.advance() }
         case .motivator:
             EmptyView()   // CTA lives inside MotivatorView
+        case .teach:
+            EmptyView()   // CTA lives inside TeachCardView
         case .complete:
             EmptyView()
         }

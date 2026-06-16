@@ -1,7 +1,10 @@
 import SwiftUI
 
-/// Screen 19 — Personalized Plan
-/// Shows daily goal, focus areas with progress bars, timeline.
+/// Screen 19 — Personalized Plan (v2).
+///
+/// Three cards: the daily ring (anything counts), the path (focus pack core
+/// skills with the readiness gates named), and the timeline — DATED when the
+/// moment has a real deadline ("Ready around Oct 18, before Nov 1").
 struct PersonalizedPlanView: View {
     @ObservedObject var viewModel: OnboardingViewModel
     @AppStorage("numind.userName") private var userName = "You"
@@ -9,15 +12,16 @@ struct PersonalizedPlanView: View {
 
     private var minutesPerDay: Int { viewModel.signals.dailyMinutes ?? 10 }
     private var challengeCount: Int { viewModel.signals.dailyChallengeCount }
+    private var packTitle: String { viewModel.focusPack?.title ?? "your focus" }
+    private var coreCount: Int { max(viewModel.moneyMapRows.count, 3) }
 
-    private var aspirationText: String {
-        switch viewModel.signals.aspiration {
-        case .tipInstantly:       return "tip in your head instantly"
-        case .confidentWithMoney: return "feel confident with money decisions"
-        case .spotGoodDeals:      return "spot good deals effortlessly"
-        case .fasterThanPhone:    return "do mental math faster than your phone"
-        case nil:                 return "build your everyday math skills"
-        }
+    private var deadline: MomentsRegistry.Deadline? {
+        guard let id = viewModel.signals.focusPackId else { return nil }
+        return MomentsRegistry.nextDeadline(for: id)
+    }
+
+    private var readyDate: Date {
+        MomentsRegistry.readyEstimate(coreSkillCount: coreCount)
     }
 
     var body: some View {
@@ -39,34 +43,27 @@ struct PersonalizedPlanView: View {
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .padding(.top, 10)
 
-                        (Text("You said you want to ") +
-                         Text(aspirationText).fontWeight(.semibold).foregroundColor(Theme.Colors.deepNavy) +
-                         Text(" \u{2014} here\u{2019}s how we\u{2019}ll get there."))
+                        (Text("Goal: walk into ") +
+                         Text(packTitle).fontWeight(.semibold).foregroundColor(Theme.Colors.deepNavy) +
+                         Text(" prepared \u{2014} here\u{2019}s how we\u{2019}ll get there."))
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Colors.mutedText)
                             .lineSpacing(3)
                             .padding(.top, 8)
 
-                        // Hero plan card
-                        dailyGoalCard
+                        dailyRingCard
                             .padding(.top, 18)
 
-                        // Focus areas
-                        Text("Focus areas")
+                        Text("Your path")
                             .font(Theme.Typography.small)
                             .textCase(.uppercase)
                             .tracking(1.5)
                             .foregroundStyle(Theme.Colors.mutedText)
                             .padding(.top, 22)
 
-                        VStack(spacing: 10) {
-                            ForEach(focusRows, id: \.name) { row in
-                                focusRowView(row)
-                            }
-                        }
-                        .padding(.top, 10)
+                        pathCard
+                            .padding(.top, 10)
 
-                        // Timeline card
                         timelineCard
                             .padding(.top, 22)
                     }
@@ -81,30 +78,30 @@ struct PersonalizedPlanView: View {
         }
     }
 
-    // MARK: - Daily Goal Card
+    // MARK: - Daily Ring Card
 
-    private var dailyGoalCard: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("Daily goal")
-                .font(Theme.Typography.small)
-                .textCase(.uppercase)
-                .tracking(1)
-                .foregroundStyle(.white.opacity(0.6))
+    private var dailyRingCard: some View {
+        HStack(spacing: 18) {
+            GoalRing(progress: 0.65, isClosed: false, size: 64)
 
-            HStack(alignment: .firstTextBaseline, spacing: 6) {
-                Text("\(minutesPerDay) min")
-                    .font(.system(size: 36, weight: .heavy, design: .rounded))
-                    .foregroundStyle(.white)
-                Text("/ day")
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Theme.Colors.insightYellow)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Daily ring")
+                    .font(Theme.Typography.small)
+                    .textCase(.uppercase)
+                    .tracking(1)
+                    .foregroundStyle(.white.opacity(0.6))
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Text("\(challengeCount) questions")
+                        .font(.system(size: 26, weight: .heavy, design: .rounded))
+                        .foregroundStyle(.white)
+                    Text("\u{2248} \(minutesPerDay) min")
+                        .font(.system(size: 15, weight: .semibold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.insightYellow)
+                }
+                Text("Anything counts \u{2014} a workout, a lesson, a refresh.")
+                    .font(Theme.Typography.caption)
+                    .foregroundStyle(.white.opacity(0.65))
             }
-            .padding(.top, 6)
-
-            Text("~\(challengeCount) questions \u{00B7} resets at midnight")
-                .font(Theme.Typography.caption)
-                .foregroundStyle(.white.opacity(0.65))
-                .padding(.top, 4)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(18)
@@ -119,95 +116,58 @@ struct PersonalizedPlanView: View {
         .shadow(color: Theme.Colors.deepNavy.opacity(0.18), radius: 18, x: 0, y: 8)
     }
 
-    // MARK: - Focus Rows
+    // MARK: - Path Card
 
-    private struct FocusRowData: Identifiable {
-        var id: String { name }
-        let name: String
-        let target: String
-        let color: Color
-        let progress: Double
-    }
-
-    private let colorMap: [String: Color] = [
-        "smart_shopping": Theme.Colors.primaryBlue,
-        "salary": Theme.Colors.warmOrange,
-        "investing": Theme.Colors.investIndigo,
-        "debt": Theme.Colors.debtCoral,
-        "housing": Theme.Colors.housingRose,
-        "taxes": Theme.Colors.taxSlate,
-        "insurance": Theme.Colors.insurancePurple,
-        "car": Theme.Colors.mindTeal,
-        "student_loans": Theme.Colors.warmOrange,
-    ]
-
-    private let nameMap: [String: String] = [
-        "smart_shopping": "Tips & smart shopping",
-        "salary": "Salary & income",
-        "investing": "Returns & investing",
-        "debt": "Debt & interest rates",
-        "housing": "Housing & rent",
-        "taxes": "Taxes & paycheck",
-        "insurance": "Insurance & healthcare",
-        "car": "Car buying & big purchases",
-        "student_loans": "Student loans & education",
-    ]
-
-    private var focusRows: [FocusRowData] {
-        viewModel.signals.recommendationPriority.prefix(4).enumerated().map { index, topicId in
-            let difficulty = viewModel.signals.startingDifficulties[topicId] ?? .beginner
-            let target: String
-            let progress: Double
-            switch difficulty {
-            case .intermediate: target = "from Strong \u{2192} Mastery"; progress = 0.4
-            case .foundation:   target = "from Needs Work \u{2192} Strong"; progress = 0.18
-            case .beginner:     target = "Starting fresh"; progress = 0.05
-            }
-            return FocusRowData(
-                name: nameMap[topicId] ?? topicId.capitalized,
-                target: target,
-                color: colorMap[topicId] ?? Theme.Colors.primaryBlue,
-                progress: progress
-            )
-        }
-    }
-
-    private func focusRowView(_ row: FocusRowData) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 10) {
-                Circle()
-                    .fill(row.color)
-                    .frame(width: 8, height: 8)
-                Text(row.name)
-                    .font(.system(size: 15, weight: .semibold))
+    private var pathCard: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                Text(packTitle)
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
                     .foregroundStyle(Theme.Colors.deepNavy)
                 Spacer()
-                Text(row.target)
-                    .font(.system(size: 12))
-                    .foregroundStyle(Theme.Colors.mutedText)
+                Text("\(coreCount) CORE SKILLS")
+                    .font(.system(size: 10, weight: .heavy))
+                    .tracking(0.5)
+                    .foregroundStyle(Theme.Colors.mindTeal)
             }
 
-            // Progress bar
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(Theme.Colors.mutedTint)
-                    Capsule()
-                        .fill(row.color)
-                        .frame(width: geo.size.width * row.progress)
-                }
+            VStack(alignment: .leading, spacing: 10) {
+                gateRow(number: 1, text: "Learn each core skill", icon: "book")
+                gateRow(number: 2, text: "Prove the hard ones", icon: "bolt")
+                gateRow(number: 3, text: "Hold them over time", icon: "calendar")
+                gateRow(number: 4, text: "Apply one to a real scenario", icon: "checkmark.seal")
             }
-            .frame(height: 6)
-            .clipShape(Capsule())
+
+            Text("Clear all four and the pack reads Ready \u{2014} the honest kind.")
+                .font(Theme.Typography.small)
+                .foregroundStyle(Theme.Colors.mutedText)
         }
-        .padding(14)
+        .padding(18)
         .background(Theme.Colors.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
         )
-        .shadow(color: .black.opacity(0.04), radius: 3, x: 0, y: 1)
+        .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
+    }
+
+    private func gateRow(number: Int, text: String, icon: String) -> some View {
+        HStack(spacing: 12) {
+            Text("\(number)")
+                .font(.system(size: 12, weight: .heavy, design: .rounded))
+                .foregroundStyle(Theme.Colors.primaryBlue)
+                .frame(width: 24, height: 24)
+                .background(Theme.Colors.primaryBlueTint)
+                .clipShape(Circle())
+            Text(text)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(Theme.Colors.deepNavy)
+            Spacer()
+            Image(systemName: icon)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(Theme.Colors.mutedText)
+        }
     }
 
     // MARK: - Timeline Card
@@ -215,7 +175,7 @@ struct PersonalizedPlanView: View {
     private var timelineCard: some View {
         NumindCard {
             HStack(alignment: .top, spacing: 12) {
-                Text("\u{1F3AF}")
+                Text("\u{1F4C5}")
                     .font(.system(size: 22))
                     .frame(width: 44, height: 44)
                     .background(Theme.Colors.insightYellowTint)
@@ -227,18 +187,31 @@ struct PersonalizedPlanView: View {
                         .textCase(.uppercase)
                         .tracking(1)
                         .foregroundStyle(Theme.Colors.mutedText)
-                    Text("In 30 days, you\u{2019}ll \(aspirationText).")
+                    Text(timelineHeadline)
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundStyle(Theme.Colors.deepNavy)
                         .lineSpacing(2)
                         .padding(.top, 2)
-                    Text("Based on your time commitment + diagnostic.")
+                    Text("Based on your pace and your diagnostic. \u{201C}On track\u{201D} \u{2014} Ready itself is earned, not scheduled.")
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Colors.mutedText)
+                        .lineSpacing(2)
                         .padding(.top, 4)
                 }
             }
         }
+    }
+
+    private var timelineHeadline: String {
+        let readyText = readyDate.formatted(.dateTime.month(.wide).day())
+        if let deadline {
+            let deadlineText = deadline.date.formatted(.dateTime.month(.wide).day())
+            if readyDate < deadline.date {
+                return "\(deadline.label) \(deadlineText). At your pace, you\u{2019}re on track to be Ready around \(readyText)."
+            }
+            return "\(deadline.label) \(deadlineText) \u{2014} it\u{2019}s tight, so we\u{2019}ll front-load the core skills. Start today."
+        }
+        return "At your pace, you\u{2019}re on track to be Ready around \(readyText)."
     }
 }
 

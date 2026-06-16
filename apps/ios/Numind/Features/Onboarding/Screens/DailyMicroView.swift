@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Screen 3 — Solution: "5 minutes a day"
-/// Light background, clock illustration, 17% efficiency stat.
+/// Screen 3 — "It's not knowledge, it's timing."
+/// Money decisions arrive as MOMENTS — the frame the whole funnel runs on.
 struct DailyMicroView: View {
     let onContinue: () -> Void
 
@@ -18,24 +18,22 @@ struct DailyMicroView: View {
                 }
                 .padding(.top, 28)
 
-                Text("What if 5 minutes a day could change that?")
+                Text("You don\u{2019}t need a finance course. You need to be ready on the day it happens.")
                     .font(Theme.Typography.title)
                     .foregroundStyle(Theme.Colors.deepNavy)
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 30)
 
-                (Text("Short, focused sessions make learning ")
-                    + Text("17% more efficient")
+                (Text("Money decisions arrive as ")
+                    + Text("moments")
                         .fontWeight(.semibold)
                         .foregroundColor(Theme.Colors.deepNavy)
-                    + Text(" than traditional study methods."))
+                    + Text(" \u{2014} a job offer every few years, open enrollment every fall, a lease every year. Five minutes a day keeps your money instincts sharp for whichever one is next."))
                     .font(Theme.Typography.body)
                     .foregroundStyle(Theme.Colors.mutedText)
                     .lineSpacing(4)
-                    .padding(.top, 14)
-
-                Text("Source: Journal of Applied Psychology")
-                    .font(.system(size: 11))
-                    .foregroundStyle(Theme.Colors.mutedText.opacity(0.7))
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 14)
 
                 Spacer()
@@ -46,7 +44,7 @@ struct DailyMicroView: View {
             VStack {
                 Spacer()
                 onboardingFooter(dark: false) {
-                    PillButton("Let\u{2019}s find out") { onContinue() }
+                    PillButton("That\u{2019}s me") { onContinue() }
                 }
             }
         }

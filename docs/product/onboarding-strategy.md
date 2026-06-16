@@ -1,15 +1,19 @@
 # Onboarding Strategy
 
-> **Last updated:** May 2026 (after V1 refinement — diagnostic calibration now wired into session difficulty and question count).
+> **Last updated:** June 2026 — **funnel v2 (decision-first) is built as a
+> testable baseline.** The as-built screen-by-screen spec lives in
+> [`onboarding-funnel-v2.md`](onboarding-funnel-v2.md); this doc keeps the
+> strategy + calibration mechanics.
 
-Numind will eventually use a long onboarding flow with:
-1. Welcome/value proposition
-2. Goal selection
-3. Skill confidence question
-4. 5–7 question diagnostic test
-5. Preliminary evaluation
-6. Personalized plan preview
-7. 5-day trial hard paywall
+The 26-screen funnel (anonymous end-to-end, CalAI-style hard paywall at the
+end):
+1. Problem framing (money-stress proof + moments frame + insecurity mirror)
+2. Personalization (confidence, motivations, **life-moment picker** → focus pack, mirroring, real deadline)
+3. Commitment (ring target, kaizen, ADHD tuning, name/age)
+4. **Diagnostic-as-demo** (pack-weighted, shortcut reveal after every answer, live goal ring)
+5. **Money Map** reveal + personalized plan (dated "Ready around…" timeline)
+6. Priming (notifications, ROI, ring-streak goal, projection, trial-reminder transparency)
+7. 7-day-trial hard paywall → welcome → first workout
 
 ## Purpose
 Onboarding should prime the user to believe:

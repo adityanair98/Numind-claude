@@ -173,7 +173,8 @@ final class QuizEngineTests: XCTestCase {
                 "Length of credit history",
                 "Number of inquiries"
             ],
-            correctConceptChoice: "Payment history"
+            correctConceptChoice: "Payment history",
+            isApplication: nil
         )
         let q = QuizEngine.generate(from: template, seed: 42)
         XCTAssertEqual(q.choices.count, 4)
@@ -198,7 +199,8 @@ final class QuizEngineTests: XCTestCase {
             distractorStrategy: .roundedNeighbor,
             explanationTemplate: "Always A.",
             conceptChoices: ["A", "B", "C", "D"],
-            correctConceptChoice: "A"
+            correctConceptChoice: "A",
+            isApplication: nil
         )
         let q1 = QuizEngine.generate(from: template, seed: 42)
         let q2 = QuizEngine.generate(from: template, seed: 42)
@@ -232,5 +234,38 @@ final class QuizEngineTests: XCTestCase {
             variables: ["billAmount": 50, "tipPercent": 18]
         )
         XCTAssertEqual(result, .ok(9))
+    }
+
+    // MARK: - Phase 10 Block 1 formulas
+
+    func test_phase10Formulas_computeCorrectly() {
+        let cases: [(formula: String, vars: [String: Double], expected: Double)] = [
+            ("negotiationValue", ["extraSalary": 3000, "years": 10], 30000),
+            ("cashOutCost", ["balance": 20000, "taxRate": 22], 6400),
+            ("rolloverShortfall", ["balance": 20000], 4000),
+            ("paydayFee", ["loanAmount": 300, "feePer100": 15], 45),
+            ("paydayAPR", ["feePer100": 15, "termDays": 14], 391.07),
+            ("overdraftFeePct", ["fee": 35, "purchase": 20], 175),
+            ("carEquity", ["carValue": 14000, "loanBalance": 19500], -5500),
+            ("rollInLoan", ["newCarPrice": 30000, "shortfall": 5500], 35500),
+            ("shrinkPct", ["oldSize": 16, "newSize": 12], 33.33),
+        ]
+        for c in cases {
+            guard case .ok(let value) = QuizEngine.compute(formula: c.formula, variables: c.vars) else {
+                XCTFail("formula \(c.formula) failed to compute"); continue
+            }
+            XCTAssertEqual(value, c.expected, accuracy: 0.01, "formula \(c.formula)")
+        }
+    }
+
+    func test_carEquity_isNegativeWhenUpsideDown() {
+        // The one deliberately negative-capable Phase 10 formula — its template
+        // (negeq_equity_d1) is allowlisted in ContentInvariantTests because the
+        // negative result IS the lesson.
+        guard case .ok(let value) = QuizEngine.compute(
+            formula: "carEquity",
+            variables: ["carValue": 12000, "loanBalance": 21000]
+        ) else { return XCTFail("carEquity failed to compute") }
+        XCTAssertEqual(value, -9000)
     }
 }

@@ -4,19 +4,31 @@
     "title": "First Paycheck",
     "tagline": "Make sense of your first real paycheck",
     "hook": "You got the offer. The paycheck arrives. Why is it so much less than the salary you were quoted?",
-    "description": "Every adult sees their first real paycheck and thinks 'wait, where did the rest go?' This pack walks you through the answer in 7 short lessons: gross vs net, what each line item on your stub means, how marginal tax brackets actually work (hint: it's not the rate on all your income), and the one W-4 adjustment that gets you more money each paycheck instead of waiting for a refund.",
+    "description": "Every adult sees their first real paycheck and thinks 'wait, where did the rest go?' This pack walks you through the answer: gross vs net, what each line item on your stub means, how marginal tax brackets actually work (hint: it's not the rate on all your income), what a 401(k) contribution really costs you per check, whether you're exempt or overtime-eligible, and the one W-4 adjustment that gets you more money each paycheck instead of waiting for a refund.",
     "lessonIds": [
       "net_pay_check",
       "concept_taxes_paycheck_stub",
       "taxes_brackets",
       "raise_impact",
+      "pay_period_convert",
+      "overtime_calc",
+      "concept_salary_exempt_status",
+      "salary_401k_paycheck_impact",
       "salary_total_comp",
       "investing_401k_match",
-      "taxes_w4_adjust"
+      "taxes_w4_adjust",
+      "banking_basics_fees",
+      "credit_from_zero"
+    ],
+    "coreLessonIds": [
+      "net_pay_check",
+      "concept_taxes_paycheck_stub",
+      "taxes_brackets",
+      "salary_401k_paycheck_impact"
     ],
     "anchorLessonId": "net_pay_check",
-    "estimatedMinutes": 18,
-    "lastVerified": "2026-05-26",
+    "estimatedMinutes": 30,
+    "lastVerified": "2026-06-10",
     "primarySkillAxis": "income_and_paycheck",
     "secondarySkillAxes": [
       "cash_flow_and_budgeting",
@@ -28,18 +40,28 @@
     "title": "First Apartment",
     "tagline": "Budget your first place without getting surprised by the bill",
     "hook": "You found a $1,800/month apartment. Why does it actually take $8,000 in cash to move in?",
-    "description": "Renting your first place is the most common first big-money decision after a new job. This pack covers what most renters underestimate by 35-55%: not just rent, but the rent-component cash (first + last + security + sometimes broker), the utility deposits and furniture setup, the move itself, and the lease clauses that bite later. Includes the 28% affordability rule, the true-cost-of-renting calc that adds insurance and utilities, the roommate-math savings comparison, and the lease clauses you should never sign without negotiating.",
+    "description": "Renting your first place is the most common first big-money decision after a new job. This pack covers what most renters underestimate by 35-55%: not just rent, but the rent-component cash (first + last + security + sometimes broker), the utility deposits and furniture setup, the move itself, and the lease clauses that bite later. Includes the 28% affordability rule, the true-cost-of-renting calc that adds insurance and utilities, the roommate-math savings comparison, the renew-vs-move math when the increase letter arrives, and what breaking a lease actually costs.",
     "lessonIds": [
       "housing_rent_affordability",
       "housing_true_cost",
       "housing_move_in_cost",
       "housing_first_month_true_cost",
       "housing_roommate_math",
-      "concept_housing_lease_clauses"
+      "housing_rent_increase",
+      "housing_lease_break",
+      "concept_housing_lease_clauses",
+      "insurance_renters"
+    ],
+    "coreLessonIds": [
+      "housing_rent_affordability",
+      "housing_first_month_true_cost",
+      "housing_true_cost",
+      "concept_housing_lease_clauses",
+      "insurance_renters"
     ],
     "anchorLessonId": "housing_first_month_true_cost",
-    "estimatedMinutes": 16,
-    "lastVerified": "2026-05-26",
+    "estimatedMinutes": 22,
+    "lastVerified": "2026-06-10",
     "primarySkillAxis": "big_purchases",
     "secondarySkillAxes": [
       "cash_flow_and_budgeting"
@@ -50,20 +72,30 @@
     "title": "Credit Card Cleanup",
     "tagline": "Stop paying $$$ in interest. Start optimizing for payoff.",
     "hook": "You have a balance. The minimum payment isn't moving the number. Where do you start?",
-    "description": "Credit-card debt is the most expensive consumer debt in America (avg APR ~22%, per CFPB). This pack is the complete playbook: how interest actually compounds, why minimum payments keep you treading water, how to estimate your real payoff time, when a 0% balance transfer is worth the fee, how to time your statement-close payments to fix your credit utilization, and the rewards-card trap that costs more in interest than it pays in cashback.",
+    "description": "Credit-card debt is the most expensive consumer debt in America (avg APR ~22%, per CFPB). This pack is the complete playbook: how interest actually compounds, why minimum payments keep you treading water, how to estimate your real payoff time, when a 0% balance transfer is worth the fee, how to time your statement-close payments to fix your credit utilization, why payday loans and cash advances make a debt hole deeper, and the rewards-card trap that costs more in interest than it pays in cashback.",
     "lessonIds": [
       "credit_card_interest",
       "minimum_payment_trap",
       "debt_cc_payoff_time",
       "debt_balance_transfer",
       "debt_avalanche_snowball",
+      "debt_apr_vs_apy",
       "debt_cc_statement_cycle",
       "concept_debt_credit_scores",
-      "debt_cc_rewards_vs_interest"
+      "concept_ef_vs_debt_priority",
+      "payday_loan_cost",
+      "debt_cc_rewards_vs_interest",
+      "credit_from_zero"
+    ],
+    "coreLessonIds": [
+      "credit_card_interest",
+      "minimum_payment_trap",
+      "debt_cc_payoff_time",
+      "debt_balance_transfer"
     ],
     "anchorLessonId": "debt_cc_payoff_time",
-    "estimatedMinutes": 22,
-    "lastVerified": "2026-05-26",
+    "estimatedMinutes": 30,
+    "lastVerified": "2026-06-10",
     "primarySkillAxis": "debt_and_credit",
     "secondarySkillAxes": [
       "everyday_money_math"
@@ -74,7 +106,7 @@
     "title": "Open Enrollment",
     "tagline": "Pick your benefits in 10 minutes without guessing",
     "hook": "Open enrollment is that 2-week window each fall when you lock in 12 months of medical, HSA/FSA, life, and disability decisions. Don't autopilot.",
-    "description": "Most workers re-elect last year's benefits on autopilot and leave $500-1,500/yr of tax savings on the table. This pack is the 10-minute decision tree: HDHP vs PPO based on your expected medical year, HSA vs FSA based on which plan you picked, DCFSA if you have childcare, commuter benefits if you commute, supplemental life if you have dependents, and the four add-ons (legal / identity / accident / cancer) you should almost always skip.",
+    "description": "Most workers re-elect last year's benefits on autopilot and leave $500-1,500/yr of tax savings on the table. This pack is the 10-minute decision tree: HDHP vs PPO based on your expected medical year, the out-of-pocket max that caps your worst case, HSA vs FSA based on which plan you picked, supplemental life and disability if anyone depends on your income, and what happens to coverage when a job ends (COBRA vs marketplace). Plus the four add-ons you should almost always skip.",
     "lessonIds": [
       "insurance_deductible_vs_premium",
       "insurance_copay_coinsurance",
@@ -82,11 +114,21 @@
       "insurance_hdhp_vs_ppo",
       "insurance_hsa_advantage",
       "insurance_fsa_use_it",
+      "insurance_life_coverage",
+      "concept_insurance_disability",
+      "job_change_health",
+      "concept_insurance_open_enrollment"
+    ],
+    "coreLessonIds": [
+      "insurance_deductible_vs_premium",
+      "insurance_hdhp_vs_ppo",
+      "insurance_oop_max",
+      "insurance_hsa_advantage",
       "concept_insurance_open_enrollment"
     ],
     "anchorLessonId": "concept_insurance_open_enrollment",
-    "estimatedMinutes": 20,
-    "lastVerified": "2026-05-26",
+    "estimatedMinutes": 27,
+    "lastVerified": "2026-06-10",
     "primarySkillAxis": "protection_and_benefits",
     "secondarySkillAxes": [
       "cash_flow_and_budgeting",
@@ -98,16 +140,24 @@
     "title": "Buying a Home",
     "tagline": "How much you can afford — and how much cash you actually need",
     "hook": "Mortgage calculators tell you the monthly payment. They don't tell you the $60K of cash you need before keys.",
-    "description": "Buying your first home is the largest single transaction most adults will ever make. This pack covers the full picture: the Fannie Mae 28% affordability rule, the mortgage-rate factor that lets you do mental mortgage math, the cash-to-close that's typically 5% of purchase price ON TOP of the down payment (most first-time buyers underestimate by $20-30K), and the buy-vs-rent decision framework calibrated for today's mortgage rates.",
+    "description": "Buying your first home is the largest single transaction most adults will ever make. This pack covers the full picture: the Fannie Mae 28% affordability rule, the debt-to-income ratio lenders actually underwrite against, the mortgage-rate factor that lets you do mental mortgage math, the cash-to-close that's typically 5% of purchase price ON TOP of the down payment (most first-time buyers underestimate by $20-30K), and the buy-vs-rent decision framework calibrated for today's mortgage rates.",
     "lessonIds": [
       "housing_affordability_full",
+      "debt_to_income",
+      "housing_mortgage_vs_rent",
+      "housing_cash_to_close",
+      "concept_housing_buy_vs_rent_framework"
+    ],
+    "coreLessonIds": [
+      "housing_affordability_full",
+      "debt_to_income",
       "housing_mortgage_vs_rent",
       "housing_cash_to_close",
       "concept_housing_buy_vs_rent_framework"
     ],
     "anchorLessonId": "housing_affordability_full",
-    "estimatedMinutes": 14,
-    "lastVerified": "2026-05-26",
+    "estimatedMinutes": 15,
+    "lastVerified": "2026-06-10",
     "primarySkillAxis": "big_purchases",
     "secondarySkillAxes": [
       "debt_and_credit",
@@ -119,20 +169,28 @@
     "title": "Student Loan Repayment",
     "tagline": "Know what you owe — and the trap of refinancing federal loans",
     "hook": "Federal IDR, PSLF, refinancing — the options feel infinite. Here's the math + the one rule that prevents most regret.",
-    "description": "Federal student-loan landscape is in active flux (post-SAVE rulings, evolving IDR plan availability). This pack gives you the durable math: what your monthly payment will be on standard 10-year, how much interest the loan costs over its life, when refinancing saves real money — and crucially, when it permanently forfeits federal protections (IDR, PSLF, deferment, discharge) that almost always exceed the rate savings for public-service workers. Also covers the IRC §127 employer benefit that can pay $5,250/yr tax-free toward your loans.",
+    "description": "Federal student-loan landscape is in active flux (post-SAVE rulings, evolving IDR plan availability). This pack gives you the durable math: what your monthly payment will be on standard 10-year, how much interest the loan costs over its life, what to do with interest during the grace period, the subsidized/unsubsidized distinction that decides which loan to pay first, when refinancing saves real money — and crucially, when it permanently forfeits federal protections (IDR, PSLF, deferment, discharge) that almost always exceed the rate savings for public-service workers. Also covers the IRC §127 employer benefit and the Parent PLUS vs private comparison.",
     "lessonIds": [
       "student_loan_monthly",
       "student_loan_total_cost",
       "student_loan_grace_period",
+      "concept_sl_subsidized_vs_unsubsidized",
       "student_loan_idr",
       "student_loan_pslf",
       "student_loan_employer_benefit",
+      "student_loan_parent_plus",
       "student_loan_refinance",
       "concept_sl_refi_protections_lost"
     ],
+    "coreLessonIds": [
+      "student_loan_monthly",
+      "student_loan_grace_period",
+      "student_loan_idr",
+      "concept_sl_refi_protections_lost"
+    ],
     "anchorLessonId": "concept_sl_refi_protections_lost",
-    "estimatedMinutes": 22,
-    "lastVerified": "2026-05-26",
+    "estimatedMinutes": 27,
+    "lastVerified": "2026-06-10",
     "primarySkillAxis": "debt_and_credit",
     "secondarySkillAxes": [
       "income_and_paycheck",
@@ -144,20 +202,33 @@
     "title": "Investing Starter Pack",
     "tagline": "The 4 decisions that matter — everything else is noise",
     "hook": "You're ready to start investing. Skip the YouTube finance bros and the crypto pitches — here's what actually compounds.",
-    "description": "For most adults, investing is dominated by 4 decisions: capture the employer 401(k) match, pick Roth vs Traditional, automate monthly contributions, and let compounding do the work. This pack walks through each in order, including the three-accounts clarification (Roth IRA vs Roth 401(k) vs Traditional 401(k) — same word, different account), the emergency-fund prerequisite that keeps your portfolio safe from emergencies, and where to actually park the EF (HYSA at 4-5%, not the 0.01% big-bank account).",
+    "description": "For most adults, investing is dominated by 4 decisions: capture the employer 401(k) match, pick Roth vs Traditional, automate monthly contributions into low-fee funds, and let compounding do the work. This pack walks through each in order — starting with what a stock and an index fund actually are, why fund fees quietly eat six figures over a career, why dollar-cost averaging beats waiting for the dip, and the behavioral traps (panic-selling, performance-chasing) that cost more than any fee. Includes the emergency-fund prerequisite, where to park it, and the HSA's stealth-retirement triple tax advantage.",
     "lessonIds": [
+      "concept_investing_what_are_stocks",
       "rule_of_72",
       "investing_401k_match",
       "investing_roth_vs_traditional",
       "investing_roth_decision",
       "concept_investing_three_accounts",
       "investing_compound_growth",
+      "investing_fund_fees",
+      "investing_dca",
+      "concept_investing_behavioral_traps",
+      "insurance_hsa_advantage",
+      "salary_401k_paycheck_impact",
       "investing_emergency_fund",
       "concept_investing_ef_location"
     ],
+    "coreLessonIds": [
+      "concept_investing_what_are_stocks",
+      "investing_401k_match",
+      "investing_roth_decision",
+      "investing_compound_growth",
+      "investing_fund_fees"
+    ],
     "anchorLessonId": "investing_401k_match",
-    "estimatedMinutes": 24,
-    "lastVerified": "2026-05-26",
+    "estimatedMinutes": 36,
+    "lastVerified": "2026-06-10",
     "primarySkillAxis": "investing_and_future",
     "secondarySkillAxes": [
       "income_and_paycheck"
@@ -168,19 +239,32 @@
     "title": "Car Buying",
     "tagline": "Walk into the dealership knowing the math",
     "hook": "The salesperson's job is to get you to negotiate by monthly payment. Yours is to negotiate by out-the-door price.",
-    "description": "Car dealerships have refined their tactics over decades. This pack is your counter-playbook: the monthly-payment-vs-total-cost trap (a $400/mo car can cost $32K total), why the 20/4/10 rule keeps you from being car-poor, the lease-vs-buy math including acquisition + disposition fees most comparisons skip, the F&I markup that's pure dealer profit, and why extended warranties on reliable brands almost always lose money.",
+    "description": "Car dealerships have refined their tactics over decades. This pack is your counter-playbook: the monthly-payment-vs-total-cost trap (a $400/mo car can cost $32K total), why the 20/4/10 rule keeps you from being car-poor, the down-payment and depreciation math, the negative-equity check to run BEFORE any trade-in (nearly a third of trade-ins are underwater — Edmunds), trade-in vs private sale including the sales-tax credit, the lease-vs-buy math including the fees most comparisons skip, the F&I markup that's pure dealer profit, and why extended warranties on reliable brands almost always lose money.",
     "lessonIds": [
       "car_monthly_vs_total",
       "car_loan_term",
+      "car_down_payment",
       "car_20_4_10_rule",
+      "car_depreciation",
+      "car_negative_equity",
+      "car_trade_in_vs_private",
       "car_total_cost_ownership",
       "car_lease_vs_buy",
+      "debt_to_income",
       "concept_car_negotiation",
-      "concept_car_warranty"
+      "concept_car_warranty",
+      "insurance_auto_shopping"
+    ],
+    "coreLessonIds": [
+      "car_monthly_vs_total",
+      "car_20_4_10_rule",
+      "car_down_payment",
+      "car_negative_equity",
+      "concept_car_negotiation"
     ],
     "anchorLessonId": "concept_car_negotiation",
-    "estimatedMinutes": 20,
-    "lastVerified": "2026-05-26",
+    "estimatedMinutes": 32,
+    "lastVerified": "2026-06-10",
     "primarySkillAxis": "big_purchases",
     "secondarySkillAxes": [
       "debt_and_credit"
@@ -190,20 +274,30 @@
     "id": "everyday_spending",
     "title": "Everyday Spending",
     "tagline": "Master the mental math behind daily money decisions",
-    "hook": "Tips, discounts, sales tax, subscriptions — the math you do constantly without thinking about it. This pack makes those decisions faster.",
-    "description": "Seven short lessons covering the calculations that come up every day: the 10% tip move, why 20% + 10% off isn't 30%, how to factor sales tax into your discount math, and when a membership like Costco / DashPass / Uber One pays for itself. Most of these you'll use within 24 hours of learning them. Anchor lesson: the membership-worth calc, the most generative skill in the pack.",
+    "hook": "Tips, discounts, sales tax, subscriptions, shrinking packages — the math you do constantly without thinking about it. This pack makes those decisions faster.",
+    "description": "Short lessons covering the calculations that come up every day: the 10% tip move, why 20% + 10% off isn't 30%, how to factor sales tax into your discount math, the unit-price check that defeats shrinkflation, the cost-per-use test for any purchase, how retailers engineer prices to fool your gut, and when a membership like Costco / DashPass / Uber One pays for itself. Most of these you'll use within 24 hours of learning them.",
     "lessonIds": [
       "tip_10_percent_trick",
       "tip_18_percent",
       "discount_stacked",
+      "discount_bogo",
       "discount_price_plus_tax",
       "sales_tax_quick",
+      "shrinkflation_unit_price",
+      "price_per_use",
       "subscription_math",
+      "concept_shopping_manipulation",
+      "discount_membership_worth"
+    ],
+    "coreLessonIds": [
+      "tip_10_percent_trick",
+      "sales_tax_quick",
+      "shrinkflation_unit_price",
       "discount_membership_worth"
     ],
     "anchorLessonId": "discount_membership_worth",
-    "estimatedMinutes": 16,
-    "lastVerified": "2026-05-26",
+    "estimatedMinutes": 28,
+    "lastVerified": "2026-06-10",
     "primarySkillAxis": "everyday_money_math",
     "secondarySkillAxes": [
       "cash_flow_and_budgeting"
@@ -214,22 +308,100 @@
     "title": "Taxes Without Panic",
     "tagline": "Understand your tax situation in 15 minutes",
     "hook": "April doesn't have to be scary. The math behind your tax bill is simpler than it looks once you know what to ignore.",
-    "description": "Seven lessons that demystify the US individual income tax: how to read your paycheck stub, what 'taxable income' actually means versus gross income, how marginal brackets work in layers (no — being 'in the 22% bracket' doesn't mean all your income is taxed at 22%), when to itemize, what your refund really tells you, and the W-4 tweak that gets you more money each paycheck. Anchor: the marginal-bracket lesson, which threads through everything else.",
+    "description": "Eight lessons that demystify the US individual income tax: how to read your paycheck stub, what 'taxable income' actually means versus gross income, how marginal brackets work in layers (no — being 'in the 22% bracket' doesn't mean all your income is taxed at 22%), when to itemize, what your refund really tells you, the self-employment tax math for side income, and the W-4 tweak that gets you more money each paycheck. Anchor: the marginal-bracket lesson, which threads through everything else.",
     "lessonIds": [
       "concept_taxes_paycheck_stub",
       "taxes_brackets",
       "taxes_deductions",
       "taxes_standard_vs_itemized",
       "taxes_refund",
+      "taxes_self_employment",
       "taxes_w4_adjust",
-      "taxes_capital_gains"
+      "taxes_capital_gains",
+      "taxes_filing_mechanics"
+    ],
+    "coreLessonIds": [
+      "concept_taxes_paycheck_stub",
+      "taxes_brackets",
+      "taxes_standard_vs_itemized",
+      "taxes_refund",
+      "taxes_filing_mechanics"
     ],
     "anchorLessonId": "taxes_brackets",
-    "estimatedMinutes": 19,
-    "lastVerified": "2026-05-26",
+    "estimatedMinutes": 22,
+    "lastVerified": "2026-06-10",
     "primarySkillAxis": "income_and_paycheck",
     "secondarySkillAxes": [
       "cash_flow_and_budgeting"
+    ]
+  },
+  {
+    "id": "protect_your_money",
+    "title": "Protect Your Money",
+    "tagline": "Scams, fraud, and the free defenses most people never use",
+    "hook": "Adults in their 20s report losing money to fraud more often than any other age group. The defenses are free — if you know they exist.",
+    "description": "The highest-stakes money skills aren't about growing money — they're about not losing it in an afternoon. This pack covers the imposter-scam playbook (fake bank fraud alerts, 'Zelle yourself to a safe account', spoofed caller ID) and the one callback rule that defeats all of it; the payment-method reversibility ladder that explains why scammers demand gift cards, wire, and crypto; your free federal credit-file rights (weekly reports, disputes, freezes); the predatory-lending math behind payday loans and cash advances; how to read a medical bill against its EOB; the emergency fund that keeps a bad month from becoming debt; and which insurance actually deserves your premium dollars.",
+    "lessonIds": [
+      "scam_imposter_patterns",
+      "scam_payment_rails",
+      "credit_report_rights",
+      "concept_debt_credit_scores",
+      "payday_loan_cost",
+      "investing_emergency_fund",
+      "concept_investing_ef_location",
+      "concept_insurance_policy_priority",
+      "insurance_medical_bill_eob",
+      "dispute_a_charge",
+      "estate_beneficiaries"
+    ],
+    "coreLessonIds": [
+      "scam_imposter_patterns",
+      "scam_payment_rails",
+      "credit_report_rights",
+      "investing_emergency_fund",
+      "dispute_a_charge"
+    ],
+    "anchorLessonId": "scam_imposter_patterns",
+    "estimatedMinutes": 25,
+    "lastVerified": "2026-06-10",
+    "primarySkillAxis": "protection_and_benefits",
+    "secondarySkillAxes": [
+      "debt_and_credit",
+      "cash_flow_and_budgeting"
+    ]
+  },
+  {
+    "id": "the_job_offer",
+    "title": "The Job Offer",
+    "tagline": "Evaluate it, negotiate it, and exit your old job without leaving money behind",
+    "hook": "An offer letter is a starting point, not a verdict. Ten minutes of math and one script can be worth tens of thousands.",
+    "description": "Job changes are where careers gain — or quietly leak — the most money. This pack covers the full transition: how to compare total compensation (base, bonus, equity, benefits — not just salary), the W-2 vs 1099 break-even that catches contractors off guard, RSU and vesting mechanics including the quit-timing check, the negotiation math and scripts (anchoring, countering with data, using a competing offer), whether the raise beats inflation at all, and the two exit moves that protect what you've built: the direct 401(k) rollover (skip the 20%-withholding trap — about 41% of leavers cash out and pay dearly) and the COBRA-vs-marketplace health coverage decision with its 60-day clock.",
+    "lessonIds": [
+      "salary_negotiation",
+      "salary_total_comp",
+      "inflation_adjusted_raise",
+      "salary_w2_vs_1099_offer",
+      "salary_rsu_basics",
+      "salary_bonus_after_tax",
+      "salary_401k_vesting",
+      "investing_401k_match",
+      "job_change_401k",
+      "job_change_health"
+    ],
+    "coreLessonIds": [
+      "salary_negotiation",
+      "salary_total_comp",
+      "salary_w2_vs_1099_offer",
+      "salary_401k_vesting",
+      "job_change_401k"
+    ],
+    "anchorLessonId": "salary_negotiation",
+    "estimatedMinutes": 27,
+    "lastVerified": "2026-06-10",
+    "primarySkillAxis": "income_and_paycheck",
+    "secondarySkillAxes": [
+      "investing_and_future",
+      "protection_and_benefits"
     ]
   }
 ]

@@ -3,12 +3,13 @@ import SwiftUI
 /// Post-session insight screen shown after completing the Daily Workout
 /// (formerly Daily Challenge).
 ///
-/// Displays the user's current Numind Score, a 7-axis radar chart (or
-/// bar chart if fewer than 3 axes have evidence), session stats, and a
-/// recommended lesson for the weakest measured axis.
+/// Displays the daily ring + skills that moved this session, a 7-axis
+/// performance radar (or bar chart if fewer than 3 axes have evidence),
+/// session stats, and a recommended lesson for the weakest measured axis.
 ///
-/// Phase 5d wired in the 7-axis competency model — see
-/// `apps/ios/Numind/Domain/Progress/NumindScoreEngine.swift`.
+/// Phase 10 retired the visible Level/XP headline for the goal ring +
+/// capability language; the radar survives as a per-session diagnostic over
+/// `NumindScoreEngine.axisResults`.
 struct DailyInsightView: View {
 
     // MARK: - Input
@@ -22,8 +23,12 @@ struct DailyInsightView: View {
         let previousScore: Int?       // 0–100 seven days ago, nil if no history
     }
 
-    let overallScore: Int
-    let scoreDelta: Int
+    /// Daily ring fill (0–1) after this session.
+    let ringProgress: Double
+    /// Whether today's ring closed (the day counts toward the streak).
+    let ringClosed: Bool
+    /// Skills whose state changed this session ("Net pay — Mastered").
+    let skillsMoved: [SkillMove]
     let axisScores: [AxisScore]
 
     /// SkillAxis values that appeared in this session's question set.
@@ -39,10 +44,6 @@ struct DailyInsightView: View {
 
     let onContinue: () -> Void
     var onLearnWeakness: ((Lesson) -> Void)? = nil
-
-    // MARK: - State
-
-    @State private var scoreAnimated: Int = 0
 
     // MARK: - Derived
 
@@ -98,11 +99,6 @@ struct DailyInsightView: View {
                 )
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
-        .onAppear {
-            withAnimation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3)) {
-                scoreAnimated = overallScore
-            }
-        }
     }
 
     // MARK: - Header
@@ -112,25 +108,36 @@ struct DailyInsightView: View {
             Text("Today's Insight")
                 .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundStyle(Theme.Colors.deepNavy)
-            Text("Here's how your number sense is looking.")
+            Text("Here's how your money sense is looking.")
                 .font(Theme.Typography.caption)
                 .foregroundStyle(Theme.Colors.mutedText)
                 .multilineTextAlignment(.center)
         }
     }
 
-    // MARK: - Score ring
+    // MARK: - Daily ring (Phase 10)
 
     private var scoreSection: some View {
-        VStack(spacing: 6) {
-            NumindScoreRing(score: scoreAnimated, delta: scoreDelta, size: 130)
+        VStack(spacing: 10) {
+            GoalRing(progress: ringProgress, isClosed: ringClosed, size: 130)
 
-            if scoreDelta != 0 {
-                Text(scoreDelta > 0
-                     ? "Up \(scoreDelta) pts from last week 📈"
-                     : "Down \(abs(scoreDelta)) pts from last week")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(scoreDelta > 0 ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
+            Text(ringClosed ? "Ring closed — today counts toward your streak" : "Keep going to close today's ring")
+                .font(.system(size: 14, weight: .bold))
+                .foregroundStyle(ringClosed ? Theme.Colors.growthGreen : Theme.Colors.mutedText)
+
+            if !skillsMoved.isEmpty {
+                VStack(spacing: 6) {
+                    ForEach(skillsMoved) { move in
+                        HStack(spacing: 6) {
+                            Image(systemName: "checkmark.seal.fill")
+                                .font(.system(size: 12, weight: .bold))
+                            Text("\(move.title) — Mastered")
+                                .font(.system(size: 13, weight: .semibold))
+                        }
+                        .foregroundStyle(Theme.Colors.mindTeal)
+                    }
+                }
+                .padding(.top, 2)
             }
         }
         .frame(maxWidth: .infinity)
@@ -226,10 +233,10 @@ struct DailyInsightView: View {
                 .frame(width: 36, height: 36)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("\(weak.axis.displayName) needs work")
+                Text("Focus next: \(weak.axis.displayName)")
                     .font(.system(size: 14, weight: .bold))
                     .foregroundStyle(Theme.Colors.deepNavy)
-                Text("Your weakest skill right now. A quick lesson can fix it.")
+                Text("Your biggest opportunity right now. A quick lesson sharpens it.")
                     .font(.system(size: 12))
                     .foregroundStyle(Theme.Colors.mutedText)
                     .fixedSize(horizontal: false, vertical: true)
@@ -273,9 +280,9 @@ struct DailyInsightView: View {
                     color: Theme.Colors.primaryBlue
                 )
                 statPill(
-                    icon: "flame.fill",
-                    value: "\(sessionCorrect * 10) XP",
-                    label: "earned",
+                    icon: "list.number",
+                    value: "\(sessionTotal)",
+                    label: "questions",
                     color: Theme.Colors.insightYellow
                 )
             }
@@ -350,8 +357,9 @@ struct DailyInsightView: View {
         .lessons(for: modules.first!.id).first
 
     DailyInsightView(
-        overallScore: 68,
-        scoreDelta: 7,
+        ringProgress: 1.0,
+        ringClosed: true,
+        skillsMoved: [SkillMove(title: "Gross vs net", change: .mastered)],
         axisScores: axes,
         sessionAxes: Set(SkillAxis.allCases.prefix(4)),
         sessionCorrect: 7,

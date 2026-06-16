@@ -7,7 +7,7 @@
 
 ## What is Numind?
 
-Numind is a **paid iOS app** (SwiftUI) — a **financial education app that uses mental math as its teaching method**. Where other financial literacy apps teach concepts, Numind teaches the math behind them (tip math, paycheck math, mortgage estimates, IDR baseline, OOP exposure, etc.) so the financial knowledge is usable in real moments — not just memorizable. Think Duolingo for adult money decisions: short lessons, quizzes, and game modes covering tipping, paycheck math, investing, debt, housing, taxes, insurance, car buying, and student loans.
+Numind is a **paid iOS app** (SwiftUI) — a **financial education app that uses mental math as its teaching method**. Where other financial literacy apps teach concepts, Numind teaches the math behind them (tip math, paycheck math, mortgage estimates, IDR baseline, OOP exposure, etc.) so the financial knowledge is usable in real moments — not just memorizable. Think Duolingo for adult money decisions: short lessons, quizzes, and in-app calculators covering tipping, paycheck math, investing, debt, housing, taxes, insurance, car buying, and student loans.
 
 **Business model:** 5-day free trial → hard paywall → monthly/yearly subscription. No free version.
 

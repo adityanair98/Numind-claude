@@ -11,21 +11,13 @@ struct LessonView: View {
     @State private var sessionVM: QuizSessionViewModel?
     @State private var isNewPersonalBest: Bool = false
     @State private var newBadgeIds: Set<String> = []
-    @State private var sessionNumindScore: Int = 0
-    @State private var sessionScoreDelta: Int = 0
-    @State private var pendingLevelUp: LevelUpInfo? = nil
+    @State private var skillChanges: [SkillMove] = []
+    @State private var showCalc = false
 
     var body: some View {
         NavigationStack {
             phaseContent
                 .background(Theme.Colors.softBackground.ignoresSafeArea())
-        }
-        // Level-up modal — shown BEFORE summary so summary animations fire when visible.
-        // onDismiss triggers phase = .summary after the user taps "Keep going".
-        .fullScreenCover(item: $pendingLevelUp, onDismiss: {
-            phase = .summary
-        }) { info in
-            LevelUpView(info: info)
         }
     }
 
@@ -53,9 +45,9 @@ struct LessonView: View {
                         isNewPersonalBest = false
                     }
 
-                    // Capture level and score BEFORE recording.
-                    let prevLevel = progressStore.skillLevel(moduleId: viewModel.lesson.moduleId)
-                    let scoreBefore = progressStore.numindScore
+                    // Diff mastery across the recording to surface capability
+                    // language in the summary (Phase 10 — replaces +XP/Level).
+                    let masteredBefore = progressStore.masteredLessonIds
 
                     var record = SessionRecord(
                         id: UUID(),
@@ -66,32 +58,16 @@ struct LessonView: View {
                         totalCount: vm.total
                     )
                     record.questionResults = vm.questionResults
-                    record.bonusXP = vm.bonusXP
                     progressStore.recordSession(record)
                     newBadgeIds = progressStore.newlyEarnedBadgeIds
-                    sessionNumindScore = progressStore.numindScore
-                    sessionScoreDelta = progressStore.numindScore - scoreBefore
 
-                    // Level-up ceremony only fires when the user actually mastered the lesson.
-                    // onDismiss of the fullScreenCover will set phase = .summary.
-                    if didMasterThisSession {
-                        let newLevel = progressStore.skillLevel(moduleId: viewModel.lesson.moduleId)
-                        if newLevel > prevLevel {
-                            let module = LocalContentRepository().allModules()
-                                .first { $0.id == viewModel.lesson.moduleId }
-                            pendingLevelUp = LevelUpInfo(
-                                moduleName: module?.title ?? viewModel.moduleTitle,
-                                moduleIcon: module?.icon  ?? "star.fill",
-                                moduleColor: viewModel.moduleColor,
-                                newLevel: newLevel
-                            )
-                            // phase = .summary is deferred to fullScreenCover onDismiss
-                        } else {
-                            phase = .summary
-                        }
-                    } else {
-                        phase = .summary
-                    }
+                    let repo = LocalContentRepository()
+                    skillChanges = progressStore.masteredLessonIds
+                        .subtracting(masteredBefore)
+                        .compactMap { repo.lesson(id: $0) }
+                        .map { SkillMove(title: $0.title, change: .mastered) }
+
+                    phase = .summary
                 }
             }
         case .summary:
@@ -100,8 +76,7 @@ struct LessonView: View {
                     viewModel: vm,
                     isPersonalBest: isNewPersonalBest,
                     newBadgeIds: newBadgeIds,
-                    numindScore: sessionNumindScore,
-                    scoreDelta: sessionScoreDelta,
+                    skillChanges: skillChanges,
                     onContinue: { dismiss() },
                     onRetry: { retryQuiz() }
                 )
@@ -112,10 +87,18 @@ struct LessonView: View {
     // MARK: - Lesson phase
 
     private var lessonPhaseView: some View {
-        ZStack(alignment: .bottom) {
-            lessonScrollContent
-            lessonFooter
-        }
+        LessonStoryView(
+            viewModel: viewModel,
+            questionCount: QuizSessionViewModel.lessonQuestionCount(
+                lessonId: viewModel.lesson.id,
+                moduleId: viewModel.lesson.moduleId,
+                sessions: progressStore.data.sessions,
+                signals: progressStore.data.onboardingSignals
+            ),
+            onStartQuiz: { startQuiz() },
+            onShowCalculator: viewModel.lesson.relatedCalculatorSlug != nil
+                ? { showCalc = true } : nil
+        )
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -127,210 +110,19 @@ struct LessonView: View {
                 }
             }
         }
-    }
-
-    private var lessonScrollContent: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
-                lessonHero
-                ruleCard
-                workedExampleCard
-                whyCard
-            }
-            .padding(.horizontal, Theme.Spacing.screenHorizontal)
-            .padding(.top, 8)
-            .padding(.bottom, Theme.Spacing.buttonHeight + 52)
-        }
-    }
-
-    // MARK: - Accent colour helper
-
-    private var accent: Color { viewModel.moduleColor.tintColor }
-
-    // MARK: - Lesson hero
-
-    private var lessonHero: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            // Slim progress bar + step counter
-            HStack(spacing: 10) {
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        Capsule().fill(Theme.Colors.mutedTint)
-                        Capsule()
-                            .fill(accent)
-                            .frame(width: geo.size.width * viewModel.progress)
-                    }
-                }
-                .frame(height: 4)
-                Text(viewModel.stepLabel)
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundStyle(Theme.Colors.mutedText)
-                    .fixedSize()
-            }
-
-            // Category chip
-            Text(viewModel.contextLabel)
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(accent)
-                .textCase(.uppercase)
-                .kerning(0.6)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 4)
-                .background(accent.opacity(0.12))
-                .clipShape(Capsule())
-
-            // Lesson title
-            Text(viewModel.lesson.title)
-                .font(.system(size: 26, weight: .bold, design: .rounded))
-                .foregroundStyle(Theme.Colors.deepNavy)
-
-            // Quiz count badge
-            HStack(spacing: 5) {
-                Image(systemName: "bolt.fill")
-                    .font(.system(size: 10, weight: .semibold))
-                    .foregroundStyle(accent)
-                Text("\(QuizSessionViewModel.lessonQuestionCount(lessonId: viewModel.lesson.id, moduleId: viewModel.lesson.moduleId, sessions: progressStore.data.sessions, signals: progressStore.data.onboardingSignals)) questions to follow")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(Theme.Colors.mutedText)
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(Theme.Colors.cardBackground)
-            .clipShape(Capsule())
-            .overlay(Capsule().strokeBorder(Theme.Colors.hairline, lineWidth: 1))
-        }
-    }
-
-    // MARK: - Rule card
-
-    private var ruleCard: some View {
-        NumindCard {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("The rule")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(accent)
-                    .textCase(.uppercase)
-                    .kerning(0.6)
-                Text(viewModel.lesson.concept)
-                    .font(Theme.Typography.body)
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                    .lineSpacing(3)
-            }
-        }
-    }
-
-    // MARK: - Worked example card
-
-    private var workedExampleCard: some View {
-        let lines = viewModel.lesson.example
-            .components(separatedBy: "\n")
-            .filter { !$0.isEmpty }
-
-        return VStack(alignment: .leading, spacing: 8) {
-            Text("Worked example")
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(Theme.Colors.mutedText)
-                .textCase(.uppercase)
-                .kerning(0.6)
-
-            VStack(spacing: 0) {
-                ForEach(Array(lines.enumerated()), id: \.offset) { i, line in
-                    let isLast = i == lines.count - 1
-                    let parts = exampleLineParts(line)
-
-                    HStack {
-                        Text(parts.label)
-                            .font(.system(size: 14, design: .monospaced))
-                            .foregroundStyle(isLast ? accent : Theme.Colors.mutedText)
-                        Spacer()
-                        if !parts.value.isEmpty {
-                            Text(parts.value)
-                                .font(.system(size: 14, weight: isLast ? .bold : .regular, design: .monospaced))
-                                .foregroundStyle(isLast ? accent : Theme.Colors.deepNavy)
+        .sheet(isPresented: $showCalc) {
+            if let slug = viewModel.lesson.relatedCalculatorSlug {
+                NavigationStack {
+                    CalculatorRegistry.view(for: slug)
+                        .toolbar {
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Done") { showCalc = false }
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Theme.Colors.primaryBlue)
+                            }
                         }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 11)
-                    .background(isLast ? accent.opacity(0.09) : Color.clear)
-
-                    if !isLast {
-                        Divider()
-                            .background(Theme.Colors.hairline)
-                    }
                 }
             }
-            .background(Theme.Colors.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
-            .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 2)
-        }
-    }
-
-    private func exampleLineParts(_ line: String) -> (label: String, value: String) {
-        for sep in [" = ", " ≈ ", ": "] {
-            if let range = line.range(of: sep) {
-                return (
-                    String(line[..<range.lowerBound]).trimmingCharacters(in: .whitespaces),
-                    String(line[range.upperBound...]).trimmingCharacters(in: .whitespaces)
-                )
-            }
-        }
-        return (line, "")
-    }
-
-    // MARK: - Why card
-
-    private var whyCard: some View {
-        NumindCard(background: Theme.Colors.insightYellowTint) {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 8) {
-                    ZStack {
-                        Circle()
-                            .fill(Theme.Colors.insightYellow.opacity(0.25))
-                            .frame(width: 30, height: 30)
-                        Image(systemName: "lightbulb.fill")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.insightText)
-                    }
-                    Text("Why this works")
-                        .font(Theme.Typography.small)
-                        .fontWeight(.bold)
-                        .foregroundStyle(Theme.Colors.insightText)
-                        .textCase(.uppercase)
-                        .kerning(0.6)
-                }
-                Text(viewModel.lesson.shortcut)
-                    .font(Theme.Typography.body)
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                    .lineSpacing(3)
-            }
-        }
-        .overlay(alignment: .leading) {
-            UnevenRoundedRectangle(
-                topLeadingRadius: Theme.Radius.card,
-                bottomLeadingRadius: Theme.Radius.card,
-                bottomTrailingRadius: 0,
-                topTrailingRadius: 0
-            )
-            .fill(Theme.Colors.insightYellow)
-            .frame(width: 5)
-        }
-    }
-
-    // MARK: - Footer
-
-    private var lessonFooter: some View {
-        VStack(spacing: 0) {
-            LinearGradient(
-                colors: [Theme.Colors.softBackground.opacity(0), Theme.Colors.softBackground],
-                startPoint: .top, endPoint: .bottom
-            )
-            .frame(height: 24)
-            .allowsHitTesting(false)
-
-            PillButton("Start quiz") { startQuiz() }
-                .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                .padding(.bottom, 28)
-                .background(Theme.Colors.softBackground)
         }
     }
 
@@ -357,7 +149,7 @@ struct LessonView: View {
         )
         isNewPersonalBest = false
         newBadgeIds = []
-        pendingLevelUp = nil
+        skillChanges = []
         sessionVM = vm
         phase = .quiz
     }

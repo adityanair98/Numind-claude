@@ -27,7 +27,7 @@ struct AgeRangeView: View {
                     .padding(.top, 8)
 
                 LazyVGrid(columns: columns, spacing: 12) {
-                    ForEach(AgeRange.allCases, id: \.self) { range in
+                    ForEach(AgeRange.pickerCases, id: \.self) { range in
                         let selected = viewModel.signals.ageRange == range
                         Button {
                             viewModel.setAgeRange(range)

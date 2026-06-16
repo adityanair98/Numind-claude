@@ -5,19 +5,22 @@ import SwiftUI
 struct BrandHeader: View {
     let name: String
     let isDailyChallengeCompleted: Bool
-    /// Current Numind Score (0–100). 0 hides the ring until the user has sessions.
-    var numindScore: Int = 0
-    /// Called when the user taps the score ring.
+    /// Daily ring fill (0–1) — the one glanceable daily signal (Phase 10).
+    var ringProgress: Double = 0
+    /// Whether today's ring is closed (the day counts toward the streak).
+    var isRingClosed: Bool = false
+    /// Called when the user taps the ring (opens the readiness sheet).
     var onScoreTap: (() -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            topRow
+            // Bell hidden until notifications ship (Phase 8 Group G); `bellButton`
+            // retained below so wiring it back up is a one-line change.
             greetingRow
         }
     }
 
-    // MARK: - Top row (bell)
+    // MARK: - Top row (bell) — currently unused; see note in `body`.
 
     private var topRow: some View {
         HStack {
@@ -71,16 +74,14 @@ struct BrandHeader: View {
                 }
             }
             Spacer()
-            // Small score ring — only shown after first session
-            if numindScore > 0 {
-                Button {
-                    onScoreTap?()
-                } label: {
-                    NumindScoreRing(score: numindScore, size: 52)
-                        .padding(.bottom, 4)
-                }
-                .buttonStyle(.plain)
+            // Daily goal ring — meaningful from day one (Phase 10).
+            Button {
+                onScoreTap?()
+            } label: {
+                GoalRing(progress: ringProgress, isClosed: isRingClosed, size: 52)
+                    .padding(.bottom, 4)
             }
+            .buttonStyle(.plain)
         }
     }
 

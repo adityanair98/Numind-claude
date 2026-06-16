@@ -67,7 +67,7 @@ enum QuestionTheme {
         case .budget:        return "Budget & Plans"
         case .paycheck:      return "Paycheck"
         case .investing:     return "Investing"
-        case .quickMath:     return "Quick Math"
+        case .quickMath:     return "Quick Numbers"
         case .debt:          return "Debt & Loans"
         case .housing:       return "Housing & Rent"
         case .taxes:         return "Taxes & Paycheck"

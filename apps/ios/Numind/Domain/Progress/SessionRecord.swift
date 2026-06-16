@@ -1,7 +1,8 @@
 import Foundation
 
 /// Per-question result captured during a quiz session.
-/// Used by Review Mistakes (M44), Spaced Repetition (M45), and Speed Bonus XP (M46).
+/// Used by Review Mistakes, Spaced Repetition / Freshness, and the difficulty-
+/// weighted XP model.
 struct QuestionResult: Codable {
     let templateId: String
     let isCorrect: Bool
@@ -22,8 +23,6 @@ struct SessionRecord: Codable, Identifiable {
     let totalCount: Int
     /// Per-question breakdown. Defaults to empty for backward compat (pre-M43 data).
     var questionResults: [QuestionResult] = []
-    /// Speed bonus XP earned this session. Defaults to 0 for backward compat.
-    var bonusXP: Int = 0
 
     /// True for module review/checkpoint sessions (lessonId starts with "review_").
     /// Used to exclude reviews from per-module lesson-completion counts.

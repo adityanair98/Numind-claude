@@ -1,26 +1,33 @@
 import SwiftUI
 
+/// A skill whose state moved during a session (Phase 10 — capability
+/// language replaces "+XP" everywhere the user reads progress).
+struct SkillMove: Equatable, Identifiable {
+    enum Change: Equatable { case mastered, refreshed, progressed }
+    let title: String
+    let change: Change
+    var id: String { title }
+}
+
 struct SessionSummaryView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var progressStore: ProgressStore
     @ObservedObject var viewModel: QuizSessionViewModel
     let isPersonalBest: Bool
     let newBadgeIds: Set<String>
-    /// Current overall Numind Score after this session was recorded.
-    let numindScore: Int
-    /// How the score changed this session (positive = improvement).
-    let scoreDelta: Int
+    /// Skills whose state changed this session ("Net pay — Mastered").
+    let skillChanges: [SkillMove]
     let onContinue: () -> Void
     /// Called when the user wants to retry the quiz with fresh questions.
     /// Only shown when mastery threshold was not met.
     let onRetry: () -> Void
 
-    @State private var xpAnimated: Int = 0
     @State private var showPersonalBest: Bool = false
     @State private var reviewVM: QuizSessionViewModel? = nil
     /// Results from the most recent review session (nil = no review done yet).
     /// Replaces the original wrong answers once the first review completes.
     @State private var reviewResults: [QuizSessionViewModel.QuizResult]? = nil
+    @State private var showCalc = false
 
     private var accent: Color { viewModel.moduleColor.tintColor }
     private var accentTint: Color { viewModel.moduleColor.tintBackground }
@@ -56,13 +63,6 @@ struct SessionSummaryView: View {
             }
         }
         .onAppear {
-            if didMaster {
-                withAnimation(.easeOut(duration: 0.7).delay(0.3)) {
-                    xpAnimated = viewModel.totalXP
-                }
-            } else {
-                xpAnimated = viewModel.totalXP   // immediate, no fanfare on failure
-            }
             if isPersonalBest && didMaster {
                 withAnimation(.spring(response: 0.42, dampingFraction: 0.62).delay(1.0)) {
                     showPersonalBest = true
@@ -82,6 +82,20 @@ struct SessionSummaryView: View {
                 }
             }
         }
+        .sheet(isPresented: $showCalc) {
+            if let slug = viewModel.lessonRelatedCalculatorSlug {
+                NavigationStack {
+                    CalculatorRegistry.view(for: slug)
+                        .toolbar {
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Done") { showCalc = false }
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Theme.Colors.primaryBlue)
+                            }
+                        }
+                }
+            }
+        }
     }
 
     // MARK: - Scroll content
@@ -91,10 +105,13 @@ struct SessionSummaryView: View {
             VStack(spacing: Theme.Spacing.sectionSpacing) {
                 resultHeader
                 statsCard
-                if numindScore > 0 { scoreCard }
+                learnedCard
+                if !skillChanges.isEmpty { skillsMovedCard }
+                ringCard
                 masteryBanner
                 if !newBadgeIds.isEmpty { newBadgesSection }
                 recapSection
+                calcLinkSection
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.top, 20)
@@ -134,27 +151,6 @@ struct SessionSummaryView: View {
             }
 
             VStack(spacing: 8) {
-                Text("+\(xpAnimated) XP")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
-                    .foregroundStyle(Theme.Colors.insightText)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    .background(Theme.Colors.insightYellowTint)
-                    .clipShape(Capsule())
-                    .contentTransition(.numericText())
-                    .animation(.easeOut(duration: 0.7).delay(0.3), value: xpAnimated)
-
-                if viewModel.bonusXP > 0 {
-                    HStack(spacing: 4) {
-                        Image(systemName: "bolt.fill")
-                            .font(.system(size: 10, weight: .bold))
-                        Text("+\(viewModel.bonusXP) XP speed bonus included")
-                            .font(.system(size: 12, weight: .semibold))
-                    }
-                    .foregroundStyle(Theme.Colors.insightText)
-                    .transition(.opacity.combined(with: .scale(scale: 0.9)))
-                }
-
                 if showPersonalBest {
                     HStack(spacing: 6) {
                         Text("🏆")
@@ -195,15 +191,6 @@ struct SessionSummaryView: View {
             }
 
             VStack(spacing: 8) {
-                Text("+\(viewModel.totalXP) XP")
-                    .font(Theme.Typography.body)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Theme.Colors.insightText)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 6)
-                    .background(Theme.Colors.insightYellowTint)
-                    .clipShape(Capsule())
-
                 HStack(spacing: 6) {
                     Image(systemName: "star")
                         .font(.system(size: 13, weight: .semibold))
@@ -258,42 +245,114 @@ struct SessionSummaryView: View {
         .frame(maxWidth: .infinity)
     }
 
-    // MARK: - Score card
+    // MARK: - Money-moment card (Phase 6c)
 
-    private var scoreCard: some View {
-        let tier = ScoreTier(score: numindScore)
-        return NumindCard {
+    /// "Now put it to work" — surfaces the lesson's realWorldHint so the user
+    /// leaves the session knowing exactly when to use what they just learned.
+    @ViewBuilder
+    private var learnedCard: some View {
+        if let hint = viewModel.lessonRealWorldHint {
+            NumindCard(background: accentTint) {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "target")
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundStyle(accent)
+                        Text("Now put it to work")
+                            .font(Theme.Typography.small)
+                            .fontWeight(.bold)
+                            .foregroundStyle(accent)
+                            .textCase(.uppercase)
+                            .kerning(0.6)
+                    }
+                    Text(hint)
+                        .font(Theme.Typography.body)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+    }
+
+    // MARK: - Calculator cross-link (Phase 7a)
+
+    @ViewBuilder
+    private var calcLinkSection: some View {
+        if let slug = viewModel.lessonRelatedCalculatorSlug,
+           let name = CalculatorRegistry.name(for: slug) {
+            Button { showCalc = true } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "wrench.and.screwdriver")
+                        .font(.system(size: 13, weight: .semibold))
+                    Text("Try this in \(name)")
+                        .font(.system(size: 14, weight: .semibold))
+                    Image(systemName: "arrow.right")
+                        .font(.system(size: 12, weight: .bold))
+                }
+                .foregroundStyle(accent)
+                .frame(maxWidth: .infinity)
+                .frame(height: 46)
+                .background(accentTint)
+                .clipShape(Capsule())
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    // MARK: - Skills moved (Phase 10)
+
+    private var skillsMovedCard: some View {
+        NumindCard {
+            VStack(alignment: .leading, spacing: 12) {
+                ForEach(skillChanges) { move in
+                    HStack(spacing: 10) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .font(.system(size: 16))
+                            .foregroundStyle(accent)
+                        Text(move.title)
+                            .font(Theme.Typography.body)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Spacer()
+                        Text(changeLabel(move.change))
+                            .font(Theme.Typography.small)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                    }
+                }
+            }
+        }
+    }
+
+    private func changeLabel(_ change: SkillMove.Change) -> String {
+        switch change {
+        case .mastered:   return "Mastered"
+        case .refreshed:  return "Refreshed"
+        case .progressed: return "Progressed"
+        }
+    }
+
+    // MARK: - Daily ring (Phase 10)
+
+    private var ringCard: some View {
+        NumindCard {
             HStack(spacing: 14) {
-                NumindScoreRing(score: numindScore, size: 52)
+                GoalRing(progress: progressStore.ringProgress,
+                         isClosed: progressStore.isRingClosedToday,
+                         size: 52)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(tier.name)
+                    Text(progressStore.isRingClosedToday ? "Daily ring closed" : "Daily ring")
                         .font(.system(size: 15, weight: .bold, design: .rounded))
-                        .foregroundStyle(tier.color)
-
-                    if scoreDelta != 0 {
-                        let isUp = scoreDelta > 0
-                        HStack(spacing: 4) {
-                            Image(systemName: isUp ? "arrow.up.right" : "arrow.down.right")
-                                .font(.system(size: 11, weight: .bold))
-                            Text("\(isUp ? "+" : "")\(scoreDelta) pts this session")
-                                .font(.system(size: 13, weight: .bold))
-                        }
-                        .foregroundStyle(isUp ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
-                    } else {
-                        Text("Score unchanged")
-                            .font(.system(size: 13, weight: .medium))
-                            .foregroundStyle(Theme.Colors.mutedText)
-                    }
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text(progressStore.isRingClosedToday
+                         ? "Today counts toward your streak."
+                         : "\(max(0, progressStore.ringTarget - progressStore.todayQuestionCount)) more to close today's ring")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(Theme.Colors.mutedText)
                 }
 
                 Spacer()
-
-                Text("NUMIND\nSCORE")
-                    .font(.system(size: 9, weight: .heavy))
-                    .foregroundStyle(Theme.Colors.mutedText)
-                    .tracking(0.5)
-                    .multilineTextAlignment(.trailing)
             }
         }
     }
@@ -352,10 +411,10 @@ struct SessionSummaryView: View {
         HStack(spacing: 14) {
             ZStack {
                 RoundedRectangle(cornerRadius: Theme.Radius.pill, style: .continuous)
-                    .fill(result.isCorrect ? accentTint : Theme.Colors.errorSoftRedTint)
+                    .fill(result.isCorrect ? accentTint : Theme.Colors.warmOrangeTint)
                 Image(systemName: result.isCorrect ? "checkmark" : "xmark")
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(result.isCorrect ? accent : Theme.Colors.errorSoftRed)
+                    .foregroundStyle(result.isCorrect ? accent : Theme.Colors.warmOrange)
             }
             .frame(width: 36, height: 36)
 
@@ -367,9 +426,9 @@ struct SessionSummaryView: View {
             if !result.isCorrect {
                 Image(systemName: "arrow.counterclockwise")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(Theme.Colors.errorSoftRed)
+                    .foregroundStyle(Theme.Colors.warmOrange)
                     .padding(6)
-                    .background(Theme.Colors.errorSoftRedTint)
+                    .background(Theme.Colors.warmOrangeTint)
                     .clipShape(Circle())
             }
         }
@@ -457,7 +516,7 @@ struct SessionSummaryView: View {
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity)
             .frame(height: Theme.Spacing.buttonHeight)
-            .background(Theme.Colors.errorSoftRed)
+            .background(Theme.Colors.warmOrange)
             .clipShape(Capsule())
         }
         .buttonStyle(.plain)

@@ -56,16 +56,16 @@ struct KaizenView: View {
                         // Compound chart card
                         VStack(alignment: .leading, spacing: 0) {
                             HStack {
-                                Text("1% better daily")
+                                Text("A few minutes daily")
                                     .font(Theme.Typography.caption)
                                     .foregroundStyle(.white.opacity(0.7))
                                 Spacer()
-                                Text("37.8\u{00D7}")
-                                    .font(.system(size: 26, weight: .semibold, design: .rounded))
+                                Text("every moment")
+                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
                                     .foregroundStyle(Theme.Colors.mindTeal)
                             }
 
-                            Text("improvement compounded over a year")
+                            Text("this year, met prepared \u{2014} raises, renewals, bills, plans")
                                 .font(Theme.Typography.caption)
                                 .foregroundStyle(.white.opacity(0.55))
                                 .padding(.top, 2)
@@ -93,7 +93,9 @@ struct KaizenView: View {
                         )
                         .padding(.top, 28)
 
-                        Text("Numind makes this fun \u{2014} short games, daily challenges, and streaks keep you sharp without it feeling like work.")
+                        Text(viewModel.isHabitBuyer
+                             ? "Week one, tips stop needing your phone. Month one, you read a paycheck like a native. Month three, a dealer can\u{2019}t number you."
+                             : "Short sessions. Real scenarios. No fluff \u{2014} a few minutes a day keeps your instincts sharp for whichever decision is next.")
                             .font(.system(size: 15))
                             .foregroundStyle(.white.opacity(0.78))
                             .lineSpacing(4)

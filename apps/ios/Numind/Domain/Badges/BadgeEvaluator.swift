@@ -28,7 +28,12 @@ enum BadgeEvaluator {
         if !perfectSessions.isEmpty { ids.insert("first_perfect") }
         if perfectSessions.count >= 3 { ids.insert("triple_perfect") }
 
-        let speedSessions = sessions.filter { $0.bonusXP > 0 }
+        // A "speed" session = one with ≥1 fast correct answer (<10s), measured
+        // directly from question results so these badges survive the Phase 9
+        // removal of speed-bonus XP (which previously fed `bonusXP`).
+        let speedSessions = sessions.filter { session in
+            session.questionResults.contains { $0.isCorrect && $0.timeSpentSeconds < 10 }
+        }
         if !speedSessions.isEmpty { ids.insert("first_speed_bonus") }
         if speedSessions.count >= 5 { ids.insert("speed_5_sessions") }
 
@@ -55,8 +60,9 @@ enum BadgeEvaluator {
         if sessionCount >= 10 { ids.insert("sessions_10") }
         if sessionCount >= 25 { ids.insert("sessions_25") }
 
-        // MARK: XP
-        if xp >= 100 { ids.insert("xp_100") }
+        // MARK: Early momentum (Phase 10 — question-count trigger replaces the
+        // retired visible-XP framing; id kept for earned-set compatibility)
+        if totalQs >= 10 { ids.insert("xp_100") }
 
         // MARK: Breadth
         if uniqueLessons >= 5 { ids.insert("lessons_5") }

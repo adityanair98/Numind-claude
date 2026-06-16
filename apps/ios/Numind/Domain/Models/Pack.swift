@@ -23,6 +23,9 @@ struct Pack: Codable, Identifiable, Equatable {
     /// learning sequence; the first item is the natural entry point unless
     /// `anchorLessonId` overrides it.
     let lessonIds: [String]
+    /// The foundational subset of `lessonIds` that defines readiness for this
+    /// pack's decision (Phase 9). Empty = treat all `lessonIds` as core.
+    let coreLessonIds: [String]
     /// The single lesson that best frames the decision. Surfaced visually
     /// (e.g. as a "Start here" anchor on the pack page). Must be present in
     /// `lessonIds`.
@@ -46,7 +49,7 @@ struct Pack: Codable, Identifiable, Equatable {
     let secondarySkillAxes: [SkillAxis]
 
     enum CodingKeys: String, CodingKey {
-        case id, title, tagline, hook, description, lessonIds, anchorLessonId
+        case id, title, tagline, hook, description, lessonIds, coreLessonIds, anchorLessonId
         case estimatedMinutes, lastVerified
         case primarySkillAxis, secondarySkillAxes
     }
@@ -59,6 +62,7 @@ struct Pack: Codable, Identifiable, Equatable {
         self.hook             = try c.decode(String.self, forKey: .hook)
         self.description      = try c.decode(String.self, forKey: .description)
         self.lessonIds        = try c.decode([String].self, forKey: .lessonIds)
+        self.coreLessonIds    = try c.decodeIfPresent([String].self, forKey: .coreLessonIds) ?? []
         self.anchorLessonId   = try c.decode(String.self, forKey: .anchorLessonId)
         self.estimatedMinutes = try c.decode(Int.self, forKey: .estimatedMinutes)
         self.lastVerified     = try c.decode(String.self, forKey: .lastVerified)
@@ -73,6 +77,7 @@ struct Pack: Codable, Identifiable, Equatable {
         hook: String,
         description: String,
         lessonIds: [String],
+        coreLessonIds: [String] = [],
         anchorLessonId: String,
         estimatedMinutes: Int,
         lastVerified: String,
@@ -85,6 +90,7 @@ struct Pack: Codable, Identifiable, Equatable {
         self.hook = hook
         self.description = description
         self.lessonIds = lessonIds
+        self.coreLessonIds = coreLessonIds
         self.anchorLessonId = anchorLessonId
         self.estimatedMinutes = estimatedMinutes
         self.lastVerified = lastVerified

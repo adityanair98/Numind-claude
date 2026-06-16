@@ -10,17 +10,23 @@ struct OptionCard: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 14) {
+            // Top-aligned so the key bubble hugs the first line when the
+            // choice wraps; identical to centered for one-line choices.
+            HStack(alignment: .top, spacing: 14) {
                 keyBubble
                 Text(text)
                     .font(.system(size: 17, weight: .medium))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .multilineTextAlignment(.leading)
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 3)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 if state == .correct {
                     Image(systemName: "checkmark")
                         .font(.system(size: 15, weight: .bold))
                         .foregroundStyle(Theme.Colors.mindTeal)
+                        .frame(height: 28)
                 }
             }
             .padding(.horizontal, 16)
@@ -51,7 +57,7 @@ struct OptionCard: View {
         case .normal:   Theme.Colors.cardBackground
         case .selected: Theme.Colors.primaryBlueTint
         case .correct:  Theme.Colors.mindTealTint
-        case .wrong:    Theme.Colors.errorSoftRedTint
+        case .wrong:    Theme.Colors.warmOrangeTint
         }
     }
 
@@ -60,7 +66,7 @@ struct OptionCard: View {
         case .normal:   Theme.Colors.hairline
         case .selected: Theme.Colors.primaryBlue
         case .correct:  Theme.Colors.mindTeal
-        case .wrong:    Theme.Colors.errorSoftRed
+        case .wrong:    Theme.Colors.warmOrange
         }
     }
 
@@ -69,7 +75,7 @@ struct OptionCard: View {
         case .normal:   Theme.Colors.mutedTint
         case .selected: Theme.Colors.primaryBlue
         case .correct:  Theme.Colors.mindTeal
-        case .wrong:    Theme.Colors.errorSoftRed
+        case .wrong:    Theme.Colors.warmOrange
         }
     }
 
@@ -87,6 +93,12 @@ struct OptionCard: View {
         OptionCard(key: "B", text: "$9.60",  state: .selected, action: {})
         OptionCard(key: "C", text: "$12.00", state: .correct,  action: {})
         OptionCard(key: "D", text: "$24.00", state: .wrong,    action: {})
+        OptionCard(key: "A",
+                   text: "Check the merchant name online today; if still unknown, dispute it in writing with your issuer now \u{2014} the 60-day clock is running",
+                   state: .correct, action: {})
+        OptionCard(key: "B",
+                   text: "Wait for next month's statement to see if the charge repeats before doing anything",
+                   state: .wrong, action: {})
     }
     .padding()
     .background(Theme.Colors.softBackground)

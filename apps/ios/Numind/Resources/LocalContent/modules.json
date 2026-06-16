@@ -2,7 +2,7 @@
   {
     "id": "smart_shopping",
     "title": "Smart Shopping",
-    "subtitle": "Tips, discounts, and everyday saving math",
+    "subtitle": "Tips, discounts, and everyday savings",
     "icon": "cart.fill",
     "color": "blue",
     "mascot": "\ud83d\uded2",
@@ -16,7 +16,8 @@
       "discount_coupon_vs_cashback",
       "discount_price_plus_tax",
       "discount_membership_worth",
-      "concept_shopping_manipulation"
+      "concept_shopping_manipulation",
+      "shrinkflation_unit_price"
     ]
   },
   {
@@ -25,8 +26,8 @@
     "subtitle": "Daily expenses, budgets, and spending smarts",
     "icon": "dollarsign.circle.fill",
     "color": "yellow",
-    "mascot": "\ud83e\uddee",
-    "glyph": "\u00d7",
+    "mascot": "\ud83d\udcb0",
+    "glyph": "$",
     "lessonIds": [
       "subscription_math",
       "price_per_use",
@@ -35,7 +36,9 @@
       "money_math_latte_factor",
       "money_math_weekly_monthly",
       "concept_money_needs_vs_wants",
-      "money_math_sinking_funds"
+      "money_math_sinking_funds",
+      "investing_emergency_fund",
+      "banking_basics_fees"
     ]
   },
   {
@@ -60,7 +63,8 @@
       "salary_rsu_basics",
       "salary_w2_vs_1099_offer",
       "salary_401k_vesting",
-      "salary_bonus_after_tax"
+      "salary_bonus_after_tax",
+      "salary_negotiation"
     ]
   },
   {
@@ -73,6 +77,7 @@
     "glyph": "$",
     "lessonIds": [
       "rule_of_72",
+      "concept_investing_what_are_stocks",
       "roi_basic",
       "investing_401k_match",
       "investing_roth_vs_traditional",
@@ -84,13 +89,12 @@
       "investing_apy_savings",
       "investing_espp_discount",
       "investing_fund_fees",
-      "investing_emergency_fund",
       "concept_investing_ef_location",
       "investing_rental_yield",
       "investing_on_track",
-      "concept_investing_what_are_stocks",
       "concept_investing_asset_allocation",
-      "concept_investing_behavioral_traps"
+      "concept_investing_behavioral_traps",
+      "job_change_401k"
     ]
   },
   {
@@ -116,7 +120,9 @@
       "debt_cc_payoff_time",
       "debt_balance_transfer",
       "debt_cc_statement_cycle",
-      "debt_cc_rewards_vs_interest"
+      "debt_cc_rewards_vs_interest",
+      "payday_loan_cost",
+      "credit_from_zero"
     ]
   },
   {
@@ -159,7 +165,8 @@
       "taxes_standard_vs_itemized",
       "taxes_capital_gains",
       "taxes_w4_adjust",
-      "concept_taxes_paycheck_stub"
+      "concept_taxes_paycheck_stub",
+      "taxes_filing_mechanics"
     ]
   },
   {
@@ -182,7 +189,11 @@
       "concept_insurance_policy_priority",
       "concept_insurance_disability",
       "concept_insurance_open_enrollment",
-      "insurance_medical_bill_eob"
+      "insurance_medical_bill_eob",
+      "job_change_health",
+      "insurance_renters",
+      "insurance_auto_shopping",
+      "estate_beneficiaries"
     ]
   },
   {
@@ -203,7 +214,8 @@
       "car_lease_vs_buy",
       "car_trade_in_vs_private",
       "concept_car_negotiation",
-      "concept_car_warranty"
+      "concept_car_warranty",
+      "car_negative_equity"
     ]
   },
   {
@@ -225,6 +237,21 @@
       "student_loan_parent_plus",
       "concept_sl_subsidized_vs_unsubsidized",
       "concept_sl_refi_protections_lost"
+    ]
+  },
+  {
+    "id": "money_safety",
+    "title": "Protect Your Money",
+    "subtitle": "Scams, fraud, and your consumer rights",
+    "icon": "shield.fill",
+    "color": "crimson",
+    "mascot": "🛡️",
+    "glyph": "!",
+    "lessonIds": [
+      "scam_imposter_patterns",
+      "scam_payment_rails",
+      "credit_report_rights",
+      "dispute_a_charge"
     ]
   }
 ]

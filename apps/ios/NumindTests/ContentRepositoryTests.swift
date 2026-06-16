@@ -30,7 +30,8 @@ final class ContentRepositoryTests: XCTestCase {
             "discount_bogo", "discount_stacked",
             "discount_coupon_vs_cashback", "discount_price_plus_tax",
             "discount_membership_worth",
-            "concept_shopping_manipulation"
+            "concept_shopping_manipulation",
+            "shrinkflation_unit_price"
         ])
     }
 
@@ -53,14 +54,14 @@ final class ContentRepositoryTests: XCTestCase {
         XCTAssertFalse(l?.example.isEmpty  ?? true)
     }
 
-    func test_smartShoppingLesson_referencesFiveTemplates() {
+    func test_smartShoppingLesson_referencesSixTemplates() {
         let l = repo.lesson(id: "tip_18_percent")
-        XCTAssertEqual(l?.quizTemplateIds.count, 5)
+        XCTAssertEqual(l?.quizTemplateIds.count, 6)
     }
 
     func test_lessonsForModule_returnsSmartShoppingLessons() {
         let lessons = repo.lessons(for: "smart_shopping")
-        XCTAssertEqual(lessons.count, 9)
+        XCTAssertEqual(lessons.count, 10)
         XCTAssertEqual(lessons.first?.id, "tip_10_percent_trick")
     }
 
@@ -70,16 +71,17 @@ final class ContentRepositoryTests: XCTestCase {
 
     // MARK: - Templates
 
-    func test_templatesForLesson_returnsFive() {
+    func test_templatesForLesson_returnsSix() {
         let templates = repo.templates(for: "tip_18_percent")
-        XCTAssertEqual(templates.count, 5)
+        XCTAssertEqual(templates.count, 6)
     }
 
     func test_templatesForLesson_respectsDeclarationOrder() {
         let templates = repo.templates(for: "tip_18_percent")
         XCTAssertEqual(templates.map(\.id), [
             "tip_double_ten", "tip_18_d2", "tip_per_hundred_d1",
-            "tip_total_25_d2", "tip_post_tax_scenario_d3"
+            "tip_total_25_d2", "tip_post_tax_scenario_d3",
+            "tip_decision_pretax_d2"
         ])
     }
 
@@ -95,7 +97,9 @@ final class ContentRepositoryTests: XCTestCase {
     }
 
     func test_allTemplates_haveNonEmptyVariableRules() {
-        for template in repo.templates(for: "tip_18_percent") {
+        // Concept/decision templates (no answerFormula) legitimately have empty
+        // variableRules — the invariant applies to parametric numerical templates.
+        for template in repo.templates(for: "tip_18_percent") where template.answerFormula != nil {
             XCTAssertFalse(
                 template.variableRules.isEmpty,
                 "\(template.id) has no variable rules"

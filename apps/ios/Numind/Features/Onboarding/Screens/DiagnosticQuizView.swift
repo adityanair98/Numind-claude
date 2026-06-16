@@ -1,53 +1,72 @@
 import SwiftUI
 
-/// Screen 16 — Diagnostic Quiz (8 questions, 2x2 choice grid)
-/// Lightweight diagnostic mode — no XP, no motivators, no feedback phase.
+/// Screen 16 — Diagnostic-as-demo (8 questions, 2x2 choice grid).
+///
+/// The diagnostic carries the end-of-funnel paywall, so it has to demo the
+/// product, not feel like a test:
+/// - the GOAL RING fills live at the top (one segment per question — the
+///   daily habit mechanic, experienced before we ask for commitment)
+/// - after EVERY answer a shortcut reveal card shows the mental-math move
+///   behind the question (the thing the subscription buys)
+/// - capability placement language, never points or grades
 struct DiagnosticQuizView: View {
     @ObservedObject var viewModel: OnboardingViewModel
 
-    private var currentQuestion: QuizQuestion? {
-        guard viewModel.diagnosticIndex < viewModel.diagnosticQuestions.count else { return nil }
-        return viewModel.diagnosticQuestions[viewModel.diagnosticIndex]
+    private var currentItem: DiagnosticQuestionBuilder.TaggedQuestion? {
+        guard viewModel.diagnosticIndex < viewModel.diagnosticItems.count else { return nil }
+        return viewModel.diagnosticItems[viewModel.diagnosticIndex]
     }
 
-    private var questionNumber: Int {
-        viewModel.diagnosticIndex + 1
-    }
+    private var questionNumber: Int { viewModel.diagnosticIndex + 1 }
+    private var totalQuestions: Int { viewModel.diagnosticItems.count }
 
-    private var totalQuestions: Int {
-        viewModel.diagnosticQuestions.count
+    /// Ring fills per ANSWERED question — practice counts, not correctness,
+    /// exactly like the real daily ring.
+    private var ringProgress: Double {
+        guard totalQuestions > 0 else { return 0 }
+        let answered = viewModel.diagnosticIndex + (viewModel.diagnosticReveal != nil ? 1 : 0)
+        return Double(answered) / Double(totalQuestions)
     }
 
     var body: some View {
         ZStack {
             Theme.Colors.softBackground.ignoresSafeArea()
 
-            if let question = currentQuestion {
+            if let item = currentItem {
                 VStack(alignment: .leading, spacing: 0) {
-                    // Header: counter + dots
+                    // Header: counter + live goal ring
                     HStack {
-                        Text("Question \(questionNumber) of \(totalQuestions)")
-                            .font(Theme.Typography.small)
-                            .textCase(.uppercase)
-                            .tracking(1)
-                            .foregroundStyle(Theme.Colors.mutedText)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Question \(questionNumber) of \(totalQuestions)")
+                                .font(Theme.Typography.small)
+                                .textCase(.uppercase)
+                                .tracking(1)
+                                .foregroundStyle(Theme.Colors.mutedText)
+                            if item.isApplication {
+                                Text("What would you do?")
+                                    .font(.system(size: 11, weight: .bold))
+                                    .foregroundStyle(Theme.Colors.warmOrange)
+                            }
+                        }
                         Spacer()
-                        DotProgress(current: questionNumber, total: totalQuestions)
+                        GoalRing(
+                            progress: ringProgress,
+                            isClosed: ringProgress >= 1.0,
+                            size: 40
+                        )
                     }
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.top, 4)
 
                     ScrollView {
                         VStack(alignment: .leading, spacing: 0) {
-                            // Question card
-                            questionCard(question)
-                                .padding(.top, 22)
+                            questionCard(item)
+                                .padding(.top, 18)
 
-                            // 2x2 choice grid
-                            choiceGrid(question)
+                            choiceGrid(item.question)
                                 .padding(.top, 16)
 
-                            Text("Tap your best guess \u{2014} no scoring, no explanation.")
+                            Text("Tap your best guess \u{2014} we\u{2019}ll show you the shortcut either way.")
                                 .font(.system(size: 13))
                                 .foregroundStyle(Theme.Colors.mutedText.opacity(0.7))
                                 .frame(maxWidth: .infinity)
@@ -58,40 +77,33 @@ struct DiagnosticQuizView: View {
                     }
                 }
 
-                // Flash overlay
-                if let flash = viewModel.diagnosticFlash {
-                    flashOverlay(correct: flash.correct)
-                        .transition(.opacity)
-                        .animation(.easeOut(duration: 0.2), value: viewModel.diagnosticFlash)
+                // Shortcut reveal — the demo beat
+                if let reveal = viewModel.diagnosticReveal {
+                    revealOverlay(reveal)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
         }
+        .animation(.easeOut(duration: 0.28), value: viewModel.diagnosticReveal)
     }
 
     // MARK: - Question Card
 
-    private var currentModuleId: String? {
-        guard viewModel.diagnosticIndex < viewModel.diagnosticModuleIds.count else { return nil }
-        return viewModel.diagnosticModuleIds[viewModel.diagnosticIndex]
-    }
-
-    private func questionCard(_ question: QuizQuestion) -> some View {
+    private func questionCard(_ item: DiagnosticQuestionBuilder.TaggedQuestion) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            if let moduleId = currentModuleId {
-                Text(moduleId.capitalized)
-                    .font(Theme.Typography.small)
-                    .textCase(.uppercase)
-                    .tracking(1)
-                    .foregroundStyle(Theme.Colors.primaryBlue)
-            }
+            Text(item.lessonTitle)
+                .font(Theme.Typography.small)
+                .textCase(.uppercase)
+                .tracking(1)
+                .foregroundStyle(Theme.Colors.primaryBlue)
 
-            Text(question.prompt)
+            Text(item.question.prompt)
                 .font(Theme.Typography.body)
                 .foregroundStyle(Theme.Colors.mutedText)
                 .lineSpacing(3)
                 .padding(.top, 4)
 
-            if let scenario = question.scenario {
+            if let scenario = item.question.scenario {
                 Text(scenario)
                     .font(.system(size: 17, weight: .bold, design: .rounded))
                     .foregroundStyle(Theme.Colors.deepNavy)
@@ -130,8 +142,10 @@ struct DiagnosticQuizView: View {
                         Spacer()
 
                         Text(choice.text)
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.system(size: choice.text.count > 24 ? 14 : 22,
+                                          weight: .bold, design: .rounded))
                             .foregroundStyle(Theme.Colors.deepNavy)
+                            .multilineTextAlignment(.leading)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(14)
@@ -145,22 +159,60 @@ struct DiagnosticQuizView: View {
                     .shadow(color: .black.opacity(0.04), radius: 3, x: 0, y: 1)
                 }
                 .buttonStyle(.plain)
-                .disabled(viewModel.diagnosticFlash != nil)
+                .disabled(viewModel.diagnosticReveal != nil)
             }
         }
     }
 
-    // MARK: - Flash Overlay
+    // MARK: - Shortcut Reveal
 
-    private func flashOverlay(correct: Bool) -> some View {
-        RoundedRectangle(cornerRadius: 0)
-            .fill(
-                correct
-                    ? Theme.Colors.mindTeal.opacity(0.12)
-                    : Theme.Colors.errorSoftRed.opacity(0.12)
-            )
-            .ignoresSafeArea()
-            .allowsHitTesting(false)
+    private func revealOverlay(_ reveal: DiagnosticReveal) -> some View {
+        VStack {
+            Spacer()
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 8) {
+                    Image(systemName: reveal.correct ? "checkmark.circle.fill" : "lightbulb.fill")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(reveal.correct ? Theme.Colors.growthGreen : Theme.Colors.warmOrange)
+                    Text(reveal.correct
+                         ? "\(reveal.lessonTitle) \u{2014} solid start"
+                         : "\(reveal.lessonTitle) \u{2014} we\u{2019}ll build this one")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                }
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("THE SHORTCUT")
+                        .font(.system(size: 10, weight: .heavy))
+                        .tracking(0.8)
+                        .foregroundStyle(Theme.Colors.insightText)
+                    Text(reveal.shortcut)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .lineSpacing(3)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(14)
+                .background(Theme.Colors.insightYellowTint)
+                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+
+                PillButton(questionNumber == totalQuestions ? "Finish" : "Next") {
+                    viewModel.advanceDiagnostic()
+                }
+            }
+            .padding(20)
+            .background(Theme.Colors.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+            .shadow(color: .black.opacity(0.16), radius: 24, x: 0, y: -4)
+            .padding(.horizontal, 12)
+            .padding(.bottom, 8)
+        }
+        .background(
+            Color.black.opacity(0.25)
+                .ignoresSafeArea()
+                .onTapGesture { } // swallow taps behind the card
+        )
     }
 }
 

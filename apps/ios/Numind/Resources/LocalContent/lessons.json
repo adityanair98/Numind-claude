@@ -11,13 +11,16 @@
       "tip_bill_total",
       "tip_10_pct_d1",
       "tip_15_pct_d1",
-      "tip_total_15_d2"
+      "tip_total_15_d2",
+      "tip_decision_screen_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this at every restaurant, bar, and salon for the rest of your life.",
+    "relatedCalculatorSlug": "tip_split"
   },
   {
     "id": "tip_18_percent",
@@ -31,13 +34,16 @@
       "tip_18_d2",
       "tip_per_hundred_d1",
       "tip_total_25_d2",
-      "tip_post_tax_scenario_d3"
+      "tip_post_tax_scenario_d3",
+      "tip_decision_pretax_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Pull this out the next time the check lands and you're second-guessing the tip.",
+    "relatedCalculatorSlug": "tip_split"
   },
   {
     "id": "tip_split_bill",
@@ -51,13 +57,16 @@
       "tip_bill_total",
       "tip_group_per_person_d2",
       "tip_group_per_person_d3",
-      "tip_bar_d2"
+      "tip_bar_d2",
+      "tip_decision_autograt_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when the group check arrives and everyone's reaching for their phone.",
+    "relatedCalculatorSlug": "tip_split"
   },
   {
     "id": "discount_bogo",
@@ -71,13 +80,15 @@
       "bogo_savings",
       "bogo_scenario_d2",
       "unit_price_grocery_d2",
-      "discount_compare_d2"
+      "discount_compare_d2",
+      "sm_decision_bogo_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you grab a 'buy one get one' deal you didn't come in for."
   },
   {
     "id": "discount_stacked",
@@ -91,13 +102,16 @@
       "stacked_discount_saving_calc",
       "stacked_discount_final",
       "stacked_scenario_d3",
-      "discount_budget_d3"
+      "discount_budget_d3",
+      "sm_decision_stacked_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this at checkout when a coupon stacks on top of a sale price.",
+    "relatedCalculatorSlug": "discount_tax"
   },
   {
     "id": "discount_coupon_vs_cashback",
@@ -111,13 +125,15 @@
       "cashback_amount_d1",
       "coupon_plus_cashback_d2",
       "coupon_vs_cashback_compare_d3",
-      "coupon_cashback_final_d3"
+      "coupon_cashback_final_d3",
+      "sm_decision_couponcash_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Pull this up when you're choosing between a coupon code and a cashback offer."
   },
   {
     "id": "discount_price_plus_tax",
@@ -131,7 +147,8 @@
       "disc_tax_amount_d2",
       "disc_tax_nonround_d2",
       "disc_tax_stacked_d3",
-      "disc_tax_compare_d3"
+      "disc_tax_compare_d3",
+      "sm_decision_discount_compare_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -139,7 +156,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this at the register so the final price never surprises you.",
+    "relatedCalculatorSlug": "discount_tax"
   },
   {
     "id": "discount_membership_worth",
@@ -153,7 +172,8 @@
       "membership_annual_d1",
       "membership_net_saving_d2",
       "membership_compare_d3",
-      "membership_decision_d3"
+      "membership_decision_d3",
+      "sm_decision_membership_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
@@ -161,7 +181,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you renew Costco, Prime, or a delivery membership."
   },
   {
     "id": "concept_shopping_manipulation",
@@ -175,13 +196,15 @@
       "concept_decoy_pricing_d2",
       "concept_charm_pricing_d2",
       "concept_inflated_msrp_d3",
-      "concept_bogo_inflation_d3"
+      "concept_bogo_inflation_d3",
+      "sm_decision_manipulation_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "everyday_money_math",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Keep this in mind every time a store flashes a 'limited time' price."
   },
   {
     "id": "subscription_math",
@@ -195,7 +218,8 @@
       "yearly_cost_d1",
       "sub_audit_annual_d2",
       "subscription_compare_d2",
-      "sub_audit_cut_d3"
+      "sub_audit_cut_d3",
+      "mm_decision_subaudit_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -203,7 +227,8 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this once a year to see what your subscriptions actually cost you."
   },
   {
     "id": "price_per_use",
@@ -217,7 +242,8 @@
       "mm_cpu_book_d1",
       "cost_per_use_gym_d2",
       "mm_cpu_daily_d2",
-      "cost_per_use_scenario"
+      "cost_per_use_scenario",
+      "mm_decision_peruse_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -225,7 +251,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before buying the thing you'll 'definitely use all the time.'"
   },
   {
     "id": "sales_tax_quick",
@@ -247,7 +274,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to know your real total before you reach the register.",
+    "relatedCalculatorSlug": "discount_tax"
   },
   {
     "id": "money_math_50_30_20",
@@ -261,13 +290,15 @@
       "savings_20_d1",
       "all_three_buckets_d2",
       "over_budget_d3",
-      "target_savings_d3"
+      "target_savings_d3",
+      "mm_decision_budget_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you set up a monthly budget or get a raise."
   },
   {
     "id": "money_math_latte_factor",
@@ -289,7 +320,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this when a small daily habit makes you wonder where your money goes."
   },
   {
     "id": "money_math_weekly_monthly",
@@ -311,7 +343,8 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when a weekly expense quietly blows your monthly budget."
   },
   {
     "id": "concept_money_needs_vs_wants",
@@ -325,13 +358,15 @@
       "concept_needs_gym_d2",
       "concept_needs_streaming_d2",
       "concept_needs_over_50_d3",
-      "concept_needs_job_loss_d3"
+      "concept_needs_job_loss_d3",
+      "mm_decision_needs_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you're trimming your budget and deciding what's truly essential."
   },
   {
     "id": "money_math_sinking_funds",
@@ -345,13 +380,15 @@
       "sinking_fund_multi_total_d2",
       "sinking_fund_holiday_d1",
       "sinking_fund_short_window_d2",
-      "concept_sinking_fund_vs_cc_d2"
+      "concept_sinking_fund_vs_cc_d2",
+      "mm_decision_sinking_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Set this up so annual bills — insurance, holidays, car registration — never blindside you."
   },
   {
     "id": "net_pay_check",
@@ -373,7 +410,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when an offer quotes a salary and you want your real take-home.",
+    "relatedCalculatorSlug": "paycheck"
   },
   {
     "id": "raise_impact",
@@ -393,7 +432,8 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this the moment you hear your raise number."
   },
   {
     "id": "overtime_calc",
@@ -407,13 +447,15 @@
       "overtime_d2",
       "overtime_scenario_d2",
       "salary_hourly_annual_d1",
-      "total_weekly_with_ot_d3"
+      "total_weekly_with_ot_d3",
+      "sal_decision_overtime_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to check your paycheck added up your overtime correctly."
   },
   {
     "id": "pay_period_convert",
@@ -427,13 +469,16 @@
       "weekly_to_annual",
       "biweekly_annual_d1",
       "weekly_annual_d1",
-      "job_offer_compare_d3"
+      "job_offer_compare_d3",
+      "sal_decision_offer_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to compare two jobs that pay on different schedules.",
+    "relatedCalculatorSlug": "salary_converter"
   },
   {
     "id": "inflation_adjusted_raise",
@@ -447,7 +492,8 @@
       "inflation_raise_dollars_d1",
       "inflation_raise_scenario_d2",
       "inflation_raise_compare_d2",
-      "inflation_raise_negative_d3"
+      "inflation_raise_negative_d3",
+      "sal_decision_realraise_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -455,7 +501,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this when your raise arrives to see if you actually came out ahead."
   },
   {
     "id": "salary_hourly_2000",
@@ -475,7 +522,9 @@
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to instantly translate any hourly rate into a yearly salary.",
+    "relatedCalculatorSlug": "salary_converter"
   },
   {
     "id": "salary_total_comp",
@@ -489,13 +538,15 @@
       "total_comp_difference_d2",
       "total_comp_hourly_d3",
       "missing_benefit_d2",
-      "benefits_pct_d2"
+      "benefits_pct_d2",
+      "sal_decision_totalcomp_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you're weighing a job offer's full package, not just the salary."
   },
   {
     "id": "salary_side_hustle",
@@ -509,7 +560,8 @@
       "side_hustle_simple_d1",
       "worth_it_compare_d3",
       "hourly_compare_d3",
-      "side_hustle_annual_d2"
+      "side_hustle_annual_d2",
+      "sal_decision_sidehustle_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -517,13 +569,14 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before taking a side gig to see what it really pays per hour."
   },
   {
     "id": "concept_salary_exempt_status",
     "moduleId": "salary",
     "title": "What 'exempt' vs 'non-exempt' actually means",
-    "concept": "FLSA divides employees into exempt (salaried, no overtime, must pass salary + duties tests) and non-exempt (overtime-eligible at 1.5×). Most people don't know which they are or that misclassification is common. The DOL's 2024 rule raised the federal salary threshold to $58,656/year for 2025 — but in November 2024 a Texas federal court vacated that rule, reverting the threshold to $35,568. Several states (CA, NY, WA) set their own higher thresholds. Always check both federal and state law.",
+    "concept": "FLSA divides employees into exempt (salaried, no overtime, must pass salary + duties tests) and non-exempt (overtime-eligible at 1.5×). Most people don't know which they are or that misclassification is common. A 2024 DOL rule briefly raised the federal salary threshold to $58,656/year, but federal courts vacated it — and in May 2026 the DOL formally restored the prior regulation, so the enforced federal floor is $35,568/year ($684/week, the 2019 level). Several states (CA, NY, WA) set much higher floors of their own — California's tracks 2× the state minimum wage and rises annually. Always check both federal and state law.",
     "shortcut": "Exempt = no OT, fixed salary. Non-exempt = OT-eligible, paid by the hour. Federal threshold currently $35,568/yr (after Nov 2024 court ruling vacated the $58,656 increase) AND must pass duties test (executive, administrative, professional). Many states have higher thresholds — California is over $66k. Below threshold OR failing duties = legally non-exempt regardless of what HR labels you.",
     "example": "Two job offers:\nA: $80k exempt salary, expected 50-hour weeks\nB: $35/hr non-exempt, 50-hour weeks\n\nA: $80,000/year\nB: (40×$35×52) + (10×$35×1.5×52)\n  = $72,800 + $27,300 = $100,100/year\n\nNon-exempt wins by $20k if hours are real.",
     "quizTemplateIds": [
@@ -531,13 +584,15 @@
       "concept_nonexempt_def_d1",
       "concept_exempt_threshold_d2",
       "concept_exempt_misclass_d2",
-      "concept_exempt_tradeoff_d3"
+      "concept_exempt_tradeoff_d3",
+      "sal_decision_exempt_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Check this when a job is 'salaried' and you want to know if you're owed overtime."
   },
   {
     "id": "salary_401k_paycheck_impact",
@@ -551,7 +606,8 @@
       "k401_net_cost_d1",
       "k401_net_cost_high_bracket_d2",
       "k401_compare_rates_d2",
-      "k401_with_match_scenario_d3"
+      "k401_with_match_scenario_d3",
+      "sal_decision_match_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -559,13 +615,15 @@
       "investing_and_future"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you set your 401(k) contribution rate.",
+    "relatedCalculatorSlug": "401k_impact"
   },
   {
     "id": "salary_rsu_basics",
     "moduleId": "salary",
     "title": "RSUs — what's your stock comp actually worth?",
-    "concept": "RSUs (Restricted Stock Units) are stock-based compensation. The math most people get wrong: at vest, the shares hit your account AND are taxed as ordinary income at your marginal rate — your employer typically withholds shares to cover the tax at the IRS supplemental withholding rate of 22% (per IRS Pub 15). That rate is too LOW if you're in the 32-37% bracket (above ~$197K single 2025 taxable income, per IRS Rev Proc 2024-40), which means you owe more at tax time than you might expect. Standard tech-industry vest is 4 years with a 1-year cliff: 25% of the grant vests on your first anniversary, then quarterly or monthly until year 4. Each vest is a taxable event AT THAT YEAR'S share price — not at the grant price.",
+    "concept": "RSUs (Restricted Stock Units) are stock-based compensation. The math most people get wrong: at vest, the shares hit your account AND are taxed as ordinary income at your marginal rate — your employer typically withholds shares to cover the tax at the IRS supplemental withholding rate of 22% (per IRS Pub 15). That rate is too LOW if you're in the 32-37% bracket (above ~$202K single 2026 taxable income, per IRS Rev Proc 2025-32), which means you owe more at tax time than you might expect. Standard tech-industry vest is 4 years with a 1-year cliff: 25% of the grant vests on your first anniversary, then quarterly or monthly until year 4. Each vest is a taxable event AT THAT YEAR'S share price — not at the grant price.",
     "shortcut": "Two-step mental on a vest: (1) Gross income added that year = vested shares × current price. (2) Net cash equivalent = vested shares × price × (1 − your marginal rate). For most tech workers in a combined ~32-35% bracket (federal 24% + state 5-13% + FICA Medicare 1.45%): every $10K of RSU vest nets ~$6.5-7K. The 22% IRS supplemental withholding can leave you owing 10-15% more at tax time — set aside the gap.",
     "example": "Alex receives a 4-year RSU grant of 1,000 shares (25% / year), at a grant-date share price of $40.\n\nYear 1 vest (250 shares):\n  Stock price now: $50 (up 25%)\n  Gross income added: 250 × $50 = $12,500\n  Marginal rate (24% fed + 5% state ≈ 29% total): tax owed = $3,625\n  Net cash equivalent: $12,500 − $3,625 = $8,875\n\nYear 2 vest (250 shares):\n  Stock price now: $60\n  Gross: 250 × $60 = $15,000 added to W-2\n  Each vest is taxed at THAT year's price, not the grant price.\n\nUnderwithholding trap:\n  Employer withheld 22% of $12,500 = $2,750\n  Actual tax owed at marginal rate: $3,625\n  Gap owed at tax time: $875",
     "quizTemplateIds": [
@@ -573,7 +631,8 @@
       "rsu_net_after_tax_d2",
       "rsu_underwithholding_d2",
       "rsu_4yr_vest_d2",
-      "concept_rsu_when_taxed_d2"
+      "concept_rsu_when_taxed_d2",
+      "sal_decision_rsu_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -581,21 +640,23 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when an offer includes stock and you need its real value."
   },
   {
     "id": "salary_w2_vs_1099_offer",
     "moduleId": "salary",
     "title": "W-2 vs 1099 offer — is $50/hr 1099 better than $40/hr W-2?",
-    "concept": "Two offers, same headline number, different real value. A 1099 contractor role pays a gross hourly rate but you lose: (1) employer FICA half (~7.65%, per IRS — you pay it as self-employment tax instead), (2) employer-sponsored health insurance (~$400-700/month value), (3) employer 401(k) match (typically 3-6% of salary), (4) paid time off (~10-20 days/year = ~5-8% of salary), (5) employer-paid disability + life insurance, (6) the IRS Schedule SE deduction that smooths it (you deduct the employer-equivalent half before computing SE tax — effective SE rate ~14.13%, not 15.3%). After accounting for all of that, a 1099 rate needs to be roughly **30-40% higher** than the equivalent W-2 hourly to break even on take-home. Quick screening rule for adults considering a 1099 offer: 1099 hourly × 0.65 ≈ what the equivalent W-2 hourly take-home would feel like, after stripping out the missing employer contributions.",
-    "shortcut": "1099-to-W-2 quick screen: 1099 hourly × 0.65 ≈ W-2-equivalent take-home rate. So $50/hr 1099 ≈ $32.50/hr W-2 once you net out missing benefits + employer FICA half + missing PTO. To break even with a $40/hr W-2 job, the 1099 offer needs to be roughly $40 ÷ 0.65 ≈ $61.50/hr. Big multipliers come from health insurance and PTO — if the 1099 includes healthcare via a spouse or marketplace ACA subsidy, the gap shrinks.",
-    "example": "Two offers, side by side:\n\nOffer A: W-2, $40/hr × 2,080 hours = $83,200 gross\n  Plus benefits: employer health $6K + 401(k) match $2,500 + 15 PTO days (~$4,800 paid time off) + employer FICA half $6,365 paid on your behalf\n  Total compensation: ~$103K\n\nOffer B: 1099, $50/hr × 2,080 hours = $104,000 gross\n  Minus SE tax (effective 14.13% per IRS Schedule SE): ~$14,695\n  Minus health insurance (self-purchased ACA Silver, single 30-yo): ~$5,400/yr after subsidies\n  Minus no 401(k) match: $0 (you can open a Solo 401(k) but employer match is gone)\n  Minus no PTO: ~$4,000 of unbillable time\n  Net realized: ~$79,900\n\nOffer A ($40/hr W-2) effectively pays MORE than Offer B ($50/hr 1099). The 1099 rate would need to be roughly $61.50/hr to match.\n\nQuick screen: $50 × 0.65 = $32.50 W-2-equivalent. Way under $40 → A wins. Same math applied to a $75/hr 1099: $75 × 0.65 = $48.75 W-2-equivalent → A is the closer call.",
+    "concept": "Two offers, same headline number, different real value. A 1099 contractor role pays a gross hourly rate but you lose: (1) employer FICA half (~7.65%, per IRS — you pay it as self-employment tax instead), (2) employer-sponsored health insurance (~$400-700/month value), (3) employer 401(k) match (typically 3-6% of salary), (4) paid time off (~10-20 days/year = ~5-8% of salary), (5) employer-paid disability + life insurance, (6) the IRS Schedule SE deduction that smooths it (you deduct the employer-equivalent half before computing SE tax — effective SE rate ~14.13%, not 15.3%). After accounting for all of that — partially offset by the 20% QBI deduction on self-employment income, made permanent by OBBBA in 2025 — a 1099 rate needs to be roughly **40-45% higher** than the equivalent W-2 hourly to break even on take-home. Quick screening rule for adults considering a 1099 offer: 1099 hourly × 0.70 ≈ what the equivalent W-2 hourly take-home would feel like, after stripping out the missing employer contributions (net of the QBI deduction).",
+    "shortcut": "1099-to-W-2 quick screen: 1099 hourly × 0.70 ≈ W-2-equivalent take-home rate. So $50/hr 1099 ≈ $35/hr W-2 once you net out missing benefits + employer FICA half + missing PTO (net of the QBI deduction). To break even with a $40/hr W-2 job, the 1099 offer needs to be roughly $40 ÷ 0.70 ≈ $57/hr. Big multipliers come from health insurance and PTO — if the 1099 includes healthcare via a spouse or marketplace ACA subsidy, the gap shrinks.",
+    "example": "Two offers, side by side:\n\nOffer A: W-2, $40/hr × 2,080 hours = $83,200 gross\n  Plus benefits: employer health $6K + 401(k) match $2,500 + 15 PTO days (~$4,800 paid time off) + employer FICA half $6,365 paid on your behalf\n  Total compensation: ~$103K\n\nOffer B: 1099, $50/hr × 2,080 hours = $104,000 gross\n  Minus SE tax (effective 14.13% per IRS Schedule SE): ~$14,695\n  Minus health insurance (self-purchased ACA Silver, single 30-yo): ~$5,400/yr after subsidies\n  Minus no 401(k) match: $0 (you can open a Solo 401(k) but employer match is gone)\n  Minus no PTO: ~$4,000 of unbillable time\n  Plus 20% QBI deduction on self-employment income (made permanent by OBBBA 2025): ~+$4,250 in tax saved\n  Net realized: ~$84,150\n\nOffer A ($40/hr W-2) still effectively pays MORE than Offer B ($50/hr 1099) once you count the employer benefits Offer A bundles in. The 1099 rate would need to be roughly $57/hr to match.\n\nQuick screen: $50 × 0.70 = $35 W-2-equivalent. Under $40 → A wins (but closer than it looks). Same math applied to a $75/hr 1099: $75 × 0.70 = $52.50 W-2-equivalent → now above $40, so the 1099 pulls ahead.",
     "quizTemplateIds": [
       "w2_equivalent_quick_d1",
       "w2_equivalent_breakeven_d2",
       "se_tax_on_1099_d2",
       "offer_compare_total_comp_d2",
-      "concept_1099_missing_benefits_d2"
+      "concept_1099_missing_benefits_d2",
+      "sal_decision_1099_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -603,7 +664,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when a contract gig pays more per hour and you're tempted to take it."
   },
   {
     "id": "salary_401k_vesting",
@@ -617,7 +679,8 @@
       "vested_match_cliff_d1",
       "vested_match_forfeit_d2",
       "vested_match_milestone_d2",
-      "concept_vesting_cliff_vs_graded_d2"
+      "concept_vesting_cliff_vs_graded_d2",
+      "sal_decision_vesting_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -625,7 +688,9 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Check this before you quit a job and possibly walk away from unvested match.",
+    "relatedCalculatorSlug": "401k_impact"
   },
   {
     "id": "salary_bonus_after_tax",
@@ -639,13 +704,15 @@
       "bonus_take_home_high_state_d2",
       "bonus_owed_at_filing_d2",
       "bonus_refunded_low_bracket_d2",
-      "concept_bonus_supplemental_vs_marginal_d2"
+      "concept_bonus_supplemental_vs_marginal_d2",
+      "sal_decision_bonus_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this when a bonus is coming so the smaller-than-expected deposit doesn't shock you."
   },
   {
     "id": "rule_of_72",
@@ -667,7 +734,8 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to estimate how fast any investment — or debt — doubles."
   },
   {
     "id": "roi_basic",
@@ -689,7 +757,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to compare any two investments on the same footing."
   },
   {
     "id": "investing_401k_match",
@@ -703,7 +772,8 @@
       "total_with_match_d1",
       "match_scenario_d2",
       "match_percent_d2",
-      "match_annual_d3"
+      "match_annual_d3",
+      "inv_decision_match_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -711,13 +781,15 @@
       "income_and_paycheck"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this on day one of a new job so you never leave free match on the table.",
+    "relatedCalculatorSlug": "401k_impact"
   },
   {
     "id": "investing_roth_vs_traditional",
     "moduleId": "investing",
     "title": "Roth vs Traditional IRA — the basics",
-    "concept": "Both IRAs cap at $7,000/year (2025) or $8,000 if you're 50+ (per IRS Rev Proc 2024-25). The mechanical difference: Roth uses after-tax dollars (you pay tax now, withdraw tax-free in retirement); Traditional uses pre-tax dollars (you skip tax now, pay it on withdrawal). Income above $150k single / $236k MFJ phases out direct Roth contributions (per IRS — backdoor Roth still possible). This lesson covers the mechanics math; the decision rules (which to choose) live in the next lesson, 'Roth vs Traditional — the decision.'",
+    "concept": "Both IRAs cap at $7,500/year (2026) or $8,600 if you're 50+ (per IRS Notice 2025-67). The mechanical difference: Roth uses after-tax dollars (you pay tax now, withdraw tax-free in retirement); Traditional uses pre-tax dollars (you skip tax now, pay it on withdrawal). Income above $153k single / $242k MFJ phases out direct Roth contributions (per IRS — backdoor Roth still possible). This lesson covers the mechanics math; the decision rules (which to choose) live in the next lesson, 'Roth vs Traditional — the decision.'",
     "shortcut": "Roth: contribution comes from your post-tax cash. Traditional: contribution reduces taxable income by the full amount this year. Tax saved on a Traditional contribution = contribution × your marginal rate. Long-term Roth value = contribution × growth multiplier, tax-free; Traditional value = same growth, but taxed on withdrawal at your future rate.",
     "example": "$5,000 contribution at 22% tax bracket:\nRoth: $5,000 comes from post-tax cash; you keep all of it tax-free at withdrawal\nTraditional: saves $1,100 in taxes this year; you'll owe tax on withdrawals later\n\n$7k/yr × 25 yrs at 8% growth ≈ $510k\nRoth: $510k tax-free at withdrawal\nTraditional at 24% future bracket: $510k − $122k tax = $388k after-tax",
     "quizTemplateIds": [
@@ -725,7 +797,8 @@
       "traditional_tax_saved_d1",
       "roth_scenario_d2",
       "traditional_scenario_d2",
-      "roth_growth_value_d3"
+      "roth_growth_value_d3",
+      "inv_decision_trad_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -733,13 +806,14 @@
       "income_and_paycheck"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you open an IRA and have to pick Roth or Traditional."
   },
   {
     "id": "investing_roth_decision",
     "moduleId": "investing",
     "title": "Roth vs Traditional — the decision",
-    "concept": "The honest answer to 'Roth or Traditional?' is **you don't know your future tax bracket** — nobody does. Future tax rates depend on your future income, what state you retire in, what RMDs (required minimum distributions starting at age 73, per IRS) push you into, and what Congress does to tax law over the next 30-40 years. The TCJA's lower rates currently sunset at the end of 2025; what replaces them is genuinely uncertain. So the right framing is hedging, not optimization. Three defaults that work for ~70% of users: (1) Early career in the 12-22% federal bracket → **lean Roth** (decades of tax-free growth, low tax cost to lock in). (2) Peak earning in the 24-37% bracket AND expect lower retirement spending → **lean Traditional** (defer to a likely-lower future rate). (3) Genuinely uncertain (most people) → **split** across Roth and Traditional buckets so you can choose which to withdraw from in retirement based on the bracket you're actually in. Income above the Roth IRA phaseout ($150K single / $236K MFJ in 2025, per IRS Rev Proc 2024-40) closes the direct Roth IRA door — backdoor Roth IRA via a non-deductible Traditional contribution remains legal as of 2026, though it's worth checking whether legislative changes have closed it.",
+    "concept": "The honest answer to 'Roth or Traditional?' is **you don't know your future tax bracket** — nobody does. Future tax rates depend on your future income, what state you retire in, what RMDs (required minimum distributions starting at age 73, per IRS) push you into, and what Congress does to tax law over the next 30-40 years. The 2017 TCJA bracket structure was made permanent by the OBBBA in 2025, so the old 'rates snap back in 2026' deadline is gone — but a future Congress can still change rates, and your own income and state of residence will shift over a 30-40 year retirement. So the right framing is hedging, not optimization. Three defaults that work for ~70% of users: (1) Early career in the 12-22% federal bracket → **lean Roth** (decades of tax-free growth, low tax cost to lock in). (2) Peak earning in the 24-37% bracket AND expect lower retirement spending → **lean Traditional** (defer to a likely-lower future rate). (3) Genuinely uncertain (most people) → **split** across Roth and Traditional buckets so you can choose which to withdraw from in retirement based on the bracket you're actually in. Income above the Roth IRA phaseout ($153K single / $242K MFJ in 2026, per IRS Notice 2025-67) closes the direct Roth IRA door — backdoor Roth IRA via a non-deductible Traditional contribution remains legal as of 2026, though it's worth checking whether legislative changes have closed it.",
     "shortcut": "Default leans, not prescriptions: bracket 12-22% → lean Roth. Bracket 24-37% with lower retirement spending → lean Traditional. Don't know → split 50/50 between Roth and Traditional buckets — you preserve the option to pick at withdrawal. Always capture the employer 401k match before optimizing the Roth/Traditional split (matches usually go into Traditional regardless of your elections).",
     "example": "Three example users, with the honest 'unknown' framing:\n\n28 y/o earning $55K (12% bracket):\nMore years for tax-free growth; current tax cost low\n→ Lean Roth (IRA + Roth 401k if available)\nReality check: if tax brackets rise dramatically, you've locked in today's rate — net win. If brackets fall, you slightly overpaid — net small loss. Roth wins on the downside risk.\n\n42 y/o earning $200K (24% bracket), expects to retire and spend less:\nDefer the 24% to a likely-lower future rate\n→ Lean Traditional 401k (defer tax), Roth IRA for flexibility\nReality check: if Congress raises rates above 24% in retirement, you'd have preferred Roth — but that's a real risk, not a foregone conclusion.\n\n50 y/o uncertain about retirement spending:\nSplit. Some Roth, some Traditional.\n→ At retirement, choose which bucket to withdraw from year-by-year based on the bracket you're actually in. The 'tax flexibility' is worth more than getting the original allocation perfect.\n\nNot covered here: RMDs kick in at age 73 (Traditional, per SECURE 2.0); Roth has no RMDs during the original owner's lifetime.",
     "quizTemplateIds": [
@@ -747,7 +821,8 @@
       "concept_roth_traditional_peak_d1",
       "concept_roth_phaseout_d2",
       "concept_roth_backdoor_d2",
-      "concept_roth_unsure_split_d3"
+      "concept_roth_unsure_split_d3",
+      "inv_decision_roth_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -755,21 +830,23 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you're genuinely unsure whether Roth or Traditional fits you."
   },
   {
     "id": "concept_investing_three_accounts",
     "moduleId": "investing",
     "title": "Roth IRA vs Roth 401(k) vs Traditional 401(k) — same word, different account",
-    "concept": "Three retirement accounts whose overlapping names confuse most adults. (1) **Roth IRA** — INDIVIDUAL account you open at a brokerage. 2025 cap is $7,000/yr ($8,000 if 50+) per IRS Rev Proc 2024-40, COMBINED with any Traditional IRA contributions. Income phaseout above $150K single / $236K MFJ (2025) for direct contribution. Tax-free withdrawals after 59½ + 5-year rule. NO required minimum distributions (RMDs) during the owner's lifetime. (2) **Roth 401(k)** — EMPLOYER-SPONSORED plan, post-tax contributions. 2025 elective deferral cap is $23,500/yr (shared with the Traditional 401(k) bucket at the same employer). NO income phaseout — high earners excluded from Roth IRA can still use Roth 401(k). Employer match ALWAYS goes to the Traditional (pre-tax) 401(k) bucket regardless of where your elective contributions go. RMDs were eliminated in 2024 by SECURE 2.0. (3) **Traditional 401(k)** — same plan, pre-tax contributions, taxed on withdrawal, RMDs at age 73 (per SECURE 2.0). The naming trap: 'Roth' and 'Traditional' describe TAX TREATMENT; 'IRA' and '401(k)' describe ACCOUNT TYPE. They're independent: you can have a Traditional 401(k) at work AND a Roth IRA on the side, with separate caps.",
-    "shortcut": "Two axes, four account labels. **Tax treatment**: Roth (after-tax in, tax-free out) vs Traditional (pre-tax in, taxed out). **Account type**: IRA (individual, $7,000/yr 2025 cap) vs 401(k) (employer-sponsored, $23,500/yr 2025 cap). Caps are PER account type, not combined across the two: a maxed-out worker contributes up to $30,500/yr total ($23,500 401(k) + $7,000 IRA), regardless of how that splits between Roth and Traditional within each bucket. Employer matches always land in the pre-tax 401(k) bucket — capture them first before any Roth/Traditional optimization.",
-    "example": "Maya is 32, earning $95K single. Her benefits offer both a Roth 401(k) and a Traditional 401(k). She's also opening an IRA on her own.\n\nMaya's max 2025 contribution capacity:\n  401(k) elective deferral: $23,500 (any mix of Roth + Traditional)\n  IRA: $7,000 (any mix of Roth + Traditional)\n  Total max: $30,500\n\nMaya's setup (her own elections):\n  Roth 401(k): $14,000/yr\n  Traditional 401(k): $9,500/yr\n  Total elective deferral: $23,500 ✓\n  Roth IRA at Fidelity: $7,000 (below the $150K single phaseout)\n\nEmployer adds:\n  50% match up to 6% of $95K = $2,850/yr → goes into the TRADITIONAL 401(k) bucket regardless of where Maya's elective contributions go.\n\nMaya's actual total annual retirement contributions: $30,500 (her) + $2,850 (employer) = $33,350.\n\nCommon confusion the lesson prevents:\n  'I can contribute $7K to my Roth IRA AND $7K to my Roth 401(k), right?' → Wrong. The IRA cap is its own thing, but the 401(k) cap ($23,500) is shared across Roth + Traditional within the same employer plan.\n  'My Roth 401(k) match grows tax-free, right?' → No. The match goes pre-tax (Traditional) and is taxed at withdrawal — even if your own contributions are Roth.",
+    "concept": "Three retirement accounts whose overlapping names confuse most adults. (1) **Roth IRA** — INDIVIDUAL account you open at a brokerage. 2026 cap is $7,500/yr ($8,600 if 50+) per IRS Notice 2025-67, COMBINED with any Traditional IRA contributions. Income phaseout above $153K single / $242K MFJ (2026) for direct contribution. Tax-free withdrawals after 59½ + 5-year rule. NO required minimum distributions (RMDs) during the owner's lifetime. (2) **Roth 401(k)** — EMPLOYER-SPONSORED plan, post-tax contributions. 2026 elective deferral cap is $24,500/yr (shared with the Traditional 401(k) bucket at the same employer); the 50+ catch-up adds $8,000, and ages 60-63 get an $11,250 'super catch-up' instead, per SECURE 2.0. NO income phaseout — high earners excluded from Roth IRA can still use Roth 401(k). Employer match ALWAYS goes to the Traditional (pre-tax) 401(k) bucket regardless of where your elective contributions go. RMDs were eliminated in 2024 by SECURE 2.0. (3) **Traditional 401(k)** — same plan, pre-tax contributions, taxed on withdrawal, RMDs at age 73 (per SECURE 2.0). The naming trap: 'Roth' and 'Traditional' describe TAX TREATMENT; 'IRA' and '401(k)' describe ACCOUNT TYPE. They're independent: you can have a Traditional 401(k) at work AND a Roth IRA on the side, with separate caps.",
+    "shortcut": "Two axes, four account labels. **Tax treatment**: Roth (after-tax in, tax-free out) vs Traditional (pre-tax in, taxed out). **Account type**: IRA (individual, $7,500/yr 2026 cap) vs 401(k) (employer-sponsored, $24,500/yr 2026 cap). Caps are PER account type, not combined across the two: a maxed-out worker contributes up to $32,000/yr total ($24,500 401(k) + $7,500 IRA), regardless of how that splits between Roth and Traditional within each bucket. Employer matches always land in the pre-tax 401(k) bucket — capture them first before any Roth/Traditional optimization.",
+    "example": "Maya is 32, earning $95K single. Her benefits offer both a Roth 401(k) and a Traditional 401(k). She's also opening an IRA on her own.\n\nMaya's max 2026 contribution capacity:\n  401(k) elective deferral: $24,500 (any mix of Roth + Traditional)\n  IRA: $7,500 (any mix of Roth + Traditional)\n  Total max: $32,000\n\nMaya's setup (her own elections):\n  Roth 401(k): $14,000/yr\n  Traditional 401(k): $10,500/yr\n  Total elective deferral: $24,500 ✓\n  Roth IRA at Fidelity: $7,500 (below the $153K single phaseout)\n\nEmployer adds:\n  50% match up to 6% of $95K = $2,850/yr → goes into the TRADITIONAL 401(k) bucket regardless of where Maya's elective contributions go.\n\nMaya's actual total annual retirement contributions: $32,000 (her) + $2,850 (employer) = $34,850.\n\nCommon confusion the lesson prevents:\n  'I can contribute $7.5K to my Roth IRA AND $7.5K to my Roth 401(k), right?' → Wrong. The IRA cap is its own thing, but the 401(k) cap ($24,500) is shared across Roth + Traditional within the same employer plan.\n  'My Roth 401(k) match grows tax-free, right?' → No. The match goes pre-tax (Traditional) and is taxed at withdrawal — even if your own contributions are Roth.",
     "quizTemplateIds": [
       "concept_three_accounts_caps_d1",
       "concept_three_accounts_match_d2",
       "concept_three_accounts_phaseout_d2",
       "concept_three_accounts_total_max_d2",
-      "concept_three_accounts_rmd_d2"
+      "concept_three_accounts_rmd_d2",
+      "inv_decision_accounts_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -777,7 +854,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when your benefits portal asks you to pick between confusingly-named accounts."
   },
   {
     "id": "investing_compound_growth",
@@ -791,13 +869,15 @@
       "compound_interest_earned_d1",
       "compound_pct_interest_d2",
       "compound_early_vs_late_d3",
-      "compound_backwards_d3"
+      "compound_backwards_d3",
+      "inv_decision_compound_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to see what investing today is worth decades from now."
   },
   {
     "id": "investing_compound_reverse_goal",
@@ -817,7 +897,8 @@
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this when you have a savings target and need a monthly number to hit it."
   },
   {
     "id": "investing_dca",
@@ -832,13 +913,15 @@
       "concept_dca_behavioral_d2",
       "concept_dca_when_use_d2",
       "concept_dca_vs_timing_d3",
-      "dca_cash_drag_d2"
+      "dca_cash_drag_d2",
+      "inv_decision_dca_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you're deciding whether to invest a little every month."
   },
   {
     "id": "investing_apy_savings",
@@ -852,7 +935,8 @@
       "apy_annual_interest_d1",
       "apy_bank_gap_d2",
       "apy_doubling_time_d2",
-      "apy_compounding_effect_d3"
+      "apy_compounding_effect_d3",
+      "inv_decision_hysa_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -860,7 +944,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you leave cash in a big-bank account paying almost nothing.",
+    "relatedCalculatorSlug": "hysa_growth"
   },
   {
     "id": "investing_espp_discount",
@@ -874,7 +960,8 @@
       "espp_annualized_d2",
       "espp_lookback_value_d2",
       "espp_vs_market_d2",
-      "concept_espp_qualifying_disposition_d2"
+      "concept_espp_qualifying_disposition_d2",
+      "inv_decision_espp_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -882,7 +969,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when your company offers a stock purchase plan and you're unsure it's worth it."
   },
   {
     "id": "investing_fund_fees",
@@ -896,17 +984,19 @@
       "fund_fee_diff_d2",
       "fund_fee_compare_d1",
       "fund_fee_decade_d3",
-      "fund_fee_30yr_d3"
+      "fund_fee_30yr_d3",
+      "inv_decision_fees_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Check this before picking a fund — a small fee quietly costs you a fortune."
   },
   {
     "id": "investing_emergency_fund",
-    "moduleId": "investing",
+    "moduleId": "money_math",
     "title": "How much emergency fund do you actually need?",
     "concept": "3-6 months of ESSENTIAL expenses — not income. Essential means rent, food, insurance, transport, debt minimums. Not subscriptions, dining out, entertainment. Most people calculate against income and get an overwhelming number; calculating against essentials makes the goal achievable.",
     "shortcut": "Sum your 4-5 non-negotiable monthly bills. That's your essential number. × 3 = minimum target, × 6 = solid. Months of runway = current savings ÷ essentials. Cut $X from non-essentials = (savings ÷ (essentials − cut)) months of runway.",
@@ -916,7 +1006,8 @@
       "ef_target_d1",
       "ef_runway_d2",
       "ef_runway_after_cut_d3",
-      "ef_months_to_target_d3"
+      "ef_months_to_target_d3",
+      "mm_decision_ef_target_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -924,13 +1015,15 @@
       "protection_and_benefits"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before life throws a job loss or surprise bill at you.",
+    "relatedCalculatorSlug": "hysa_growth"
   },
   {
     "id": "concept_investing_ef_location",
     "moduleId": "investing",
     "title": "Where should your emergency fund actually sit?",
-    "concept": "Knowing you need 3-6 months of essentials is only half the answer. The other half: where does it live? The wrong place either loses you ~$1,000+/year in foregone interest (sitting in a 0.01% APY big-bank savings account) OR locks you out of accessing it when you need it (a 5-year CD with early-withdrawal penalty). The right place depends on the size of your fund. **Decision tree by balance:** (1) **Under $1,000 starter EF** → leave it in checking as a buffer (per the r/personalfinance Order of Operations). Liquidity beats yield at this scale. (2) **$1K to ~$30K full EF** → high-yield savings account (HYSA) at 4-5% APY, FDIC-insured. Vanguard / Ally / Marcus / Discover / SoFi / Wealthfront all in this range. (3) **Above ~$30K** → split across multiple FDIC-insured banks ($250K limit per depositor per bank, per FDIC) OR use a fintech with a sweep network OR use short-term US Treasury bills (similar yield, state-tax-free, backed by US government, ~4-5% in 2025). (4) **Bonus tier** → for a portion you're confident you won't touch in 6+ months, a no-penalty CD or short-duration T-bill can pick up 25-50 basis points more — but never your full EF.",
+    "concept": "Knowing you need 3-6 months of essentials is only half the answer. The other half: where does it live? The wrong place either loses you ~$1,000+/year in foregone interest (sitting in a 0.01% APY big-bank savings account) OR locks you out of accessing it when you need it (a 5-year CD with early-withdrawal penalty). The right place depends on the size of your fund. **Decision tree by balance:** (1) **Under $1,000 starter EF** → leave it in checking as a buffer (per the r/personalfinance Order of Operations). Liquidity beats yield at this scale. (2) **$1K to ~$30K full EF** → high-yield savings account (HYSA) at ~4-4.5% APY, FDIC-insured. Vanguard / Ally / Marcus / Discover / SoFi / Wealthfront all in this range. (3) **Above ~$30K** → split across multiple FDIC-insured banks ($250K limit per depositor per bank, per FDIC) OR use a fintech with a sweep network OR use short-term US Treasury bills (similar yield, state-tax-free, backed by US government, ~4% in 2026). (4) **Bonus tier** → for a portion you're confident you won't touch in 6+ months, a no-penalty CD or short-duration T-bill can pick up 25-50 basis points more — but never your full EF.",
     "shortcut": "Three-rule decision: (1) **Liquidity first** — your full EF should be accessible within 1-2 business days, no penalties, no market-loss risk. (2) **Yield second** — once liquidity is guaranteed, optimize for APY. The gap between 0.01% (big-bank savings) and 4.5% (HYSA) on $20K is $900/year of essentially free money. (3) **Insurance third** — if your balance approaches $250K at one bank, split across banks or move excess to short-term US Treasury bills (FDIC limit is $250K per depositor per bank; T-bills have the full faith and credit of the US Treasury, no banking-system risk). Skip: long-term CDs, brokerage account uninvested cash, money-market mutual funds inside a 401(k), and 'high-yield' checking accounts that gate the rate behind direct-deposit / debit-card requirements.",
     "example": "Three realistic EF scenarios:\n\nMaya, age 26, just started saving:\n  EF size: $800 (building toward $1K starter)\n  Right home: checking account, $800 buffer\n  Wrong move: any kind of HYSA hassle for $800 isn't worth it yet.\n\nTaylor, age 32, established EF:\n  EF size: $18,000 (6 months of $3K essentials)\n  Right home: HYSA at 4.5% APY → $810/year in interest, fully liquid\n  Wrong moves: leaving it in 0.01% big-bank savings ($1.80/yr); locking $10K of it in a 1-year CD with early-withdrawal penalty; putting it in an index fund (could be down 30% the day you need it).\n  The right move earns ~$800/yr in passive interest with no liquidity sacrifice.\n\nJordan, age 45, family of four, larger EF:\n  EF size: $60,000 (9 months at $6,700 essentials)\n  Right home: $50K in primary HYSA + $10K in a secondary FDIC bank (or a fintech sweep network). At the FDIC limit ($250K) consider 4-week T-bills via TreasuryDirect — same yield, state-tax-free, no FDIC-limit ceiling.\n  Wrong moves: $60K at one bank below the FDIC limit is fine but inflexible if rates diverge between banks. Some Fintech 'high yield' accounts have hidden requirements (direct deposit / transaction count) that drop yield to near-zero if you don't comply.\n\nWhat NOT to use as EF: 401(k) (taxes + penalty + lockup), brokerage taxable accounts holding equities (market loss risk), CDs longer than 6 months (early-withdrawal penalty), real estate equity, crypto.",
     "quizTemplateIds": [
@@ -938,7 +1031,8 @@
       "concept_ef_loc_full_d2",
       "concept_ef_loc_fdic_split_d2",
       "concept_ef_loc_what_not_d2",
-      "concept_ef_loc_hysa_vs_cd_d2"
+      "concept_ef_loc_hysa_vs_cd_d2",
+      "inv_decision_efloc_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -946,7 +1040,9 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to decide where your emergency cash should actually live.",
+    "relatedCalculatorSlug": "hysa_growth"
   },
   {
     "id": "investing_rental_yield",
@@ -960,7 +1056,8 @@
       "concept_rental_real_expenses_d1",
       "concept_rental_reserves_d2",
       "concept_rental_cashflow_check_d2",
-      "concept_rental_speculation_d3"
+      "concept_rental_speculation_d3",
+      "inv_decision_rental_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -968,7 +1065,8 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you buy a rental expecting it to cash-flow."
   },
   {
     "id": "investing_on_track",
@@ -982,13 +1080,15 @@
       "on_track_target_d1",
       "on_track_gap_d2",
       "on_track_close_gap_d3",
-      "on_track_extra_save_d3"
+      "on_track_extra_save_d3",
+      "inv_decision_ontrack_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to check whether your retirement savings fit your age."
   },
   {
     "id": "concept_investing_what_are_stocks",
@@ -1002,13 +1102,15 @@
       "concept_bond_def_d1",
       "concept_index_fund_d2",
       "concept_etf_vs_mutual_d2",
-      "concept_risk_return_rank_d3"
+      "concept_risk_return_rank_d3",
+      "inv_decision_risk_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this the first time you stare at your 401(k)'s fund options and feel lost."
   },
   {
     "id": "concept_investing_asset_allocation",
@@ -1022,13 +1124,15 @@
       "concept_alloc_bonds_role_d2",
       "concept_target_date_d2",
       "concept_alloc_too_conservative_d3",
-      "concept_crash_response_d3"
+      "concept_crash_response_d3",
+      "inv_decision_alloc_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to decide how much of your portfolio should be stocks vs bonds."
   },
   {
     "id": "concept_investing_behavioral_traps",
@@ -1042,19 +1146,21 @@
       "concept_panic_sell_d2",
       "concept_market_timing_myth_d2",
       "concept_wait_for_dip_d3",
-      "concept_panic_sell_2020_d3"
+      "concept_panic_sell_2020_d3",
+      "inv_decision_panic_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Remember this the next time the market drops and you want to sell everything."
   },
   {
     "id": "credit_card_interest",
     "moduleId": "debt",
     "title": "How credit card interest works",
-    "concept": "Credit card APR sounds small — 20% — but it compounds. As a mental approximation, the monthly interest charge ≈ balance × APR ÷ 12. Real billing is slightly different: most US issuers use the 'average daily balance' method with a daily periodic rate of APR ÷ 365 (per CFPB Credit Card Agreement standards), so balances that fluctuate within the month produce a slightly different exact charge. For sanity-checking your statement, the APR ÷ 12 mental model lands within a few dollars on typical balances.",
+    "concept": "Credit card APR sounds small — 20% — but it compounds. As a mental approximation, the monthly interest charge ≈ balance × APR ÷ 12. Real billing is slightly different: most US issuers use the 'average daily balance' method with a daily periodic rate of APR ÷ 365 (per CFPB Credit Card Agreement standards), so balances that fluctuate within the month produce a slightly different exact charge — your card's exact formula is spelled out in your cardholder agreement, so check your statement to confirm. For sanity-checking, the APR ÷ 12 mental model lands within a few dollars on typical balances.",
     "shortcut": "Mental estimate: monthly interest ≈ balance × APR ÷ 12. To compute: move the decimal left two places to get 1%, multiply by your APR, divide by 12. $2,000 × 20% ÷ 12 = $33.33/month. Real issuer billing (daily periodic rate × average daily balance) lands within ~$1-2 of this.",
     "example": "Balance: $2,000 · APR: 20%\nMonthly approximation: 20% ÷ 12 = 1.67%\nInterest ≈ $2,000 × 1.67% = $33.33\n\nReal billing on a stable balance: identical.\nReal billing on a balance that swung from $1,500 → $2,500 mid-month: based on average daily balance ≈ $2,000 — still ~$33.",
     "quizTemplateIds": [
@@ -1062,7 +1168,8 @@
       "cc_monthly_interest_scenario",
       "cc_annual_interest",
       "cc_interest_year_d3",
-      "cc_rate_check_d1"
+      "cc_rate_check_d1",
+      "debt_decision_grace_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1070,13 +1177,15 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to sanity-check the interest charge on your card statement.",
+    "relatedCalculatorSlug": "cc_payoff"
   },
   {
     "id": "minimum_payment_trap",
     "moduleId": "debt",
     "title": "The minimum payment trap",
-    "concept": "Older guides taught a flat '2% of balance' minimum, but most US issuers actually calculate it as roughly 1% of your principal + this month's interest charge + any fees, with a $25-$35 floor on tiny balances. That formula keeps you barely treading water — most of every minimum payment goes to interest, not what you owe. Issuers designed it that way: minimums are profitable for them.",
+    "concept": "Older guides taught a flat '2% of balance' minimum, but most US issuers actually calculate it as roughly 1% of your principal + this month's interest charge + any fees, with a $25-$35 floor on tiny balances. Your issuer's exact formula varies — check your statement or cardholder agreement to confirm. That formula keeps you barely treading water — most of every minimum payment goes to interest, not what you owe. Issuers designed it that way: minimums are profitable for them.",
     "shortcut": "Realistic minimum ≈ (balance × 1%) + (balance × APR ÷ 1200). On $3,000 at 20% APR: $30 + $50 = $80/month (not the $60 the old 2% rule suggests). Floor: $25-35 for small balances. Always pay above the minimum — even +$50/month cuts years off payoff.",
     "example": "Balance: $3,000 at 20% APR\n1% of balance = $30 (principal)\n+ monthly interest = $3,000 × 20% ÷ 12 = $50\n= $80 minimum\n\nOf that $80, only $30 reduces what you owe — the other $50 is pure interest.",
     "quizTemplateIds": [
@@ -1084,7 +1193,8 @@
       "cc_minimum_payment_scenario",
       "cc_min_balance_d1",
       "cc_new_balance_d2",
-      "cc_interest_check_d2"
+      "cc_interest_check_d2",
+      "debt_decision_minpay_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1092,7 +1202,9 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you're tempted to just pay the minimum on your card.",
+    "relatedCalculatorSlug": "cc_payoff"
   },
   {
     "id": "loan_true_cost",
@@ -1114,7 +1226,9 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you sign any loan to see what it really costs.",
+    "relatedCalculatorSlug": "loan"
   },
   {
     "id": "debt_to_income",
@@ -1128,7 +1242,8 @@
       "dti_ratio_scenario",
       "dti_add_payments",
       "dti_housing_only",
-      "new_dti_with_payment_d3"
+      "new_dti_with_payment_d3",
+      "debt_decision_dti_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1136,7 +1251,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before applying for a mortgage or car loan."
   },
   {
     "id": "extra_payment_power",
@@ -1150,7 +1266,8 @@
       "cc_extra_d1",
       "cc_annual_cost_d2",
       "cc_balance_interest_d2",
-      "principal_reduction_d3"
+      "principal_reduction_d3",
+      "debt_decision_extra_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1158,7 +1275,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this to see how much faster a little extra each month clears your debt."
   },
   {
     "id": "debt_cc_payoff_time",
@@ -1180,7 +1298,9 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to see exactly when your card balance hits zero.",
+    "relatedCalculatorSlug": "cc_payoff"
   },
   {
     "id": "debt_balance_transfer",
@@ -1194,7 +1314,8 @@
       "balance_transfer_interest_saved_d1",
       "balance_transfer_net_d2",
       "balance_transfer_breakeven_d2",
-      "balance_transfer_full_payoff_plan_d3"
+      "balance_transfer_full_payoff_plan_d3",
+      "debt_decision_transfer_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1202,7 +1323,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before moving a balance to a 0% card with a transfer fee."
   },
   {
     "id": "debt_cc_rewards_vs_interest",
@@ -1216,7 +1338,8 @@
       "cc_net_rewards_with_balance_d2",
       "cc_rewards_breakeven_balance_d2",
       "cc_rewards_high_balance_loss_d2",
-      "concept_cc_rewards_only_if_paid_off_d1"
+      "concept_cc_rewards_only_if_paid_off_d1",
+      "debt_decision_rewards_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1224,7 +1347,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Remember this before chasing cashback while carrying a balance."
   },
   {
     "id": "debt_cc_statement_cycle",
@@ -1238,13 +1362,15 @@
       "cc_utilization_target_d2",
       "cc_after_payoff_d2",
       "concept_cc_statement_vs_due_d2",
-      "cc_multi_card_utilization_d2"
+      "cc_multi_card_utilization_d2",
+      "debt_decision_utilization_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to time your payment so it actually lowers your interest."
   },
   {
     "id": "debt_avalanche_snowball",
@@ -1258,13 +1384,15 @@
       "avalanche_monthly_saving_d2",
       "snowball_difference_d3",
       "debt_compare_rates_d2",
-      "psychology_premium_d3"
+      "psychology_premium_d3",
+      "debt_decision_avalanche_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you have multiple debts and need a payoff order."
   },
   {
     "id": "debt_apr_vs_apy",
@@ -1278,7 +1406,8 @@
       "apr_monthly_rate_d1",
       "apr_annual_cost_d2",
       "apr_with_fees_d2",
-      "apr_vs_total_cost_d3"
+      "apr_vs_total_cost_d3",
+      "debt_decision_apr_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1286,13 +1415,14 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to understand the real rate a lender is quoting you."
   },
   {
     "id": "debt_bnpl_hidden_cost",
     "moduleId": "debt",
     "title": "Buy Now, Pay Later — the math they don't show",
-    "concept": "BNPL splits a purchase into 4 'easy payments.' Sounds free. Miss one payment = up to $35 late fee (sometimes 25% of the missed payment). On a $300 purchase that's an 11.7% surcharge — higher than most credit card APRs. The real danger is stacking: research from CFPB's BNPL industry studies shows BNPL users carry an average of 9 loans per year, and BNPL borrowers are roughly twice as likely as non-users to overdraft their bank account in the same period (per CFPB BNPL Market Trends Reports, 2022-23). None of these loans show up on your credit card statement, making the total cash drain invisible.",
+    "concept": "BNPL splits a purchase into 4 'easy payments.' Sounds free. Miss one payment = up to $35 late fee (sometimes 25% of the missed payment). On a $300 purchase that's an 11.7% surcharge — higher than most credit card APRs. The real danger is stacking: CFPB market studies found heavy BNPL users juggling many loans at once and overdrafting their bank accounts at roughly twice the rate of non-users. Visibility is messy in BOTH directions: the plans don't show on your credit card statement (the cash drain is invisible to you), and whether they show on your credit REPORT depends on the provider — as of mid-2026, Affirm reports most of its loans to bureaus, while Klarna's and Afterpay's pay-in-4 plans generally aren't reported. But a missed plan sent to collections absolutely IS reported, and FICO has announced BNPL-aware score models — so assume visibility is rising, not falling.",
     "shortcut": "Total BNPL = number of payments × payment amount. Surcharge from one late fee = lateFee ÷ originalPrice × 100. Stacked monthly burden = sum of all your BNPL payments across providers. The clean test: if you can't pay cash today, you can't afford it.",
     "example": "$300 item, 4 × $75 BNPL:\nMiss one: $35 late fee\nTotal paid: $335\nSurcharge: 11.7%\n\nTypical user (per CFPB):\n~9 BNPL loans/year stacked across Affirm/Klarna/Afterpay\nMonthly burden invisible to credit reports\n2× more likely to overdraft than non-users",
     "quizTemplateIds": [
@@ -1300,7 +1430,8 @@
       "bnpl_late_fee_d2",
       "bnpl_surcharge_pct_d3",
       "bnpl_stacked_d3",
-      "bnpl_annual_d2"
+      "bnpl_annual_d2",
+      "debt_decision_bnpl_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1308,7 +1439,8 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Remember this the next time 'pay in 4' pops up at checkout."
   },
   {
     "id": "concept_debt_credit_scores",
@@ -1322,13 +1454,15 @@
       "concept_utilization_max_d2",
       "concept_close_old_card_d2",
       "concept_hard_inquiry_d3",
-      "concept_no_debt_myth_d3"
+      "concept_no_debt_myth_d3",
+      "debt_decision_creditscore_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before a big application to understand what moves your score."
   },
   {
     "id": "concept_debt_good_vs_bad",
@@ -1342,7 +1476,8 @@
       "concept_bad_debt_d1",
       "concept_interest_threshold_d2",
       "concept_mortgage_short_d3",
-      "concept_payoff_vs_invest_d3"
+      "concept_payoff_vs_invest_d3",
+      "debt_decision_goodbad_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1350,7 +1485,8 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you're deciding whether a debt is worth taking on."
   },
   {
     "id": "concept_ef_vs_debt_priority",
@@ -1364,7 +1500,8 @@
       "concept_ef_priority_match_d1",
       "concept_ef_priority_cc_d2",
       "concept_ef_priority_low_rate_d2",
-      "concept_ef_priority_scenario_d3"
+      "concept_ef_priority_scenario_d3",
+      "debt_decision_ef_priority_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -1372,7 +1509,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you have spare cash and can't decide: save it or kill debt?"
   },
   {
     "id": "housing_rent_affordability",
@@ -1386,7 +1524,8 @@
       "rent_afford_scenario_d1",
       "rent_afford_reverse_d2",
       "rent_afford_annual_d3",
-      "rent_min_income_d3"
+      "rent_min_income_d3",
+      "hou_decision_rent_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1394,7 +1533,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before you start apartment hunting or sign a lease.",
+    "relatedCalculatorSlug": "rent_affordability"
   },
   {
     "id": "housing_affordability_full",
@@ -1416,7 +1557,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before you talk to a lender or tour your first home.",
+    "relatedCalculatorSlug": "mortgage"
   },
   {
     "id": "housing_cash_to_close",
@@ -1430,13 +1573,15 @@
       "cash_to_close_breakdown_d2",
       "cash_to_close_20pct_down_d2",
       "cash_to_close_total_with_moving_d2",
-      "concept_cash_to_close_components_d2"
+      "concept_cash_to_close_components_d2",
+      "hou_decision_cashclose_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before closing day so the cash you need doesn't blindside you."
   },
   {
     "id": "housing_col_relocation",
@@ -1450,7 +1595,8 @@
       "col_rent_eats_raise_d2",
       "col_tax_delta_d2",
       "col_breakeven_salary_d2",
-      "col_full_scenario_d3"
+      "col_full_scenario_d3",
+      "hou_decision_col_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1458,7 +1604,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when a job in a new city offers more money."
   },
   {
     "id": "housing_first_month_true_cost",
@@ -1472,7 +1619,8 @@
       "first_month_padding_rule_d1",
       "first_month_breakdown_d2",
       "first_month_no_broker_d2",
-      "concept_first_month_overlooked_d2"
+      "concept_first_month_overlooked_d2",
+      "hou_decision_firstmonth_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1480,7 +1628,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you move so the upfront cash doesn't catch you off guard.",
+    "relatedCalculatorSlug": "rent_affordability"
   },
   {
     "id": "housing_rent_increase",
@@ -1494,7 +1644,8 @@
       "rent_increase_new_d1",
       "rent_increase_annual_d2",
       "rent_above_avg_d2",
-      "rent_renew_vs_move_d3"
+      "rent_renew_vs_move_d3",
+      "hou_decision_renew_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -1502,7 +1653,8 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when your renewal letter arrives with a higher number."
   },
   {
     "id": "housing_move_in_cost",
@@ -1516,7 +1668,8 @@
       "move_in_no_broker_d1",
       "move_in_with_broker_d2",
       "move_in_scenario_d2",
-      "move_in_compare_d3"
+      "move_in_compare_d3",
+      "hou_decision_movein_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1524,7 +1677,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you sign so you know the full upfront cost."
   },
   {
     "id": "housing_roommate_math",
@@ -1538,7 +1692,8 @@
       "roommate_utilities_d2",
       "roommate_unequal_d3",
       "roommate_annual_d2",
-      "roommate_compare_d3"
+      "roommate_compare_d3",
+      "hou_decision_roommate_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -1546,7 +1701,8 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when deciding whether a roommate is worth the trade-offs."
   },
   {
     "id": "housing_true_cost",
@@ -1560,7 +1716,8 @@
       "true_cost_extra_d1",
       "true_cost_compare_d2",
       "true_cost_pct_d2",
-      "true_cost_vs_28_d3"
+      "true_cost_vs_28_d3",
+      "hou_decision_truecost_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "cash_flow_and_budgeting",
@@ -1568,7 +1725,9 @@
       "big_purchases"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to see what renting really costs you beyond the rent line.",
+    "relatedCalculatorSlug": "rent_affordability"
   },
   {
     "id": "housing_mortgage_vs_rent",
@@ -1582,7 +1741,8 @@
       "mortgage_per_100k_d1",
       "mortgage_rate_compare_d2",
       "mortgage_pi_taxes_d3",
-      "mortgage_vs_rent_decision_d3"
+      "mortgage_vs_rent_decision_d3",
+      "hou_decision_own_cost_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1590,7 +1750,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to estimate a real mortgage payment before you shop.",
+    "relatedCalculatorSlug": "mortgage"
   },
   {
     "id": "housing_lease_break",
@@ -1604,7 +1766,8 @@
       "lease_break_total_d2",
       "lease_break_breakeven_d2",
       "lease_stay_savings_d3",
-      "lease_break_decision_d3"
+      "lease_break_decision_d3",
+      "hou_decision_lease_break_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1612,7 +1775,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this when you're deciding whether to break your lease early."
   },
   {
     "id": "concept_housing_buy_vs_rent_framework",
@@ -1626,7 +1790,8 @@
       "concept_buy_rent_long_d2",
       "concept_buy_rent_200x_d2",
       "concept_buy_rent_opportunity_d3",
-      "concept_buy_rent_mobility_d3"
+      "concept_buy_rent_mobility_d3",
+      "hou_decision_buyrent_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -1634,7 +1799,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when everyone insists renting is 'throwing money away.'",
+    "relatedCalculatorSlug": "mortgage"
   },
   {
     "id": "concept_housing_lease_clauses",
@@ -1648,53 +1815,60 @@
       "concept_lease_auto_renewal_d2",
       "concept_lease_deposit_d2",
       "concept_lease_illegal_clause_d3",
-      "concept_lease_wear_tear_d3"
+      "concept_lease_wear_tear_d3",
+      "hou_decision_lease_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Read this before you sign any lease."
   },
   {
     "id": "taxes_brackets",
     "moduleId": "taxes",
     "title": "Marginal tax brackets",
-    "concept": "Two things most people get wrong about federal tax brackets. (1) Brackets apply to TAXABLE income, not gross. Taxable income = gross − standard deduction (or itemized) − any above-the-line deductions. The 2025 single standard deduction is $15,750 (per IRS Rev Proc 2024-40). (2) Brackets are marginal layers, not flat rates. 'Being in the 22% bracket' means only your dollars ABOVE $48,475 are taxed at 22% — the first $11,925 is taxed at 10%, the next slice up to $48,475 is taxed at 12%. So your effective rate is always lower than your top bracket.",
-    "shortcut": "Two-step mental: (1) Taxable income = gross − $15,750 standard deduction (single, 2025). (2) Stack the slices: first $11,925 at 10%, next slice up to $48,475 at 12%, next slice up to $103,350 at 22%. Then add. For a quick sanity check, your effective rate on a $60K gross income single filer lands around 8–11% — well below the headline 22% bracket.",
-    "example": "Sarah, single, gross $60,000 (2025):\nTaxable = $60,000 − $15,750 = $44,250\nFalls within the 10% and 12% brackets:\n  First $11,925 × 10% = $1,192.50\n  Next $32,325 × 12% = $3,879.00\n  Tax = $5,071.50\nEffective rate = $5,071.50 ÷ $60,000 = 8.5%\n\nMike, single, gross $100,000 (2025):\nTaxable = $100,000 − $15,750 = $84,250\nCrosses into the 22% bracket:\n  First $11,925 × 10% = $1,192.50\n  Next $36,550 × 12% = $4,386.00\n  Last $35,775 × 22% = $7,870.50\n  Tax = $13,449.00\nEffective rate = 13.4%, far below the 22% headline.",
+    "concept": "Two things most people get wrong about federal tax brackets. (1) Brackets apply to TAXABLE income, not gross. Taxable income = gross − standard deduction (or itemized) − any above-the-line deductions. The 2026 single standard deduction is $16,100 (per IRS Rev Proc 2025-32). (2) Brackets are marginal layers, not flat rates. 'Being in the 22% bracket' means only your dollars ABOVE $50,400 are taxed at 22% — the first $12,400 is taxed at 10%, the next slice up to $50,400 is taxed at 12%. So your effective rate is always lower than your top bracket.",
+    "shortcut": "Two-step mental: (1) Taxable income = gross − $16,100 standard deduction (single, 2026). (2) Stack the slices: first $12,400 at 10%, next slice up to $50,400 at 12%, next slice up to $105,700 at 22%. Then add. For a quick sanity check, your effective rate on a $60K gross income single filer lands around 8–11% — well below the headline 22% bracket.",
+    "example": "Sarah, single, gross $60,000 (2026):\nTaxable = $60,000 − $16,100 = $43,900\nFalls within the 10% and 12% brackets:\n  First $12,400 × 10% = $1,240.00\n  Next $31,500 × 12% = $3,780.00\n  Tax = $5,020.00\nEffective rate = $5,020.00 ÷ $60,000 = 8.4%\n\nMike, single, gross $100,000 (2026):\nTaxable = $100,000 − $16,100 = $83,900\nCrosses into the 22% bracket:\n  First $12,400 × 10% = $1,240.00\n  Next $38,000 × 12% = $4,560.00\n  Last $33,500 × 22% = $7,370.00\n  Tax = $13,170.00\nEffective rate = 13.2%, far below the 22% headline.",
     "quizTemplateIds": [
       "bracket_basic_d1",
       "bracket_two_tier_d1",
       "concept_bracket_taxable_vs_gross_d2",
       "bracket_22_24_crossing_d2",
-      "bracket_effective_d3"
+      "bracket_effective_d3",
+      "tax_decision_bracket_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to estimate what you actually owe — and stop fearing a higher bracket.",
+    "relatedCalculatorSlug": "paycheck"
   },
   {
     "id": "taxes_deductions",
     "moduleId": "taxes",
     "title": "Paycheck deductions",
-    "concept": "Your gross pay gets reduced by FICA (6.2% Social Security + 1.45% Medicare = 7.65% combined), federal income tax, and state income tax before you see a dime. Two FICA nuances for higher earners: Social Security applies only up to the annual wage base (~$176,100 for 2025 per SSA) — above that, only the 1.45% Medicare portion continues. Workers earning over $200k single / $250k MFJ also pay the Additional Medicare Tax of 0.9% on income above that threshold (per IRS).",
+    "concept": "Your gross pay gets reduced by FICA (6.2% Social Security + 1.45% Medicare = 7.65% combined), federal income tax, and state income tax before you see a dime. Two FICA nuances for higher earners: Social Security applies only up to the annual wage base (~$184,500 for 2026 per SSA) — above that, only the 1.45% Medicare portion continues. Workers earning over $200k single / $250k MFJ also pay the Additional Medicare Tax of 0.9% on income above that threshold (per IRS).",
     "shortcut": "Net pay = gross × (1 − total deduction rate). If FICA is 7.65%, federal is 12%, and state is 5%, total rate = 24.65%. From $4,000 gross: $4,000 × 0.7535 = $3,014 net. Earning above the SS wage base? Knock the rate down by 6.2% on dollars above the cap.",
-    "example": "Gross: $4,000/mo (~$48k/yr, below SS cap)\nFICA (7.65%): $306\nFederal (12%): $480\nState (5%): $200\nNet: $3,014\n\nHigh earner above $176,100 (2025):\nOn dollars above the cap, only 1.45% Medicare applies (plus 0.9% Additional Medicare above $200k single).",
+    "example": "Gross: $4,000/mo (~$48k/yr, below SS cap)\nFICA (7.65%): $306\nFederal (12%): $480\nState (5%): $200\nNet: $3,014\n\nHigh earner above $184,500 (2026):\nOn dollars above the cap, only 1.45% Medicare applies (plus 0.9% Additional Medicare above $200k single).",
     "quizTemplateIds": [
       "deduction_basic_d1",
       "deduction_net_d1",
       "deduction_fica_d2",
       "deduction_scenario_d2",
-      "deduction_compare_d3"
+      "deduction_compare_d3",
+      "tax_decision_pretax_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to decode why your paycheck is smaller than your salary."
   },
   {
     "id": "taxes_refund",
@@ -1708,7 +1882,8 @@
       "refund_owe_d1",
       "refund_monthly_loan_d2",
       "refund_invested_d2",
-      "refund_annual_loss_d3"
+      "refund_annual_loss_d3",
+      "tax_decision_refund_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -1716,7 +1891,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Remember this when a big refund feels like a win."
   },
   {
     "id": "taxes_self_employment",
@@ -1730,7 +1906,8 @@
       "se_tax_amount_d1",
       "se_tax_scenario_d2",
       "se_tax_compare_d2",
-      "se_quarterly_combined_d3"
+      "se_quarterly_combined_d3",
+      "tax_decision_quarterly_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -1738,33 +1915,36 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": true
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this if you freelance, so quarterly taxes don't wreck you."
   },
   {
     "id": "taxes_standard_vs_itemized",
     "moduleId": "taxes",
     "title": "Standard vs itemized — which saves you more?",
-    "concept": "The 2025 standard deduction is $15,750 single / $23,625 Head of Household / $31,500 married filing jointly. Itemize only if mortgage interest + state/local taxes (SALT-capped) + charity beats your filing status's standard. After the 2017 tax law (extended by OBBBA), ~90% of filers take the standard. Homeowners with mortgages and high-tax-state residents (NY, CA, NJ) are the main itemizers.",
-    "shortcut": "Add mortgage interest + state taxes + charity. If > $15,750 (single), $23,625 (HoH), or $31,500 (MFJ) for your filing status, itemize. Extra tax saving vs standard = (itemized − standard) × your marginal tax rate.",
-    "example": "Single, 22% tax bracket:\nMortgage interest: $9,400\nState taxes: $5,100\nCharity: $1,800\nItemized: $16,300\nStandard (single): $15,750\nExtra saving: $550 × 22% ≈ $121\n\nHead of Household same numbers? Standard = $23,625 — itemizing loses by ~$7,300; take the standard.",
+    "concept": "The 2026 standard deduction is $16,100 single / $24,150 Head of Household / $32,200 married filing jointly. Itemize only if mortgage interest + state/local taxes (the SALT deduction cap rose to $40,400 in 2026 under OBBBA, phasing down for incomes above $500K MAGI) + charity beats your filing status's standard. After the 2017 tax law (made permanent by OBBBA in 2025), ~90% of filers take the standard. Homeowners with mortgages and high-tax-state residents (NY, CA, NJ) are the main itemizers.",
+    "shortcut": "Add mortgage interest + state taxes + charity. If > $16,100 (single), $24,150 (HoH), or $32,200 (MFJ) for your filing status, itemize. Extra tax saving vs standard = (itemized − standard) × your marginal tax rate.",
+    "example": "Single, 22% tax bracket:\nMortgage interest: $10,500\nState taxes: $5,100\nCharity: $1,800\nItemized: $17,400\nStandard (single): $16,100\nExtra saving: $1,300 × 22% ≈ $286\n\nHead of Household same numbers? Standard = $24,150 — itemizing loses by ~$6,750; take the standard.",
     "quizTemplateIds": [
       "itemized_sum_d1",
       "itemized_vs_standard_d1",
       "itemized_saving_d2",
       "itemized_decision_d3",
-      "itemized_strategy_d3"
+      "itemized_strategy_d3",
+      "tax_decision_standard_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this at tax time to pick the deduction that saves you more."
   },
   {
     "id": "taxes_capital_gains",
     "moduleId": "taxes",
     "title": "Sell too soon, pay double the tax",
-    "concept": "Short-term capital gains (held < 1 year) are taxed at your ordinary income rate (22-24% for most). Long-term gains (held > 1 year) are taxed at 0%, 15%, or 20%. For most of the target audience, the gap is ~7 percentage points. Waiting a few weeks past the 1-year mark can save thousands.",
+    "concept": "Short-term capital gains (held < 1 year) are taxed at your ordinary income rate (22-24% for most). Long-term gains (held > 1 year) are taxed at 0%, 15%, or 20% (for 2026, single filers stay in the 15% rate up to $545,500 of taxable income, per IRS Rev Proc 2025-32). High earners also owe the 3.8% Net Investment Income Tax (NIIT) on investment gains once MAGI tops $200K single / $250K MFJ (per IRC § 1411). For most of the target audience, the long-vs-short gap is ~7 percentage points. Waiting a few weeks past the 1-year mark can save thousands.",
     "shortcut": "On a $10k gain at 22% ordinary rate: short-term = $2,200 tax. Long-term at 15% = $1,500. Wait one extra month = save $700. Per $10k of gain, waiting saves ~$700.",
     "example": "Held stock 11 months, $15k gain:\nSell now (short-term, 24%):\n$15k × 24% = $3,600 tax\n\nWait 1 more month (long-term, 15%):\n$15k × 15% = $2,250 tax\nSave: $1,350",
     "quizTemplateIds": [
@@ -1772,7 +1952,8 @@
       "capgains_long_d1",
       "capgains_saving_d2",
       "capgains_timing_d3",
-      "capgains_compare_d3"
+      "capgains_compare_d3",
+      "tax_decision_capgains_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -1780,7 +1961,8 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before you sell an investment you've held close to a year."
   },
   {
     "id": "taxes_w4_adjust",
@@ -1794,7 +1976,8 @@
       "w4_bump_biweekly_d1",
       "w4_invested_d2",
       "w4_annual_growth_d2",
-      "w4_lifetime_d3"
+      "w4_lifetime_d3",
+      "tax_decision_w4adjust_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
@@ -1802,7 +1985,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you keep getting big refunds and want that cash sooner.",
+    "relatedCalculatorSlug": "paycheck"
   },
   {
     "id": "concept_taxes_paycheck_stub",
@@ -1810,19 +1995,22 @@
     "title": "Your paycheck stub + filing status",
     "concept": "Two things on every US worker's paycheck most never decode: (1) the **stub line items** (gross pay, FICA at 7.65%, federal/state withholding, pre-tax vs post-tax deductions), and (2) the **filing status** used to compute withholding — Single, Married Filing Jointly (MFJ), Married Filing Separately (MFS), Head of Household (HoH), or Qualifying Widow(er). Filing status drives your bracket, standard deduction, and credit eligibility. Two important nuances: 401(k) contributions reduce income tax but NOT FICA; HSA contributions via Section 125 reduce BOTH (extra ~7.65% advantage per IRS Pub 15-B). And single parents providing >50% of household costs are usually HoH not Single — bigger standard deduction.",
     "shortcut": "Pre-tax stub decoder: 401k reduces income tax only (still pays FICA); HSA/Section 125 health premiums reduce both. Filing status defaults: single → Single (unless you provide >50% of a household → HoH). Married → MFJ default, except MFS when one spouse has IBR/PAYE student loans (calculated on their income only) or huge medical bills. Check your W-4 filing status matches your actual situation — wrong status means wrong withholding all year.",
-    "example": "Sample biweekly stub on $80k MFJ filer:\nGross pay        $3,077\n— Pre-tax 401k    −$308 (10%)\n— Pre-tax HSA     −$150 (via Sec 125)\n  Income-taxable  $2,619\n  FICA-taxable    $2,769  (401k still pays FICA; HSA doesn't)\n— Federal tax     −$315 (MFJ brackets)\n— State tax       −$133\n— FICA (7.65%)    −$212\n  Net pay         $2,000\n\nStandard deduction 2025 by status:\n  Single: $15,750  ·  HoH: $23,625  ·  MFJ: $31,500\nPicking the wrong status can cost a single parent $7,875 in extra taxable income (Single vs HoH).",
+    "example": "Sample biweekly stub on $80k MFJ filer:\nGross pay        $3,077\n— Pre-tax 401k    −$308 (10%)\n— Pre-tax HSA     −$150 (via Sec 125)\n  Income-taxable  $2,619\n  FICA-taxable    $2,769  (401k still pays FICA; HSA doesn't)\n— Federal tax     −$315 (MFJ brackets)\n— State tax       −$133\n— FICA (7.65%)    −$212\n  Net pay         $2,000\n\nStandard deduction 2026 by status:\n  Single: $16,100  ·  HoH: $24,150  ·  MFJ: $32,200\nPicking the wrong status can cost a single parent $8,050 in extra taxable income (Single vs HoH).",
     "quizTemplateIds": [
       "concept_paycheck_fica_d1",
       "concept_paycheck_pretax_d1",
       "concept_filing_default_d1",
       "concept_filing_mfs_idr_d2",
-      "concept_filing_status_choice_d3"
+      "concept_filing_status_choice_d3",
+      "tax_decision_w4_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "income_and_paycheck",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to actually read your pay stub and pick the right filing status.",
+    "relatedCalculatorSlug": "paycheck"
   },
   {
     "id": "insurance_deductible_vs_premium",
@@ -1836,13 +2024,15 @@
       "ins_worst_case_d1",
       "ins_deduct_compare_d2",
       "ins_premium_scenario_d2",
-      "ins_exposure_range_d3"
+      "ins_exposure_range_d3",
+      "ins_decision_plan_choice_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when picking a health plan during open enrollment."
   },
   {
     "id": "insurance_copay_coinsurance",
@@ -1856,13 +2046,15 @@
       "ins_copay_total_d1",
       "ins_coinsurance_big_d2",
       "ins_er_visit_d3",
-      "ins_copay_vs_coins_d2"
+      "ins_copay_vs_coins_d2",
+      "ins_decision_innetwork_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to predict what a doctor visit or procedure will cost you."
   },
   {
     "id": "insurance_oop_max",
@@ -1876,13 +2068,15 @@
       "ins_oop_scenario_d1",
       "ins_oop_calc_d2",
       "ins_oop_compare_d2",
-      "ins_oop_cap_d3"
+      "ins_oop_cap_d3",
+      "ins_decision_oop_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to know the most a bad health year can cost you."
   },
   {
     "id": "insurance_hdhp_vs_ppo",
@@ -1896,19 +2090,21 @@
       "ins_ppo_annual_d1",
       "ins_hdhp_vs_ppo_d2",
       "ins_plan_scenario_d2",
-      "ins_visits_breakeven_d3"
+      "ins_visits_breakeven_d3",
+      "ins_decision_hdhp_hsa_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when choosing between a high-deductible plan and a PPO."
   },
   {
     "id": "insurance_hsa_advantage",
     "moduleId": "insurance",
     "title": "HSA triple tax advantage",
-    "concept": "HSAs have the triple tax advantage: contributions are pre-tax (reduce taxable income AND payroll tax if via Section 125), growth is tax-free, and withdrawals for qualified medical are tax-free at any age. The hidden superpower: after age 65, you can withdraw HSA funds for ANY purpose (just pay ordinary income tax, like a Traditional IRA). 2025 contribution limits: $4,300 self-only / $8,550 family (per IRS Rev Proc 2024-25). You must be enrolled in a qualifying HDHP (2025 minimum deductible: $1,650 self / $3,300 family) to contribute. This combination makes the HSA arguably the most tax-efficient retirement account in the US code.",
+    "concept": "HSAs have the triple tax advantage: contributions are pre-tax (reduce taxable income AND payroll tax if via Section 125), growth is tax-free, and withdrawals for qualified medical are tax-free at any age. The hidden superpower: after age 65, you can withdraw HSA funds for ANY purpose (just pay ordinary income tax, like a Traditional IRA). 2026 contribution limits: $4,400 self-only / $8,750 family (per IRS Rev Proc 2025-19). You must be enrolled in a qualifying HDHP (2026 minimum deductible: $1,700 self / $3,400 family) to contribute. This combination makes the HSA arguably the most tax-efficient retirement account in the US code.",
     "shortcut": "Annual tax saving = contribution × (your income tax rate + ~7.65% FICA if contributed via payroll). Long-term: HSA grows like an investment account. $3,500/yr from age 30 to 65 at 7% growth ≈ $550,000, all tax-free for medical or income-taxed for anything else.",
     "example": "Contribute $3,000 at 22% rate via payroll:\nIncome tax saved: $660\nFICA saved (7.65%): $230\nTotal immediate saving: $890\n\nLong-term:\n$3,500/yr × 35 yrs at 7% growth\n≈ $550,000\nUsed for medical: $0 tax\nUsed for retirement (after 65): ordinary income tax only",
     "quizTemplateIds": [
@@ -1916,7 +2112,8 @@
       "ins_hsa_annual_d1",
       "ins_hsa_scenario_d2",
       "ins_hsa_compare_d2",
-      "ins_hsa_retirement_d3"
+      "ins_hsa_retirement_d3",
+      "ins_decision_hsa_use_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -1924,13 +2121,14 @@
       "investing_and_future"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you have an HDHP and aren't using the HSA's tax break."
   },
   {
     "id": "insurance_fsa_use_it",
     "moduleId": "insurance",
     "title": "FSA: free money or wasted money?",
-    "concept": "Flexible Spending Accounts are use-it-or-lose-it: any unspent balance at year-end is generally forfeited. Employers can offer one (not both) of two grace mechanisms: a 2.5-month grace period to spend prior-year funds, or a limited rollover (IRS-indexed; ~$660 for 2025 per IRS Rev Proc). 2025 contribution cap: $3,300 per employee (per IRS). Tax savings = election × your tax rate. If you elect $3,000 at a 25% bracket, you save $750 in tax. But if you only spend $1,800, you forfeit $1,200 — for a net loss of $450.",
+    "concept": "Flexible Spending Accounts are use-it-or-lose-it: any unspent balance at year-end is generally forfeited. Employers can offer one (not both) of two grace mechanisms: a 2.5-month grace period to spend prior-year funds, or a limited rollover (IRS-indexed; ~$680 for 2026 per IRS Rev Proc 2025-32). 2026 contribution cap: $3,400 per employee (per IRS). Tax savings = election × your tax rate. If you elect $3,000 at a 25% bracket, you save $750 in tax. But if you only spend $1,800, you forfeit $1,200 — for a net loss of $450.",
     "shortcut": "Only elect what you'll definitely spend. Tax savings = election × tax rate. Break-even: spend at least (1 − tax rate) of your election. In a 25% bracket, you need to spend at least 75% of what you elect to come out ahead.",
     "example": "Election: $2,850 at 25% bracket\nTax savings: $712\n\nScenario A: Spend $2,850 → save $712 ✓\nScenario B: Spend $1,800 → save $712 in tax but lose $1,050 unused\nNet: −$338",
     "quizTemplateIds": [
@@ -1938,7 +2136,8 @@
       "fsa_net_result_d2",
       "fsa_breakeven_d3",
       "fsa_election_compare_d2",
-      "fsa_max_safe_d3"
+      "fsa_max_safe_d3",
+      "ins_decision_fsa_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -1946,7 +2145,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before open enrollment so you don't over- or under-fund your FSA."
   },
   {
     "id": "insurance_life_coverage",
@@ -1960,13 +2160,15 @@
       "life_dime_adjusted_d2",
       "life_quote_compare_d2",
       "life_per_100k_d2",
-      "life_lifetime_d3"
+      "life_lifetime_d3",
+      "ins_decision_life_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when someone depends on your income and you need coverage."
   },
   {
     "id": "insurance_brand_vs_generic",
@@ -1980,7 +2182,8 @@
       "rx_multiple_d2",
       "rx_goodrx_d3",
       "rx_monthly_diff_d1",
-      "rx_lifetime_d2"
+      "rx_lifetime_d2",
+      "ins_decision_generic_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -1988,7 +2191,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this at the pharmacy when there's a generic option."
   },
   {
     "id": "concept_insurance_policy_priority",
@@ -2002,13 +2206,15 @@
       "concept_insurance_skip_d1",
       "concept_insurance_overinsured_d2",
       "concept_insurance_disability_priority_d3",
-      "concept_insurance_warranty_d3"
+      "concept_insurance_warranty_d3",
+      "ins_decision_priority_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to figure out which insurance you actually need — and which to skip."
   },
   {
     "id": "concept_insurance_disability",
@@ -2022,7 +2228,8 @@
       "concept_disability_own_occ_d2",
       "concept_disability_cap_d2",
       "concept_disability_elim_period_d3",
-      "concept_disability_supplemental_d3"
+      "concept_disability_supplemental_d3",
+      "ins_decision_disability_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -2030,27 +2237,30 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to protect the paycheck everything else depends on."
   },
   {
     "id": "concept_insurance_open_enrollment",
     "moduleId": "insurance",
     "title": "Open enrollment — the 10-minute checklist",
-    "concept": "Open enrollment is the ~2-week window each fall (typically Oct-Nov for a plan year starting Jan 1) when you pick all your employer benefits for the next 12 months. Miss it and you're locked in until next year unless you have a qualifying life event (marriage, baby, divorce, job loss). The mistake most people make: re-electing the same things from last year on autopilot. The 10-minute checklist that beats most people's outcomes: (1) **Medical plan** — HDHP vs PPO based on EXPECTED use this year (low: HDHP wins on premium; high: PPO wins on OOP). (2) **HSA or FSA** — HSA only if HDHP enrolled, $4,300 self / $8,550 family 2025 cap (per IRS Rev Proc 2024-25); FSA $3,300/yr 2025 cap (per IRS), use-it-or-lose-it. (3) **Dependent Care FSA** — $5,000/yr cap (per IRS, not inflation-indexed), pre-tax for daycare / aftercare. (4) **Commuter benefits** — $315/mo each for transit + parking (2025, per IRS), pre-tax. (5) **Life insurance** — most employers give 1× salary free; supplemental usually 2-5× pre-tax. (6) **Disability** — confirm short-term and long-term coverage; check 'own-occupation' vs 'any-occupation' definitions. (7) **401(k) contribution rate** — open enrollment is also a good moment to bump.",
+    "concept": "Open enrollment is the ~2-week window each fall (typically Oct-Nov for a plan year starting Jan 1) when you pick all your employer benefits for the next 12 months. Miss it and you're locked in until next year unless you have a qualifying life event (marriage, baby, divorce, job loss). The mistake most people make: re-electing the same things from last year on autopilot. The 10-minute checklist that beats most people's outcomes: (1) **Medical plan** — HDHP vs PPO based on EXPECTED use this year (low: HDHP wins on premium; high: PPO wins on OOP). (2) **HSA or FSA** — HSA only if HDHP enrolled, $4,400 self / $8,750 family 2026 cap (per IRS Rev Proc 2025-19); FSA $3,400/yr 2026 cap (per IRS), use-it-or-lose-it. (3) **Dependent Care FSA** — $7,500/yr cap (raised from $5,000 by OBBBA 2025, the first increase since 1986; $3,750 if married filing separately), pre-tax for daycare / aftercare. (4) **Commuter benefits** — $340/mo each for transit + parking (2026, per IRS), pre-tax. (5) **Life insurance** — most employers give 1× salary free; supplemental usually 2-5× pre-tax. (6) **Disability** — confirm short-term and long-term coverage; check 'own-occupation' vs 'any-occupation' definitions. (7) **401(k) contribution rate** — open enrollment is also a good moment to bump.",
     "shortcut": "Four-stage rule: **estimate your medical year** (low / medium / high use) → **pick HDHP or PPO** accordingly → **fund the right account** (HSA with HDHP, or FSA with PPO) → **review supplemental** (DCFSA if you have kids, commuter if you commute, supplemental life only if you actually have dependents). Skip: most accident / hospital-indemnity / cancer-only / legal / identity-theft add-ons sold during open enrollment — they're usually negative expected value. Confirm: your 401(k) rate is at LEAST the employer match cap.",
-    "example": "Decision flow for a typical 30-something:\n\nSingle, healthy, no kids, low medical use:\n  Medical: HDHP (lowest premium, low OOP risk)\n  HSA: max out ($4,300 self, 2025) — triple tax advantage\n  FSA: skip (HDHPs and Health FSAs don't combine; limited-purpose FSA allowed)\n  DCFSA: skip (no dependents)\n  Commuter: yes if commuting\n  Supplemental life: skip (no dependents)\n  Supplemental disability: maybe (cheap pre-tax via employer)\n  Estimated annual tax saving: ~$1,200-1,800 from HSA alone at 22-24% bracket\n\nMarried with infant in daycare:\n  Medical: PPO (kids = high medical-use risk)\n  HSA: not available (PPO usually not HSA-eligible)\n  FSA: $3,300 (2025) for predictable medical / dental / vision\n  DCFSA: $5,000 (2025) for daycare — typically the highest-ROI election\n  Commuter: yes\n  Supplemental life: 2-5× salary (dependent income replacement)\n  Estimated annual tax saving: ~$1,500-2,200 (FSA + DCFSA + commuter combined)\n\nThe 10-minute pass beats 90% of 'I just re-elected last year's plan' outcomes — most people leave $500-1,500/yr of tax savings on the table by skipping the DCFSA or commuter election.",
+    "example": "Decision flow for a typical 30-something:\n\nSingle, healthy, no kids, low medical use:\n  Medical: HDHP (lowest premium, low OOP risk)\n  HSA: max out ($4,400 self, 2026) — triple tax advantage\n  FSA: skip (HDHPs and Health FSAs don't combine; limited-purpose FSA allowed)\n  DCFSA: skip (no dependents)\n  Commuter: yes if commuting\n  Supplemental life: skip (no dependents)\n  Supplemental disability: maybe (cheap pre-tax via employer)\n  Estimated annual tax saving: ~$1,200-1,800 from HSA alone at 22-24% bracket\n\nMarried with infant in daycare:\n  Medical: PPO (kids = high medical-use risk)\n  HSA: not available (PPO usually not HSA-eligible)\n  FSA: $3,400 (2026) for predictable medical / dental / vision\n  DCFSA: $7,500 (2026) for daycare — typically the highest-ROI election\n  Commuter: yes\n  Supplemental life: 2-5× salary (dependent income replacement)\n  Estimated annual tax saving: ~$1,500-2,200 (FSA + DCFSA + commuter combined)\n\nThe 10-minute pass beats 90% of 'I just re-elected last year's plan' outcomes — most people leave $500-1,500/yr of tax savings on the table by skipping the DCFSA or commuter election.",
     "quizTemplateIds": [
       "concept_oe_when_d1",
       "concept_oe_hdhp_eligibility_d2",
       "concept_oe_dcfsa_cap_d2",
       "concept_oe_fsa_vs_hsa_d2",
-      "concept_oe_supplemental_life_d2"
+      "concept_oe_supplemental_life_d2",
+      "ins_decision_qle_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this during your ~2-week open enrollment window each fall."
   },
   {
     "id": "insurance_medical_bill_eob",
@@ -2064,7 +2274,8 @@
       "eob_vs_provider_bill_d2",
       "eob_cash_discount_d2",
       "concept_eob_what_is_it_d1",
-      "concept_eob_when_to_dispute_d2"
+      "concept_eob_when_to_dispute_d2",
+      "ins_decision_eob_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "protection_and_benefits",
@@ -2072,7 +2283,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when a medical bill arrives and you're not sure what you really owe."
   },
   {
     "id": "car_monthly_vs_total",
@@ -2086,7 +2298,8 @@
       "car_interest_paid_d1",
       "car_monthly_scenario_d2",
       "car_total_compare_d2",
-      "car_term_impact_d3"
+      "car_term_impact_d3",
+      "car_decision_term_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2094,7 +2307,9 @@
       "debt_and_credit"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this at the dealership when they steer you toward the monthly payment.",
+    "relatedCalculatorSlug": "lease_vs_buy"
   },
   {
     "id": "car_loan_term",
@@ -2108,7 +2323,8 @@
       "car_term_difference_d1",
       "car_term_scenario_d2",
       "car_payment_compare_d2",
-      "car_term_extra_cost_d3"
+      "car_term_extra_cost_d3",
+      "car_decision_term_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2116,7 +2332,9 @@
       "debt_and_credit"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before you stretch a car loan to shrink the payment.",
+    "relatedCalculatorSlug": "loan"
   },
   {
     "id": "car_down_payment",
@@ -2130,7 +2348,8 @@
       "car_loan_after_down_d1",
       "car_down_scenario_d2",
       "car_down_compare_d2",
-      "car_down_savings_total_d3"
+      "car_down_savings_total_d3",
+      "car_decision_down_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2138,7 +2357,8 @@
       "debt_and_credit"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you decide how much to put down on a car."
   },
   {
     "id": "car_20_4_10_rule",
@@ -2152,7 +2372,8 @@
       "car_20pct_down_d1",
       "car_10pct_rule_d2",
       "car_rule_scenario_d2",
-      "car_afford_check_d3"
+      "car_afford_check_d3",
+      "car_decision_afford_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2160,7 +2381,8 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to know how much car you can actually afford."
   },
   {
     "id": "car_depreciation",
@@ -2174,13 +2396,15 @@
       "car_depreciation_d1",
       "car_year2_value_d2",
       "car_depreciation_scenario_d2",
-      "car_total_cost_3yr_d3"
+      "car_total_cost_3yr_d3",
+      "car_decision_used_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before buying new to see how fast the value drops."
   },
   {
     "id": "car_total_cost_ownership",
@@ -2194,7 +2418,8 @@
       "car_tco_compare_d2",
       "car_tco_keep_vs_buy_d3",
       "car_tco_vs_income_d2",
-      "car_tco_annual_d2"
+      "car_tco_annual_d2",
+      "car_decision_tco_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2202,7 +2427,9 @@
       "cash_flow_and_budgeting"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to see what a car really costs beyond the payment.",
+    "relatedCalculatorSlug": "lease_vs_buy"
   },
   {
     "id": "car_lease_vs_buy",
@@ -2216,7 +2443,8 @@
       "buy_net_cost_d2",
       "lease_vs_buy_3yr_d3",
       "lease_monthly_d1",
-      "lease_vs_buy_lifetime_d3"
+      "lease_vs_buy_lifetime_d3",
+      "car_decision_lease_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2224,7 +2452,9 @@
       "debt_and_credit"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you're deciding whether to lease or buy.",
+    "relatedCalculatorSlug": "lease_vs_buy"
   },
   {
     "id": "car_trade_in_vs_private",
@@ -2238,13 +2468,15 @@
       "trade_in_hourly_d2",
       "trade_in_tax_benefit_d2",
       "trade_in_adjusted_d3",
-      "trade_in_decision_d3"
+      "trade_in_decision_d3",
+      "car_decision_tradein_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before you accept a dealer's trade-in offer."
   },
   {
     "id": "concept_car_negotiation",
@@ -2258,13 +2490,15 @@
       "concept_dealer_payment_trap_d2",
       "concept_dealer_fi_office_d2",
       "concept_dealer_finance_markup_d3",
-      "concept_dealer_gap_insurance_d3"
+      "concept_dealer_gap_insurance_d3",
+      "car_decision_negotiate_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Keep this in mind the moment you walk onto the lot."
   },
   {
     "id": "concept_car_warranty",
@@ -2278,7 +2512,8 @@
       "concept_warranty_extended_math_d2",
       "concept_warranty_self_insure_d2",
       "concept_warranty_when_worth_d3",
-      "concept_warranty_cpo_d3"
+      "concept_warranty_cpo_d3",
+      "car_decision_warranty_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "big_purchases",
@@ -2286,7 +2521,8 @@
       "protection_and_benefits"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when the finance office pitches an extended warranty."
   },
   {
     "id": "student_loan_monthly",
@@ -2300,7 +2536,8 @@
       "sl_monthly_estimate_d1",
       "sl_rule_apply_d2",
       "sl_per10k_compare_d2",
-      "sl_monthly_range_d3"
+      "sl_monthly_range_d3",
+      "sl_decision_borrow_load_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -2308,7 +2545,9 @@
       "everyday_money_math"
     ],
     "isCore": true,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to estimate your monthly payment before repayment starts.",
+    "relatedCalculatorSlug": "student_loan"
   },
   {
     "id": "student_loan_total_cost",
@@ -2322,7 +2561,8 @@
       "sl_total_interest_d1",
       "sl_total_scenario_d2",
       "sl_cost_compare_d2",
-      "sl_interest_pct_d3"
+      "sl_interest_pct_d3",
+      "sl_decision_totalcost_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -2330,7 +2570,9 @@
       "everyday_money_math"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this to see what your loans really cost over their full life.",
+    "relatedCalculatorSlug": "student_loan"
   },
   {
     "id": "student_loan_refinance",
@@ -2344,21 +2586,24 @@
       "sl_refi_annual_d1",
       "sl_refi_scenario_d2",
       "sl_refi_compare_d2",
-      "sl_refi_vs_pslf_d3"
+      "sl_refi_vs_pslf_d3",
+      "sl_decision_refi_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Run this before refinancing to weigh savings against lost protections.",
+    "relatedCalculatorSlug": "student_loan"
   },
   {
     "id": "student_loan_idr",
     "moduleId": "student_loans",
     "title": "Income-driven repayment",
-    "concept": "⚠️ **This lesson covers a topic with unusually volatile rules.** Income-driven repayment plans have been in active flux since the 2024 federal court rulings vacating parts of SAVE. The Department of Education has issued repeated transitional guidance through 2025-26 directing affected borrowers between plans. **Before making any IDR decision, always check the current state at studentaid.gov and run your numbers through the official FSA Loan Simulator — not this lesson alone.** With that caveat: IDR caps federal student-loan payments at a percentage of your 'discretionary income' (income above a poverty-line multiplier, per Federal Student Aid). The legacy plans — PAYE, IBR (original and new), ICR — use different formulas (10-20% of discretionary), different poverty-line multipliers (100% or 150%), different family-size adjustments, and different forgiveness timelines (20 years for some, 25 for others). SAVE was the most generous and was vacated; what survives in 2026 is principally IBR (which remains the most stable plan because it's statutory rather than regulatory). Only federal Direct Loans qualify for IDR; private loans don't.",
+    "concept": "⚠️ **This lesson covers a topic with unusually volatile rules.** Income-driven repayment plans have been in active flux since the 2024 federal court rulings vacating parts of SAVE. The Department of Education has issued repeated transitional guidance through 2025-26 directing affected borrowers between plans. **Before making any IDR decision, always check the current state at studentaid.gov and run your numbers through the official FSA Loan Simulator — not this lesson alone.** With that caveat: IDR caps federal student-loan payments at a percentage of your 'discretionary income' (income above a poverty-line multiplier, per Federal Student Aid). The legacy plans — PAYE, IBR (original and new), ICR — use different formulas (10-20% of discretionary), different poverty-line multipliers (100% or 150%), different family-size adjustments, and different forgiveness timelines (20 years for some, 25 for others). SAVE was the most generous and is now permanently closed. The big 2026 change: OBBBA created the **Repayment Assistance Plan (RAP)** — the default income-driven option for borrowers whose FIRST loans are disbursed on/after July 1, 2026 (payments scale 1%-10% of income with a $10/mo floor, forgiveness after 30 years). Borrowers with older loans are being migrated into IBR, which remains the most stable plan because it's statutory rather than regulatory. Only federal Direct Loans qualify for IDR/RAP; private loans don't.",
     "shortcut": "Mental baseline ONLY (canonical 10%/150% formula, IBR-flavored): monthly ≈ (income − 1.5 × poverty line) × 10% ÷ 12. Treat this as 'rough order-of-magnitude only' — your actual payment depends heavily on which plan you're enrolled in, your family size, AGI source (joint vs separate filing for married borrowers), and the current state of ED's guidance. The FSA Loan Simulator at studentaid.gov is the only authoritative quote source. DON'T quote the number from this lesson to anyone — quote the simulator's number.",
-    "example": "Baseline illustration ONLY (canonical IBR-style 10%/150% formula):\n\nIncome: $50,000, single, no dependents\nFederal poverty line (1 person, 2025, per HHS): $15,650\nPoverty line × 1.5: $23,475\nDiscretionary income: $50,000 − $23,475 = $26,525\nMonthly ≈ $26,525 × 10% ÷ 12 ≈ $221\n\nReal-world reality check:\n— Old PAYE: 10% of discretionary, 150% poverty multiplier, 20-yr forgiveness. Stable as of 2026.\n— New IBR: 10% of discretionary, 150% poverty, 20-yr forgiveness for new borrowers from 2014+ (10/20 plan).\n— Old IBR: 15% of discretionary, 150% poverty, 25-yr forgiveness.\n— ICR: 20% of discretionary, 100% poverty. Highest payment, lowest income protection.\n— SAVE: was 5-10% / 225% poverty, vacated 2024-25.\n\nThe gap between IBR (10% on 150%) and ICR (20% on 100%) on the same $50K income can be ~$200/month. That's why running the simulator beats running the mental math here.",
+    "example": "Baseline illustration ONLY (canonical IBR-style 10%/150% formula):\n\nIncome: $50,000, single, no dependents\nFederal poverty line (1 person, 2026, per HHS): $15,960\nPoverty line × 1.5: $23,940\nDiscretionary income: $50,000 − $23,940 = $26,060\nMonthly ≈ $26,060 × 10% ÷ 12 ≈ $217\n\nReal-world reality check:\n— Old PAYE: 10% of discretionary, 150% poverty multiplier, 20-yr forgiveness. Closing to new enrollees.\n— New IBR: 10% of discretionary, 150% poverty, 20-yr forgiveness for new borrowers from 2014+ (10/20 plan).\n— Old IBR: 15% of discretionary, 150% poverty, 25-yr forgiveness.\n— ICR: 20% of discretionary, 100% poverty. Highest payment, lowest income protection.\n— SAVE: closed permanently; borrowers migrated into IBR or RAP.\n— RAP (OBBBA, for first loans disbursed on/after July 1, 2026): payment scales 1%-10% of total AGI by income band, $10/mo floor, forgiveness after 30 years.\n\nThe gap between IBR (10% on 150%) and ICR (20% on 100%) on the same $50K income can be ~$200/month. That's why running the simulator beats running the mental math here.",
     "quizTemplateIds": [
       "concept_idr_definition_d1",
       "concept_idr_forgiveness_d1",
@@ -2372,13 +2617,15 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this if your federal loan payment feels unaffordable on your income.",
+    "relatedCalculatorSlug": "student_loan"
   },
   {
     "id": "student_loan_pslf",
     "moduleId": "student_loans",
     "title": "PSLF forgiveness math",
-    "concept": "Public Service Loan Forgiveness (PSLF) forgives remaining federal loan balance after 120 qualifying payments (10 years) while working for a qualifying employer. The key math: total paid = IDR payment × 120 months. Forgiven amount = original balance + accrued interest − total paid.",
+    "concept": "Public Service Loan Forgiveness (PSLF) forgives remaining federal loan balance after 120 qualifying payments (10 years) while working for a qualifying employer. ⚠️ A March 2025 executive order narrowed the definition of a 'qualifying employer' (excluding organizations engaged in certain activities); the rule is in active litigation, so confirm your employer still qualifies at studentaid.gov before relying on PSLF. The key math: total paid = IDR payment × 120 months. Forgiven amount = original balance + accrued interest − total paid.",
     "shortcut": "PSLF total paid = monthly IDR payment × 120. Forgiveness amount = remaining balance at month 120. If you pay $250/month for 10 years = $30,000 paid. If balance started at $80,000, you could get $50,000+ forgiven.",
     "example": "Loan: $80,000\nIDR payment: $250/month\n10 years = $30,000 paid\nForgiven: $50,000+\n(balance grew with interest)",
     "quizTemplateIds": [
@@ -2386,13 +2633,15 @@
       "sl_pslf_forgiven_d1",
       "sl_pslf_scenario_d2",
       "sl_pslf_compare_d2",
-      "sl_pslf_decision_d3"
+      "sl_pslf_decision_d3",
+      "sl_decision_pslf_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this if you work in public service and might qualify for forgiveness."
   },
   {
     "id": "student_loan_employer_benefit",
@@ -2406,7 +2655,8 @@
       "sl_employer_5yr_d2",
       "sl_employer_with_interest_d3",
       "sl_employer_vs_raise_d2",
-      "sl_employer_lifetime_d3"
+      "sl_employer_lifetime_d3",
+      "sl_decision_employer_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
@@ -2414,47 +2664,53 @@
       "income_and_paycheck"
     ],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Check this in case your employer quietly offers loan-repayment help."
   },
   {
     "id": "student_loan_grace_period",
     "moduleId": "student_loans",
     "title": "Your loans are growing while you wait",
-    "concept": "Unsubsidized federal loans accrue interest from disbursement. The 6-month grace period after graduation doesn't pause interest — it lets it pile up and capitalize (added to principal). A $25,000 loan at 5.5% accrues ~$680 in interest during grace alone. Most new grads don't realize this.",
-    "shortcut": "Daily interest = balance × rate ÷ 365. Grace period total = daily × 180 days. Making interest-only payments during grace prevents capitalization and saves money long-term.",
-    "example": "$25,000 unsubsidized at 5.5%:\nDaily interest: $3.77\nGrace period (180 days): $678\nNew balance at repayment start: $25,678\n\nInterest-only during grace ($113/mo):\nBalance stays $25,000 → save $678 + future interest on it",
+    "concept": "Unsubsidized federal loans accrue interest from disbursement. The 6-month grace period after graduation doesn't pause interest — it keeps piling up and is added to what you owe. (A 2023 federal rule means this accrued interest is no longer automatically capitalized — folded into principal — when you enter repayment, but you still owe every dollar of it, and it can capitalize later at triggers like leaving an income-driven plan or default.) A $25,000 loan at 6.5% accrues ~$800 during grace alone. Most new grads don't realize this.",
+    "shortcut": "Daily interest = balance × rate ÷ 365. Grace period total = daily × 180 days. Paying that interest during grace keeps it from being added to your balance (and from capitalizing later), saving money long-term.",
+    "example": "$25,000 unsubsidized at 6.5%:\nDaily interest: $4.45\nGrace period (180 days): $801\nNew balance at repayment start: $25,801\n\nInterest-only during grace ($135/mo):\nBalance stays $25,000 → save $801 + future interest on it",
     "quizTemplateIds": [
       "sl_daily_interest_d1",
       "sl_grace_total_d1",
       "sl_grace_vs_interest_only_d3",
       "sl_grace_capitalization_d2",
-      "sl_grace_lifetime_d3"
+      "sl_grace_lifetime_d3",
+      "sl_decision_grace_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this during your 6-month grace period before interest piles up."
   },
   {
     "id": "student_loan_parent_plus",
     "moduleId": "student_loans",
     "title": "Parent PLUS vs private — which costs less?",
-    "concept": "Parent PLUS loans carry an 8.94% fixed rate (2025-26 academic year) + a 4.228% origination fee deducted upfront. Private parent loans start as low as 5.09% with no origination. For a parent with good credit, private can save $10k+ over 10 years on a $30k loan. But PLUS offers federal protections (IDR, deferment, PSLF) that private doesn't. Rates reset annually each July based on the May Treasury auction.",
+    "concept": "Parent PLUS loans carry a 9.07% fixed rate (2026-27 academic year) + a 4.228% origination fee deducted upfront. Private parent loans start as low as 5.09% with no origination. For a parent with good credit, private can save $10k+ over 10 years on a $30k loan. But PLUS offers federal protections (IDR, deferment, PSLF) that private doesn't. Note: OBBBA caps new Parent PLUS borrowing at $20,000/year per student and $65,000 lifetime per student for loans first disbursed on/after July 1, 2026. Rates reset annually each July based on the May Treasury auction.",
     "shortcut": "Annual interest difference = balance × (PLUS rate − private rate). Over 10 years × 10. Origination fee adds to PLUS cost upfront. Trade-off: ~$10k savings on private vs federal protections.",
-    "example": "$30,000 borrowed:\nPLUS at 8.94%: ~$2,682/yr interest + $1,268 origination upfront\nPrivate at 5.5%: ~$1,650/yr interest, no fee\n\nAnnual diff: ~$1,032\n10-year diff: ~$10,320 + $1,268 = $11,588 saved with private",
+    "example": "$30,000 borrowed:\nPLUS at 9.07%: ~$2,721/yr interest + $1,268 origination upfront\nPrivate at 5.5%: ~$1,650/yr interest, no fee\n\nAnnual diff: ~$1,071\n10-year diff: ~$10,710 + $1,268 = $11,978 saved with private",
     "quizTemplateIds": [
       "plus_vs_private_annual_d1",
       "plus_vs_private_10yr_d2",
       "plus_origination_d2",
       "plus_total_cost_d3",
-      "plus_decision_d3"
+      "plus_decision_d3",
+      "sl_decision_plus_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when financing a kid's education and weighing federal vs private.",
+    "relatedCalculatorSlug": "student_loan"
   },
   {
     "id": "concept_sl_subsidized_vs_unsubsidized",
@@ -2462,25 +2718,27 @@
     "title": "Subsidized vs unsubsidized loans",
     "concept": "Subsidized loans are need-based and capped — undergrads with demonstrated financial need on their FAFSA may qualify, up to annual limits ($3,500-$5,500/year per Federal Student Aid). On a subsidized loan, the government pays the interest while you're in school, during the 6-month grace period, and during qualified deferment. Unsubsidized loans are available to all eligible students but accrue interest from disbursement onward. Most graduate loans and Parent PLUS are unsubsidized. The difference compounds: a $25k subsidized loan stays at $25k through graduation; a $25k unsubsidized loan grows to ~$28k over four years at 5.5%.",
     "shortcut": "Borrowing order if you have a mix offered: subsidized first (free money on the interest), unsubsidized second, federal Parent PLUS third (worst rate + origination), private last (no federal protections). Don't decline offered subsidized aid because the amount is small — every dollar that doesn't accrue interest in school is worth more than a dollar of unsubsidized borrowing.",
-    "example": "$25,000 borrowed, 4 years in school + 6 months grace, 5.5% interest:\nSubsidized: balance at repayment start = $25,000\nUnsubsidized: balance at repayment start ≈ $31,000\n\nDifference: $6,000 added to principal you'll then pay 5.5% on for 10 more years — another ~$5,000 in lifetime interest.",
+    "example": "$25,000 borrowed, 4 years in school + 6 months grace, 5.5% interest:\nSubsidized: balance at repayment start = $25,000\nUnsubsidized: balance at repayment start ≈ $31,000\n\nDifference: ~$6,000 in accrued interest you also owe. Pay it during school and grace so it can't capitalize later (for example, if you leave an income-driven plan) — that is what avoids paying ~$5,000 more in lifetime interest on it.",
     "quizTemplateIds": [
       "concept_sl_sub_def_d1",
       "concept_sl_unsub_def_d1",
       "concept_sl_who_qualifies_d2",
       "concept_sl_balance_growth_d3",
-      "concept_sl_grad_loans_d3"
+      "concept_sl_grad_loans_d3",
+      "sl_decision_subsidized_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this when you're accepting financial aid and choosing what to borrow."
   },
   {
     "id": "concept_sl_refi_protections_lost",
     "moduleId": "student_loans",
     "title": "Federal loan protections you lose by refinancing",
-    "concept": "Refinance salespeople pitch lower rates without mentioning what you give up. Refinancing federal loans to private permanently forfeits: IDR plans (payment based on income), PSLF (forgiveness after 10 years in public service), federal forbearance (pause payments during hardship), death/disability discharge (federal loans wiped if you die or become totally disabled), and any future federal relief (like the COVID-era pause). You CANNOT refi back to federal once you've gone private — it's a one-way door.",
+    "concept": "Refinance salespeople pitch lower rates without mentioning what you give up. Refinancing federal loans to private permanently forfeits: IDR plans (payment based on income), PSLF (forgiveness after 10 years in public service — though a March 2025 executive order narrowed which employers qualify, now in litigation), federal forbearance (pause payments during hardship), death/disability discharge (federal loans wiped if you die or become totally disabled), and any future federal relief (like the COVID-era pause). You CANNOT refi back to federal once you've gone private — it's a one-way door.",
     "shortcut": "Refi makes sense only if ALL apply: (1) stable high income, (2) no chance of public-service work, (3) no realistic risk of needing IDR or a hardship pause, (4) you can save 2%+ on rate. For most public-service workers (teachers, non-profit nurses, government employees, public defenders), refi almost never makes sense — the PSLF math alone usually beats any rate savings. If you're not sure about your career trajectory, keep federal until you are.",
     "example": "Refi tradeoff example:\nFederal loan: $40k at 6%, 10-year repayment, $444/mo\nPrivate refi: $40k at 4.5%, 10-year repayment, $415/mo\nSavings: $29/month = $3,480 over 10 years\n\nWhat you give up:\n— PSLF (could be $20k-$80k forgiven if you'd qualify)\n— IDR (payments could drop dramatically if you lose your job)\n— COVID-era pause (saved typical borrower $5k-$10k)\nVerdict: only worth it if you're confident none of those protections matter for you.",
     "quizTemplateIds": [
@@ -2488,12 +2746,391 @@
       "concept_sl_refi_one_way_d2",
       "concept_sl_refi_teacher_d2",
       "concept_sl_refi_when_makes_sense_d3",
-      "concept_sl_refi_vs_protections_d3"
+      "concept_sl_refi_vs_protections_d3",
+      "sl_decision_protections_d3"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "debt_and_credit",
     "secondarySkills": [],
     "isCore": false,
-    "isScenarioEligible": false
+    "isScenarioEligible": true,
+    "realWorldHint": "Read this before a refinance salesperson pitches you a lower rate."
+  },
+  {
+    "id": "scam_imposter_patterns",
+    "moduleId": "money_safety",
+    "title": "Spot the imposter scam",
+    "concept": "The most-reported fraud in America is the imposter scam: someone pretending to be your bank, the government, or a company you trust. The play is always the same three beats — (1) manufactured urgency ('your account is compromised'), (2) borrowed authority (caller ID can be spoofed to show your bank's real name and number), (3) an unusual action only a scammer would request: move your money to a 'safe account,' Zelle it to yourself, read back a security code, or buy gift cards. Per the FTC, your bank will never call or text you asking you to transfer money or share a passcode — and fake bank fraud-alert texts were among the most-reported text scams (FTC, 2024 data).",
+    "shortcut": "One rule beats every script: hang up and call the number on the back of your card. Real fraud departments never mind a callback — only imposters need you to stay on the line. Urgency + secrecy + 'move your money' = imposter, every time.",
+    "example": "Text: 'FRAUD ALERT: Did you authorize $480 at Walmart? Reply NO.'\nYou reply — your phone rings. 'Bank security' says move your checking to a 'safe account' now.\n\nThe tells:\n— Real banks freeze fraud internally; they never need YOU to move money\n— Caller ID showing the bank's number proves nothing (spoofable)\n— The callback test costs 60 seconds and defeats 100% of imposters",
+    "quizTemplateIds": [
+      "msafe_imposter_never_d1",
+      "msafe_imposter_callerid_d1",
+      "msafe_imposter_code_d2",
+      "msafe_decision_safeaccount_d2",
+      "msafe_imposter_pressure_d3",
+      "msafe_decision_callback_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this the moment any call or text about your money creates urgency."
+  },
+  {
+    "id": "scam_payment_rails",
+    "moduleId": "money_safety",
+    "title": "Payment methods scammers love",
+    "concept": "Every scam funnels to the same question: HOW do they want the money? Payment methods differ wildly in reversibility. Credit cards carry the strongest federal dispute rights; debit cards have protections but the cash leaves your account first. P2P apps (Zelle, Venmo, Cash App) treat a payment YOU sent as authorized — recovery is rare even when you were tricked. Wire transfers, gift cards, and crypto-ATM deposits are effectively cash: gone in minutes. That's why the FTC's rule of thumb is absolute: anyone who DEMANDS payment by gift card, wire, or crypto is running a scam — no legitimate business or government agency does that.",
+    "shortcut": "Reversibility ladder, top to bottom: credit card → debit card → P2P apps → wire / gift cards / crypto. The harder a payment is to reverse, the harder a scammer pushes it. The method IS the tell: when someone else picks the payment and it sits low on the ladder, walk away.",
+    "example": "Same $500 'purchase', four endings:\nCredit card → dispute it, provisional credit, federal billing rights\nDebit card → bank investigates; your cash is missing meanwhile\nZelle to a stranger → treated as authorized; usually gone\nGift card codes read over the phone → cashed out in minutes, gone\n\n'Pay only by gift card / wire / crypto ATM' = scam, 100% of the time (FTC)",
+    "quizTemplateIds": [
+      "msafe_rails_strongest_d1",
+      "msafe_rails_giftcard_d1",
+      "msafe_rails_zelle_goods_d2",
+      "msafe_rails_authorized_d2",
+      "msafe_rails_cryptoatm_d3",
+      "msafe_rails_overpayment_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Check the payment method before you check anything else about a deal."
+  },
+  {
+    "id": "credit_report_rights",
+    "moduleId": "money_safety",
+    "title": "Your credit file: free reports, disputes, freezes",
+    "concept": "Three federal rights most people never use. (1) Free reports: you can pull your credit report from EACH of the three bureaus free every week at AnnualCreditReport.com — the only federally authorized source (made permanent in 2023, per FTC). (2) Free disputes: if a report has an error, the bureau must investigate, generally within 30 days, at no cost (FCRA). Errors are common enough that checking matters. (3) Free freezes: a security freeze blocks new-account openings in your name; federal law (2018) made placing and lifting freezes free at all three bureaus. A freeze doesn't touch your score, your existing cards, or your ability to use credit — it only blocks NEW accounts until you thaw it.",
+    "shortcut": "Three free moves: PULL (AnnualCreditReport.com, weekly, each bureau), DISPUTE (in writing; bureau must answer in ~30 days), FREEZE (all three bureaus, free, zero score effect). If you're not opening credit soon, the freeze is the cheapest identity-theft defense that exists.",
+    "example": "Data breach in the news:\n1. Freeze at Equifax + Experian + TransUnion — ~15 min total, $0\n2. Pull all three reports — $0\n3. Spot an account you don't recognize → dispute in writing — $0\n\nApplying for a card next month? Thaw the freeze for a window — also $0.\nTotal cost of the full defense: $0. (FTC / CFPB)",
+    "quizTemplateIds": [
+      "msafe_credit_freereport_d1",
+      "msafe_credit_freeze_cost_d1",
+      "msafe_credit_freeze_vs_alert_d2",
+      "msafe_credit_dispute_d2",
+      "msafe_decision_breach_d3",
+      "msafe_decision_error_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "debt_and_credit",
+    "secondarySkills": [
+      "protection_and_benefits"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this after any data-breach headline — the whole defense costs $0."
+  },
+  {
+    "id": "salary_negotiation",
+    "moduleId": "salary",
+    "title": "Negotiate the offer — math and script",
+    "concept": "Negotiation is a 10-minute conversation that repeats its payoff every year of your career. Three mechanics: (1) Anchoring — the first number spoken frames everything after it, so when asked for your expectations, ask for THEIR budgeted range first. (2) The counter — recruiters budget for counters; a respectful, data-backed counter does not get offers pulled. Counter on the whole package (base, signing bonus, equity, start date, PTO), not just base. (3) Compounding — a higher base repeats every year, and every future percentage raise and next-job offer builds on it. A $3,000 win at 28 is tens of thousands by 40 before investing a cent of it.",
+    "shortcut": "The math: extra per year = salary × negotiated %. Career floor = extra × years (raises compound it higher). The script: 'Based on the role and market data, I was expecting something closer to $X — is there flexibility?' And when asked first: 'What range did you have budgeted for the role?'",
+    "example": "Offer: $70,000. You counter at $74,900 (+7%) with market data.\nThey settle at $73,000 → +$3,000/year.\n\n10-year floor: $30,000 extra (before raises compound it)\nEvery future % raise now builds on $73k, not $70k.\nTime invested: one slightly awkward 10-minute call.",
+    "quizTemplateIds": [
+      "sal_nego_delta_d1",
+      "sal_nego_decade_d2",
+      "sal_nego_firstnumber_d2",
+      "sal_nego_decision_counter_d2",
+      "sal_nego_totalcomp_d3",
+      "sal_nego_decision_compete_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "income_and_paycheck",
+    "secondarySkills": [],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this the day an offer letter lands — before you reply.",
+    "relatedCalculatorSlug": "salary_converter"
+  },
+  {
+    "id": "job_change_401k",
+    "moduleId": "investing",
+    "title": "Your 401(k) when you leave a job",
+    "concept": "Leaving a job hands you four options for your 401(k): leave it, roll it to the new employer's plan, roll it to an IRA, or cash out. Cashing out is the expensive trap — income tax plus a 10% penalty under age 59½ (per IRS) — yet roughly 41% of departing employees do it (UBC Sauder/HBR study of 162,000 separations). The subtler trap is HOW you roll: a DIRECT rollover moves money custodian-to-custodian, untouched. An INDIRECT rollover (they mail YOU a check) triggers mandatory 20% withholding (per IRS) — and you must deposit the FULL original amount within 60 days, replacing the withheld 20% from your own pocket, or the gap is taxed and penalized as a distribution.",
+    "shortcut": "Say the magic words: 'direct rollover.' Cash-out cost ≈ balance × (your tax rate + 10%) under 59½. Indirect-rollover trap: the check arrives 20% light, and the 60-day clock expects you to top it back up.",
+    "example": "$20,000 balance, 22% bracket, age 30:\n\nCash out → lose ~$6,400 (22% + 10% = 32%), keep ~$13,600\nIndirect rollover → check = $16,000; must deposit $20,000 within 60 days (find $4,000 yourself)\nDirect rollover → $20,000 moves whole. Costs $0.\n\n(IRS rollover rules; Topic 413)",
+    "quizTemplateIds": [
+      "jc401k_cashout_d1",
+      "jc401k_shortfall_d1",
+      "jc401k_direct_d2",
+      "jc401k_decision_check_d2",
+      "jc401k_60day_d3",
+      "jc401k_decision_small_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "investing_and_future",
+    "secondarySkills": [
+      "income_and_paycheck"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this in your last two weeks at any job — before HR mails a check.",
+    "relatedCalculatorSlug": "401k_impact"
+  },
+  {
+    "id": "job_change_health",
+    "moduleId": "insurance",
+    "title": "Health coverage when you leave a job",
+    "concept": "Losing job-based insurance opens two paths and one clock. COBRA lets you keep your exact plan (same doctors, same deductible progress) for up to 18 months — but you pay the FULL premium plus up to a 2% admin fee (102% of plan cost, per DOL), because the employer subsidy is what vanished. The marketplace path: losing job coverage triggers a Special Enrollment Period — 60 days to enroll at HealthCare.gov, where income-based subsidies (calculated on your NEW, lower income) often beat COBRA by hundreds a month. The clock: 60 days to elect COBRA too (from the later of the election notice or coverage ending). And one powerful wrinkle: COBRA is RETROACTIVE to your coverage-loss date if you elect within the window.",
+    "shortcut": "Compare two numbers before paying anything: COBRA ≈ full plan premium × 1.02 vs. a marketplace quote at your new income. Both decisions get ~60 days. The backstop play: you can hold off electing COBRA and elect retroactively within the window only if something happens — but calendar the deadline.",
+    "example": "Employer plan total cost: $650/mo (you paid $150, employer $500):\n\nCOBRA: $650 × 1.02 = $663/mo — sticker shock is the norm\nMarketplace, subsidized at reduced income: ~$280/mo\nDifference: $383/mo ≈ $4,600/yr\n\nSame 60-day window for both paths. (DOL COBRA guide; HealthCare.gov)",
+    "quizTemplateIds": [
+      "jchealth_cobra_cost_d1",
+      "jchealth_premium_d1",
+      "jchealth_window_d2",
+      "jchealth_decision_compare_d2",
+      "jchealth_retroactive_d3",
+      "jchealth_decision_gap_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [
+      "income_and_paycheck"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this the week a job ends — before the COBRA letter scares you into overpaying."
+  },
+  {
+    "id": "payday_loan_cost",
+    "moduleId": "debt",
+    "title": "Payday loans, cash advances & overdrafts — the real APR",
+    "concept": "A payday loan's fee sounds small: '$15 per $100 for two weeks' is the common structure ($10–$30 per $100 depending on state, per CFPB). Annualized, that's roughly 400% APR — against ~22% on even an expensive credit card. The trap is the rollover: if you can't repay in 14 days, you pay another fee to extend, and the CFPB found most borrowers end up re-borrowing rather than repaying — fees can pass the original loan within months. Cash-advance apps often repackage similar economics as 'tips' and 'express fees.' Overdrafts are the same lesson in miniature: a $35 fee to cover a $20 shortfall for three days is an astronomical effective rate — though fees now vary wildly by bank (several large banks charge $0–$10), and a polite call often gets a first fee waived.",
+    "shortcut": "APR ≈ (fee per $100 ÷ 100) × (365 ÷ term days) × 100. So $15 per $100 for 14 days ≈ 391%. Overdraft check: fee ÷ amount covered × 100 = the instant percentage. Waiver script: 'Hi — I've banked with you for X years and overdrew by accident this week. Could you waive the fee as a courtesy?'",
+    "example": "Borrow $300 for 2 weeks at $15 per $100:\nFee: $45 → repay $345\nAPR: (15 ÷ 100) × (365 ÷ 14) ≈ 391%\nRoll it over 4 times: $180 in fees on a $300 loan — 60% in two months, principal still owed.\n\nOverdraft: $35 fee covering a $20 shortfall = 175% of the amount, instantly.\n(CFPB payday-loan cost data)",
+    "quizTemplateIds": [
+      "payday_fee_d1",
+      "payday_apr_d2",
+      "payday_overdraft_d2",
+      "payday_decision_alternatives_d2",
+      "payday_rollover_d3",
+      "payday_decision_waiver_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "debt_and_credit",
+    "secondarySkills": [
+      "cash_flow_and_budgeting"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use this before any 'quick cash' decision — the APR math takes ten seconds."
+  },
+  {
+    "id": "car_negative_equity",
+    "moduleId": "car",
+    "title": "Upside down: negative equity on a car loan",
+    "concept": "You're 'upside down' when you owe more than the car is worth — and it's now mainstream: in Q1 2026, 30.9% of trade-ins toward new cars carried negative equity, averaging $7,183 owed beyond the car's value (Edmunds). The drivers: long loan terms (72–84 months) pay principal slower than cars depreciate. The most misleading phrase on the lot is 'we'll pay off your loan no matter what you owe' — they don't pay it off, they ROLL the shortfall into your NEW loan, so you drive off underwater on the new car from day one. On-time payments don't prevent any of this; depreciation simply outruns amortization on long loans. Escape routes, best to worst: keep the car and keep paying (equity returns as the loan amortizes), pay the gap in cash if you must trade, or at absolute minimum walk in knowing your number before the dealer frames it.",
+    "shortcut": "Equity = car's value − loan payoff. Negative = upside down by that much. Before any trade-in: look up the car's market value, call the lender for the exact payoff, subtract. Judge every dealer offer with that shortfall ADDED to the new loan.",
+    "example": "Car's market value: $14,000. Loan payoff: $19,500.\nEquity: 14,000 − 19,500 = −$5,500 (upside down)\n\nDealer 'pays off your loan' on a $30,000 new car:\nNew loan = $30,000 + $5,500 = $35,500\n— underwater on the new car before leaving the lot.\n\n(Edmunds Q1 2026: 30.9% of trade-ins, avg −$7,183)",
+    "quizTemplateIds": [
+      "negeq_equity_d1",
+      "negeq_rollin_d1",
+      "negeq_payoff_myth_d2",
+      "negeq_decision_trade_d2",
+      "negeq_prevalence_d3",
+      "negeq_decision_gap_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "big_purchases",
+    "secondarySkills": [
+      "debt_and_credit"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Run the equity math before any dealership visit — know your number before they do.",
+    "relatedCalculatorSlug": "loan"
+  },
+  {
+    "id": "shrinkflation_unit_price",
+    "moduleId": "smart_shopping",
+    "title": "Shrinkflation — same price, smaller box",
+    "concept": "When a price can't rise invisibly, the package shrinks instead. The GAO found downsized grocery products carried average unit-price increases of 12% (paper towels) to 32% (coffee) across 2019–2024 — while the shelf price looked unchanged (GAO-25-107451). It's legal, and it works precisely because shoppers track prices, not quantities; research shows people respond far less to downsizing than to an equivalent price hike. The defense is one number: the unit price — price ÷ quantity, in $/oz, per-sheet, or per-load. It's printed in small type on most shelf tags (a dozen-plus states require it), and it's the only number shrinkflation can't fool.",
+    "shortcut": "Unit price = total price ÷ quantity. Shrink % = (old size ÷ new size − 1) × 100 — a 16 oz → 14 oz 'same-price' shrink is 16/14 − 1 ≈ +14% per ounce. Compare $/oz across brands AND across time; ignore the sticker.",
+    "example": "Cereal: $4.99 for 18 oz → $4.99 for 15.3 oz\nOld unit price: 27.7¢/oz\nNew unit price: 32.6¢/oz\nEffective increase: 18 ÷ 15.3 − 1 ≈ +17.6% per oz — at the 'same' price.\n\n(GAO: downsized categories averaged 12–32% unit-price hikes)",
+    "quizTemplateIds": [
+      "shrink_unitprice_d1",
+      "shrink_tag_d1",
+      "shrink_pct_d2",
+      "shrink_decision_compare_d2",
+      "shrink_psychology_d3",
+      "shrink_decision_swap_d3"
+    ],
+    "lastVerified": "2026-06-10",
+    "primarySkill": "everyday_money_math",
+    "secondarySkills": [
+      "cash_flow_and_budgeting"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Use the unit-price line on the shelf tag — it's the one number the package can't shrink."
+  },
+  {
+    "id": "taxes_filing_mechanics",
+    "moduleId": "taxes",
+    "title": "How filing actually works",
+    "concept": "Filing a return is a reconciliation, not a bill. Your employer withholds estimated tax from every paycheck all year (set by your W-4); the return computes what you actually owed. A refund means you overpaid through withholding - it's your own money coming back, not a bonus. The pipeline: your W-2 must be sent by the end of January (IRS); you file by April 15; e-file with direct deposit and most refunds arrive within ~21 days (IRS). Free ways to file: IRS Free File guided software if your AGI is $89,000 or less (2026 season), Free File Fillable Forms at any income, VITA in-person help if you make about $69,000 or less, and MilTax for military families at any income. (IRS Direct File ran 2024-2025 and was discontinued for 2026.)",
+    "shortcut": "Refund = your own overpaid withholding coming back. The free path: W-2 lands by end of January -> Free File if under $89K AGI -> e-file + direct deposit -> ~21 days.",
+    "example": "Single, $52,000 salary, one W-2:\n1. W-2 arrives by end of January\n2. AGI under $89,000 -> IRS Free File guided software, $0\n3. E-file + direct deposit by April 15\n4. Refund (if any) in ~21 days\n\nA paid preparer for this return buys convenience, not a bigger refund - the numbers are the numbers. (IRS)",
+    "quizTemplateIds": [
+      "filing_reconciliation_d1",
+      "filing_w2_timing_d1",
+      "filing_free_options_d2",
+      "filing_refund_timing_d2",
+      "filing_decision_firsttime_d3",
+      "filing_decision_refund_advance_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "income_and_paycheck",
+    "secondarySkills": [
+      "cash_flow_and_budgeting"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Pull this up the week your W-2 arrives - the free path takes one evening."
+  },
+  {
+    "id": "credit_from_zero",
+    "moduleId": "debt",
+    "title": "Building credit from zero",
+    "concept": "A FICO score doesn't exist until your file has at least one account open 6+ months AND one account reported to a bureau in the last 6 months (myFICO). Three starter tools: (1) a secured card - your refundable deposit (usually $200 minimum) typically becomes your credit line, and on-time use can graduate it to a regular card with the deposit returned; (2) becoming an authorized user on a trusted person's old card - the account's history can appear on YOUR report (issuer-dependent) and you carry zero legal liability for the debt (CFPB); (3) a credit-builder loan - the money sits locked in savings while your payments get reported (CFPB). What moves the score: payment history is ~35% of FICO and utilization ~30% - so one small recurring charge, autopaid in full, does almost all the work.",
+    "shortcut": "One small card + one recurring bill + autopay in full. Six months of on-time payments = a score exists. Keep the balance tiny relative to the limit.",
+    "example": "22, no credit history:\n1. Secured card, $200 deposit -> $200 limit\n2. Put one subscription (~$15/mo) on it\n3. Autopay the FULL statement every month\n4. ~6 months later: a FICO score exists; the card can graduate and the $200 comes back\n\nLate payments get reported the same way on-time ones do - autopay is the whole game. (myFICO / CFPB)",
+    "quizTemplateIds": [
+      "czero_fico_file_d1",
+      "czero_secured_mechanics_d1",
+      "czero_authorized_user_d2",
+      "czero_builder_loan_d2",
+      "czero_decision_first_card_d3",
+      "czero_decision_small_limit_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "debt_and_credit",
+    "secondarySkills": [],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Setting up a first card? Put ONE small subscription on it and turn on full-balance autopay before you leave the app."
+  },
+  {
+    "id": "dispute_a_charge",
+    "moduleId": "money_safety",
+    "title": "Disputing a charge: your rights",
+    "concept": "Two different rulebooks. CREDIT cards (Fair Credit Billing Act): you have 60 days from the date of the statement containing the error to dispute in writing, and your maximum liability for unauthorized use is $50 - and the major card networks contractually take that to $0. DEBIT cards (Regulation E): speed sets your cap - report within 2 business days of learning about it and you're liable for at most $50; report within 60 days of the statement and it's up to $500; wait longer and the losses can be unlimited. For billing mistakes (double charge, wrong amount, item never arrived), contacting the merchant first is usually fastest - but the issuer dispute (chargeback) is your legal backstop, and banks generally provide provisional credit while they investigate.",
+    "shortcut": "Credit card: 60-day clock from the statement, $50 max on fraud (usually $0). Debit card: speed is everything - 2 days = $50 cap, 60 days = $500, later = no cap. Report fast, in writing.",
+    "example": "Unknown $214 charge on your credit card statement:\n1. Don't recognize it? Check the merchant name online (many bill under odd names)\n2. Still unknown -> dispute with your issuer IN WRITING within 60 days of that statement\n3. Issuer investigates; your fraud liability tops out at $50 (networks: $0)\n\nSame charge on a DEBIT card? Report it the day you see it - the $50 cap only holds for 2 business days. (FTC / CFPB)",
+    "quizTemplateIds": [
+      "dispute_fcba_window_d1",
+      "dispute_card_liability_d1",
+      "dispute_debit_speed_d2",
+      "dispute_merchant_vs_issuer_d2",
+      "dispute_decision_unknown_charge_d3",
+      "dispute_decision_debit_skim_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "debt_and_credit",
+    "secondarySkills": [
+      "protection_and_benefits"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "See a charge you don't recognize? The clock is already running - check it today, not at the end of the month."
+  },
+  {
+    "id": "banking_basics_fees",
+    "moduleId": "money_math",
+    "title": "Checking accounts: stop paying for your own money",
+    "concept": "Three checks decide whether your bank quietly costs you money. (1) Overdraft opt-in: under Regulation E, a bank cannot charge overdraft fees on DEBIT-card and ATM transactions unless you explicitly opted in - the default is the purchase is simply declined, free. (Checks and recurring payments aren't covered by that protection.) The fee landscape is now split: many banks charge $0 or $10, while others still charge ~$34 per overdraft. (2) Monthly maintenance fees: about 95% are waivable, usually by direct deposit or a minimum balance - and nearly half of basic checking accounts are free outright (Bankrate 2025). (3) Insurance: confirm FDIC (banks) or NCUA (credit unions) coverage - $250,000 per depositor, per institution, per ownership category.",
+    "shortcut": "Three questions for any checking account: Am I opted IN to debit overdraft? (Opted out = declined free.) Is my monthly fee waived? (Direct deposit usually does it.) Is it FDIC/NCUA insured? ($250K.)",
+    "example": "New job, picking an account:\n1. Decline debit overdraft 'coverage' - a declined card costs $0; an overdraft can cost $34\n2. Set up direct deposit -> monthly fee waived at most banks\n3. Confirm FDIC/NCUA on the bank's site\n\nPaying $12/month in maintenance fees is $144/year for a service that's free across the street. (CFPB / FDIC / Bankrate 2025)",
+    "quizTemplateIds": [
+      "bank_optin_default_d1",
+      "bank_fee_waiver_d1",
+      "bank_insured_d2",
+      "bank_overdraft_landscape_d2",
+      "bank_decision_optin_d3",
+      "bank_decision_fee_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "cash_flow_and_budgeting",
+    "secondarySkills": [
+      "protection_and_benefits"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Opening any account, the teller will offer 'overdraft protection' on your debit card - now you know what that actually means."
+  },
+  {
+    "id": "insurance_renters",
+    "moduleId": "insurance",
+    "title": "Renters insurance: the $15/month most people skip",
+    "concept": "Your landlord's insurance covers the BUILDING - never your stuff. Renters insurance (average ~$171/year, NAIC 2022 - roughly $15/month) covers three things: your possessions (fire, theft, vandalism and other named perils - flood and earthquake excluded), liability if you, your family, or your pet injures someone or damages property, and additional living expenses - the hotel and meals if a covered loss makes your place unlivable. One choice matters at purchase: actual cash value pays what your used stuff was worth (depreciated); replacement cost pays what NEW equivalents cost - for roughly 10% more premium, it's the better protection (III). About 57% of renters carry it, and roughly half of landlords now require it in the lease.",
+    "shortcut": "Landlord's policy = the building. ~$15/month = your stuff + lawsuits + a hotel if it burns. Pick REPLACEMENT COST, not actual cash value.",
+    "example": "Apartment fire next door, smoke ruins your things:\n- Landlord's policy: rebuilds the walls. Pays you $0.\n- Your renters policy: replaces possessions, covers the 3 weeks in temporary housing\n\n5-year-old laptop stolen:\n- Actual cash value: pays its depreciated worth (maybe $200)\n- Replacement cost: pays for a comparable NEW one (III / NAIC)",
+    "quizTemplateIds": [
+      "renters_landlord_gap_d1",
+      "renters_cost_d1",
+      "renters_acv_vs_replacement_d2",
+      "renters_ale_d2",
+      "renters_decision_skip_d3",
+      "renters_decision_claim_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Signing a lease this year? Quote renters insurance the same day - it's the cheapest line on the move-in list."
+  },
+  {
+    "id": "insurance_auto_shopping",
+    "moduleId": "insurance",
+    "title": "Auto insurance without overpaying",
+    "concept": "Average full coverage now runs about $2,700/year (Bankrate, June 2026) - and the spread between insurers for the SAME driver is huge, which makes shopping the biggest lever. State minimums vary wildly (Florida requires no bodily-injury liability at all; California raised its floor to 30/60/15 in 2025) and are rarely enough - the common adequacy guidance is 100/300/100 for real protection (Consumer Reports). Four verified ways to pay less: (1) re-quote every 1-2 years - 'price optimization' (charging loyal non-shoppers more) is a documented industry practice that ~20 states restrict; (2) bundle auto with renters/home (~10-25% off, but compare the final total); (3) raise your deductible IF you can cover it from savings - $500 to $1,000 typically trims roughly 5-15% off the total premium; (4) on an old car, drop collision/comprehensive when that part of the premium exceeds ~10% of the car's value (III's rule of thumb).",
+    "shortcut": "Re-quote every year or two - loyalty literally costs money. Bundle, raise the deductible you can actually cover, and when comp+collision costs more than 10% of the car's value, drop it.",
+    "example": "Renewal letter: up $400 for no reason:\n1. Get 3 quotes (same coverage levels) - 30 minutes\n2. Ask current insurer to match - they often do for shoppers\n3. 12-year-old car worth $3,000 with $480/yr comp+collision? That's 16% of the car's value - drop it and self-insure\n\nThe quietest tax on autopilot customers is the loyalty penalty. (III / Consumer Reports / Bankrate 2026)",
+    "quizTemplateIds": [
+      "auto_minimums_vary_d1",
+      "auto_loyalty_d1",
+      "auto_deductible_tradeoff_d2",
+      "auto_drop_collision_d2",
+      "auto_decision_renewal_d3",
+      "auto_decision_old_car_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [
+      "big_purchases"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "When the renewal letter lands, that's the moment - 30 minutes of quotes is the highest-paid half hour of your year."
+  },
+  {
+    "id": "estate_beneficiaries",
+    "moduleId": "insurance",
+    "title": "Beneficiaries: 10 minutes that override your will",
+    "concept": "Accounts with named beneficiaries - 401(k)s, IRAs, life insurance, and payable-on-death (POD) bank accounts - pass directly to whoever is on the FORM, regardless of what your will says. The Supreme Court has enforced this even against an ex-spouse who waived the money in a divorce (Kennedy v. DuPont, 2009): the form controls. Two more rules worth knowing: under ERISA, your spouse is automatically your 401(k) beneficiary unless they sign a notarized waiver (IRAs work differently); and a CONTINGENT beneficiary only inherits if every primary is gone - so name a backup. The whole defense is a 10-minute audit: check the beneficiary on your 401(k), IRA, life insurance, and bank accounts, and re-check after every marriage, divorce, birth, or death (FINRA).",
+    "shortcut": "The FORM beats the will - every time. Audit four places: 401(k), IRA, life insurance, bank POD. Name a backup. Re-check after every big life event.",
+    "example": "Divorced two years ago, never touched the 401(k) form:\n- Will says everything to your kids\n- Form still names the ex-spouse\n-> The ex-spouse gets the 401(k). The Supreme Court has enforced exactly this.\n\nThe fix: log in, update the beneficiary, add a contingent. Ten minutes, $0. (DOL / FINRA / Kennedy v. DuPont)",
+    "quizTemplateIds": [
+      "benef_supersedes_d1",
+      "benef_contingent_d1",
+      "benef_erisa_spouse_d2",
+      "benef_pod_d2",
+      "benef_decision_divorce_d3",
+      "benef_decision_newjob_d3"
+    ],
+    "lastVerified": "2026-06-11",
+    "primarySkill": "protection_and_benefits",
+    "secondarySkills": [
+      "investing_and_future"
+    ],
+    "isCore": false,
+    "isScenarioEligible": true,
+    "realWorldHint": "Next time you log into your 401(k), spend the extra two minutes on the beneficiary tab - it outranks your will."
   }
 ]

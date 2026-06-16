@@ -16,40 +16,47 @@ struct WelcomeHookView: View {
             .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                Spacer(minLength: 32)
+                // Scrolls only when the content genuinely doesn't fit
+                // (small devices); regular phones render it static. Layout
+                // pressure must never truncate the pitch copy.
+                ScrollView {
+                    VStack(spacing: 0) {
+                        // Hero illustration (reuse existing pattern)
+                        HeroIllustration()
+                            .padding(.top, 12)
+                            .padding(.bottom, 28)
 
-                // Hero illustration (reuse existing pattern)
-                HeroIllustration()
-                    .padding(.bottom, 36)
+                        // Headline
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Money decisions")
+                                .font(.system(size: 34, weight: .heavy, design: .rounded))
+                                .foregroundStyle(.white)
+                            Text("don\u{2019}t wait.")
+                                .font(.system(size: 34, weight: .heavy, design: .rounded))
+                                .foregroundStyle(Theme.Colors.insightYellow)
 
-                // Headline
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Real math.")
-                        .font(.system(size: 38, weight: .heavy, design: .rounded))
-                        .foregroundStyle(.white)
-                    Text("Real life.")
-                        .font(.system(size: 38, weight: .heavy, design: .rounded))
-                        .foregroundStyle(Theme.Colors.insightYellow)
+                            Text("Five minutes a day to walk into every one of them prepared.")
+                                .font(Theme.Typography.body)
+                                .foregroundStyle(.white.opacity(0.72))
+                                .lineSpacing(3)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding(.top, 8)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, Theme.Spacing.screenHorizontal)
 
-                    Text("Build everyday math skills that help you make smarter decisions — every day.")
-                        .font(Theme.Typography.body)
-                        .foregroundStyle(.white.opacity(0.72))
-                        .lineSpacing(3)
-                        .padding(.top, 8)
+                        // Value props
+                        VStack(spacing: 12) {
+                            valueRow(emoji: "\u{1F3AF}", tint: Theme.Colors.primaryBlueTint, title: "Decision-sized sessions", sub: "5 minutes, built for real moments")
+                            valueRow(emoji: "\u{1F9ED}", tint: Theme.Colors.mindTealTint, title: "Job offers, health plans, leases, loans", sub: "Know your number for each one")
+                            valueRow(emoji: "\u{2705}", tint: Theme.Colors.insightYellowTint, title: "Honest progress", sub: "We tell you when you\u{2019}re actually ready")
+                        }
+                        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                        .padding(.top, 18)
+                        .padding(.bottom, 16)
+                    }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, Theme.Spacing.screenHorizontal)
-
-                // Value props
-                VStack(spacing: 12) {
-                    valueRow(emoji: "\u{26A1}", tint: Theme.Colors.primaryBlueTint, title: "Short, focused workouts", sub: "5\u{2013}10 minutes to build momentum")
-                    valueRow(emoji: "\u{1F6D2}", tint: Theme.Colors.mindTealTint, title: "Practical & relevant", sub: "Learn skills you can use today")
-                    valueRow(emoji: "\u{1F4CA}", tint: Theme.Colors.insightYellowTint, title: "Track progress, build habits", sub: "Streaks, goals, and rewards")
-                }
-                .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                .padding(.top, 18)
-
-                Spacer(minLength: 24)
+                .scrollBounceBehavior(.basedOnSize)
 
                 // CTAs
                 VStack(spacing: 6) {

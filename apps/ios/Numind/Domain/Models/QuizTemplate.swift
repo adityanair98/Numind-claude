@@ -15,6 +15,14 @@ struct QuizTemplate: Codable, Identifiable, Equatable {
     // ── Concept template fields (text-MCQ, no formula evaluation) ──
     let conceptChoices: [String]?           // 4 static text options
     let correctConceptChoice: String?       // exact text of the correct option (must appear in conceptChoices)
+    // ── Application / decision flag (Phase 9E) ──
+    /// True for scenario/decision items that test "what would you do," not just
+    /// "compute X." Feeds the per-pack Readiness *application* gate. Optional so
+    /// pre-9E JSON (which omits the key) decodes as nil → not an application item.
+    let isApplication: Bool?
+
+    /// Convenience: treats a missing flag as `false`.
+    var isApplicationItem: Bool { isApplication ?? false }
 }
 
 enum InputMode: String, Codable {

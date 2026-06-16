@@ -9,6 +9,8 @@ struct NumindApp: App {
         if UserDefaults.standard.object(forKey: "numind.installDate") == nil {
             UserDefaults.standard.set(Date(), forKey: "numind.installDate")
         }
+        // PostHog + Sentry — no-ops until keys land in Info.plist (Phase 10-D).
+        AnalyticsService.configure()
     }
 
     var body: some Scene {

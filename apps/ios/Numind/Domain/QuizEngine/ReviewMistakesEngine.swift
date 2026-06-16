@@ -47,39 +47,4 @@ enum ReviewMistakesEngine {
         )
     }
 
-    /// Builds a cross-session review from wrong `QuestionResult`s stored in
-    /// `SessionRecord`s — used by the Progress tab "Review all mistakes" entry point.
-    ///
-    /// - Parameters:
-    ///   - questionResults: Flat list of wrong `QuestionResult` from any sessions.
-    ///   - moduleColor: Tint for the review session banner.
-    ///   - repository: Content source.
-    @MainActor
-    static func build(
-        fromStored questionResults: [QuestionResult],
-        moduleColor: ModuleColor = .muted,
-        repository: ContentRepository = LocalContentRepository()
-    ) -> QuizSessionViewModel? {
-        var seen = Set<String>()
-        let wrongIds = questionResults
-            .filter { !$0.isCorrect }
-            .map    { $0.templateId }
-            .filter { seen.insert($0).inserted }
-
-        guard !wrongIds.isEmpty else { return nil }
-
-        let questions: [QuizQuestion] = wrongIds.compactMap { id in
-            guard let template = repository.template(id: id) else { return nil }
-            return QuizEngine.generate(from: template)
-        }
-
-        guard !questions.isEmpty else { return nil }
-
-        return QuizSessionViewModel(
-            questions: questions,
-            title: "Review Mistakes",
-            shortcut: "Same question types, different numbers — focus on the method, not the answer.",
-            moduleColor: moduleColor
-        )
-    }
 }

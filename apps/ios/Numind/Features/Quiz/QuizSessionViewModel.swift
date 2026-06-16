@@ -9,6 +9,7 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         case answered(UUID)      // user picked a choice
         case feedback(UUID)      // answer checked, showing result
         case motivator(MotivatorCheckpoint)  // mid-session checkpoint
+        case teach(TeachCard)    // Phase 10: in-session teach moment before new material
         case complete            // all questions done
     }
 
@@ -30,6 +31,11 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     let lessonTitle: String
     let moduleColor: ModuleColor
     let lessonShortcut: String
+    /// Money-moment sentence for this lesson (Phase 6c). Nil for review/blitz
+    /// sessions that aren't tied to a single lesson.
+    let lessonRealWorldHint: String?
+    /// Calculator slug for this lesson (Phase 7a), nil for review/blitz sessions.
+    let lessonRelatedCalculatorSlug: String?
     let questions: [QuizQuestion]
 
     /// Optional per-question time limit (seconds). Nil = standard untimed quiz.
@@ -101,38 +107,25 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
 
     // MARK: - XP
 
-    /// Seconds thresholds and bonus amounts for speed XP.
-    static let speedFastSeconds: Double = 5
-    static let speedGoodSeconds: Double = 10
-    static let speedFastBonus:   Int    = 5
-    static let speedGoodBonus:   Int    = 2
-
     var correctCount: Int { results.filter(\.isCorrect).count }
 
-    /// Base XP: 10 per correct answer.
-    var xpEarned: Int { correctCount * 10 }
-
-    /// Speed bonus XP for the question currently showing feedback.
-    var currentSpeedBonus: Int {
-        guard case .feedback = sessionState, isCorrectAnswer else { return 0 }
-        return Self.speedBonus(for: lastQuestionTimeSpent)
-    }
-
-    /// Total speed bonus XP across all completed questions in this session.
-    var bonusXP: Int {
+    /// Session XP — difficulty-weighted per the Phase 9 model (easy 10 /
+    /// medium 15 / hard 25). Speed no longer affects XP (the speed bonus was
+    /// retired with the composite score).
+    var xpEarned: Int {
         results.reduce(0) { acc, r in
-            acc + (r.isCorrect ? Self.speedBonus(for: r.timeSpentSeconds) : 0)
+            acc + (r.isCorrect ? MomentumEngine.xp(for: r.question.difficulty) : 0)
         }
     }
 
-    /// Total XP including speed bonuses — use this for display and storage.
-    var totalXP: Int { xpEarned + bonusXP }
-
-    private static func speedBonus(for seconds: Double) -> Int {
-        if seconds < speedFastSeconds { return speedFastBonus }
-        if seconds < speedGoodSeconds { return speedGoodBonus }
-        return 0
+    /// XP just earned for the question currently showing feedback (0 if wrong).
+    var currentQuestionXP: Int {
+        guard case .feedback = sessionState, isCorrectAnswer else { return 0 }
+        return MomentumEngine.xp(for: currentQuestion.difficulty)
     }
+
+    /// Total session XP (difficulty-weighted). Used for display and storage.
+    var totalXP: Int { xpEarned }
 
     /// Maps completed results to the Codable `QuestionResult` type for `SessionRecord`.
     var questionResults: [QuestionResult] {
@@ -211,6 +204,8 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         lessonTitle = lesson.title
         self.moduleColor = moduleColor
         self.lessonShortcut = lesson.shortcut
+        self.lessonRealWorldHint = lesson.realWorldHint
+        self.lessonRelatedCalculatorSlug = lesson.relatedCalculatorSlug
         self.questionTimeLimit = nil
         self.repository = repository
         let ordered = sessions.isEmpty
@@ -279,6 +274,10 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         }
         built.shuffle()
         questions = built
+        // Speed-delta baselines for repeat material (Phase 12 — favorable-only).
+        speedBaselines = SharpnessEngine.baselines(
+            for: built.map(\.templateId), sessions: sessions
+        )
     }
 
     /// Initialiser for pre-generated question sets (daily challenge, game modes).
@@ -296,18 +295,70 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         shortcut: String,
         moduleColor: ModuleColor = .blue,
         questionTimeLimit: TimeInterval? = nil,
-        repository: ContentRepository = LocalContentRepository()
+        repository: ContentRepository = LocalContentRepository(),
+        teachCards: [Int: TeachCard] = [:],
+        segmentLabels: [String]? = nil,
+        speedBaselines: [String: Double] = [:]
     ) {
         lessonTitle = title
         self.moduleColor = moduleColor
         self.lessonShortcut = shortcut
+        self.lessonRealWorldHint = nil
+        self.lessonRelatedCalculatorSlug = nil
         self.questions = questions
         self.questionTimeLimit = questionTimeLimit
         self.repository = repository
+        self.teachCards = teachCards
+        self.segmentLabels = segmentLabels
+        self.speedBaselines = speedBaselines
         // Start countdown for first question if a time limit is set.
         if questionTimeLimit != nil {
             questionTimeRemaining = questionTimeLimit!
         }
+    }
+
+    // MARK: - Teach cards (Phase 10)
+
+    /// Question index → teach card shown immediately before that question
+    /// (once per session). Set only by the Daily Workout path.
+    var teachCards: [Int: TeachCard] = [:]
+
+    /// templateId → prior rolling median seconds (Phase 12 sharpness).
+    /// Snapshot at session start; templates absent here never show a delta.
+    var speedBaselines: [String: Double] = [:]
+
+    /// The favorable speed delta for the just-answered question, or nil.
+    /// Set in `checkAnswer()`, cleared in `advance()`.
+    @Published private(set) var currentSpeedDelta: SharpnessEngine.SpeedDelta? = nil
+    /// Per-question workout segment labels ("Warm-up"/"Focus"/"Decision").
+    var segmentLabels: [String]? = nil
+    private var teachShownAt: Set<Int> = []
+    private var pendingQuestionIndex: Int = 0
+    private var teachEnteredAt: Date? = nil
+
+    /// The current question's workout segment, when labels are present.
+    var currentSegmentLabel: String? {
+        guard let segmentLabels, currentIndex < segmentLabels.count else { return nil }
+        return segmentLabels[currentIndex]
+    }
+
+    /// Single navigation path to a question — shows that index's teach card
+    /// first (once) when one is attached.
+    private func proceedToQuestion(_ index: Int) {
+        if let card = teachCards[index], !teachShownAt.contains(index) {
+            teachShownAt.insert(index)
+            pendingQuestionIndex = index
+            teachEnteredAt = Date()
+            sessionState = .teach(card)
+            AnalyticsService.capture(.teachCardShown, properties: ["lesson_id": card.id])
+            return
+        }
+        currentIndex = index
+        sessionState = .question
+        hintRevealed = false
+        freeEntryText = ""
+        questionStartTime = Date()
+        startQuestionTimer()
     }
 
     // MARK: - Per-question timer management
@@ -384,6 +435,14 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         if isCorrectAnswer {
             evaluateInlineEncouragement()
         }
+
+        // Sharpness: favorable-only speed delta on repeat material (untimed only).
+        currentSpeedDelta = (questionTimeLimit == nil && isCorrectAnswer)
+            ? SharpnessEngine.favorableDelta(
+                currentSeconds: lastQuestionTimeSpent,
+                priorMedian: speedBaselines[currentQuestion.templateId]
+              )
+            : nil
     }
 
     func appendDigit(_ digit: String) {
@@ -403,15 +462,21 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     }
 
     func advance() {
+        // ── Dismissing a teach card → land on its question ──
+        if case .teach = sessionState {
+            // Reading time stays out of the session clock (same treatment
+            // as feedback time).
+            if questionTimeLimit == nil, let entered = teachEnteredAt {
+                totalFeedbackDuration += Date().timeIntervalSince(entered)
+                teachEnteredAt = nil
+            }
+            proceedToQuestion(pendingQuestionIndex)
+            return
+        }
+
         // ── Dismissing a motivator → proceed to next question ──
         if case .motivator = sessionState {
-            let next = currentIndex + 1
-            currentIndex = next
-            sessionState = .question
-            hintRevealed = false
-            freeEntryText = ""
-            questionStartTime = Date()
-            startQuestionTimer()
+            proceedToQuestion(currentIndex + 1)
             return
         }
 
@@ -423,8 +488,9 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
             feedbackEnteredAt = nil
         }
 
-        // Clear inline encouragement
+        // Clear inline encouragement + speed delta
         inlineEncouragement = nil
+        currentSpeedDelta = nil
 
         results.append(QuizResult(
             question: currentQuestion,
@@ -442,27 +508,25 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         }
 
         // ── Evaluate motivator checkpoint ──
-        let correctFlags = results.map(\.isCorrect)
-        if let type = MotivatorEngine.evaluate(
-            correctFlags: correctFlags,
-            totalQuestions: questions.count,
-            justAnsweredIndex: currentIndex,
-            motivatorsShownAt: motivatorsShownAt,
-            isSpeedDrill: questionTimeLimit != nil
-        ) {
-            let checkpoint = buildCheckpoint(type: type)
-            motivatorsShownAt.append(currentIndex)
-            sessionState = .motivator(checkpoint)
-            return
+        // Capped at one per session when teach cards are present, so a
+        // 7-question workout never stacks three full-screen interstitials.
+        if teachCards.isEmpty || motivatorsShownAt.isEmpty {
+            let correctFlags = results.map(\.isCorrect)
+            if let type = MotivatorEngine.evaluate(
+                correctFlags: correctFlags,
+                totalQuestions: questions.count,
+                justAnsweredIndex: currentIndex,
+                motivatorsShownAt: motivatorsShownAt,
+                isSpeedDrill: questionTimeLimit != nil
+            ) {
+                let checkpoint = buildCheckpoint(type: type)
+                motivatorsShownAt.append(currentIndex)
+                sessionState = .motivator(checkpoint)
+                return
+            }
         }
 
-        // Normal advance
-        currentIndex = next
-        sessionState = .question
-        hintRevealed = false
-        freeEntryText = ""
-        questionStartTime = Date()
-        startQuestionTimer()
+        proceedToQuestion(next)
     }
 
     // MARK: - Motivator checkpoint builder
@@ -560,7 +624,8 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     // MARK: - Lifecycle
 
     func startSession() {
-        // Called after the view appears — starts the first question's timer.
-        startQuestionTimer()
+        // Called after the view appears. Routes through the single
+        // navigation path so an index-0 teach card shows before question 1.
+        proceedToQuestion(0)
     }
 }

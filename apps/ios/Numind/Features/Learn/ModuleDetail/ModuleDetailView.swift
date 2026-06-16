@@ -147,11 +147,6 @@ struct ModuleDetailView: View {
                     heroStat(value: "\(masteredCount)/\(total)", label: "Lessons")
                     heroDivider
                     heroStat(value: "\(Int(averageAccuracy * 100))%", label: "Accuracy")
-                    heroDivider
-                    heroStat(
-                        value: "\(progressStore.numindScore(for: viewModel.module.id))",
-                        label: "Score"
-                    )
                 }
                 .padding(.horizontal, 14)
                 .padding(.vertical, 12)
@@ -166,7 +161,7 @@ struct ModuleDetailView: View {
                 // Progress bar
                 VStack(spacing: 6) {
                     HStack {
-                        Text("WORLD PROGRESS")
+                        Text("TOPIC PROGRESS")
                             .font(.system(size: 11, weight: .bold))
                             .foregroundStyle(.white.opacity(0.85))
                             .tracking(0.4)
@@ -431,7 +426,7 @@ struct ModuleDetailView: View {
             module: Module(
                 id: "smart_shopping",
                 title: "Smart Shopping",
-                subtitle: "Tips, discounts, and everyday saving math",
+                subtitle: "Tips, discounts, and everyday savings",
                 icon: "cart.fill",
                 color: .blue,
                 lessonIds: ["tip_18_percent"],

@@ -1,5 +1,12 @@
 # Numind Score Baseline — May 2026 (Phase 5g)
 
+> **⚠️ Retired (Phase 9).** The global 0–100 Numind Score this doc baselines no
+> longer exists — the composite/coverage-cap/subtitle engine and its
+> `NumindScoreBaselineTests` were deleted when scoring moved to the two-currency
+> XP/Level + per-pack Readiness model. Kept as a historical record only.
+> Current model: `docs/product/scoring-system-research.md`; current regression
+> coverage: `MomentumTests` / `ReadinessTests` / `FreshnessTests` / `MasteryTests`.
+
 Diagnostic snapshot of the 7-axis Numind Score engine after the Phase 5
 architecture redesign (per-module → per-skill-axis).
 

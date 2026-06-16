@@ -6,11 +6,7 @@ struct HomeView: View {
     @State private var launchCard: HomeViewModel.LessonCard?
     @State private var dailyVM: QuizSessionViewModel? = nil
     @State private var bonusRoundVM: QuizSessionViewModel? = nil
-    @State private var showSpeedDrill = false
-    @State private var blitzVM: BlitzViewModel? = nil
-    @State private var streakVM: StreakViewModel? = nil
-    @State private var estimationVM: EstimationViewModel? = nil
-    @State private var comparisonVM: ComparisonViewModel? = nil
+    @State private var refreshVM: QuizSessionViewModel? = nil
     // insightLesson is now computed inline in insightView(for:) from the session's modules
     @State private var showInsight = false
     @State private var insightSessionVM: QuizSessionViewModel? = nil   // retained while sheet shows
@@ -22,32 +18,61 @@ struct HomeView: View {
 
     private let repo = LocalContentRepository()
 
+    /// Skills mastered during today's workout — feeds the insight sheet's
+    /// capability language (Phase 10).
+    @State private var insightSkillMoves: [SkillMove] = []
+
+    /// Skills restored by the last refresh session (Phase 12 — the
+    /// recurring "caught it fading" narration; first-ever save shows the
+    /// milestone instead).
+    @State private var refreshSaveMoves: [SkillMove] = []
+    @State private var showRefreshSaveToast = false
+
+    // Sharpness check + real-world saves (Phase 12)
+    @State private var checkVM: QuizSessionViewModel? = nil
+    @State private var checkResult: SharpnessCheckRecord? = nil
+    @State private var showSavePrompt = false
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
                 BrandHeader(
                     name: userName,
                     isDailyChallengeCompleted: progressStore.isDailyChallengeCompleted,
-                    numindScore: progressStore.numindScore,
+                    ringProgress: progressStore.ringProgress,
+                    isRingClosed: progressStore.isRingClosedToday,
                     onScoreTap: { showScoreDetail = true }
                 )
                 dailyChallengeSection
+                momentChipSection
                 streakSection
-                workoutSection
-                packSection
-                modesSection
+                refreshSection
+                sharpnessCheckSection
                 if let card = viewModel.continueCard {
                     continueSection(card)
                 }
-                if !viewModel.upNextCards.isEmpty {
-                    upNextSection
-                }
+                packSection
+                quickAccessRow
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
             .padding(.vertical, Theme.Spacing.sectionSpacing)
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
+        // Refresh-save toast — the recurring everyday echo of a skill caught
+        // before it faded (the first-ever save shows a milestone instead).
+        .overlay(alignment: .top) {
+            if showRefreshSaveToast {
+                refreshSaveToast
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            withAnimation { showRefreshSaveToast = false }
+                        }
+                    }
+            }
+        }
+        .animation(.easeInOut(duration: 0.35), value: showRefreshSaveToast)
         // Lesson launch
         .fullScreenCover(item: $launchCard) { card in
             LessonView(viewModel: LessonViewModel(
@@ -62,11 +87,21 @@ struct HomeView: View {
         .fullScreenCover(item: $dailyVM) { vm in
             NavigationStack {
                 QuizSessionView(viewModel: vm) {
+                    // Diff mastery across the recording for the insight
+                    // sheet's capability language (Phase 10).
+                    let masteredBefore = progressStore.masteredLessonIds
                     recordMixedSession(
                         vm: vm, lessonId: "daily_challenge"
                     )
+                    insightSkillMoves = progressStore.masteredLessonIds
+                        .subtracting(masteredBefore)
+                        .compactMap { repo.lesson(id: $0) }
+                        .map { SkillMove(title: $0.title, change: .mastered) }
                     lastDailyCorrectCount = vm.correctCount
                     progressStore.markDailyChallengeCompleted()
+                    AnalyticsService.capture(.workoutCompleted, properties: [
+                        "correct": vm.correctCount, "total": vm.total
+                    ])
                     insightSessionVM = vm
                     dailyVM = nil
                     showInsight = true
@@ -77,10 +112,59 @@ struct HomeView: View {
         .sheet(isPresented: $showInsight, onDismiss: {
             insightSessionVM = nil
             viewModel.refresh(using: progressStore)
+            // Weekly real-world saves prompt (max 1/7 days, post-ring moment).
+            if progressStore.isSavePromptDue,
+               !SharpnessCheckGate.saveChips(sessions: progressStore.data.sessions).isEmpty {
+                showSavePrompt = true
+            }
         }) {
             if let vm = insightSessionVM {
                 insightView(for: vm)
             }
+        }
+        // Sharpness check session (diagnostic mode — never a SessionRecord)
+        .fullScreenCover(item: $checkVM) { vm in
+            NavigationStack {
+                QuizSessionView(viewModel: vm) {
+                    let seconds = vm.results.map(\.timeSpentSeconds).sorted()
+                    let median = seconds.isEmpty ? 0
+                        : seconds.count % 2 == 0
+                            ? (seconds[seconds.count / 2 - 1] + seconds[seconds.count / 2]) / 2
+                            : seconds[seconds.count / 2]
+                    let record = SharpnessCheckRecord(
+                        date: Date(),
+                        correct: vm.correctCount,
+                        total: vm.total,
+                        medianSeconds: median
+                    )
+                    progressStore.recordSharpnessCheck(record)
+                    checkVM = nil
+                    checkResult = record
+                }
+            }
+        }
+        // Sharpness check result
+        .sheet(item: $checkResult) { record in
+            let previous = progressStore.sharpnessChecks
+                .filter { $0.date < record.date }
+                .max { $0.date < $1.date }
+            let day1: (correct: Int, total: Int)? = {
+                let results = progressStore.data.onboardingSignals?.diagnosticResults ?? []
+                guard !results.isEmpty else { return nil }
+                return (results.filter(\.isCorrect).count, results.count)
+            }()
+            SharpnessCheckResultView(
+                record: record,
+                dayOne: day1,
+                previousCheck: previous,
+                staleCount: progressStore.staleSkillCount,
+                onStartRefresh: { launchRefresh() }
+            )
+        }
+        // Weekly real-world saves prompt
+        .sheet(isPresented: $showSavePrompt) {
+            savePromptSheet
+                .presentationDetents([.medium])
         }
         // Bonus round launch
         .fullScreenCover(item: $bonusRoundVM) { vm in
@@ -93,35 +177,31 @@ struct HomeView: View {
                 }
             }
         }
-        // Speed Drill launch
-        .fullScreenCover(isPresented: $showSpeedDrill) {
-            SpeedDrillView()
-                .environmentObject(progressStore)
-        }
-        // Blitz launch
-        .fullScreenCover(item: $blitzVM) { vm in
-            BlitzView(viewModel: vm) {
-                BlitzEngine.generateQuestionQueue(from: progressStore.data)
+        // Refresh — the one consolidated review entry point (Phase 10-A8):
+        // stale mastered skills + unfixed mistakes in a single session
+        .fullScreenCover(item: $refreshVM) { vm in
+            NavigationStack {
+                QuizSessionView(viewModel: vm) {
+                    let staleBefore = Set(FreshnessEngine.staleLessons(
+                        masteredLessonIds: progressStore.masteredLessonIds,
+                        sessions: progressStore.data.sessions,
+                        repository: repo
+                    ))
+                    recordMixedSession(vm: vm, lessonId: "refresh_review")
+                    let staleAfter = Set(FreshnessEngine.staleLessons(
+                        masteredLessonIds: progressStore.masteredLessonIds,
+                        sessions: progressStore.data.sessions,
+                        repository: repo
+                    ))
+                    refreshSaveMoves = staleBefore.subtracting(staleAfter)
+                        .compactMap { repo.lesson(id: $0) }
+                        .map { SkillMove(title: $0.title, change: .refreshed) }
+                    if !refreshSaveMoves.isEmpty && progressStore.pendingMilestone == nil {
+                        withAnimation { showRefreshSaveToast = true }
+                    }
+                    refreshVM = nil
+                }
             }
-            .environmentObject(progressStore)
-        }
-        // Streak launch
-        .fullScreenCover(item: $streakVM) { vm in
-            StreakView(
-                viewModel: vm,
-                generateQuestions: { generateMCQQuestions(count: 40) }
-            )
-            .environmentObject(progressStore)
-        }
-        // Estimation launch
-        .fullScreenCover(item: $estimationVM) { vm in
-            EstimationView(viewModel: vm)
-                .environmentObject(progressStore)
-        }
-        // Comparison launch
-        .fullScreenCover(item: $comparisonVM) { vm in
-            ComparisonView(viewModel: vm)
-                .environmentObject(progressStore)
         }
         // Score detail sheet
         .sheet(isPresented: $showScoreDetail) {
@@ -160,30 +240,26 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Score detail sheet
+    // MARK: - Level & Readiness detail sheet
 
     private var scoreDetailSheet: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Tier hero banner + large ring
-                    tierHeroBanner
+                    readinessHero
                         .padding(.top, 4)
 
-                    // 4-node progression ladder
-                    tierProgressionStrip
+                    // Coverage diagnostic (mastered / total per axis)
+                    coverageCard
 
-                    // Radar / bar chart
-                    scoreChartCard
-
-                    // Per-module breakdown
-                    moduleBreakdownCard
+                    // The honest competence surface: per-pack Readiness
+                    readinessBoardCard
                 }
                 .padding(.horizontal, Theme.Spacing.screenHorizontal)
                 .padding(.vertical, 12)
             }
             .background(Theme.Colors.softBackground.ignoresSafeArea())
-            .navigationTitle("Numind Score")
+            .navigationTitle("Readiness")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -195,223 +271,115 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Tier hero banner
+    // MARK: - Readiness hero (Phase 10 — capability language, no Level/XP)
 
-    private var tierHeroBanner: some View {
-        let tier = ScoreTier(score: progressStore.numindScore)
-        let ptsToNext = tier.pointsToNext(from: progressStore.numindScore)
-
-        return NumindCard {
-            HStack(spacing: 20) {
-                // Large ring
-                NumindScoreRing(score: progressStore.numindScore,
-                                delta: progressStore.numindScoreDelta,
-                                size: 110)
-
-                VStack(alignment: .leading, spacing: 8) {
-                    // Tier badge
-                    HStack(spacing: 6) {
-                        Image(systemName: tier.icon)
-                            .font(.system(size: 13, weight: .bold))
-                        Text(tier.name.uppercased())
-                            .font(.system(size: 12, weight: .bold))
-                            .kerning(0.5)
-                    }
-                    .foregroundStyle(tier.color)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(tier.color.opacity(0.12))
-                    .clipShape(Capsule())
-
-                    // Delta line
-                    if progressStore.numindScoreDelta != 0 {
-                        let up = progressStore.numindScoreDelta > 0
-                        HStack(spacing: 4) {
-                            Image(systemName: up ? "arrow.up.right" : "arrow.down.right")
-                                .font(.system(size: 11, weight: .bold))
-                            Text(up
-                                 ? "+\(progressStore.numindScoreDelta) pts this week"
-                                 : "\(progressStore.numindScoreDelta) pts this week")
-                                .font(.system(size: 12, weight: .semibold))
-                        }
-                        .foregroundStyle(up ? Theme.Colors.mindTeal : Theme.Colors.errorSoftRed)
-                    }
-
-                    // Next tier callout
-                    if let pts = ptsToNext, let next = tier.next {
-                        Text("\(pts) pts to \(next.name)")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundStyle(Theme.Colors.mutedText)
-                    } else {
-                        Text("You've reached the top tier \u{1F451}")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundStyle(Theme.Colors.growthGreen)
-                    }
-                }
-                Spacer(minLength: 0)
-            }
-        }
-    }
-
-    // MARK: - Tier progression strip
-
-    private var tierProgressionStrip: some View {
-        let currentTier = ScoreTier(score: progressStore.numindScore)
-        let score = progressStore.numindScore
-        let tiers = ScoreTier.allCases
-
-        return NumindCard {
-            VStack(alignment: .leading, spacing: 14) {
-                Text("YOUR JOURNEY")
-                    .font(.system(size: 10, weight: .bold))
-                    .foregroundStyle(Theme.Colors.mutedText)
-                    .kerning(0.6)
-
-                // Node strip
-                HStack(spacing: 0) {
-                    ForEach(Array(tiers.enumerated()), id: \.offset) { i, tier in
-                        // Node
-                        let isReached = score >= tier.minScore
-                        let isCurrent = tier == currentTier
-
-                        VStack(spacing: 6) {
-                            ZStack {
-                                Circle()
-                                    .fill(isReached ? tier.color : Theme.Colors.mutedTint)
-                                    .frame(width: isCurrent ? 36 : 28, height: isCurrent ? 36 : 28)
-
-                                Image(systemName: tier.icon)
-                                    .font(.system(size: isCurrent ? 15 : 11, weight: .bold))
-                                    .foregroundStyle(isReached ? .white : Theme.Colors.mutedText)
-                            }
-                            .shadow(color: isCurrent ? tier.color.opacity(0.4) : .clear,
-                                    radius: 6, y: 2)
-
-                            Text(tier.name)
-                                .font(.system(size: 9, weight: isCurrent ? .bold : .medium))
-                                .foregroundStyle(isCurrent ? tier.color : Theme.Colors.mutedText)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(2)
-                                .frame(width: 52)
-                        }
-
-                        // Connector line between nodes
-                        if i < tiers.count - 1 {
-                            let nextTier = tiers[i + 1]
-                            let nextReached = score >= nextTier.minScore
-                            Rectangle()
-                                .fill(nextReached
-                                      ? LinearGradient(colors: [tier.color, nextTier.color],
-                                                       startPoint: .leading, endPoint: .trailing)
-                                      : LinearGradient(colors: [Theme.Colors.mutedTint, Theme.Colors.mutedTint],
-                                                       startPoint: .leading, endPoint: .trailing))
-                                .frame(height: 2)
-                                .offset(y: -12) // align with node centers
-                                .frame(maxWidth: .infinity)
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity)
-
-                // Score threshold labels
-                HStack(spacing: 0) {
-                    ForEach(Array(tiers.enumerated()), id: \.offset) { i, tier in
-                        Text(tier.minScore == 0 ? "Start" : "\(tier.minScore)+")
-                            .font(.system(size: 9, weight: .medium))
-                            .foregroundStyle(score >= tier.minScore ? tier.color : Theme.Colors.mutedText)
-                            .frame(maxWidth: .infinity)
-                        if i < tiers.count - 1 {
-                            Spacer(minLength: 0).frame(maxWidth: .infinity)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private var scoreChartCard: some View {
-        let results = progressStore.numindAxisResults
-        return NumindCard {
-            VStack(alignment: .leading, spacing: 14) {
-                Text("PERFORMANCE BY SKILL")
-                    .font(.system(size: 10, weight: .bold))
-                    .foregroundStyle(Theme.Colors.mutedText)
-                    .kerning(0.6)
-
-                // 7-axis radar. Untested axes render at 0 (dim spoke);
-                // measured axes scale to their score / 100.
-                let current = results.map { r in
-                    RadarChartView.Axis(
-                        label: r.axis.shortName,
-                        value: r.evidence == .notStarted ? 0 : Double(r.score) / 100.0
-                    )
-                }
-                let previous: [RadarChartView.Axis]? = results.allSatisfy({
-                    progressStore.numindScore(forAxis: $0.axis, daysAgo: 7) != nil
-                })
-                ? results.map { r in
-                    RadarChartView.Axis(
-                        label: r.axis.shortName,
-                        value: Double(progressStore.numindScore(forAxis: r.axis, daysAgo: 7) ?? 0) / 100.0
-                    )
-                }
-                : nil
-                RadarChartView(axes: current, previousAxes: previous, size: 220)
-                    .frame(maxWidth: .infinity)
-
-                if progressStore.numindScore == 0 {
-                    Text("Complete your first lesson to see your Numind Score.")
-                        .font(Theme.Typography.caption)
-                        .foregroundStyle(Theme.Colors.mutedText)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity)
-                }
-            }
-        }
-    }
-
-    /// Per-axis score breakdown — rendered below the radar in the score
-    /// detail sheet. Each row shows the axis name, score, and evidence
-    /// label (Untested / Early Read / Developing / Reliable).
-    private var moduleBreakdownCard: some View {
-        let results = progressStore.numindAxisResults
-        return NumindCard {
+    private var readinessHero: some View {
+        NumindCard {
             VStack(alignment: .leading, spacing: 12) {
-                Text("SKILL SCORES")
-                    .font(.system(size: 10, weight: .bold))
-                    .foregroundStyle(Theme.Colors.mutedText)
-                    .kerning(0.6)
+                if let pack = progressStore.focusPack {
+                    let state = progressStore.readiness(for: pack)
+                    let core = ReadinessEngine.coreLessons(for: pack)
+                    let mastered = core.filter { progressStore.hasMasteredLessonNow($0) }.count
 
-                ForEach(Array(results.enumerated()), id: \.element.axis) { i, r in
-                    HStack(spacing: 12) {
-                        Image(systemName: skillIcon(r.axis))
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(skillColor(r.axis))
-                            .frame(width: 32, height: 32)
-                            .background(skillColor(r.axis).opacity(0.12))
-                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(r.axis.displayName)
-                                .font(.system(size: 14, weight: .semibold))
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(pack.title.uppercased())
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundStyle(Theme.Colors.mutedText)
+                                .kerning(0.6)
+                            Text("\(mastered) of \(core.count) core skills mastered")
+                                .font(.system(size: 17, weight: .bold, design: .rounded))
                                 .foregroundStyle(Theme.Colors.deepNavy)
-                            Text(r.evidence.label)
-                                .font(.system(size: 11, weight: .medium))
-                                .foregroundStyle(evidenceColor(r.evidence))
                         }
                         Spacer()
-                        Text("\(r.score)")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .foregroundStyle(r.evidence == .notStarted
-                                ? Theme.Colors.mutedText
-                                : skillColor(r.axis))
+                        ReadinessBadge(state: state)
                     }
-                    .padding(.vertical, 4)
 
-                    if i < results.count - 1 {
-                        Divider().background(Theme.Colors.hairline)
+                    // The named missing gate follows the pack everywhere.
+                    if case .almostReady(_, let nextAction) = state {
+                        Label(nextAction, systemImage: "arrow.right.circle.fill")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.primaryBlue)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
+                } else {
+                    Text("Pick a path to get decision-ready")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                }
+
+                // Decisions you're ready for — the competence headline.
+                if progressStore.readyPackCount > 0 {
+                    Label("\(progressStore.readyPackCount) decision path\(progressStore.readyPackCount == 1 ? "" : "s") you're ready for",
+                          systemImage: "checkmark.seal.fill")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(Theme.Colors.growthGreen)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
+        }
+    }
+
+    // MARK: - Skill coverage (diagnostic)
+
+    private var coverageCard: some View {
+        let coverage = progressStore.axisCoverage
+        return NumindCard {
+            VStack(alignment: .leading, spacing: 14) {
+                Text("SKILL COVERAGE")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .kerning(0.6)
+
+                // Coverage shape (mastered / total) — NOT a competence grade.
+                let axes = coverage.map {
+                    RadarChartView.Axis(label: $0.axis.shortName, value: $0.fraction)
+                }
+                RadarChartView(axes: axes, previousAxes: nil, size: 220)
+                    .frame(maxWidth: .infinity)
+
+                Text("How much of each area you've locked in — not a grade.")
+                    .font(Theme.Typography.small)
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .frame(maxWidth: .infinity, alignment: .center)
+
+                Divider().background(Theme.Colors.hairline)
+
+                ForEach(coverage) { row in
+                    HStack(spacing: 12) {
+                        Image(systemName: skillIcon(row.axis))
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(skillColor(row.axis))
+                            .frame(width: 32, height: 32)
+                            .background(skillColor(row.axis).opacity(0.12))
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                        Text(row.axis.displayName)
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Spacer()
+                        Text("\(row.mastered)/\(row.total)")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundStyle(row.mastered > 0
+                                ? skillColor(row.axis) : Theme.Colors.mutedText)
+                    }
+                    .padding(.vertical, 4)
+                }
+            }
+        }
+    }
+
+    // MARK: - Pack readiness board
+
+    private var readinessBoardCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("DECISIONS YOU'RE GETTING READY FOR")
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(Theme.Colors.mutedText)
+                .kerning(0.6)
+            PackReadinessBoard(rows: LocalContentRepository().allPacks().map {
+                PackReadinessBoard.Row(id: $0.id, title: $0.title,
+                                       state: progressStore.readiness(for: $0))
+            })
         }
     }
 
@@ -441,15 +409,6 @@ struct HomeView: View {
         }
     }
 
-    private func evidenceColor(_ level: EvidenceLevel) -> Color {
-        switch level {
-        case .notStarted: return Theme.Colors.mutedText.opacity(0.55)
-        case .warmingUp:  return Theme.Colors.warmOrange
-        case .developing: return Theme.Colors.primaryBlue
-        case .reliable:   return Theme.Colors.growthGreen
-        }
-    }
-
     // MARK: - Daily challenge
 
     private var dailyChallengeSection: some View {
@@ -460,7 +419,8 @@ struct HomeView: View {
             timeUntilReset: viewModel.timeUntilDailyReset,
             hasHistory: progressStore.totalSessions > 0,
             onStart: { startDailyChallenge() },
-            onBonusRound: { startBonusRound() }
+            onBonusRound: { startBonusRound() },
+            total: DailyChallengeEngine.questionCount(for: progressStore.data)
         )
     }
 
@@ -477,9 +437,9 @@ struct HomeView: View {
                 axis: r.axis,
                 score: r.score,
                 evidence: r.evidence,
-                // Previous-week per-axis score comes straight from the
-                // snapshot history. Nil collapses gracefully in the radar.
-                previousScore: progressStore.numindScore(forAxis: r.axis, daysAgo: 7)
+                // Phase 9: composite score history is retired, so there's no
+                // prior-week overlay. Nil collapses gracefully in the radar.
+                previousScore: nil
             )
         }
         // Derive which axes appeared in this session's questions, via the
@@ -490,8 +450,9 @@ struct HomeView: View {
             }
         )
         DailyInsightView(
-            overallScore: progressStore.numindScore,
-            scoreDelta: progressStore.numindScoreDelta,
+            ringProgress: progressStore.ringProgress,
+            ringClosed: progressStore.isRingClosedToday,
+            skillsMoved: insightSkillMoves,
             axisScores: axisScores,
             sessionAxes: sessionAxes,
             sessionCorrect: vm.correctCount,
@@ -527,27 +488,339 @@ struct HomeView: View {
     }
 
     private func startDailyChallenge() {
-        let questions = DailyChallengeEngine.dailyQuestions(
+        let plan = DailyWorkoutEngine.plan(
             from: repo,
             progressData: progressStore.data,
             focusPack: progressStore.focusPack
         )
+        var teachCards: [Int: TeachCard] = [:]
+        if let card = plan.teachCard, let index = plan.teachCardIndex {
+            teachCards[index] = card
+        }
         dailyVM = QuizSessionViewModel(
-            questions: questions,
+            questions: plan.questions,
             title: "Daily Workout",
-            shortcut: "Draw on all the skills you've built \u{2014} tips, discounts, salary math, and more.",
-            moduleColor: .blue
+            shortcut: "Draw on all the skills you've built \u{2014} tips, discounts, paychecks, and more.",
+            moduleColor: .blue,
+            teachCards: teachCards,
+            segmentLabels: plan.segmentLabels,
+            speedBaselines: SharpnessEngine.baselines(
+                for: plan.questions.map(\.templateId),
+                sessions: progressStore.data.sessions
+            )
         )
+        AnalyticsService.capture(.workoutStarted, properties: [
+            "question_count": plan.questions.count
+        ])
     }
 
     private func startBonusRound() {
         let questions = DailyChallengeEngine.bonusRoundQuestions(from: repo, progressData: progressStore.data)
         bonusRoundVM = QuizSessionViewModel(
             questions: questions,
-            title: "Bonus Round",
+            title: "More Practice",
             shortcut: "Extra practice \u{2014} a fresh set of questions from your modules.",
-            moduleColor: .blue
+            moduleColor: .blue,
+            speedBaselines: SharpnessEngine.baselines(
+                for: questions.map(\.templateId),
+                sessions: progressStore.data.sessions
+            )
         )
+    }
+
+    // MARK: - Refresh (consolidated, Phase 10-A8)
+
+    /// A gentle, opportunity-framed card — "N skills to refresh" — that appears
+    /// when mastered skills have gone stale OR recent mistakes are still
+    /// unfixed (the old Recall surface folded in). Tapping starts one short
+    /// session that restores both. Never a penalty.
+    @ViewBuilder
+    private var refreshSection: some View {
+        let count = RefreshSessionBuilder.skillCount(
+            masteredLessonIds: progressStore.masteredLessonIds,
+            sessions: progressStore.data.sessions,
+            repository: repo
+        )
+        if count > 0 {
+            Button(action: launchRefresh) {
+                HStack(spacing: 14) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Theme.Colors.mindTeal.opacity(0.14))
+                            .frame(width: 44, height: 44)
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .font(.system(size: 19, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("\(count) skill\(count == 1 ? "" : "s") to refresh")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text("Bring back fading skills and fix recent misses.")
+                            .font(.system(size: 12))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+                .padding(14)
+                .background(Theme.Colors.cardBackground)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                        .strokeBorder(Theme.Colors.mindTeal.opacity(0.25), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.05), radius: 6, y: 3)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    /// Builds the consolidated refresh session — stale mastered templates
+    /// plus unfixed mistakes, regenerated with fresh values.
+    private func launchRefresh() {
+        guard let session = RefreshSessionBuilder.build(
+            masteredLessonIds: progressStore.masteredLessonIds,
+            sessions: progressStore.data.sessions,
+            repository: repo
+        ) else { return }
+        refreshVM = QuizSessionViewModel(
+            questions: session.questions,
+            title: "Refresh",
+            shortcut: "Bring your skills back to sharp \u{2014} same methods, fresh numbers.",
+            moduleColor: .teal,
+            speedBaselines: SharpnessEngine.baselines(
+                for: session.questions.map(\.templateId),
+                sessions: progressStore.data.sessions
+            )
+        )
+        AnalyticsService.capture(.refreshStarted, properties: [
+            "skill_count": session.skillCount
+        ])
+    }
+
+    // MARK: - Coming up (moments, Phase 12)
+
+    /// Pack IDs the moments registry treats as "this user's moments".
+    private var momentPackIds: Set<String> {
+        var ids = Set(progressStore.data.onboardingSignals?.selectedPackIds ?? [])
+        ids.formUnion(progressStore.inProgressPacks.map(\.id))
+        if let focus = progressStore.focusPackId { ids.insert(focus) }
+        return ids
+    }
+
+    /// Top-1 live moment as a slim chip — "about N weeks" granularity,
+    /// nothing rendered outside a genuine window.
+    @ViewBuilder
+    private var momentChipSection: some View {
+        if let moment = MomentsRegistry.currentMoments(
+            signals: progressStore.data.onboardingSignals,
+            packIds: momentPackIds
+        ).first {
+            Button {
+                if let packId = moment.packId, let pack = repo.pack(id: packId) {
+                    presentedPack = pack
+                }
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "calendar")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(Theme.Colors.insightText)
+                        .frame(width: 36, height: 36)
+                        .background(Theme.Colors.insightYellowTint)
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(moment.title)
+                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text(moment.detail)
+                            .font(.system(size: 12))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .lineLimit(2)
+                            .multilineTextAlignment(.leading)
+                    }
+                    Spacer(minLength: 0)
+                    if moment.packId != nil {
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                }
+                .padding(12)
+                .background(Theme.Colors.cardBackground)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                        .strokeBorder(Theme.Colors.insightYellow.opacity(0.35), lineWidth: 1)
+                )
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    // MARK: - Sharpness check (Phase 12)
+
+    /// Monthly 2-minute check — appears 28+ days after the last one (or
+    /// the day-1 diagnostic). Results never touch the session log.
+    @ViewBuilder
+    private var sharpnessCheckSection: some View {
+        if progressStore.isSharpnessCheckDue, progressStore.focusPackId != nil {
+            Button(action: launchSharpnessCheck) {
+                HStack(spacing: 14) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Theme.Colors.investIndigo.opacity(0.14))
+                            .frame(width: 44, height: 44)
+                        Image(systemName: "waveform.path.ecg")
+                            .font(.system(size: 19, weight: .bold))
+                            .foregroundStyle(Theme.Colors.investIndigo)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Monthly sharpness check")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundStyle(Theme.Colors.deepNavy)
+                        Text("2 minutes \u{2014} see how far you\u{2019}ve come since day 1.")
+                            .font(.system(size: 12))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+                .padding(14)
+                .background(Theme.Colors.cardBackground)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
+                        .strokeBorder(Theme.Colors.investIndigo.opacity(0.25), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.05), radius: 6, y: 3)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    private func launchSharpnessCheck() {
+        let signals = progressStore.data.onboardingSignals
+        let items = DiagnosticQuestionBuilder.build(
+            focusPackId: progressStore.focusPackId ?? signals?.focusPackId,
+            secondaryPackIds: signals?.secondaryPackIds ?? [],
+            repository: repo
+        )
+        guard !items.isEmpty else { return }
+        checkVM = QuizSessionViewModel(
+            questions: items.map(\.question),
+            title: "Sharpness Check",
+            shortcut: "No grades \u{2014} just an honest look at where your skills sit today.",
+            moduleColor: .indigo,
+            speedBaselines: SharpnessEngine.baselines(
+                for: items.map(\.question.templateId),
+                sessions: progressStore.data.sessions
+            )
+        )
+    }
+
+    // MARK: - Real-world saves prompt (Phase 12)
+
+    private var savePromptSheet: some View {
+        let chips = SharpnessCheckGate.saveChips(sessions: progressStore.data.sessions)
+        return VStack(alignment: .leading, spacing: 16) {
+            Text("Real life check")
+                .font(Theme.Typography.small)
+                .textCase(.uppercase)
+                .tracking(1.5)
+                .foregroundStyle(Theme.Colors.mutedText)
+                .padding(.top, 24)
+
+            Text("Did any of these come up in real life this week?")
+                .font(Theme.Typography.title)
+                .foregroundStyle(Theme.Colors.deepNavy)
+                .lineSpacing(2)
+
+            VStack(spacing: 10) {
+                ForEach(chips, id: \.self) { chip in
+                    Button {
+                        progressStore.recordSavePrompt(label: chip)
+                        showSavePrompt = false
+                    } label: {
+                        HStack {
+                            Image(systemName: "checkmark.circle")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.growthGreen)
+                            Text(chip)
+                                .font(.system(size: 15, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.deepNavy)
+                                .multilineTextAlignment(.leading)
+                            Spacer()
+                        }
+                        .padding(14)
+                        .background(Theme.Colors.cardBackground)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+                        )
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+
+            Button {
+                progressStore.recordSavePrompt(label: nil)
+                showSavePrompt = false
+            } label: {
+                Text("None this week")
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 44)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+        .background(Theme.Colors.softBackground.ignoresSafeArea())
+    }
+
+    // MARK: - Refresh-save toast (Phase 12)
+
+    private var refreshSaveToast: some View {
+        let titles = refreshSaveMoves.map(\.title)
+        let line = titles.prefix(2).joined(separator: ", ")
+            + (titles.count > 2 ? " +\(titles.count - 2) more" : "")
+        return HStack(spacing: 10) {
+            Image(systemName: "arrow.triangle.2.circlepath")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundStyle(.white)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Back to sharp")
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white)
+                Text("Refreshed: \(line)")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(.white.opacity(0.85))
+                    .lineLimit(1)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [Theme.Colors.mindTeal, Theme.Colors.growthGreen],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .shadow(color: Theme.Colors.mindTeal.opacity(0.3), radius: 10, y: 4)
+        )
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+        .padding(.top, 8)
     }
 
     // MARK: - Streak
@@ -696,220 +969,54 @@ struct HomeView: View {
         .buttonStyle(.plain)
     }
 
-    // MARK: - Workout section
+    // MARK: - Quick access (Phase 6c)
 
-    @ViewBuilder
-    private var workoutSection: some View {
+    /// Compact entry points below the fold — replaces the retired Game Modes
+    /// carousel. (Phase 10-A8: the Recall chip folded into the Refresh card;
+    /// its slot is now extra practice.)
+    private var quickAccessRow: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Today's workout")
-            if let card = viewModel.todayCard {
-                workoutCard(card, reason: viewModel.recommendations.first?.reason)
-            } else {
-                allCaughtUpCard
-            }
-        }
-    }
-
-    private func workoutCard(
-        _ card: HomeViewModel.LessonCard,
-        reason: LessonRecommendation.Reason? = nil
-    ) -> some View {
-        NumindCard {
-            VStack(alignment: .leading, spacing: 14) {
-                HStack(alignment: .top, spacing: 14) {
-                    IconTile(systemName: card.module.icon,
-                             tintColor: card.module.color.tintColor, size: 52)
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack(alignment: .center, spacing: 6) {
-                            Text(card.module.title.uppercased())
-                                .font(.system(size: 10, weight: .bold))
-                                .foregroundStyle(card.module.color.tintColor)
-                                .kerning(0.6)
-                            Spacer()
-                            if let reason {
-                                reasonChip(reason)
-                            } else {
-                                HStack(spacing: 3) {
-                                    Image(systemName: "clock")
-                                        .font(.system(size: 10, weight: .medium))
-                                    Text("5\u{2013}7 min")
-                                        .font(.system(size: 11, weight: .semibold))
-                                }
-                                .foregroundStyle(Theme.Colors.mutedText)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 3)
-                                .background(Theme.Colors.mutedTint)
-                                .clipShape(Capsule())
-                            }
-                        }
-                        Text(card.lesson.title)
-                            .font(Theme.Typography.headline)
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                        Text(card.lesson.concept)
-                            .font(Theme.Typography.caption)
-                            .foregroundStyle(Theme.Colors.mutedText)
-                            .lineLimit(2)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
+            sectionLabel("Quick access")
+            HStack(spacing: 12) {
+                quickChip(icon: "square.stack.3d.up.fill",
+                          title: "More practice",
+                          subtitle: "A fresh set of questions",
+                          tint: Theme.Colors.primaryBlue) {
+                    startBonusRound()
                 }
-
-                HStack {
-                    BeadRail(progress: 0, total: card.questionCount, variant: .chunky)
-                    Spacer()
-                    Text("+\(card.xpReward) XP")
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundStyle(Theme.Colors.insightText)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                        .background(Theme.Colors.insightYellowTint)
-                        .clipShape(Capsule())
+                quickChip(icon: progressStore.focusPack == nil ? "map.fill" : "rectangle.stack.fill",
+                          title: progressStore.focusPack == nil ? "Pick a path" : "Browse paths",
+                          subtitle: progressStore.focusPack == nil ? "Get ready for a moment" : "Switch or add",
+                          tint: Theme.Colors.mindTeal) {
+                    showPackPicker = true
                 }
-
-                PillButton("Start workout") { launchCard = card }
             }
         }
     }
 
-    @ViewBuilder
-    private func reasonChip(_ reason: LessonRecommendation.Reason) -> some View {
-        switch reason {
-        case .neverAttempted:
-            chipView("NEW", icon: "sparkle", color: Theme.Colors.mindTeal)
-        case .inProgress:
-            chipView("IN PROGRESS", icon: "arrow.right.circle", color: Theme.Colors.primaryBlue)
-        case .weakModule, .weakAxis:
-            chipView("NEEDS WORK", icon: "exclamationmark.triangle", color: Theme.Colors.warmOrange)
-        }
-    }
-
-    private func chipView(_ label: String, icon: String, color: Color) -> some View {
-        HStack(spacing: 3) {
-            Image(systemName: icon)
-                .font(.system(size: 9, weight: .bold))
-            Text(label)
-                .font(.system(size: 10, weight: .bold))
-                .kerning(0.4)
-        }
-        .foregroundStyle(color)
-        .padding(.horizontal, 7)
-        .padding(.vertical, 3)
-        .background(color.opacity(0.12))
-        .clipShape(Capsule())
-    }
-
-    /// Shown only when all lessons are done AND no SRS reviews are due.
-    private var allCaughtUpCard: some View {
-        NumindCard {
-            VStack(spacing: 12) {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 44))
-                    .foregroundStyle(Theme.Colors.mindTeal)
-                Text("You're all caught up!")
-                    .font(Theme.Typography.headline)
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                Text("No reviews due right now. Check back later or try a bonus round.")
-                    .font(Theme.Typography.caption)
-                    .foregroundStyle(Theme.Colors.mutedText)
-                    .multilineTextAlignment(.center)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 8)
-        }
-    }
-
-    // MARK: - Game modes section
-
-    private var modesSection: some View {
-        let locked = !viewModel.modesUnlocked
-
-        return VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Game modes")
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ModeCard.speedDrill(
-                        bestLabel: bestLabel(for: progressStore.speedDrillBest),
-                        locked: locked,
-                        action: { startSpeedDrill() }
-                    )
-                    .frame(width: 155)
-
-                    ModeCard.blitz(
-                        bestLabel: bestLabel(for: progressStore.blitzBest),
-                        locked: locked,
-                        action: { startBlitz() }
-                    )
-                    .frame(width: 155)
-
-                    ModeCard.streak(
-                        bestLabel: bestLabel(for: progressStore.streakModeBest),
-                        locked: locked,
-                        action: { startStreak() }
-                    )
-                    .frame(width: 155)
-
-                    ModeCard.estimation(
-                        bestLabel: bestLabel(for: progressStore.estimationBest, suffix: " ★"),
-                        locked: locked,
-                        action: { startEstimation() }
-                    )
-                    .frame(width: 155)
-
-                    ModeCard.comparison(
-                        bestLabel: bestLabel(for: progressStore.comparisonBest, suffix: "/15"),
-                        locked: locked,
-                        action: { startComparison() }
-                    )
-                    .frame(width: 155)
+    private func quickChip(icon: String, title: String, subtitle: String,
+                           tint: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            NumindCard {
+                VStack(alignment: .leading, spacing: 8) {
+                    Image(systemName: icon)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(tint)
+                        .frame(width: 38, height: 38)
+                        .background(tint.opacity(0.12))
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    Text(title)
+                        .font(Theme.Typography.body)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text(subtitle)
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
                 }
-                .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            // Let scroll bleed to screen edges
-            .padding(.horizontal, -Theme.Spacing.screenHorizontal)
         }
-    }
-
-    // MARK: - Mode helpers
-
-    private func bestLabel(for score: Int, suffix: String = "") -> String? {
-        score > 0 ? "Best: \(score)\(suffix)" : nil
-    }
-
-    private func startSpeedDrill() {
-        guard viewModel.modesUnlocked else { return }
-        showSpeedDrill = true
-    }
-
-    private func startBlitz() {
-        guard viewModel.modesUnlocked else { return }
-        let questions = BlitzEngine.generateQuestionQueue(from: progressStore.data)
-        guard !questions.isEmpty else { return }
-        blitzVM = BlitzViewModel(questions: questions, previousBest: progressStore.blitzBest)
-    }
-
-    private func startStreak() {
-        guard viewModel.modesUnlocked else { return }
-        let questions = generateMCQQuestions(count: 40)
-        guard !questions.isEmpty else { return }
-        streakVM = StreakViewModel(questions: questions, previousBest: progressStore.streakModeBest)
-    }
-
-    private func startEstimation() {
-        guard viewModel.modesUnlocked else { return }
-        let templates = masteredTemplates()
-        guard !templates.isEmpty else { return }
-        let items = EstimationViewModel.generateItems(from: templates, count: 10)
-        guard !items.isEmpty else { return }
-        estimationVM = EstimationViewModel(items: items, previousBest: progressStore.estimationBest)
-    }
-
-    private func startComparison() {
-        guard viewModel.modesUnlocked else { return }
-        let templates = masteredTemplates()
-        guard templates.count >= 2 else { return }
-        let pairs = ComparisonViewModel.generatePairs(from: templates, count: 15)
-        guard !pairs.isEmpty else { return }
-        comparisonVM = ComparisonViewModel(pairs: pairs, previousBest: progressStore.comparisonBest)
+        .buttonStyle(.plain)
     }
 
     // MARK: - Continue learning
@@ -920,7 +1027,7 @@ struct HomeView: View {
         let progress: Double = lessons.isEmpty ? 0 : Double(completed) / Double(lessons.count)
 
         return VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Continue learning")
+            sectionLabel("Continue your path")
             NumindCard {
                 Button { launchCard = card } label: {
                     VStack(alignment: .leading, spacing: 12) {
@@ -964,45 +1071,6 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Up next
-
-    private var upNextSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Up next")
-            NumindCard {
-                VStack(spacing: 0) {
-                    ForEach(Array(viewModel.upNextCards.enumerated()), id: \.element.id) { i, card in
-                        Button { launchCard = card } label: {
-                            HStack(spacing: 14) {
-                                IconTile(systemName: card.module.icon,
-                                         tintColor: card.module.color.tintColor,
-                                         size: 36)
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(card.lesson.title)
-                                        .font(Theme.Typography.body)
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(Theme.Colors.deepNavy)
-                                    Text(card.module.title)
-                                        .font(Theme.Typography.small)
-                                        .foregroundStyle(Theme.Colors.mutedText)
-                                }
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .font(.system(size: 13, weight: .semibold))
-                                    .foregroundStyle(Theme.Colors.mutedText)
-                            }
-                            .padding(.vertical, 14)
-                        }
-                        .buttonStyle(.plain)
-                        if i < viewModel.upNextCards.count - 1 {
-                            Divider().background(Theme.Colors.hairline)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     // MARK: - Mixed-session recording
 
     /// Records a mixed-pool session (daily challenge, bonus round) by splitting
@@ -1026,10 +1094,16 @@ struct HomeView: View {
                 totalCount: results.count
             )
             record.questionResults = results
-            // Attach bonus XP only to the first sub-session to avoid double-counting.
-            record.bonusXP = i == 0 ? vm.bonusXP : 0
             progressStore.recordSession(record)
         }
+
+        let sessionType: String = switch lessonId {
+        case "daily_challenge": "daily_workout"
+        case "bonus_round":     "more_practice"
+        case "refresh_review":  "refresh"
+        default:                lessonId
+        }
+        AnalyticsService.capture(.sessionCompleted, properties: ["type": sessionType])
     }
 
     // MARK: - Helpers
@@ -1041,41 +1115,6 @@ struct HomeView: View {
             .kerning(0.8)
     }
 
-    /// Templates from mastered lessons, for game modes.
-    private func masteredTemplates() -> [QuizTemplate] {
-        let pool = MasteredTemplatePool.templates(
-            from: progressStore.data,
-            repository: repo
-        )
-        return pool.isEmpty ? repo.allTemplates() : pool
-    }
-
-    /// Generates MCQ questions from mastered templates for game modes.
-    private func generateMCQQuestions(count: Int) -> [QuizQuestion] {
-        let templates = MasteredTemplatePool.mcqTemplates(
-            from: progressStore.data,
-            repository: repo
-        )
-        let pool = templates.isEmpty
-            ? repo.allTemplates().filter { ($0.inputMode ?? .multipleChoice) == .multipleChoice }
-            : templates
-        guard !pool.isEmpty else { return [] }
-
-        var questions: [QuizQuestion] = []
-        var usedFingerprints: Set<String> = []
-        var idx = 0
-        while questions.count < count && idx < count * 3 {
-            let template = pool[idx % pool.count]
-            let q = QuizEngine.generate(from: template)
-            let fp = q.prompt + "|" + (q.scenario ?? "")
-            if !usedFingerprints.contains(fp) {
-                usedFingerprints.insert(fp)
-                questions.append(q)
-            }
-            idx += 1
-        }
-        return questions
-    }
 }
 
 #Preview {

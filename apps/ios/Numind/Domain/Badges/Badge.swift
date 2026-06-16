@@ -42,8 +42,9 @@ enum BadgeCatalog {
         Badge(id: "sessions_10",       name: "Dedicated",         description: "Complete 10 sessions",                               icon: "calendar.badge.checkmark", tier: .bronze),
         Badge(id: "sessions_25",       name: "Regular",           description: "Complete 25 sessions",                               icon: "calendar.badge.checkmark", tier: .silver),
 
-        // MARK: XP
-        Badge(id: "xp_100",            name: "XP Rising",         description: "Earn 100 total XP",                                  icon: "arrow.up.circle.fill",     tier: .bronze),
+        // MARK: Early momentum (Phase 10 — relabeled from the XP-era "XP Rising";
+        // id kept so previously earned sets stay valid)
+        Badge(id: "xp_100",            name: "First Reps",        description: "Answer your first 10 questions",                     icon: "arrow.up.circle.fill",     tier: .bronze),
 
         // MARK: Speed
         Badge(id: "speed_5_sessions",  name: "Speed Freak",       description: "Earn speed bonuses in 5 different sessions",         icon: "bolt.fill",                tier: .silver),

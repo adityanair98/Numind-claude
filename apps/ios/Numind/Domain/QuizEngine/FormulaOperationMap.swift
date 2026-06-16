@@ -2427,6 +2427,47 @@ enum FormulaOperationMap {
                     .add(a: lA, b: lB),
                     .divide(a: bA + bB, by: lA + lB)]
 
+        // MARK: - Phase 10 Block 1
+
+        case "negotiationValue":
+            guard let extra = variables["extraSalary"], let years = variables["years"] else { return [] }
+            return [.multiply(a: extra, by: years)]
+
+        case "cashOutCost":
+            guard let balance = variables["balance"], let rate = variables["taxRate"] else { return [] }
+            return [.add(a: rate, b: 10),
+                    .percentOf(pct: rate + 10, amount: balance)]
+
+        case "rolloverShortfall":
+            guard let balance = variables["balance"] else { return [] }
+            return [.percentOf(pct: 20, amount: balance)]
+
+        case "paydayFee":
+            guard let amount = variables["loanAmount"], let fee = variables["feePer100"] else { return [] }
+            return [.divide(a: amount, by: 100),
+                    .multiply(a: amount / 100, by: fee)]
+
+        case "paydayAPR":
+            guard let fee = variables["feePer100"], let days = variables["termDays"], days > 0 else { return [] }
+            return [.divide(a: 365, by: days),
+                    .multiply(a: fee, by: 365 / days)]
+
+        case "overdraftFeePct":
+            guard let fee = variables["fee"], let purchase = variables["purchase"], purchase > 0 else { return [] }
+            return [.divide(a: fee, by: purchase)]
+
+        case "carEquity":
+            guard let value = variables["carValue"], let balance = variables["loanBalance"] else { return [] }
+            return [.subtract(b: balance, from: value)]
+
+        case "rollInLoan":
+            guard let price = variables["newCarPrice"], let shortfall = variables["shortfall"] else { return [] }
+            return [.add(a: price, b: shortfall)]
+
+        case "shrinkPct":
+            guard let oldSize = variables["oldSize"], let newSize = variables["newSize"], newSize > 0 else { return [] }
+            return [.divide(a: oldSize, by: newSize)]
+
         default:
             return []
         }

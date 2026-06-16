@@ -54,7 +54,7 @@ Per-topic canonical authority. Every regulated claim in the curriculum cites one
 | Topic | Authority | Canonical URL | Updates |
 |---|---|---|---|
 | Federal income tax brackets | IRS Rev Proc (annual) | https://www.irs.gov/forms-pubs/about-revenue-procedures | Annually each Oct/Nov for next year |
-| Standard deduction | IRS Pub 501 | https://www.irs.gov/forms-pubs/about-publication-501 | Annually; post-OBBBA values for 2025 |
+| Standard deduction | IRS Pub 501 / Rev Proc 2025-32 | https://www.irs.gov/forms-pubs/about-publication-501 | Annually; 2026 values current ($16,100 S / $24,150 HoH / $32,200 MFJ) |
 | HSA contribution limits + HDHP thresholds | IRS Rev Proc (annual) | https://www.irs.gov/publications/p969 | Annually each May |
 | FSA limits | IRS Rev Proc (annual) | https://www.irs.gov/publications/p969 | Annually each Oct/Nov |
 | Roth/Traditional IRA limits + phaseouts | IRS Notice (annual) | https://www.irs.gov/retirement-plans | Annually each Oct/Nov |

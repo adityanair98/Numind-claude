@@ -1,73 +1,14 @@
 import Foundation
 
-/// A point-in-time snapshot of the user's Numind Score, recorded after each session.
-struct ScoreEntry: Codable {
-    let date: Date
-    let overallScore: Int
-    /// Per-axis scores at this point in time. Keyed by `SkillAxis.rawValue`.
-    /// (Was per-module before Phase 5; the v2 persistence key bump corresponds
-    /// to this schema change.)
-    let axisScores: [String: Int]
-
-    init(date: Date, overallScore: Int, axisScores: [String: Int]) {
-        self.date = date
-        self.overallScore = overallScore
-        self.axisScores = axisScores
-    }
-
-    // Custom decode tolerates the legacy `moduleScores` key during the v1→v2
-    // migration window. v1 score history is dropped on first launch under v2,
-    // but the codable shape needs to survive the decode pass.
-    private enum CodingKeys: String, CodingKey {
-        case date
-        case overallScore
-        case axisScores
-        case moduleScores
-    }
-
-    init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        self.date = try c.decode(Date.self, forKey: .date)
-        self.overallScore = try c.decode(Int.self, forKey: .overallScore)
-        if let new = try c.decodeIfPresent([String: Int].self, forKey: .axisScores) {
-            self.axisScores = new
-        } else if let legacy = try c.decodeIfPresent([String: Int].self, forKey: .moduleScores) {
-            // Legacy v1 entry — keep it readable so prior history doesn't crash.
-            self.axisScores = legacy
-        } else {
-            self.axisScores = [:]
-        }
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var c = encoder.container(keyedBy: CodingKeys.self)
-        try c.encode(date, forKey: .date)
-        try c.encode(overallScore, forKey: .overallScore)
-        try c.encode(axisScores, forKey: .axisScores)
-    }
-}
-
 // Pure Codable value — all computation lives here so it's testable without the store.
 struct ProgressData: Codable {
     var sessions: [SessionRecord] = []
     var bestStreak: Int = 0
     /// Stable set of earned badge IDs. Default empty for backward compat.
+    /// (All game-mode personal bests — Blitz/Streak/Speed Drill/Estimation/
+    /// Comparison in 7a, Recall in 10-A8 — were retired with their modes;
+    /// their stored keys drop out on decode.)
     var earnedBadgeIds: Set<String> = []
-    /// Personal best for Blitz mode: highest number of correct answers in a 60-second session.
-    var blitzBestScore: Int = 0
-    /// Personal best for Streak mode: longest correct-answer streak in a single session.
-    var streakModeBestScore: Int = 0
-    /// Personal best for Speed Drill: highest correct count in a timed session.
-    var speedDrillBestScore: Int = 0
-    /// Personal best for Recall mode: highest correct count reviewing past misses.
-    var recallBestScore: Int = 0
-    /// Personal best for Estimation mode: highest correct count (2+ stars) in a session.
-    var estimationBestScore: Int = 0
-    /// Personal best for Comparison mode: highest score out of 15.
-    var comparisonBestScore: Int = 0
-    /// Timestamped Numind Score snapshots — one appended after each session.
-    /// Retained for 90 days; older entries are pruned automatically.
-    var scoreHistory: [ScoreEntry] = []
 
     /// Signals collected during the onboarding funnel.
     /// Nil for users who completed the old 3-page onboarding.
@@ -82,7 +23,7 @@ struct ProgressData: Codable {
     /// Used to detect streak loss on next app launch.
     var lastKnownStreak: Int = 0
 
-    /// Number of streak freezes currently banked (max 3).
+    /// Number of streak freezes currently banked (max 5, per Phase 6a).
     var availableFreezes: Int = 0
 
     /// How many 7-day streak milestones have been rewarded with a freeze.
@@ -111,11 +52,17 @@ struct ProgressData: Codable {
     /// state via `ProgressStore.canTakeRestDay(on:)`.
     var restDaysUsed: Set<Date> = []
 
-    /// Skill axes the user pinned in Profile. When non-empty, the composite
-    /// reweights so pinned axes drive ~60% of the score (the rest 40%).
-    /// Phase 6a — supports the "score should reward what the user came to
-    /// do" finding. Empty = standard `compositeWeight` weighting.
-    var pinnedAxes: Set<SkillAxis> = []
+    // MARK: - Sharpness check + real-world saves (Phase 12)
+    // All three Optional for decode-compat with pre-Phase-12 payloads
+    // (the store decodes with try?, so a missing-key failure would reset
+    // dev data).
+
+    /// Monthly sharpness-check results — NEVER session records.
+    var sharpnessChecks: [SharpnessCheckRecord]?
+    /// Self-reported real-world skill uses.
+    var realWorldSaves: [RealWorldSave]?
+    /// Last time the weekly "did this come up in real life?" prompt showed.
+    var lastSavePromptDate: Date?
 
     // MARK: - Streak
 
@@ -216,8 +163,11 @@ struct ProgressData: Codable {
 
     // MARK: - XP
 
+    /// Lifetime base XP — difficulty-weighted (Phase 9), with a legacy fallback
+    /// for ungraded sessions. Delegates to `MomentumEngine` so badges, weekly XP,
+    /// and the headline all measure XP the same way.
     func computeTotalXP() -> Int {
-        sessions.reduce(0) { $0 + $1.correctCount * 10 + $1.bonusXP }
+        MomentumEngine.baseXP(sessions: sessions)
     }
 
     // MARK: - Module progress
@@ -248,6 +198,18 @@ struct ProgressData: Codable {
         let cal = Calendar.current
         let relevant = sessions.filter { $0.lessonId == lessonId && $0.totalCount > 0 }
 
+        // Phase 9 depth requirement: mastery needs at least one correct
+        // medium/hard answer — no mastering on easy-only. Enforced only when
+        // graded (difficulty-known) results exist, so legacy/ungraded sessions
+        // and tests aren't penalized.
+        let graded = relevant.flatMap { $0.questionResults }.filter { $0.difficulty != nil }
+        if !graded.isEmpty {
+            let hasNonEasy = graded.contains {
+                $0.isCorrect && ($0.difficulty == .medium || $0.difficulty == .hard)
+            }
+            if !hasNonEasy { return false }
+        }
+
         // Path (b): one 85%+ session.
         if relevant.contains(where: {
             Double($0.correctCount) / Double($0.totalCount) >= 0.85
@@ -269,6 +231,17 @@ struct ProgressData: Codable {
             }
         }
         return false
+    }
+
+    /// Deep mastery (Phase 9) — a mastered lesson with at least one correct
+    /// HARD answer. Counts toward the Level depth-gate above L8.
+    func masteredWithHard(_ lessonId: String) -> Bool {
+        guard hasMasteredLesson(lessonId) else { return false }
+        return sessions.contains { s in
+            s.lessonId == lessonId && s.questionResults.contains {
+                $0.isCorrect && $0.difficulty == .hard
+            }
+        }
     }
 
     /// Internal "Fluent" tier — ≥ 90% retained across a 7-day gap. Not
@@ -317,34 +290,6 @@ struct ProgressData: Codable {
         return Double(count - lower) / Double(upper - lower)
     }
 
-    // MARK: - Blitz best score
-
-    /// Updates blitzBestScore if the new score exceeds the current record.
-    mutating func updateBlitzBest(score: Int) {
-        if score > blitzBestScore { blitzBestScore = score }
-    }
-
-    /// Updates streakModeBestScore if the new streak exceeds the current record.
-    mutating func updateStreakBest(score: Int) {
-        if score > streakModeBestScore { streakModeBestScore = score }
-    }
-
-    mutating func updateSpeedDrillBest(score: Int) {
-        if score > speedDrillBestScore { speedDrillBestScore = score }
-    }
-
-    mutating func updateRecallBest(score: Int) {
-        if score > recallBestScore { recallBestScore = score }
-    }
-
-    mutating func updateEstimationBest(score: Int) {
-        if score > estimationBestScore { estimationBestScore = score }
-    }
-
-    mutating func updateComparisonBest(score: Int) {
-        if score > comparisonBestScore { comparisonBestScore = score }
-    }
-
     // MARK: - Personal best
 
     /// Best (correctCount, totalXP) across all prior sessions for a lesson.
@@ -352,13 +297,12 @@ struct ProgressData: Codable {
     func bestResult(for lessonId: String) -> (correctCount: Int, totalXP: Int)? {
         let prior = sessions.filter { $0.lessonId == lessonId }
         guard !prior.isEmpty else { return nil }
+        func xp(_ s: SessionRecord) -> Int { MomentumEngine.baseXP(sessions: [s]) }
         let best = prior.max { a, b in
-            let xpA = a.correctCount * 10 + a.bonusXP
-            let xpB = b.correctCount * 10 + b.bonusXP
-            return a.correctCount < b.correctCount
-                || (a.correctCount == b.correctCount && xpA < xpB)
+            a.correctCount < b.correctCount
+                || (a.correctCount == b.correctCount && xp(a) < xp(b))
         }!
-        return (best.correctCount, best.correctCount * 10 + best.bonusXP)
+        return (best.correctCount, xp(best))
     }
 
     // MARK: - Weekly
@@ -409,12 +353,39 @@ struct ProgressData: Codable {
                 byAdding: .weekOfYear, value: -weekOffset, to: currentMonday
             ) ?? currentMonday
             let weekEnd = calendar.date(byAdding: .weekOfYear, value: 1, to: weekStart) ?? weekStart
-            let xp = sessions
-                .filter { $0.date >= weekStart && $0.date < weekEnd }
-                .reduce(0) { $0 + $1.correctCount * 10 + $1.bonusXP }
+            let weekSessions = sessions.filter { $0.date >= weekStart && $0.date < weekEnd }
+            let xp = MomentumEngine.baseXP(sessions: weekSessions)
             return (
                 label: weekOffset == 0 ? "This week" : formatter.string(from: weekStart),
                 xp: xp,
+                isCurrent: weekOffset == 0
+            )
+        }
+    }
+
+    /// Questions answered per week over the trailing 4 weeks (Phase 10 —
+    /// "practice over time" replaces the visible-XP chart).
+    func weeklyQuestionHistory() -> [(label: String, count: Int, isCurrent: Bool)] {
+        let calendar = Calendar.current
+        let today = Date()
+        var comps = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)
+        comps.weekday = 2 // Monday
+        let currentMonday = calendar.date(from: comps) ?? today
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+
+        return (0..<4).reversed().map { weekOffset in
+            let weekStart = calendar.date(
+                byAdding: .weekOfYear, value: -weekOffset, to: currentMonday
+            ) ?? currentMonday
+            let weekEnd = calendar.date(byAdding: .weekOfYear, value: 1, to: weekStart) ?? weekStart
+            let count = sessions
+                .filter { $0.date >= weekStart && $0.date < weekEnd }
+                .reduce(0) { $0 + $1.totalCount }
+            return (
+                label: weekOffset == 0 ? "This week" : formatter.string(from: weekStart),
+                count: count,
                 isCurrent: weekOffset == 0
             )
         }

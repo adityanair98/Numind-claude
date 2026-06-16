@@ -8,9 +8,9 @@ struct PreparingResultsView: View {
     @State private var step = 0
 
     private let steps = [
-        "Analyzing your strengths",
-        "Setting your starting level",
-        "Building your plan",
+        "Mapping your money moments",
+        "Placing your starting skills",
+        "Building your readiness plan",
     ]
 
     var body: some View {

@@ -122,8 +122,39 @@ struct ProgressTabView: View {
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 18)
 
-                // Numind Score + radar chart
-                numindScoreSection
+                // Level (XP effort headline) — replaces the 0–100 Numind Score.
+                levelCard
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 22)
+
+                // Skill coverage — how much of each area you've locked in
+                // (mastered / total), a private diagnostic radar + per-axis
+                // rows. Replaces the old 0–100 per-axis breakdown.
+                HStack(alignment: .firstTextBaseline) {
+                    sectionLabel("Skill coverage")
+                    Spacer()
+                    NavigationLink(destination: SkillDetailView()) {
+                        Text("See all")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(Theme.Colors.primaryBlue)
+                    }
+                }
+                .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                .padding(.bottom, 10)
+                skillCoverageCard
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 22)
+
+                // "You can now handle:" — plain-language mastered decisions
+                canNowHandleSection
+
+                // Path readiness — the honest, decision-scoped competence
+                // signal per pack (Not started → Learning → Almost ready →
+                // Ready → Sharp).
+                sectionLabel("Path readiness")
+                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                    .padding(.bottom, 10)
+                packReadinessBoard
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 22)
 
@@ -134,7 +165,7 @@ struct ProgressTabView: View {
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 22)
 
-                sectionLabel("Weekly XP")
+                sectionLabel("Practice over time")
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 10)
                 weeklyXPCard
@@ -153,21 +184,6 @@ struct ProgressTabView: View {
                         .padding(.horizontal, Theme.Spacing.screenHorizontal)
                         .padding(.bottom, 22)
                 }
-
-                HStack(alignment: .firstTextBaseline) {
-                    sectionLabel("Skill mastery")
-                    Spacer()
-                    NavigationLink(destination: SkillDetailView()) {
-                        Text("See all")
-                            .font(.system(size: 12, weight: .bold))
-                            .foregroundStyle(Theme.Colors.primaryBlue)
-                    }
-                }
-                .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                .padding(.bottom, 10)
-                skillMasteryCard
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.bottom, 22)
 
                 let recent = store.recentSessions(limit: 5)
                 if !recent.isEmpty {
@@ -193,69 +209,185 @@ struct ProgressTabView: View {
     }
 
     // ═══════════════════════════════════════════════════════════════
-    // MARK: - Numind Score + Radar
+    // MARK: - Skills ledger (Phase 10 — capability counts, no Level/XP)
     // ═══════════════════════════════════════════════════════════════
 
-    private var numindScoreSection: some View {
-        NumindCard {
-            VStack(alignment: .leading, spacing: 16) {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("NUMIND SCORE")
-                            .font(.system(size: 10, weight: .bold))
+    private var levelCard: some View {
+        let masteredCount = store.masteredLessonIds.filter { !$0.hasPrefix("review_") }.count
+        let stale = store.staleSkillCount
+        return NumindCard {
+            HStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("SKILLS")
+                        .font(.system(size: 10, weight: .heavy))
+                        .foregroundStyle(Theme.Colors.mutedText)
+                        .kerning(0.6)
+                    Text("\(masteredCount) mastered")
+                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+
+                    if stale > 0 {
+                        Label("\(stale) to refresh", systemImage: "arrow.counterclockwise")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.warmOrange)
+                    } else if masteredCount > 0 {
+                        Label("All fresh", systemImage: "checkmark.circle.fill")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.growthGreen)
+                    } else {
+                        Text("Master your first lesson to start the ledger")
+                            .font(.system(size: 12, weight: .semibold))
                             .foregroundStyle(Theme.Colors.mutedText)
-                            .kerning(0.6)
-                        Text(store.numindScore > 0 ? store.numindSubtitle : "Your overall number sense")
-                            .font(Theme.Typography.caption)
-                            .foregroundStyle(Theme.Colors.mutedText)
-                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    Spacer()
-                    NumindScoreRing(score: store.numindScore,
-                                   delta: store.numindScoreDelta,
-                                   size: 76)
+
+                    if store.readyPackCount > 0 {
+                        Label("\(store.readyPackCount) decision path\(store.readyPackCount == 1 ? "" : "s") ready",
+                              systemImage: "checkmark.seal.fill")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(Theme.Colors.growthGreen)
+                    }
+
+                    // Real-world saves (Phase 12) — the wild-use ledger.
+                    if !store.realWorldSaves.isEmpty {
+                        Label("\(store.realWorldSaves.count) real-world save\(store.realWorldSaves.count == 1 ? "" : "s")",
+                              systemImage: "hand.thumbsup.fill")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                    }
                 }
+                Spacer(minLength: 0)
+            }
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Skill coverage (mastered / total per axis, Phase 9)
+    // ═══════════════════════════════════════════════════════════════
+
+    private var skillCoverageCard: some View {
+        let coverage = store.axisCoverage
+        return NumindCard {
+            VStack(alignment: .leading, spacing: 16) {
+                // Diagnostic radar — coverage shape (mastered / total), NOT a
+                // competence grade. Dim spokes for untouched areas.
+                let axes = coverage.map {
+                    RadarChartView.Axis(label: $0.axis.shortName, value: $0.fraction)
+                }
+                RadarChartView(axes: axes, previousAxes: nil, size: 220)
+                    .frame(maxWidth: .infinity)
+
+                Text("How much of each area you've locked in — not a grade.")
+                    .font(Theme.Typography.small)
+                    .foregroundStyle(Theme.Colors.mutedText)
+                    .frame(maxWidth: .infinity, alignment: .center)
 
                 Divider().background(Theme.Colors.hairline)
 
-                // 7-axis radar (Phase 5d). Replaces the per-module radar.
-                // Untested axes render as 0 — RadarChartView already handles
-                // the dimmed-spoke visual via the value being 0.
-                let axisResults = store.numindAxisResults
-                let current = axisResults.map { r in
-                    RadarChartView.Axis(
-                        label: r.axis.shortName,
-                        value: r.evidence == .notStarted ? 0 : Double(r.score) / 100.0
-                    )
-                }
-                RadarChartView(axes: current, previousAxes: nil, size: 220)
-                    .frame(maxWidth: .infinity)
-
-                // Per-axis evidence labels — small text under the chart so
-                // users see which axes are "Reliable" vs "Early Read" etc.
-                VStack(alignment: .leading, spacing: 4) {
-                    ForEach(axisResults, id: \.axis) { r in
-                        HStack {
-                            Text(r.axis.shortName)
-                                .font(Theme.Typography.small)
-                                .foregroundStyle(Theme.Colors.deepNavy.opacity(r.evidence == .notStarted ? 0.45 : 1.0))
-                            Spacer()
-                            Text(r.evidence.label)
-                                .font(Theme.Typography.small)
-                                .foregroundStyle(evidenceColor(r.evidence))
+                VStack(spacing: 12) {
+                    ForEach(coverage) { row in
+                        HStack(spacing: 12) {
+                            Image(systemName: skillIcon(row.axis))
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundStyle(skillColor(row.axis))
+                                .frame(width: 28, height: 28)
+                                .background(skillColor(row.axis).opacity(0.12))
+                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                            VStack(alignment: .leading, spacing: 4) {
+                                HStack {
+                                    Text(row.axis.displayName)
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundStyle(Theme.Colors.deepNavy)
+                                    Spacer()
+                                    Text("\(row.mastered)/\(row.total)")
+                                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                                        .foregroundStyle(row.mastered > 0
+                                            ? skillColor(row.axis) : Theme.Colors.mutedText)
+                                }
+                                // Continuous bar — scales to any lesson count
+                                // (a per-bead rail overflows for axes with 20+ lessons).
+                                GeometryReader { geo in
+                                    ZStack(alignment: .leading) {
+                                        Capsule().fill(Theme.Colors.mutedTint)
+                                        Capsule()
+                                            .fill(skillColor(row.axis))
+                                            .frame(width: max(0, geo.size.width * row.fraction))
+                                    }
+                                }
+                                .frame(height: 6)
+                            }
                         }
                     }
                 }
-                .padding(.top, 4)
+            }
+        }
+    }
 
-                if store.numindScore == 0 {
-                    Text("Complete your first lesson to see your Numind Score.")
-                        .font(Theme.Typography.caption)
-                        .foregroundStyle(Theme.Colors.mutedText)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity)
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Path readiness board (Phase 9)
+    // ═══════════════════════════════════════════════════════════════
+
+    /// Every pack with its Readiness state + (when Almost ready) the single
+    /// next action that would advance it. The decision-scoped competence
+    /// surface that replaced the global composite.
+    private var packReadinessBoard: some View {
+        PackReadinessBoard(rows: repo.allPacks().map {
+            PackReadinessBoard.Row(id: $0.id, title: $0.title, state: store.readiness(for: $0))
+        })
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - You can now handle (Phase 6c)
+    // ═══════════════════════════════════════════════════════════════
+
+    /// Up to 5 plain-language money decisions the user has mastered, pulled
+    /// from mastered lessons' realWorldHints (module order keeps it stable).
+    private var masteredHandleHints: [String] {
+        let mastered = store.masteredLessonIds
+        var seen = Set<String>()
+        var hints: [String] = []
+        for module in modules {
+            for lesson in repo.lessons(for: module.id) where mastered.contains(lesson.id) {
+                if let h = lesson.realWorldHint, !seen.contains(h) {
+                    seen.insert(h); hints.append(h)
                 }
             }
+        }
+        return Array(hints.prefix(5))
+    }
+
+    @ViewBuilder
+    private var canNowHandleSection: some View {
+        let hints = masteredHandleHints
+        if !hints.isEmpty {
+            NumindCard {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundStyle(Theme.Colors.growthGreen)
+                        Text("YOU CAN NOW HANDLE")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(Theme.Colors.mutedText)
+                            .kerning(0.6)
+                    }
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(Array(hints.enumerated()), id: \.offset) { _, hint in
+                            HStack(alignment: .top, spacing: 10) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundStyle(Theme.Colors.growthGreen)
+                                    .padding(.top, 1)
+                                Text(hint)
+                                    .font(Theme.Typography.caption)
+                                    .foregroundStyle(Theme.Colors.deepNavy.opacity(0.85))
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, Theme.Spacing.screenHorizontal)
+            .padding(.bottom, 22)
         }
     }
 
@@ -265,10 +397,13 @@ struct ProgressTabView: View {
 
     @ViewBuilder
     private var improvementCard: some View {
-        let stats = ImprovementCalculator.compute(from: store.data, scoreDelta: store.numindScoreDelta)
+        let stats = ImprovementCalculator.compute(
+            from: store.data,
+            xpThisWeek: store.data.weeklyQuestionHistory().last?.count ?? 0
+        )
         let speedUp = ImprovementCalculator.speedImprovement(stats)
         let accUp = ImprovementCalculator.accuracyImprovement(stats)
-        let hasPositive = speedUp != nil || accUp != nil || stats.scoreDelta > 0 || stats.skillsMastered > 0
+        let hasPositive = speedUp != nil || accUp != nil || stats.xpThisWeek > 0 || stats.skillsMastered > 0
 
         if hasPositive {
             NumindCard {
@@ -277,7 +412,7 @@ struct ProgressTabView: View {
                         Image(systemName: "arrow.up.right")
                             .font(.system(size: 12, weight: .bold))
                             .foregroundStyle(Theme.Colors.growthGreen)
-                        Text("YOUR IMPROVEMENT")
+                        Text("THIS WEEK")
                             .font(.system(size: 10, weight: .bold))
                             .foregroundStyle(Theme.Colors.mutedText)
                             .kerning(0.6)
@@ -327,11 +462,11 @@ struct ProgressTabView: View {
             ))
         }
 
-        if stats.scoreDelta > 0 {
+        if stats.xpThisWeek > 0 {
             items.append(ImprovementItem(
-                icon: "chart.line.uptrend.xyaxis",
-                value: "+\(stats.scoreDelta) pts",
-                label: "Numind Score",
+                icon: "bolt.fill",
+                value: "\(stats.xpThisWeek)",
+                label: "Questions this week",
                 color: Theme.Colors.growthGreen
             ))
         }
@@ -414,7 +549,7 @@ struct ProgressTabView: View {
 
                     // Inline stats
                     HStack(spacing: 0) {
-                        inlineStat(value: "\(store.totalXP)", label: "Total XP")
+                        inlineStat(value: "\(store.masteredLessonIds.filter { !$0.hasPrefix("review_") }.count)", label: "Skills")
                         statDivider
                         inlineStat(value: store.totalSessions > 0 ? "\(Int(store.accuracy * 100))%" : "\u{2014}", label: "Accuracy")
                         statDivider
@@ -594,11 +729,12 @@ struct ProgressTabView: View {
     }
 
     // ═══════════════════════════════════════════════════════════════
-    // MARK: - Weekly XP
+    // MARK: - Practice over time (Phase 10 — questions, not XP)
     // ═══════════════════════════════════════════════════════════════
 
     private var weeklyXPCard: some View {
-        let weeks = store.weeklyXPHistory()
+        let weeks = store.data.weeklyQuestionHistory()
+            .map { (label: $0.label, xp: $0.count, isCurrent: $0.isCurrent) }
         let maxXP = max(1, weeks.map { $0.xp }.max() ?? 1)
         let currentXP = weeks.last?.xp ?? 0
         let rank = weeks.filter { $0.xp > currentXP }.count + 1
@@ -611,11 +747,11 @@ struct ProgressTabView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(currentXP > 0
                          ? "Ranked #\(rank) of last 4 weeks"
-                         : "No XP yet this week")
+                         : "No practice yet this week")
                         .font(.system(size: 17, weight: .bold, design: .rounded))
                         .foregroundStyle(Theme.Colors.deepNavy)
                     HStack(spacing: 0) {
-                        Text("\(currentXP) XP")
+                        Text("\(currentXP) questions")
                             .font(Theme.Typography.small)
                             .fontWeight(.bold)
                             .foregroundStyle(Theme.Colors.primaryBlue)
@@ -986,8 +1122,9 @@ struct ProgressTabView: View {
                             RoundedRectangle(cornerRadius: 11, style: .continuous)
                                 .strokeBorder(accent.opacity(0.2), lineWidth: 1)
                         )
-                    Text(module?.mascot ?? "\u{1F4DA}")
-                        .font(.system(size: 19))
+                    Image(systemName: module?.icon ?? "book.fill")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(accent)
                 }
                 .frame(width: 36, height: 36)
 
@@ -1034,12 +1171,28 @@ struct ProgressTabView: View {
 
     // MARK: - Helpers
 
-    private func evidenceColor(_ level: EvidenceLevel) -> Color {
-        switch level {
-        case .notStarted: return Theme.Colors.mutedText.opacity(0.55)
-        case .warmingUp:  return Theme.Colors.warmOrange
-        case .developing: return Theme.Colors.primaryBlue
-        case .reliable:   return Theme.Colors.growthGreen
+    /// SF Symbol per skill axis (mirrors HomeView's score-detail sheet).
+    private func skillIcon(_ axis: SkillAxis) -> String {
+        switch axis {
+        case .everydayMoneyMath:     return "cart.fill"
+        case .cashFlowAndBudgeting:  return "list.bullet.rectangle"
+        case .incomeAndPaycheck:     return "creditcard.fill"
+        case .debtAndCredit:         return "exclamationmark.triangle.fill"
+        case .bigPurchases:          return "house.fill"
+        case .protectionAndBenefits: return "heart.text.square.fill"
+        case .investingAndFuture:    return "chart.line.uptrend.xyaxis"
+        }
+    }
+
+    private func skillColor(_ axis: SkillAxis) -> Color {
+        switch axis {
+        case .everydayMoneyMath:     return Theme.Colors.warmOrange
+        case .cashFlowAndBudgeting:  return Theme.Colors.primaryBlue
+        case .incomeAndPaycheck:     return Theme.Colors.mindTeal
+        case .debtAndCredit:         return Theme.Colors.debtCoral
+        case .bigPurchases:          return Theme.Colors.housingRose
+        case .protectionAndBenefits: return Theme.Colors.insurancePurple
+        case .investingAndFuture:    return Theme.Colors.growthGreen
         }
     }
 

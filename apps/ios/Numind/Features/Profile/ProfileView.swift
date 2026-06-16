@@ -17,12 +17,20 @@ struct ProfileView: View {
     @State private var showPermissionDeniedAlert = false
     @State private var reminderTime = Date()
 
+    // Payday (Phase 12) — drives the payday moment chip + reminders.
+    @AppStorage("numind.paydayReminderEnabled") private var paydayReminderEnabled = false
+    @State private var paydayCadence: PaycheckSchedule.Cadence = .biweekly
+    @State private var paydayAnchor = Date()
+    @State private var paydaySecondDay = 31
+    @State private var paydaySet = false
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
                 profileCard
                 statsSection
                 remindersSection
+                paydaySection
                 appearanceSection
                 appSection
                 #if DEBUG
@@ -36,7 +44,7 @@ struct ProfileView: View {
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.large)
-        .onAppear { syncReminderTime(); checkNotificationStatus() }
+        .onAppear { syncReminderTime(); checkNotificationStatus(); syncPayday() }
         .alert("Reset progress?", isPresented: $showResetAlert) {
             Button("Reset", role: .destructive) { progressStore.reset() }
             Button("Cancel", role: .cancel) {}
@@ -95,8 +103,8 @@ struct ProfileView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                 statTile(icon: "bolt.fill",   tint: Theme.Colors.primaryBlue,
                          value: "\(progressStore.totalSessions)", label: "Sessions")
-                statTile(icon: "star.fill",   tint: Theme.Colors.insightYellow,
-                         value: "\(progressStore.totalXP)", label: "Total XP")
+                statTile(icon: "checkmark.seal.fill", tint: Theme.Colors.insightYellow,
+                         value: "\(progressStore.masteredLessonIds.count)", label: "Lessons mastered")
                 statTile(icon: "scope",       tint: Theme.Colors.mindTeal,
                          value: progressStore.totalSessions > 0
                              ? "\(Int(progressStore.accuracy * 100))%" : "—",
@@ -188,6 +196,144 @@ struct ProfileView: View {
             }
             .animation(.easeOut(duration: 0.22), value: reminderEnabled)
         }
+    }
+
+    // MARK: - Payday (Phase 12)
+
+    private var paydaySection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Payday")
+            NumindCard {
+                VStack(spacing: 0) {
+                    HStack(spacing: 14) {
+                        IconTile(systemName: "dollarsign.circle", tintColor: Theme.Colors.growthGreen, size: 36)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Track my paydays")
+                                .font(Theme.Typography.body)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Theme.Colors.deepNavy)
+                            Text(paydaySet ? "Sessions timed to your money" : "Off")
+                                .font(Theme.Typography.small)
+                                .foregroundStyle(Theme.Colors.mutedText)
+                        }
+                        Spacer()
+                        Toggle("", isOn: Binding(
+                            get: { paydaySet },
+                            set: { newValue in
+                                paydaySet = newValue
+                                savePayday(enabled: newValue)
+                            }
+                        ))
+                        .labelsHidden()
+                        .tint(Theme.Colors.growthGreen)
+                    }
+                    .padding(.vertical, 14)
+                    .padding(.horizontal, 18)
+
+                    if paydaySet {
+                        Divider()
+                            .background(Theme.Colors.hairline)
+                            .padding(.leading, 18 + 36 + 14)
+
+                        HStack(spacing: 14) {
+                            IconTile(systemName: "repeat", tintColor: Theme.Colors.mutedText, size: 36)
+                            Picker("", selection: $paydayCadence) {
+                                ForEach(PaycheckSchedule.Cadence.allCases, id: \.self) {
+                                    Text($0.displayText).tag($0)
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .tint(Theme.Colors.deepNavy)
+                            Spacer()
+                            DatePicker("", selection: $paydayAnchor, displayedComponents: .date)
+                                .labelsHidden()
+                        }
+                        .padding(.vertical, 14)
+                        .padding(.horizontal, 18)
+                        .onChange(of: paydayCadence) { _, _ in savePayday(enabled: true) }
+                        .onChange(of: paydayAnchor) { _, _ in savePayday(enabled: true) }
+                        .transition(.move(edge: .top).combined(with: .opacity))
+
+                        if paydayCadence == .semimonthly {
+                            Divider()
+                                .background(Theme.Colors.hairline)
+                                .padding(.leading, 18 + 36 + 14)
+
+                            HStack(spacing: 14) {
+                                IconTile(systemName: "calendar.badge.plus", tintColor: Theme.Colors.mutedText, size: 36)
+                                Text("Other payday")
+                                    .font(Theme.Typography.body)
+                                    .foregroundStyle(Theme.Colors.deepNavy)
+                                Spacer()
+                                Picker("", selection: $paydaySecondDay) {
+                                    ForEach([1, 5, 10, 15, 20, 25, 31], id: \.self) { day in
+                                        Text(day == 31 ? "Last day" : "Day \(day)").tag(day)
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                                .tint(Theme.Colors.deepNavy)
+                            }
+                            .padding(.vertical, 14)
+                            .padding(.horizontal, 18)
+                            .onChange(of: paydaySecondDay) { _, _ in savePayday(enabled: true) }
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                        }
+                    }
+                }
+            }
+            .animation(.easeOut(duration: 0.22), value: paydaySet)
+        }
+    }
+
+    private func syncPayday() {
+        if let schedule = progressStore.data.onboardingSignals?.paycheck {
+            paydayCadence = schedule.cadence
+            paydayAnchor = schedule.anchorDate
+            if let second = schedule.secondPaydayDay { paydaySecondDay = second }
+            paydaySet = true
+        }
+    }
+
+    private func savePayday(enabled: Bool) {
+        progressStore.updateSignals { signals in
+            signals.paycheck = enabled
+                ? PaycheckSchedule(
+                    cadence: paydayCadence, anchorDate: paydayAnchor,
+                    secondPaydayDay: paydayCadence == .semimonthly ? paydaySecondDay : nil)
+                : nil
+        }
+
+        if enabled {
+            // Same permission flow as the daily reminder: prompt only on an
+            // explicit toggle; payday reminders piggyback on any grant.
+            NotificationManager.checkPermission { status in
+                switch status {
+                case .authorized, .provisional, .ephemeral:
+                    paydayReminderEnabled = true
+                    syncPaydayNotifications()
+                case .notDetermined:
+                    NotificationManager.requestPermission { granted in
+                        paydayReminderEnabled = granted
+                        if granted { syncPaydayNotifications() }
+                    }
+                case .denied:
+                    paydayReminderEnabled = false
+                @unknown default:
+                    paydayReminderEnabled = false
+                }
+            }
+        } else {
+            paydayReminderEnabled = false
+            NotificationManager.removePending(withPrefix: NotificationManager.paycheckPrefix)
+        }
+    }
+
+    private func syncPaydayNotifications() {
+        NotificationManager.syncPaydayReminders(
+            schedule: progressStore.data.onboardingSignals?.paycheck,
+            hour: reminderHour,
+            minute: reminderMinute
+        )
     }
 
     // MARK: - App section

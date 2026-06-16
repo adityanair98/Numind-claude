@@ -7,10 +7,10 @@ struct ConfidenceRatingView: View {
     let onContinue: () -> Void
 
     private let options: [(level: ConfidenceLevel, label: String, sub: String, emoji: String, color: Color)] = [
-        (.struggle, "I struggle", "Everyday math feels hard", "\u{1F630}", Theme.Colors.errorSoftRed),
-        (.getBy, "I get by", "I manage, but it\u{2019}s slow", "\u{1F642}", Theme.Colors.warmOrange),
-        (.decent, "I\u{2019}m decent", "Pretty comfortable", "\u{1F44D}", Theme.Colors.primaryBlue),
-        (.quick, "I\u{2019}m quick", "Confident and fast", "\u{26A1}", Theme.Colors.mindTeal),
+        (.struggle, "I freeze", "I just go with whatever they offer", "\u{1F630}", Theme.Colors.errorSoftRed),
+        (.getBy, "I muddle through", "And hope it works out", "\u{1F642}", Theme.Colors.warmOrange),
+        (.decent, "I\u{2019}m okay", "But I second-guess myself after", "\u{1F44D}", Theme.Colors.primaryBlue),
+        (.quick, "I\u{2019}m sharp", "Just want to stay that way", "\u{26A1}", Theme.Colors.mindTeal),
     ]
 
     var body: some View {
@@ -20,7 +20,7 @@ struct ConfidenceRatingView: View {
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("How would you rate your everyday mental math?")
+                        Text("When a money decision lands on you, how do you handle it?")
                             .font(Theme.Typography.title)
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .padding(.top, 8)

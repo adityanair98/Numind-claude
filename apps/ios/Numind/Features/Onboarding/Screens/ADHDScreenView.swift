@@ -78,6 +78,12 @@ struct ADHDScreenView: View {
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .lineSpacing(3)
 
+                Text("Numind\u{2019}s short, decision-sized sessions are designed to work with your attention \u{2014} not against it.")
+                    .font(.system(size: 13))
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .lineSpacing(3)
+                    .padding(.top, 2)
+
                 Text("EndeavorOTC / STARS-ADHD-Adult, Akili Interactive, 2023")
                     .font(.system(size: 10))
                     .foregroundStyle(Theme.Colors.mutedText)

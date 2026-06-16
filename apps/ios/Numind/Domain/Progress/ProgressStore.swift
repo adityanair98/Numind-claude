@@ -1,9 +1,21 @@
 import Foundation
 
+/// Per-axis lesson coverage (Phase 9): how many lessons whose *primary* skill is
+/// this axis the user has mastered, out of the total. The honest replacement for
+/// the old 0–100 per-axis composite — it answers "how much have you locked in
+/// here," not "how good are you" (a verdict the app can't validate).
+struct AxisCoverage: Identifiable {
+    var id: String { axis.rawValue }
+    let axis: SkillAxis
+    let mastered: Int
+    let total: Int
+    var fraction: Double { total > 0 ? Double(mastered) / Double(total) : 0 }
+}
+
 @MainActor
 final class ProgressStore: ObservableObject {
-    private static let defaultsKey       = "numind.progress.v2"
-    private static let legacyDefaultsKey = "numind.progress.v1"
+    private static let defaultsKey       = "numind.progress.v3"
+    private static let legacyDefaultsKey = "numind.progress.v2"
     private static let dailyChallengeKey = "numind.dailyChallenge.lastCompleted"
     private static let dateFormatter: DateFormatter = {
         let f = DateFormatter(); f.dateFormat = "yyyy-MM-dd"; return f
@@ -26,12 +38,12 @@ final class ProgressStore: ObservableObject {
            let decoded = try? JSONDecoder().decode(ProgressData.self, from: raw) {
             data = decoded
         } else if let legacyRaw = UserDefaults.standard.data(forKey: Self.legacyDefaultsKey),
-                  var decoded = try? JSONDecoder().decode(ProgressData.self, from: legacyRaw) {
-            // v1 → v2 migration: sessions/badges/freezes survive; scoreHistory
-            // is dropped so it recomputes on next session under the new
-            // axis-based engine. We don't yet have real users, so this is a
-            // dev-data safety net (not a user-facing migration).
-            decoded.scoreHistory = []
+                  let decoded = try? JSONDecoder().decode(ProgressData.self, from: legacyRaw) {
+            // Legacy → current migration: sessions/badges/freezes survive.
+            // The retired composite `scoreHistory`/`pinnedAxes` keys simply drop
+            // out (JSONDecoder ignores unknown keys). XP/Level/Readiness all
+            // recompute from the session log. We don't yet have real users, so
+            // this is a dev-data safety net (not a user-facing migration).
             data = decoded
         } else {
             data = ProgressData()
@@ -48,6 +60,14 @@ final class ProgressStore: ObservableObject {
         // (pack / world) AFTER the session is recorded.
         let masteredBefore = masteredLessonIds
         data.sessions.append(record)
+        // Phase 10: any real practice can close the daily ring and mark the
+        // day for the streak (must run before computeStreak).
+        DailyRingEngine.markIfClosed(&data, now: record.date)
+        let day = Calendar.current.startOfDay(for: record.date)
+        if !snapshotBefore.dailyWorkoutDates.contains(day),
+           data.dailyWorkoutDates.contains(day) {
+            AnalyticsService.capture(.ringClosed)
+        }
         let current = data.computeStreak()
         if current > data.bestStreak {
             data.bestStreak = current
@@ -73,30 +93,65 @@ final class ProgressStore: ObservableObject {
         let nowEarned = BadgeEvaluator.earned(from: data)
         newlyEarnedBadgeIds = nowEarned.subtracting(previouslyEarned)
         data.earnedBadgeIds = nowEarned
-        // Recompute Numind Score after every session so the radar + score ring
-        // always reflect the latest performance without extra callsite boilerplate.
-        let repo = LocalContentRepository()
-        let moduleIds = repo.allModules().map(\.id)
-        recomputeAndStoreScore(moduleIds: moduleIds)
-        // persist() is called inside recomputeAndStoreScore — no double write needed.
+        // Phase 9: XP/Level/Readiness are pure functions over the session log —
+        // nothing to recompute or persist beyond the session itself.
+        persist()
 
-        // Check for milestone celebrations.
-        let allModules = repo.allModules()
-        let moduleNames = Dictionary(uniqueKeysWithValues: allModules.map { ($0.id, $0.title) })
-        let moduleLessonCounts = Dictionary(uniqueKeysWithValues: allModules.map { ($0.id, $0.lessonIds.count) })
+        // Check for milestone celebrations (Phase 10 — capability triggers;
+        // pack/world COMPLETION celebrations stay in the Celebration queue).
+        let repo = LocalContentRepository()
+        let packs = repo.allPacks()
+        func readyIds(_ d: ProgressData) -> Set<String> {
+            Set(packs.filter { pack in
+                switch ReadinessEngine.state(for: pack, data: d, repository: repo) {
+                case .ready, .sharp: return true
+                default: return false
+                }
+            }.map(\.id))
+        }
+        func masteredReal(_ d: ProgressData) -> Set<String> {
+            Set(d.sessions.map(\.lessonId))
+                .filter { d.hasMasteredLesson($0) && !$0.hasPrefix("review_") }
+        }
+        func staleCount(_ d: ProgressData) -> Int {
+            FreshnessEngine.staleCount(
+                masteredLessonIds: masteredReal(d), sessions: d.sessions, repository: repo
+            )
+        }
+        let lessonNames = Dictionary(
+            uniqueKeysWithValues: repo.allModules()
+                .flatMap { repo.lessons(for: $0.id) }
+                .map { ($0.id, $0.title) }
+        )
+        let beforeReadyIds = readyIds(snapshotBefore)
+        let afterReadyIds = readyIds(data)
         pendingMilestone = MilestoneEngine.check(
             before: snapshotBefore,
             after: data,
             shownIds: data.shownMilestoneIds,
-            moduleNames: moduleNames,
-            moduleLessonCounts: moduleLessonCounts
+            beforeMastered: masteredReal(snapshotBefore),
+            afterMastered: masteredReal(data),
+            beforeReadyPackIds: beforeReadyIds,
+            afterReadyPackIds: afterReadyIds,
+            packNames: Dictionary(uniqueKeysWithValues: packs.map { ($0.id, $0.title) }),
+            lessonNames: lessonNames,
+            beforeStaleCount: staleCount(snapshotBefore),
+            afterStaleCount: staleCount(data),
+            lastSessionLessonId: record.lessonId
         )
+        for packId in afterReadyIds.subtracting(beforeReadyIds) {
+            AnalyticsService.capture(.packStateChanged,
+                                     properties: ["pack_id": packId, "state": "ready"])
+        }
 
         // Detect newly-completed packs and worlds for the celebration queue.
         // Pack celebration fires first when both a pack and a world complete
         // in the same session (per the spec).
         let masteredAfter = masteredLessonIds
         let newlyMastered = masteredAfter.subtracting(masteredBefore)
+        for lessonId in newlyMastered where !lessonId.hasPrefix("review_") {
+            AnalyticsService.capture(.lessonMastered, properties: ["lesson_id": lessonId])
+        }
         if !newlyMastered.isEmpty {
             enqueueCompletionCelebrations(
                 newlyMastered: newlyMastered,
@@ -170,8 +225,9 @@ final class ProgressStore: ObservableObject {
         let today = Self.dateFormatter.string(from: now)
         UserDefaults.standard.set(today, forKey: Self.dailyChallengeKey)
         dailyChallengeCompletedDate = today
-        let startOfDay = Calendar.current.startOfDay(for: now)
-        data.dailyWorkoutDates.insert(startOfDay)
+        // Phase 10: the day itself is marked by ring closure inside
+        // recordSession (DailyRingEngine.markIfClosed) — this method now
+        // only maintains the legacy "workout done today" card state.
         // Recompute streak so the rest of the app immediately reflects it.
         let current = data.computeStreak()
         if current > data.bestStreak { data.bestStreak = current }
@@ -185,9 +241,17 @@ final class ProgressStore: ObservableObject {
         markDailyChallengeCompleted()
     }
 
+    // MARK: - Daily ring (Phase 10)
+
+    var ringTarget: Int { DailyRingEngine.target(for: data) }
+    var todayQuestionCount: Int { DailyRingEngine.questionCount(on: Date(), sessions: data.sessions) }
+    var ringProgress: Double { DailyRingEngine.progress(on: Date(), data: data) }
+    var isRingClosedToday: Bool { DailyRingEngine.isClosed(on: Date(), data: data) }
+
     private func persist() {
         guard let encoded = try? JSONEncoder().encode(data) else { return }
         UserDefaults.standard.set(encoded, forKey: Self.defaultsKey)
+        WidgetSnapshotWriter.write(from: data)
     }
 
     // MARK: - Streak revival
@@ -244,6 +308,7 @@ final class ProgressStore: ObservableObject {
             guard data.availableFreezes > 0 else { break }
             data.freezeDate(date)
             data.availableFreezes -= 1
+            AnalyticsService.capture(.streakFreezeUsed)
         }
 
         let current = data.computeStreak()
@@ -283,20 +348,6 @@ final class ProgressStore: ObservableObject {
         persist()
     }
 
-    // MARK: - Pinned axes (Phase 6a)
-
-    /// Axes the user has pinned in Profile. Used by `recomputeAndStoreScore`
-    /// to reweight the composite.
-    var pinnedAxes: Set<SkillAxis> { data.pinnedAxes }
-
-    /// Set the user's pinned axes (max 3). Recomputes the score so the
-    /// header reflects the new weighting immediately.
-    func setPinnedAxes(_ axes: Set<SkillAxis>) {
-        data.pinnedAxes = Set(axes.prefix(3))
-        let repo = LocalContentRepository()
-        recomputeAndStoreScore(moduleIds: repo.allModules().map(\.id))
-    }
-
     // MARK: - Milestones
 
     /// Marks a milestone as shown so it won't fire again.
@@ -322,63 +373,51 @@ final class ProgressStore: ObservableObject {
         persist()
     }
 
-    // MARK: - Blitz personal best
-
-    var blitzBest: Int { data.blitzBestScore }
-
-    func updateBlitzBest(score: Int) {
-        guard score > data.blitzBestScore else { return }
-        data.updateBlitzBest(score: score)
+    /// In-place mutation of saved signals (Profile edits: payday, lease month).
+    func updateSignals(_ mutate: (inout OnboardingSignals) -> Void) {
+        var signals = data.onboardingSignals ?? OnboardingSignals()
+        mutate(&signals)
+        data.onboardingSignals = signals
         persist()
     }
 
-    // MARK: - Streak mode personal best
+    // MARK: - Sharpness check + real-world saves (Phase 12)
 
-    var streakModeBest: Int { data.streakModeBestScore }
+    var sharpnessChecks: [SharpnessCheckRecord] { data.sharpnessChecks ?? [] }
+    var realWorldSaves: [RealWorldSave] { data.realWorldSaves ?? [] }
 
-    func updateStreakBest(score: Int) {
-        guard score > data.streakModeBestScore else { return }
-        data.updateStreakBest(score: score)
+    /// Due 28+ days after the last check (or the day-1 diagnostic / first
+    /// session when no check exists yet).
+    var isSharpnessCheckDue: Bool {
+        let anchor = data.onboardingSignals?.diagnosticDate
+            ?? data.sessions.map(\.date).min()
+        return SharpnessCheckGate.isCheckDue(
+            lastCheck: sharpnessChecks.map(\.date).max(),
+            anchor: anchor
+        )
+    }
+
+    func recordSharpnessCheck(_ record: SharpnessCheckRecord) {
+        data.sharpnessChecks = sharpnessChecks + [record]
         persist()
     }
 
-    // MARK: - Speed Drill personal best
-
-    var speedDrillBest: Int { data.speedDrillBestScore }
-
-    func updateSpeedDrillBest(score: Int) {
-        guard score > data.speedDrillBestScore else { return }
-        data.updateSpeedDrillBest(score: score)
-        persist()
+    var isSavePromptDue: Bool {
+        SharpnessCheckGate.isSavePromptDue(
+            lastPrompt: data.lastSavePromptDate,
+            sessionCount: data.sessions.count
+        )
     }
 
-    // MARK: - Recall personal best
-
-    var recallBest: Int { data.recallBestScore }
-
-    func updateRecallBest(score: Int) {
-        guard score > data.recallBestScore else { return }
-        data.updateRecallBest(score: score)
-        persist()
-    }
-
-    // MARK: - Estimation personal best
-
-    var estimationBest: Int { data.estimationBestScore }
-
-    func updateEstimationBest(score: Int) {
-        guard score > data.estimationBestScore else { return }
-        data.updateEstimationBest(score: score)
-        persist()
-    }
-
-    // MARK: - Comparison personal best
-
-    var comparisonBest: Int { data.comparisonBestScore }
-
-    func updateComparisonBest(score: Int) {
-        guard score > data.comparisonBestScore else { return }
-        data.updateComparisonBest(score: score)
+    /// Marks the prompt shown (regardless of answer) and stores a save
+    /// when the user picked one.
+    func recordSavePrompt(label: String?) {
+        data.lastSavePromptDate = Date()
+        if let label {
+            data.realWorldSaves = realWorldSaves + [
+                RealWorldSave(id: UUID(), date: Date(), label: label)
+            ]
+        }
         persist()
     }
 
@@ -387,11 +426,91 @@ final class ProgressStore: ObservableObject {
     var streak: Int               { data.computeStreak() }
     var bestStreak: Int           { data.bestStreak }
     var totalSessions: Int        { data.sessions.count }
-    var totalXP: Int              { data.computeTotalXP() }
+    var totalXP: Int              { xp }
     var accuracy: Double          { data.computeAccuracy() }
     var weeklyCompletions: [Bool] { data.computeWeeklyCompletions() }
     var weeklyWorkouts: Int       { data.computeWeeklyWorkouts() }
     let weeklyGoal: Int = 5
+
+    // MARK: - Momentum (XP + Level, Phase 9)
+
+    /// Real lesson IDs mastered in a given snapshot (excludes daily/bonus/recall
+    /// pseudo-lessons, which share the `lessonId` field but aren't curriculum).
+    private func masteredRealLessonIds(in d: ProgressData) -> Set<String> {
+        let repo = LocalContentRepository()
+        let real = Set(repo.allModules().flatMap { repo.lessons(for: $0.id).map(\.id) })
+        let mastered = Set(d.sessions.map(\.lessonId)).filter { d.hasMasteredLesson($0) }
+        return mastered.intersection(real)
+    }
+
+    /// Lifetime XP for a snapshot — the effort currency. Monotonic; pure.
+    func xp(of d: ProgressData) -> Int {
+        MomentumEngine.totalXP(
+            sessions: d.sessions,
+            masteredLessonCount: masteredRealLessonIds(in: d).count,
+            readyPackCount: ReadinessEngine.readyPackCount(data: d)
+        )
+    }
+
+    /// Effective level for a snapshot — XP ladder, depth-gated above L8.
+    func level(of d: ProgressData) -> Int {
+        let deep = masteredRealLessonIds(in: d).filter { d.masteredWithHard($0) }.count
+        return MomentumEngine.level(xp: xp(of: d), deepMasteryCount: deep)
+    }
+
+    /// Lifetime XP — the effort currency. Monotonic; pure over the session log.
+    var xp: Int { xp(of: data) }
+
+    /// Effective level — XP ladder, depth-gated above L8.
+    var level: Int { level(of: data) }
+
+    var xpToNextLevel: Int? { MomentumEngine.xpToNextLevel(xp) }
+    var levelProgress: Double { MomentumEngine.levelProgress(xp) }
+
+    /// True when the user has the XP for the next level but is held back by the
+    /// depth gate (needs another deep mastery — a lesson mastered with a hard
+    /// question, or a pack reaching Ready). Drives honest "earn a deep mastery"
+    /// copy instead of an "X XP to go" bar that would never move.
+    var isDepthGated: Bool {
+        let deep = masteredRealLessonIds(in: data).filter { data.masteredWithHard($0) }.count
+        return MomentumEngine.isDepthGated(xp: xp, deepMasteryCount: deep)
+    }
+
+    // MARK: - Readiness + Freshness (Phase 9)
+
+    /// Readiness state for a pack (the decision-scoped competence signal).
+    func readiness(for pack: Pack) -> ReadinessEngine.State {
+        ReadinessEngine.state(for: pack, data: data)
+    }
+
+    /// Number of packs the user is Ready/Sharp on — the Home competence headline.
+    var readyPackCount: Int { ReadinessEngine.readyPackCount(data: data) }
+
+    /// Per-axis lesson coverage (mastered / total) by primary skill axis.
+    /// Drives the coverage radar + rows on Home and Progress.
+    var axisCoverage: [AxisCoverage] {
+        let repo = LocalContentRepository()
+        let mastered = masteredLessonIds
+        var counts: [SkillAxis: (m: Int, t: Int)] = [:]
+        for axis in SkillAxis.allCases { counts[axis] = (0, 0) }
+        for module in repo.allModules() {
+            for lesson in repo.lessons(for: module.id) {
+                guard let axis = lesson.primarySkill else { continue }
+                var e = counts[axis] ?? (0, 0)
+                e.t += 1
+                if mastered.contains(lesson.id) { e.m += 1 }
+                counts[axis] = e
+            }
+        }
+        return SkillAxis.allCases.map {
+            AxisCoverage(axis: $0, mastered: counts[$0]?.m ?? 0, total: counts[$0]?.t ?? 0)
+        }
+    }
+
+    /// Mastered skills that have gone stale (overdue) — surfaced as refresh opportunities.
+    var staleSkillCount: Int {
+        FreshnessEngine.staleCount(masteredLessonIds: masteredLessonIds, sessions: data.sessions)
+    }
 
     func moduleProgress(moduleId: String, totalLessons: Int) -> Double {
         data.moduleProgress(moduleId: moduleId, totalLessons: totalLessons)
@@ -411,27 +530,14 @@ final class ProgressStore: ObservableObject {
         data.hasMasteredLesson(lessonId)
     }
 
-    /// "Is this lesson *currently* mastered" — applies the Phase 6a mastery
-    /// decay rule. A lesson reverts to "attempted" if the user's recent
-    /// 3 attempts on its templates average <60%. Use this for the gold
-    /// checkmark, world-conquered crown, pack progress, and the
-    /// continue-card resume target.
+    /// "Is this lesson *currently* mastered." Phase 9: mastery no longer
+    /// decays — once earned, the star stays (the headline never goes down).
+    /// Skill staleness is carried by Freshness (FreshnessEngine), not by
+    /// revoking the star. Kept as a distinct method so call sites (gold
+    /// checkmark, world-conquered crown, pack progress, resume target) read
+    /// clearly and we can reintroduce a decay policy here if ever needed.
     func hasMasteredLessonNow(_ lessonId: String) -> Bool {
-        guard data.hasMasteredLesson(lessonId) else { return false }
-        // Mastery decay check: pull the lesson's template IDs, then the
-        // user's last 3 attempts on any of them. Average < 60% revokes.
-        let repo = LocalContentRepository()
-        guard let lesson = repo.lesson(id: lessonId) else { return true }
-        let templateIds = Set(lesson.quizTemplateIds)
-        let recentAttempts: [QuestionResult] = data.sessions
-            .sorted(by: { $0.date > $1.date })
-            .flatMap { $0.questionResults.filter { templateIds.contains($0.templateId) } }
-            .prefix(3)
-            .map { $0 }
-        guard recentAttempts.count >= 3 else { return true }
-        let correctCount = recentAttempts.filter(\.isCorrect).count
-        let avg = Double(correctCount) / Double(recentAttempts.count)
-        return avg >= 0.60
+        data.hasMasteredLesson(lessonId)
     }
 
     func skillLevel(moduleId: String) -> Int {
@@ -508,53 +614,12 @@ final class ProgressStore: ObservableObject {
         LocalContentRepository().inProgressPacks(masteredLessonIds: masteredLessonIds)
     }
 
-    // MARK: - Numind Score
-
-    /// Current overall Numind Score (0–100). 0 if no score has been computed yet.
-    var numindScore: Int { data.scoreHistory.last?.overallScore ?? 0 }
-
-    /// Latest score for a specific module (0–100). 0 if never computed.
-    /// Compatibility shim: in the 7-axis world we average the lessons'
-    /// primary-axis scores from the most recent snapshot.
-    func numindScore(for moduleId: String) -> Int {
-        guard let entry = data.scoreHistory.last else { return 0 }
-        // Map module → primary axes of its lessons.
-        let lessons = LocalContentRepository().lessons(for: moduleId)
-        let primaryAxes = Set(lessons.compactMap { $0.primarySkill?.rawValue })
-        let scores = primaryAxes.compactMap { entry.axisScores[$0] }
-        guard !scores.isEmpty else { return 0 }
-        return scores.reduce(0, +) / scores.count
-    }
-
-    /// Module score from the nearest snapshot at or before `daysAgo` days ago.
-    /// Returns nil if no snapshot exists that far back.
-    func numindScoreHistory(for moduleId: String, daysAgo: Int) -> Int? {
-        let cutoff = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
-        guard let entry = data.scoreHistory
-            .filter({ $0.date <= cutoff })
-            .max(by: { $0.date < $1.date })
-        else { return nil }
-        let lessons = LocalContentRepository().lessons(for: moduleId)
-        let primaryAxes = Set(lessons.compactMap { $0.primarySkill?.rawValue })
-        let scores = primaryAxes.compactMap { entry.axisScores[$0] }
-        guard !scores.isEmpty else { return nil }
-        return scores.reduce(0, +) / scores.count
-    }
-
-    /// Latest score for a specific skill axis (0–100). 0 if never computed.
-    func numindScore(forAxis axis: SkillAxis) -> Int {
-        data.scoreHistory.last?.axisScores[axis.rawValue] ?? 0
-    }
-
-    /// Axis score from the nearest snapshot at or before `daysAgo` days ago.
-    /// Returns nil if no snapshot exists that far back.
-    func numindScore(forAxis axis: SkillAxis, daysAgo: Int) -> Int? {
-        let cutoff = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
-        return data.scoreHistory
-            .filter { $0.date <= cutoff }
-            .max { $0.date < $1.date }
-            .flatMap { $0.axisScores[axis.rawValue] }
-    }
+    // MARK: - Skill axes (private diagnostic, Phase 9)
+    //
+    // The 7-axis model survives only as an internal diagnostic — it feeds the
+    // coverage radar, the "focus next" recommendation, and the Daily Insight
+    // session radar. There is no longer a 0–100 composite, subtitle, delta, or
+    // score history; competence is expressed via per-pack Readiness.
 
     /// Axis evidence level (Untested / Early Read / Developing / Reliable),
     /// recomputed lazily from current sessions (cheap; bounded by axis count).
@@ -571,36 +636,6 @@ final class ProgressStore: ObservableObject {
         NumindScoreEngine.axisResults(
             sessions: sessionsWithDrillAttribution(),
             repository: LocalContentRepository()
-        )
-    }
-
-    /// Dynamic subtitle string ("Solid money sense. Strongest: Debt. Focus
-    /// next: Investing.") for the header below the score ring.
-    ///
-    /// Phase 6a — alternates between "Focus next: weakest" and "Biggest
-    /// gain this week" so the subtitle never leads with weakness on
-    /// successive renders. Parity is derived deterministically from
-    /// `scoreHistory.count` (no extra state needed); falls back gracefully
-    /// to "Focus next" when no positive week-over-week improvement exists.
-    var numindSubtitle: String {
-        let results = numindAxisResults
-        let variant: NumindScoreEngine.SubtitleVariant =
-            (data.scoreHistory.count % 2 == 0) ? .strongestAndWeakest : .strongestAndBiggestGain
-
-        // Build the prior-axis snapshot from the nearest score entry at
-        // least 7 days old. Empty dict if no history that far back.
-        var prior: [SkillAxis: Int] = [:]
-        for axis in SkillAxis.allCases {
-            if let s = numindScore(forAxis: axis, daysAgo: 7) {
-                prior[axis] = s
-            }
-        }
-
-        return NumindScoreEngine.subtitle(
-            results,
-            composite: numindScore,
-            variant: variant,
-            priorAxisScores: prior
         )
     }
 
@@ -627,43 +662,6 @@ final class ProgressStore: ObservableObject {
             }
         }
         return unfinished.first
-    }
-
-    /// How much the overall score changed versus 7 days ago.
-    /// Positive = improvement, negative = regression, 0 = no history.
-    var numindScoreDelta: Int {
-        guard let latest = data.scoreHistory.last else { return 0 }
-        let cutoff = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-        let prior = data.scoreHistory
-            .filter { $0.date <= cutoff }
-            .max { $0.date < $1.date }
-        return latest.overallScore - (prior?.overallScore ?? 0)
-    }
-
-    /// Recomputes Numind Scores for all given modules and appends a `ScoreEntry`
-    /// snapshot to `ProgressData`. Call this immediately after `recordSession`.
-    ///
-    /// - Parameter moduleIds: All known module IDs (from `ContentRepository.allModules()`).
-    func recomputeAndStoreScore(moduleIds: [String]) {
-        // Module IDs are accepted for legacy callers but ignored — the engine
-        // now scores along the 7 SkillAxis cases regardless of module count.
-        let scoringSessions = sessionsWithDrillAttribution()
-        let repo = LocalContentRepository()
-        let results = NumindScoreEngine.axisResults(sessions: scoringSessions, repository: repo)
-        var axisScores: [String: Int] = [:]
-        for r in results {
-            axisScores[r.axis.rawValue] = r.score
-        }
-        let overall = NumindScoreEngine.composite(results, pinnedAxes: data.pinnedAxes)
-
-        let entry = ScoreEntry(date: Date(), overallScore: overall, axisScores: axisScores)
-        data.scoreHistory.append(entry)
-
-        // Prune entries older than 90 days to prevent unbounded growth.
-        let horizon = Calendar.current.date(byAdding: .day, value: -90, to: Date()) ?? Date()
-        data.scoreHistory.removeAll { $0.date < horizon }
-
-        persist()
     }
 
     // MARK: - Drill attribution
