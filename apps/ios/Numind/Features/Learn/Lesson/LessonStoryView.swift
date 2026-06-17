@@ -132,8 +132,9 @@ struct LessonStoryView: View {
                 .clipShape(Capsule())
 
             Text(viewModel.lesson.title)
-                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .font(Theme.Typography.serifDisplay)
                 .foregroundStyle(Theme.Colors.deepNavy)
+                .lineSpacing(2)
                 .fixedSize(horizontal: false, vertical: true)
 
             if let hint = viewModel.lesson.realWorldHint {
@@ -143,7 +144,7 @@ struct LessonStoryView: View {
                         .foregroundStyle(accent)
                         .padding(.top, 3)
                     Text(hint)
-                        .font(.system(size: 19, weight: .medium, design: .rounded))
+                        .font(.system(size: 19, weight: .medium))
                         .foregroundStyle(Theme.Colors.deepNavy)
                         .lineSpacing(3)
                         .fixedSize(horizontal: false, vertical: true)
@@ -186,7 +187,7 @@ struct LessonStoryView: View {
                 }
 
                 Text(q.prompt)
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .lineSpacing(3)
                     .fixedSize(horizontal: false, vertical: true)
@@ -238,7 +239,7 @@ struct LessonStoryView: View {
                         .foregroundStyle(Theme.Colors.insightText)
                 }
                 Text(viewModel.lesson.shortcut)
-                    .font(.system(size: 19, weight: .semibold, design: .rounded))
+                    .font(.system(size: 21, weight: .medium, design: .serif))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .lineSpacing(4)
                     .fixedSize(horizontal: false, vertical: true)
