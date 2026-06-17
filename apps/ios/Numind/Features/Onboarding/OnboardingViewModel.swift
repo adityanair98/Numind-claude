@@ -387,15 +387,10 @@ enum OnboardingScreen: Int, CaseIterable, Equatable {
         OnboardingScreen(rawValue: rawValue - 1) ?? .welcome
     }
 
-    var isDark: Bool {
-        switch self {
-        case .welcome, .socialProof, .deadline, .kaizen, .preparingResults,
-             .improvementProjection, .welcomeConfirm:
-            return true
-        default:
-            return false
-        }
-    }
+    /// Phase 13: every onboarding screen now self-paints the warm
+    /// `softBackground`, so the flow chrome (back chevron + progress bar) is
+    /// always rendered light. No screen is dark anymore.
+    var isDark: Bool { false }
 
     var isDiagnosticQuiz: Bool {
         self == .diagnosticQuiz

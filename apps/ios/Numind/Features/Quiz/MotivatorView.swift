@@ -134,7 +134,7 @@ struct MotivatorView: View {
         switch checkpoint.type {
         case .momentum:  return Theme.Colors.insightYellow
         case .coaching:  return Theme.Colors.insightYellow
-        case .progress:  return Theme.Colors.primaryBlue
+        case .progress:  return Theme.Colors.mindTeal
         case .nearFinish: return Theme.Colors.insightYellow
         }
     }
@@ -143,7 +143,7 @@ struct MotivatorView: View {
         switch checkpoint.type {
         case .momentum:  return Theme.Colors.insightYellowTint
         case .coaching:  return Theme.Colors.insightYellowTint
-        case .progress:  return Theme.Colors.primaryBlueTint
+        case .progress:  return Theme.Colors.mindTealTint
         case .nearFinish: return Theme.Colors.insightYellowTint
         }
     }
@@ -152,8 +152,8 @@ struct MotivatorView: View {
         switch checkpoint.type {
         case .momentum:  return Theme.Colors.mindTeal
         case .coaching:  return Theme.Colors.mutedText
-        case .progress:  return Theme.Colors.primaryBlue
-        case .nearFinish: return Theme.Colors.primaryBlue
+        case .progress:  return Theme.Colors.mindTeal
+        case .nearFinish: return Theme.Colors.deepNavy
         }
     }
 
@@ -200,11 +200,11 @@ struct MotivatorView: View {
                     HStack(spacing: 12) {
                         ZStack {
                             Circle()
-                                .fill(Theme.Colors.primaryBlueTint)
+                                .fill(Theme.Colors.mindTealTint)
                                 .frame(width: 40, height: 40)
                             Image(systemName: "clock.fill")
                                 .font(.system(size: 18, weight: .semibold))
-                                .foregroundStyle(Theme.Colors.primaryBlue)
+                                .foregroundStyle(Theme.Colors.mindTeal)
                         }
 
                         VStack(alignment: .leading, spacing: 3) {
@@ -241,21 +241,21 @@ struct MotivatorView: View {
     private var coachingContent: some View {
         VStack(spacing: 14) {
             // Tip card with left accent bar
-            NumindCard(background: Theme.Colors.primaryBlueTint) {
+            NumindCard(background: Theme.Colors.mindTealTint) {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 8) {
                         ZStack {
                             Circle()
-                                .fill(Theme.Colors.primaryBlue.opacity(0.15))
+                                .fill(Theme.Colors.mindTeal.opacity(0.15))
                                 .frame(width: 28, height: 28)
                             Image(systemName: "brain.head.profile.fill")
                                 .font(.system(size: 13, weight: .semibold))
-                                .foregroundStyle(Theme.Colors.primaryBlue)
+                                .foregroundStyle(Theme.Colors.mindTeal)
                         }
                         Text("Try this tip")
                             .font(Theme.Typography.small)
                             .fontWeight(.bold)
-                            .foregroundStyle(Theme.Colors.primaryBlue)
+                            .foregroundStyle(Theme.Colors.mindTeal)
                             .textCase(.uppercase)
                             .kerning(0.6)
                     }
@@ -280,7 +280,7 @@ struct MotivatorView: View {
                     bottomTrailingRadius: 0,
                     topTrailingRadius: 0
                 )
-                .fill(Theme.Colors.primaryBlue)
+                .fill(Theme.Colors.mindTeal)
                 .frame(width: 5)
             }
 
@@ -362,7 +362,7 @@ struct MotivatorView: View {
 
                 Text("\(checkpoint.completed) of \(checkpoint.total) questions")
                     .font(Theme.Typography.title)
-                    .foregroundStyle(Theme.Colors.primaryBlue)
+                    .foregroundStyle(Theme.Colors.mindTeal)
             }
 
             // Bead rail
@@ -370,7 +370,7 @@ struct MotivatorView: View {
                 progress: checkpoint.completed,
                 total: checkpoint.total,
                 variant: .dot,
-                filledColor: Theme.Colors.primaryBlue
+                filledColor: Theme.Colors.mindTeal
             )
             .frame(maxWidth: .infinity, alignment: .center)
 
@@ -379,11 +379,11 @@ struct MotivatorView: View {
                 HStack(spacing: 12) {
                     ZStack {
                         Circle()
-                            .fill(Theme.Colors.primaryBlueTint)
+                            .fill(Theme.Colors.mindTealTint)
                             .frame(width: 40, height: 40)
                         Image(systemName: "chart.bar.fill")
                             .font(.system(size: 18, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.primaryBlue)
+                            .foregroundStyle(Theme.Colors.mindTeal)
                     }
 
                     VStack(alignment: .leading, spacing: 3) {
@@ -452,11 +452,11 @@ struct MotivatorView: View {
                     HStack(spacing: 12) {
                         ZStack {
                             Circle()
-                                .fill(Theme.Colors.warmOrangeTint)
+                                .fill(Theme.Colors.emberTint)
                                 .frame(width: 40, height: 40)
                             Image(systemName: "flame.fill")
                                 .font(.system(size: 18, weight: .semibold))
-                                .foregroundStyle(Theme.Colors.warmOrange)
+                                .foregroundStyle(Theme.Colors.ember)
                         }
 
                         VStack(alignment: .leading, spacing: 3) {
@@ -470,7 +470,7 @@ struct MotivatorView: View {
 
                         Text("\(checkpoint.dailyStreak) days")
                             .font(Theme.Typography.headline)
-                            .foregroundStyle(Theme.Colors.warmOrange)
+                            .foregroundStyle(Theme.Colors.ember)
                     }
                 }
             }

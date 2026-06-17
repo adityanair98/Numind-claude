@@ -12,8 +12,9 @@ struct WorldCompletionSheet: View {
         VStack(spacing: Theme.Spacing.sectionSpacing) {
             Spacer()
             VStack(spacing: 16) {
-                Text(module.mascot)
+                Image(systemName: "checkmark.seal.fill")
                     .font(.system(size: 72))
+                    .foregroundStyle(module.color.tintColor)
                 Text("Topic complete")
                     .font(Theme.Typography.display)
                     .foregroundStyle(Theme.Colors.deepNavy)
@@ -29,17 +30,9 @@ struct WorldCompletionSheet: View {
                     .padding(.horizontal, Theme.Spacing.cardPadding)
             }
             Spacer()
-            Button(action: dismissNow) {
-                Text("Onward")
-                    .font(Theme.Typography.headline)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: Theme.Spacing.buttonHeight)
-                    .background(Theme.Colors.deepNavy)
-                    .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.button, style: .continuous))
-            }
-            .padding(.horizontal, Theme.Spacing.screenHorizontal)
-            .padding(.bottom, Theme.Spacing.sectionSpacing)
+            PillButton("Onward", action: dismissNow)
+                .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                .padding(.bottom, Theme.Spacing.sectionSpacing)
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
     }

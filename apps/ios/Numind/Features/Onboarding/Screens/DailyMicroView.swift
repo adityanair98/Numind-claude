@@ -58,7 +58,7 @@ private struct ClockIllustration: View {
         ZStack {
             // Glow
             RadialGradient(
-                colors: [Theme.Colors.primaryBlue.opacity(0.10), .clear],
+                colors: [Theme.Colors.insightYellow.opacity(0.16), .clear],
                 center: .center,
                 startRadius: 0,
                 endRadius: 120
@@ -67,12 +67,12 @@ private struct ClockIllustration: View {
 
             // Outer ring
             Circle()
-                .fill(.white)
+                .fill(Theme.Colors.cardBackground)
                 .frame(width: 200, height: 200)
                 .shadow(color: Theme.Colors.deepNavy.opacity(0.10), radius: 20, x: 0, y: 10)
                 .overlay(
                     Circle()
-                        .strokeBorder(Theme.Colors.primaryBlue.opacity(0.10), lineWidth: 2)
+                        .strokeBorder(Theme.Colors.hairline, lineWidth: 2)
                 )
 
             // 12 tick marks
@@ -100,7 +100,7 @@ private struct ClockIllustration: View {
             // Center label
             VStack(spacing: 2) {
                 Text("5")
-                    .font(.system(size: 44, weight: .heavy, design: .rounded))
+                    .font(.system(size: 44, weight: .heavy, design: .monospaced))
                     .foregroundStyle(Theme.Colors.deepNavy)
                 Text("minutes / day")
                     .font(.system(size: 10, weight: .medium))

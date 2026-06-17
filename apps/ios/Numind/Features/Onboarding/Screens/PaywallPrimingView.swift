@@ -11,7 +11,7 @@ struct PaywallPrimingView: View {
             VStack(spacing: 0) {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("Less than a coffee a month \u{2615}")
+                        Text("Less than a coffee a month")
                             .font(Theme.Typography.title)
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .padding(.top, 8)
@@ -25,7 +25,7 @@ struct PaywallPrimingView: View {
                         // Comparison cards
                         HStack(spacing: 12) {
                             comparisonCard(
-                                emoji: "\u{2615}",
+                                symbol: "cup.and.saucer.fill",
                                 label: "One coffee",
                                 price: "$5.50",
                                 sub: "20 minutes of caffeine",
@@ -34,12 +34,12 @@ struct PaywallPrimingView: View {
                                 featured: false
                             )
                             comparisonCard(
-                                emoji: "\u{1F9E0}",
+                                symbol: "brain.head.profile",
                                 label: "Numind / week",
                                 price: "$3.99",
                                 sub: "Every money decision, prepared",
-                                tint: Theme.Colors.primaryBlueTint,
-                                color: Theme.Colors.primaryBlue,
+                                tint: Theme.Colors.mindTealTint,
+                                color: Theme.Colors.mindTeal,
                                 featured: true
                             )
                         }
@@ -81,12 +81,13 @@ struct PaywallPrimingView: View {
     }
 
     private func comparisonCard(
-        emoji: String, label: String, price: String, sub: String,
+        symbol: String, label: String, price: String, sub: String,
         tint: Color, color: Color, featured: Bool
     ) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(emoji)
-                .font(.system(size: 30))
+            Image(systemName: symbol)
+                .font(.system(size: 26, weight: .semibold))
+                .foregroundStyle(color)
                 .frame(width: 56, height: 56)
                 .background(tint)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -96,7 +97,7 @@ struct PaywallPrimingView: View {
                 .foregroundStyle(Theme.Colors.mutedText)
 
             Text(price)
-                .font(.system(size: 24, weight: .heavy, design: .rounded))
+                .font(.system(size: 24, weight: .heavy, design: .monospaced))
                 .foregroundStyle(Theme.Colors.deepNavy)
 
             Text(sub)
@@ -142,7 +143,7 @@ struct PaywallPrimingView: View {
                 .foregroundStyle(muted ? Theme.Colors.mutedText : Theme.Colors.deepNavy)
             Spacer()
             Text(right)
-                .font(.system(size: 14, weight: highlight ? .heavy : .semibold))
+                .font(.system(size: 14, weight: highlight ? .heavy : .semibold, design: .monospaced))
                 .foregroundStyle(
                     highlight ? Theme.Colors.mindTeal :
                     muted ? Theme.Colors.mutedText : Theme.Colors.deepNavy

@@ -113,7 +113,7 @@ struct StreakRevivalQuizView: View {
                 .font(Theme.Typography.small)
                 .textCase(.uppercase)
                 .tracking(1)
-                .foregroundStyle(Theme.Colors.warmOrange)
+                .foregroundStyle(Theme.Colors.ember)
 
             Text(question.prompt)
                 .font(Theme.Typography.body)
@@ -123,7 +123,7 @@ struct StreakRevivalQuizView: View {
 
             if let scenario = question.scenario {
                 Text(scenario)
-                    .font(.system(size: 17, weight: .bold, design: .rounded))
+                    .font(.system(size: 17, weight: .bold))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .padding(.top, 4)
             }
@@ -152,15 +152,15 @@ struct StreakRevivalQuizView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         Text(index < letters.count ? letters[index] : "")
                             .font(.system(size: 13, weight: .bold))
-                            .foregroundStyle(Theme.Colors.primaryBlue)
+                            .foregroundStyle(Theme.Colors.mindTeal)
                             .frame(width: 28, height: 28)
-                            .background(Theme.Colors.primaryBlueTint)
+                            .background(Theme.Colors.mindTealTint)
                             .clipShape(Circle())
 
                         Spacer()
 
                         Text(choice.text)
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.system(size: 22, weight: .bold))
                             .foregroundStyle(Theme.Colors.deepNavy)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)

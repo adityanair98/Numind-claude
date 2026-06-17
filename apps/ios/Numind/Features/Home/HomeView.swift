@@ -282,7 +282,7 @@ struct HomeView: View {
                                 .foregroundStyle(Theme.Colors.mutedText)
                                 .kerning(0.6)
                             Text("\(mastered) of \(core.count) core skills mastered")
-                                .font(.system(size: 17, weight: .bold, design: .rounded))
+                                .font(.system(size: 17, weight: .bold))
                                 .foregroundStyle(Theme.Colors.deepNavy)
                         }
                         Spacer()
@@ -352,7 +352,7 @@ struct HomeView: View {
                             .foregroundStyle(Theme.Colors.deepNavy)
                         Spacer()
                         Text("\(row.mastered)/\(row.total)")
-                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .font(.system(size: 15, weight: .bold, design: .monospaced))
                             .foregroundStyle(row.mastered > 0
                                 ? skillColor(row.axis) : Theme.Colors.mutedText)
                     }
@@ -552,7 +552,7 @@ struct HomeView: View {
                     }
                     VStack(alignment: .leading, spacing: 2) {
                         Text("\(count) skill\(count == 1 ? "" : "s") to refresh")
-                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .font(.system(size: 15, weight: .bold))
                             .foregroundStyle(Theme.Colors.deepNavy)
                         Text("Bring back fading skills and fix recent misses.")
                             .font(.system(size: 12))
@@ -631,7 +631,7 @@ struct HomeView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     VStack(alignment: .leading, spacing: 2) {
                         Text(moment.title)
-                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                            .font(.system(size: 14, weight: .bold))
                             .foregroundStyle(Theme.Colors.deepNavy)
                         Text(moment.detail)
                             .font(.system(size: 12))
@@ -677,7 +677,7 @@ struct HomeView: View {
                     }
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Monthly sharpness check")
-                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .font(.system(size: 15, weight: .bold))
                             .foregroundStyle(Theme.Colors.deepNavy)
                         Text("2 minutes \u{2014} see how far you\u{2019}ve come since day 1.")
                             .font(.system(size: 12))
@@ -795,7 +795,7 @@ struct HomeView: View {
                 .foregroundStyle(.white)
             VStack(alignment: .leading, spacing: 2) {
                 Text("Back to sharp")
-                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .font(.system(size: 14, weight: .bold))
                     .foregroundStyle(.white)
                 Text("Refreshed: \(line)")
                     .font(.system(size: 12, weight: .medium))
@@ -864,7 +864,7 @@ struct HomeView: View {
             NumindCard(background: Theme.Colors.mindTealTint) {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 6) {
-                        Text("📍 PATH")
+                        Label("PATH", systemImage: "signpost.right.fill")
                             .font(.system(size: 10, weight: .bold))
                             .foregroundStyle(Theme.Colors.mindTeal)
                             .kerning(0.6)

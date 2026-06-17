@@ -35,7 +35,7 @@ struct PersonalizedPlanView: View {
                             .font(Theme.Typography.small)
                             .textCase(.uppercase)
                             .tracking(1.5)
-                            .foregroundStyle(Theme.Colors.primaryBlue)
+                            .foregroundStyle(Theme.Colors.mindTeal)
                             .padding(.top, 4)
 
                         Text("Your Numind Plan, \(userName)")
@@ -89,31 +89,38 @@ struct PersonalizedPlanView: View {
                     .font(Theme.Typography.small)
                     .textCase(.uppercase)
                     .tracking(1)
-                    .foregroundStyle(.white.opacity(0.6))
+                    .foregroundStyle(Theme.Colors.mutedText)
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
-                    Text("\(challengeCount) questions")
-                        .font(.system(size: 26, weight: .heavy, design: .rounded))
-                        .foregroundStyle(.white)
+                    Text("\(challengeCount)")
+                        .font(.system(size: 26, weight: .heavy, design: .monospaced))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text("questions")
+                        .font(.system(size: 26, weight: .heavy))
+                        .foregroundStyle(Theme.Colors.deepNavy)
                     Text("\u{2248} \(minutesPerDay) min")
-                        .font(.system(size: 15, weight: .semibold, design: .rounded))
-                        .foregroundStyle(Theme.Colors.insightYellow)
+                        .font(.system(size: 15, weight: .semibold, design: .monospaced))
+                        .foregroundStyle(Theme.Colors.mindTeal)
                 }
                 Text("Anything counts \u{2014} a workout, a lesson, a refresh.")
                     .font(Theme.Typography.caption)
-                    .foregroundStyle(.white.opacity(0.65))
+                    .foregroundStyle(Theme.Colors.mutedText)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(18)
         .background(
             LinearGradient(
-                colors: [Theme.Colors.deepNavy, Color(red: 0.11, green: 0.20, blue: 0.45)],
+                colors: [Theme.Colors.cardBackground, Theme.Colors.mindTealTint],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         )
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-        .shadow(color: Theme.Colors.deepNavy.opacity(0.18), radius: 18, x: 0, y: 8)
+        .overlay(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(0.05), radius: 18, x: 0, y: 8)
     }
 
     // MARK: - Path Card
@@ -122,7 +129,7 @@ struct PersonalizedPlanView: View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
                 Text(packTitle)
-                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .font(.system(size: 16, weight: .bold))
                     .foregroundStyle(Theme.Colors.deepNavy)
                 Spacer()
                 Text("\(coreCount) CORE SKILLS")
@@ -155,10 +162,10 @@ struct PersonalizedPlanView: View {
     private func gateRow(number: Int, text: String, icon: String) -> some View {
         HStack(spacing: 12) {
             Text("\(number)")
-                .font(.system(size: 12, weight: .heavy, design: .rounded))
-                .foregroundStyle(Theme.Colors.primaryBlue)
+                .font(.system(size: 12, weight: .heavy, design: .monospaced))
+                .foregroundStyle(Theme.Colors.mindTeal)
                 .frame(width: 24, height: 24)
-                .background(Theme.Colors.primaryBlueTint)
+                .background(Theme.Colors.mindTealTint)
                 .clipShape(Circle())
             Text(text)
                 .font(.system(size: 14, weight: .medium))
@@ -175,8 +182,9 @@ struct PersonalizedPlanView: View {
     private var timelineCard: some View {
         NumindCard {
             HStack(alignment: .top, spacing: 12) {
-                Text("\u{1F4C5}")
-                    .font(.system(size: 22))
+                Image(systemName: "calendar")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.insightText)
                     .frame(width: 44, height: 44)
                     .background(Theme.Colors.insightYellowTint)
                     .clipShape(RoundedRectangle(cornerRadius: 14))

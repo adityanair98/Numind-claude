@@ -23,10 +23,11 @@ private struct ConfettiPiece: View {
 
     private var color: Color {
         let palette: [Color] = [
-            Theme.Colors.primaryBlue,
+            Theme.Colors.deepNavy,
             Theme.Colors.mindTeal,
             Theme.Colors.insightYellow,
-            .pink, .orange
+            Theme.Colors.ember,
+            Theme.Colors.warmOrange
         ]
         return palette[index % palette.count]
     }

@@ -153,7 +153,7 @@ struct InsecurityMirrorView: View {
                                          : "Also coming for most people")
                                         .font(.system(size: 11, weight: .semibold))
                                         .foregroundStyle(row.isYours
-                                                         ? Theme.Colors.primaryBlue
+                                                         ? Theme.Colors.mindTeal
                                                          : Theme.Colors.mutedText)
                                         .padding(.leading, 4)
                                     costRow(stat: s.stat, text: s.text, source: s.source)
@@ -182,7 +182,7 @@ struct InsecurityMirrorView: View {
     private func costRow(stat: String, text: String, source: String) -> some View {
         HStack(alignment: .top, spacing: 14) {
             Text(stat)
-                .font(.system(size: 22, weight: .heavy, design: .rounded))
+                .font(.system(size: 22, weight: .heavy, design: .monospaced))
                 .foregroundStyle(Theme.Colors.warmOrange)
                 .frame(width: 72, alignment: .leading)
 

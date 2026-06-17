@@ -151,7 +151,7 @@ private struct HeroIllustration: View {
                     .frame(width: 78, height: 78)
                     .shadow(color: Theme.Colors.insightYellow.opacity(0.45), radius: 16, x: 0, y: 8)
                 Text("%")
-                    .font(.system(size: 38, weight: .heavy, design: .rounded))
+                    .font(.system(size: 38, weight: .heavy, design: .monospaced))
                     .foregroundStyle(Theme.Colors.deepNavy)
             }
             .rotationEffect(.degrees(8))
@@ -164,8 +164,9 @@ private struct HeroIllustration: View {
                     .fill(Theme.Colors.mindTeal)
                     .frame(width: 64, height: 64)
                     .shadow(color: Theme.Colors.mindTeal.opacity(0.45), radius: 14, x: 0, y: 6)
-                Text("\u{1F6D2}")
-                    .font(.system(size: 30))
+                Image(systemName: "cart.fill")
+                    .font(.system(size: 26, weight: .semibold))
+                    .foregroundStyle(.white)
             }
             .rotationEffect(.degrees(-6))
             .offset(x: -95, y: floatC ? 55 : 62)
@@ -178,7 +179,7 @@ private struct HeroIllustration: View {
                     .frame(width: 44, height: 44)
                     .shadow(color: .black.opacity(0.25), radius: 10, x: 0, y: 4)
                 Text("$")
-                    .font(.system(size: 22, weight: .heavy, design: .rounded))
+                    .font(.system(size: 22, weight: .heavy, design: .monospaced))
                     .foregroundStyle(Theme.Colors.deepNavy)
             }
             .offset(x: 20, y: -80)

@@ -9,14 +9,14 @@ struct MotivationPickerView: View {
     // One accent for every card — selection feedback should read as
     // "selected", not as seven competing theme colors. Labels come from
     // Motivation.displayText so later screens can echo them verbatim.
-    private let options: [(motivation: Motivation, sub: String, emoji: String)] = [
-        (.stopLeavingMoney, "Negotiation, benefits, the match", "\u{1F4BC}"),
-        (.stopGettingTaken, "Scams, fees, dealer tactics", "\u{1F6E1}"),
-        (.decideWithConfidence, "Know your numbers before the moment", "\u{1F4AA}"),
-        (.understandPaycheck, "Deductions, benefits, taxes", "\u{1F9FE}"),
-        (.getAheadOfDebt, "Interest, payoff, the real cost", "\u{1F4B3}"),
-        (.growMoney, "Match, accounts, compounding", "\u{1F4C8}"),
-        (.staySharp, "Daily reps, no fading skills", "\u{26A1}"),
+    private let options: [(motivation: Motivation, sub: String, symbol: String)] = [
+        (.stopLeavingMoney, "Negotiation, benefits, the match", "briefcase.fill"),
+        (.stopGettingTaken, "Scams, fees, dealer tactics", "shield.fill"),
+        (.decideWithConfidence, "Know your numbers before the moment", "checkmark.seal.fill"),
+        (.understandPaycheck, "Deductions, benefits, taxes", "doc.text.fill"),
+        (.getAheadOfDebt, "Interest, payoff, the real cost", "creditcard.fill"),
+        (.growMoney, "Match, accounts, compounding", "chart.line.uptrend.xyaxis"),
+        (.staySharp, "Daily reps, no fading skills", "bolt.fill"),
     ]
 
     var body: some View {
@@ -38,10 +38,10 @@ struct MotivationPickerView: View {
 
                             Text("\(viewModel.signals.motivations.count) of 3 selected")
                                 .font(Theme.Typography.small)
-                                .foregroundStyle(Theme.Colors.primaryBlue)
+                                .foregroundStyle(Theme.Colors.mindTeal)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 2)
-                                .background(Theme.Colors.primaryBlueTint)
+                                .background(Theme.Colors.mindTealTint)
                                 .clipShape(Capsule())
                         }
                         .padding(.top, 8)
@@ -52,11 +52,11 @@ struct MotivationPickerView: View {
                                     label: opt.motivation.displayText,
                                     subtitle: opt.sub,
                                     selected: viewModel.signals.motivations.contains(opt.motivation),
-                                    accentColor: Theme.Colors.primaryBlue
+                                    accentColor: Theme.Colors.mindTeal
                                 ) {
                                     viewModel.toggleMotivation(opt.motivation)
                                 } icon: {
-                                    OnboardingIconTile(emoji: opt.emoji, color: Theme.Colors.primaryBlue, size: 36)
+                                    IconTile(systemName: opt.symbol, tintColor: Theme.Colors.mindTeal, size: 36)
                                 }
                             }
                         }

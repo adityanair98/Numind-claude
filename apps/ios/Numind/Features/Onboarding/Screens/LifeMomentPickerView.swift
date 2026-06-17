@@ -14,23 +14,23 @@ struct LifeMomentPickerView: View {
     private struct Moment {
         let packId: String
         let label: String
-        let glyph: String
+        let symbol: String
         let color: Color
     }
 
     private let moments: [Moment] = [
-        Moment(packId: "the_job_offer",          label: "A job offer or\nsalary talk",      glyph: "\u{1F4BC}", color: Theme.Colors.warmOrange),
-        Moment(packId: "open_enrollment",        label: "Picking benefits /\nopen enrollment", glyph: "\u{1FA7A}", color: Theme.Colors.insurancePurple),
-        Moment(packId: "first_apartment",        label: "Moving / first\napartment",        glyph: "\u{1F511}", color: Theme.Colors.housingRose),
-        Moment(packId: "credit_card_cleanup",    label: "Paying down\ncard debt",           glyph: "\u{1F4B3}", color: Theme.Colors.debtCoral),
-        Moment(packId: "investing_starter",      label: "Starting to\ninvest",              glyph: "\u{1F4C8}", color: Theme.Colors.investIndigo),
-        Moment(packId: "car_buying",             label: "Buying a\ncar",                    glyph: "\u{1F697}", color: Theme.Colors.mindTeal),
-        Moment(packId: "buying_a_home",          label: "Buying a\nhome",                   glyph: "\u{1F3E0}", color: Theme.Colors.housingRose),
-        Moment(packId: "student_loan_repayment", label: "Student\nloans",                   glyph: "\u{1F393}", color: Theme.Colors.warmOrange),
-        Moment(packId: "first_paycheck",         label: "First real\npaycheck",             glyph: "\u{1F4B5}", color: Theme.Colors.growthGreen),
-        Moment(packId: "taxes_without_panic",    label: "Taxes",                            glyph: "\u{1F9FE}", color: Theme.Colors.taxSlate),
-        Moment(packId: "protect_your_money",     label: "Worried about\nscams",             glyph: "\u{1F6E1}", color: Theme.Colors.safetyCrimson),
-        Moment(packId: "everyday_spending",      label: "Just everyday\nmoney",             glyph: "%",         color: Theme.Colors.primaryBlue),
+        Moment(packId: "the_job_offer",          label: "A job offer or\nsalary talk",      symbol: "briefcase.fill",              color: Theme.Colors.warmOrange),
+        Moment(packId: "open_enrollment",        label: "Picking benefits /\nopen enrollment", symbol: "heart.text.square.fill",   color: Theme.Colors.insurancePurple),
+        Moment(packId: "first_apartment",        label: "Moving / first\napartment",        symbol: "key.fill",                    color: Theme.Colors.housingRose),
+        Moment(packId: "credit_card_cleanup",    label: "Paying down\ncard debt",           symbol: "creditcard.fill",             color: Theme.Colors.debtCoral),
+        Moment(packId: "investing_starter",      label: "Starting to\ninvest",              symbol: "chart.line.uptrend.xyaxis",   color: Theme.Colors.investIndigo),
+        Moment(packId: "car_buying",             label: "Buying a\ncar",                    symbol: "car.fill",                    color: Theme.Colors.mindTeal),
+        Moment(packId: "buying_a_home",          label: "Buying a\nhome",                   symbol: "house.fill",                  color: Theme.Colors.housingRose),
+        Moment(packId: "student_loan_repayment", label: "Student\nloans",                   symbol: "graduationcap.fill",          color: Theme.Colors.warmOrange),
+        Moment(packId: "first_paycheck",         label: "First real\npaycheck",             symbol: "dollarsign.circle.fill",      color: Theme.Colors.growthGreen),
+        Moment(packId: "taxes_without_panic",    label: "Taxes",                            symbol: "doc.text.fill",               color: Theme.Colors.taxSlate),
+        Moment(packId: "protect_your_money",     label: "Worried about\nscams",             symbol: "lock.shield.fill",            color: Theme.Colors.safetyCrimson),
+        Moment(packId: "everyday_spending",      label: "Just everyday\nmoney",             symbol: "percent",                     color: Theme.Colors.mindTeal),
     ]
 
     private var canContinue: Bool {
@@ -89,8 +89,8 @@ struct LifeMomentPickerView: View {
         } label: {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
-                    Text(moment.glyph)
-                        .font(.system(size: 22, weight: .bold))
+                    Image(systemName: moment.symbol)
+                        .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(moment.color)
                         .frame(width: 44, height: 44)
                         .background(moment.color.opacity(0.12))
@@ -108,7 +108,7 @@ struct LifeMomentPickerView: View {
                     } else if isSecondary {
                         // Secondaries share one neutral check — only the FOCUS
                         // earns its pack color, so the hierarchy reads at a glance.
-                        CheckBadge(selected: true, color: Theme.Colors.primaryBlue)
+                        CheckBadge(selected: true, color: Theme.Colors.mindTeal)
                     }
                 }
 
@@ -123,20 +123,20 @@ struct LifeMomentPickerView: View {
             .padding(14)
             .padding(.top, 2)
             .background(isFocus ? moment.color.opacity(0.06)
-                        : (isSecondary ? Theme.Colors.primaryBlueTint.opacity(0.5)
+                        : (isSecondary ? Theme.Colors.mindTealTint.opacity(0.5)
                            : Theme.Colors.cardBackground))
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .strokeBorder(
                         isFocus ? moment.color
-                            : (isSecondary ? Theme.Colors.primaryBlue : Theme.Colors.hairline),
+                            : (isSecondary ? Theme.Colors.mindTeal : Theme.Colors.hairline),
                         lineWidth: isFocus ? 2 : (selected ? 1.5 : 1)
                     )
             )
             .shadow(
                 color: isFocus ? moment.color.opacity(0.12)
-                    : (isSecondary ? Theme.Colors.primaryBlue.opacity(0.10) : .black.opacity(0.04)),
+                    : (isSecondary ? Theme.Colors.mindTeal.opacity(0.10) : .black.opacity(0.04)),
                 radius: selected ? 8 : 3, x: 0, y: 2
             )
         }

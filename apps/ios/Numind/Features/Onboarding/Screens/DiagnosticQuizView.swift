@@ -95,7 +95,7 @@ struct DiagnosticQuizView: View {
                 .font(Theme.Typography.small)
                 .textCase(.uppercase)
                 .tracking(1)
-                .foregroundStyle(Theme.Colors.primaryBlue)
+                .foregroundStyle(Theme.Colors.mindTeal)
 
             Text(item.question.prompt)
                 .font(Theme.Typography.body)
@@ -105,7 +105,7 @@ struct DiagnosticQuizView: View {
 
             if let scenario = item.question.scenario {
                 Text(scenario)
-                    .font(.system(size: 17, weight: .bold, design: .rounded))
+                    .font(.system(size: 17, weight: .bold))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .padding(.top, 4)
             }
@@ -134,16 +134,16 @@ struct DiagnosticQuizView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         Text(index < letters.count ? letters[index] : "")
                             .font(.system(size: 13, weight: .bold))
-                            .foregroundStyle(Theme.Colors.primaryBlue)
+                            .foregroundStyle(Theme.Colors.mindTeal)
                             .frame(width: 28, height: 28)
-                            .background(Theme.Colors.primaryBlueTint)
+                            .background(Theme.Colors.mindTealTint)
                             .clipShape(Circle())
 
                         Spacer()
 
                         Text(choice.text)
                             .font(.system(size: choice.text.count > 24 ? 14 : 22,
-                                          weight: .bold, design: .rounded))
+                                          weight: .bold, design: .monospaced))
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .multilineTextAlignment(.leading)
                     }

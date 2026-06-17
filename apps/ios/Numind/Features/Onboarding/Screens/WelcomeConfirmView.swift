@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Screen 26 — Welcome to Numind (final, celebratory)
-/// Dark gradient, confetti, success badge, first session CTA.
+/// Screen 26 — Welcome to Numind (final, celebratory milestone)
+/// Warm hero tint, confetti, success badge, first session CTA.
 struct WelcomeConfirmView: View {
     @ObservedObject var viewModel: OnboardingViewModel
     @AppStorage("numind.userName") private var userName = "You"
@@ -19,14 +19,14 @@ struct WelcomeConfirmView: View {
 
     var body: some View {
         ZStack {
-            // Background gradient
+            // Warm celebratory hero tint fading into the page background.
             LinearGradient(
-                colors: [Theme.Colors.deepNavy, Color(red: 0.08, green: 0.28, blue: 0.72)],
+                colors: [Theme.Colors.emberTint, Theme.Colors.softBackground],
                 startPoint: .topLeading, endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
 
-            // Confetti
+            // Confetti (milestone celebration screen — completion of onboarding)
             ConfettiBurst()
 
             VStack(spacing: 0) {
@@ -40,11 +40,11 @@ struct WelcomeConfirmView: View {
                     .font(Theme.Typography.small)
                     .textCase(.uppercase)
                     .tracking(1.5)
-                    .foregroundStyle(Theme.Colors.insightYellow)
+                    .foregroundStyle(Theme.Colors.insightText)
 
                 Text("Welcome to Numind,\n\(userName)")
-                    .font(.system(size: 36, weight: .heavy, design: .rounded))
-                    .foregroundStyle(.white)
+                    .font(.system(size: 36, weight: .heavy))
+                    .foregroundStyle(Theme.Colors.deepNavy)
                     .multilineTextAlignment(.center)
                     .lineSpacing(2)
                     .fixedSize(horizontal: false, vertical: true)
@@ -52,7 +52,7 @@ struct WelcomeConfirmView: View {
 
                 Text("\(packShortName) is your focus. Let\u{2019}s close your first ring.")
                     .font(Theme.Typography.body)
-                    .foregroundStyle(.white.opacity(0.72))
+                    .foregroundStyle(Theme.Colors.mutedText)
                     .multilineTextAlignment(.center)
                     .lineSpacing(3)
                     .fixedSize(horizontal: false, vertical: true)
@@ -69,11 +69,11 @@ struct WelcomeConfirmView: View {
                 }
                 .padding(.vertical, 12)
                 .padding(.horizontal, 14)
-                .background(.white.opacity(0.06))
+                .background(Theme.Colors.cardBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                 .overlay(
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .strokeBorder(.white.opacity(0.10), lineWidth: 1)
+                        .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
                 )
                 .padding(.top, 30)
                 .padding(.horizontal, 40)
@@ -86,10 +86,10 @@ struct WelcomeConfirmView: View {
                     Button(action: onStartFirstSession) {
                         Text("Start today\u{2019}s workout \u{2192}")
                             .font(Theme.Typography.headline)
-                            .foregroundStyle(Theme.Colors.deepNavy)
+                            .foregroundStyle(Theme.Colors.ctaLabel)
                             .frame(maxWidth: .infinity)
                             .frame(height: Theme.Spacing.buttonHeight)
-                            .background(.white)
+                            .background(Theme.Colors.ctaFill)
                             .clipShape(Capsule())
                     }
                     .buttonStyle(.plain)
@@ -97,7 +97,7 @@ struct WelcomeConfirmView: View {
                     Button(action: onExploreFirst) {
                         Text("Explore first")
                             .font(.system(size: 15, weight: .medium))
-                            .foregroundStyle(.white.opacity(0.6))
+                            .foregroundStyle(Theme.Colors.mutedText)
                             .frame(height: 36)
                     }
                 }
@@ -110,18 +110,18 @@ struct WelcomeConfirmView: View {
     private func statPill(value: String, label: String) -> some View {
         VStack(spacing: 2) {
             Text(value)
-                .font(.system(size: 20, weight: .heavy, design: .rounded))
-                .foregroundStyle(.white)
+                .font(.system(size: 20, weight: .bold, design: .monospaced))
+                .foregroundStyle(Theme.Colors.deepNavy)
             Text(label)
                 .font(.system(size: 10))
-                .foregroundStyle(.white.opacity(0.55))
+                .foregroundStyle(Theme.Colors.mutedText)
         }
         .frame(minWidth: 64)
     }
 
     private var statDivider: some View {
         Rectangle()
-            .fill(.white.opacity(0.15))
+            .fill(Theme.Colors.hairline)
             .frame(width: 1, height: 30)
             .padding(.horizontal, 2)
     }
@@ -136,7 +136,7 @@ private struct SuccessBadge: View {
         ZStack {
             // Glow
             RadialGradient(
-                colors: [Theme.Colors.insightYellow.opacity(0.35), .clear],
+                colors: [Theme.Colors.mindTeal.opacity(0.30), .clear],
                 center: .center,
                 startRadius: 0,
                 endRadius: 80
@@ -148,20 +148,20 @@ private struct SuccessBadge: View {
                 let angle = Double(i) / 16.0 * .pi * 2 - .pi / 2
                 let r: CGFloat = 60
                 Circle()
-                    .fill(i % 4 == 0 ? Theme.Colors.insightYellow : .white.opacity(0.4))
+                    .fill(i % 4 == 0 ? Theme.Colors.mindTeal : Theme.Colors.mutedText.opacity(0.35))
                     .frame(width: 6, height: 6)
                     .offset(x: r * cos(angle), y: r * sin(angle))
             }
 
             // Center disk
             Circle()
-                .fill(Theme.Colors.insightYellow)
+                .fill(Theme.Colors.mindTeal)
                 .frame(width: 94, height: 94)
-                .shadow(color: Theme.Colors.insightYellow.opacity(0.5), radius: 18, x: 0, y: 8)
+                .shadow(color: Theme.Colors.mindTeal.opacity(0.45), radius: 18, x: 0, y: 8)
                 .overlay(
                     Image(systemName: "checkmark")
                         .font(.system(size: 40, weight: .bold))
-                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .foregroundStyle(.white)
                 )
         }
         .frame(width: 130, height: 130)

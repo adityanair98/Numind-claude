@@ -45,9 +45,9 @@ struct DiagnosticIntroView: View {
 
                         // Info chips
                         HStack(spacing: 10) {
-                            diagnosticChip(glyph: "\u{23F1}", label: "~3 min")
-                            diagnosticChip(glyph: "\u{1F3AF}", label: "No grades")
-                            diagnosticChip(glyph: "\u{1F4A1}", label: "Shortcuts")
+                            diagnosticChip(symbol: "timer", tint: Theme.Colors.deepNavy, label: "~3 min")
+                            diagnosticChip(symbol: "target", tint: Theme.Colors.mindTeal, label: "No grades")
+                            diagnosticChip(symbol: "lightbulb.fill", tint: Theme.Colors.insightText, label: "Shortcuts")
                         }
                         .padding(.top, 22)
 
@@ -68,10 +68,11 @@ struct DiagnosticIntroView: View {
         }
     }
 
-    private func diagnosticChip(glyph: String, label: String) -> some View {
+    private func diagnosticChip(symbol: String, tint: Color, label: String) -> some View {
         VStack(spacing: 4) {
-            Text(glyph)
-                .font(.system(size: 22))
+            Image(systemName: symbol)
+                .font(.system(size: 20, weight: .semibold))
+                .foregroundStyle(tint)
             Text(label)
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(Theme.Colors.deepNavy)

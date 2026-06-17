@@ -6,11 +6,11 @@ struct ConfidenceRatingView: View {
     @ObservedObject var viewModel: OnboardingViewModel
     let onContinue: () -> Void
 
-    private let options: [(level: ConfidenceLevel, label: String, sub: String, emoji: String, color: Color)] = [
-        (.struggle, "I freeze", "I just go with whatever they offer", "\u{1F630}", Theme.Colors.errorSoftRed),
-        (.getBy, "I muddle through", "And hope it works out", "\u{1F642}", Theme.Colors.warmOrange),
-        (.decent, "I\u{2019}m okay", "But I second-guess myself after", "\u{1F44D}", Theme.Colors.primaryBlue),
-        (.quick, "I\u{2019}m sharp", "Just want to stay that way", "\u{26A1}", Theme.Colors.mindTeal),
+    private let options: [(level: ConfidenceLevel, label: String, sub: String, symbol: String, color: Color)] = [
+        (.struggle, "I freeze", "I just go with whatever they offer", "exclamationmark.triangle.fill", Theme.Colors.warmOrange),
+        (.getBy, "I muddle through", "And hope it works out", "tortoise.fill", Theme.Colors.ember),
+        (.decent, "I\u{2019}m okay", "But I second-guess myself after", "hand.thumbsup.fill", Theme.Colors.mindTeal),
+        (.quick, "I\u{2019}m sharp", "Just want to stay that way", "bolt.fill", Theme.Colors.mindTeal),
     ]
 
     var body: some View {
@@ -40,7 +40,7 @@ struct ConfidenceRatingView: View {
                                 ) {
                                     viewModel.setConfidence(opt.level)
                                 } icon: {
-                                    OnboardingIconTile(emoji: opt.emoji, color: opt.color)
+                                    IconTile(systemName: opt.symbol, tintColor: opt.color, size: 38)
                                 }
                             }
                         }

@@ -15,8 +15,9 @@ struct PackCompletionSheet: View {
         VStack(spacing: Theme.Spacing.sectionSpacing) {
             Spacer()
             VStack(spacing: 16) {
-                Text("🎉")
+                Image(systemName: "checkmark.seal.fill")
                     .font(.system(size: 72))
+                    .foregroundStyle(Theme.Colors.mindTeal)
                 Text("Path complete")
                     .font(Theme.Typography.display)
                     .foregroundStyle(Theme.Colors.deepNavy)
@@ -32,17 +33,9 @@ struct PackCompletionSheet: View {
                     .padding(.horizontal, Theme.Spacing.cardPadding)
             }
             Spacer()
-            Button(action: dismissNow) {
-                Text("Awesome")
-                    .font(Theme.Typography.headline)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: Theme.Spacing.buttonHeight)
-                    .background(Theme.Colors.deepNavy)
-                    .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.button, style: .continuous))
-            }
-            .padding(.horizontal, Theme.Spacing.screenHorizontal)
-            .padding(.bottom, Theme.Spacing.sectionSpacing)
+            PillButton("Awesome", action: dismissNow)
+                .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                .padding(.bottom, Theme.Spacing.sectionSpacing)
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
     }

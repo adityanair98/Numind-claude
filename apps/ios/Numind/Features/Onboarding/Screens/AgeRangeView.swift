@@ -33,21 +33,21 @@ struct AgeRangeView: View {
                             viewModel.setAgeRange(range)
                         } label: {
                             Text(range.displayText)
-                                .font(.system(size: 20, weight: .bold, design: .rounded))
-                                .foregroundStyle(selected ? Theme.Colors.primaryBlue : Theme.Colors.deepNavy)
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundStyle(selected ? Theme.Colors.mindTeal : Theme.Colors.deepNavy)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 20)
-                                .background(selected ? Theme.Colors.cardBackground : .white)
+                                .background(Theme.Colors.cardBackground)
                                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 18, style: .continuous)
                                         .strokeBorder(
-                                            selected ? Theme.Colors.primaryBlue : Theme.Colors.hairline,
+                                            selected ? Theme.Colors.mindTeal : Theme.Colors.hairline,
                                             lineWidth: selected ? 1.5 : 1
                                         )
                                 )
                                 .shadow(
-                                    color: selected ? Theme.Colors.primaryBlueTint : .black.opacity(0.04),
+                                    color: selected ? Theme.Colors.mindTealTint : .black.opacity(0.04),
                                     radius: selected ? 8 : 3, x: 0, y: 2
                                 )
                         }
@@ -57,7 +57,7 @@ struct AgeRangeView: View {
                 }
                 .padding(.top, 28)
 
-                Text("\u{1F512} We never share this with anyone.")
+                Text("\(Image(systemName: "lock.fill")) We never share this with anyone.")
                     .font(.system(size: 10))
                     .foregroundStyle(Theme.Colors.mutedText.opacity(0.7))
                     .frame(maxWidth: .infinity)

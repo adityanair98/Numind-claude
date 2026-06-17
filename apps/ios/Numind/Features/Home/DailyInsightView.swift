@@ -106,7 +106,7 @@ struct DailyInsightView: View {
     private var header: some View {
         VStack(spacing: 6) {
             Text("Today's Insight")
-                .font(.system(size: 24, weight: .bold, design: .rounded))
+                .font(.system(size: 24, weight: .bold))
                 .foregroundStyle(Theme.Colors.deepNavy)
             Text("Here's how your money sense is looking.")
                 .font(Theme.Typography.caption)
@@ -247,7 +247,7 @@ struct DailyInsightView: View {
                     } label: {
                         Text("Try \"\(lesson.title)\" →")
                             .font(.system(size: 12, weight: .bold))
-                            .foregroundStyle(Theme.Colors.primaryBlue)
+                            .foregroundStyle(Theme.Colors.mindTeal)
                     }
                     .buttonStyle(.plain)
                     .padding(.top, 2)
@@ -295,7 +295,7 @@ struct DailyInsightView: View {
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundStyle(color)
             Text(value)
-                .font(.system(size: 15, weight: .bold, design: .rounded))
+                .font(.system(size: 15, weight: .bold, design: .monospaced))
                 .foregroundStyle(Theme.Colors.deepNavy)
             Text(label)
                 .font(.system(size: 11, weight: .medium))
@@ -313,20 +313,13 @@ struct DailyInsightView: View {
     private var ctaButton: some View {
         Button(action: onContinue) {
             Text("Done")
-                .font(.system(size: 18, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
+                .font(.system(size: 18, weight: .bold))
+                .foregroundStyle(Theme.Colors.ctaLabel)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
-                .background(
-                    LinearGradient(
-                        colors: [Theme.Colors.primaryBlue,
-                                 Theme.Colors.mindTeal],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
+                .background(Theme.Colors.ctaFill)
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .shadow(color: Theme.Colors.primaryBlue.opacity(0.3), radius: 12, y: 6)
+                .shadow(color: Theme.Colors.shadow.opacity(0.15), radius: 12, y: 6)
         }
         .buttonStyle(.plain)
     }

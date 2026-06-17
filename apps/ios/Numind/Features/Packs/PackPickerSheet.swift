@@ -135,9 +135,9 @@ struct PackPickerSheet: View {
     private func badgeView(_ badge: PackBadge) -> some View {
         switch badge {
         case .focus:
-            badgePill(text: "FOCUS", fg: .white, bg: Theme.Colors.deepNavy)
+            badgePill(text: "FOCUS", fg: Theme.Colors.ctaLabel, bg: Theme.Colors.ctaFill)
         case .complete:
-            badgePill(text: "COMPLETE ✓", fg: Theme.Colors.growthGreen, bg: Theme.Colors.growthGreenTint)
+            badgePill(text: "COMPLETE", systemImage: "checkmark", fg: Theme.Colors.growthGreen, bg: Theme.Colors.growthGreenTint)
         case .active(let done, let total):
             badgePill(text: "ACTIVE \(done)/\(total)", fg: Theme.Colors.mindTeal, bg: Theme.Colors.mindTealTint)
         case .new:
@@ -145,14 +145,20 @@ struct PackPickerSheet: View {
         }
     }
 
-    private func badgePill(text: String, fg: Color, bg: Color) -> some View {
-        Text(text)
-            .font(Theme.Typography.small)
-            .foregroundStyle(fg)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 4)
-            .background(bg)
-            .clipShape(Capsule())
+    private func badgePill(text: String, systemImage: String? = nil, fg: Color, bg: Color) -> some View {
+        HStack(spacing: 4) {
+            if let systemImage {
+                Image(systemName: systemImage)
+                    .font(.system(size: 10, weight: .bold))
+            }
+            Text(text)
+                .font(Theme.Typography.small)
+        }
+        .foregroundStyle(fg)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 4)
+        .background(bg)
+        .clipShape(Capsule())
     }
 }
 

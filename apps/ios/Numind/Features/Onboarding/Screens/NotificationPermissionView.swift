@@ -26,19 +26,19 @@ struct NotificationPermissionView: View {
                         // Mock notifications
                         VStack(spacing: 10) {
                             notificationBanner(
-                                emoji: "\u{1F9ED}",
-                                bg: Theme.Colors.warmOrange,
+                                symbol: "flame.fill",
+                                bg: Theme.Colors.ember,
                                 body: "Your ring\u{2019}s still open \u{2014} 6 minutes closes it."
                             )
                             notificationBanner(
-                                emoji: "\u{1F504}",
+                                symbol: "arrow.triangle.2.circlepath",
                                 bg: Theme.Colors.mindTeal,
                                 body: "2 skills are fading \u{2014} 3 minutes brings them back.",
                                 scale: 0.96
                             )
                             notificationBanner(
-                                emoji: "\u{1F4C5}",
-                                bg: Theme.Colors.insightYellow,
+                                symbol: "calendar",
+                                bg: Theme.Colors.insightText,
                                 body: "Open enrollment is in 3 weeks \u{2014} you\u{2019}re 2 skills from Ready.",
                                 scale: 0.96,
                                 opacity: 0.5
@@ -49,14 +49,15 @@ struct NotificationPermissionView: View {
 
                         // Smart timing hint
                         HStack(spacing: 10) {
-                            Text("\u{1F515}")
-                                .font(.system(size: 16))
+                            Image(systemName: "bell.badge.fill")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.mindTeal)
                             Text("Smart timing \u{2014} we won\u{2019}t bug you when you\u{2019}re busy.")
                                 .font(.system(size: 13))
                                 .foregroundStyle(Theme.Colors.deepNavy)
                         }
                         .padding(14)
-                        .background(Theme.Colors.primaryBlueTint)
+                        .background(Theme.Colors.mindTealTint)
                         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                         .padding(.top, 24)
                     }
@@ -91,10 +92,11 @@ struct NotificationPermissionView: View {
         }
     }
 
-    private func notificationBanner(emoji: String, bg: Color, body: String, scale: CGFloat = 1.0, opacity: Double = 1.0) -> some View {
+    private func notificationBanner(symbol: String, bg: Color, body: String, scale: CGFloat = 1.0, opacity: Double = 1.0) -> some View {
         HStack(spacing: 12) {
-            Text(emoji)
-                .font(.system(size: 18))
+            Image(systemName: symbol)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(.white)
                 .frame(width: 36, height: 36)
                 .background(bg)
                 .clipShape(RoundedRectangle(cornerRadius: 9))

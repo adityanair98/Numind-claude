@@ -68,7 +68,7 @@ struct ModuleDetailView: View {
 
             // Watermark glyph
             Text(viewModel.module.glyph)
-                .font(.system(size: 240, weight: .heavy, design: .rounded))
+                .font(.system(size: 240, weight: .heavy))
                 .foregroundStyle(.white.opacity(0.13))
                 .offset(x: 100, y: -30)
                 .allowsHitTesting(false)
@@ -113,7 +113,8 @@ struct ModuleDetailView: View {
                 }
                 .padding(.top, 8)
 
-                // Mascot + title
+                // Icon + title (Phase 13: mascot emoji reserved for the
+                // milestone celebration screen — use the topic SF Symbol here)
                 HStack(alignment: .bottom, spacing: 14) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 24, style: .continuous)
@@ -122,8 +123,9 @@ struct ModuleDetailView: View {
                                 RoundedRectangle(cornerRadius: 24, style: .continuous)
                                     .strokeBorder(.white.opacity(0.35), lineWidth: 1)
                             )
-                        Text(viewModel.module.mascot)
-                            .font(.system(size: 40))
+                        Image(systemName: viewModel.module.icon)
+                            .font(.system(size: 36, weight: .semibold))
+                            .foregroundStyle(.white)
                             .shadow(color: .black.opacity(0.25), radius: 2, y: 1)
                     }
                     .frame(width: 78, height: 78)
@@ -131,7 +133,7 @@ struct ModuleDetailView: View {
 
                     VStack(alignment: .leading, spacing: 4) {
                         Text(viewModel.module.title)
-                            .font(.system(size: 26, weight: .bold, design: .rounded))
+                            .font(.system(size: 26, weight: .bold))
                             .foregroundStyle(.white)
                             .lineLimit(2)
                         Text(viewModel.module.subtitle)
@@ -198,7 +200,7 @@ struct ModuleDetailView: View {
     private func heroStat(value: String, label: String) -> some View {
         VStack(spacing: 2) {
             Text(value)
-                .font(.system(size: 18, weight: .heavy, design: .rounded))
+                .font(.system(size: 18, weight: .heavy, design: .monospaced))
                 .foregroundStyle(.white)
             Text(label.uppercased())
                 .font(.system(size: 10, weight: .bold))
@@ -300,7 +302,7 @@ struct ModuleDetailView: View {
                                 .foregroundStyle(Theme.Colors.mutedText)
                         } else {
                             Text("\(index + 1)")
-                                .font(.system(size: 14, weight: .heavy, design: .rounded))
+                                .font(.system(size: 14, weight: .heavy, design: .monospaced))
                                 .foregroundStyle(isAttempted ? Theme.Colors.warmOrange : accent)
                         }
                     }

@@ -106,7 +106,7 @@ struct DiagnosticResultsView: View {
                 .tracking(0.8)
                 .foregroundStyle(Theme.Colors.mindTeal)
             Text(summaryLine)
-                .font(.system(size: 17, weight: .bold, design: .rounded))
+                .font(.system(size: 17, weight: .bold))
                 .foregroundStyle(Theme.Colors.deepNavy)
                 .lineSpacing(3)
         }
@@ -129,7 +129,7 @@ struct DiagnosticResultsView: View {
         switch p {
         case .solidStart: return Theme.Colors.growthGreen
         case .shaky:      return Theme.Colors.warmOrange
-        case .newToYou:   return Theme.Colors.primaryBlue
+        case .newToYou:   return Theme.Colors.mutedText
         }
     }
 

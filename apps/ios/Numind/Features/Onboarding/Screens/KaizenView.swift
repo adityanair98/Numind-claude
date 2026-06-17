@@ -16,11 +16,11 @@ struct KaizenView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.deepNavy.ignoresSafeArea()
+            Theme.Colors.softBackground.ignoresSafeArea()
 
             // Halo
             RadialGradient(
-                colors: [Theme.Colors.insightYellow.opacity(0.16), .clear],
+                colors: [Theme.Colors.insightYellow.opacity(0.28), .clear],
                 center: .init(x: 0.8, y: 0.0),
                 startRadius: 0,
                 endRadius: 160
@@ -34,23 +34,23 @@ struct KaizenView: View {
                             .font(Theme.Typography.small)
                             .textCase(.uppercase)
                             .tracking(1.5)
-                            .foregroundStyle(.white.opacity(0.55))
+                            .foregroundStyle(Theme.Colors.mutedText)
                             .padding(.top, 4)
 
                         Text("\(minutesPerDay) minutes a day equals")
                             .font(Theme.Typography.body)
-                            .foregroundStyle(.white.opacity(0.7))
+                            .foregroundStyle(Theme.Colors.mutedText)
                             .padding(.top, 20)
 
                         Text("\(hoursPerYear) hours")
-                            .font(.system(size: 64, weight: .heavy, design: .rounded))
-                            .foregroundStyle(Theme.Colors.insightYellow)
+                            .font(.system(size: 64, weight: .heavy, design: .monospaced))
+                            .foregroundStyle(Theme.Colors.insightText)
                             .padding(.top, 6)
 
                         Text("this year")
                             .font(Theme.Typography.headline)
                             .fontWeight(.semibold)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Theme.Colors.deepNavy)
                             .padding(.top, 4)
 
                         // Compound chart card
@@ -58,16 +58,16 @@ struct KaizenView: View {
                             HStack {
                                 Text("A few minutes daily")
                                     .font(Theme.Typography.caption)
-                                    .foregroundStyle(.white.opacity(0.7))
+                                    .foregroundStyle(Theme.Colors.mutedText)
                                 Spacer()
                                 Text("every moment")
-                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .font(.system(size: 20, weight: .semibold))
                                     .foregroundStyle(Theme.Colors.mindTeal)
                             }
 
                             Text("this year, met prepared \u{2014} raises, renewals, bills, plans")
                                 .font(Theme.Typography.caption)
-                                .foregroundStyle(.white.opacity(0.55))
+                                .foregroundStyle(Theme.Colors.mutedText)
                                 .padding(.top, 2)
 
                             CompoundCurveView()
@@ -76,20 +76,20 @@ struct KaizenView: View {
                             HStack {
                                 Text("Day 1")
                                     .font(.system(size: 10))
-                                    .foregroundStyle(.white.opacity(0.5))
+                                    .foregroundStyle(Theme.Colors.mutedText)
                                 Spacer()
                                 Text("Day 365")
                                     .font(.system(size: 10))
-                                    .foregroundStyle(.white.opacity(0.5))
+                                    .foregroundStyle(Theme.Colors.mutedText)
                             }
                             .padding(.top, 6)
                         }
                         .padding(18)
-                        .background(.white.opacity(0.06))
+                        .background(Theme.Colors.cardBackground)
                         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                         .overlay(
                             RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                .strokeBorder(.white.opacity(0.10), lineWidth: 1)
+                                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
                         )
                         .padding(.top, 28)
 
@@ -97,7 +97,7 @@ struct KaizenView: View {
                              ? "Week one, tips stop needing your phone. Month one, you read a paycheck like a native. Month three, a dealer can\u{2019}t number you."
                              : "Short sessions. Real scenarios. No fluff \u{2014} a few minutes a day keeps your instincts sharp for whichever decision is next.")
                             .font(.system(size: 15))
-                            .foregroundStyle(.white.opacity(0.78))
+                            .foregroundStyle(Theme.Colors.deepNavy)
                             .lineSpacing(4)
                             .padding(.top, 20)
                     }
@@ -105,17 +105,8 @@ struct KaizenView: View {
                     .padding(.bottom, 120)
                 }
 
-                onboardingFooter(dark: true) {
-                    Button(action: onContinue) {
-                        Text("I\u{2019}m in")
-                            .font(Theme.Typography.headline)
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: Theme.Spacing.buttonHeight)
-                            .background(.white)
-                            .clipShape(Capsule())
-                    }
-                    .buttonStyle(.plain)
+                onboardingFooter(dark: false) {
+                    PillButton("I\u{2019}m in") { onContinue() }
                 }
             }
         }

@@ -24,17 +24,11 @@ struct StreakStripCard: View {
     private var flameTile: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(
-                    LinearGradient(
-                        colors: [Theme.Colors.insightYellow, Theme.Colors.warmOrange],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .shadow(color: Theme.Colors.warmOrange.opacity(0.35), radius: 7, x: 0, y: 6)
+                .fill(Theme.Colors.emberTint)
+                .shadow(color: Theme.Colors.ember.opacity(0.25), radius: 7, x: 0, y: 6)
             Image(systemName: "flame.fill")
                 .font(.system(size: 22, weight: .bold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Theme.Colors.ember)
         }
         .frame(width: 46, height: 46)
     }
@@ -45,7 +39,7 @@ struct StreakStripCard: View {
         VStack(alignment: .leading, spacing: 3) {
             HStack(alignment: .firstTextBaseline, spacing: 6) {
                 Text("\(streak)")
-                    .font(.system(size: 26, weight: .bold, design: .rounded))
+                    .font(.system(size: 26, weight: .bold, design: .monospaced))
                     .foregroundStyle(Theme.Colors.deepNavy)
                 Text("day streak")
                     .font(Theme.Typography.small)
@@ -54,7 +48,7 @@ struct StreakStripCard: View {
             HStack(spacing: 8) {
                 Text(tierMessage)
                     .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Theme.Colors.warmOrange)
+                    .foregroundStyle(Theme.Colors.ember)
 
                 if availableFreezes > 0 {
                     freezeBadge
@@ -70,17 +64,17 @@ struct StreakStripCard: View {
             Image(systemName: "snowflake")
                 .font(.system(size: 10, weight: .bold))
             Text("\u{00D7}\(availableFreezes)")
-                .font(.system(size: 11, weight: .bold, design: .rounded))
+                .font(.system(size: 11, weight: .bold, design: .monospaced))
         }
-        .foregroundStyle(Theme.Colors.primaryBlue)
+        .foregroundStyle(Theme.Colors.mindTeal)
         .padding(.horizontal, 6)
         .padding(.vertical, 2)
-        .background(Theme.Colors.primaryBlue.opacity(0.1))
+        .background(Theme.Colors.mindTeal.opacity(0.1))
         .clipShape(Capsule())
     }
 
     private var tierMessage: String {
-        if streak >= 7 { return "You're on fire \u{1F525}" }
+        if streak >= 7 { return "You're on fire" }
         if streak >= 3 { return "Nice rhythm" }
         return "Building momentum"
     }
@@ -99,17 +93,17 @@ struct StreakStripCard: View {
                     ZStack {
                         if done {
                             Circle()
-                                .fill(Theme.Colors.primaryBlue)
-                                .shadow(color: Theme.Colors.primaryBlue.opacity(0.4), radius: 3, x: 0, y: 2)
+                                .fill(Theme.Colors.mindTeal)
+                                .shadow(color: Theme.Colors.mindTeal.opacity(0.4), radius: 3, x: 0, y: 2)
                             Image(systemName: "checkmark")
                                 .font(.system(size: 11, weight: .bold))
                                 .foregroundStyle(.white)
                         } else if isToday {
                             Circle()
-                                .fill(Color.white)
+                                .fill(Theme.Colors.cardBackground)
                                 .overlay(
                                     Circle()
-                                        .stroke(Theme.Colors.primaryBlue, style: StrokeStyle(lineWidth: 2, dash: [3, 3]))
+                                        .stroke(Theme.Colors.mindTeal, style: StrokeStyle(lineWidth: 2, dash: [3, 3]))
                                 )
                         } else {
                             Circle()

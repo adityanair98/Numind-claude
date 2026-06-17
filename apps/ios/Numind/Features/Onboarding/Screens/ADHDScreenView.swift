@@ -59,8 +59,9 @@ struct ADHDScreenView: View {
 
     private var revealCard: some View {
         HStack(alignment: .top, spacing: 12) {
-            Text("\u{1F331}")
-                .font(.system(size: 22))
+            Image(systemName: "leaf.fill")
+                .font(.system(size: 18))
+                .foregroundStyle(Theme.Colors.mindTeal)
                 .frame(width: 40, height: 40)
                 .background(Theme.Colors.cardBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 12))

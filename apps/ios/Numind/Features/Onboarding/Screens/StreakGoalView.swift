@@ -6,9 +6,9 @@ struct StreakGoalView: View {
     let onContinue: () -> Void
 
     private let options: [(days: Int, label: String, sub: String, glyph: String, color: Color, recommended: Bool)] = [
-        (3, "3 days", "Build the habit", "\u{1F525}", Theme.Colors.warmOrange, false),
-        (7, "7 days", "First core skills at solid", "\u{1F9ED}", Theme.Colors.insightYellow, true),
-        (14, "14 days", "Within reach of your first Ready", "\u{26A1}", Theme.Colors.primaryBlue, false),
+        (3, "3 days", "Build the habit", "flame.fill", Theme.Colors.ember, false),
+        (7, "7 days", "First core skills at solid", "signpost.right.fill", Theme.Colors.insightText, true),
+        (14, "14 days", "Within reach of your first Ready", "bolt.fill", Theme.Colors.mindTeal, false),
     ]
 
     private var ctaLabel: String {
@@ -42,8 +42,9 @@ struct StreakGoalView: View {
                                     viewModel.setStreakGoal(opt.days)
                                 } label: {
                                     HStack(spacing: 14) {
-                                        Text(opt.glyph)
-                                            .font(.system(size: 28))
+                                        Image(systemName: opt.glyph)
+                                            .font(.system(size: 24, weight: .semibold))
+                                            .foregroundStyle(opt.color)
                                             .frame(width: 56, height: 56)
                                             .background(opt.color.opacity(0.14))
                                             .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -51,7 +52,7 @@ struct StreakGoalView: View {
                                         VStack(alignment: .leading, spacing: 2) {
                                             HStack(alignment: .firstTextBaseline, spacing: 8) {
                                                 Text(opt.label)
-                                                    .font(.system(size: 22, weight: .heavy, design: .rounded))
+                                                    .font(.system(size: 22, weight: .heavy))
                                                     .foregroundStyle(Theme.Colors.deepNavy)
 
                                                 if opt.recommended {

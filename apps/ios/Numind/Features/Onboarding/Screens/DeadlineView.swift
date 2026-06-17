@@ -18,13 +18,16 @@ struct DeadlineView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.deepNavy.ignoresSafeArea()
+            Theme.Colors.softBackground.ignoresSafeArea()
 
+            // Single warm accent block — an ember/insight glow that fades into
+            // the warm page rather than a deep-navy hero.
             RadialGradient(
-                colors: [Theme.Colors.insightYellow.opacity(0.14), .clear],
+                colors: [Theme.Colors.insightYellowTint, .clear],
                 center: .center, startRadius: 0, endRadius: 180
             )
             .offset(y: -60)
+            .ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView {
@@ -39,17 +42,8 @@ struct DeadlineView: View {
                     .padding(.bottom, 120)
                 }
 
-                onboardingFooter(dark: true) {
-                    Button(action: onContinue) {
-                        Text("Let\u{2019}s get ready")
-                            .font(Theme.Typography.headline)
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: Theme.Spacing.buttonHeight)
-                            .background(.white)
-                            .clipShape(Capsule())
-                    }
-                    .buttonStyle(.plain)
+                onboardingFooter(dark: false) {
+                    PillButton("Let\u{2019}s get ready") { onContinue() }
                 }
             }
         }
@@ -65,22 +59,22 @@ struct DeadlineView: View {
             .font(Theme.Typography.small)
             .textCase(.uppercase)
             .tracking(1.5)
-            .foregroundStyle(.white.opacity(0.55))
+            .foregroundStyle(Theme.Colors.mutedText)
             .padding(.top, 4)
 
         HStack(alignment: .firstTextBaseline, spacing: 8) {
             Text("\(days)")
-                .font(.system(size: 64, weight: .heavy, design: .rounded))
-                .foregroundStyle(Theme.Colors.insightYellow)
+                .font(.system(size: 64, weight: .heavy, design: .monospaced))
+                .foregroundStyle(Theme.Colors.insightText)
             Text("days")
-                .font(.system(size: 24, weight: .semibold, design: .rounded))
-                .foregroundStyle(.white.opacity(0.7))
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundStyle(Theme.Colors.mutedText)
         }
         .padding(.top, 16)
 
         Text("\(deadline.label) \(deadline.date.formatted(.dateTime.month(.wide).day())).")
             .font(.system(size: 17, weight: .semibold))
-            .foregroundStyle(.white)
+            .foregroundStyle(Theme.Colors.deepNavy)
             .padding(.top, 6)
 
         deadlineCard(
@@ -97,12 +91,12 @@ struct DeadlineView: View {
             .font(Theme.Typography.small)
             .textCase(.uppercase)
             .tracking(1.5)
-            .foregroundStyle(.white.opacity(0.55))
+            .foregroundStyle(Theme.Colors.mutedText)
             .padding(.top, 4)
 
         Text(undatedHeadline)
-            .font(.system(size: 26, weight: .bold, design: .rounded))
-            .foregroundStyle(.white)
+            .font(.system(size: 26, weight: .bold))
+            .foregroundStyle(Theme.Colors.deepNavy)
             .lineSpacing(3)
             .padding(.top, 14)
 
@@ -139,15 +133,15 @@ struct DeadlineView: View {
     private func deadlineCard(_ text: String) -> some View {
         Text(text)
             .font(.system(size: 15))
-            .foregroundStyle(.white.opacity(0.85))
+            .foregroundStyle(Theme.Colors.deepNavy)
             .lineSpacing(4)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(18)
-            .background(.white.opacity(0.06))
+            .background(Theme.Colors.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .strokeBorder(.white.opacity(0.12), lineWidth: 1)
+                    .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
             )
     }
 }

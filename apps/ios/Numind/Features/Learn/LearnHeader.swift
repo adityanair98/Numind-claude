@@ -11,7 +11,7 @@ struct LearnHeader: View {
             topRow
             VStack(alignment: .leading, spacing: 4) {
                 Text("Your modules")
-                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                    .font(.system(size: 30, weight: .bold))
                     .foregroundStyle(Theme.Colors.deepNavy)
                 Text("\(totalMastered) lessons mastered \u{00B7} \(totalLessons - totalMastered) to go")
                     .font(Theme.Typography.caption)

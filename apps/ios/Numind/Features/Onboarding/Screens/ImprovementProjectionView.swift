@@ -20,11 +20,11 @@ struct ImprovementProjectionView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.deepNavy.ignoresSafeArea()
+            Theme.Colors.softBackground.ignoresSafeArea()
 
-            // Halo
+            // Warm insight halo fading into the background
             RadialGradient(
-                colors: [Theme.Colors.insightYellow.opacity(0.16), .clear],
+                colors: [Theme.Colors.insightYellowTint, .clear],
                 center: .center,
                 startRadius: 0,
                 endRadius: 160
@@ -38,46 +38,46 @@ struct ImprovementProjectionView: View {
                             .font(Theme.Typography.small)
                             .textCase(.uppercase)
                             .tracking(1.5)
-                            .foregroundStyle(.white.opacity(0.55))
+                            .foregroundStyle(Theme.Colors.mindTeal)
                             .padding(.top, 4)
 
                         Text("Here\u{2019}s what you\u{2019}ll unlock:")
-                            .font(.system(size: 24, weight: .semibold, design: .rounded))
-                            .foregroundStyle(.white)
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.deepNavy)
                             .lineSpacing(2)
                             .padding(.top, 10)
 
                         VStack(spacing: 12) {
                             unlockRow(
-                                glyph: "\u{2705}",
+                                icon: "checkmark.seal.fill",
                                 color: Theme.Colors.mindTeal,
                                 title: "\(skillsEstimate) core skills at solid",
                                 sub: "From \(packTitle)"
                             )
                             unlockRow(
-                                glyph: "\u{1F3AF}",
-                                color: Theme.Colors.primaryBlue,
+                                icon: "target",
+                                color: Theme.Colors.deepNavy,
                                 title: "~\(questionsEstimate) real questions practiced",
                                 sub: "Tuned to where your diagnostic placed you"
                             )
                             if viewModel.isHabitBuyer {
                                 unlockRow(
-                                    glyph: "\u{26A1}",
-                                    color: Theme.Colors.insightYellow,
+                                    icon: "bolt.fill",
+                                    color: Theme.Colors.insightText,
                                     title: "Answers that arrive before you reach for your phone",
                                     sub: "Second nature \u{2014} that\u{2019}s the whole point"
                                 )
                             } else {
                                 unlockRow(
-                                    glyph: "\u{1F9ED}",
-                                    color: Theme.Colors.insightYellow,
+                                    icon: "signpost.right.fill",
+                                    color: Theme.Colors.insightText,
                                     title: "On track to Ready by \(readyDateText)",
                                     sub: "Earned, not granted \u{2014} that\u{2019}s the point"
                                 )
                             }
                             unlockRow(
-                                glyph: "\u{1F504}",
-                                color: Theme.Colors.warmOrange,
+                                icon: "arrow.triangle.2.circlepath",
+                                color: Theme.Colors.ember,
                                 title: "Your first refresh",
                                 sub: "The moment a skill tries to fade \u{2014} and you catch it"
                             )
@@ -86,7 +86,7 @@ struct ImprovementProjectionView: View {
 
                         Text("Start with a free trial and see the improvement for yourself.")
                             .font(.system(size: 13))
-                            .foregroundStyle(.white.opacity(0.55))
+                            .foregroundStyle(Theme.Colors.mutedText)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
                             .padding(.top, 22)
@@ -95,26 +95,18 @@ struct ImprovementProjectionView: View {
                     .padding(.bottom, 120)
                 }
 
-                onboardingFooter(dark: true) {
-                    Button(action: onContinue) {
-                        Text("Let me try")
-                            .font(Theme.Typography.headline)
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: Theme.Spacing.buttonHeight)
-                            .background(.white)
-                            .clipShape(Capsule())
-                    }
-                    .buttonStyle(.plain)
+                onboardingFooter(dark: false) {
+                    PillButton("Let me try") { onContinue() }
                 }
             }
         }
     }
 
-    private func unlockRow(glyph: String, color: Color, title: String, sub: String) -> some View {
+    private func unlockRow(icon: String, color: Color, title: String, sub: String) -> some View {
         HStack(spacing: 14) {
-            Text(glyph)
-                .font(.system(size: 22))
+            Image(systemName: icon)
+                .font(.system(size: 20, weight: .semibold))
+                .foregroundStyle(color)
                 .frame(width: 44, height: 44)
                 .background(color.opacity(0.15))
                 .clipShape(RoundedRectangle(cornerRadius: 14))
@@ -122,19 +114,19 @@ struct ImprovementProjectionView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Theme.Colors.deepNavy)
                 Text(sub)
                     .font(.system(size: 13))
-                    .foregroundStyle(.white.opacity(0.55))
+                    .foregroundStyle(Theme.Colors.mutedText)
             }
             Spacer()
         }
         .padding(14)
-        .background(.white.opacity(0.05))
+        .background(Theme.Colors.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .strokeBorder(.white.opacity(0.10), lineWidth: 1)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
         )
     }
 }

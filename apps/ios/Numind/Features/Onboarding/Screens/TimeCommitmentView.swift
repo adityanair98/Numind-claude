@@ -7,9 +7,9 @@ struct TimeCommitmentView: View {
 
     private let options: [(minutes: Int, label: String, sub: String, color: Color)] = [
         (5, "5 minutes", "Quick daily boost", Theme.Colors.mindTeal),
-        (10, "10 minutes", "Solid daily practice", Theme.Colors.primaryBlue),
+        (10, "10 minutes", "Solid daily practice", Theme.Colors.topicPaycheck),
         (15, "15 minutes", "Serious skill building", Theme.Colors.warmOrange),
-        (20, "20+ minutes", "Maximum growth", Theme.Colors.errorSoftRed),
+        (20, "20+ minutes", "Maximum growth", Theme.Colors.ember),
     ]
 
     var body: some View {
@@ -41,7 +41,7 @@ struct TimeCommitmentView: View {
                                     viewModel.setDailyMinutes(opt.minutes)
                                 } icon: {
                                     Text(minuteLabel)
-                                        .font(.system(size: 17, weight: .bold))
+                                        .font(.system(size: 17, weight: .bold, design: .monospaced))
                                         .foregroundStyle(opt.color)
                                         .frame(width: 44, height: 44)
                                         .background(opt.color.opacity(0.12))
@@ -53,14 +53,15 @@ struct TimeCommitmentView: View {
 
                         // Hint
                         HStack(spacing: 8) {
-                            Text("\u{1F4A1}")
+                            Image(systemName: "lightbulb.fill")
                                 .font(.system(size: 14))
+                                .foregroundStyle(Theme.Colors.mindTeal)
                             Text("You can always do more with practice modes beyond your daily goal.")
                                 .font(.system(size: 13))
                                 .foregroundStyle(Theme.Colors.deepNavy)
                         }
                         .padding(14)
-                        .background(Theme.Colors.primaryBlueTint)
+                        .background(Theme.Colors.mindTealTint)
                         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                         .padding(.top, 18)
                     }

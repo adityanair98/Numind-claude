@@ -44,7 +44,7 @@ struct SharpnessCheckResultView: View {
                     .foregroundStyle(Theme.Colors.mutedText)
 
                 Text("\(record.correct) of \(record.total)")
-                    .font(.system(size: 40, weight: .heavy, design: .rounded))
+                    .font(.system(size: 40, weight: .heavy, design: .monospaced))
                     .foregroundStyle(Theme.Colors.deepNavy)
 
                 // Day-1 comparison (capability words, favorable-forward).
@@ -86,10 +86,10 @@ struct SharpnessCheckResultView: View {
             Button(action: { dismiss() }) {
                 Text("Done")
                     .font(Theme.Typography.headline)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Theme.Colors.ctaLabel)
                     .frame(maxWidth: .infinity)
                     .frame(height: Theme.Spacing.buttonHeight)
-                    .background(Theme.Colors.deepNavy)
+                    .background(Theme.Colors.ctaFill)
                     .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.button, style: .continuous))
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)

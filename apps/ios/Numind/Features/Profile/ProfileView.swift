@@ -66,11 +66,11 @@ struct ProfileView: View {
             HStack(spacing: 14) {
                 ZStack {
                     Circle()
-                        .fill(Theme.Colors.primaryBlueTint)
+                        .fill(Theme.Colors.mindTealTint)
                         .frame(width: 56, height: 56)
                     Text(String(userName.prefix(1)).uppercased())
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
-                        .foregroundStyle(Theme.Colors.primaryBlue)
+                        .font(.system(size: 22, weight: .bold))
+                        .foregroundStyle(Theme.Colors.mindTeal)
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     Text(userName)
@@ -83,11 +83,12 @@ struct ProfileView: View {
                 Spacer()
                 if progressStore.streak > 0 {
                     VStack(spacing: 2) {
-                        Text("🔥")
+                        Image(systemName: "flame.fill")
                             .font(.system(size: 22))
+                            .foregroundStyle(Theme.Colors.ember)
                         Text("\(progressStore.streak)")
-                            .font(.system(size: 13, weight: .bold, design: .rounded))
-                            .foregroundStyle(Theme.Colors.insightText)
+                            .font(.system(size: 13, weight: .bold, design: .monospaced))
+                            .foregroundStyle(Theme.Colors.ember)
                     }
                 }
             }
@@ -101,7 +102,7 @@ struct ProfileView: View {
             sectionLabel("Your numbers")
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                statTile(icon: "bolt.fill",   tint: Theme.Colors.primaryBlue,
+                statTile(icon: "bolt.fill",   tint: Theme.Colors.deepNavy,
                          value: "\(progressStore.totalSessions)", label: "Sessions")
                 statTile(icon: "checkmark.seal.fill", tint: Theme.Colors.insightYellow,
                          value: "\(progressStore.masteredLessonIds.count)", label: "Lessons mastered")
@@ -109,7 +110,7 @@ struct ProfileView: View {
                          value: progressStore.totalSessions > 0
                              ? "\(Int(progressStore.accuracy * 100))%" : "—",
                          label: "Accuracy")
-                statTile(icon: "flame.fill",  tint: Theme.Colors.errorSoftRed,
+                statTile(icon: "flame.fill",  tint: Theme.Colors.ember,
                          value: progressStore.bestStreak > 0 ? "\(progressStore.bestStreak)" : "—",
                          label: "Best streak")
             }
@@ -122,7 +123,7 @@ struct ProfileView: View {
                 IconTile(systemName: icon, tintColor: tint, size: 36)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(value)
-                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .font(.system(size: 26, weight: .bold, design: .monospaced))
                         .foregroundStyle(Theme.Colors.deepNavy)
                     Text(label)
                         .font(Theme.Typography.small)
@@ -372,7 +373,7 @@ struct ProfileView: View {
             sectionLabel("Appearance")
             NumindCard {
                 HStack(spacing: 14) {
-                    IconTile(systemName: "circle.lefthalf.filled", tintColor: Theme.Colors.primaryBlue, size: 36)
+                    IconTile(systemName: "circle.lefthalf.filled", tintColor: Theme.Colors.deepNavy, size: 36)
                     Text("Theme")
                         .font(Theme.Typography.body)
                         .fontWeight(.semibold)

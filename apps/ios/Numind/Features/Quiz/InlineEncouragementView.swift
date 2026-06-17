@@ -47,10 +47,10 @@ struct InlineEncouragementView: View {
                 } label: {
                     Text("Continue")
                         .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(Theme.Colors.primaryBlue)
+                        .foregroundStyle(Theme.Colors.mindTeal)
                         .padding(.horizontal, 32)
                         .padding(.vertical, 12)
-                        .background(Theme.Colors.primaryBlueTint)
+                        .background(Theme.Colors.mindTealTint)
                         .clipShape(Capsule())
                 }
                 .buttonStyle(.plain)

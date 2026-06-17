@@ -118,7 +118,7 @@ struct LessonView: View {
                             ToolbarItem(placement: .confirmationAction) {
                                 Button("Done") { showCalc = false }
                                     .fontWeight(.semibold)
-                                    .foregroundStyle(Theme.Colors.primaryBlue)
+                                    .foregroundStyle(Theme.Colors.mindTeal)
                             }
                         }
                 }

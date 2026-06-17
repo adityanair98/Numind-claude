@@ -12,7 +12,7 @@ struct MirroringView: View {
 
             // Soft halo
             RadialGradient(
-                colors: [Theme.Colors.primaryBlue.opacity(0.10), .clear],
+                colors: [Theme.Colors.mindTealTint, .clear],
                 center: .center,
                 startRadius: 0,
                 endRadius: 160
@@ -27,7 +27,7 @@ struct MirroringView: View {
                             .font(Theme.Typography.small)
                             .textCase(.uppercase)
                             .tracking(1.5)
-                            .foregroundStyle(Theme.Colors.primaryBlue)
+                            .foregroundStyle(Theme.Colors.mindTeal)
                             .padding(.top, 4)
 
                         Text(MirroringCopy.headline(forPackId: viewModel.signals.focusPackId))
@@ -89,7 +89,7 @@ struct MirroringView: View {
                 if let tag = bullet.tag {
                     Text(tag)
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(Theme.Colors.primaryBlue)
+                        .foregroundStyle(Theme.Colors.mindTeal)
                 }
                 Text(bullet.text)
                     .font(.system(size: 15))

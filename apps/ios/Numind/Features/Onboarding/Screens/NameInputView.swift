@@ -24,20 +24,20 @@ struct NameInputView: View {
 
                 // Text input
                 TextField("Your name", text: $nameInput)
-                    .font(.system(size: 22, weight: .semibold, design: .rounded))
+                    .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .padding(.horizontal, 18)
                     .padding(.vertical, 18)
-                    .background(.white)
+                    .background(Theme.Colors.cardBackground)
                     .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                     .overlay(
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
                             .strokeBorder(
-                                isFocused ? Theme.Colors.primaryBlue : Theme.Colors.hairline,
+                                isFocused ? Theme.Colors.mindTeal : Theme.Colors.hairline,
                                 lineWidth: 1.5
                             )
                     )
-                    .shadow(color: isFocused ? Theme.Colors.primaryBlue.opacity(0.12) : .clear, radius: 9, x: 0, y: 3)
+                    .shadow(color: isFocused ? Theme.Colors.mindTeal.opacity(0.12) : .clear, radius: 9, x: 0, y: 3)
                     .focused($isFocused)
                     .submitLabel(.done)
                     .onSubmit { saveName() }

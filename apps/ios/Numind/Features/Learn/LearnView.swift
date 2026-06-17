@@ -235,7 +235,7 @@ struct LearnView: View {
 
                     VStack(alignment: .leading, spacing: 3) {
                         Text(section.module.title)
-                            .font(.system(size: 19, weight: .bold, design: .rounded))
+                            .font(.system(size: 19, weight: .bold))
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .lineLimit(1)
                         Text(section.module.subtitle)
@@ -338,7 +338,7 @@ struct LearnView: View {
                     .font(.system(size: 14, weight: .bold))
                     .foregroundStyle(.white)
                 Text("TOPIC COMPLETE")
-                    .font(.system(size: 13, weight: .heavy, design: .rounded))
+                    .font(.system(size: 13, weight: .heavy))
                     .foregroundStyle(.white)
                     .tracking(0.5)
             }
@@ -509,7 +509,7 @@ struct LearnView: View {
     private func questNodeLabel(_ node: LearnViewModel.PathNode, accent: Color) -> some View {
         VStack(spacing: 3) {
             Text(node.displayTitle)
-                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(node.state == .notYetSuggested ? Theme.Colors.mutedText : Theme.Colors.deepNavy)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
@@ -564,7 +564,7 @@ struct LearnView: View {
                     .foregroundStyle(accent)
             } else {
                 Text("\(node.lessonIndexInModule + 1)")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .font(.system(size: 22, weight: .bold, design: .monospaced))
                     .foregroundStyle(accent)
             }
         case .notYetSuggested:
@@ -577,7 +577,7 @@ struct LearnView: View {
                     .foregroundStyle(Theme.Colors.mutedText)
             } else {
                 Text("\(node.lessonIndexInModule + 1)")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .font(.system(size: 22, weight: .bold, design: .monospaced))
                     .foregroundStyle(Theme.Colors.mutedText)
             }
         }
@@ -591,7 +591,7 @@ struct LearnView: View {
         switch node.state {
         case .mastered:  return node.isReview ? Theme.Colors.insightYellow : accent
         case .current:   return node.isReview ? Theme.Colors.insightYellow : accent
-        case .attempted: return Color.orange
+        case .attempted: return Theme.Colors.warmOrange
         case .available: return Theme.Colors.cardBackground
         case .notYetSuggested: return Theme.Colors.mutedTint
         }
@@ -601,7 +601,7 @@ struct LearnView: View {
         switch node.state {
         case .mastered:  return node.isReview ? Theme.Colors.insightYellow : accent
         case .current:   return node.isReview ? Theme.Colors.insightYellow : accent
-        case .attempted: return Color.orange
+        case .attempted: return Theme.Colors.warmOrange
         case .available: return node.isReview ? Theme.Colors.insightYellow.opacity(0.5) : accent.opacity(0.4)
         case .notYetSuggested: return Theme.Colors.hairline
         }
@@ -620,7 +620,7 @@ struct LearnView: View {
     private func subtitleColor(for node: LearnViewModel.PathNode, accent: Color) -> Color {
         switch node.state {
         case .mastered:           return accent
-        case .attempted:          return Color.orange
+        case .attempted:          return Theme.Colors.warmOrange
         case .current:            return accent
         case .available, .notYetSuggested: return Theme.Colors.mutedText
         }
@@ -699,7 +699,7 @@ private struct QuestStartBadge: View {
 
     var body: some View {
         Text(label)
-            .font(.system(size: 11, weight: .black, design: .rounded))
+            .font(.system(size: 11, weight: .black))
             .foregroundStyle(textColor)
             .padding(.horizontal, 16)
             .padding(.vertical, 5)

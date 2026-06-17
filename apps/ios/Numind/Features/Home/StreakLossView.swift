@@ -60,7 +60,7 @@ struct StreakLossView: View {
                         onDismiss()
                     } label: {
                         Text("Start fresh")
-                            .font(.system(size: 17, weight: .semibold, design: .rounded))
+                            .font(.system(size: 17, weight: .semibold))
                             .foregroundStyle(Theme.Colors.mutedText)
                             .frame(maxWidth: .infinity)
                             .frame(height: 52)

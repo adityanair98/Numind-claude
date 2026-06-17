@@ -15,11 +15,11 @@ struct PreparingResultsView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.deepNavy.ignoresSafeArea()
+            Theme.Colors.softBackground.ignoresSafeArea()
 
-            // Blue halo
+            // Teal halo fading into the warm background
             RadialGradient(
-                colors: [Theme.Colors.primaryBlue.opacity(0.30), .clear],
+                colors: [Theme.Colors.mindTealTint, .clear],
                 center: .center,
                 startRadius: 0,
                 endRadius: 140
@@ -48,7 +48,7 @@ struct PreparingResultsView: View {
 
                 Text("This usually takes about 2 seconds.")
                     .font(Theme.Typography.caption)
-                    .foregroundStyle(.white.opacity(0.45))
+                    .foregroundStyle(Theme.Colors.mutedText)
                     .padding(.top, 36)
 
                 Spacer()
@@ -70,15 +70,15 @@ struct PreparingResultsView: View {
                         .foregroundStyle(.white)
                 } else if loading {
                     Circle()
-                        .strokeBorder(.white.opacity(0.4), lineWidth: 1.5)
+                        .strokeBorder(Theme.Colors.mindTeal.opacity(0.4), lineWidth: 1.5)
                         .frame(width: 22, height: 22)
                     Circle()
-                        .fill(Theme.Colors.insightYellow)
+                        .fill(Theme.Colors.mindTeal)
                         .frame(width: 8, height: 8)
-                        .shadow(color: Theme.Colors.insightYellow.opacity(0.8), radius: 5)
+                        .shadow(color: Theme.Colors.mindTeal.opacity(0.8), radius: 5)
                 } else {
                     Circle()
-                        .strokeBorder(.white.opacity(0.4), lineWidth: 1.5)
+                        .strokeBorder(Theme.Colors.track, lineWidth: 1.5)
                         .frame(width: 22, height: 22)
                 }
             }
@@ -86,7 +86,7 @@ struct PreparingResultsView: View {
 
             Text(text + (loading ? "\u{2026}" : ""))
                 .font(.system(size: 16, weight: .medium))
-                .foregroundStyle(done ? .white.opacity(0.55) : .white)
+                .foregroundStyle(done ? Theme.Colors.mutedText : Theme.Colors.deepNavy)
         }
         .animation(.easeOut(duration: 0.3), value: step)
     }

@@ -5,10 +5,10 @@ struct TrialReminderView: View {
     @ObservedObject var viewModel: OnboardingViewModel
     let onContinue: () -> Void
 
-    private let options: [(days: Int?, label: String, sub: String, emoji: String, color: Color)] = [
-        (1, "1 day before", "We\u{2019}ll ping on day 4 of your trial", "\u{23F0}", Theme.Colors.primaryBlue),
-        (2, "2 days before", "We\u{2019}ll ping on day 3 of your trial", "\u{1F4C5}", Theme.Colors.mindTeal),
-        (nil, "Don\u{2019}t remind me", "I\u{2019}ve got my own calendar", "\u{1F515}", Theme.Colors.mutedText),
+    private let options: [(days: Int?, label: String, sub: String, symbol: String, color: Color)] = [
+        (1, "1 day before", "We\u{2019}ll ping on day 4 of your trial", "alarm.fill", Theme.Colors.mindTeal),
+        (2, "2 days before", "We\u{2019}ll ping on day 3 of your trial", "calendar", Theme.Colors.mindTeal),
+        (nil, "Don\u{2019}t remind me", "I\u{2019}ve got my own calendar", "bell.slash.fill", Theme.Colors.mutedText),
     ]
 
     // Track explicit selection since nil could mean "don't remind" or "not yet selected"
@@ -33,8 +33,9 @@ struct TrialReminderView: View {
 
                         // Trust badge
                         HStack(spacing: 10) {
-                            Text("\u{1F514}")
-                                .font(.system(size: 14))
+                            Image(systemName: "bell.fill")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.mindTeal)
                             Text("Always 24h notice. Always one tap to cancel.")
                                 .font(.system(size: 13))
                                 .foregroundStyle(Theme.Colors.deepNavy)
@@ -56,7 +57,7 @@ struct TrialReminderView: View {
                                     viewModel.setTrialReminder(opt.days)
                                     hasSelected = true
                                 } icon: {
-                                    OnboardingIconTile(emoji: opt.emoji, color: opt.color)
+                                    OnboardingIconTile(systemImage: opt.symbol, color: opt.color)
                                 }
                             }
                         }
