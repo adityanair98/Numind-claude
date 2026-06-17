@@ -6,12 +6,6 @@ struct LearnView: View {
 
     // MARK: - Presentation state
 
-    /// Top-level segmented tab inside the Learn tab. Explore = module-by-module
-    /// topic library (Phase 10: quest framing retired). Paths = curated
-    /// Life-Event Packs grid.
-    private enum LearnTab: Hashable { case worlds, paths }
-    @State private var selectedTab: LearnTab = .worlds
-
     private struct LessonCard: Identifiable {
         let id: String
         let vm: LessonViewModel
@@ -26,12 +20,6 @@ struct LearnView: View {
     @State private var selectedReview: ReviewCard? = nil
 
     @State private var presentedPack: Pack? = nil
-
-    /// Currently-visible page in the Worlds carousel. 0-indexed across
-    /// `viewModel.sections`. Defaults to the section containing the
-    /// "current" lesson node so a fresh user lands on the right world.
-    @State private var currentWorldIndex: Int = 0
-    @State private var carouselInitialized = false
 
     /// Set when a world's Continue CTA is tapped. While non-nil the carousel
     /// is hidden and the quest map for that world fills the tab. A back
@@ -90,27 +78,6 @@ struct LearnView: View {
         }
     }
 
-    // MARK: - Worlds carousel (Brilliant-style page swipe)
-
-    private var worldsCarousel: some View {
-        TabView(selection: $currentWorldIndex) {
-            ForEach(Array(viewModel.sections.enumerated()), id: \.element.id) { idx, section in
-                WorldHeroPage(
-                    section: section,
-                    onContinue: { _ in
-                        withAnimation(.easeInOut(duration: 0.25)) {
-                            openedWorldId = section.id
-                        }
-                    }
-                )
-                .tag(idx)
-                .environmentObject(progressStore)
-            }
-        }
-        .tabViewStyle(.page(indexDisplayMode: .always))
-        .indexViewStyle(.page(backgroundDisplayMode: .always))
-    }
-
     /// Renders the existing worldBanner + sectionNodes + worldConqueredBanner
     /// for a single section as a full-screen view with a back-chevron row at
     /// the top to return to the carousel. Mirrors the Brilliant world-detail
@@ -152,107 +119,6 @@ struct LearnView: View {
             }
         }
     }
-
-    /// Default starting page = section containing the .current node;
-    /// falls back to the first section.
-    private func defaultWorldIndex() -> Int {
-        if let idx = viewModel.sections.firstIndex(where: { section in
-            section.nodes.contains(where: { $0.state == .current })
-        }) { return idx }
-        return 0
-    }
-
-    private var pathsScroll: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                pathsList
-            }
-            .padding(.top, 8)
-            .padding(.bottom, 40)
-        }
-    }
-
-    // MARK: - Tab segmented control
-
-    private var tabSegmentedControl: some View {
-        Picker("View", selection: $selectedTab) {
-            Text("Explore").tag(LearnTab.worlds)
-            Text("Paths").tag(LearnTab.paths)
-        }
-        .pickerStyle(.segmented)
-    }
-
-    // MARK: - Paths list
-
-    private var pathsList: some View {
-        let repo = LocalContentRepository()
-        let packs = repo.allPacks()
-        return VStack(spacing: 12) {
-            ForEach(packs) { pack in
-                pathCard(pack: pack)
-            }
-        }
-        .padding(.horizontal, 20)
-    }
-
-    @ViewBuilder
-    private func pathCard(pack: Pack) -> some View {
-        let progress = progressStore.packProgress(packId: pack.id)
-        let isFocus = progressStore.focusPackId == pack.id
-        let isComplete = progress.done == progress.total && progress.total > 0
-        let isActive = progress.done > 0 && !isComplete
-
-        Button(action: { presentedPack = pack }) {
-            NumindCard(background: isFocus ? Theme.Colors.mindTealTint : Theme.Colors.cardBackground) {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack(alignment: .top, spacing: 8) {
-                        Text(pack.title)
-                            .font(Theme.Typography.headline)
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                            .multilineTextAlignment(.leading)
-                        Spacer()
-                        if isFocus {
-                            Text("FOCUS")
-                                .font(.system(size: 10, weight: .bold))
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 3)
-                                .background(Theme.Colors.deepNavy)
-                                .clipShape(Capsule())
-                        } else if isComplete {
-                            Text("✓")
-                                .font(.system(size: 14, weight: .bold))
-                                .foregroundStyle(Theme.Colors.growthGreen)
-                        } else if isActive {
-                            Text("\(progress.done)/\(progress.total)")
-                                .font(.system(size: 11, weight: .bold))
-                                .foregroundStyle(Theme.Colors.mindTeal)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 3)
-                                .background(Theme.Colors.mindTealTint)
-                                .clipShape(Capsule())
-                        }
-                    }
-                    Text(pack.tagline)
-                        .font(Theme.Typography.caption)
-                        .foregroundStyle(Theme.Colors.mutedText)
-                        .multilineTextAlignment(.leading)
-                    HStack(spacing: 10) {
-                        Text("\(pack.lessonIds.count) lessons")
-                        Text("·")
-                        Text("~\(pack.estimatedMinutes) min")
-                    }
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundStyle(Theme.Colors.mutedText)
-                }
-            }
-        }
-        .buttonStyle(.plain)
-    }
-
-    // ═══════════════════════════════════════════════════════════════
-    // MARK: - Learn Header
-    // ═══════════════════════════════════════════════════════════════
 
     // MARK: - Explore topic library (Phase 13)
 
@@ -371,18 +237,6 @@ struct LearnView: View {
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(Theme.Colors.mutedText)
         }
-    }
-
-    private var learnHeader: some View {
-        // Count only lesson nodes — exclude review/checkpoint nodes so the
-        // denominator matches the Practice tab's count.
-        let totalMastered = viewModel.sections.reduce(0) { acc, section in
-            acc + section.nodes.filter { !$0.isReview && $0.state == .mastered }.count
-        }
-        let totalLessons = viewModel.sections.reduce(0) { acc, section in
-            acc + section.nodes.filter { !$0.isReview }.count
-        }
-        return LearnHeader(totalMastered: totalMastered, totalLessons: totalLessons)
     }
 
     // ═══════════════════════════════════════════════════════════════
