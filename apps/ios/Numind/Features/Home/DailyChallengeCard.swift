@@ -1,6 +1,9 @@
 import SwiftUI
 
-/// Hero card for the daily challenge. Uses HeroCard with navy/teal variants.
+/// Hero card for the daily workout (Phase 13 — "Warm-Premium Money Tool").
+/// The one accent block on Home: a calm white card with a teal eyebrow, sans
+/// title, ink "Start" pill, and the teal daily-goal ring (mono center) on the
+/// right. No bead rail, gradient, emoji, or glow.
 struct DailyChallengeCard: View {
     let isDone: Bool
     let progress: Int
@@ -15,215 +18,95 @@ struct DailyChallengeCard: View {
     /// Per-user workout size (onboarding-driven); defaults for previews.
     var total: Int = DailyChallengeEngine.defaultQuestionCount
 
+    // Daily goal ring (Phase 13 — moved into the hero card from the header).
+    var ringProgress: Double = 0
+    var ringCenter: String = "0"
+    var isRingClosed: Bool = false
+    var onRingTap: (() -> Void)? = nil
+
     var body: some View {
-        if isDone {
-            doneState
-        } else {
-            notDoneState
-        }
-    }
-
-    // MARK: - Not-done state
-
-    private var notDoneState: some View {
-        HeroCard(variant: .navy) {
-            VStack(alignment: .leading, spacing: 0) {
-                headerChips
-                titleBlock
-                    .padding(.top, 14)
-                progressBlock
-                    .padding(.top, 18)
-                ctaButton
-                    .padding(.top, 18)
+        NumindCard {
+            HStack(alignment: .top, spacing: 16) {
+                VStack(alignment: .leading, spacing: 0) {
+                    eyebrow
+                    Text(title)
+                        .font(.system(size: 21, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.top, 8)
+                    Spacer(minLength: 16)
+                    if isDone {
+                        Button(action: onBonusRound) {
+                            Text("More practice")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(Theme.Colors.mindTeal)
+                        }
+                        .buttonStyle(.plain)
+                    } else {
+                        startPill
+                    }
+                }
+                Spacer(minLength: 0)
+                ringColumn
             }
         }
     }
 
-    // MARK: - Done state
+    // MARK: - Pieces
 
-    private var doneHeadline: String {
-        if correctCount == total { return "Nailed it \u{2728}" }
-        if correctCount >= total * 2 / 3 { return "Nice work \u{1F4AA}" }
-        return "Challenge done \u{2705}"
+    private var eyebrow: some View {
+        Text(isDone ? "TODAY · DONE" : "TODAY · \(max(1, total / 2)) MIN")
+            .font(Theme.Typography.overline)
+            .textCase(.uppercase)
+            .kerning(0.6)
+            .foregroundStyle(Theme.Colors.mindTeal)
     }
 
-    private var doneState: some View {
-        HeroCard(variant: .teal) {
-            VStack(alignment: .leading, spacing: 0) {
-                dailyChip
-                Text(doneHeadline)
-                    .font(.system(size: 26, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white)
-                    .padding(.top, 14)
-                Text("\(correctCount)/\(total) correct today. Ring closed. Come back tomorrow for a fresh set.")
-                    .font(Theme.Typography.caption)
-                    .foregroundStyle(.white.opacity(0.85))
-                    .padding(.top, 6)
-                bonusButton
-                    .padding(.top, 16)
-            }
-        }
+    private var title: String {
+        if isDone { return "Ring closed for today" }
+        return hasHistory ? "Your overdue skills, picked" : "A fresh set to start you"
     }
 
-    // MARK: - Shared chip
-
-    private var dailyChip: some View {
-        HStack(spacing: 6) {
-            Circle()
-                .fill(Theme.Colors.insightYellow)
-                .frame(width: 6, height: 6)
-                .shadow(color: Theme.Colors.insightYellow, radius: 4)
-            Text("DAILY WORKOUT")
-                .font(.system(size: 11, weight: .bold))
-                .foregroundStyle(Theme.Colors.insightYellow)
-                .kerning(0.6)
-        }
-        .padding(.horizontal, 11)
-        .padding(.vertical, 5)
-        .background(Theme.Colors.insightYellow.opacity(0.18))
-        .overlay(
-            Capsule().stroke(Theme.Colors.insightYellow.opacity(0.35), lineWidth: 1)
-        )
-        .clipShape(Capsule())
-    }
-
-    // MARK: - Header chips row
-
-    private var headerChips: some View {
-        HStack {
-            dailyChip
-            Spacer()
-            Text("Resets in \(timeUntilReset)")
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(.white.opacity(0.55))
-        }
-    }
-
-    // MARK: - Title
-
-    private var titleBlock: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(hasHistory
-                 ? "\(total) questions\npicked for you"
-                 : "\(total) questions\nto get you started")
-                .font(.system(size: 28, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
-                .lineSpacing(1)
-            Text(hasHistory
-                 ? "Your most overdue skills \u{00B7} ~3 min"
-                 : "Across all topics \u{00B7} ~3 min")
-                .font(Theme.Typography.caption)
-                .foregroundStyle(.white.opacity(0.65))
-        }
-    }
-
-    // MARK: - Progress rail + labels
-
-    private var progressBlock: some View {
-        VStack(spacing: 10) {
-            BeadRail(
-                progress: progress,
-                total: total,
-                variant: .chunky,
-                filledColor: Theme.Colors.mindTeal,
-                trackColor: .white.opacity(0.14)
-            )
-            HStack {
-                Text(progress > 0 ? "\(progress) / \(total) answered" : "Fresh set ready")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.7))
-                Spacer()
-                xpChip
-            }
-        }
-    }
-
-    private var xpChip: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "circle.dashed")
-                .font(.system(size: 11, weight: .bold))
-            Text("Closes your ring")
-                .font(.system(size: 12, weight: .bold))
-        }
-        .foregroundStyle(Theme.Colors.insightYellow)
-        .padding(.horizontal, 9)
-        .padding(.vertical, 3)
-        .background(Theme.Colors.insightYellow.opacity(0.18))
-        .clipShape(Capsule())
-    }
-
-    // MARK: - CTA button (teal gradient)
-
-    private var ctaButton: some View {
+    private var startPill: some View {
         Button(action: onStart) {
-            HStack(spacing: 8) {
-                Text(progress > 0 ? "Continue challenge" : "Start challenge")
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .bold))
+            Text(progress > 0 ? "Continue" : "Start")
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(Theme.Colors.ctaLabel)
+                .padding(.horizontal, 26)
+                .frame(height: 44)
+                .background(Theme.Colors.ctaFill)
+                .clipShape(Capsule())
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var ringColumn: some View {
+        Button { onRingTap?() } label: {
+            VStack(spacing: 4) {
+                GoalRing(progress: ringProgress, isClosed: isRingClosed,
+                         centerText: ringCenter, size: 88)
+                Text(isDone ? "done" : "today")
+                    .font(Theme.Typography.small)
+                    .foregroundStyle(Theme.Colors.mutedText)
             }
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
-            .frame(height: 54)
-            .background(
-                LinearGradient(
-                    colors: [
-                        Theme.Colors.mindTeal,
-                        Color(red: 31 / 255, green: 175 / 255, blue: 160 / 255),
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .shadow(color: Theme.Colors.mindTeal.opacity(0.45), radius: 12, x: 0, y: 12)
         }
         .buttonStyle(.plain)
+        .disabled(onRingTap == nil)
     }
-
-    // MARK: - More-practice button (frosted glass)
-
-    private var bonusButton: some View {
-        Button(action: onBonusRound) {
-            Text("More practice \u{2192}")
-                .font(.system(size: 16, weight: .bold))
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 48)
-                .background(.ultraThinMaterial.opacity(0.6))
-                .background(.white.opacity(0.18))
-                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-        }
-        .buttonStyle(.plain)
-    }
-}
-
-#Preview("New user") {
-    DailyChallengeCard(isDone: false, progress: 0, correctCount: 0, timeUntilReset: "7h 23m", hasHistory: false, onStart: {}, onBonusRound: {})
-        .padding(.horizontal, Theme.Spacing.screenHorizontal)
-        .background(Theme.Colors.softBackground)
 }
 
 #Preview("Returning user") {
-    DailyChallengeCard(isDone: false, progress: 0, correctCount: 0, timeUntilReset: "7h 23m", hasHistory: true, onStart: {}, onBonusRound: {})
+    DailyChallengeCard(isDone: false, progress: 0, correctCount: 0, timeUntilReset: "7h",
+                       hasHistory: true, onStart: {}, onBonusRound: {},
+                       ringProgress: 0.5, ringCenter: "1/2")
         .padding(.horizontal, Theme.Spacing.screenHorizontal)
         .background(Theme.Colors.softBackground)
 }
 
-#Preview("In Progress") {
-    DailyChallengeCard(isDone: false, progress: 4, correctCount: 0, timeUntilReset: "5h 10m", hasHistory: true, onStart: {}, onBonusRound: {})
-        .padding(.horizontal, Theme.Spacing.screenHorizontal)
-        .background(Theme.Colors.softBackground)
-}
-
-#Preview("Done — perfect") {
-    DailyChallengeCard(isDone: true, progress: DailyChallengeEngine.defaultQuestionCount, correctCount: 7, timeUntilReset: "", hasHistory: true, onStart: {}, onBonusRound: {})
-        .padding(.horizontal, Theme.Spacing.screenHorizontal)
-        .background(Theme.Colors.softBackground)
-}
-
-#Preview("Done — partial") {
-    DailyChallengeCard(isDone: true, progress: DailyChallengeEngine.defaultQuestionCount, correctCount: 5, timeUntilReset: "", hasHistory: true, onStart: {}, onBonusRound: {})
+#Preview("Done") {
+    DailyChallengeCard(isDone: true, progress: 8, correctCount: 7, timeUntilReset: "",
+                       hasHistory: true, onStart: {}, onBonusRound: {},
+                       ringProgress: 1, ringCenter: "2/2", isRingClosed: true)
         .padding(.horizontal, Theme.Spacing.screenHorizontal)
         .background(Theme.Colors.softBackground)
 }

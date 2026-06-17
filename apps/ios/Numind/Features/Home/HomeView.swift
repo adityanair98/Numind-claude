@@ -36,13 +36,7 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
-                BrandHeader(
-                    name: userName,
-                    isDailyChallengeCompleted: progressStore.isDailyChallengeCompleted,
-                    ringProgress: progressStore.ringProgress,
-                    isRingClosed: progressStore.isRingClosedToday,
-                    onScoreTap: { showScoreDetail = true }
-                )
+                BrandHeader(name: userName, streak: progressStore.streak)
                 dailyChallengeSection
                 momentChipSection
                 streakSection
@@ -420,7 +414,11 @@ struct HomeView: View {
             hasHistory: progressStore.totalSessions > 0,
             onStart: { startDailyChallenge() },
             onBonusRound: { startBonusRound() },
-            total: DailyChallengeEngine.questionCount(for: progressStore.data)
+            total: DailyChallengeEngine.questionCount(for: progressStore.data),
+            ringProgress: progressStore.ringProgress,
+            ringCenter: "\(progressStore.todayQuestionCount)/\(progressStore.ringTarget)",
+            isRingClosed: progressStore.isRingClosedToday,
+            onRingTap: { showScoreDetail = true }
         )
     }
 

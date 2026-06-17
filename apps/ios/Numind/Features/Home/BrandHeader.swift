@@ -1,112 +1,48 @@
 import SwiftUI
 
-/// Top brand row replacing the standard navigation title.
-/// Shows wordmark + bell button, then avatar circle + greeting.
+/// Top brand row (Phase 13). Warm date + sans greeting on the left; the streak
+/// as an ember flame chip (flame glyph + mono count) on the right — the ring
+/// now lives in the daily hero card.
 struct BrandHeader: View {
     let name: String
-    let isDailyChallengeCompleted: Bool
-    /// Daily ring fill (0–1) — the one glanceable daily signal (Phase 10).
-    var ringProgress: Double = 0
-    /// Whether today's ring is closed (the day counts toward the streak).
-    var isRingClosed: Bool = false
-    /// Called when the user taps the ring (opens the readiness sheet).
-    var onScoreTap: (() -> Void)? = nil
+    var streak: Int = 0
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            // Bell hidden until notifications ship (Phase 8 Group G); `bellButton`
-            // retained below so wiring it back up is a one-line change.
-            greetingRow
-        }
-    }
-
-    // MARK: - Top row (bell) — currently unused; see note in `body`.
-
-    private var topRow: some View {
-        HStack {
-            Spacer()
-            bellButton
-        }
-    }
-
-    private var bellButton: some View {
-        Button(action: {}) {
-            ZStack(alignment: .topTrailing) {
-                Circle()
-                    .fill(Theme.Colors.cardBackground)
-                    .frame(width: 38, height: 38)
-                    .shadow(color: .black.opacity(0.06), radius: 6, x: 0, y: 2)
-                Image(systemName: "bell.fill")
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                    .frame(width: 38, height: 38)
-                if !isDailyChallengeCompleted {
-                    Circle()
-                        .fill(Theme.Colors.warmOrange)
-                        .frame(width: 8, height: 8)
-                        .overlay(
-                            Circle()
-                                .stroke(Theme.Colors.cardBackground, lineWidth: 2)
-                        )
-                        .offset(x: -1, y: 1)
-                }
-            }
-        }
-        .buttonStyle(.plain)
-    }
-
-    // MARK: - Greeting row (avatar + text)
-
-    private var greetingRow: some View {
-        HStack(alignment: .bottom, spacing: 14) {
-            avatarCircle
-            VStack(alignment: .leading, spacing: 2) {
-                Text("\(greetingPrefix),")
+        HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 1) {
+                Text(dateLine)
                     .font(Theme.Typography.caption)
                     .foregroundStyle(Theme.Colors.mutedText)
-                HStack(spacing: 4) {
-                    Text(displayName)
-                        .font(Theme.Typography.title)
-                        .foregroundStyle(Theme.Colors.deepNavy)
-                    Image(systemName: "hand.wave.fill")
-                        .font(.system(size: 20))
-                        .foregroundStyle(Theme.Colors.insightYellow)
-                }
+                Text("\(greetingPrefix), \(displayName)")
+                    .font(Theme.Typography.title)
+                    .foregroundStyle(Theme.Colors.deepNavy)
             }
             Spacer()
-            // Daily goal ring — meaningful from day one (Phase 10).
-            Button {
-                onScoreTap?()
-            } label: {
-                GoalRing(progress: ringProgress, isClosed: isRingClosed, size: 52)
-                    .padding(.bottom, 4)
-            }
-            .buttonStyle(.plain)
+            if streak > 0 { streakChip }
         }
     }
 
-    private var avatarCircle: some View {
-        ZStack {
-            Circle()
-                .fill(
-                    LinearGradient(
-                        colors: [Theme.Colors.mindTeal, Theme.Colors.primaryBlue],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-            Text(String((name.isEmpty ? "A" : name).prefix(1)).uppercased())
-                .font(.system(size: 22, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
+    private var streakChip: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "flame.fill")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(Theme.Colors.ember)
+            Text("\(streak)")
+                .font(Theme.Typography.monoSmall)
+                .foregroundStyle(Theme.Colors.deepNavy)
         }
-        .frame(width: 52, height: 52)
-        .shadow(color: Theme.Colors.primaryBlue.opacity(0.3), radius: 8, x: 0, y: 6)
+        .padding(.horizontal, 11)
+        .padding(.vertical, 6)
+        .background(Theme.Colors.emberTint)
+        .clipShape(Capsule())
     }
 
-    // MARK: - Helpers
+    private var displayName: String { name.isEmpty ? "there" : name }
 
-    private var displayName: String {
-        name.isEmpty ? "there" : name
+    private var dateLine: String {
+        let f = DateFormatter()
+        f.dateFormat = "EEEE, MMMM d"
+        return f.string(from: Date())
     }
 
     private var greetingPrefix: String {
@@ -119,7 +55,7 @@ struct BrandHeader: View {
 
 #Preview {
     VStack {
-        BrandHeader(name: "Aditya", isDailyChallengeCompleted: false)
+        BrandHeader(name: "Aditya", streak: 12)
         Spacer()
     }
     .padding(.horizontal, Theme.Spacing.screenHorizontal)
