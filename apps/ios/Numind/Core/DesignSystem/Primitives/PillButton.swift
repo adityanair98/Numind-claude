@@ -28,15 +28,15 @@ struct PillButton: View {
 
     private var fillColor: Color {
         switch variant {
-        case .primary:   Theme.Colors.primaryBlue
-        case .secondary: Theme.Colors.softBackground
+        case .primary:   Theme.Colors.ctaFill          // ink pill (cream in dark)
+        case .secondary: Theme.Colors.cardBackground
         }
     }
 
     private var labelColor: Color {
         switch variant {
-        case .primary:   .white
-        case .secondary: Theme.Colors.primaryBlue
+        case .primary:   Theme.Colors.ctaLabel         // cream label (ink in dark)
+        case .secondary: Theme.Colors.deepNavy
         }
     }
 }

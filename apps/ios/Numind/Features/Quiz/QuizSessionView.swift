@@ -8,17 +8,10 @@ struct QuizSessionView: View {
     @ObservedObject var viewModel: QuizSessionViewModel
     let onComplete: () -> Void
 
-    @State private var showConfetti = false
-
     var body: some View {
         ZStack(alignment: .bottom) {
             scrollContent
             footer
-            if showConfetti {
-                ConfettiView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                    .ignoresSafeArea()
-            }
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
@@ -47,22 +40,15 @@ struct QuizSessionView: View {
         }
         .onChange(of: viewModel.sessionState) { _, newState in
             if case .complete = newState { onComplete() }
+            // Per-answer feedback is CALM — a settle + haptic, never confetti.
+            // Confetti/celebration is reserved for milestone sheets only
+            // (Phase 13 design-language spec; MilestoneCelebrationView owns it).
             if case .feedback = newState {
                 if viewModel.isCorrectAnswer {
-                    showConfetti = true
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    UINotificationFeedbackGenerator().notificationOccurred(.success)
                 } else {
                     UINotificationFeedbackGenerator().notificationOccurred(.error)
                 }
-            }
-            if case .question = newState {
-                showConfetti = false
-            }
-            if case .motivator = newState {
-                showConfetti = false
-            }
-            if case .teach = newState {
-                showConfetti = false
             }
         }
     }
