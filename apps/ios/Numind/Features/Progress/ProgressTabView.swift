@@ -66,13 +66,34 @@ struct ProgressTabView: View {
                 .buttonStyle(.plain)
             }
 
-            Text("Progress")
-                .font(.system(size: 30, weight: .bold, design: .rounded))
-                .foregroundStyle(Theme.Colors.deepNavy)
+            // H1 + ember streak chip (the streak lives in the glyph — no navy
+            // hero, per the Phase 13 streak rule).
+            HStack(alignment: .center) {
+                Text("Progress")
+                    .font(Theme.Typography.display)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                Spacer()
+                if store.streak > 0 { emberStreakChip }
+            }
         }
         .padding(.horizontal, Theme.Spacing.screenHorizontal)
         .padding(.top, 4)
         .padding(.bottom, 16)
+    }
+
+    private var emberStreakChip: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "flame.fill")
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(Theme.Colors.ember)
+            Text("\(store.streak)")
+                .font(Theme.Typography.monoSmall)
+                .foregroundStyle(Theme.Colors.deepNavy)
+        }
+        .padding(.horizontal, 11)
+        .padding(.vertical, 6)
+        .background(Theme.Colors.emberTint)
+        .clipShape(Capsule())
     }
 
     // MARK: - Empty state
@@ -113,39 +134,20 @@ struct ProgressTabView: View {
             VStack(alignment: .leading, spacing: 0) {
                 progressHeader
 
-                // Your Improvement (only shows positive stats)
-                improvementCard
+                // This week — practice days as a 7-bar chart (teal active days,
+                // today a short bar with a teal ring). Capability framing, not a
+                // score. Replaces the navy streak hero + clinical XP charts.
+                practiceChartCard
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 18)
 
-                streakHeroCard
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.bottom, 18)
-
-                // Level (XP effort headline) — replaces the 0–100 Numind Score.
-                levelCard
+                // Skills ledger — two cards: Mastered (teal) + To refresh
+                // (muted). Mono counts, no Level/XP, no 0–100.
+                skillsLedgerRow
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 22)
 
-                // Skill coverage — how much of each area you've locked in
-                // (mastered / total), a private diagnostic radar + per-axis
-                // rows. Replaces the old 0–100 per-axis breakdown.
-                HStack(alignment: .firstTextBaseline) {
-                    sectionLabel("Skill coverage")
-                    Spacer()
-                    NavigationLink(destination: SkillDetailView()) {
-                        Text("See all")
-                            .font(.system(size: 12, weight: .bold))
-                            .foregroundStyle(Theme.Colors.primaryBlue)
-                    }
-                }
-                .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                .padding(.bottom, 10)
-                skillCoverageCard
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.bottom, 22)
-
-                // "You can now handle:" — plain-language mastered decisions
+                // "You can now handle:" — plain-language mastered decisions.
                 canNowHandleSection
 
                 // Path readiness — the honest, decision-scoped competence
@@ -158,23 +160,8 @@ struct ProgressTabView: View {
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 22)
 
-                sectionLabel("Weekly goal")
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.bottom, 10)
-                weeklyGoalCard
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.bottom, 22)
-
-                sectionLabel("Practice over time")
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.bottom, 10)
-                weeklyXPCard
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.bottom, 22)
-
-                // Paths in progress — shows packs the user has touched but
-                // not yet finished, with a thin progress bar each. Hidden
-                // entirely when there's nothing in progress.
+                // Paths in progress — packs touched but not finished, each with
+                // a thin progress bar. Hidden when nothing is in progress.
                 let inProgressPacks = store.inProgressPacks
                 if !inProgressPacks.isEmpty {
                     sectionLabel("Paths in progress")
@@ -182,29 +169,113 @@ struct ProgressTabView: View {
                         .padding(.bottom, 10)
                     pathsInProgressCard(packs: inProgressPacks)
                         .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                        .padding(.bottom, 22)
+                        .padding(.bottom, 40)
                 }
-
-                let recent = store.recentSessions(limit: 5)
-                if !recent.isEmpty {
-                    HStack(alignment: .firstTextBaseline) {
-                        sectionLabel("Recent activity")
-                        Spacer()
-                    }
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.bottom, 10)
-                    recentActivityCard(sessions: recent)
-                        .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                        .padding(.bottom, 22)
-                }
-
-                sectionLabel("Badges")
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.bottom, 10)
-                badgesGrid
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.bottom, 40)
             }
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - This week (practice chart — Phase 13)
+    // ═══════════════════════════════════════════════════════════════
+
+    /// 7 day bars, Mon–Sun: neutral track, teal fill on a completed day,
+    /// today a short bar with a teal ring. Mirrors handoff screen 11.
+    private var practiceChartCard: some View {
+        let comp = store.weeklyCompletions
+        let doneDays = comp.prefix(7).filter { $0 }.count
+        let todayIndex = Calendar.current.component(.weekday, from: Date())
+        let todayMon = (todayIndex + 5) % 7   // Sun=1…Sat=7 → Mon=0…Sun=6
+        let barMax: CGFloat = 64
+
+        return NumindCard {
+            VStack(alignment: .leading, spacing: 16) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("This week")
+                        .font(Theme.Typography.headline)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Spacer()
+                    HStack(spacing: 4) {
+                        Text("\(doneDays)")
+                            .font(Theme.Typography.mono)
+                            .foregroundStyle(Theme.Colors.mindTeal)
+                        Text("of 7 days")
+                            .font(Theme.Typography.small)
+                            .foregroundStyle(Theme.Colors.mutedText)
+                    }
+                }
+
+                HStack(alignment: .bottom, spacing: 8) {
+                    ForEach(0..<7, id: \.self) { i in
+                        let isDone = comp.indices.contains(i) ? comp[i] : false
+                        let isToday = i == todayMon
+                        VStack(spacing: 8) {
+                            ZStack(alignment: .bottom) {
+                                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                    .fill(Theme.Colors.track)
+                                    .frame(height: barMax)
+                                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                    .fill(isDone ? Theme.Colors.mindTeal : Theme.Colors.track)
+                                    .frame(height: isDone ? barMax : (isToday ? 22 : 8))
+                            }
+                            .frame(height: barMax)
+                            .overlay {
+                                if isToday {
+                                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                        .strokeBorder(Theme.Colors.mindTeal, lineWidth: 2)
+                                }
+                            }
+                            Text(weekDayLabels[i])
+                                .font(.system(size: 10, weight: isToday ? .bold : .medium))
+                                .foregroundStyle(isToday ? Theme.Colors.mindTeal : Theme.Colors.mutedText)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                }
+            }
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARK: - Skills ledger (Phase 13 — two cards, mono counts)
+    // ═══════════════════════════════════════════════════════════════
+
+    private var skillsLedgerRow: some View {
+        let mastered = store.masteredLessonIds.filter { !$0.hasPrefix("review_") }.count
+        let stale = store.staleSkillCount
+        return HStack(spacing: 12) {
+            NavigationLink(destination: SkillDetailView()) {
+                ledgerCard(icon: "checkmark", tint: Theme.Colors.mindTeal,
+                           tintBg: Theme.Colors.mindTealTint, value: mastered, label: "Mastered")
+            }
+            .buttonStyle(.plain)
+            ledgerCard(icon: "arrow.counterclockwise", tint: Theme.Colors.refreshNeutral,
+                       tintBg: Theme.Colors.track, value: stale, label: "To refresh")
+        }
+    }
+
+    private func ledgerCard(icon: String, tint: Color, tintBg: Color,
+                            value: Int, label: String) -> some View {
+        NumindCard {
+            VStack(alignment: .leading, spacing: 12) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(tintBg)
+                        .frame(width: 38, height: 38)
+                    Image(systemName: icon)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(tint)
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("\(value)")
+                        .font(Theme.Typography.moneyLarge)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text(label)
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
@@ -223,7 +294,7 @@ struct ProgressTabView: View {
                         .foregroundStyle(Theme.Colors.mutedText)
                         .kerning(0.6)
                     Text("\(masteredCount) mastered")
-                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .font(.system(size: 26, weight: .bold))
                         .foregroundStyle(Theme.Colors.deepNavy)
 
                     if stale > 0 {
@@ -299,7 +370,7 @@ struct ProgressTabView: View {
                                         .foregroundStyle(Theme.Colors.deepNavy)
                                     Spacer()
                                     Text("\(row.mastered)/\(row.total)")
-                                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                                        .font(.system(size: 12, weight: .bold))
                                         .foregroundStyle(row.mastered > 0
                                             ? skillColor(row.axis) : Theme.Colors.mutedText)
                                 }
@@ -495,7 +566,7 @@ struct ProgressTabView: View {
             }
             VStack(alignment: .leading, spacing: 1) {
                 Text(item.value)
-                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .font(.system(size: 14, weight: .bold))
                     .foregroundStyle(Theme.Colors.deepNavy)
                 Text(item.label)
                     .font(.system(size: 10, weight: .medium))
@@ -537,7 +608,7 @@ struct ProgressTabView: View {
 
                     // Streak tier message
                     Text(streakTierMessage)
-                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .font(.system(size: 15, weight: .bold))
                         .foregroundStyle(.white)
                         .lineLimit(1)
                         .padding(.bottom, 2)
@@ -607,7 +678,7 @@ struct ProgressTabView: View {
                 Text("\u{1F525}")
                     .font(.system(size: 22))
                 Text("\(store.streak)")
-                    .font(.system(size: 28, weight: .heavy, design: .rounded))
+                    .font(.system(size: 28, weight: .heavy))
                     .foregroundStyle(.white)
                 Text("DAYS")
                     .font(.system(size: 9, weight: .semibold))
@@ -628,7 +699,7 @@ struct ProgressTabView: View {
     private func inlineStat(value: String, label: String) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(value)
-                .font(.system(size: 16, weight: .heavy, design: .rounded))
+                .font(.system(size: 16, weight: .heavy))
                 .foregroundStyle(.white)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
@@ -664,7 +735,7 @@ struct ProgressTabView: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("\(done) of \(goal) workouts")
-                        .font(.system(size: 17, weight: .bold, design: .rounded))
+                        .font(.system(size: 17, weight: .bold))
                         .foregroundStyle(Theme.Colors.deepNavy)
                     Text(reached ? "Goal reached \u{2014} great work!" : "\(remaining) more to hit your goal")
                         .font(Theme.Typography.small)
@@ -748,7 +819,7 @@ struct ProgressTabView: View {
                     Text(currentXP > 0
                          ? "Ranked #\(rank) of last 4 weeks"
                          : "No practice yet this week")
-                        .font(.system(size: 17, weight: .bold, design: .rounded))
+                        .font(.system(size: 17, weight: .bold))
                         .foregroundStyle(Theme.Colors.deepNavy)
                     HStack(spacing: 0) {
                         Text("\(currentXP) questions")
@@ -782,7 +853,7 @@ struct ProgressTabView: View {
                 ForEach(Array(weeks.enumerated()), id: \.offset) { _, week in
                     VStack(spacing: 4) {
                         Text(week.xp > 0 ? "\(week.xp)" : "")
-                            .font(.system(size: 10, weight: .heavy, design: .rounded))
+                            .font(.system(size: 10, weight: .heavy))
                             .foregroundStyle(
                                 week.isCurrent ? Theme.Colors.primaryBlue : Theme.Colors.mutedText
                             )
@@ -1142,7 +1213,7 @@ struct ProgressTabView: View {
 
                 VStack(alignment: .trailing, spacing: 1) {
                     Text("\(session.correctCount)/\(session.totalCount)")
-                        .font(.system(size: 14, weight: .heavy, design: .rounded))
+                        .font(.system(size: 14, weight: .heavy))
                         .foregroundStyle(Theme.Colors.deepNavy)
                     Text("\(accuracy)%")
                         .font(.system(size: 11, weight: .bold))

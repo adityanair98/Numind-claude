@@ -92,6 +92,23 @@ struct CalculatorShell<Content: View>: View {
     }
 }
 
+/// Inline "ESTIMATE" tag for a result figure (Phase 13, handoff layer 1 of the
+/// 3-layer disclaimer). Deliberately a NEUTRAL pill — an estimate is not
+/// "verified", so it never wears the teal accent. Place it beside the big
+/// mono figure on any calculator's result card.
+struct EstimateTag: View {
+    var body: some View {
+        Text("ESTIMATE")
+            .font(.system(size: 10, weight: .bold))
+            .kerning(0.6)
+            .foregroundStyle(Theme.Colors.mutedText)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 3)
+            .background(Theme.Colors.track)
+            .clipShape(Capsule())
+    }
+}
+
 /// Per-calculator assumption note shown directly above/below a result panel.
 /// A thin, muted callout so it reads as a caveat, not a warning.
 struct CalculatorNote: View {

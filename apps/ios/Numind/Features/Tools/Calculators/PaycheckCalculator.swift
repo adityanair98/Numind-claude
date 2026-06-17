@@ -88,15 +88,17 @@ struct PaycheckCalculator: View {
     // MARK: - Result
 
     private var resultCard: some View {
-        NumindCard(background: Theme.Colors.mindTealTint) {
+        // Calm card (no saturated accent) — a tool reads quieter than a lesson.
+        NumindCard {
             VStack(alignment: .leading, spacing: 12) {
-                VStack(spacing: 2) {
-                    Text(money(takeHomePerCheck))
-                        .font(.system(size: 32, weight: .bold, design: .rounded))
-                        .foregroundStyle(Theme.Colors.mindTeal)
-                    Text("per \(frequency.rawValue.lowercased()) paycheck")
+                VStack(spacing: 4) {
+                    Text("Per \(frequency.rawValue.lowercased()) paycheck")
                         .font(Theme.Typography.small)
                         .foregroundStyle(Theme.Colors.mutedText)
+                    Text(money(takeHomePerCheck))
+                        .font(Theme.Typography.moneyHero)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    EstimateTag()
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, 4)
@@ -122,8 +124,8 @@ struct PaycheckCalculator: View {
                 .foregroundStyle(bold ? Theme.Colors.deepNavy : Theme.Colors.mutedText)
             Spacer()
             Text(value)
-                .font(.system(size: bold ? 16 : 14, weight: bold ? .bold : .semibold, design: .rounded))
-                .foregroundStyle(Theme.Colors.deepNavy)
+                .font(.system(size: bold ? 16 : 14, weight: bold ? .bold : .medium, design: .monospaced))
+                .foregroundStyle(bold ? Theme.Colors.deepNavy : Theme.Colors.mutedText)
         }
     }
 
@@ -181,7 +183,7 @@ struct PaycheckCalculator: View {
             Text("$").font(.system(size: 17, weight: .semibold)).foregroundStyle(Theme.Colors.mutedText)
             TextField(placeholder, text: text)
                 .keyboardType(.decimalPad)
-                .font(.system(size: 17, weight: .semibold, design: .rounded))
+                .font(.system(size: 17, weight: .semibold, design: .monospaced))
         }
         .padding(.horizontal, 12).padding(.vertical, 10)
         .background(Theme.Colors.mutedTint)
@@ -192,7 +194,7 @@ struct PaycheckCalculator: View {
         HStack(spacing: 8) {
             TextField(placeholder, text: text)
                 .keyboardType(.decimalPad)
-                .font(.system(size: 17, weight: .semibold, design: .rounded))
+                .font(.system(size: 17, weight: .semibold, design: .monospaced))
                 .frame(maxWidth: 90)
                 .padding(.horizontal, 12).padding(.vertical, 10)
                 .background(Theme.Colors.mutedTint)

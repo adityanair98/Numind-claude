@@ -106,17 +106,22 @@ struct PackDetailView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
                 if isFocus {
-                    Text("📍 FOCUS")
-                        .font(Theme.Typography.small)
-                        .foregroundStyle(Theme.Colors.mindTeal)
+                    HStack(spacing: 4) {
+                        Image(systemName: "pin.fill")
+                            .font(.system(size: 9, weight: .bold))
+                        Text("FOCUS")
+                            .font(Theme.Typography.small)
+                    }
+                    .foregroundStyle(Theme.Colors.mindTeal)
                 }
                 Text("\(progress.done) of \(progress.total) lessons")
                     .font(Theme.Typography.small)
                     .foregroundStyle(Theme.Colors.mutedText)
             }
             Text(pack.title)
-                .font(Theme.Typography.display)
+                .font(Theme.Typography.serifDisplay)
                 .foregroundStyle(Theme.Colors.deepNavy)
+                .fixedSize(horizontal: false, vertical: true)
             Text(pack.tagline)
                 .font(Theme.Typography.body)
                 .foregroundStyle(Theme.Colors.deepNavy.opacity(0.8))
@@ -310,10 +315,10 @@ struct PackDetailView: View {
                                     Text(CalculatorRegistry.name(for: slug) ?? "")
                                         .font(.system(size: 13, weight: .semibold))
                                 }
-                                .foregroundStyle(Theme.Colors.primaryBlue)
+                                .foregroundStyle(Theme.Colors.mindTeal)
                                 .padding(.horizontal, 14)
                                 .padding(.vertical, 9)
-                                .background(Theme.Colors.primaryBlueTint)
+                                .background(Theme.Colors.mindTealTint)
                                 .clipShape(Capsule())
                             }
                             .buttonStyle(.plain)
@@ -389,10 +394,10 @@ struct PackDetailView: View {
         Button(action: ctaTap) {
             Text(ctaTitle)
                 .font(Theme.Typography.headline)
-                .foregroundStyle(.white)
+                .foregroundStyle(Theme.Colors.ctaLabel)
                 .frame(maxWidth: .infinity)
                 .frame(height: Theme.Spacing.buttonHeight)
-                .background(Theme.Colors.deepNavy)
+                .background(Theme.Colors.ctaFill)
                 .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.button, style: .continuous))
         }
         .disabled(nextUndoneLessonId == nil)
