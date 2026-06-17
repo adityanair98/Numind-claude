@@ -39,6 +39,9 @@ struct LearnView: View {
     /// extracting all the quest map helpers out of LearnView.
     @State private var openedWorldId: String? = nil
 
+    /// Topic-library search (Phase 13).
+    @State private var searchText = ""
+
     // MARK: - Layout constants
 
     private let nodeSize:        CGFloat = 70
@@ -48,40 +51,24 @@ struct LearnView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // When a world is "opened" (Continue tapped from the carousel),
-            // hide the header + segmented control to give the quest map
-            // full vertical real estate. A floating back chevron lets the
-            // user return to the carousel.
+            // Phase 13 — Explore is a clean topic library: a searchable list of
+            // topics; tapping one opens its existing quest map (the worlds
+            // carousel + paths segmented control are retired).
             if openedWorldId == nil {
-                learnHeader
-                tabSegmentedControl
-                    .padding(.horizontal, 20)
-                    .padding(.top, 4)
-                    .padding(.bottom, 12)
+                exploreHeader
             }
 
-            switch selectedTab {
-            case .worlds:
-                if let id = openedWorldId,
-                   let section = viewModel.sections.first(where: { $0.id == id }),
-                   let idx = viewModel.sections.firstIndex(where: { $0.id == id }) {
-                    openedWorldView(section: section, sectionIndex: idx)
-                } else {
-                    worldsCarousel
-                }
-            case .paths:
-                pathsScroll
+            if let id = openedWorldId,
+               let section = viewModel.sections.first(where: { $0.id == id }),
+               let idx = viewModel.sections.firstIndex(where: { $0.id == id }) {
+                openedWorldView(section: section, sectionIndex: idx)
+            } else {
+                topicList
             }
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
-        .onAppear {
-            viewModel.refresh(using: progressStore)
-            if !carouselInitialized {
-                currentWorldIndex = defaultWorldIndex()
-                carouselInitialized = true
-            }
-        }
+        .onAppear { viewModel.refresh(using: progressStore) }
         .onChange(of: progressStore.totalSessions) {
             viewModel.refresh(using: progressStore)
         }
@@ -266,6 +253,125 @@ struct LearnView: View {
     // ═══════════════════════════════════════════════════════════════
     // MARK: - Learn Header
     // ═══════════════════════════════════════════════════════════════
+
+    // MARK: - Explore topic library (Phase 13)
+
+    private var exploreHeader: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Explore")
+                .font(Theme.Typography.display)
+                .foregroundStyle(Theme.Colors.deepNavy)
+            HStack(spacing: 8) {
+                Image(systemName: "magnifyingglass")
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundStyle(Theme.Colors.mutedText)
+                TextField("Search lessons & tools", text: $searchText)
+                    .font(Theme.Typography.body)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .autocorrectionDisabled()
+            }
+            .padding(.horizontal, 14)
+            .frame(height: 44)
+            .background(Theme.Colors.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+            )
+        }
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+        .padding(.top, 8)
+        .padding(.bottom, 14)
+    }
+
+    private var filteredSections: [LearnViewModel.PathSection] {
+        guard !searchText.isEmpty else { return viewModel.sections }
+        let q = searchText.lowercased()
+        return viewModel.sections.filter {
+            $0.module.title.lowercased().contains(q)
+                || $0.module.subtitle.lowercased().contains(q)
+        }
+    }
+
+    private var topicList: some View {
+        ScrollView {
+            VStack(spacing: 10) {
+                HStack {
+                    Text("All topics")
+                        .font(Theme.Typography.small)
+                        .textCase(.uppercase)
+                        .kerning(0.6)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                    Spacer()
+                }
+                .padding(.top, 2)
+                ForEach(filteredSections) { topicRow($0) }
+            }
+            .padding(.horizontal, Theme.Spacing.screenHorizontal)
+            .padding(.bottom, 40)
+        }
+    }
+
+    private func topicRow(_ section: LearnViewModel.PathSection) -> some View {
+        let accent = section.module.color.tintColor
+        let tint   = section.module.color.tintBackground
+        let lessons = section.nodes.filter { !$0.isReview }
+        let mastered = lessons.filter { $0.state == .mastered }.count
+        let total = lessons.count
+
+        return Button {
+            withAnimation(.easeInOut(duration: 0.25)) { openedWorldId = section.id }
+        } label: {
+            HStack(spacing: 13) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 11, style: .continuous).fill(tint)
+                    Image(systemName: section.module.icon)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(accent)
+                }
+                .frame(width: 42, height: 42)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(section.module.title)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                    Text(section.module.subtitle)
+                        .font(Theme.Typography.small)
+                        .foregroundStyle(Theme.Colors.mutedText)
+                        .lineLimit(1)
+                }
+                Spacer(minLength: 8)
+                topicStatus(mastered: mastered, total: total)
+            }
+            .padding(14)
+            .background(Theme.Colors.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    @ViewBuilder
+    private func topicStatus(mastered: Int, total: Int) -> some View {
+        if total > 0 && mastered == total {
+            HStack(spacing: 4) {
+                Image(systemName: "checkmark").font(.system(size: 11, weight: .bold))
+                Text("Complete").font(.system(size: 12, weight: .semibold))
+            }
+            .foregroundStyle(Theme.Colors.mindTeal)
+        } else if mastered > 0 {
+            Text("\(mastered)/\(total)")
+                .font(Theme.Typography.monoSmall)
+                .foregroundStyle(Theme.Colors.deepNavy)
+        } else {
+            Text("Start")
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(Theme.Colors.mutedText)
+        }
+    }
 
     private var learnHeader: some View {
         // Count only lesson nodes — exclude review/checkpoint nodes so the
