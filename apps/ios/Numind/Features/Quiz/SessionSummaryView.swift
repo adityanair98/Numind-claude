@@ -22,7 +22,6 @@ struct SessionSummaryView: View {
     /// Only shown when mastery threshold was not met.
     let onRetry: () -> Void
 
-    @State private var showPersonalBest: Bool = false
     @State private var reviewVM: QuizSessionViewModel? = nil
     /// Results from the most recent review session (nil = no review done yet).
     /// Replaces the original wrong answers once the first review completes.
@@ -63,11 +62,6 @@ struct SessionSummaryView: View {
             }
         }
         .onAppear {
-            if isPersonalBest && didMaster {
-                withAnimation(.spring(response: 0.42, dampingFraction: 0.62).delay(1.0)) {
-                    showPersonalBest = true
-                }
-            }
             if !newBadgeIds.isEmpty {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
             }
@@ -103,11 +97,11 @@ struct SessionSummaryView: View {
     private var scrollContent: some View {
         ScrollView {
             VStack(spacing: Theme.Spacing.sectionSpacing) {
-                resultHeader
+                summaryHero
+                emberStreakRow
                 statsCard
                 learnedCard
                 if !skillChanges.isEmpty { skillsMovedCard }
-                ringCard
                 masteryBanner
                 if !newBadgeIds.isEmpty { newBadgesSection }
                 recapSection
@@ -119,93 +113,54 @@ struct SessionSummaryView: View {
         }
     }
 
-    // MARK: - Result header
+    // MARK: - Hero (Phase 13 — the completed teal ring leads, calmly)
 
+    /// Centered daily-goal ring + sans headline + line. No trophy, no
+    /// confetti, no personal-best pill — celebration belongs to milestones.
+    private var summaryHero: some View {
+        VStack(spacing: 18) {
+            GoalRing(progress: progressStore.ringProgress,
+                     isClosed: progressStore.isRingClosedToday,
+                     centerText: "\(progressStore.todayQuestionCount)/\(progressStore.ringTarget)",
+                     size: 132)
+
+            VStack(spacing: 6) {
+                Text(heroTitle)
+                    .font(Theme.Typography.display)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .multilineTextAlignment(.center)
+                Text("\(viewModel.total) questions · \(viewModel.elapsedTimeString)")
+                    .font(Theme.Typography.caption)
+                    .foregroundStyle(Theme.Colors.mutedText)
+            }
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private var heroTitle: String {
+        if progressStore.isRingClosedToday { return "Daily goal done." }
+        return didMaster ? "Lesson mastered." : "Lesson complete."
+    }
+
+    /// emberTint streak row — flame + "12-day streak — kept alive."
     @ViewBuilder
-    private var resultHeader: some View {
-        if didMaster {
-            passHeader
-        } else {
-            failHeader
-        }
-    }
-
-    private var passHeader: some View {
-        VStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(accentTint)
-                    .frame(width: 96, height: 96)
-                Image(systemName: "trophy.fill")
-                    .font(.system(size: 44))
-                    .foregroundStyle(accent)
-            }
-
-            VStack(spacing: 6) {
-                Text("Session complete!")
-                    .font(Theme.Typography.display)
+    private var emberStreakRow: some View {
+        if progressStore.streak > 0 {
+            HStack(spacing: 12) {
+                Image(systemName: "flame.fill")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.ember)
+                Text("\(progressStore.streak)-day streak — kept alive.")
+                    .font(Theme.Typography.body)
+                    .fontWeight(.semibold)
                     .foregroundStyle(Theme.Colors.deepNavy)
-                Text("\(viewModel.total) questions · \(viewModel.elapsedTimeString)")
-                    .font(Theme.Typography.caption)
-                    .foregroundStyle(Theme.Colors.mutedText)
+                Spacer()
             }
-
-            VStack(spacing: 8) {
-                if showPersonalBest {
-                    HStack(spacing: 6) {
-                        Text("🏆")
-                            .font(.system(size: 14))
-                        Text("New personal best!")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundStyle(accent)
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 7)
-                    .background(accentTint)
-                    .clipShape(Capsule())
-                    .transition(.scale(scale: 0.75).combined(with: .opacity))
-                }
-            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .background(Theme.Colors.emberTint)
+            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
         }
-        .frame(maxWidth: .infinity)
-    }
-
-    private var failHeader: some View {
-        return VStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(Theme.Colors.primaryBlueTint)
-                    .frame(width: 96, height: 96)
-                Image(systemName: "checkmark.circle")
-                    .font(.system(size: 40, weight: .semibold))
-                    .foregroundStyle(Theme.Colors.primaryBlue)
-            }
-
-            VStack(spacing: 6) {
-                Text("Lesson complete!")
-                    .font(Theme.Typography.display)
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                Text("\(viewModel.total) questions · \(viewModel.elapsedTimeString)")
-                    .font(Theme.Typography.caption)
-                    .foregroundStyle(Theme.Colors.mutedText)
-            }
-
-            VStack(spacing: 8) {
-                HStack(spacing: 6) {
-                    Image(systemName: "star")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(Theme.Colors.warmOrange)
-                    Text("Practice more to earn the gold star (\(viewModel.correctCount)/\(viewModel.total) correct)")
-                        .font(Theme.Typography.caption)
-                        .foregroundStyle(Theme.Colors.mutedText)
-                }
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
-                .background(Theme.Colors.warmOrangeTint)
-                .clipShape(Capsule())
-            }
-        }
-        .frame(maxWidth: .infinity)
     }
 
     // MARK: - Stats card
@@ -222,12 +177,6 @@ struct SessionSummaryView: View {
                 statCell(value: progressStore.accuracy > 0 ? "\(Int(progressStore.accuracy * 100))%" : "—",
                          label: "Accuracy",
                          color: Theme.Colors.deepNavy)
-                Divider()
-                    .frame(width: 1, height: 32)
-                    .background(Theme.Colors.hairline)
-                statCell(value: progressStore.streak > 0 ? "\(progressStore.streak)🔥" : "—",
-                         label: "Streak",
-                         color: Theme.Colors.insightYellow)
             }
         }
     }
@@ -235,7 +184,7 @@ struct SessionSummaryView: View {
     private func statCell(value: String, label: String, color: Color) -> some View {
         VStack(spacing: 4) {
             Text(value)
-                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .font(.system(size: 22, weight: .bold, design: .monospaced))
                 .foregroundStyle(color)
             Text(label.uppercased())
                 .font(Theme.Typography.small)
@@ -332,31 +281,6 @@ struct SessionSummaryView: View {
         }
     }
 
-    // MARK: - Daily ring (Phase 10)
-
-    private var ringCard: some View {
-        NumindCard {
-            HStack(spacing: 14) {
-                GoalRing(progress: progressStore.ringProgress,
-                         isClosed: progressStore.isRingClosedToday,
-                         size: 52)
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(progressStore.isRingClosedToday ? "Daily ring closed" : "Daily ring")
-                        .font(.system(size: 15, weight: .bold, design: .rounded))
-                        .foregroundStyle(Theme.Colors.deepNavy)
-                    Text(progressStore.isRingClosedToday
-                         ? "Today counts toward your streak."
-                         : "\(max(0, progressStore.ringTarget - progressStore.todayQuestionCount)) more to close today's ring")
-                        .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(Theme.Colors.mutedText)
-                }
-
-                Spacer()
-            }
-        }
-    }
-
     // MARK: - Mastery banner (pass only)
 
     @ViewBuilder
@@ -367,10 +291,10 @@ struct SessionSummaryView: View {
                     .font(.system(size: 22))
                     .foregroundStyle(accent)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Lesson mastered!")
+                    Text("Skill locked in")
                         .font(Theme.Typography.headline)
                         .foregroundStyle(Theme.Colors.deepNavy)
-                    Text("You earned the gold star!")
+                    Text("You can handle this one in real life now.")
                         .font(Theme.Typography.small)
                         .foregroundStyle(Theme.Colors.mutedText)
                 }
@@ -554,7 +478,7 @@ struct SessionSummaryView: View {
                         HStack(spacing: 6) {
                             Image(systemName: "arrow.counterclockwise")
                                 .font(.system(size: 13, weight: .semibold))
-                            Text("Practice again for gold star")
+                            Text("Practice again to master it")
                                 .font(.system(size: 14, weight: .semibold))
                         }
                         .foregroundStyle(Theme.Colors.mutedText)

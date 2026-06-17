@@ -23,8 +23,18 @@ struct MilestoneCelebrationView: View {
             VStack(spacing: 0) {
                 Spacer()
 
-                // Icon
+                // Mascot coin on a teal radial glow, with a teal check badge —
+                // the celebratory artifact (mascots allowed on milestones only).
                 ZStack {
+                    Circle()
+                        .fill(
+                            RadialGradient(
+                                colors: [Theme.Colors.mindTeal.opacity(0.28), .clear],
+                                center: .center, startRadius: 0, endRadius: 110
+                            )
+                        )
+                        .frame(width: 220, height: 220)
+
                     Circle()
                         .fill(iconGradient)
                         .frame(width: 120, height: 120)
@@ -32,14 +42,30 @@ struct MilestoneCelebrationView: View {
 
                     Image(systemName: milestone.icon)
                         .font(.system(size: 48, weight: .bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(glyphColor)
+
+                    // Teal check badge, bottom-trailing.
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 34, weight: .bold))
+                        .foregroundStyle(Theme.Colors.mindTeal)
+                        .background(Circle().fill(Theme.Colors.softBackground).padding(3))
+                        .offset(x: 42, y: 42)
                 }
                 .scaleEffect(iconScale)
-                .padding(.bottom, 32)
+                .padding(.bottom, 24)
 
-                // Headline
+                // Eyebrow — names the milestone kind in caps.
+                Text(eyebrow)
+                    .font(.system(size: 12, weight: .heavy))
+                    .kerning(1.2)
+                    .foregroundStyle(accentColor == Theme.Colors.insightYellow
+                                     ? Theme.Colors.insightText : accentColor)
+                    .opacity(textOpacity)
+                    .padding(.bottom, 8)
+
+                // Headline (sans — celebration screens never use serif).
                 Text(milestone.headline)
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .font(Theme.Typography.largeDisplay)
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .multilineTextAlignment(.center)
                     .opacity(textOpacity)
@@ -55,11 +81,17 @@ struct MilestoneCelebrationView: View {
 
                 Spacer()
 
-                // CTA
-                PillButton("Keep going") { onDismiss() }
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .opacity(buttonOpacity)
-                    .padding(.bottom, 50)
+                // CTA — ink pill + secondary link.
+                VStack(spacing: 10) {
+                    PillButton("Keep going") { onDismiss() }
+                    Button("Back to lessons") { onDismiss() }
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(Theme.Colors.mutedText)
+                        .frame(height: 40)
+                }
+                .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                .opacity(buttonOpacity)
+                .padding(.bottom, 44)
             }
         }
         .onAppear {
@@ -81,17 +113,35 @@ struct MilestoneCelebrationView: View {
     private var accentColor: Color {
         switch milestone {
         case .firstSkillMastered:
-            return Theme.Colors.primaryBlue
+            return Theme.Colors.insightYellow          // gold coin
         case .firstPackReady, .threePacksReady:
-            return Theme.Colors.growthGreen
+            return Theme.Colors.mindTeal
         case .firstRefreshSave:
             return Theme.Colors.mindTeal
         case .firstWeekStreak, .twoWeekStreak:
-            return Theme.Colors.warmOrange
+            return Theme.Colors.ember                   // warm flame
         case .accuracyJump:
             return Theme.Colors.mindTeal
         case .firstFreeze:
             return Theme.Colors.mindTeal
+        }
+    }
+
+    /// Glyph reads dark on the gold coin, light on the saturated accents.
+    private var glyphColor: Color {
+        accentColor == Theme.Colors.insightYellow ? Theme.Colors.deepNavy : .white
+    }
+
+    private var eyebrow: String {
+        switch milestone {
+        case .firstSkillMastered: return "SKILL MASTERED"
+        case .firstPackReady:     return "PACK READY"
+        case .threePacksReady:    return "THREE PACKS READY"
+        case .firstRefreshSave:   return "BACK TO SHARP"
+        case .firstWeekStreak:    return "7-DAY STREAK"
+        case .twoWeekStreak:      return "14-DAY STREAK"
+        case .accuracyJump:       return "SHARPER"
+        case .firstFreeze:        return "STREAK PROTECTED"
         }
     }
 
@@ -106,7 +156,8 @@ struct MilestoneCelebrationView: View {
 
 // MARK: - Confetti overlay
 
-/// Lightweight confetti animation using phase-driven circles.
+/// Restrained confetti (Phase 13): 8 gold/teal/ember dots + squares that
+/// drift only through the top zone, then fade. Celebration, not a toy storm.
 private struct ConfettiOverlay: View {
     @State private var particles: [ConfettiParticle] = []
     @State private var animating = false
@@ -115,23 +166,25 @@ private struct ConfettiOverlay: View {
         GeometryReader { geo in
             ZStack {
                 ForEach(particles) { p in
-                    Circle()
-                        .fill(p.color)
-                        .frame(width: p.size, height: p.size)
-                        .position(
-                            x: animating ? p.endX : p.startX,
-                            y: animating ? geo.size.height + 20 : p.startY
-                        )
-                        .opacity(animating ? 0 : 1)
+                    Group {
+                        if p.isSquare {
+                            RoundedRectangle(cornerRadius: 2, style: .continuous).fill(p.color)
+                        } else {
+                            Circle().fill(p.color)
+                        }
+                    }
+                    .frame(width: p.size, height: p.size)
+                    .rotationEffect(.degrees(animating ? p.rotation : 0))
+                    .position(
+                        x: animating ? p.endX : p.startX,
+                        y: animating ? p.endY : p.startY
+                    )
+                    .opacity(animating ? 0 : 1)
                 }
             }
             .onAppear {
-                particles = (0..<30).map { _ in
-                    ConfettiParticle(bounds: geo.size)
-                }
-                withAnimation(.easeOut(duration: 2.0)) {
-                    animating = true
-                }
+                particles = (0..<8).map { _ in ConfettiParticle(bounds: geo.size) }
+                withAnimation(.easeOut(duration: 1.6)) { animating = true }
             }
         }
         .ignoresSafeArea()
@@ -143,21 +196,25 @@ private struct ConfettiParticle: Identifiable {
     let startX: CGFloat
     let startY: CGFloat
     let endX: CGFloat
+    let endY: CGFloat
     let size: CGFloat
+    let rotation: CGFloat
     let color: Color
+    let isSquare: Bool
 
     init(bounds: CGSize) {
-        startX = CGFloat.random(in: 0...bounds.width)
-        startY = CGFloat.random(in: -40...bounds.height * 0.3)
-        endX = startX + CGFloat.random(in: -60...60)
-        size = CGFloat.random(in: 5...10)
+        startX = CGFloat.random(in: bounds.width * 0.15...bounds.width * 0.85)
+        startY = CGFloat.random(in: -20...bounds.height * 0.12)
+        endX = startX + CGFloat.random(in: -50...50)
+        endY = startY + CGFloat.random(in: bounds.height * 0.18...bounds.height * 0.32)  // top zone only
+        size = CGFloat.random(in: 7...12)
+        rotation = CGFloat.random(in: -180...180)
         color = [
-            Theme.Colors.primaryBlue,
-            Theme.Colors.mindTeal,
-            Theme.Colors.warmOrange,
             Theme.Colors.insightYellow,
-            Theme.Colors.growthGreen
+            Theme.Colors.mindTeal,
+            Theme.Colors.ember
         ].randomElement()!
+        isSquare = Bool.random()
     }
 }
 
