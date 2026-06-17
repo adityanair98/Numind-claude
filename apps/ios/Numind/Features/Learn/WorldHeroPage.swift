@@ -54,11 +54,10 @@ struct WorldHeroPage: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
+            // One confident accent block: the world's topic tint fading into
+            // the warm base (so the page never floats on cool system white).
             LinearGradient(
-                colors: [
-                    accent.opacity(0.18),
-                    accent.opacity(0.04),
-                ],
+                colors: [accent.opacity(0.16), Theme.Colors.softBackground],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -156,7 +155,7 @@ struct WorldHeroPage: View {
                     Text(node.state == .current || node.state == .attempted
                          ? "Continue"
                          : "Start")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(.system(size: 16, weight: .bold))
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 50)
@@ -211,7 +210,7 @@ struct WorldHeroPage: View {
                         Image(systemName: "arrow.counterclockwise")
                             .font(.system(size: 13, weight: .bold))
                         Text("Review this topic")
-                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .font(.system(size: 15, weight: .bold))
                     }
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .frame(maxWidth: .infinity)

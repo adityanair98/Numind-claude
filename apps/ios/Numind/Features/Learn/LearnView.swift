@@ -27,8 +27,10 @@ struct LearnView: View {
     /// extracting all the quest map helpers out of LearnView.
     @State private var openedWorldId: String? = nil
 
-    /// Topic-library search (Phase 13).
-    @State private var searchText = ""
+    /// Current page in the worlds swipe-carousel; seeded once to the world
+    /// holding the user's `.current` lesson.
+    @State private var currentWorldIndex: Int = 0
+    @State private var carouselInitialized = false
 
     // MARK: - Layout constants
 
@@ -39,9 +41,9 @@ struct LearnView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Phase 13 — Explore is a clean topic library: a searchable list of
-            // topics; tapping one opens its existing quest map (the worlds
-            // carousel + paths segmented control are retired).
+            // Explore is an immersive worlds carousel: swipe through topic
+            // hero pages, tap Continue to drop into a topic's quest map. The
+            // header hides while a world is opened to give the map full height.
             if openedWorldId == nil {
                 exploreHeader
             }
@@ -51,12 +53,18 @@ struct LearnView: View {
                let idx = viewModel.sections.firstIndex(where: { $0.id == id }) {
                 openedWorldView(section: section, sectionIndex: idx)
             } else {
-                topicList
+                worldsCarousel
             }
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
-        .onAppear { viewModel.refresh(using: progressStore) }
+        .onAppear {
+            viewModel.refresh(using: progressStore)
+            if !carouselInitialized {
+                currentWorldIndex = defaultWorldIndex()
+                carouselInitialized = true
+            }
+        }
         .onChange(of: progressStore.totalSessions) {
             viewModel.refresh(using: progressStore)
         }
@@ -120,123 +128,54 @@ struct LearnView: View {
         }
     }
 
-    // MARK: - Explore topic library (Phase 13)
+    // MARK: - Explore worlds carousel (Phase 13 — restored, reskinned warm)
 
+    /// Slim title row above the carousel; "Explore" + a one-line nudge. Hidden
+    /// once a world is opened so the quest map gets the full height.
     private var exploreHeader: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 2) {
             Text("Explore")
-                .font(Theme.Typography.display)
+                .font(Theme.Typography.title)
                 .foregroundStyle(Theme.Colors.deepNavy)
-            HStack(spacing: 8) {
-                Image(systemName: "magnifyingglass")
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundStyle(Theme.Colors.mutedText)
-                TextField("Search lessons & tools", text: $searchText)
-                    .font(Theme.Typography.body)
-                    .foregroundStyle(Theme.Colors.deepNavy)
-                    .autocorrectionDisabled()
-            }
-            .padding(.horizontal, 14)
-            .frame(height: 44)
-            .background(Theme.Colors.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
-            )
-        }
-        .padding(.horizontal, Theme.Spacing.screenHorizontal)
-        .padding(.top, 8)
-        .padding(.bottom, 14)
-    }
-
-    private var filteredSections: [LearnViewModel.PathSection] {
-        guard !searchText.isEmpty else { return viewModel.sections }
-        let q = searchText.lowercased()
-        return viewModel.sections.filter {
-            $0.module.title.lowercased().contains(q)
-                || $0.module.subtitle.lowercased().contains(q)
-        }
-    }
-
-    private var topicList: some View {
-        ScrollView {
-            VStack(spacing: 10) {
-                HStack {
-                    Text("All topics")
-                        .font(Theme.Typography.small)
-                        .textCase(.uppercase)
-                        .kerning(0.6)
-                        .foregroundStyle(Theme.Colors.mutedText)
-                    Spacer()
-                }
-                .padding(.top, 2)
-                ForEach(filteredSections) { topicRow($0) }
-            }
-            .padding(.horizontal, Theme.Spacing.screenHorizontal)
-            .padding(.bottom, 40)
-        }
-    }
-
-    private func topicRow(_ section: LearnViewModel.PathSection) -> some View {
-        let accent = section.module.color.tintColor
-        let tint   = section.module.color.tintBackground
-        let lessons = section.nodes.filter { !$0.isReview }
-        let mastered = lessons.filter { $0.state == .mastered }.count
-        let total = lessons.count
-
-        return Button {
-            withAnimation(.easeInOut(duration: 0.25)) { openedWorldId = section.id }
-        } label: {
-            HStack(spacing: 13) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 11, style: .continuous).fill(tint)
-                    Image(systemName: section.module.icon)
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(accent)
-                }
-                .frame(width: 42, height: 42)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(section.module.title)
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(Theme.Colors.deepNavy)
-                    Text(section.module.subtitle)
-                        .font(Theme.Typography.small)
-                        .foregroundStyle(Theme.Colors.mutedText)
-                        .lineLimit(1)
-                }
-                Spacer(minLength: 8)
-                topicStatus(mastered: mastered, total: total)
-            }
-            .padding(14)
-            .background(Theme.Colors.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
-            )
-        }
-        .buttonStyle(.plain)
-    }
-
-    @ViewBuilder
-    private func topicStatus(mastered: Int, total: Int) -> some View {
-        if total > 0 && mastered == total {
-            HStack(spacing: 4) {
-                Image(systemName: "checkmark").font(.system(size: 11, weight: .bold))
-                Text("Complete").font(.system(size: 12, weight: .semibold))
-            }
-            .foregroundStyle(Theme.Colors.mindTeal)
-        } else if mastered > 0 {
-            Text("\(mastered)/\(total)")
-                .font(Theme.Typography.monoSmall)
-                .foregroundStyle(Theme.Colors.deepNavy)
-        } else {
-            Text("Start")
-                .font(.system(size: 12, weight: .medium))
+            Text("Swipe through every topic \u{2014} tap in to start.")
+                .font(Theme.Typography.small)
                 .foregroundStyle(Theme.Colors.mutedText)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+        .padding(.top, 8)
+        .padding(.bottom, 6)
+    }
+
+    /// Brilliant-style full-bleed page swipe between topic hero pages. Each
+    /// page (WorldHeroPage) carries the topic's accent gradient + a Continue
+    /// card; tapping Continue opens that topic's quest map in place.
+    private var worldsCarousel: some View {
+        TabView(selection: $currentWorldIndex) {
+            ForEach(Array(viewModel.sections.enumerated()), id: \.element.id) { idx, section in
+                WorldHeroPage(
+                    section: section,
+                    onContinue: { _ in
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            openedWorldId = section.id
+                        }
+                    }
+                )
+                .tag(idx)
+                .environmentObject(progressStore)
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .always))
+        .indexViewStyle(.page(backgroundDisplayMode: .interactive))
+    }
+
+    /// Default starting page = the world holding the `.current` node;
+    /// falls back to the first world.
+    private func defaultWorldIndex() -> Int {
+        if let idx = viewModel.sections.firstIndex(where: { section in
+            section.nodes.contains(where: { $0.state == .current })
+        }) { return idx }
+        return 0
     }
 
     // ═══════════════════════════════════════════════════════════════
