@@ -16,46 +16,17 @@ struct PaywallView: View {
             VStack(spacing: 0) {
                 ScrollView {
                     VStack(spacing: 0) {
-                        // Hero badge
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                .fill(
-                                    LinearGradient(
-                                        colors: [Theme.Colors.primaryBlue, Theme.Colors.investIndigo],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                                .frame(width: 88, height: 88)
-                                .shadow(color: Theme.Colors.primaryBlue.opacity(0.32), radius: 18, x: 0, y: 8)
+                        // Marketing hero — goldTint radial card + serif headline
+                        // (paywall is a marketing surface, so serif is allowed).
+                        heroCard
+                            .padding(.top, 8)
+                            .padding(.horizontal, Theme.Spacing.screenHorizontal)
 
-                            Text("\u{1F9E0}")
-                                .font(.system(size: 44))
-
-                            // PRO badge
-                            Text("PRO")
-                                .font(.system(size: 10, weight: .heavy))
-                                .foregroundStyle(Theme.Colors.deepNavy)
-                                .tracking(0.4)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 3)
-                                .background(Theme.Colors.insightYellow)
-                                .clipShape(Capsule())
-                                .shadow(color: Theme.Colors.insightYellow.opacity(0.4), radius: 5, x: 0, y: 2)
-                                .offset(x: 28, y: -30)
-                        }
-                        .padding(.top, 8)
-
-                        Text("Try Numind free for 7 days \u{2014} be ready for what\u{2019}s coming")
-                            .font(.system(size: 26, weight: .semibold, design: .rounded))
-                            .foregroundStyle(Theme.Colors.deepNavy)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, 18)
-
-                        Text("You\u{2019}ll be reminded before any charge.")
+                        Text("Start free for 7 days \u{2014} reminded before any charge.")
                             .font(.system(size: 14))
                             .foregroundStyle(Theme.Colors.mutedText)
-                            .padding(.top, 8)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 14)
 
                         // Plan cards
                         HStack(spacing: 12) {
@@ -109,6 +80,55 @@ struct PaywallView: View {
         }
     }
 
+    // MARK: - Marketing hero (Phase 13)
+
+    private var heroCard: some View {
+        VStack(spacing: 18) {
+            HStack(spacing: 14) {
+                artifactCircle(text: "%", fill: Theme.Colors.insightYellow, fg: Theme.Colors.deepNavy)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .fill(Theme.Colors.mindTeal)
+                        .frame(width: 56, height: 56)
+                    Image(systemName: "cart.fill")
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundStyle(.white)
+                }
+                artifactCircle(text: "$", fill: Theme.Colors.mindTealTint, fg: Theme.Colors.mindTeal)
+            }
+
+            Text("The only money app that respects your money.")
+                .font(.system(size: 26, weight: .medium, design: .serif))
+                .foregroundStyle(Theme.Colors.deepNavy)
+                .multilineTextAlignment(.center)
+                .lineSpacing(2)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.vertical, 28)
+        .padding(.horizontal, 20)
+        .frame(maxWidth: .infinity)
+        .background(
+            RadialGradient(
+                colors: [Theme.Colors.insightYellowTint, Theme.Colors.cardBackground],
+                center: .top, startRadius: 10, endRadius: 300
+            )
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+    }
+
+    private func artifactCircle(text: String, fill: Color, fg: Color) -> some View {
+        ZStack {
+            Circle().fill(fill).frame(width: 56, height: 56)
+            Text(text)
+                .font(.system(size: 26, weight: .heavy))
+                .foregroundStyle(fg)
+        }
+    }
+
     // MARK: - Plan Card
 
     private func planCard(
@@ -128,7 +148,7 @@ struct PaywallView: View {
 
                 HStack(alignment: .firstTextBaseline, spacing: 4) {
                     Text(price)
-                        .font(.system(size: 28, weight: .heavy, design: .rounded))
+                        .font(.system(size: 28, weight: .bold, design: .monospaced))
                         .foregroundStyle(Theme.Colors.deepNavy)
                     Text(period)
                         .font(.system(size: 13))
@@ -158,29 +178,27 @@ struct PaywallView: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 22, style: .continuous)
                     .strokeBorder(
-                        isSelected
-                            ? (featured ? Theme.Colors.insightYellow : Theme.Colors.primaryBlue)
-                            : Theme.Colors.hairline,
+                        isSelected ? Theme.Colors.deepNavy : Theme.Colors.hairline,
                         lineWidth: isSelected ? 2 : 1
                     )
             )
             .overlay(alignment: .top) {
                 if let badge {
+                    // Positive = teal, never gold (a savings badge is good news).
                     Text(badge)
                         .font(.system(size: 10, weight: .heavy))
-                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .foregroundStyle(.white)
                         .tracking(0.5)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 4)
-                        .background(Theme.Colors.insightYellow)
+                        .background(Theme.Colors.mindTeal)
                         .clipShape(Capsule())
-                        .shadow(color: Theme.Colors.insightYellow.opacity(0.4), radius: 5, x: 0, y: 2)
                         .offset(y: -10)
                 }
             }
             .shadow(
-                color: featured ? Theme.Colors.insightYellow.opacity(0.30) : .black.opacity(0.04),
-                radius: featured ? 14 : 3, x: 0, y: featured ? 6 : 1
+                color: .black.opacity(featured ? 0.07 : 0.04),
+                radius: featured ? 8 : 3, x: 0, y: featured ? 4 : 1
             )
         }
         .buttonStyle(.plain)
@@ -237,17 +255,17 @@ struct PaywallView: View {
             // Connection line + steps
             HStack(alignment: .top, spacing: 0) {
                 timelineStep(
-                    glyph: "\u{2728}", color: Theme.Colors.primaryBlue,
-                    day: "Today", title: "Start", sub: "Full Pro access"
+                    glyph: "sparkles", color: Theme.Colors.mindTeal,
+                    day: "Today", title: "Start", sub: "Full access"
                 )
                 Spacer()
                 timelineStep(
-                    glyph: "\u{1F514}", color: Theme.Colors.warmOrange,
+                    glyph: "bell.fill", color: Theme.Colors.ember,
                     day: "Day 5", title: "Reminder", sub: "We ping you before"
                 )
                 Spacer()
                 timelineStep(
-                    glyph: "\u{1F3AF}", color: Theme.Colors.mindTeal,
+                    glyph: "flag.checkered", color: Theme.Colors.mindTeal,
                     day: "Day 7", title: "Continue or cancel", sub: "Your choice"
                 )
             }
@@ -259,8 +277,9 @@ struct PaywallView: View {
 
     private func timelineStep(glyph: String, color: Color, day: String, title: String, sub: String) -> some View {
         VStack(spacing: 6) {
-            Text(glyph)
-                .font(.system(size: 14))
+            Image(systemName: glyph)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(color)
                 .frame(width: 32, height: 32)
                 .background(Theme.Colors.cardBackground)
                 .clipShape(Circle())

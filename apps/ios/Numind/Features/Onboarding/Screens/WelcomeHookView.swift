@@ -1,19 +1,15 @@
 import SwiftUI
 
-/// Screen 1 — Welcome / Hook
-/// Deep navy gradient background, hero illustration, value props, CTA.
+/// Screen 1 — Welcome / Hook (handoff #1, Phase 13)
+/// Warm base, a contained illustration panel, a SANS ink headline (onboarding
+/// has a primary action, so serif is not allowed), ink CTA, teal Sign-in link.
 struct WelcomeHookView: View {
     let onGetStarted: () -> Void
     let onAlreadyHaveAccount: () -> Void
 
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Theme.Colors.deepNavy, Color(red: 0.08, green: 0.28, blue: 0.72)],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            Theme.Colors.softBackground.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 // Scrolls only when the content genuinely doesn't fit
@@ -21,35 +17,48 @@ struct WelcomeHookView: View {
                 // pressure must never truncate the pitch copy.
                 ScrollView {
                     VStack(spacing: 0) {
-                        // Hero illustration (reuse existing pattern)
+                        // Illustration panel — a warm radial gradient card
+                        // holding the money-artifact collage.
                         HeroIllustration()
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                RadialGradient(
+                                    colors: [Theme.Colors.emberTint, Theme.Colors.softBackground],
+                                    center: .top, startRadius: 20, endRadius: 330
+                                )
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+                            .padding(.horizontal, Theme.Spacing.screenHorizontal)
                             .padding(.top, 12)
                             .padding(.bottom, 28)
 
-                        // Headline
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Money decisions")
-                                .font(.system(size: 34, weight: .heavy, design: .rounded))
-                                .foregroundStyle(.white)
-                            Text("don\u{2019}t wait.")
-                                .font(.system(size: 34, weight: .heavy, design: .rounded))
-                                .foregroundStyle(Theme.Colors.insightYellow)
+                        // Headline (sans ink)
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Money skills,\nfinally taught.")
+                                .font(.system(size: 34, weight: .bold))
+                                .foregroundStyle(Theme.Colors.deepNavy)
+                                .fixedSize(horizontal: false, vertical: true)
 
-                            Text("Five minutes a day to walk into every one of them prepared.")
+                            Text("Five minutes a day to walk into every money moment prepared.")
                                 .font(Theme.Typography.body)
-                                .foregroundStyle(.white.opacity(0.72))
+                                .foregroundStyle(Theme.Colors.mutedText)
                                 .lineSpacing(3)
                                 .fixedSize(horizontal: false, vertical: true)
-                                .padding(.top, 8)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, Theme.Spacing.screenHorizontal)
 
                         // Value props
                         VStack(spacing: 12) {
-                            valueRow(emoji: "\u{1F3AF}", tint: Theme.Colors.primaryBlueTint, title: "Decision-sized sessions", sub: "5 minutes, built for real moments")
-                            valueRow(emoji: "\u{1F9ED}", tint: Theme.Colors.mindTealTint, title: "Job offers, health plans, leases, loans", sub: "Know your number for each one")
-                            valueRow(emoji: "\u{2705}", tint: Theme.Colors.insightYellowTint, title: "Honest progress", sub: "We tell you when you\u{2019}re actually ready")
+                            valueRow(icon: "target", tint: Theme.Colors.mindTealTint,
+                                     iconColor: Theme.Colors.mindTeal,
+                                     title: "Decision-sized sessions", sub: "5 minutes, built for real moments")
+                            valueRow(icon: "signpost.right.fill", tint: Theme.Colors.emberTint,
+                                     iconColor: Theme.Colors.ember,
+                                     title: "Job offers, leases, loans, health plans", sub: "Know your number for each one")
+                            valueRow(icon: "checkmark.seal.fill", tint: Theme.Colors.insightYellowTint,
+                                     iconColor: Theme.Colors.insightText,
+                                     title: "Honest progress", sub: "We tell you when you\u{2019}re actually ready")
                         }
                         .padding(.horizontal, Theme.Spacing.screenHorizontal)
                         .padding(.top, 18)
@@ -58,23 +67,23 @@ struct WelcomeHookView: View {
                 }
                 .scrollBounceBehavior(.basedOnSize)
 
-                // CTAs
+                // CTAs — ink pill + teal Sign-in link.
                 VStack(spacing: 6) {
                     Button(action: onGetStarted) {
                         Text("Get started")
                             .font(.system(size: 17, weight: .semibold))
-                            .foregroundStyle(Theme.Colors.deepNavy)
+                            .foregroundStyle(Theme.Colors.ctaLabel)
                             .frame(maxWidth: .infinity)
                             .frame(height: Theme.Spacing.buttonHeight)
-                            .background(.white)
+                            .background(Theme.Colors.ctaFill)
                             .clipShape(Capsule())
                     }
                     .buttonStyle(.plain)
 
                     Button(action: onAlreadyHaveAccount) {
-                        Text("I already have an account")
+                        (Text("Already a member? ").foregroundColor(Theme.Colors.mutedText)
+                            + Text("Sign in").foregroundColor(Theme.Colors.mindTeal))
                             .font(.system(size: 15, weight: .medium))
-                            .foregroundStyle(.white.opacity(0.72))
                             .frame(height: 44)
                     }
                 }
@@ -84,10 +93,11 @@ struct WelcomeHookView: View {
         }
     }
 
-    private func valueRow(emoji: String, tint: Color, title: String, sub: String) -> some View {
+    private func valueRow(icon: String, tint: Color, iconColor: Color, title: String, sub: String) -> some View {
         HStack(spacing: 12) {
-            Text(emoji)
-                .font(.system(size: 18))
+            Image(systemName: icon)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(iconColor)
                 .frame(width: 38, height: 38)
                 .background(tint)
                 .clipShape(Circle())
@@ -96,10 +106,10 @@ struct WelcomeHookView: View {
                 Text(title)
                     .font(Theme.Typography.body)
                     .fontWeight(.semibold)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Theme.Colors.deepNavy)
                 Text(sub)
                     .font(Theme.Typography.caption)
-                    .foregroundStyle(.white.opacity(0.55))
+                    .foregroundStyle(Theme.Colors.mutedText)
             }
             Spacer()
         }
@@ -173,10 +183,10 @@ private struct HeroIllustration: View {
             }
             .offset(x: 20, y: -80)
 
-            // Decorative dots
-            Circle().fill(Color.white.opacity(0.5)).frame(width: 6, height: 6).offset(x: 80, y: 55)
-            Circle().fill(Color.white.opacity(0.3)).frame(width: 6, height: 6).offset(x: 95, y: 55)
-            Circle().fill(Theme.Colors.insightYellow.opacity(0.5)).frame(width: 5, height: 5).offset(x: -80, y: -50)
+            // Decorative beads (warm-panel friendly)
+            Circle().fill(Theme.Colors.mindTeal.opacity(0.5)).frame(width: 6, height: 6).offset(x: 80, y: 55)
+            Circle().fill(Theme.Colors.deepNavy.opacity(0.18)).frame(width: 6, height: 6).offset(x: 95, y: 55)
+            Circle().fill(Theme.Colors.insightYellow.opacity(0.7)).frame(width: 5, height: 5).offset(x: -80, y: -50)
         }
         .frame(height: 250)
         .frame(maxWidth: .infinity)
@@ -220,8 +230,8 @@ private struct ReceiptCard: View {
                     .foregroundStyle(Theme.Colors.deepNavy)
                 Spacer()
                 Text("$2.43")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(Theme.Colors.primaryBlue)
+                    .font(.system(size: 14, weight: .bold, design: .monospaced))
+                    .foregroundStyle(Theme.Colors.mindTeal)
             }
             .padding(.top, 4)
         }
@@ -239,7 +249,7 @@ private struct ReceiptCard: View {
                 .foregroundStyle(muted ? Theme.Colors.mutedText : Theme.Colors.deepNavy)
             Spacer()
             Text(value)
-                .font(.system(size: 12, weight: .semibold))
+                .font(.system(size: 12, weight: .semibold, design: .monospaced))
                 .foregroundStyle(muted ? Theme.Colors.mutedText : Theme.Colors.deepNavy)
         }
     }
