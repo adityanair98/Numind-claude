@@ -386,15 +386,17 @@ struct QuizSessionView: View {
                         .font(.system(size: 28, weight: .bold))
                         .foregroundStyle(.white)
                 }
+                // Wrong-state headline is dark ink, never amber (amber is mid-
+                // luminance; carries the icon/wash, never small text). Phase 13.
                 Text(isCorrect ? "Nice — that's right." : "Not quite.")
                     .font(Theme.Typography.title)
-                    .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange)
+                    .foregroundStyle(isCorrect ? Theme.Colors.mindTeal : Theme.Colors.deepNavy)
                 if isCorrect {
                     Text("One more toward today's ring.")
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Colors.mindTeal)
                 } else {
-                    Text("No penalty — keep going.")
+                    Text("No penalty — the ring still moves.")
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Colors.mutedText)
                 }
@@ -422,11 +424,13 @@ struct QuizSessionView: View {
     @ViewBuilder
     private func answerRevealPill(for q: QuizQuestion, isCorrect: Bool) -> some View {
         let text = q.choices.first { $0.id == q.correctChoiceId }?.text ?? ""
-        let background = isCorrect ? Theme.Colors.mindTeal : Theme.Colors.warmOrange
+        // Always teal — this shows the CORRECT answer (positive), even when the
+        // user's pick was wrong (the correct option is revealed in teal). P13.
+        let background = Theme.Colors.mindTeal
         if text.count <= 22 {
-            // Short answers ("$2.43", "Roth IRA") get the big celebratory pill.
+            // Short answers ("$2.43", "18%") are figures → mono.
             Text(text)
-                .font(.system(size: 30, weight: .bold, design: .rounded))
+                .font(.system(size: 28, weight: .semibold, design: .monospaced))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 32)
                 .padding(.vertical, 14)

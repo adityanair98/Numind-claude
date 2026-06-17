@@ -55,7 +55,7 @@ struct OptionCard: View {
     private var cardBackground: Color {
         switch state {
         case .normal:   Theme.Colors.cardBackground
-        case .selected: Theme.Colors.primaryBlueTint
+        case .selected: Theme.Colors.mindTealTint   // selection = teal (Phase 13)
         case .correct:  Theme.Colors.mindTealTint
         case .wrong:    Theme.Colors.warmOrangeTint
         }
@@ -64,7 +64,7 @@ struct OptionCard: View {
     private var borderColor: Color {
         switch state {
         case .normal:   Theme.Colors.hairline
-        case .selected: Theme.Colors.primaryBlue
+        case .selected: Theme.Colors.mindTeal
         case .correct:  Theme.Colors.mindTeal
         case .wrong:    Theme.Colors.warmOrange
         }
@@ -73,7 +73,7 @@ struct OptionCard: View {
     private var bubbleBackground: Color {
         switch state {
         case .normal:   Theme.Colors.mutedTint
-        case .selected: Theme.Colors.primaryBlue
+        case .selected: Theme.Colors.mindTeal
         case .correct:  Theme.Colors.mindTeal
         case .wrong:    Theme.Colors.warmOrange
         }
