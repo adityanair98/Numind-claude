@@ -51,7 +51,7 @@ struct DiscountTaxCalculator: View {
                     }
                     TextField(discountMode == .percent ? "e.g. 30" : "e.g. 10", text: $discountText)
                         .keyboardType(.decimalPad)
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .font(.system(size: 17, weight: .semibold, design: .monospaced))
                     if discountMode == .percent {
                         Text("%").font(Theme.Typography.body).foregroundStyle(Theme.Colors.mutedText)
                     }
@@ -64,7 +64,7 @@ struct DiscountTaxCalculator: View {
                 HStack(spacing: 8) {
                     TextField("8", text: $taxPctText)
                         .keyboardType(.decimalPad)
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .font(.system(size: 17, weight: .semibold, design: .monospaced))
                         .frame(maxWidth: 80)
                         .padding(.horizontal, 12).padding(.vertical, 10)
                         .background(Theme.Colors.mutedTint)
@@ -92,7 +92,7 @@ struct DiscountTaxCalculator: View {
                         .foregroundStyle(Theme.Colors.deepNavy)
                     Spacer()
                     Text(money(finalPrice))
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.system(size: 22, weight: .bold, design: .monospaced))
                         .foregroundStyle(Theme.Colors.warmOrange)
                 }
             }
@@ -103,7 +103,7 @@ struct DiscountTaxCalculator: View {
         HStack {
             Text(label).font(.system(size: 14, weight: .medium)).foregroundStyle(Theme.Colors.mutedText)
             Spacer()
-            Text(value).font(.system(size: 15, weight: .semibold, design: .rounded))
+            Text(value).font(.system(size: 15, weight: .semibold, design: .monospaced))
                 .foregroundStyle(tint ?? Theme.Colors.deepNavy)
         }
     }
@@ -137,7 +137,7 @@ struct DiscountTaxCalculator: View {
             Text("$").font(.system(size: 17, weight: .semibold)).foregroundStyle(Theme.Colors.mutedText)
             TextField(placeholder, text: text)
                 .keyboardType(.decimalPad)
-                .font(.system(size: 17, weight: .semibold, design: .rounded))
+                .font(.system(size: 17, weight: .semibold, design: .monospaced))
         }
         .padding(.horizontal, 12).padding(.vertical, 10)
         .background(Theme.Colors.mutedTint)

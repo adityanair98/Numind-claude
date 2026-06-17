@@ -98,7 +98,7 @@ struct ToolsView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("Run your real numbers")
-                .font(.system(size: 30, weight: .bold, design: .rounded))
+                .font(.system(size: 30, weight: .bold))
                 .foregroundStyle(Theme.Colors.deepNavy)
             Text("Quick calculators for the moment a money decision actually happens.")
                 .font(Theme.Typography.caption)

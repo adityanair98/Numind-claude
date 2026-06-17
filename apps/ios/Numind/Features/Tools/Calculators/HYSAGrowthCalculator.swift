@@ -47,7 +47,7 @@ struct HYSAGrowthCalculator: View {
             VStack(alignment: .leading, spacing: 12) {
                 VStack(spacing: 2) {
                     Text(money(ending))
-                        .font(.system(size: 32, weight: .bold, design: .rounded))
+                        .font(.system(size: 32, weight: .bold, design: .monospaced))
                         .foregroundStyle(Theme.Colors.growthGreen)
                     Text("in \(pct(years)) years")
                         .font(Theme.Typography.small).foregroundStyle(Theme.Colors.mutedText)
@@ -66,7 +66,7 @@ struct HYSAGrowthCalculator: View {
         HStack {
             Text(l).font(.system(size: bold ? 15 : 14, weight: bold ? .bold : .medium)).foregroundStyle(bold ? Theme.Colors.deepNavy : Theme.Colors.mutedText)
             Spacer()
-            Text(v).font(.system(size: bold ? 16 : 15, weight: bold ? .bold : .semibold, design: .rounded)).foregroundStyle(tint ?? Theme.Colors.deepNavy)
+            Text(v).font(.system(size: bold ? 16 : 15, weight: bold ? .bold : .semibold, design: .monospaced)).foregroundStyle(tint ?? Theme.Colors.deepNavy)
         }
     }
 
@@ -101,14 +101,14 @@ struct HYSAGrowthCalculator: View {
     private func currencyField(text: Binding<String>, placeholder: String) -> some View {
         HStack(spacing: 4) {
             Text("$").font(.system(size: 17, weight: .semibold)).foregroundStyle(Theme.Colors.mutedText)
-            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .rounded))
+            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .monospaced))
         }
         .padding(.horizontal, 12).padding(.vertical, 10).background(Theme.Colors.mutedTint)
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
     private func pctField(text: Binding<String>, placeholder: String, unit: String = "%") -> some View {
         HStack(spacing: 8) {
-            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .rounded))
+            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .monospaced))
                 .frame(maxWidth: 90).padding(.horizontal, 12).padding(.vertical, 10).background(Theme.Colors.mutedTint)
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             Text(unit).font(Theme.Typography.body).foregroundStyle(Theme.Colors.mutedText)

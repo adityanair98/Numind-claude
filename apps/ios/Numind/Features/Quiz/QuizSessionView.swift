@@ -85,7 +85,7 @@ struct QuizSessionView: View {
                 .rotationEffect(.degrees(-90))
                 .animation(.linear(duration: 0.1), value: remaining)
             Text("\(max(0, Int(ceil(remaining))))")
-                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .font(.system(size: 13, weight: .bold, design: .monospaced))
                 .foregroundStyle(ringColor)
                 .animation(.none, value: remaining)
         }
@@ -197,7 +197,7 @@ struct QuizSessionView: View {
                             difficultyPips(q.difficulty)
                                 .padding(.trailing, 8)
                             Text("\(viewModel.currentIndex + 1) / \(viewModel.total)")
-                                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                .font(.system(size: 12, weight: .semibold, design: .monospaced))
                                 .foregroundStyle(Theme.Colors.mutedText)
                         }
 
@@ -267,7 +267,7 @@ struct QuizSessionView: View {
             }
         }()
         return Text(label)
-            .font(.system(size: 38, weight: .bold, design: .rounded))
+            .font(.system(size: 38, weight: .bold, design: .monospaced))
             .foregroundStyle(raw.isEmpty ? Theme.Colors.mutedText : Theme.Colors.deepNavy)
             .frame(maxWidth: .infinity)
             .frame(height: 80)
@@ -562,10 +562,10 @@ struct QuizSessionView: View {
         Button { viewModel.checkAnswer() } label: {
             Text("Check answer")
                 .font(.system(size: 17, weight: .semibold))
-                .foregroundStyle(enabled ? .white : Theme.Colors.mutedText)
+                .foregroundStyle(enabled ? Theme.Colors.ctaLabel : Theme.Colors.placeholderText)
                 .frame(maxWidth: .infinity)
                 .frame(height: Theme.Spacing.buttonHeight)
-                .background(enabled ? Theme.Colors.primaryBlue : Theme.Colors.mutedTint)
+                .background(enabled ? Theme.Colors.ctaFill : Theme.Colors.disabledFill)
                 .clipShape(Capsule())
         }
         .buttonStyle(.plain)

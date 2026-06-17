@@ -65,7 +65,7 @@ struct TipSplitCalculator: View {
                 HStack(spacing: 8) {
                     TextField("8", text: $taxPctText)
                         .keyboardType(.decimalPad)
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .font(.system(size: 17, weight: .semibold, design: .monospaced))
                         .frame(maxWidth: 80)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 10)
@@ -99,7 +99,7 @@ struct TipSplitCalculator: View {
                     HStack(spacing: 8) {
                         TextField("e.g. 25", text: $customTipText)
                             .keyboardType(.decimalPad)
-                            .font(.system(size: 17, weight: .semibold, design: .rounded))
+                            .font(.system(size: 17, weight: .semibold, design: .monospaced))
                             .frame(maxWidth: 90)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 10)
@@ -190,7 +190,7 @@ struct TipSplitCalculator: View {
                             .foregroundStyle(Theme.Colors.deepNavy)
                         Spacer()
                         Text(money(row.amount))
-                            .font(.system(size: 17, weight: .bold, design: .rounded))
+                            .font(.system(size: 17, weight: .bold, design: .monospaced))
                             .foregroundStyle(Theme.Colors.mindTeal)
                     }
                 }
@@ -201,7 +201,7 @@ struct TipSplitCalculator: View {
                             Image(systemName: "square.and.arrow.up")
                             Text("Share the split")
                         }
-                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .font(.system(size: 15, weight: .bold))
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 48)
@@ -221,7 +221,7 @@ struct TipSplitCalculator: View {
                 .foregroundStyle(bold ? Theme.Colors.deepNavy : Theme.Colors.mutedText)
             Spacer()
             Text(value)
-                .font(.system(size: bold ? 18 : 15, weight: bold ? .bold : .semibold, design: .rounded))
+                .font(.system(size: bold ? 18 : 15, weight: bold ? .bold : .semibold, design: .monospaced))
                 .foregroundStyle(Theme.Colors.deepNavy)
         }
     }
@@ -293,7 +293,7 @@ struct TipSplitCalculator: View {
             Text("$").font(.system(size: 17, weight: .semibold)).foregroundStyle(Theme.Colors.mutedText)
             TextField(placeholder, text: text)
                 .keyboardType(.decimalPad)
-                .font(.system(size: 17, weight: .semibold, design: .rounded))
+                .font(.system(size: 17, weight: .semibold, design: .monospaced))
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 10)

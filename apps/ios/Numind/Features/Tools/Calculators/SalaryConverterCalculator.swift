@@ -61,7 +61,7 @@ struct SalaryConverterCalculator: View {
         HStack {
             Text(l).font(.system(size: bold ? 15 : 14, weight: bold ? .bold : .medium)).foregroundStyle(bold ? Theme.Colors.deepNavy : Theme.Colors.mutedText)
             Spacer()
-            Text(v).font(.system(size: bold ? 17 : 15, weight: bold ? .bold : .semibold, design: .rounded)).foregroundStyle(bold ? Theme.Colors.mindTeal : Theme.Colors.deepNavy)
+            Text(v).font(.system(size: bold ? 17 : 15, weight: bold ? .bold : .semibold, design: .monospaced)).foregroundStyle(bold ? Theme.Colors.mindTeal : Theme.Colors.deepNavy)
         }
     }
 
@@ -80,14 +80,14 @@ struct SalaryConverterCalculator: View {
     private func currencyField(text: Binding<String>, placeholder: String) -> some View {
         HStack(spacing: 4) {
             Text("$").font(.system(size: 17, weight: .semibold)).foregroundStyle(Theme.Colors.mutedText)
-            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .rounded))
+            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .monospaced))
         }
         .padding(.horizontal, 12).padding(.vertical, 10).background(Theme.Colors.mutedTint)
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
     private func pctField(text: Binding<String>, placeholder: String, unit: String) -> some View {
         HStack(spacing: 8) {
-            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .rounded))
+            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .monospaced))
                 .frame(maxWidth: 90).padding(.horizontal, 12).padding(.vertical, 10).background(Theme.Colors.mutedTint)
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             Text(unit).font(Theme.Typography.body).foregroundStyle(Theme.Colors.mutedText)

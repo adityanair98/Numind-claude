@@ -53,7 +53,7 @@ struct StudentLoanCalculator: View {
                         .font(.system(size: 14, weight: .bold)).foregroundStyle(Theme.Colors.deepNavy)
                     Spacer()
                     Text(money(max(0, standardTotal - refiTotal)))
-                        .font(.system(size: 17, weight: .bold, design: .rounded))
+                        .font(.system(size: 17, weight: .bold, design: .monospaced))
                         .foregroundStyle(Theme.Colors.growthGreen)
                 }
             }
@@ -63,7 +63,7 @@ struct StudentLoanCalculator: View {
     private func column(_ title: String, monthly: Double, total: Double, tint: Color) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title).font(.system(size: 10, weight: .heavy)).foregroundStyle(Theme.Colors.mutedText).tracking(0.6)
-            Text(money(monthly)).font(.system(size: 20, weight: .bold, design: .rounded)).foregroundStyle(tint)
+            Text(money(monthly)).font(.system(size: 20, weight: .bold, design: .monospaced)).foregroundStyle(tint)
             Text("per month").font(.system(size: 10)).foregroundStyle(Theme.Colors.mutedText)
             Text("Total \(money(total))").font(.system(size: 11, weight: .semibold)).foregroundStyle(Theme.Colors.mutedText)
         }
@@ -91,14 +91,14 @@ struct StudentLoanCalculator: View {
     private func currencyField(text: Binding<String>, placeholder: String) -> some View {
         HStack(spacing: 4) {
             Text("$").font(.system(size: 17, weight: .semibold)).foregroundStyle(Theme.Colors.mutedText)
-            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .rounded))
+            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .monospaced))
         }
         .padding(.horizontal, 12).padding(.vertical, 10).background(Theme.Colors.mutedTint)
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
     private func pctField(text: Binding<String>, placeholder: String) -> some View {
         HStack(spacing: 8) {
-            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .rounded))
+            TextField(placeholder, text: text).keyboardType(.decimalPad).font(.system(size: 17, weight: .semibold, design: .monospaced))
                 .frame(maxWidth: 90).padding(.horizontal, 12).padding(.vertical, 10).background(Theme.Colors.mutedTint)
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             Text("%").font(Theme.Typography.body).foregroundStyle(Theme.Colors.mutedText)
