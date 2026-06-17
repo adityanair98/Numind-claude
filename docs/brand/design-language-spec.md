@@ -1,5 +1,11 @@
 # Design Language Spec — "Warm-Premium Money Tool" (Phase 13)
 
+> **Status: implemented (June 2026).** Shipped across the foundation tokens
+> (`Colors.swift`/`Typography.swift`, repointed in place) and all 14 handoff
+> screens; the `design_handoff_numind_screens/README.md` Claude-design handoff
+> was the screen-by-screen build target. The rules below are now binding for
+> new UI, not just aspirational.
+>
 > The redesign brief. This is the source of truth for the visual language and
 > supersedes `design-tokens.md` for color/type/shape. It is grounded in the
 > June-2026 audience-aesthetic research (`docs/product/` research + the

@@ -57,13 +57,14 @@ docs/          product, brand, architecture, ops — see CLAUDE.md "Required Doc
 ## Status
 
 The core loop (Home → Module/Pack → Lesson → Quiz → Feedback → Progress) is
-built, with 140 passing tests. Shipped through **Phase 12** (felt-sharpness
-loop: moments, sharpness check, widget, administrative-adulting content). The
-**Phase 13 visual redesign** is specced — see
-[`docs/brand/design-language-spec.md`](docs/brand/design-language-spec.md)
-("Warm-Premium Money Tool") — implementation pending. What remains overall is the
-**ship-it layer** (legal, accessibility) and the **monetization layer**
-(RevenueCat paywall, Supabase auth).
+built, with 141 passing tests. Shipped through **Phase 13** — the
+**"Warm-Premium Money Tool" visual redesign** is implemented across the
+foundation tokens and all 14 handoff screens (warm-neutral base + one accent
+block per screen, serif-as-bounded-teaching-voice, every money figure in mono,
+four-channel quiz feedback, milestone-only celebration). See
+[`docs/brand/design-language-spec.md`](docs/brand/design-language-spec.md).
+What remains overall is the **ship-it layer** (legal, accessibility) and the
+**monetization layer** (RevenueCat paywall, Supabase auth).
 
 ## Working in this repo
 
