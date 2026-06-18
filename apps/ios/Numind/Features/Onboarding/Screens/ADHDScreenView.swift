@@ -79,7 +79,7 @@ struct ADHDScreenView: View {
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .lineSpacing(3)
 
-                Text("Numind\u{2019}s short, decision-sized sessions are designed to work with your attention \u{2014} not against it.")
+                Text("If your brain checks out of long finance \u{201C}homework,\u{201D} that\u{2019}s not a flaw \u{2014} it\u{2019}s exactly what these short, decision-sized sessions are built for. With your attention, not against it.")
                     .font(.system(size: 13))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .lineSpacing(3)

@@ -97,8 +97,8 @@ struct PaywallView: View {
                 artifactCircle(text: "$", fill: Theme.Colors.mindTealTint, fg: Theme.Colors.mindTeal)
             }
 
-            Text("The only money app that respects your money.")
-                .font(.system(size: 26, weight: .medium, design: .serif))
+            Text("Walk in ready. Every time.")
+                .font(.system(size: 28, weight: .medium, design: .serif))
                 .foregroundStyle(Theme.Colors.deepNavy)
                 .multilineTextAlignment(.center)
                 .lineSpacing(2)

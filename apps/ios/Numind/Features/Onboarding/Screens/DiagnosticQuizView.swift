@@ -66,7 +66,7 @@ struct DiagnosticQuizView: View {
                             choiceGrid(item.question)
                                 .padding(.top, 16)
 
-                            Text("Tap your best guess \u{2014} we\u{2019}ll show you the shortcut either way.")
+                            Text("Tap your best guess \u{2014} we\u{2019}ll show you the move either way.")
                                 .font(.system(size: 13))
                                 .foregroundStyle(Theme.Colors.mutedText.opacity(0.7))
                                 .frame(maxWidth: .infinity)
@@ -182,7 +182,9 @@ struct DiagnosticQuizView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("THE SHORTCUT")
+                    // Numerical items have a shortcut; decision items have a
+                    // move. Both are readiness, neither is a speed claim.
+                    Text(reveal.isApplication ? "THE MOVE" : "THE SHORTCUT")
                         .font(.system(size: 10, weight: .heavy))
                         .tracking(0.8)
                         .foregroundStyle(Theme.Colors.insightText)

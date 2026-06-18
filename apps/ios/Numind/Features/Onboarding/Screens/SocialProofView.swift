@@ -56,12 +56,19 @@ struct SocialProofView: View {
                     .frame(width: 32, height: 3)
                     .padding(.top, 16)
 
-                Text("Not because they\u{2019}re bad with money \u{2014} because nobody ever showed them the 20-second version.")
+                Text("Not because they\u{2019}re bad with money \u{2014} because the moment always comes faster than the answer, and nobody ever showed them how.")
                     .font(Theme.Typography.body)
                     .foregroundStyle(Theme.Colors.mutedText)
                     .lineSpacing(3)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 12)
+
+                Text("Stress isn\u{2019}t the same as stuck \u{2014} 72% have already tried. They were just never shown how.")
+                    .font(Theme.Typography.body)
+                    .foregroundStyle(Theme.Colors.deepNavy)
+                    .lineSpacing(3)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 14)
 
                 Text("Source: APA Stress in America")
                     .font(.system(size: 11))

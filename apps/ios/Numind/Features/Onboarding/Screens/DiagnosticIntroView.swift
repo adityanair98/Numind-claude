@@ -51,7 +51,7 @@ struct DiagnosticIntroView: View {
                         }
                         .padding(.top, 22)
 
-                        Text("You don\u{2019}t need to be a math person \u{2014} every shortcut here is 20 seconds, and we show it to you after every question.")
+                        Text("You don\u{2019}t need to be a finance person. This isn\u{2019}t a test \u{2014} it\u{2019}s a preview of what walking in ready feels like, and we show you the move right after each one.")
                             .font(.system(size: 11))
                             .foregroundStyle(Theme.Colors.mutedText.opacity(0.8))
                             .lineSpacing(2)

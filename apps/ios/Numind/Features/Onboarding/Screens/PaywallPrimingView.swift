@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Screen 21 — Paywall Priming (coffee comparison + quick math)
+/// Screen 21 — Paywall Priming (coffee comparison + the cost of guessing)
 struct PaywallPrimingView: View {
     let onContinue: () -> Void
 
