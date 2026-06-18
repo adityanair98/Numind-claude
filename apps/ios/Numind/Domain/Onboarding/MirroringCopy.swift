@@ -99,4 +99,39 @@ enum MirroringCopy {
 
         return Array(matched.prefix(3))
     }
+
+    // MARK: - Micro-reflections
+    //
+    // One short line shown the moment after a personal input — the funnel
+    // acknowledging what it just heard before asking the next thing.
+
+    static func reflection(forConfidence level: ConfidenceLevel) -> String {
+        switch level {
+        case .struggle: return "Freezing isn\u{2019}t a flaw \u{2014} it\u{2019}s what happens when nobody ever showed you the move."
+        case .getBy:    return "Muddling through is most people. We\u{2019}ll turn it into muscle memory."
+        case .decent:   return "That second-guess fades fast once you\u{2019}ve made the move a few times."
+        case .quick:    return "Good \u{2014} let\u{2019}s make sure it holds up when it actually counts."
+        }
+    }
+
+    static func reflection(forMomentPackId packId: String?) -> String {
+        switch packId {
+        case "the_job_offer", "buying_a_home", "first_apartment", "car_buying":
+            return "One of the big ones \u{2014} and almost everyone walks in cold. Not you."
+        case "credit_card_cleanup", "student_loan_repayment":
+            return "This one quietly costs people for years. We\u{2019}ll shut that off."
+        case "everyday_spending":
+            return "The small ones add up fastest \u{2014} sharp instincts turn them all your way."
+        default:
+            return "Good pick. That\u{2019}s the moment we\u{2019}ll get you ready for."
+        }
+    }
+
+    static func reflection(forMotivations motivations: Set<Motivation>) -> String? {
+        guard !motivations.isEmpty else { return nil }
+        if motivations.contains(.fillTheGapSchoolLeft) || motivations.contains(.decideWithConfidence) {
+            return "That\u{2019}s exactly what this is for. Let\u{2019}s close the gap."
+        }
+        return "Then let\u{2019}s make you the calm, un-bluffable one in the room."
+    }
 }

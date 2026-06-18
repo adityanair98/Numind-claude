@@ -20,12 +20,12 @@ struct ConfidenceRatingView: View {
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("When a money decision lands on you, how do you handle it?")
+                        Text("When a money decision lands on you, how does it feel?")
                             .font(Theme.Typography.title)
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .padding(.top, 8)
 
-                        Text("No wrong answer \u{2014} just helps us calibrate.")
+                        Text("No wrong answer. This one\u{2019}s just for us.")
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Colors.mutedText)
                             .padding(.top, 8)
@@ -38,7 +38,9 @@ struct ConfidenceRatingView: View {
                                     selected: viewModel.signals.confidenceLevel == opt.level,
                                     accentColor: opt.color
                                 ) {
-                                    viewModel.setConfidence(opt.level)
+                                    withAnimation(.easeOut(duration: 0.25)) {
+                                        viewModel.setConfidence(opt.level)
+                                    }
                                 } icon: {
                                     IconTile(systemName: opt.symbol, tintColor: opt.color, size: 38)
                                 }
@@ -48,6 +50,17 @@ struct ConfidenceRatingView: View {
                     }
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 120)
+                }
+
+                if let level = viewModel.signals.confidenceLevel {
+                    Text(MirroringCopy.reflection(forConfidence: level))
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                        .padding(.bottom, 10)
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
 
                 onboardingFooter(dark: false) {

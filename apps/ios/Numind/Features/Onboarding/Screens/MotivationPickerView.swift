@@ -55,7 +55,9 @@ struct MotivationPickerView: View {
                                     selected: viewModel.signals.motivations.contains(opt.motivation),
                                     accentColor: Theme.Colors.mindTeal
                                 ) {
-                                    viewModel.toggleMotivation(opt.motivation)
+                                    withAnimation(.easeOut(duration: 0.25)) {
+                                        viewModel.toggleMotivation(opt.motivation)
+                                    }
                                 } icon: {
                                     IconTile(systemName: opt.symbol, tintColor: Theme.Colors.mindTeal, size: 36)
                                 }
@@ -65,6 +67,17 @@ struct MotivationPickerView: View {
                     }
                     .padding(.horizontal, Theme.Spacing.screenHorizontal)
                     .padding(.bottom, 120)
+                }
+
+                if let reflection = MirroringCopy.reflection(forMotivations: viewModel.signals.motivations) {
+                    Text(reflection)
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                        .padding(.bottom, 10)
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
 
                 onboardingFooter(dark: false) {

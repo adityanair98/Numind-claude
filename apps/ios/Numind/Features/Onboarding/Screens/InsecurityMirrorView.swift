@@ -78,6 +78,18 @@ struct InsecurityMirrorView: View {
         !viewModel.signals.feltMoments.subtracting([.noneYet]).isEmpty
     }
 
+    /// The reveal's closing reassurance branches on the confidence answer
+    /// (collected on the prior screen): relief for the avoider lane (no
+    /// blame, never their fault), edge for the confident lane.
+    private var revealClosingLine: String {
+        switch viewModel.signals.confidenceLevel {
+        case .struggle, .getBy:
+            return "None of this was ever yours to figure out alone \u{2014} it was never explained. That changes now."
+        default:
+            return "You can feel these coming. After this, you\u{2019}ll name them before they land \u{2014} every time."
+        }
+    }
+
     /// One verified cost stat per felt moment — the reveal mirrors EXACTLY
     /// what the user just admitted to, in their own words.
     private static let momentStats: [FeltMoment: (stat: String, text: String, source: String)] = [
@@ -136,8 +148,8 @@ struct InsecurityMirrorView: View {
                         .padding(.top, 4)
 
                     Text(hasRealMoment
-                         ? "Every one of these has a 5-minute fix."
-                         : "These moments are coming \u{2014} and each has a 5-minute fix.")
+                         ? "Every one of these has a move you can learn."
+                         : "These moments are coming \u{2014} and each has a move you can learn first.")
                         .font(Theme.Typography.title)
                         .foregroundStyle(Theme.Colors.deepNavy)
                         .lineSpacing(2)
@@ -163,7 +175,7 @@ struct InsecurityMirrorView: View {
                     }
                     .padding(.top, 22)
 
-                    Text("Not because people are careless \u{2014} because nobody showed them what to look for before the moment arrived.")
+                    Text(revealClosingLine)
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Colors.mutedText)
                         .lineSpacing(3)

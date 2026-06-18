@@ -70,6 +70,17 @@ struct LifeMomentPickerView: View {
                     .padding(.bottom, 120)
                 }
 
+                if let focus = viewModel.signals.focusPackId {
+                    Text(MirroringCopy.reflection(forMomentPackId: focus))
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.deepNavy)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                        .padding(.bottom, 10)
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
+                }
+
                 onboardingFooter(dark: false) {
                     PillButton("Continue") { onContinue() }
                 }
@@ -85,7 +96,9 @@ struct LifeMomentPickerView: View {
         let selected = isFocus || isSecondary
 
         return Button {
-            viewModel.toggleLifeMoment(moment.packId)
+            withAnimation(.easeOut(duration: 0.25)) {
+                viewModel.toggleLifeMoment(moment.packId)
+            }
         } label: {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
