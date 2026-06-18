@@ -15,10 +15,14 @@ Three load-bearing parts: the **school gap** is the no-blame origin story ("you'
 
 Our audience overlaps heavily with math-anxious adults — every "math" in promise copy reads as homework to them and as a drill app to everyone else. Mental math is HOW we teach (internal identity, CLAUDE.md); what the user buys is readiness.
 
-- **Budget: at most ONE "math" per surface/funnel, used only to disarm** — e.g. "You don't need to be a math person — every shortcut here is 20 seconds." (lives on the diagnostic intro).
-- Everywhere else, sell the gain in the user's words: *"know your number," "what it's actually worth," "the 20-second version," "spot the trap," "keep the money you've earned," "money instincts."*
-- "Math" is welcome INSIDE the product where it lands as delight, not dread: shortcut reveals, explanations, teach cards — the demo, not the pitch.
+- **Budget: at most ONE disarm per surface/funnel** — e.g. "You don't need to be a finance person. This isn't a test — it's a preview of what walking in ready feels like." (lives on the diagnostic intro). Drop the old "every shortcut is 20 seconds" speed claim everywhere.
+- Everywhere else, sell the gain in the user's words: *"walk in ready," "know your number," "know the move," "what it's actually worth," "spot the trap," "keep the money you've earned," "money instincts."*
+- "Math" / speed is welcome INSIDE the product where it lands as delight, not dread: shortcut reveals, explanations, teach cards, the Sharpness pill — the demo, not the pitch.
 - Honest-progress vocabulary stays capability-based: skills mastered, skills to refresh, packs Ready — never points, levels, or grades.
+
+## Positioning line: "Walk in ready."
+
+The customer-facing positioning line (screen 1, paywall, App Store) is **"Walk in ready."** It beats speed/number-coded lines ("know your number") because it's true for 100% of the content — numerical *and* conceptual/decision — and it *is* the product's own progress model (`ReadinessEngine`). **Sell readiness, not speed.** The product teaches two kinds of readiness — numerical (estimate the number) and decision ("know the move") — and both ladder to one promise: *you know what to do when the decision shows up.* "20 seconds" describes only the numerical half; it is a retention delight (the Sharpness pill), never an acquisition claim. (Strategy: `docs/product/onboarding-repositioning-2026-06.md`.)
 
 ## Brand Feel
 Friendly, clean, modern, useful, lightly playful, financially credible — and
