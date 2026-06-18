@@ -10,9 +10,10 @@ struct MotivationPickerView: View {
     // "selected", not as seven competing theme colors. Labels come from
     // Motivation.displayText so later screens can echo them verbatim.
     private let options: [(motivation: Motivation, sub: String, symbol: String)] = [
+        (.fillTheGapSchoolLeft, "The money stuff school skipped", "graduationcap.fill"),
+        (.decideWithConfidence, "Know the move, not just the number", "checkmark.seal.fill"),
         (.stopLeavingMoney, "Negotiation, benefits, the match", "briefcase.fill"),
         (.stopGettingTaken, "Scams, fees, dealer tactics", "shield.fill"),
-        (.decideWithConfidence, "Know your numbers before the moment", "checkmark.seal.fill"),
         (.understandPaycheck, "Deductions, benefits, taxes", "doc.text.fill"),
         (.getAheadOfDebt, "Interest, payoff, the real cost", "creditcard.fill"),
         (.growMoney, "Match, accounts, compounding", "chart.line.uptrend.xyaxis"),

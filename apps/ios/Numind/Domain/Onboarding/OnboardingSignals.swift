@@ -101,9 +101,10 @@ enum ConfidenceLevel: String, Codable, CaseIterable, Equatable {
 
 /// v2 motivations — money-decision outcomes, not math skills.
 enum Motivation: String, Codable, CaseIterable, Equatable, Hashable {
-    case stopLeavingMoney      // at work: negotiation, benefits, match
+    case fillTheGapSchoolLeft  // relief / no-blame origin (the universal opener)
+    case decideWithConfidence  // dread → calm
+    case stopLeavingMoney      // at work: negotiation, benefits, match (edge lane)
     case stopGettingTaken      // scams, fees, dealer tactics
-    case decideWithConfidence  // anxiety → confidence
     case understandPaycheck    // paycheck, benefits, taxes
     case getAheadOfDebt
     case growMoney
@@ -113,9 +114,10 @@ enum Motivation: String, Codable, CaseIterable, Equatable, Hashable {
     /// later screens so personalization is visibly theirs.
     var displayText: String {
         switch self {
+        case .fillTheGapSchoolLeft: return "Finally learn what school skipped"
+        case .decideWithConfidence: return "Stop dreading money decisions"
         case .stopLeavingMoney:     return "Stop leaving money on the table"
         case .stopGettingTaken:     return "Stop getting taken advantage of"
-        case .decideWithConfidence: return "Decide with confidence, not anxiety"
         case .understandPaycheck:   return "Actually understand my paycheck"
         case .getAheadOfDebt:       return "Get ahead of my debt"
         case .growMoney:            return "Make my money grow"

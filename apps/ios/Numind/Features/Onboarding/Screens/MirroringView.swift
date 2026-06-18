@@ -41,7 +41,8 @@ struct MirroringView: View {
                             VStack(spacing: 0) {
                                 let bullets = MirroringCopy.bullets(
                                     for: viewModel.signals.motivations,
-                                    feltMoments: viewModel.signals.feltMoments
+                                    feltMoments: viewModel.signals.feltMoments,
+                                    confidence: viewModel.signals.confidenceLevel
                                 )
                                 ForEach(Array(bullets.enumerated()), id: \.offset) { index, bullet in
                                     if index > 0 {

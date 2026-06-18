@@ -55,7 +55,7 @@ final class OnboardingViewModel: ObservableObject {
 
     func advance() {
         isForward = true
-        // Handle screen 4 sub-state
+        // Insecurity Mirror sub-state (question → reveal).
         if currentScreen == .insecurityMirror && !mirrorRevealed {
             mirrorRevealed = true
             return
@@ -63,7 +63,9 @@ final class OnboardingViewModel: ObservableObject {
         if currentScreen == .insecurityMirror && mirrorRevealed {
             mirrorRevealed = false
         }
-        currentScreen = currentScreen.next
+        var nextScreen = currentScreen.next
+        while shouldSkip(nextScreen) { nextScreen = nextScreen.next }
+        currentScreen = nextScreen
         persistSignals()
         AnalyticsService.capture(.onboardingStepViewed, properties: [
             "step": currentScreen.number
@@ -81,7 +83,24 @@ final class OnboardingViewModel: ObservableObject {
             return
         }
 
-        currentScreen = currentScreen.previous
+        var prevScreen = currentScreen.previous
+        while shouldSkip(prevScreen) { prevScreen = prevScreen.previous }
+        currentScreen = prevScreen
+    }
+
+    /// Lane-aware screen skipping ("Walk In Ready"). The timing anchor branches
+    /// by lane: the habit lane (no decision deadline) skips the Deadline; the
+    /// decision lane (a moment is coming) anchors on that deadline and skips
+    /// Payday — except First Paycheck, which IS about payday.
+    func shouldSkip(_ screen: OnboardingScreen) -> Bool {
+        switch screen {
+        case .deadline:
+            return isHabitBuyer
+        case .paydayCapture:
+            return !isHabitBuyer && signals.focusPackId != "first_paycheck"
+        default:
+            return false
+        }
     }
 
     // MARK: - Signal Setters
@@ -350,8 +369,11 @@ enum OnboardingScreen: Int, CaseIterable, Equatable {
     case welcome = 1
     case socialProof = 2
     case momentsFraming = 3
-    case insecurityMirror = 4
-    case confidence = 5
+    // Phase 13 "Walk In Ready": Confidence is asked BEFORE the Insecurity
+    // Mirror so the mirror can branch its reveal relief-vs-edge on the first
+    // personal signal. Order is rawValue-driven, so the swap is the rawValues.
+    case confidence = 4
+    case insecurityMirror = 5
     case motivation = 6
     case lifeMoment = 7
     case mirroring = 8
