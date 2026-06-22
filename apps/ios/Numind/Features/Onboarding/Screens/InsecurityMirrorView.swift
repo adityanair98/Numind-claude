@@ -98,6 +98,15 @@ struct InsecurityMirrorView: View {
             "is what a negotiation conversation takes \u{2014} and its payoff repeats every year you hold the job. Most people skip it.",
             "Numind curriculum \u{00B7} verified 2026"
         ),
+        // TODO(content): replace the empty `stat` with a sourced post-payday
+        // spending figure (founder to provide). Until then `costRow` renders a
+        // spike icon + the no-number behavioral line below — never a made-up
+        // number (primary-source rule).
+        .spentToFeelBetter: (
+            "",
+            "the urge to spend hits hardest right after money lands \u{2014} a two-minute rep on payday is how it stops running your month.",
+            "Numind curriculum \u{00B7} verified 2026"
+        ),
         .guessedHealthPlan: (
             "$4.5B",
             "in FSA money is forfeited annually \u{2014} benefits chosen by guessing leak money all year",
@@ -193,10 +202,20 @@ struct InsecurityMirrorView: View {
 
     private func costRow(stat: String, text: String, source: String) -> some View {
         HStack(alignment: .top, spacing: 14) {
-            Text(stat)
-                .font(.system(size: 22, weight: .heavy, design: .monospaced))
-                .foregroundStyle(Theme.Colors.warmOrange)
-                .frame(width: 72, alignment: .leading)
+            Group {
+                // A sourced figure renders as the mono stat; a not-yet-sourced
+                // row (empty stat) renders a spike glyph instead of a fake number.
+                if stat.isEmpty {
+                    Image(systemName: "chart.line.uptrend.xyaxis")
+                        .font(.system(size: 22, weight: .bold))
+                        .foregroundStyle(Theme.Colors.warmOrange)
+                } else {
+                    Text(stat)
+                        .font(.system(size: 22, weight: .heavy, design: .monospaced))
+                        .foregroundStyle(Theme.Colors.warmOrange)
+                }
+            }
+            .frame(width: 72, alignment: .leading)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(text)

@@ -74,6 +74,7 @@ struct OnboardingSignals: Codable, Equatable {
 /// "Which of these have happened to you?" — screen 4 multi-select.
 enum FeltMoment: String, Codable, CaseIterable, Equatable, Hashable {
     case acceptedWithoutNegotiating
+    case spentToFeelBetter
     case guessedHealthPlan
     case carriedCardBalance
     case almostScammed
@@ -83,6 +84,7 @@ enum FeltMoment: String, Codable, CaseIterable, Equatable, Hashable {
     var displayText: String {
         switch self {
         case .acceptedWithoutNegotiating: return "Accepted a job offer without negotiating"
+        case .spentToFeelBetter:          return "Spent to feel better, then regretted it"
         case .guessedHealthPlan:          return "Picked a health plan by guessing"
         case .carriedCardBalance:         return "Carried a card balance longer than planned"
         case .almostScammed:              return "Got a scam text that almost got me"

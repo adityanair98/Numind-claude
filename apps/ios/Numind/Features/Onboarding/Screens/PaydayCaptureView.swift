@@ -41,11 +41,14 @@ struct PaydayCaptureView: View {
                             .foregroundStyle(Theme.Colors.deepNavy)
                             .padding(.top, 8)
 
-                        Text("We\u{2019}ll time your sessions to your money \u{2014} payday is the best 2 minutes you\u{2019}ll spend on each check.")
+                        Text("Payday is the best two minutes you\u{2019}ll spend on each check \u{2014} and there\u{2019}s a reason we time it there.")
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Colors.mutedText)
                             .lineSpacing(2)
                             .padding(.top, 8)
+
+                        paydayInsightCard
+                            .padding(.top, 16)
 
                         VStack(spacing: 10) {
                             ForEach(PaycheckSchedule.Cadence.allCases, id: \.self) { option in
@@ -159,6 +162,71 @@ struct PaydayCaptureView: View {
         guard let cadence else { return }
         viewModel.setPaycheck(cadence: cadence, anchorDate: anchorDate,
                               secondPaydayDay: secondPaydayDay)
+    }
+
+    // MARK: - Payday insight (why we time the rep here)
+
+    /// Why payday is the rep that matters: spending reliably spikes right after
+    /// money lands (the "payday effect"). Framed as a pattern, not a fabricated
+    /// stat — no number to source.
+    private var paydayInsightCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 7) {
+                Image(systemName: "chart.line.uptrend.xyaxis")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(Theme.Colors.ember)
+                Text("Spending spikes the day money lands")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(Theme.Colors.deepNavy)
+            }
+
+            paydaySpikeChart
+
+            Text("It\u{2019}s such a reliable pattern it has a name \u{2014} the payday effect. A quick rep right here is how you get ahead of it, instead of cleaning up after.")
+                .font(.system(size: 12))
+                .foregroundStyle(Theme.Colors.mutedText)
+                .lineSpacing(2)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(16)
+        .background(Theme.Colors.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .strokeBorder(Theme.Colors.hairline, lineWidth: 1)
+        )
+    }
+
+    /// Nine days of spend; the bar where the paycheck lands is the ember spike.
+    private var paydaySpikeChart: some View {
+        let heights: [CGFloat] = [14, 18, 12, 44, 36, 24, 16, 12, 10]
+        let paydayIndex = 3
+        return HStack(alignment: .bottom, spacing: 6) {
+            ForEach(heights.indices, id: \.self) { i in
+                let bar = RoundedRectangle(cornerRadius: 3, style: .continuous)
+                    .fill(barColor(i, paydayIndex: paydayIndex))
+                    .frame(height: heights[i])
+                    .frame(maxWidth: .infinity)
+                if i == paydayIndex {
+                    VStack(spacing: 3) {
+                        Text("PAYDAY")
+                            .font(.system(size: 9, weight: .bold))
+                            .tracking(0.5)
+                            .foregroundStyle(Theme.Colors.ember)
+                        bar
+                    }
+                } else {
+                    bar
+                }
+            }
+        }
+        .frame(height: 60, alignment: .bottom)
+    }
+
+    private func barColor(_ i: Int, paydayIndex: Int) -> Color {
+        if i == paydayIndex { return Theme.Colors.ember }
+        if i == paydayIndex + 1 { return Theme.Colors.ember.opacity(0.5) }
+        return Theme.Colors.mutedText.opacity(0.22)
     }
 }
 

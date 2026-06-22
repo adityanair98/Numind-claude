@@ -228,12 +228,18 @@ final class OnboardingViewModel: ObservableObject {
             lessonId: item.lessonId
         ))
 
-        // The demo beat: show the shortcut behind the question.
+        // The demo beat: show the shortcut behind the question, and mark the
+        // answer honestly (correct choice always lit, wrong pick flagged).
+        let correctText = item.question.choices
+            .first { $0.id == item.question.correctChoiceId }?.text ?? ""
         diagnosticReveal = DiagnosticReveal(
             correct: isCorrect,
             lessonTitle: item.lessonTitle,
             shortcut: item.shortcut,
-            isApplication: item.isApplication
+            isApplication: item.isApplication,
+            selectedChoiceId: choiceId,
+            correctChoiceId: item.question.correctChoiceId,
+            correctChoiceText: correctText
         )
     }
 
@@ -427,4 +433,9 @@ struct DiagnosticReveal: Equatable {
     let lessonTitle: String
     let shortcut: String
     let isApplication: Bool
+    /// What the user tapped + the right answer — so the choice grid can mark
+    /// the pick (amber when wrong) and always light the correct choice (teal).
+    let selectedChoiceId: UUID
+    let correctChoiceId: UUID
+    let correctChoiceText: String
 }
