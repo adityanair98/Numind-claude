@@ -142,26 +142,38 @@ struct DiagnosticQuizView: View {
         return .dimmed
     }
 
-    /// Decision items get a single readable column; numerical items keep the
-    /// compact 2×2 money grid.
+    /// True only when every choice is a bare number ($ / % / digits) — those
+    /// keep the compact 2×2 money grid. Decision AND text-concept questions
+    /// (any word-length, often uneven) get a single readable column.
+    private func isNumeric(_ question: QuizQuestion) -> Bool {
+        question.choices.allSatisfy { choice in
+            let t = choice.text
+                .replacingOccurrences(of: "$", with: "")
+                .replacingOccurrences(of: "%", with: "")
+                .replacingOccurrences(of: ",", with: "")
+                .trimmingCharacters(in: .whitespaces)
+            return !t.isEmpty && Double(t) != nil
+        }
+    }
+
     @ViewBuilder
     private func choices(_ item: DiagnosticQuestionBuilder.TaggedQuestion) -> some View {
         let letters = ["A", "B", "C", "D"]
         let list = Array(item.question.choices.prefix(4))
 
-        if item.isApplication {
-            VStack(spacing: 10) {
-                ForEach(Array(list.enumerated()), id: \.element.id) { _, choice in
-                    decisionCell(choice)
-                }
-            }
-        } else {
+        if isNumeric(item.question) {
             LazyVGrid(columns: [
                 GridItem(.flexible(), spacing: 12),
                 GridItem(.flexible(), spacing: 12),
             ], spacing: 12) {
                 ForEach(Array(list.enumerated()), id: \.element.id) { index, choice in
                     numericCell(index < letters.count ? letters[index] : "", choice)
+                }
+            }
+        } else {
+            VStack(spacing: 10) {
+                ForEach(Array(list.enumerated()), id: \.element.id) { _, choice in
+                    decisionCell(choice)
                 }
             }
         }
@@ -262,8 +274,11 @@ struct DiagnosticQuizView: View {
     }
 
     private func resultText(_ reveal: DiagnosticReveal) -> String {
+        let numeric = currentItem.map { isNumeric($0.question) } ?? false
         if reveal.correct {
-            return reveal.isApplication ? "Nailed it \u{2014} that\u{2019}s the move." : "Nailed it \u{2014} that\u{2019}s the number."
+            if reveal.isApplication { return "Nailed it \u{2014} that\u{2019}s the move." }
+            // Concept questions have no "number" — don't claim one.
+            return numeric ? "Nailed it \u{2014} that\u{2019}s the number." : "Nailed it \u{2014} exactly right."
         }
         let label = reveal.isApplication ? "the move is" : "the answer is"
         return "Not quite \u{2014} \(label) \(reveal.correctChoiceText). This is exactly one we\u{2019}ll build with you."

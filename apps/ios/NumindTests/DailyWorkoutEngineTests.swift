@@ -57,7 +57,7 @@ final class DailyWorkoutEngineTests: XCTestCase {
     func test_questionCount_respectsOnboardingSize() {
         var data = ProgressData()
         var signals = OnboardingSignals()
-        signals.dailyMinutes = 5            // → 5-question workout
+        signals.dailyMinutes = 3            // → 5-question workout (3/5/10 options)
         data.onboardingSignals = signals
         let plan = DailyWorkoutEngine.plan(from: repo, progressData: data)
         XCTAssertEqual(plan.questions.count, 5)

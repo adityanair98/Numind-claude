@@ -57,14 +57,16 @@ struct OnboardingSignals: Codable, Equatable {
         return ids
     }
 
-    /// Daily ring target derived from time commitment.
+    /// Daily workout size derived from the chosen time commitment (3/5/10 min).
+    /// Sized so the session roughly fills the picked minutes; the ring target
+    /// (DailyRingEngine) clamps separately so a streak stays achievable.
+    /// Legacy 15/20 picks (no longer offered) fall through to the default.
     var dailyChallengeCount: Int {
         switch dailyMinutes {
-        case 5:  return 5
-        case 10: return 8
-        case 15: return 10
-        case 20: return 12
-        default: return 8
+        case 3:  return 5
+        case 5:  return 8
+        case 10: return 12
+        default: return 7
         }
     }
 }

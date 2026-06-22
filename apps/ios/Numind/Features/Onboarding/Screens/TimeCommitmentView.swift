@@ -5,11 +5,12 @@ struct TimeCommitmentView: View {
     @ObservedObject var viewModel: OnboardingViewModel
     let onContinue: () -> Void
 
+    // Short by design — Numind's loop is decision-sized daily reps, not long
+    // study blocks. Offering 15/20 over-promised time the session won't fill.
     private let options: [(minutes: Int, label: String, sub: String, color: Color)] = [
-        (5, "5 minutes", "Quick daily boost", Theme.Colors.mindTeal),
-        (10, "10 minutes", "Solid daily practice", Theme.Colors.topicPaycheck),
-        (15, "15 minutes", "Serious skill building", Theme.Colors.warmOrange),
-        (20, "20+ minutes", "Maximum growth", Theme.Colors.ember),
+        (3, "3 minutes", "A quick daily rep", Theme.Colors.mindTeal),
+        (5, "5 minutes", "The sweet spot", Theme.Colors.topicPaycheck),
+        (10, "10 minutes", "Go a little deeper", Theme.Colors.warmOrange),
     ]
 
     var body: some View {

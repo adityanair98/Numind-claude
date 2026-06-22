@@ -18,6 +18,10 @@ struct DailyChallengeCard: View {
     /// Per-user workout size (onboarding-driven); defaults for previews.
     var total: Int = DailyChallengeEngine.defaultQuestionCount
 
+    /// The user's chosen daily commitment (3/5/10) — shown honestly in the
+    /// eyebrow instead of a count-derived estimate.
+    var dailyMinutes: Int = 5
+
     // Daily goal ring (Phase 13 — moved into the hero card from the header).
     var ringProgress: Double = 0
     var ringCenter: String = "0"
@@ -55,7 +59,7 @@ struct DailyChallengeCard: View {
     // MARK: - Pieces
 
     private var eyebrow: some View {
-        Text(isDone ? "TODAY · DONE" : "TODAY · \(max(1, total / 2)) MIN")
+        Text(isDone ? "TODAY · DONE" : "TODAY · \(dailyMinutes) MIN")
             .font(Theme.Typography.overline)
             .textCase(.uppercase)
             .kerning(0.6)

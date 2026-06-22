@@ -419,8 +419,9 @@ struct HomeView: View {
             onStart: { startDailyChallenge() },
             onBonusRound: { startBonusRound() },
             total: DailyChallengeEngine.questionCount(for: progressStore.data),
+            dailyMinutes: progressStore.data.onboardingSignals?.dailyMinutes ?? 5,
             ringProgress: progressStore.ringProgress,
-            ringCenter: "\(progressStore.todayQuestionCount)/\(progressStore.ringTarget)",
+            ringCenter: "\(min(progressStore.todayQuestionCount, progressStore.ringTarget))/\(progressStore.ringTarget)",
             isRingClosed: progressStore.isRingClosedToday,
             onRingTap: { showScoreDetail = true }
         )

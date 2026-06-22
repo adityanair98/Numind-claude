@@ -19,19 +19,20 @@ final class DailyRingTests: XCTestCase {
     }
 
     func test_target_capsAtEight_forHeavyWorkouts() {
-        // 20 min/day onboarding → 12-question workout; the ring stays at 8 so
-        // one full lesson always closes it.
+        // 10 min/day onboarding → 12-question workout; the ring stays at 8 so
+        // one full session always closes it.
         var data = ProgressData()
         var signals = OnboardingSignals()
-        signals.dailyMinutes = 20
+        signals.dailyMinutes = 10
         data.onboardingSignals = signals
         XCTAssertEqual(DailyRingEngine.target(for: data), 8)
     }
 
     func test_target_floorsAtFive_forLightWorkouts() {
+        // 3 min/day → 5-question workout; floored at 5 so the day isn't trivial.
         var data = ProgressData()
         var signals = OnboardingSignals()
-        signals.dailyMinutes = 5
+        signals.dailyMinutes = 3
         data.onboardingSignals = signals
         XCTAssertEqual(DailyRingEngine.target(for: data), 5)
     }
