@@ -54,9 +54,9 @@ struct PaywallPrimingView: View {
                                     .tracking(1)
                                     .foregroundStyle(Theme.Colors.mutedText)
 
-                                mathLine(left: "Cashing out a 401(k) at a job change", right: "\u{2212}$2,000+", muted: true)
-                                mathLine(left: "A year of unclaimed employer match", right: "\u{2212}$1,000+", muted: true)
-                                mathLine(left: "Forfeited FSA money (use it or lose it)", right: "\u{2212}$400+", muted: true)
+                                mathLine(left: "Cashing out a small 401(k) (tax + penalty)", right: "\u{2212}$1,000+", muted: true)
+                                mathLine(left: "A year of unclaimed employer match", right: "\u{2212}$1,300", muted: true)
+                                mathLine(left: "Forfeited FSA money (use it or lose it)", right: "\u{2212}$420", muted: true)
                                 Divider().padding(.vertical, 4)
                                 mathLine(left: "Numind, for a whole year (annual plan)", right: "$29.99", highlight: true)
                             }

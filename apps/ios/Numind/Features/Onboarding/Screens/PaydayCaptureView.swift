@@ -182,7 +182,7 @@ struct PaydayCaptureView: View {
 
             paydaySpikeChart
 
-            Text("It\u{2019}s such a reliable pattern it has a name \u{2014} the payday effect. A quick rep right here is how you get ahead of it, instead of cleaning up after.")
+            Text("It\u{2019}s such a reliable pattern it has a name \u{2014} the payday effect. A lot of it is just bills landing at once; a two-minute rep right here keeps you sharp for the parts that are actually choices.")
                 .font(.system(size: 12))
                 .foregroundStyle(Theme.Colors.mutedText)
                 .lineSpacing(2)

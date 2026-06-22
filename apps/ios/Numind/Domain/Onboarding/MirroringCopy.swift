@@ -63,23 +63,25 @@ enum MirroringCopy {
             (.growMoney, "A handful of decisions \u{2014} match, account type, allocation \u{2014} drive most investing outcomes. They\u{2019}re all learnable."),
             (.staySharp, "Skills fade. Numind tracks what\u{2019}s going stale and brings it back in minutes \u{2014} that\u{2019}s how it sticks for good."),
         ]
+        // No "You picked ·" / "You said ·" tags — the bullets are already keyed
+        // to their answers, so the echo stays implicit (it read as parroting).
         let motivationBullets = motivationCopy
             .filter { motivations.contains($0.0) }
-            .map { Bullet(tag: "You picked \u{00B7} \($0.0.displayText)", text: $0.1) }
+            .map { Bullet(tag: nil, text: $0.1) }
 
         // Every felt moment now mirrors back — relief-framed (system-caused),
         // never shame. Order here is the avoider-lane lead order.
         let feltCopy: [(FeltMoment, String)] = [
-            (.spentToFeelBetter, "Spending to feel better isn\u{2019}t weakness \u{2014} it\u{2019}s wiring, and it spikes right when money lands. A two-minute rep on payday is how you stay ahead of it."),
+            (.spentToFeelBetter, "Spending to feel better isn\u{2019}t weakness \u{2014} it\u{2019}s wiring. The skill is catching the difference between a real choice and a reflex, in the moment."),
             (.guessedHealthPlan, "\u{201C}Just re-pick last year\u{2019}s plan\u{201D} is the most common move \u{2014} and often the most expensive. You\u{2019}ll pick the one that actually wins."),
             (.carriedCardBalance, "A card balance isn\u{2019}t a character flaw \u{2014} it\u{2019}s a math trick nobody explained. You\u{2019}ll know exactly how to switch it off."),
             (.acceptedWithoutNegotiating, "Most first offers have room in them. The counter is a script plus one number \u{2014} both learnable in one session."),
-            (.signedLeaseBlind, "Move-in runs 3\u{2013}4\u{00D7} the rent, and the lease hides the rest. You\u{2019}ll read every line before you sign."),
-            (.almostScammed, "Adults in their 20s and 30s are the MOST-scammed age group by report rate \u{2014} pattern recognition is the defense."),
+            (.signedLeaseBlind, "Move-in runs about 2.5\u{2013}3\u{00D7} the rent, and the lease hides the rest. You\u{2019}ll read every line before you sign."),
+            (.almostScammed, "Adults in their 20s report losing money to fraud more often than any older age group \u{2014} pattern recognition is the defense."),
         ]
         let feltBullets = feltCopy
             .filter { feltMoments.contains($0.0) }
-            .map { Bullet(tag: "You said \u{00B7} \($0.0.displayText)", text: $0.1) }
+            .map { Bullet(tag: nil, text: $0.1) }
 
         // Avoider lane (low confidence): lead with THEIR moment, in relief —
         // their own words must be the first thing they see. Everyone else:

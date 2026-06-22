@@ -22,7 +22,7 @@ struct SocialProofView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
 
-                Text("The reality")
+                Text("You\u{2019}re not alone")
                     .font(Theme.Typography.small)
                     .textCase(.uppercase)
                     .tracking(1.5)
@@ -63,14 +63,14 @@ struct SocialProofView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 12)
 
-                Text("Stress isn\u{2019}t the same as stuck \u{2014} 72% have already tried. They were just never shown how.")
+                Text("Stress isn\u{2019}t the same as stuck \u{2014} 72% of young adults took steps to get ahead of their money this past year. You\u{2019}re not starting from zero.")
                     .font(Theme.Typography.body)
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .lineSpacing(3)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 14)
 
-                Text("Source: APA Stress in America")
+                Text("APA Stress in America, 2025 \u{00B7} BofA Better Money Habits, 2025")
                     .font(.system(size: 11))
                     .foregroundStyle(Theme.Colors.mutedText)
                     .padding(.top, 18)
