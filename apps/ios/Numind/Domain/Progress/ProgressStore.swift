@@ -110,8 +110,7 @@ final class ProgressStore: ObservableObject {
             }.map(\.id))
         }
         func masteredReal(_ d: ProgressData) -> Set<String> {
-            Set(d.sessions.map(\.lessonId))
-                .filter { d.hasMasteredLesson($0) && !$0.hasPrefix("review_") }
+            masteredRealLessonIds(in: d)
         }
         func staleCount(_ d: ProgressData) -> Int {
             FreshnessEngine.staleCount(
@@ -597,8 +596,11 @@ final class ProgressStore: ObservableObject {
     /// Mastered-lesson IDs across all sessions, with Phase 6a decay
     /// applied. A lesson appears iff `hasMasteredLessonNow` returns true.
     var masteredLessonIds: Set<String> {
-        let candidateIds = Set(data.sessions.map { $0.lessonId })
-        return candidateIds.filter { hasMasteredLessonNow($0) }
+        // Only REAL curriculum lessons. The daily/bonus/refresh sessions reuse
+        // the lessonId field for synthetic ids ("daily_challenge" etc.); a
+        // single ≥85% daily sub-session would otherwise flip "daily_challenge"
+        // to mastered and show a phantom "1 mastered" on Progress.
+        masteredRealLessonIds(in: data)
     }
 
     /// Mastered/total for a specific pack id.
