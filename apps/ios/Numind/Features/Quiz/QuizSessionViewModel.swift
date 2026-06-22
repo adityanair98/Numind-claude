@@ -124,6 +124,13 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         repository.lesson(forTemplateId: currentQuestion.templateId)?.shortcut ?? lessonShortcut
     }
 
+    /// The CURRENT question's own lesson title. In a mixed session (Refresh,
+    /// Daily Workout) `lessonTitle` is the session name ("Refresh"), so this is
+    /// how the user sees which lesson a given question came from.
+    var currentLessonTitle: String {
+        repository.lesson(forTemplateId: currentQuestion.templateId)?.title ?? lessonTitle
+    }
+
     // MARK: - XP
 
     var correctCount: Int { results.filter(\.isCorrect).count }

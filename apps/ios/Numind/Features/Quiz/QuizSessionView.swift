@@ -176,25 +176,31 @@ struct QuizSessionView: View {
 
     private var questionContent: some View {
         let q = viewModel.currentQuestion
+        // Per-question topic theme — drives the banner, the lesson badge, and
+        // the pips so a mixed session reads as that question's actual topic.
+        let theme = viewModel.theme(for: q)
         return VStack(spacing: Theme.Spacing.sectionSpacing) {
             // Themed graphic banner + prompt card — grouped as a visual unit
             VStack(spacing: 8) {
-                QuizGraphicBanner(theme: viewModel.theme(for: q))
+                QuizGraphicBanner(theme: theme)
 
                 // Prompt card (shared between both input modes)
                 NumindCard {
                     VStack(alignment: .leading, spacing: 12) {
-                        // Top meta row: module label · difficulty · question counter
+                        // Top meta row: lesson label · difficulty · question counter.
+                        // The label is the question's OWN lesson (mixed sessions
+                        // span many) so the user sees where it came from.
                         HStack(spacing: 0) {
-                            Text(viewModel.lessonTitle)
+                            Text(viewModel.currentLessonTitle)
                                 .font(.system(size: 11, weight: .bold))
-                                .foregroundStyle(viewModel.moduleColor.tintColor)
+                                .foregroundStyle(theme.moduleColor.tintColor)
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 4)
-                                .background(viewModel.moduleColor.tintBackground)
+                                .background(theme.moduleColor.tintBackground)
                                 .clipShape(Capsule())
+                                .lineLimit(1)
                             Spacer()
-                            difficultyPips(q.difficulty)
+                            difficultyPips(q.difficulty, color: theme.moduleColor.tintColor)
                                 .padding(.trailing, 8)
                             Text("\(viewModel.currentIndex + 1) / \(viewModel.total)")
                                 .font(.system(size: 12, weight: .semibold, design: .monospaced))
@@ -342,13 +348,11 @@ struct QuizSessionView: View {
 
     // MARK: - Difficulty pips
 
-    private func difficultyPips(_ difficulty: QuestionDifficulty) -> some View {
+    private func difficultyPips(_ difficulty: QuestionDifficulty, color: Color) -> some View {
         HStack(spacing: 3) {
             ForEach(1...3, id: \.self) { i in
                 Circle()
-                    .fill(i <= difficulty.rawValue
-                          ? viewModel.moduleColor.tintColor
-                          : Theme.Colors.mutedTint)
+                    .fill(i <= difficulty.rawValue ? color : Theme.Colors.mutedTint)
                     .frame(width: 6, height: 6)
             }
         }
