@@ -212,8 +212,8 @@ struct LessonStoryView: View {
 
                 if let selected = selectedChoiceId {
                     Text(selected == q.correctChoiceId
-                         ? "Good instincts. Here\u{2019}s the 20-second version \u{2014}"
-                         : "Most people guess that one. Here\u{2019}s the 20-second version \u{2014}")
+                         ? "Good instincts. Here\u{2019}s the shortcut \u{2014}"
+                         : "Most people guess that one. Here\u{2019}s the shortcut \u{2014}")
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundStyle(selected == q.correctChoiceId
                                          ? Theme.Colors.mindTeal : Theme.Colors.deepNavy)
@@ -227,7 +227,7 @@ struct LessonStoryView: View {
 
     private var shortcutBeat: some View {
         VStack(alignment: .leading, spacing: 16) {
-            overline("The 20-second version", color: Theme.Colors.insightText)
+            overline("The shortcut", color: Theme.Colors.insightText)
 
             VStack(alignment: .leading, spacing: 12) {
                 ZStack {

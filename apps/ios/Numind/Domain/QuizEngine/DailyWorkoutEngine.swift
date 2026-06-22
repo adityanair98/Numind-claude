@@ -1,6 +1,6 @@
 import Foundation
 
-/// A 20-second in-session teach moment: the lesson's concept + shortcut shown
+/// A quick in-session teach moment: the lesson's concept + shortcut shown
 /// right before that lesson's first practice rep of the day. New material
 /// enters the Daily Workout through exactly this door (one bite per day).
 struct TeachCard: Equatable, Identifiable {
