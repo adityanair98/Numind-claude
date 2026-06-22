@@ -17,6 +17,7 @@ enum QuestionTheme {
     case insurance
     case carBuying
     case studentLoans
+    case moneySafety
 
     // MARK: - Display properties
 
@@ -36,6 +37,7 @@ enum QuestionTheme {
         case .insurance:     return "cross.case.fill"
         case .carBuying:     return "car.fill"
         case .studentLoans:  return "graduationcap.fill"
+        case .moneySafety:   return "lock.shield.fill"
         }
     }
 
@@ -55,6 +57,7 @@ enum QuestionTheme {
         case .insurance:     return "heart.text.square.fill"
         case .carBuying:     return "key.radiowaves.forward.fill"
         case .studentLoans:  return "book.closed.fill"
+        case .moneySafety:   return "checkmark.shield.fill"
         }
     }
 
@@ -74,6 +77,7 @@ enum QuestionTheme {
         case .insurance:     return "Insurance"
         case .carBuying:     return "Car Buying"
         case .studentLoans:  return "Student Loans"
+        case .moneySafety:   return "Money Safety"
         }
     }
 
@@ -93,6 +97,7 @@ enum QuestionTheme {
         case .insurance:     return "Premiums & deductibles"
         case .carBuying:     return "Loans & depreciation"
         case .studentLoans:  return "Repayment & forgiveness"
+        case .moneySafety:   return "Scams & your rights"
         }
     }
 
@@ -112,6 +117,7 @@ enum QuestionTheme {
         case .insurance:     return .purple
         case .carBuying:     return .teal
         case .studentLoans:  return .orange
+        case .moneySafety:   return .coral
         }
     }
 
@@ -511,5 +517,39 @@ enum QuestionTheme {
         default:
             return .quickMath
         }
+    }
+
+    /// Theme from the question's MODULE — the fallback when the per-template map
+    /// doesn't recognize a template. Decision/application items ("what would you
+    /// do") don't appear in the template switch above, so without this they'd
+    /// all show the .quickMath default ("Quick Numbers / Doubling & splitting"),
+    /// even for an insurance or housing question.
+    static func theme(forModuleId moduleId: String) -> QuestionTheme? {
+        switch moduleId {
+        case "smart_shopping": return .shopping
+        case "money_math":     return .quickMath
+        case "salary":         return .paycheck
+        case "investing":      return .investing
+        case "debt":           return .debt
+        case "housing":        return .housing
+        case "taxes":          return .taxes
+        case "insurance":      return .insurance
+        case "car":            return .carBuying
+        case "student_loans":  return .studentLoans
+        case "money_safety":   return .moneySafety
+        default:               return nil
+        }
+    }
+
+    /// Per-template theme when known; otherwise the module's theme. Keeps the
+    /// finer sub-themes (a tip vs a discount inside Smart Shopping) while making
+    /// unmapped items resolve to their real topic instead of "Quick Numbers".
+    static func resolve(templateId: String, moduleId: String?) -> QuestionTheme {
+        let perTemplate = theme(for: templateId)
+        if case .quickMath = perTemplate,
+           let moduleId, let byModule = theme(forModuleId: moduleId) {
+            return byModule
+        }
+        return perTemplate
     }
 }

@@ -179,7 +179,7 @@ struct QuizSessionView: View {
         return VStack(spacing: Theme.Spacing.sectionSpacing) {
             // Themed graphic banner + prompt card — grouped as a visual unit
             VStack(spacing: 8) {
-                QuizGraphicBanner(theme: QuestionTheme.theme(for: q.templateId))
+                QuizGraphicBanner(theme: viewModel.theme(for: q))
 
                 // Prompt card (shared between both input modes)
                 NumindCard {
@@ -299,7 +299,7 @@ struct QuizSessionView: View {
                             .textCase(.uppercase)
                             .kerning(0.6)
                     }
-                    Text(viewModel.lessonShortcut)
+                    Text(viewModel.currentShortcut)
                         .font(Theme.Typography.body)
                         .foregroundStyle(Theme.Colors.deepNavy)
                         .lineSpacing(3)

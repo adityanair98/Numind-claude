@@ -105,6 +105,25 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
     var currentQuestion: QuizQuestion { questions[currentIndex] }
     var total: Int { questions.count }
 
+    /// Banner theme for a question, resolved by its module so decision/
+    /// application items show their real topic instead of the "Quick Numbers"
+    /// default. (Mixed sessions — Refresh, Daily Workout — span modules, so the
+    /// session-level color can't carry this.)
+    func theme(for question: QuizQuestion) -> QuestionTheme {
+        QuestionTheme.resolve(
+            templateId: question.templateId,
+            moduleId: repository.module(forTemplateId: question.templateId)?.id
+        )
+    }
+
+    /// The shortcut for the CURRENT question's own lesson. Mixed sessions carry
+    /// a generic session tagline as `lessonShortcut` ("Bring your skills back to
+    /// sharp…"), which is nonsense as a per-question shortcut — resolve the real
+    /// one per question.
+    var currentShortcut: String {
+        repository.lesson(forTemplateId: currentQuestion.templateId)?.shortcut ?? lessonShortcut
+    }
+
     // MARK: - XP
 
     var correctCount: Int { results.filter(\.isCorrect).count }

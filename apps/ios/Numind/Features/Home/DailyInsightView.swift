@@ -70,10 +70,12 @@ struct DailyInsightView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView {
+                // Radar/score chart retired from the post-session surface — it's
+                // a private coverage diagnostic, not a celebration (Phase 10/13).
+                // The calm ring + skill moves lead, like the lesson summary.
                 VStack(spacing: 24) {
                     header
                     scoreSection
-                    chartSection
                     if let weak = weakestAxis { weaknessCard(weak) }
                     statsSection
                     Spacer(minLength: 120)
