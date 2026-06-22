@@ -30,11 +30,11 @@ struct DailyChallengeCard: View {
                 VStack(alignment: .leading, spacing: 0) {
                     eyebrow
                     Text(title)
-                        .font(.system(size: 21, weight: .semibold))
+                        .font(.system(size: 19, weight: .semibold))
                         .foregroundStyle(Theme.Colors.deepNavy)
                         .fixedSize(horizontal: false, vertical: true)
-                        .padding(.top, 8)
-                    Spacer(minLength: 16)
+                        .padding(.top, 6)
+                    Spacer(minLength: 14)
                     if isDone {
                         Button(action: onBonusRound) {
                             Text("More practice")
@@ -84,7 +84,7 @@ struct DailyChallengeCard: View {
         Button { onRingTap?() } label: {
             VStack(spacing: 4) {
                 GoalRing(progress: ringProgress, isClosed: isRingClosed,
-                         centerText: ringCenter, size: 88)
+                         centerText: ringCenter, size: 72)
                 Text(isDone ? "done" : "today")
                     .font(Theme.Typography.small)
                     .foregroundStyle(Theme.Colors.mutedText)

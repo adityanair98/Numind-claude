@@ -35,7 +35,10 @@ struct HomeView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Theme.Spacing.sectionSpacing) {
+            // Home is a content feed, not a celebration surface — a tighter
+            // rhythm than the global sectionSpacing (28) so it doesn't read
+            // oversized/sparse with only ~3 cards per screen.
+            VStack(alignment: .leading, spacing: 18) {
                 BrandHeader(name: userName, streak: progressStore.streak)
                 dailyChallengeSection
                 momentChipSection
@@ -49,7 +52,8 @@ struct HomeView: View {
                 quickAccessRow
             }
             .padding(.horizontal, Theme.Spacing.screenHorizontal)
-            .padding(.vertical, Theme.Spacing.sectionSpacing)
+            .padding(.top, 12)
+            .padding(.bottom, 24)
         }
         .background(Theme.Colors.softBackground.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)

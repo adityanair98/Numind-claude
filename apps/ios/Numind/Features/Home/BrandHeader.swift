@@ -14,7 +14,7 @@ struct BrandHeader: View {
                     .font(Theme.Typography.caption)
                     .foregroundStyle(Theme.Colors.mutedText)
                 Text("\(greetingPrefix), \(displayName)")
-                    .font(Theme.Typography.title)
+                    .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(Theme.Colors.deepNavy)
             }
             Spacer()
