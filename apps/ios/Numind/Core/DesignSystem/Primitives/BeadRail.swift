@@ -12,8 +12,21 @@ struct BeadRail: View {
     /// Override the track / unfilled color (default: mutedTint).
     var trackColor: Color = Theme.Colors.mutedTint
 
+    // Chunky rail is bounded — beads SHRINK to fit a large pack instead of
+    // overflowing the row. A 12-lesson pack at a fixed 28pt/bead is ~400pt of
+    // rail, which stretched the whole Home VStack past the screen (everything
+    // shifted/clipped, read as "zoomed in"). ≤5 beads keep the full 28pt pill.
+    private static let chunkySpacing: CGFloat = 6
+    private static let chunkyMaxRailWidth: CGFloat = 170
+
+    private var chunkyBeadWidth: CGFloat {
+        guard total > 1 else { return 28 }
+        let avail = Self.chunkyMaxRailWidth - Self.chunkySpacing * CGFloat(total - 1)
+        return max(4, min(28, avail / CGFloat(total)))
+    }
+
     var body: some View {
-        HStack(spacing: variant == .chunky ? 6 : 8) {
+        HStack(spacing: variant == .chunky ? Self.chunkySpacing : 8) {
             ForEach(0..<total, id: \.self) { index in
                 beadView(at: index)
             }
@@ -26,7 +39,7 @@ struct BeadRail: View {
         case .chunky:
             let filled = filledColor ?? Theme.Colors.primaryBlue
             Capsule()
-                .frame(width: 28, height: 6)
+                .frame(width: chunkyBeadWidth, height: 6)
                 .foregroundStyle(index < progress ? filled : trackColor)
                 .shadow(color: index < progress ? filled.opacity(0.35) : .clear, radius: 3, y: 0)
         case .dot:
