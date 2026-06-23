@@ -2,7 +2,8 @@ import XCTest
 @testable import Numind
 
 /// Phase 10 — daily ring + the "ring closes from any real practice" streak
-/// rule. Pure over DailyRingEngine/ProgressData — no store, no persistence.
+/// rule. Mostly pure over DailyRingEngine/ProgressData; the final section adds
+/// store-level regressions for the batch-recording + freeze audit fixes (H2/M3).
 final class DailyRingTests: XCTestCase {
 
     private func session(daysAgo: Int = 0, total: Int, lessonId: String = "tip_10_percent_trick") -> SessionRecord {
@@ -62,21 +63,34 @@ final class DailyRingTests: XCTestCase {
         XCTAssertEqual(DailyRingEngine.progress(on: Date(), data: data), 1.0)
     }
 
-    func test_markIfClosed_underThreshold_doesNotMarkDay() {
+    func test_markActiveDay_subTargetPractice_stillMarksDay() {
+        // Audit fix H3: the streak counts "you showed up," not "you hit the
+        // daily volume goal." A sub-target session (3 < target 7) still marks
+        // the day — previously it was silently dropped and broke the streak.
         var data = ProgressData()
         data.sessions = [session(total: 3)]
-        DailyRingEngine.markIfClosed(&data)
+        DailyRingEngine.markActiveDay(&data)
+        let today = Calendar.current.startOfDay(for: Date())
+        XCTAssertTrue(data.dailyWorkoutDates.contains(today))
+        XCTAssertEqual(data.computeStreak(), 1)
+        // The ring visual is still target-based — the goal isn't "closed" yet.
+        XCTAssertFalse(DailyRingEngine.isClosed(on: Date(), data: data))
+    }
+
+    func test_markActiveDay_noPractice_doesNotMarkDay() {
+        var data = ProgressData()
+        DailyRingEngine.markActiveDay(&data)
         XCTAssertTrue(data.dailyWorkoutDates.isEmpty)
     }
 
-    func test_markIfClosed_marksToday_andIsIdempotent() {
+    func test_markActiveDay_marksToday_andIsIdempotent() {
         var data = ProgressData()
         data.sessions = [session(total: 8)]
-        DailyRingEngine.markIfClosed(&data)
+        DailyRingEngine.markActiveDay(&data)
         let today = Calendar.current.startOfDay(for: Date())
         XCTAssertTrue(data.dailyWorkoutDates.contains(today))
         let countAfterFirst = data.dailyWorkoutDates.count
-        DailyRingEngine.markIfClosed(&data)
+        DailyRingEngine.markActiveDay(&data)
         XCTAssertEqual(data.dailyWorkoutDates.count, countAfterFirst)
     }
 
@@ -85,7 +99,7 @@ final class DailyRingTests: XCTestCase {
         // but does a full lesson still gets their day.
         var data = ProgressData()
         data.sessions = [session(total: 7, lessonId: "net_pay_check")]
-        DailyRingEngine.markIfClosed(&data)
+        DailyRingEngine.markActiveDay(&data)
         XCTAssertEqual(data.computeStreak(), 1)
     }
 
@@ -102,7 +116,7 @@ final class DailyRingTests: XCTestCase {
         XCTAssertEqual(data.computeStreak(), 5)
 
         data.sessions.append(session(total: 8))   // today: ring closes
-        DailyRingEngine.markIfClosed(&data)
+        DailyRingEngine.markActiveDay(&data)
 
         XCTAssertEqual(data.computeStreak(), 6)   // 5 backfilled + today
     }
@@ -113,10 +127,54 @@ final class DailyRingTests: XCTestCase {
         var data = ProgressData()
         let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date())!
         data.sessions = [session(daysAgo: 2, total: 8)]
-        DailyRingEngine.markIfClosed(&data, now: twoDaysAgo)
+        DailyRingEngine.markActiveDay(&data, now: twoDaysAgo)
         data.frozenDates.insert(calendar.startOfDay(for: calendar.date(byAdding: .day, value: -1, to: Date())!))
         data.sessions.append(session(total: 8))
-        DailyRingEngine.markIfClosed(&data)
+        DailyRingEngine.markActiveDay(&data)
         XCTAssertEqual(data.computeStreak(), 3)
+    }
+
+    // MARK: - Store-level recording (audit fixes H2 + M3)
+
+    private func dailyRec(daysAgo: Int, module: String = "smart_shopping", total: Int) -> SessionRecord {
+        let d = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())!
+        // Synthetic lessonId (like the real Daily Workout) so no real-lesson
+        // capability milestone outranks the streak/freeze milestone under test.
+        return SessionRecord(id: UUID(), lessonId: "daily_challenge", moduleId: module,
+                             date: d, correctCount: total, totalCount: total)
+    }
+
+    @MainActor
+    func test_multiRecordBatch_preservesEarnedMilestone() {
+        // A daily workout spanning multiple modules records several SessionRecords
+        // at once. The milestone earned as the streak crosses a threshold must
+        // survive — the old per-record loop recomputed (and nil'd) it on later
+        // sub-records before the UI ever saw it (audit fix H2).
+        let store = ProgressStore()
+        store.reset()
+        store.recordSession(dailyRec(daysAgo: 2, total: 8))
+        store.recordSession(dailyRec(daysAgo: 1, total: 8))
+        // Today, recorded as a 2-module batch (the bug path) — streak crosses to
+        // 3, earning the first freeze.
+        store.recordSessions([dailyRec(daysAgo: 0, module: "smart_shopping", total: 4),
+                              dailyRec(daysAgo: 0, module: "salary", total: 4)])
+        XCTAssertEqual(store.streak, 3)
+        XCTAssertEqual(store.pendingMilestone?.id, "milestone_first_freeze")
+        store.reset()
+    }
+
+    @MainActor
+    func test_acceptStreakLoss_clearsBankedFreezes_noDoubleAward() {
+        // Audit fix M3: accepting a loss resets BOTH the milestone counter and the
+        // banked balance, so a new climb earns from scratch instead of stacking.
+        let store = ProgressStore()
+        store.reset()
+        store.recordSession(dailyRec(daysAgo: 2, total: 8))
+        store.recordSession(dailyRec(daysAgo: 1, total: 8))
+        store.recordSession(dailyRec(daysAgo: 0, total: 8))   // streak 3 → 1 freeze
+        XCTAssertEqual(store.availableFreezes, 1)
+        store.acceptStreakLoss()
+        XCTAssertEqual(store.availableFreezes, 0)
+        store.reset()
     }
 }

@@ -44,24 +44,32 @@ enum DailyRingEngine {
         return min(1, Double(questionCount(on: day, sessions: data.sessions)) / Double(t))
     }
 
-    /// Marks `now`'s day in `dailyWorkoutDates` once the ring target is
-    /// reached (idempotent; no-op while the ring is open).
+    /// Marks `now`'s day in `dailyWorkoutDates` once the user does ANY real
+    /// practice that day (idempotent; no-op on a day with no sessions).
     ///
-    /// Phase 10 widens that field's semantics from "completed the Daily
-    /// Workout" to "closed the daily ring" — the persisted shape is
-    /// unchanged, so no migration.
+    /// Audit fix (H3): the streak counts "you showed up," not "you hit the daily
+    /// volume goal." Previously the day was only marked when `questionCount`
+    /// reached `target`, so a genuine but sub-target session (a 5–6 question
+    /// first-attempt lesson, a short refresh) left the day unmarked and silently
+    /// broke the streak — contradicting this engine's own "the ring closes from
+    /// any real practice" contract. The ring's `isClosed`/`progress` stay
+    /// target-based: that's the visual daily goal, separate from the streak.
+    ///
+    /// Phase 10 widened this field's semantics from "completed the Daily
+    /// Workout" to "had a streak-active day" — the persisted shape is unchanged,
+    /// so no migration.
     ///
     /// Backfill hazard: `ProgressData.activeDays` anchors the streak on
     /// `dailyWorkoutDates` EXCLUSIVELY once the set is non-empty, falling
     /// back to session days only while it's empty. A legacy lesson-only user
     /// (empty set, streak anchored on session days) would have that streak
-    /// collapse to 1 on their first ring closure — so the first write also
-    /// backfills all historical session days.
-    static func markIfClosed(_ data: inout ProgressData, now: Date = Date()) {
+    /// collapse to 1 on the first mark — so the first write also backfills all
+    /// historical session days.
+    static func markActiveDay(_ data: inout ProgressData, now: Date = Date()) {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: now)
         guard !data.dailyWorkoutDates.contains(today),
-              isClosed(on: now, data: data) else { return }
+              questionCount(on: now, sessions: data.sessions) > 0 else { return }
         if data.dailyWorkoutDates.isEmpty {
             for day in Set(data.sessions.map { calendar.startOfDay(for: $0.date) }) {
                 data.dailyWorkoutDates.insert(day)

@@ -54,18 +54,36 @@ final class ProgressStore: ObservableObject {
     // MARK: - Write
 
     func recordSession(_ record: SessionRecord) {
+        recordSessions([record])
+    }
+
+    /// Records one or more SessionRecords as a SINGLE logical event. The Daily
+    /// Workout / Refresh / Bonus flows split one workout into per-module records;
+    /// recording them as a batch means the streak, freezes, badges, the pending
+    /// milestone, and completion celebrations are computed ONCE against the
+    /// before→after snapshot. Recording them one-at-a-time (the old loop) made
+    /// each later sub-record recompute `pendingMilestone` — clobbering a
+    /// capability/streak/freeze milestone earned on an earlier sub-record before
+    /// the UI ever saw it (audit fix H2), and ran the streak/freeze/badge
+    /// recompute N times for one workout.
+    func recordSessions(_ records: [SessionRecord]) {
+        guard !records.isEmpty else { return }
         let snapshotBefore = data
         let previouslyEarned = data.earnedBadgeIds
         // Snapshot pre-session mastery to detect first-time completions
         // (pack / world) AFTER the session is recorded.
         let masteredBefore = masteredLessonIds
-        data.sessions.append(record)
-        // Phase 10: any real practice can close the daily ring and mark the
-        // day for the streak (must run before computeStreak).
-        DailyRingEngine.markIfClosed(&data, now: record.date)
-        let day = Calendar.current.startOfDay(for: record.date)
-        if !snapshotBefore.dailyWorkoutDates.contains(day),
-           data.dailyWorkoutDates.contains(day) {
+        data.sessions.append(contentsOf: records)
+        // Phase 10 / audit fix H3: any real practice marks the day for the
+        // streak (must run before computeStreak). The ring's own target governs
+        // only the visual goal, not whether the day counts.
+        let latest = records.map(\.date).max() ?? Date()
+        DailyRingEngine.markActiveDay(&data, now: latest)
+        // `.ringClosed` keeps its literal meaning — the daily volume target was
+        // actually hit — so it fires on the target transition, not on first
+        // practice of the day.
+        if !DailyRingEngine.isClosed(on: latest, data: snapshotBefore),
+           DailyRingEngine.isClosed(on: latest, data: data) {
             AnalyticsService.capture(.ringClosed)
         }
         let current = data.computeStreak()
@@ -136,7 +154,7 @@ final class ProgressStore: ObservableObject {
             lessonNames: lessonNames,
             beforeStaleCount: staleCount(snapshotBefore),
             afterStaleCount: staleCount(data),
-            lastSessionLessonId: record.lessonId
+            lastSessionLessonId: records.last?.lessonId ?? ""
         )
         for packId in afterReadyIds.subtracting(beforeReadyIds) {
             AnalyticsService.capture(.packStateChanged,
@@ -224,8 +242,8 @@ final class ProgressStore: ObservableObject {
         let today = Self.dateFormatter.string(from: now)
         UserDefaults.standard.set(today, forKey: Self.dailyChallengeKey)
         dailyChallengeCompletedDate = today
-        // Phase 10: the day itself is marked by ring closure inside
-        // recordSession (DailyRingEngine.markIfClosed) — this method now
+        // Phase 10: the day itself is marked by the streak-active rule inside
+        // recordSessions (DailyRingEngine.markActiveDay) — this method now
         // only maintains the legacy "workout done today" card state.
         // Recompute streak so the rest of the app immediately reflects it.
         let current = data.computeStreak()
@@ -289,11 +307,15 @@ final class ProgressStore: ObservableObject {
     }
 
     /// Accept the streak loss — reset lastKnownStreak so the loss screen
-    /// doesn't re-trigger. Also resets freeze milestones so a new streak
-    /// earns freezes from scratch.
+    /// doesn't re-trigger. The freeze safety net resets with the streak it
+    /// protected: both the awarded-milestone counter AND the banked balance go
+    /// to zero so a new streak earns freezes truly from scratch. (Audit fix M3:
+    /// previously only `freezeMilestonesAwarded` reset, so the next climb
+    /// re-earned freezes the user had already banked — a double-award leak.)
     func acceptStreakLoss() {
         data.lastKnownStreak = 0
         data.freezeMilestonesAwarded = 0
+        data.availableFreezes = 0
         persist()
     }
 

@@ -1085,7 +1085,7 @@ struct HomeView: View {
         }
 
         let sortedKeys = groups.keys.sorted()
-        for (i, moduleId) in sortedKeys.enumerated() {
+        let records: [SessionRecord] = sortedKeys.map { moduleId in
             let results = groups[moduleId]!
             let correct = results.filter(\.isCorrect).count
             var record = SessionRecord(
@@ -1097,8 +1097,11 @@ struct HomeView: View {
                 totalCount: results.count
             )
             record.questionResults = results
-            progressStore.recordSession(record)
+            return record
         }
+        // Record as ONE logical event so a milestone earned on an earlier
+        // module sub-record isn't clobbered by the later ones (audit fix H2).
+        progressStore.recordSessions(records)
 
         let sessionType: String = switch lessonId {
         case "daily_challenge": "daily_workout"

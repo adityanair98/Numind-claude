@@ -53,7 +53,17 @@ enum ReadinessEngine {
         guard core.contains(where: { data.hasCompletedLesson($0) }) else { return .notStarted }
 
         let coverage  = core.allSatisfy { data.hasCompletedLesson($0) }
-        let depth     = core.allSatisfy { data.masteredWithHard($0) }
+        // Depth gate: "prove the hard ones." For a lesson that *can* produce a
+        // hard question we require mastered-with-hard; for a pure-concept lesson
+        // whose templates top out below hard (no hard question is generable —
+        // e.g. concept_insurance_open_enrollment), the hardest available evidence
+        // IS top-tier mastery, so we accept plain mastery. Without this carve-out
+        // such a lesson makes its pack's depth gate mathematically unreachable.
+        let depth     = core.allSatisfy { lessonId in
+            hardCapable(lessonId, repository: repository)
+                ? data.masteredWithHard(lessonId)
+                : data.hasMasteredLesson(lessonId)
+        }
         let retention = core.allSatisfy { retained($0, sessions: data.sessions) }
 
         var gates: [(Gate, Bool)] = [(.coverage, coverage), (.depth, depth), (.retention, retention)]
@@ -121,6 +131,20 @@ enum ReadinessEngine {
             }
         }
         return ids
+    }
+
+    /// Whether a lesson can ever generate a HARD question. A numerical template
+    /// is hard-capable (difficulty is assessed at runtime and can reach hard); a
+    /// concept template is hard-capable only when its static tier is hard (≥3).
+    /// A lesson the repo doesn't know (no templates — e.g. a synthetic test pack)
+    /// defaults to hard-capable, preserving the strict depth gate.
+    private static func hardCapable(
+        _ lessonId: String,
+        repository: ContentRepository
+    ) -> Bool {
+        let templates = repository.templates(for: lessonId)
+        guard !templates.isEmpty else { return true }
+        return templates.contains { $0.conceptChoices == nil || $0.difficulty >= 3 }
     }
 
     /// Hold-out retention proxy: correct answers on ≥2 distinct calendar days.

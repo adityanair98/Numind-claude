@@ -21,6 +21,12 @@ final class ReadinessTests: XCTestCase {
         QuestionResult(templateId: "t", isCorrect: correct, timeSpentSeconds: 5, difficulty: d)
     }
 
+    /// Variant pinning a real templateId (so the application gate, which is
+    /// template-scoped, can be satisfied with a real lesson's decision item).
+    private func qr(_ templateId: String, _ d: QuestionDifficulty?, _ correct: Bool) -> QuestionResult {
+        QuestionResult(templateId: templateId, isCorrect: correct, timeSpentSeconds: 5, difficulty: d)
+    }
+
     private func session(lesson: String, daysAgo: Int, results: [QuestionResult]) -> SessionRecord {
         let date = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
         return SessionRecord(
@@ -94,6 +100,30 @@ final class ReadinessTests: XCTestCase {
 
     func test_readyPackCount_isZero_withNoProgress() {
         XCTAssertEqual(ReadinessEngine.readyPackCount(data: ProgressData(), repository: repo), 0)
+    }
+
+    func test_conceptOnlyCoreLesson_reachesReady_viaTopTierMastery() {
+        // Audit fix H1: a pure-concept core lesson whose templates top out below
+        // hard (concept_insurance_open_enrollment — max static tier 2, so no hard
+        // question is ever generable) must satisfy the depth gate via plain
+        // mastery. Otherwise its pack's depth gate is mathematically unreachable
+        // and the pack can NEVER reach Ready/Sharp for any user.
+        let L = "concept_insurance_open_enrollment"
+        let pack = Pack(id: "oe_test", title: "OE", tagline: "t", hook: "h", description: "d",
+                        lessonIds: [L], coreLessonIds: [L],
+                        anchorLessonId: L, estimatedMinutes: 5, lastVerified: "2026-01-01")
+        // Two correct days; day 3 includes the lesson's real decision item
+        // (ins_decision_qle_d2) so the template-scoped application gate passes.
+        let sessions = [
+            session(lesson: L, daysAgo: 3, results: [qr("ins_decision_qle_d2", .medium, true),
+                                                     qr("concept_oe_when_d1", .easy, true)]),
+            session(lesson: L, daysAgo: 0, results: [qr("concept_oe_hdhp_eligibility_d2", .medium, true)])
+        ]
+        let s = ReadinessEngine.state(for: pack, data: progress(sessions), repository: repo)
+        switch s {
+        case .ready, .sharp: break  // recent practice → likely sharp; accept either
+        default: XCTFail("concept-only core lesson should reach ready/sharp, got \(s)")
+        }
     }
 
     func test_coreLessons_fallsBackToAllLessonsWhenUntagged() {
