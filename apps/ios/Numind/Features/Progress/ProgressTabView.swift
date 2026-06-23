@@ -234,7 +234,9 @@ struct ProgressTabView: View {
     // ═══════════════════════════════════════════════════════════════
 
     private var skillsLedgerRow: some View {
-        let mastered = store.masteredLessonIds.filter { !$0.hasPrefix("review_") }.count
+        // masteredLessonIds is already real-curriculum-only (no review_/synthetic
+        // ids), so no filtering needed (audit fix #05 — dropped inert filter).
+        let mastered = store.masteredLessonIds.count
         let stale = store.staleSkillCount
         return HStack(spacing: 12) {
             NavigationLink(destination: SkillDetailView()) {

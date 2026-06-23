@@ -158,6 +158,38 @@ final class MilestoneEngineTests: XCTestCase {
         }
     }
 
+    // MARK: - Accuracy jump (min-sample guard)
+
+    func test_accuracyJump_doesNotFireOnTinySample() {
+        // Audit fix #28: a huge delta on a 1–2 question sample must not fire.
+        func sess(_ correct: Int, _ total: Int) -> SessionRecord {
+            SessionRecord(id: UUID(), lessonId: "L", moduleId: "smart_shopping",
+                          date: Date(), correctCount: correct, totalCount: total)
+        }
+        let tiny = MilestoneEngine.check(
+            before: makeProgress(sessions: [sess(0, 1)]),
+            after: makeProgress(sessions: [sess(0, 1), sess(1, 1)]),
+            shownIds: [], beforeMastered: ["x"], afterMastered: ["x"]
+        )
+        if case .accuracyJump = tiny { XCTFail("accuracyJump fired on a tiny sample") }
+    }
+
+    func test_accuracyJump_firesWithSufficientSample() {
+        func sess(_ correct: Int, _ total: Int) -> SessionRecord {
+            SessionRecord(id: UUID(), lessonId: "L", moduleId: "smart_shopping",
+                          date: Date(), correctCount: correct, totalCount: total)
+        }
+        // before: 10/20 = 50%; after adds 20/20 → 30/40 = 75% (≥10% jump, ≥20 sample).
+        let fires = MilestoneEngine.check(
+            before: makeProgress(sessions: [sess(10, 20)]),
+            after: makeProgress(sessions: [sess(10, 20), sess(20, 20)]),
+            shownIds: [], beforeMastered: ["x"], afterMastered: ["x"]
+        )
+        guard case .accuracyJump = fires else {
+            return XCTFail("expected accuracyJump with sufficient sample, got \(String(describing: fires))")
+        }
+    }
+
     // MARK: - Priority
 
     func test_capabilityOutranksStreak() {

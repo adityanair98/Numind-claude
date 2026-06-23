@@ -174,10 +174,15 @@ enum MilestoneEngine {
         return results
     }
 
+    /// Minimum questions in the trailing window before an accuracy-jump
+    /// milestone can fire — guards against tiny-denominator spikes on a user's
+    /// first few sessions (audit fix #28).
+    private static let accuracyMinSample = 20
+
     private static func recentAccuracy(_ sessions: [SessionRecord], window: Int) -> Double? {
         let recent = sessions.suffix(window)
         let total = recent.reduce(0) { $0 + $1.totalCount }
-        guard total > 0 else { return nil }
+        guard total >= accuracyMinSample else { return nil }
         let correct = recent.reduce(0) { $0 + $1.correctCount }
         return Double(correct) / Double(total)
     }

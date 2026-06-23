@@ -94,4 +94,20 @@ final class QuizSessionTeachTests: XCTestCase {
         if case .motivator = vm.sessionState { vm.advance() }
         XCTAssertEqual(vm.currentSegmentLabel, "Focus")
     }
+
+    func test_freeEntryTolerance_isMagnitudeAware() {
+        // Audit fix M4: a correct mental estimate on a large/cents answer passes
+        // (the old flat ±0.05 demanded cent-precision), while distractor-class
+        // values stay wrong.
+        let t1750 = QuizSessionViewModel.freeEntryTolerance(for: 1750, format: .currency)
+        XCTAssertEqual(t1750, 70, accuracy: 0.001)            // 4% of 1750
+        XCTAssertLessThanOrEqual(abs(1748 - 1750), t1750)     // estimate accepted
+
+        let t4 = QuizSessionViewModel.freeEntryTolerance(for: 4.40, format: .currency)
+        XCTAssertEqual(t4, 0.25, accuracy: 0.001)             // floor for small answers
+        XCTAssertGreaterThan(abs(5.40 - 4.40), t4)            // a $1-off answer is still wrong
+
+        XCTAssertEqual(QuizSessionViewModel.freeEntryTolerance(for: 9, format: .integer), 0.5)
+        XCTAssertEqual(QuizSessionViewModel.freeEntryTolerance(for: 22, format: .percent), 0.5)
+    }
 }

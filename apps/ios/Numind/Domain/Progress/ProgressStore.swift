@@ -274,11 +274,11 @@ final class ProgressStore: ObservableObject {
     // MARK: - Streak revival
 
     /// True when the user had a streak > 1 that has now dropped to 0,
-    /// and the last session was recent enough to allow revival (≤ 2 days).
+    /// and the last session was recent enough to allow revival (≤ 3 days).
     var isStreakLost: Bool {
         let current = data.computeStreak()
         guard current == 0, data.lastKnownStreak > 1 else { return false }
-        // Only allow revival if last session was within 2 days.
+        // Only allow revival if last session was within 3 days.
         guard let lastDate = data.lastSessionDate else { return false }
         let gap = Calendar.current.dateComponents([.day], from: lastDate, to: Date()).day ?? 999
         return gap <= 3
@@ -351,8 +351,10 @@ final class ProgressStore: ObservableObject {
     func canTakeRestDay(on date: Date = Date()) -> Bool {
         let cal = Calendar.current
         let today = cal.startOfDay(for: date)
+        // Strict `>` so a rest day exactly 14 days ago no longer blocks — true
+        // 1-per-14-days cadence (audit fix #16; `>=` made it 1-per-15).
         let window = cal.date(byAdding: .day, value: -14, to: today) ?? today
-        return !data.restDaysUsed.contains(where: { $0 >= window })
+        return !data.restDaysUsed.contains(where: { $0 > window })
     }
 
     /// Use today as a rest day. Inserts today into `restDaysUsed`, which
@@ -615,8 +617,10 @@ final class ProgressStore: ObservableObject {
     /// Convenience: clear the focus pack.
     func clearFocusPack() { setFocusPack(nil) }
 
-    /// Mastered-lesson IDs across all sessions, with Phase 6a decay
-    /// applied. A lesson appears iff `hasMasteredLessonNow` returns true.
+    /// Real curriculum lesson IDs the user has ever mastered. Mastery does NOT
+    /// decay (Phase 9) — once earned it stays; staleness is carried separately
+    /// by Freshness. Routed through `masteredRealLessonIds(in:)` (see below) so
+    /// synthetic ids can't leak in.
     var masteredLessonIds: Set<String> {
         // Only REAL curriculum lessons. The daily/bonus/refresh sessions reuse
         // the lessonId field for synthetic ids ("daily_challenge" etc.); a

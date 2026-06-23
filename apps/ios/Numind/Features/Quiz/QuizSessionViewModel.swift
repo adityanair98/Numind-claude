@@ -291,7 +291,9 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
             var q = QuizEngine.generate(from: template, targetDifficulty: diff)
             var attempts = 1
             while usedFingerprints.contains(fingerprint(q)) && attempts < 10 {
-                q = QuizEngine.generate(from: template)
+                // Keep the diagnostic-calibrated difficulty on re-rolls too, so
+                // filler questions match the first-pass tier (audit fix #36).
+                q = QuizEngine.generate(from: template, targetDifficulty: diff)
                 attempts += 1
             }
             usedFingerprints.insert(fingerprint(q))
@@ -439,17 +441,41 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         }
     }
 
+    /// Max plausible answering time for one question; beyond this the user
+    /// backgrounded/abandoned the question, so the value is clamped before it
+    /// reaches SharpnessEngine's speed baselines (audit fix #21).
+    static let maxAnswerSeconds: Double = 300
+
+    /// Tolerance band for grading a typed numeric answer. Magnitude-aware so a
+    /// correct mental estimate isn't rejected on a large or cents-bearing answer
+    /// (the old flat ±0.05 demanded cent-precision), while distractor-class
+    /// values (≥10% off for these templates) never slip through (audit fix M4).
+    static func freeEntryTolerance(for correct: Double, format: AnswerFormat) -> Double {
+        switch format {
+        case .integer: return 0.5                              // nearest whole number
+        case .percent: return 0.5                              // ±0.5 percentage points
+        case .currency: return max(0.25, abs(correct) * 0.04)  // 4% or 25¢, whichever larger
+        }
+    }
+
     func checkAnswer() {
         cancelQuestionTimer()
-        lastQuestionTimeSpent = Date().timeIntervalSince(questionStartTime)
+        // Clamp to a sane ceiling — a backgrounded/abandoned question must not
+        // poison SharpnessEngine speed baselines (audit fix #21).
+        lastQuestionTimeSpent = min(Self.maxAnswerSeconds,
+                                    max(0, Date().timeIntervalSince(questionStartTime)))
         switch currentQuestion.inputMode {
         case .multipleChoice:
             guard case .answered(let id) = sessionState else { return }
             sessionState = .feedback(id)
         case .freeEntry:
+            // Input is a custom number pad (digits + "."), so the string is
+            // always clean — no $/comma/% to strip.
             guard let entered = Double(freeEntryText) else { return }
-            let tolerance: Double = 0.05
-            let isCorrect = abs(entered - currentQuestion.correctValue) <= tolerance
+            let tol = Self.freeEntryTolerance(
+                for: currentQuestion.correctValue, format: currentQuestion.answerFormat
+            )
+            let isCorrect = abs(entered - currentQuestion.correctValue) <= tol
             sessionState = .feedback(isCorrect ? currentQuestion.correctChoiceId : UUID())
         }
         // Start tracking feedback viewing time (untimed sessions only).

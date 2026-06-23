@@ -106,8 +106,12 @@ enum RefreshSessionBuilder {
         var latest: [String: (date: Date, isCorrect: Bool)] = [:]
         for record in sessions {
             for result in record.questionResults {
-                if let existing = latest[result.templateId], existing.date > record.date {
-                    continue
+                if let existing = latest[result.templateId] {
+                    if existing.date > record.date { continue }
+                    // On an exact-timestamp tie, keep a WRONG attempt rather than
+                    // letting a same-instant correct one mask an unfixed mistake
+                    // (audit fix #08 — deterministic tie-break).
+                    if existing.date == record.date && !existing.isCorrect { continue }
                 }
                 latest[result.templateId] = (record.date, result.isCorrect)
             }
