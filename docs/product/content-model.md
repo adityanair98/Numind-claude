@@ -166,10 +166,10 @@ Each has a corresponding mutator (`updateBlitzBest(score:)`, etc.) that only upd
 ### Streak Freezes
 `ProgressData` tracks streak freeze state:
 
-    var availableFreezes: Int = 0           // max 3 banked
-    var freezeMilestonesAwarded: Int = 0    // tracks 7-day milestones
+    var availableFreezes: Int = 0           // max 5 banked (Phase 6a)
+    var freezeMilestonesAwarded: Int = 0    // tracks freeze milestones earned
 
-Users earn one freeze per 7-day streak milestone (max 3 banked). Freezes are auto-applied on missed days before showing a streak loss screen. `freezeMilestonesAwarded` resets when the streak resets to 0.
+Users earn their first freeze at a 3-day streak, then one per 7-day milestone (max 5 banked, per Phase 6a). Freezes are auto-applied on missed days before showing a streak loss screen. Accepting a streak loss (`acceptStreakLoss`) resets BOTH `freezeMilestonesAwarded` and `availableFreezes` to 0, so a new streak earns freezes from scratch (audit fix M3 — previously only the counter reset, which re-awarded already-banked freezes on the next climb).
 
 ### Mastery & Progression
 A lesson is "mastered" when any session for that lesson has `correctCount / totalCount >= 0.75` (75%). Mastery earns a gold star on the learning path. However, **progression only requires completion** — any attempt at a lesson (regardless of score) unlocks the next node. This prevents anxious users from being blocked while still rewarding high performance.

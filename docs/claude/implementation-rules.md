@@ -46,7 +46,7 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 - **IconTile** for all tinted icon displays. Pass `size:` parameter for different sizes (36, 48, 52).
 - **PillButton** for primary CTAs. Use `.primary` variant by default.
 - **ConfettiBurst** for celebration effects. Always pair with `NewBestBadge` in summary views.
-- **LevelRing** for displaying the user's Level + XP-progress (Phase 9; replaced `NumindScoreRing`/the 0–100 composite). **ReadinessBadge** / **PackReadinessBoard** for per-pack Readiness state.
+- **GoalRing** for the daily goal ring (Phase 10; replaced LevelRing — XP/Level are now hidden fuel, surfaced nowhere). **ReadinessBadge** / **PackReadinessBoard** for per-pack Readiness state.
 - **HeroCard** for large hero cards.
 - **CalculatorShell** is the base scaffold for every Tools-tab calculator (summary header, input area, collapsible methodology block, global disclaimer). New calculators wrap their inputs/results in it and register in `CalculatorRegistry`.
 
@@ -63,12 +63,12 @@ Rules for building Numind. These supplement the top-level CLAUDE.md and apply to
 
 - **The Practice tab and all timed game modes — Speed Drill, Blitz, Streak, Estimation, Comparison — were retired in Phase 7a.** Their views, view models, and supporting engines (`BlitzEngine`, `MasteredTemplatePool`, `ModeCard`, `EstimationSlider`, `PracticeQuizContainer`) were deleted. The per-mode personal-best fields remain in `ProgressData` for snapshot back-compat, but no UI writes them anymore.
 - **The Tools tab replaced Practice in `RootTabView`** (`NumindTab.tools`, SF Symbol `wrench.and.screwdriver.fill`). It hosts 12 in-app calculators built on `CalculatorShell` and dispatched through `CalculatorRegistry.view(for:)`. Lessons deep-link to a calculator via `Lesson.relatedCalculatorSlug`.
-- **Recall ("review your weak spots") survives** as a Home quick-access entry. Build the session with `ReviewMistakesEngine.build(fromStored:moduleColor:repository:)`; fall back to a bonus round when there's no miss history. Persist the best via `progressStore.updateRecallBest(score:)`.
-- **Daily Workout** is the streak anchor: 10 mixed questions via `DailyChallengeEngine.dailyQuestions(from:progressData:focusPack:)` (pack-aware when a focus pack is set). The storage key `numind.dailyChallenge.lastCompleted` is kept for back-compat; user-facing strings say "Daily Workout."
+- **Recall was retired in Phase 10-A8** and folded into the one consolidated **Refresh**. Build the Refresh session with `RefreshSessionBuilder.build(masteredLessonIds:sessions:repository:)` — stale mastered skills (SRS-overdue) first, then unfixed mistakes (latest attempt wrong), max 8 questions with fresh values. No personal-best to persist (the Recall best + its celebration retired with the mode).
+- **Daily Workout** is built by `DailyWorkoutEngine.plan(...)` (Phase 10): a date-seeded, deterministic 5–8 question plan in three labeled segments — Warm-up / Focus / Decision — pack-aware when a focus pack is set. Any recorded practice marks the day for the streak (`DailyRingEngine.markActiveDay`); closing the ring is the daily *goal*. The storage key `numind.dailyChallenge.lastCompleted` is kept for back-compat; user-facing strings say "Daily Workout."
 
 ## Celebration / Personal Best
 
-- **`previousBest` pattern.** The Recall flow captures the current best from `ProgressStore` before the session and shows a celebration when `score > previousBest && score > 0`.
+- **Capability milestones (Phase 10).** Personal-best/volume ceremonies are retired. Full-screen celebrations fire on capability only — first skill mastered, first pack Ready, 3 packs Ready, first refresh-save, 7/14-day streak, accuracy jump (≥20-question sample), first freeze — via `MilestoneEngine`; pack/topic *completion* lives in the `Celebration` queue.
 - **`ConfettiBurst`** is a reusable Canvas + TimelineView confetti particle system in `Core/DesignSystem/Primitives/ConfettiBurst.swift`. 60 particles, 3-second duration, fires on appear. Use as a ZStack overlay on summary views: `if viewModel.isNewBest { ConfettiBurst() }`.
 - **`NewBestBadge`** is a reusable golden trophy capsule badge (also in `ConfettiBurst.swift`). Spring bounce-in animation on appear. Summary views show it when `isNewBest` is true.
 

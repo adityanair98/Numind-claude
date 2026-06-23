@@ -115,7 +115,7 @@ The Learn tab has two top-level sub-tabs (segmented picker): **Explore** and **P
 ### Daily Goal Ring (Phase 10)
 - One ring on Home (BrandHeader) and in the session summary / insight sheet
 - Target = the day's workout size (min 5, max 8 questions); ANY practice counts (workout, lesson, pack, refresh)
-- Closing the ring is the single write path into `dailyWorkoutDates` — the ring, not a specific mode, anchors the streak
+- Any real practice that day marks `dailyWorkoutDates` (the streak anchor) via `DailyRingEngine.markActiveDay` — the ring's 5–8 target is the daily *goal*, not the streak gate, so a sub-target lesson still counts the day (audit fix H3; previously only a closed ring marked it, silently breaking the streak on a short real session)
 
 ### XP System (invisible fuel after Phase 10)
 - XP/Level still accrue in `MomentumEngine` (easy 10 / med 15 / hard 25, depth-gated above L8) but appear on **no surface** — they exist as a tested substrate if a future surface needs them
@@ -127,7 +127,7 @@ A streak is the number of consecutive calendar days on which the user completed 
 ### Progress model (Phase 9, de-gamified in Phase 10)
 The global composite score is retired. Progress is capability + a freshness signal:
 - **XP / Level** — effort fuel, hidden since Phase 10. XP = `10 × difficulty` per correct answer (easy 10 / med 15 / hard 25) + milestones (lesson mastered +50, pack Ready +150). Monotonic; never decays. Level is a front-loaded ladder, **depth-gated above L8** (each level past 8 also needs one "deep mastery" — a lesson mastered with a correct hard question, or a pack at Ready) so easy-only volume can't grind to the top.
-- **Readiness (per pack)** — the honest, decision-scoped competence signal: *Not started → Learning → Almost ready (names the one missing gate) → Ready → Sharp*, gated on coverage (all core lessons attempted) + depth (each core mastered-with-hard) + retention (correct across ≥2 distinct days). Claims are scoped to the evidence, never a "ready for real life" verdict.
+- **Readiness (per pack)** — the honest, decision-scoped competence signal: *Not started → Learning → Almost ready (names the one missing gate) → Ready → Sharp* (Sharp = Ready + every core lesson currently fresh). Four gates over a pack's *core* lessons: **coverage** (each practiced ≥once), **retention** (each correct on ≥2 distinct days), **application** (≥1 correct `isApplication` item, present only when such items exist), and **depth** (each mastered-with-hard; a hard-incapable concept-only core lesson satisfies depth via plain top-tier mastery — audit fix H1). **Option C scoping (June 2026 audit):** coverage/retention/application advance from *any* practice surface (focused lesson, Daily Workout, Refresh, Bonus — all carry the real `templateId`); **depth and the mastery star are earned by focused lesson sessions only**, so a daily-only user's packs progress toward Ready while "Mastered" stays 0 by design. Claims are scoped to the evidence, never a "ready for real life" verdict.
 - **Freshness** — the only thing that decays. Derived from the SRS overdue signal; surfaced as a Home "N skills to refresh" chip. Reviewing restores it; it never touches XP/Level/mastery.
 - The 7 competency axes survive only as a **private coverage diagnostic** (radar + per-axis mastered/total), not a graded composite. Full spec: `docs/product/scoring-system-research.md`.
 

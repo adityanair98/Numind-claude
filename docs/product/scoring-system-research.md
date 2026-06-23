@@ -1,5 +1,48 @@
 # Numind — Scoring System Redesign Brief (for implementation)
 
+> **IMPLEMENTATION STATUS — as shipped (June 2026). This section is authoritative where it
+> differs from the brief below**, which is preserved as the original Phase 9 research/design
+> input (the rationale in §2/§6/§7 still stands). Key deltas:
+>
+> - **Two currencies shipped, then the headline moved.** The brief's "MP" shipped as **XP**
+>   via `MomentumEngine` (formula + ladder + depth-gate exactly as §3.2–§3.4). In **Phase 10**
+>   XP/Level became **hidden fuel** — retired from every surface. The user-facing headline is
+>   now the **daily goal ring + per-pack Readiness + restorable Freshness**. The brief's
+>   "Sharpness" is the shipped **Freshness** (`FreshnessEngine`).
+> - **Counts (current):** 11 modules · 134 lessons · 791 templates · 12 packs · 12 calculators.
+> - **Mastery star** (`ProgressData.hasMasteredLesson`, **focused lesson sessions only**): one
+>   session ≥85% **or** two ≥75% on non-consecutive days, with ≥1 correct medium/hard.
+>   `masteredWithHard` (deep mastery) additionally needs a correct **hard** answer.
+> - **Readiness gates — Option C (June 2026 audit), supersedes §3.7.** Four gates over a pack's
+>   *core* lessons:
+>     - **coverage** — each core lesson practiced ≥once — *any practice surface*
+>     - **retention** — each core lesson correct on **≥2 distinct calendar days** — *any surface*
+>     - **application** — ≥1 correct `isApplication` decision item among core lessons — *any
+>       surface* (gate present only when such items exist; else the §3.7 fallback)
+>     - **depth** — each core lesson **mastered-with-hard** — *focused lesson sessions only*;
+>       **carve-out:** a hard-incapable concept-only core lesson (no hard question is generable)
+>       satisfies depth via plain top-tier mastery, else its pack could never reach Ready.
+>   "Any surface" = a focused lesson, the Daily Workout, a Refresh, or a Bonus round (these
+>   record under a synthetic `lessonId` but carry the real `templateId`). Net: daily/refresh
+>   practice advances coverage/retention/application + Freshness, while the **mastery star and
+>   depth stay earned by focused lessons** — so a daily-only user's packs progress while their
+>   "Mastered" count stays 0 by design. States: Not started → Learning → Almost ready (names the
+>   one missing gate) → Ready → **Sharp** (Ready + every core lesson currently fresh).
+> - **Streak** (`DailyRingEngine.markActiveDay` + `computeStreak`): a day counts when the user
+>   does **any** real practice that day (not only when the ring's 5–8 question target is hit), or
+>   a freeze / rest day covers it. The ring is the daily *goal*; the streak is "you showed up."
+> - **Freezes:** first at **day 3**, then every 7 days, **cap 5** (the §3.9 drift fix; the old
+>   "max 3" was wrong). Accepting a streak loss resets the milestone counter **and** the banked
+>   balance, so a new streak earns from scratch (no double-award).
+> - **Free-entry grading:** magnitude-aware tolerance — currency `max(4%, $0.25)`, integer ±0.5,
+>   percent ±0.5pp (replaced the flat ±0.05 that rejected correct estimates).
+> - **Review:** the brief's "Recall" is retired; one consolidated **Refresh**
+>   (`RefreshSessionBuilder`) = stale mastered skills + unfixed mistakes.
+>
+> Engines: `MomentumEngine` · `ReadinessEngine` · `FreshnessEngine` · `DailyRingEngine` ·
+> `MilestoneEngine`. June-2026 audit fixes: commits b5fc5d0 (4 defects), 170c9d3 (Option C),
+> 5cc212f (tolerance + cleanups).
+
 ## 0. CONTEXT
 Numind is a PAID iOS SwiftUI financial-learning app (hard paywall), US adults ~22–40.
 10 modules, 118 lessons, 590 quiz templates, 10 life-event packs, 12 calculators.
