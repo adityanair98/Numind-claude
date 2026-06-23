@@ -126,6 +126,31 @@ final class ReadinessTests: XCTestCase {
         }
     }
 
+    func test_dailyExposure_advancesCoverageRetentionApplication_butNotDepth() {
+        // Option C: practicing a core lesson's templates via the Daily Workout
+        // (recorded under the synthetic lessonId "daily_challenge", real
+        // templateId preserved) advances coverage + retention + application — so
+        // the pack moves off .notStarted toward Ready — but the depth gate / the
+        // mastery star still require focused lesson work, so it lands at
+        // almostReady(.depth): "now lock in the hard ones."
+        let L = "concept_insurance_open_enrollment"
+        let pack = Pack(id: "oe_test2", title: "OE", tagline: "t", hook: "h", description: "d",
+                        lessonIds: [L], coreLessonIds: [L],
+                        anchorLessonId: L, estimatedMinutes: 5, lastVerified: "2026-01-01")
+        // Two daily sessions on distinct days; day 3 includes the real decision
+        // item so the (template-scoped) application gate also passes.
+        let daily = [
+            session(lesson: "daily_challenge", daysAgo: 3, results: [qr("ins_decision_qle_d2", .medium, true)]),
+            session(lesson: "daily_challenge", daysAgo: 0, results: [qr("concept_oe_dcfsa_cap_d2", .medium, true)])
+        ]
+        guard case .almostReady(let missing, _) = ReadinessEngine.state(
+            for: pack, data: progress(daily), repository: repo
+        ) else {
+            return XCTFail("daily exposure should reach almostReady(.depth)")
+        }
+        XCTAssertEqual(missing, .depth)
+    }
+
     func test_coreLessons_fallsBackToAllLessonsWhenUntagged() {
         let untagged = Pack(id: "p", title: "P", tagline: "t", hook: "h", description: "d",
                             lessonIds: ["x", "y"], coreLessonIds: [],

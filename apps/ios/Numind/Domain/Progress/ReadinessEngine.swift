@@ -4,11 +4,19 @@ import Foundation
 /// (Phase 9). Replaces the global 0–100 composite as the competence headline.
 /// Pure over the session log + content repo.
 ///
-/// Gates are layered and depth-gated:
-/// - **coverage** — every core lesson attempted
+/// Gates are layered and depth-gated. **coverage / retention / application** are
+/// *exposure*-scoped — they count practice of a core lesson's templates on ANY
+/// surface (a focused lesson session OR Daily Workout / Refresh / Bonus, which
+/// record under a synthetic lessonId but keep the real templateId). **depth** and
+/// the mastery star are *focused*-scoped — earned only by deliberate lesson work.
+/// So the daily loop visibly moves a pack toward Ready, while "prove the hard
+/// ones" still requires sitting the lesson (Option C — exposure counts, mastery
+/// earned).
+/// - **coverage** — every core lesson practiced (any surface)
 /// - **depth** — every core lesson mastered *with a correct hard question*
+///   (focused lesson sessions only)
 /// - **retention** — every core lesson answered correctly on ≥2 distinct days
-///   (a hold-out proxy: it survived at least one gap)
+///   (any surface; a hold-out proxy — it survived at least one gap)
 /// - **application** (Phase 9E) — a correct answer on a scenario/decision item
 ///   (`isApplication`) among the pack's core lessons. Added only when the pack
 ///   actually carries application content; otherwise absent (the spec's fallback).
@@ -50,9 +58,16 @@ enum ReadinessEngine {
     ) -> State {
         let core = coreLessons(for: pack)
         guard !core.isEmpty else { return .notStarted }
-        guard core.contains(where: { data.hasCompletedLesson($0) }) else { return .notStarted }
+        guard core.contains(where: { attempted($0, sessions: data.sessions, repository: repository) })
+        else { return .notStarted }
 
-        let coverage  = core.allSatisfy { data.hasCompletedLesson($0) }
+        // Coverage + retention count practice of a core lesson's templates on ANY
+        // surface — a focused lesson session OR Daily Workout / Refresh / Bonus
+        // (which record under a synthetic lessonId but keep the real templateId).
+        // The depth gate + the mastery star stay focused-session-only: exposure
+        // moves a pack toward Ready, but "prove the hard ones" is still earned by
+        // deliberate lesson work (Option C — exposure counts, mastery earned).
+        let coverage  = core.allSatisfy { attempted($0, sessions: data.sessions, repository: repository) }
         // Depth gate: "prove the hard ones." For a lesson that *can* produce a
         // hard question we require mastered-with-hard; for a pure-concept lesson
         // whose templates top out below hard (no hard question is generable —
@@ -64,7 +79,7 @@ enum ReadinessEngine {
                 ? data.masteredWithHard(lessonId)
                 : data.hasMasteredLesson(lessonId)
         }
-        let retention = core.allSatisfy { retained($0, sessions: data.sessions) }
+        let retention = core.allSatisfy { retained($0, sessions: data.sessions, repository: repository) }
 
         var gates: [(Gate, Bool)] = [(.coverage, coverage), (.depth, depth), (.retention, retention)]
 
@@ -147,14 +162,43 @@ enum ReadinessEngine {
         return templates.contains { $0.conceptChoices == nil || $0.difficulty >= 3 }
     }
 
-    /// Hold-out retention proxy: correct answers on ≥2 distinct calendar days.
-    private static func retained(_ lessonId: String, sessions: [SessionRecord]) -> Bool {
+    /// Template IDs belonging to a lesson. Cheap repo lookup, bounded by the
+    /// lesson's template count.
+    private static func templateIds(_ lessonId: String, repository: ContentRepository) -> Set<String> {
+        Set(repository.templates(for: lessonId).map(\.id))
+    }
+
+    /// Coverage proxy — has the user practiced this lesson on ANY surface?
+    /// A focused lesson session (lessonId match, incl. legacy sessions with no
+    /// per-question results) OR Daily/Refresh/Bonus practice of one of the
+    /// lesson's templates (Option C — exposure counts).
+    private static func attempted(
+        _ lessonId: String, sessions: [SessionRecord], repository: ContentRepository
+    ) -> Bool {
+        if sessions.contains(where: { $0.lessonId == lessonId }) { return true }
+        let ids = templateIds(lessonId, repository: repository)
+        guard !ids.isEmpty else { return false }
+        return sessions.contains { $0.questionResults.contains { ids.contains($0.templateId) } }
+    }
+
+    /// Hold-out retention proxy: a correct answer attributable to this lesson on
+    /// ≥2 distinct calendar days — counting a focused lesson session (lessonId
+    /// match) OR Daily/Refresh/Bonus practice of the lesson's templates
+    /// (Option C). The lessonId path also covers legacy sessions that predate
+    /// per-question results.
+    private static func retained(
+        _ lessonId: String, sessions: [SessionRecord], repository: ContentRepository
+    ) -> Bool {
         let cal = Calendar.current
-        let days = Set(
-            sessions
-                .filter { $0.lessonId == lessonId && $0.correctCount > 0 }
-                .map { cal.startOfDay(for: $0.date) }
-        )
+        let ids = templateIds(lessonId, repository: repository)
+        var days = Set<Date>()
+        for s in sessions {
+            let focusedCorrect = s.lessonId == lessonId && s.correctCount > 0
+            let exposureCorrect = s.questionResults.contains { ids.contains($0.templateId) && $0.isCorrect }
+            if focusedCorrect || exposureCorrect {
+                days.insert(cal.startOfDay(for: s.date))
+            }
+        }
         return days.count >= 2
     }
 
