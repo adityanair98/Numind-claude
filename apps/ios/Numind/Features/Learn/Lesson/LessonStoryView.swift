@@ -26,6 +26,11 @@ struct LessonStoryView: View {
 
     private let predictQuestion: QuizQuestion?
     private let exampleLines: [String]
+    /// A pure-concept lesson (no formula templates) teaches a portable decision
+    /// rule, not a math shortcut — so its takeaway beat reads "The move," not
+    /// "The shortcut." (The `shortcut` field evolved past mental math into a
+    /// heuristic for concept lessons; the label hadn't followed.)
+    private let isDecisionLesson: Bool
 
     init(viewModel: LessonViewModel,
          questionCount: Int,
@@ -36,14 +41,16 @@ struct LessonStoryView: View {
         self.onStartQuiz = onStartQuiz
         self.onShowCalculator = onShowCalculator
 
-        let template = LocalContentRepository()
-            .templates(for: viewModel.lesson.id)
+        let allTemplates = LocalContentRepository().templates(for: viewModel.lesson.id)
+        let template = allTemplates
             .sorted {
                 ($0.isApplicationItem ? 1 : 0, $0.difficulty)
                     < ($1.isApplicationItem ? 1 : 0, $1.difficulty)
             }
             .first
         self.predictQuestion = template.map { QuizEngine.generate(from: $0) }
+        self.isDecisionLesson = !allTemplates.isEmpty
+            && allTemplates.allSatisfy { $0.answerFormula == nil }
 
         self.exampleLines = viewModel.lesson.example
             .components(separatedBy: "\n")
@@ -212,8 +219,8 @@ struct LessonStoryView: View {
 
                 if let selected = selectedChoiceId {
                     Text(selected == q.correctChoiceId
-                         ? "Good instincts. Here\u{2019}s the shortcut \u{2014}"
-                         : "Most people guess that one. Here\u{2019}s the shortcut \u{2014}")
+                         ? "Good instincts. Here\u{2019}s \(isDecisionLesson ? "the move" : "the shortcut") \u{2014}"
+                         : "Most people guess that one. Here\u{2019}s \(isDecisionLesson ? "the move" : "the shortcut") \u{2014}")
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundStyle(selected == q.correctChoiceId
                                          ? Theme.Colors.mindTeal : Theme.Colors.deepNavy)
@@ -227,14 +234,14 @@ struct LessonStoryView: View {
 
     private var shortcutBeat: some View {
         VStack(alignment: .leading, spacing: 16) {
-            overline("The shortcut", color: Theme.Colors.insightText)
+            overline(isDecisionLesson ? "The move" : "The shortcut", color: Theme.Colors.insightText)
 
             VStack(alignment: .leading, spacing: 12) {
                 ZStack {
                     Circle()
                         .fill(Theme.Colors.insightYellow.opacity(0.3))
                         .frame(width: 44, height: 44)
-                    Image(systemName: "bolt.fill")
+                    Image(systemName: isDecisionLesson ? "lightbulb.fill" : "bolt.fill")
                         .font(.system(size: 19, weight: .semibold))
                         .foregroundStyle(Theme.Colors.insightText)
                 }
