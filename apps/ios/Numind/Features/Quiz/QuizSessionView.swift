@@ -298,7 +298,7 @@ struct QuizSessionView: View {
                                 .font(.system(size: 13, weight: .semibold))
                                 .foregroundStyle(Theme.Colors.insightText)
                         }
-                        Text("Shortcut")
+                        Text(viewModel.currentTakeawayIsMove ? "The move" : "Shortcut")
                             .font(Theme.Typography.small)
                             .fontWeight(.bold)
                             .foregroundStyle(Theme.Colors.insightText)
@@ -331,7 +331,7 @@ struct QuizSessionView: View {
                     Image(systemName: "lightbulb")
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(Theme.Colors.insightText)
-                    Text("Show shortcut")
+                    Text(viewModel.currentTakeawayIsMove ? "Show the move" : "Show shortcut")
                         .font(Theme.Typography.small)
                         .fontWeight(.semibold)
                         .foregroundStyle(Theme.Colors.insightText)

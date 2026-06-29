@@ -131,6 +131,17 @@ final class QuizSessionViewModel: ObservableObject, Identifiable {
         repository.lesson(forTemplateId: currentQuestion.templateId)?.title ?? lessonTitle
     }
 
+    /// True when the current question's lesson is pure-concept (no formula
+    /// templates) — its takeaway is a decision "move," not a math "shortcut."
+    /// Mirrors LessonStoryView's distinction so the quiz hint reads consistently.
+    var currentTakeawayIsMove: Bool {
+        guard let lesson = repository.lesson(forTemplateId: currentQuestion.templateId) else {
+            return false
+        }
+        let templates = repository.templates(for: lesson.id)
+        return !templates.isEmpty && templates.allSatisfy { $0.answerFormula == nil }
+    }
+
     // MARK: - XP
 
     var correctCount: Int { results.filter(\.isCorrect).count }
