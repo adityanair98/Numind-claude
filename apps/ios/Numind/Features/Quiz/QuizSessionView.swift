@@ -35,6 +35,10 @@ struct QuizSessionView: View {
                 }
             }
         }
+        // Opaque bar — without this the (translucent) inline nav lets scrolled
+        // content ghost through behind the title (the "Nice — that's right" bleed).
+        .toolbarBackground(Theme.Colors.softBackground, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .onAppear {
             viewModel.startSession()
         }
@@ -105,45 +109,55 @@ struct QuizSessionView: View {
                 // Motivator takes over the full screen — show with daily streak from ProgressStore
                 motivatorScreen(checkpoint: checkpoint)
             } else {
-                ScrollView {
-                    VStack(spacing: Theme.Spacing.sectionSpacing) {
-                        beadRail
-                        if let segment = viewModel.currentSegmentLabel {
-                            Text(segment.uppercased())
-                                .font(Theme.Typography.overline)
-                                .tracking(1.4)
-                                .foregroundStyle(Theme.Colors.mutedText)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        switch viewModel.sessionState {
-                        case .question, .answered:
-                            questionContent
-                                .transition(.opacity)
-                        case .feedback:
-                            ZStack {
-                                feedbackContent
-                                    .transition(.asymmetric(
-                                        insertion: .scale(scale: 0.92).combined(with: .opacity),
-                                        removal: .opacity
-                                    ))
-                                // Inline encouragement overlay
-                                if let encouragement = viewModel.inlineEncouragement {
-                                    InlineEncouragementView(
-                                        encouragement: encouragement,
-                                        onContinue: { viewModel.advance() }
-                                    )
-                                    .transition(.scale(scale: 0.9).combined(with: .opacity))
-                                }
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack(spacing: Theme.Spacing.sectionSpacing) {
+                            beadRail
+                                .id("scrollTop")
+                            if let segment = viewModel.currentSegmentLabel {
+                                Text(segment.uppercased())
+                                    .font(Theme.Typography.overline)
+                                    .tracking(1.4)
+                                    .foregroundStyle(Theme.Colors.mutedText)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                             }
-                        case .complete, .motivator, .teach:
-                            EmptyView()
+                            switch viewModel.sessionState {
+                            case .question, .answered:
+                                questionContent
+                                    .transition(.opacity)
+                            case .feedback:
+                                ZStack {
+                                    // Calm fade (Phase 13: per-answer feedback is a
+                                    // settle, never a pop). The old scale-in left the
+                                    // result card scaled under the nav and clipped cards.
+                                    feedbackContent
+                                        .transition(.opacity)
+                                    // Inline encouragement overlay
+                                    if let encouragement = viewModel.inlineEncouragement {
+                                        InlineEncouragementView(
+                                            encouragement: encouragement,
+                                            onContinue: { viewModel.advance() }
+                                        )
+                                        .transition(.opacity)
+                                    }
+                                }
+                            case .complete, .motivator, .teach:
+                                EmptyView()
+                            }
+                        }
+                        .animation(.spring(response: 0.38, dampingFraction: 0.72), value: viewModel.sessionState)
+                        .animation(.spring(response: 0.32, dampingFraction: 0.75), value: viewModel.hintRevealed)
+                        .padding(.horizontal, Theme.Spacing.screenHorizontal)
+                        .padding(.top, 8)
+                        .padding(.bottom, Theme.Spacing.buttonHeight + 52)
+                    }
+                    .onChange(of: viewModel.sessionState) { _, _ in
+                        // Snap to top on each question/feedback swap so the result
+                        // card never starts scrolled under the nav bar.
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            proxy.scrollTo("scrollTop", anchor: .top)
                         }
                     }
-                    .animation(.spring(response: 0.38, dampingFraction: 0.72), value: viewModel.sessionState)
-                    .animation(.spring(response: 0.32, dampingFraction: 0.75), value: viewModel.hintRevealed)
-                    .padding(.horizontal, Theme.Spacing.screenHorizontal)
-                    .padding(.top, 8)
-                    .padding(.bottom, Theme.Spacing.buttonHeight + 52)
                 }
             }
         }
