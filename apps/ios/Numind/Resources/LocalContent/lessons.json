@@ -242,7 +242,6 @@
       "mm_cpu_book_d1",
       "cost_per_use_gym_d2",
       "mm_cpu_daily_d2",
-      "cost_per_use_scenario",
       "mm_decision_peruse_d2"
     ],
     "lastVerified": "2026-05-26",
@@ -288,9 +287,7 @@
     "quizTemplateIds": [
       "needs_50_d1",
       "savings_20_d1",
-      "all_three_buckets_d2",
       "over_budget_d3",
-      "target_savings_d3",
       "mm_decision_budget_d3"
     ],
     "lastVerified": "2026-05-26",
@@ -445,8 +442,6 @@
     "quizTemplateIds": [
       "overtime_pay_calc",
       "overtime_d2",
-      "overtime_scenario_d2",
-      "salary_hourly_annual_d1",
       "total_weekly_with_ot_d3",
       "sal_decision_overtime_d2"
     ],
@@ -979,7 +974,6 @@
     "quizTemplateIds": [
       "fund_fee_annual_d1",
       "fund_fee_diff_d2",
-      "fund_fee_compare_d1",
       "fund_fee_decade_d3",
       "fund_fee_30yr_d3",
       "inv_decision_fees_d3"
@@ -1187,7 +1181,6 @@
     "example": "Balance: $3,000 at 20% APR\n1% of balance = $30 (principal)\n+ monthly interest = $3,000 × 20% ÷ 12 = $50\n= $80 minimum\n\nOf that $80, only $30 reduces what you owe — the other $50 is pure interest.",
     "quizTemplateIds": [
       "cc_minimum_payment",
-      "cc_minimum_payment_scenario",
       "cc_min_balance_d1",
       "cc_new_balance_d2",
       "cc_interest_check_d2",
@@ -1259,7 +1252,6 @@
     "shortcut": "First-year interest saved ≈ extra payment × APR%. Cumulative saving over the full payoff is typically 2-4× that, depending on how long until payoff. On 20% APR debt: $100/mo extra saves ~$240 in year 1, but ~$600-1,200 over a 3-5 year payoff (the principal shrinks each month, so future interest shrinks with it).",
     "example": "Extra: $100/mo · APR: 20%\nYear 1 interest saved: ~$240 ($100 × 20% × 12)\n\nFull payoff (~3 yrs on a $3k balance):\nTotal interest saved: ~$700\nReason: each $100 of extra principal kills not just its own 20% APR, but every future month's interest on that $100 too.",
     "quizTemplateIds": [
-      "cc_extra_payment_saving",
       "cc_extra_d1",
       "cc_annual_cost_d2",
       "cc_balance_interest_d2",
@@ -1380,7 +1372,6 @@
       "debt_priority_d1",
       "avalanche_monthly_saving_d2",
       "snowball_difference_d3",
-      "debt_compare_rates_d2",
       "psychology_premium_d3",
       "debt_decision_avalanche_d2"
     ],
@@ -1661,10 +1652,7 @@
     "example": "Rent: $1,800/month\nFirst + last + deposit + broker\n$1,800 × 4 = $7,200 move-in",
     "quizTemplateIds": [
       "move_in_basic_d1",
-      "move_in_no_broker_d1",
       "move_in_with_broker_d2",
-      "move_in_scenario_d2",
-      "move_in_compare_d3",
       "hou_decision_movein_d2"
     ],
     "lastVerified": "2026-05-26",
@@ -1853,9 +1841,6 @@
     "example": "Gross: $4,000/mo (~$48k/yr, below SS cap)\nFICA (7.65%): $306\nFederal (12%): $480\nState (5%): $200\nNet: $3,014\n\nHigh earner above $184,500 (2026):\nOn dollars above the cap, only 1.45% Medicare applies (plus 0.9% Additional Medicare above $200k single).",
     "quizTemplateIds": [
       "deduction_basic_d1",
-      "deduction_net_d1",
-      "deduction_fica_d2",
-      "deduction_scenario_d2",
       "deduction_compare_d3",
       "tax_decision_pretax_d2"
     ],
@@ -1875,7 +1860,6 @@
     "example": "Refund: $3,000\nMonthly over-withholding: $250\n\nIf invested at 6%/yr:\n~$3,100 at year-end\nExtra ~$100 vs lump refund\n\nOver 10 years of same pattern:\nForfeited >$1,000 in compounding",
     "quizTemplateIds": [
       "refund_basic_d1",
-      "refund_owe_d1",
       "refund_monthly_loan_d2",
       "refund_invested_d2",
       "refund_annual_loss_d3",

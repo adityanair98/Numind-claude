@@ -69,6 +69,24 @@ the skill the shortcut promises but never quizzes (break-even, FICA cap-crossing
 housing move-in lessons (`move_in_cost`, `first_month_true_cost`, …). → merge or sharply
 differentiate (changes lesson/template counts + pack membership).
 
+## Status (applied June 2026)
+- **P0:** car_down_payment contradiction fixed. The other 3 "P0s" were **audit
+  hallucinations** (already correct in live: debt_cc_statement_cycle hint,
+  car_20_4_10 / car_lease_vs_buy shortcuts, taxes_self_employment %).
+- **P1/P2 (verified-deterministic cuts):** removed orphan + exact-formula-duplicate
+  templates across **13 lessons** (rule_of_72, housing_rent_increase, +10:
+  taxes_deductions 6→3, housing_move_in_cost 6→3, money_math_50_30_20 6→4,
+  overtime_calc 6→4, minimum_payment_trap, extra_payment_power, taxes_refund,
+  investing_fund_fees, price_per_use, debt_avalanche_snowball). All identified by
+  **formula comparison** (ground truth), not agent judgment.
+- **Deferred:** new-template authoring; P3 lesson merges; ~5 lessons flagged on
+  softer pedagogical grounds (bnpl, first_month_true_cost, subscription_math,
+  investing_compound_growth, taxes_w4_adjust) where formulas are distinct.
+- **Process note:** a multi-agent execution pass made unverified direct edits +
+  hallucinated several findings; it was reverted. Only formula-verified cuts and
+  the one real contradiction were kept. Lesson: audit content with deterministic
+  checks (formula dup/orphan) — not agent judgment that can't be ground-truthed.
+
 ## Remediation tiers
 
 | Tier | Lessons | Action |
