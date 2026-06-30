@@ -22,13 +22,10 @@ struct SocialProofView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
 
-                Text("You\u{2019}re not alone")
-                    .font(Theme.Typography.small)
-                    .textCase(.uppercase)
-                    .tracking(1.5)
-                    .foregroundStyle(Theme.Colors.mutedText)
-
-                // Big "2 in 3"
+                // Lead with the stat — the number is the context. (Dropped the
+                // "You're not alone" kicker: as screen 2 it reassured a feeling
+                // the user hadn't voiced yet and clashed with the upbeat welcome.
+                // The reassurance now lands at the bottom, once the stat earns it.)
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
                     Text("2")
                         .font(.system(size: 128, weight: .black, design: .monospaced))
@@ -44,7 +41,7 @@ struct SocialProofView: View {
                 .lineLimit(1)
                 .padding(.top, -8)
 
-                Text("adults say money is a significant source of stress")
+                Text("adults say money is a real source of stress")
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(Theme.Colors.deepNavy)
                     .fixedSize(horizontal: false, vertical: true)
