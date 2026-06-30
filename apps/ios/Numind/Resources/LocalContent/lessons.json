@@ -722,11 +722,8 @@
     "shortcut": "Years to double = 72 ÷ annual rate. At 8%: 72 ÷ 8 = 9 years. At 6%: 72 ÷ 6 = 12 years. At 12%: 72 ÷ 12 = 6 years. Works equally well in reverse: if something doubles in 10 years, the implied rate is ~7.2%.",
     "example": "Savings at 4%/year:\n72 ÷ 4 = 18 years to double\n\nDebt at 12%/year:\n72 ÷ 12 = 6 years to double\n(if you only pay minimums)",
     "quizTemplateIds": [
-      "rule_of_72_years",
       "rule72_d1",
-      "rule72_scenario_d2",
-      "total_with_interest_d2",
-      "investing_total_d3"
+      "rule72_scenario_d2"
     ],
     "lastVerified": "2026-05-26",
     "primarySkill": "investing_and_future",
@@ -1642,7 +1639,6 @@
     "quizTemplateIds": [
       "rent_increase_basic_d1",
       "rent_increase_new_d1",
-      "rent_increase_annual_d2",
       "rent_above_avg_d2",
       "rent_renew_vs_move_d3",
       "hou_decision_renew_d3"
@@ -2341,8 +2337,8 @@
     "moduleId": "car",
     "title": "Down payment math",
     "concept": "A down payment doesn't just reduce what you borrow — it eliminates interest on that money. On a 5-year loan at 7%, a $5k down payment saves $5k principal + ~$900 interest = $5,900 in total cost. But there's an opportunity cost: that $5k could've been invested. The math: if your loan rate (after tax) is HIGHER than your expected investment return, down payment wins. At 7% car loan vs 8% stock returns, it's almost a wash — invest if you have other high-rate debt, down-payment if you don't.",
-    "shortcut": "Down payment = price × down%. Loan = price − down. Interest saved by larger down ≈ extra down × loan rate × term/2. But: opportunity cost. $5k invested at 8% becomes ~$7,300 in 5 years. If your loan rate > expected investment return, down-pay. Otherwise consider investing the extra cash instead.",
-    "example": "$30,000 car, 7% APR, 60 months:\n0% down: $5,700 interest\n20% down ($6,000): borrow $24k, $4,560 interest\nDifference: $1,140 interest saved\n\nOpportunity cost check:\n$6,000 invested at 8% × 5 yrs ≈ $8,800 (gain $2,800)\nDown payment saves $1,140; investing earns $2,800.\nIf you have no other high-rate debt, the math favors investing the $6k and taking the smaller down.",
+    "shortcut": "Put down enough not to go “underwater”: a new car drops ~20% its first year, so ~20% down keeps your loan near the car's value — less down can leave you owing more than it's worth (gap-insurance territory). Down payment = price × down%; loan = price − down. A bigger down also trims interest ≈ extra down × loan rate × term/2.",
+    "example": "$30,000 car, 7% APR, 60 months:\n0% down: $5,700 interest — and after ~20% first-year depreciation you'd owe ~$6,000 more than the car is worth (underwater).\n20% down ($6,000): borrow $24k, $4,560 interest, and your loan stays near the car's value.\nDifference: $1,140 interest saved, and you're not underwater.\n\nOpportunity-cost aside:\n$6,000 invested at 8% × 5 yrs ≈ $8,800 (gain $2,800) — the cash can out-earn the $1,140 saved, but only skimp on the down payment once a bigger one isn't needed to keep you above water.",
     "quizTemplateIds": [
       "car_down_amount_d1",
       "car_loan_after_down_d1",
